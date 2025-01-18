@@ -1,0 +1,21 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="AllRightsReserved"
+
+[[mods]]
+    modId="fantasyfurniture"
+    version="${file.jarVersion}"
+    displayName="Fantasy's Furniture"
+    credits="Apex - Programming"
+    authors="ApexStudios"
+    description="Fantasy's Furniture"
+
+[[dependencies.fantasyfurniture]]
+    modId="apexcore"
+    type="required"
+    versionRange="[21.4,)"
+
+#[[accessTransformers]]
+#    file="META-INF/accesstransformer.cfg"
+[[mixins]]
+   config="META-INF/fantasyfurniture.mixins.json"

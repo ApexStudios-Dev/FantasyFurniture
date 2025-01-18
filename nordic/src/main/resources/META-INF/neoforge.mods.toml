@@ -1,0 +1,25 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="AllRightsReserved"
+
+[[mods]]
+    modId="fantasyfurniture_nordic"
+    version="${file.jarVersion}"
+    displayName="Fantasy's Furniture - Nordic"
+    credits="Apex - Programming"
+    authors="ApexStudios"
+    description="Fantasy's Furniture - Nordic"
+
+[[dependencies.fantasyfurniture_nordic]]
+    modId="apexcore"
+    type="required"
+    versionRange="[21.4,)"
+[[dependencies.fantasyfurniture_nordic]]
+    modId="fantasyfurniture"
+    type="required"
+    versionRange="[21.4,)"
+
+#[[accessTransformers]]
+#    file="META-INF/accesstransformer.cfg"
+#[[mixins]]
+#    config="META-INF/fantasyfurniture_nordic.mixins.json"
