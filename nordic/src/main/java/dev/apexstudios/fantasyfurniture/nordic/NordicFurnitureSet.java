@@ -47,9 +47,24 @@ public class NordicFurnitureSet {
             .blockType(BlockType.LOCKBOX, block -> block.shape(() -> ApexShapes.join(
                     Block.box(2D, 0D, 3D, 14D, 9D, 13D),
                     Block.box(2D, 9D, 5D, 14D, 10D, 11D)
-            ))).blockType(BlockType.DRAWER, block -> block.shape(() -> ApexShapes.join(
+            )))
+            .blockType(BlockType.DRAWER, block -> block.shape(() -> ApexShapes.join(
                     Block.box(1D, 0D, 1D, 15D, 13D, 15D),
                     Block.box(0D, 13D, 0D, 16D, 16D, 16D)
+            )))
+            .blockType(BlockType.CHAIR, block -> block.shape(() -> ApexShapes.join(
+                    Block.box(2D, 0D, 2D, 4D, 4D, 4D),
+                    Block.box(2.5D, 4.5D, 4.5D, 3.5D, 5.5D, 11.5D),
+                    Block.box(12.5D, 4.5D, 4.5D, 13.5D, 5.5D, 11.5D),
+                    Block.box(12D, 0D, 2D, 14D, 4D, 4D),
+                    Block.box(2D, 0D, 12D, 4D, 4D, 14D),
+                    Block.box(2D, 7D, 2D, 14D, 9D, 14D),
+                    Block.box(2D, 9D, 13D, 14D, 25D, 14D),
+                    Block.box(12D, 0D, 12D, 14D, 4D, 14D),
+                    Block.box(2D, 4D, 11.5D, 4D, 7D, 13.5D),
+                    Block.box(12D, 4D, 11.5D, 14D, 7D, 13.5D),
+                    Block.box(2D, 4D, 2.5D, 4D, 7D, 4.5D),
+                    Block.box(12D, 4D, 2.5D, 14D, 7D, 4.5D)
             )))
     );
 
