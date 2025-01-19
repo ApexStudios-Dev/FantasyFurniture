@@ -9,24 +9,27 @@ import dev.apexstudios.apexcore.lib.menu.SimpleMenu;
 import dev.apexstudios.fantasyfurniture.FurnitureBlockEntities;
 import dev.apexstudios.fantasyfurniture.FurnitureMenus;
 import net.minecraft.core.BlockPos;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.state.BlockState;
 
-public final class DresserBlockEntity extends BaseBlockEntityComponentHolder {
+public final class BookshelfBlockEntity extends BaseBlockEntityComponentHolder {
     public static final int SLOTS = AbstractContainerMenu.SLOTS_PER_ROW * 3;
 
-    public DresserBlockEntity(BlockPos pos, BlockState blockState) {
-        super(FurnitureBlockEntities.DRESSER.value(), pos, blockState);
+    public BookshelfBlockEntity(BlockPos pos, BlockState blockState) {
+        super(FurnitureBlockEntities.BOOKSHELF.value(), pos, blockState);
     }
 
     @Override
     protected AbstractContainerMenu createMenu(int windowId, Player player) {
-        return new SimpleMenu(FurnitureMenus.DRESSER.value(), windowId, player.getInventory(), getComponentOrThrow(BlockEntityComponentTypes.INVENTORY).getItemHandler());
+        return new SimpleMenu(FurnitureMenus.BOOKSHELF.value(), windowId, player.getInventory(), getComponentOrThrow(BlockEntityComponentTypes.INVENTORY).getItemHandler());
     }
 
     @Override
     protected void registerComponents(ComponentRegistrar<BlockEntityComponent> registrar) {
-        BlockEntityComponentHelper.registerInventoryComponents(registrar, builder -> builder.slots(SLOTS));
+        BlockEntityComponentHelper.registerInventoryComponents(registrar, builder -> builder
+                .slots(SLOTS, slot -> slot.validator((index, inventory, stack) -> stack.is(ItemTags.BOOKSHELF_BOOKS)))
+        );
     }
 }

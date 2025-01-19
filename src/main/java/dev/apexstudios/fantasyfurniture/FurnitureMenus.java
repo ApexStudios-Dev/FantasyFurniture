@@ -3,6 +3,7 @@ package dev.apexstudios.fantasyfurniture;
 import dev.apexstudios.apexcore.lib.menu.SimpleMenu;
 import dev.apexstudios.apexcore.lib.menu.SimpleMenuScreen;
 import dev.apexstudios.apexcore.lib.registree.holder.DeferredMenu;
+import dev.apexstudios.fantasyfurniture.block.entity.BookshelfBlockEntity;
 import dev.apexstudios.fantasyfurniture.block.entity.DrawerBlockEntity;
 import dev.apexstudios.fantasyfurniture.block.entity.DresserBlockEntity;
 import dev.apexstudios.fantasyfurniture.block.entity.LockBoxBlockEntity;
@@ -14,16 +15,19 @@ public interface FurnitureMenus {
     DeferredMenu<SimpleMenu> DRESSER = new DeferredMenu<>(FantasyFurniture.REGISTREE.registryKey(Registries.MENU, "dresser"));
     DeferredMenu<SimpleMenu> LOCKBOX = new DeferredMenu<>(FantasyFurniture.REGISTREE.registryKey(Registries.MENU, "lockbox"));
     DeferredMenu<SimpleMenu> DRAWER = new DeferredMenu<>(FantasyFurniture.REGISTREE.registryKey(Registries.MENU, "drawer"));
+    DeferredMenu<SimpleMenu> BOOKSHELF = new DeferredMenu<>(FantasyFurniture.REGISTREE.registryKey(Registries.MENU, "bookshelf"));
 
     static void register(IEventBus modBus) {
         FantasyFurniture.REGISTREE.registerMenu("dresser", (containerId, inventory) -> new SimpleMenu(DRESSER.value(), containerId, inventory, DresserBlockEntity.SLOTS));
         FantasyFurniture.REGISTREE.registerMenu("lockbox", (containerId, inventory) -> new SimpleMenu(LOCKBOX.value(), containerId, inventory, LockBoxBlockEntity.SLOTS));
         FantasyFurniture.REGISTREE.registerMenu("drawer", (containerId, inventory) -> new SimpleMenu(DRAWER.value(), containerId, inventory, DrawerBlockEntity.SLOTS));
+        FantasyFurniture.REGISTREE.registerMenu("bookshelf", (containerId, inventory) -> new SimpleMenu(BOOKSHELF.value(), containerId, inventory, BookshelfBlockEntity.SLOTS));
 
         modBus.addListener(RegisterMenuScreensEvent.class, event -> {
             event.register(DRESSER.value(), SimpleMenuScreen::new);
             event.register(LOCKBOX.value(), SimpleMenuScreen::new);
             event.register(DRAWER.value(), SimpleMenuScreen::new);
+            event.register(BOOKSHELF.value(), SimpleMenuScreen::new);
         });
     }
 }

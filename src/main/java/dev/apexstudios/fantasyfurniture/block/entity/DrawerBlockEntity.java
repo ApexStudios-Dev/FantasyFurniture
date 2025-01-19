@@ -22,7 +22,7 @@ public final class DrawerBlockEntity extends BaseBlockEntityComponentHolder {
 
     @Override
     protected AbstractContainerMenu createMenu(int windowId, Player player) {
-        return new SimpleMenu(FurnitureMenus.DRAWER.value(), windowId, player.getInventory(), getComponentOrThrow(BlockEntityComponentTypes.INVENTORY));
+        return new SimpleMenu(FurnitureMenus.DRAWER.value(), windowId, player.getInventory(), getComponentOrThrow(BlockEntityComponentTypes.INVENTORY).getItemHandler());
     }
 
     @Override

@@ -22,7 +22,7 @@ public final class LockBoxBlockEntity extends BaseBlockEntityComponentHolder {
 
     @Override
     protected AbstractContainerMenu createMenu(int windowId, Player player) {
-        return new SimpleMenu(FurnitureMenus.LOCKBOX.value(), windowId, player.getInventory(), getComponentOrThrow(BlockEntityComponentTypes.INVENTORY));
+        return new SimpleMenu(FurnitureMenus.LOCKBOX.value(), windowId, player.getInventory(), getComponentOrThrow(BlockEntityComponentTypes.INVENTORY).getItemHandler());
     }
 
     @Override

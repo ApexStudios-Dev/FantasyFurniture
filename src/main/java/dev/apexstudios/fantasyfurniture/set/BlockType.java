@@ -5,6 +5,7 @@ import dev.apexstudios.apexcore.lib.registree.holder.DeferredBlockEntity;
 import dev.apexstudios.apexcore.lib.registree.holder.DeferredMenu;
 import dev.apexstudios.fantasyfurniture.FurnitureBlockEntities;
 import dev.apexstudios.fantasyfurniture.FurnitureMenus;
+import dev.apexstudios.fantasyfurniture.block.BookshelfBlock;
 import dev.apexstudios.fantasyfurniture.block.ChairBlock;
 import dev.apexstudios.fantasyfurniture.block.DrawerBlock;
 import dev.apexstudios.fantasyfurniture.block.DresserBlock;
@@ -131,10 +132,20 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     );
     // endregion
 
+    // region: Bookshelf
+    BlockType<BookshelfBlock, BlockItem> BOOKSHELF = new Impl<>(
+            "bookshelf",
+            () -> DRESSER.blockProperties().get(),
+            BookshelfBlock::new,
+            BlockItem::new,
+            FurnitureBlockEntities.BOOKSHELF,
+            FurnitureMenus.BOOKSHELF
+    );
+    // endregion
+
     // region: TODO
     BlockType<FurnitureBlock, BlockItem> BED_DOUBLE = new Impl<>("bed_double", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
     BlockType<FurnitureBlock, BlockItem> BED_SINGLE = new Impl<>("bed_single", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
-    BlockType<FurnitureBlock, BlockItem> BOOKSHELF = new Impl<>("bookshelf", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
     BlockType<FurnitureBlock, BlockItem> CHANDELIER = new Impl<>("chandelier", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
     BlockType<FurnitureBlock, BlockItem> CHEST = new Impl<>("chest", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
     BlockType<FurnitureBlock, BlockItem> COUNTER = new Impl<>("counter", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);

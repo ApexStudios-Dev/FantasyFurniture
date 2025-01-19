@@ -66,6 +66,10 @@ public class NordicFurnitureSet {
                     Block.box(2D, 4D, 2.5D, 4D, 7D, 4.5D),
                     Block.box(12D, 4D, 2.5D, 14D, 7D, 4.5D)
             )))
+            .blockType(BlockType.BOOKSHELF, block -> block.shape(() -> ApexShapes.join(
+                    Block.box(-15D, 0D, 1D, 15D, 30D, 15D),
+                    Block.box(-16D, 30D, 0D, 16D, 32D, 16D)
+            )))
     );
 
     public NordicFurnitureSet(IEventBus modBus) {
