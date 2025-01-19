@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "fantasyfurniture_nordic:block/bed_double"
+    "model": "fantasyfurniture_nordic:item/bed_double"
   }
 }

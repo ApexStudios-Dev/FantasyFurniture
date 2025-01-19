@@ -92,6 +92,26 @@ public class NordicFurnitureSet {
                     Block.box(1D, 5D, 2D, 15D, 8D, 30D)
             )))
             // endregion
+            // region: Bed Double
+            .blockType(BlockType.BED_DOUBLE, block -> block.shape(() -> ApexShapes.join(
+                    Block.box(-16D, 3D, 2D, 16D, 5D, 30D),
+                    Block.box(-14D, 5D, 2D, 14D, 8D, 30D),
+                    Block.box(-16D, 3D, 0D, 16D, 5D, 2D),
+                    Block.box(-16D, 0D, 0D, -14D, 8D, 2D),
+                    Block.box(14D, 0D, 0D, 16D, 8D, 2D),
+                    Block.box(-16D, 12D, 0D, -8D, 14D, 2D),
+                    Block.box(8D, 12D, 0D, 16D, 14D, 2D),
+                    Block.box(-10D, 12D, 0D, 10D, 16D, 2D),
+                    Block.box(-15D, 5D, 0D, 15D, 12D, 2D),
+                    Block.box(-15D, 5D, 30D, 15D, 12D, 32D),
+                    Block.box(-16D, 3D, 30D, 16D, 5D, 32D),
+                    Block.box(-16D, 0D, 30D, -14D, 8D, 32D),
+                    Block.box(14D, 0D, 30D, 16D, 8D, 32D),
+                    Block.box(-16D, 12D, 30D, -8D, 14D, 32D),
+                    Block.box(8D, 12D, 30D, 16D, 14D, 32D),
+                    Block.box(-10D, 12D, 30D, 10D, 16D, 32D)
+            )))
+            // endregion
     );
 
     public NordicFurnitureSet(IEventBus modBus) {
