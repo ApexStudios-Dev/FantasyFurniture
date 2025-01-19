@@ -14,7 +14,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.state.BlockState;
 
 public final class DrawerBlockEntity extends BaseBlockEntityComponentHolder {
-    public static final int SLOTS = AbstractContainerMenu.SLOTS_PER_ROW * 3;
+    public static final int ROWS = 3;
 
     public DrawerBlockEntity(BlockPos pos, BlockState blockState) {
         super(FurnitureBlockEntities.DRAWER.value(), pos, blockState);
@@ -22,11 +22,11 @@ public final class DrawerBlockEntity extends BaseBlockEntityComponentHolder {
 
     @Override
     protected AbstractContainerMenu createMenu(int windowId, Player player) {
-        return new SimpleMenu(FurnitureMenus.DRAWER.value(), windowId, player.getInventory(), getComponentOrThrow(BlockEntityComponentTypes.INVENTORY).getItemHandler());
+        return new SimpleMenu(FurnitureMenus.DRAWER.value(), windowId, player.getInventory(), getComponentOrThrow(BlockEntityComponentTypes.INVENTORY).getItemHandler(), ROWS);
     }
 
     @Override
     protected void registerComponents(ComponentRegistrar<BlockEntityComponent> registrar) {
-        BlockEntityComponentHelper.registerInventoryComponents(registrar, builder -> builder.slots(SLOTS));
+        BlockEntityComponentHelper.registerInventoryComponents(registrar, builder -> builder.slots(ROWS * AbstractContainerMenu.SLOTS_PER_ROW));
     }
 }
