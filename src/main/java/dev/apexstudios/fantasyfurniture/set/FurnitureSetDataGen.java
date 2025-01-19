@@ -94,6 +94,7 @@ interface FurnitureSetDataGen {
         componentBlock(context, furnitureSet.block(BlockType.STOOL), BlockComponentTypes.FACING, (block, component) -> horizontalFacingBlock(block, component.getProperty(), blockModels));
         componentBlock(context, furnitureSet.block(BlockType.CUSHION), BlockComponentTypes.FACING, (block, component) -> horizontalFacingBlock(block, component.getProperty(), blockModels));
         componentBlock(context, furnitureSet.block(BlockType.LOCKBOX), BlockComponentTypes.FACING, (block, component) -> horizontalFacingBlock(block, component.getProperty(), blockModels));
+        componentBlock(context, furnitureSet.block(BlockType.DRAWER), BlockComponentTypes.FACING, (block, component) -> horizontalFacingBlock(block, component.getProperty(), blockModels));
 
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(furnitureSet.block(BlockType.BED_DOUBLE).value(), ModelLocationUtils.getModelLocation(furnitureSet.block(BlockType.BED_DOUBLE).value())));
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(furnitureSet.block(BlockType.BED_SINGLE).value(), ModelLocationUtils.getModelLocation(furnitureSet.block(BlockType.BED_SINGLE).value())));
@@ -105,7 +106,6 @@ interface FurnitureSetDataGen {
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(furnitureSet.block(BlockType.DESK).value(), ModelLocationUtils.getModelLocation(furnitureSet.block(BlockType.DESK).value())));
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(furnitureSet.block(BlockType.DOOR_DOUBLE).value(), ModelLocationUtils.getModelLocation(furnitureSet.block(BlockType.DOOR_DOUBLE).value())));
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(furnitureSet.block(BlockType.DOOR_SINGLE).value(), ModelLocationUtils.getModelLocation(furnitureSet.block(BlockType.DOOR_SINGLE).value())));
-        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(furnitureSet.block(BlockType.DRAWER).value(), ModelLocationUtils.getModelLocation(furnitureSet.block(BlockType.DRAWER).value())));
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(furnitureSet.block(BlockType.FLOOR_LIGHT).value(), ModelLocationUtils.getModelLocation(furnitureSet.block(BlockType.FLOOR_LIGHT).value())));
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(furnitureSet.block(BlockType.OVEN).value(), ModelLocationUtils.getModelLocation(furnitureSet.block(BlockType.OVEN).value())));
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(furnitureSet.block(BlockType.PAINTING_SMALL).value(), ModelLocationUtils.getModelLocation(furnitureSet.block(BlockType.PAINTING_SMALL).value())));
