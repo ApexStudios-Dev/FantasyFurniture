@@ -29,7 +29,6 @@
 			"to": [16, 8, 32],
 			"autouv": 0,
 			"color": 4,
-			"export": false,
 			"origin": [16, 2, 32],
 			"faces": {
 				"north": {
@@ -72,7 +71,6 @@
 			"to": [15, 12, 32],
 			"autouv": 0,
 			"color": 5,
-			"export": false,
 			"origin": [16, 2, 32],
 			"faces": {
 				"north": {
@@ -116,7 +114,6 @@
 			"to": [16, 14, 32],
 			"autouv": 0,
 			"color": 9,
-			"export": false,
 			"origin": [16, 2, 32],
 			"faces": {
 				"north": {
@@ -159,7 +156,6 @@
 			"to": [14, 5, 32],
 			"autouv": 0,
 			"color": 2,
-			"export": false,
 			"origin": [16, 2, 32],
 			"faces": {
 				"north": {
@@ -202,7 +198,6 @@
 			"to": [14, 8, 31],
 			"autouv": 0,
 			"color": 8,
-			"export": false,
 			"origin": [16, 2, 32],
 			"faces": {
 				"north": {
@@ -247,7 +242,6 @@
 			"to": [13, 12, 31],
 			"autouv": 0,
 			"color": 7,
-			"export": false,
 			"origin": [16, 2, 32],
 			"faces": {
 				"north": {
@@ -292,7 +286,6 @@
 			"to": [16, 5, 30],
 			"autouv": 0,
 			"color": 0,
-			"export": false,
 			"origin": [16, 2, 32],
 			"faces": {
 				"north": {
@@ -335,7 +328,6 @@
 			"to": [14, 4, 30],
 			"autouv": 0,
 			"color": 0,
-			"export": false,
 			"origin": [16, 2, 16],
 			"faces": {
 				"north": {
@@ -379,7 +371,6 @@
 			"to": [15, 8, 24],
 			"autouv": 0,
 			"color": 8,
-			"export": false,
 			"origin": [16, 2, 32],
 			"faces": {
 				"north": {
@@ -423,7 +414,6 @@
 			"to": [15, 8, 24],
 			"autouv": 0,
 			"color": 2,
-			"export": false,
 			"origin": [16, 2, 32],
 			"faces": {
 				"north": {
@@ -468,7 +458,6 @@
 			"to": [16, 8, 2],
 			"autouv": 0,
 			"color": 4,
-			"export": false,
 			"origin": [16, 2, 0],
 			"faces": {
 				"north": {
@@ -511,7 +500,6 @@
 			"to": [15, 12, 2],
 			"autouv": 0,
 			"color": 5,
-			"export": false,
 			"origin": [16, 2, 0],
 			"faces": {
 				"north": {
@@ -555,7 +543,6 @@
 			"to": [16, 14, 2],
 			"autouv": 0,
 			"color": 9,
-			"export": false,
 			"origin": [16, 2, 0],
 			"faces": {
 				"north": {
@@ -598,7 +585,6 @@
 			"to": [14, 5, 2],
 			"autouv": 0,
 			"color": 2,
-			"export": false,
 			"origin": [16, 2, 0],
 			"faces": {
 				"north": {
@@ -641,7 +627,6 @@
 			"to": [14, 8, 2],
 			"autouv": 0,
 			"color": 8,
-			"export": false,
 			"origin": [16, 2, 0],
 			"faces": {
 				"north": {
@@ -686,7 +671,6 @@
 			"to": [13, 12, 2],
 			"autouv": 0,
 			"color": 7,
-			"export": false,
 			"origin": [16, 2, 0],
 			"faces": {
 				"north": {
@@ -731,7 +715,6 @@
 			"to": [16, 5, 16],
 			"autouv": 0,
 			"color": 0,
-			"export": false,
 			"origin": [16, 2, 0],
 			"faces": {
 				"north": {
@@ -774,7 +757,6 @@
 			"to": [14, 4, 16],
 			"autouv": 0,
 			"color": 0,
-			"export": false,
 			"origin": [16, 2, 16],
 			"faces": {
 				"north": {
@@ -818,7 +800,6 @@
 			"to": [15, 8, 16],
 			"autouv": 0,
 			"color": 8,
-			"export": false,
 			"origin": [16, 2, 0],
 			"faces": {
 				"north": {
@@ -862,7 +843,6 @@
 			"to": [15, 8, 16],
 			"autouv": 0,
 			"color": 2,
-			"export": false,
 			"origin": [16, 2, 0],
 			"faces": {
 				"north": {
@@ -907,7 +887,6 @@
 			"to": [14, 7, 30],
 			"autouv": 0,
 			"color": 9,
-			"export": false,
 			"origin": [16, 2, 0],
 			"faces": {
 				"north": {
@@ -951,7 +930,6 @@
 			"to": [14, 7, 30],
 			"autouv": 0,
 			"color": 0,
-			"export": false,
 			"origin": [16, 2, 0],
 			"faces": {
 				"north": {
@@ -996,7 +974,6 @@
 			"to": [15, 8, 24],
 			"autouv": 0,
 			"color": 9,
-			"export": false,
 			"origin": [16, 2, 0],
 			"faces": {
 				"north": {
@@ -1041,7 +1018,6 @@
 			"to": [13, 11.75, 30],
 			"autouv": 0,
 			"color": 1,
-			"export": false,
 			"rotation": [45, 0, 0],
 			"origin": [8, 10, 29],
 			"faces": {
@@ -1085,7 +1061,6 @@
 			"to": [2, 8, 32],
 			"autouv": 0,
 			"color": 4,
-			"export": false,
 			"origin": [0, 2, 32],
 			"faces": {
 				"north": {
@@ -1128,7 +1103,6 @@
 			"to": [3, 12, 32],
 			"autouv": 0,
 			"color": 5,
-			"export": false,
 			"origin": [0, 2, 32],
 			"faces": {
 				"north": {
@@ -1172,7 +1146,6 @@
 			"to": [8, 14, 32],
 			"autouv": 0,
 			"color": 9,
-			"export": false,
 			"origin": [0, 2, 32],
 			"faces": {
 				"north": {
@@ -1215,7 +1188,6 @@
 			"to": [8, 5, 32],
 			"autouv": 0,
 			"color": 2,
-			"export": false,
 			"origin": [0, 2, 32],
 			"faces": {
 				"north": {
@@ -1258,7 +1230,6 @@
 			"to": [8, 8, 31],
 			"autouv": 0,
 			"color": 8,
-			"export": false,
 			"origin": [0, 2, 32],
 			"faces": {
 				"north": {
@@ -1303,7 +1274,6 @@
 			"to": [8, 12, 31],
 			"autouv": 0,
 			"color": 7,
-			"export": false,
 			"origin": [0, 2, 32],
 			"faces": {
 				"north": {
@@ -1348,7 +1318,6 @@
 			"to": [2, 5, 30],
 			"autouv": 0,
 			"color": 0,
-			"export": false,
 			"origin": [0, 2, 32],
 			"faces": {
 				"north": {
@@ -1391,7 +1360,6 @@
 			"to": [8, 4, 30],
 			"autouv": 0,
 			"color": 0,
-			"export": false,
 			"origin": [0, 2, 16],
 			"faces": {
 				"north": {
@@ -1435,7 +1403,6 @@
 			"to": [8, 7, 30],
 			"autouv": 0,
 			"color": 9,
-			"export": false,
 			"origin": [0, 2, 0],
 			"faces": {
 				"north": {
@@ -1479,7 +1446,6 @@
 			"to": [2, 7, 30],
 			"autouv": 0,
 			"color": 0,
-			"export": false,
 			"origin": [0, 2, 0],
 			"faces": {
 				"north": {
@@ -1524,7 +1490,6 @@
 			"to": [8, 8, 24],
 			"autouv": 0,
 			"color": 8,
-			"export": false,
 			"origin": [0, 2, 32],
 			"faces": {
 				"north": {
@@ -1568,7 +1533,6 @@
 			"to": [1, 8, 24],
 			"autouv": 0,
 			"color": 2,
-			"export": false,
 			"origin": [0, 2, 32],
 			"faces": {
 				"north": {
@@ -1613,7 +1577,6 @@
 			"to": [8, 8, 24],
 			"autouv": 0,
 			"color": 9,
-			"export": false,
 			"origin": [0, 2, 0],
 			"faces": {
 				"north": {
@@ -1658,7 +1621,6 @@
 			"to": [8, 11.75, 30],
 			"autouv": 0,
 			"color": 1,
-			"export": false,
 			"rotation": [45, 0, 0],
 			"origin": [8, 10, 29],
 			"faces": {
@@ -1702,7 +1664,6 @@
 			"to": [2, 8, 2],
 			"autouv": 0,
 			"color": 4,
-			"export": false,
 			"origin": [0, 2, 0],
 			"faces": {
 				"north": {
@@ -1745,7 +1706,6 @@
 			"to": [3, 12, 2],
 			"autouv": 0,
 			"color": 5,
-			"export": false,
 			"origin": [0, 2, 0],
 			"faces": {
 				"north": {
@@ -1789,7 +1749,6 @@
 			"to": [8, 14, 2],
 			"autouv": 0,
 			"color": 9,
-			"export": false,
 			"origin": [0, 2, 0],
 			"faces": {
 				"north": {
@@ -1832,7 +1791,6 @@
 			"to": [8, 5, 2],
 			"autouv": 0,
 			"color": 2,
-			"export": false,
 			"origin": [0, 2, 0],
 			"faces": {
 				"north": {
@@ -1875,7 +1833,6 @@
 			"to": [8, 8, 2],
 			"autouv": 0,
 			"color": 8,
-			"export": false,
 			"origin": [0, 2, 0],
 			"faces": {
 				"north": {
@@ -1920,7 +1877,6 @@
 			"to": [8, 12, 2],
 			"autouv": 0,
 			"color": 7,
-			"export": false,
 			"origin": [0, 2, 0],
 			"faces": {
 				"north": {
@@ -1965,7 +1921,6 @@
 			"to": [2, 5, 16],
 			"autouv": 0,
 			"color": 0,
-			"export": false,
 			"origin": [0, 2, 0],
 			"faces": {
 				"north": {
@@ -2008,7 +1963,6 @@
 			"to": [8, 4, 16],
 			"autouv": 0,
 			"color": 0,
-			"export": false,
 			"origin": [0, 2, 16],
 			"faces": {
 				"north": {
@@ -2052,7 +2006,6 @@
 			"to": [8, 8, 16],
 			"autouv": 0,
 			"color": 8,
-			"export": false,
 			"origin": [0, 2, 0],
 			"faces": {
 				"north": {
@@ -2096,7 +2049,6 @@
 			"to": [1, 8, 16],
 			"autouv": 0,
 			"color": 2,
-			"export": false,
 			"origin": [0, 2, 0],
 			"faces": {
 				"north": {
@@ -2136,7 +2088,7 @@
 			"origin": [0, 8, 8],
 			"color": 0,
 			"uuid": "4f43bd36-6e30-0200-bce4-644349d7e2ae",
-			"export": false,
+			"export": true,
 			"mirror_uv": false,
 			"isOpen": false,
 			"locked": false,
@@ -2148,7 +2100,7 @@
 					"origin": [0, 2, 0],
 					"color": 0,
 					"uuid": "294e7780-438d-7d61-3b06-6c900bee580f",
-					"export": false,
+					"export": true,
 					"mirror_uv": false,
 					"isOpen": false,
 					"locked": false,
@@ -2160,7 +2112,7 @@
 							"origin": [-8, 2, -8],
 							"color": 0,
 							"uuid": "fb337cfe-dbb6-3aaa-8546-61bedb07f829",
-							"export": false,
+							"export": true,
 							"mirror_uv": false,
 							"isOpen": false,
 							"locked": false,
@@ -2182,7 +2134,7 @@
 							"origin": [0, 10, 21],
 							"color": 0,
 							"uuid": "cbd1bff8-0cab-391b-29f1-54ab9960b0f9",
-							"export": false,
+							"export": true,
 							"mirror_uv": false,
 							"isOpen": false,
 							"locked": false,
@@ -2202,7 +2154,7 @@
 							"origin": [0, 2, 0],
 							"color": 0,
 							"uuid": "01c9528c-35f6-5f25-c65c-2e11ebc3199d",
-							"export": false,
+							"export": true,
 							"mirror_uv": false,
 							"isOpen": true,
 							"locked": false,
@@ -2217,7 +2169,7 @@
 					"origin": [0, 2, 0],
 					"color": 0,
 					"uuid": "cf440c22-b26a-1f0f-e81a-13b2b9dd58d1",
-					"export": false,
+					"export": true,
 					"mirror_uv": false,
 					"isOpen": false,
 					"locked": false,
@@ -2229,7 +2181,7 @@
 							"origin": [-8, 2, -8],
 							"color": 0,
 							"uuid": "e6863fca-dffc-868d-08e6-4d2563fbbe7a",
-							"export": false,
+							"export": true,
 							"mirror_uv": false,
 							"isOpen": true,
 							"locked": false,
@@ -2251,7 +2203,7 @@
 							"origin": [0, 10, 21],
 							"color": 0,
 							"uuid": "60fdbb80-faca-4562-e5fd-7b0fdf98bb4e",
-							"export": false,
+							"export": true,
 							"mirror_uv": false,
 							"isOpen": true,
 							"locked": false,
@@ -2271,7 +2223,7 @@
 							"origin": [0, 2, 0],
 							"color": 0,
 							"uuid": "4035b9b8-d37e-8096-d1ac-cba68cd85e62",
-							"export": false,
+							"export": true,
 							"mirror_uv": false,
 							"isOpen": true,
 							"locked": false,
@@ -2288,7 +2240,7 @@
 			"origin": [0, 8, 8],
 			"color": 0,
 			"uuid": "d19c0a4c-2194-f237-cce7-48ead6a59894",
-			"export": false,
+			"export": true,
 			"mirror_uv": false,
 			"isOpen": false,
 			"locked": false,
@@ -2300,7 +2252,7 @@
 					"origin": [0, 2, 0],
 					"color": 0,
 					"uuid": "51c471fa-4d13-0412-c043-681f013ecac1",
-					"export": false,
+					"export": true,
 					"mirror_uv": false,
 					"isOpen": true,
 					"locked": false,
@@ -2312,7 +2264,7 @@
 							"origin": [-8, 2, -8],
 							"color": 0,
 							"uuid": "35c1ec40-39e7-e53a-1074-2d1275f56636",
-							"export": false,
+							"export": true,
 							"mirror_uv": false,
 							"isOpen": true,
 							"locked": false,
@@ -2334,7 +2286,7 @@
 							"origin": [0, 10, 21],
 							"color": 0,
 							"uuid": "1e1f79e1-c343-c2e7-7ecd-532faf27ff47",
-							"export": false,
+							"export": true,
 							"mirror_uv": false,
 							"isOpen": false,
 							"locked": false,
@@ -2347,7 +2299,7 @@
 							"origin": [0, 2, 0],
 							"color": 0,
 							"uuid": "1729fd67-4be6-9571-593f-3a606a405ee9",
-							"export": false,
+							"export": true,
 							"mirror_uv": false,
 							"isOpen": true,
 							"locked": false,
@@ -2362,7 +2314,7 @@
 					"origin": [0, 2, 0],
 					"color": 0,
 					"uuid": "7a59d79f-a4f5-0140-e7f4-dfa48e48cc60",
-					"export": false,
+					"export": true,
 					"mirror_uv": false,
 					"isOpen": true,
 					"locked": false,
@@ -2374,7 +2326,7 @@
 							"origin": [-8, 2, -8],
 							"color": 0,
 							"uuid": "38231c70-b800-8c57-00e2-70cd2654650c",
-							"export": false,
+							"export": true,
 							"mirror_uv": false,
 							"isOpen": true,
 							"locked": false,
@@ -2396,7 +2348,7 @@
 							"origin": [0, 10, 21],
 							"color": 0,
 							"uuid": "3d82db03-f44b-e4f0-b30f-53c329e48f66",
-							"export": false,
+							"export": true,
 							"mirror_uv": false,
 							"isOpen": true,
 							"locked": false,
@@ -2409,7 +2361,7 @@
 							"origin": [0, 2, 0],
 							"color": 0,
 							"uuid": "01a06044-5a5c-0865-ceff-5cd005b78d2c",
-							"export": false,
+							"export": true,
 							"mirror_uv": false,
 							"isOpen": true,
 							"locked": false,
