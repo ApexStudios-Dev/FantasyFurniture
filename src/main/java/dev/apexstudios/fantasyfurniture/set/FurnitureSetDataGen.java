@@ -14,6 +14,7 @@ import dev.apexstudios.apexcore.lib.data.provider.tag.TagProvider;
 import dev.apexstudios.apexcore.lib.multiblock.MultiBlock;
 import dev.apexstudios.apexcore.lib.placement.BlockPlacementRenderer;
 import dev.apexstudios.apexcore.lib.registree.holder.DeferredBlock;
+import dev.apexstudios.fantasyfurniture.block.BedSingleBlock;
 import dev.apexstudios.fantasyfurniture.block.BookshelfBlock;
 import dev.apexstudios.fantasyfurniture.block.ChairBlock;
 import dev.apexstudios.fantasyfurniture.block.DresserBlock;
@@ -100,9 +101,9 @@ interface FurnitureSetDataGen {
         componentBlock(context, furnitureSet.block(BlockType.DRAWER), BlockComponentTypes.FACING, (block, component) -> horizontalFacingBlock(block, component.getProperty(), blockModels));
         chairModel(context, furnitureSet.block(BlockType.CHAIR), blockModels);
         bookshelfModel(context, furnitureSet.block(BlockType.BOOKSHELF), blockModels);
+        bedSingleModel(context, furnitureSet.block(BlockType.BED_SINGLE), blockModels);
 
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(furnitureSet.block(BlockType.BED_DOUBLE).value(), ModelLocationUtils.getModelLocation(furnitureSet.block(BlockType.BED_DOUBLE).value())));
-        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(furnitureSet.block(BlockType.BED_SINGLE).value(), ModelLocationUtils.getModelLocation(furnitureSet.block(BlockType.BED_SINGLE).value())));
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(furnitureSet.block(BlockType.CHANDELIER).value(), ModelLocationUtils.getModelLocation(furnitureSet.block(BlockType.CHANDELIER).value())));
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(furnitureSet.block(BlockType.CHEST).value(), ModelLocationUtils.getModelLocation(furnitureSet.block(BlockType.CHEST).value())));
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(furnitureSet.block(BlockType.COUNTER).value(), ModelLocationUtils.getModelLocation(furnitureSet.block(BlockType.COUNTER).value())));
@@ -236,6 +237,29 @@ interface FurnitureSetDataGen {
                     ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(block, "_bottom_right")),
                     ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(block, "_top_left")),
                     ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(block, "_top_right"))
+            ));
+        } else {
+            registerSimpleBlockItemModel(block, blockModels);
+        }
+    }
+
+    private static void bedSingleModel(ProviderListenerContext context, DeferredBlock<BedSingleBlock> holder, BlockModelGenerators blockModels) {
+        if(!isEnabled(context, holder))
+            return;
+
+        var block = holder.value();
+        var multiBlock = block.getComponentOrThrow(BlockComponentTypes.MULTI_BLOCK);
+        var facing = block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty();
+
+        blockModels.blockStateOutput.accept(MultiVariantGenerator.multiVariant(block)
+                .with(createMultiBlockPropertyDispatch(multiBlock, index -> ModelLocationUtils.getModelLocation(block, index == MultiBlock.ORIGIN_INDEX ? "_bottom" : "_top")))
+                .with(createHorizontalFacingDispatch(facing))
+        );
+
+        if(USE_MULTIBLOCK_ITEM_MODELS) {
+            blockModels.itemModelOutput.accept(block.asItem(), ItemModelUtils.composite(
+                    ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(block, "_bottom")),
+                    ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(block, "_top"))
             ));
         } else {
             registerSimpleBlockItemModel(block, blockModels);
