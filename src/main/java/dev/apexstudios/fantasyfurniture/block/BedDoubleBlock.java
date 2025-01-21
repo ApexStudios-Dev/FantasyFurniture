@@ -50,5 +50,9 @@ public final class BedDoubleBlock extends BaseBlockComponentHolder {
         FacingBlockComponent.registerHorizontal(registrar);
         FluidLoggedBlockComponent.registerWater(registrar);
         registrar.register(BlockComponentTypes.MULTI_BLOCK, builder -> builder.type(MULTI_BLOCK_TYPE));
+        registrar.register(BlockComponentTypes.BED, builder -> builder
+                .indices(1, 0)
+                .indices(2, 3)
+        );
     }
 }

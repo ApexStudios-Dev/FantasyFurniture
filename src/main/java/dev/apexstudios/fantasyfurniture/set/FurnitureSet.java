@@ -1,6 +1,7 @@
 package dev.apexstudios.fantasyfurniture.set;
 
 import com.google.common.collect.Maps;
+import dev.apexstudios.apexcore.lib.component.block.types.BedBlockComponent;
 import dev.apexstudios.apexcore.lib.data.ProviderTypes;
 import dev.apexstudios.apexcore.lib.data.ResourceGenerator;
 import dev.apexstudios.apexcore.lib.registree.Registree;
@@ -58,6 +59,9 @@ public final class FurnitureSet {
                     event.modify(blockEntityType.value(), mapping.block.value());
             });
         });
+
+        BedBlockComponent.registerPoi(modBus, block(BlockType.BED_SINGLE));
+        BedBlockComponent.registerPoi(modBus, block(BlockType.BED_DOUBLE));
     }
 
     private <TBlock extends Block, TItem extends Item> Mapping<TBlock, TItem> mapping(BlockType<TBlock, TItem> blockType) {
