@@ -37,7 +37,7 @@ public class SingleSeatBlock extends BaseBlockComponentHolder {
     protected void registerComponents(ComponentRegistrar<BlockComponent> registrar) {
         FacingBlockComponent.registerHorizontal(registrar);
         FluidLoggedBlockComponent.registerWater(registrar);
-        registrar.register(SeatBlockComponent.BLOCK_COMPONENT_TYPE);
+        registrar.register(SeatBlockComponent.COMPONENT_TYPE);
     }
 
     @Override
