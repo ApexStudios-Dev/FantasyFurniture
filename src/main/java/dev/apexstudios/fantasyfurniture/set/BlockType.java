@@ -9,6 +9,7 @@ import dev.apexstudios.fantasyfurniture.block.BedDoubleBlock;
 import dev.apexstudios.fantasyfurniture.block.BedSingleBlock;
 import dev.apexstudios.fantasyfurniture.block.BookshelfBlock;
 import dev.apexstudios.fantasyfurniture.block.ChairBlock;
+import dev.apexstudios.fantasyfurniture.block.DeskBlock;
 import dev.apexstudios.fantasyfurniture.block.DoorBlock;
 import dev.apexstudios.fantasyfurniture.block.DrawerBlock;
 import dev.apexstudios.fantasyfurniture.block.DresserBlock;
@@ -179,7 +180,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     );
     // endregion
 
-    // region: Door Single
+    // region: Door Double
     BlockType<DoorBlock, BlockItem> DOOR_DOUBLE = new Impl<>(
             "door_double",
             () -> DRESSER.blockProperties().get(),
@@ -190,11 +191,32 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     );
     // endregion
 
+    // region: Desk Left
+    BlockType<DeskBlock, BlockItem> DESK_LEFT = new Impl<>(
+            "desk_left",
+            () -> DRESSER.blockProperties().get(),
+            DeskBlock::new,
+            BlockItem::new,
+            FurnitureBlockEntities.DESK,
+            FurnitureMenus.DESK
+    );
+    // endregion
+
+    // region: Desk Right
+    BlockType<DeskBlock, BlockItem> DESK_RIGHT = new Impl<>(
+            "desk_right",
+            () -> DRESSER.blockProperties().get(),
+            DeskBlock::new,
+            BlockItem::new,
+            FurnitureBlockEntities.DESK,
+            FurnitureMenus.DESK
+    );
+    // endregion
+
     // region: TODO
     BlockType<FurnitureBlock, BlockItem> CHANDELIER = new Impl<>("chandelier", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
     BlockType<FurnitureBlock, BlockItem> CHEST = new Impl<>("chest", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
     BlockType<FurnitureBlock, BlockItem> COUNTER = new Impl<>("counter", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
-    BlockType<FurnitureBlock, BlockItem> DESK = new Impl<>("desk", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
     BlockType<FurnitureBlock, BlockItem> FLOOR_LIGHT = new Impl<>("floor_light", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
     BlockType<FurnitureBlock, BlockItem> OVEN = new Impl<>("oven", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
     BlockType<FurnitureBlock, BlockItem> PAINTING_SMALL = new Impl<>("painting_small", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
@@ -223,7 +245,8 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
         set.add(CHANDELIER);
         set.add(CHEST);
         set.add(COUNTER);
-        set.add(DESK);
+        set.add(DESK_LEFT);
+        set.add(DESK_RIGHT);
         set.add(DOOR_DOUBLE);
         set.add(DOOR_SINGLE);
         set.add(DRAWER);

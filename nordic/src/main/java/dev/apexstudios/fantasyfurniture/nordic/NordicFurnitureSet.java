@@ -122,6 +122,34 @@ public class NordicFurnitureSet {
                     Block.box(0, 0, 0, 3, 32, 16)
             )))
             // endregion
+            // region: Desk Left
+            .blockType(BlockType.DESK_LEFT, block -> block.shape(() -> ApexShapes.join(
+                    Block.box(13D, 0D, 0D, 15D, 9D, 2D),
+                    Block.box(13D, 7D, 1D, 15D, 13D, 3D),
+                    Block.box(13D, 7D, 13D, 15D, 13D, 15D),
+                    Block.box(-15D, 7D, 13D, -13D, 13D, 15D),
+                    Block.box(-15D, 0D, 0D, -13D, 9D, 2D),
+                    Block.box(-15D, 0D, 14D, -13D, 9D, 16D),
+                    Block.box(13D, 0D, 14D, 15D, 9D, 16D),
+                    Block.box(-16D, 13D, 0D, 16D, 16D, 16D),
+                    Block.box(-15D, 7D, 1D, -13D, 13D, 3D),
+                    Block.box(5D, 9D, 2D, 12D, 13D, 11D)
+            )))
+            // endregion
+            // region: Desk Right
+            .blockType(BlockType.DESK_RIGHT, block -> block.shape(() -> ApexShapes.join(
+                    Block.box(13D, 0D, 0D, 15D, 9D, 2D),
+                    Block.box(13D, 7D, 1D, 15D, 13D, 3D),
+                    Block.box(13D, 7D, 13D, 15D, 13D, 15D),
+                    Block.box(-15D, 7D, 13D, -13D, 13D, 15D),
+                    Block.box(-15D, 0D, 0D, -13D, 9D, 2D),
+                    Block.box(-15D, 0D, 14D, -13D, 9D, 16D),
+                    Block.box(13D, 0D, 14D, 15D, 9D, 16D),
+                    Block.box(-16D, 13D, 0D, 16D, 16D, 16D),
+                    Block.box(-15D, 7D, 1D, -13D, 13D, 3D),
+                    Block.box(-12D, 9D, 2D, -5D, 13D, 11D)
+            )))
+    // endregion
     );
 
     public NordicFurnitureSet(IEventBus modBus) {

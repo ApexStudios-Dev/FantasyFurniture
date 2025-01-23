@@ -19,6 +19,7 @@ import dev.apexstudios.fantasyfurniture.block.BedDoubleBlock;
 import dev.apexstudios.fantasyfurniture.block.BedSingleBlock;
 import dev.apexstudios.fantasyfurniture.block.BookshelfBlock;
 import dev.apexstudios.fantasyfurniture.block.ChairBlock;
+import dev.apexstudios.fantasyfurniture.block.DeskBlock;
 import dev.apexstudios.fantasyfurniture.block.DoorBlock;
 import dev.apexstudios.fantasyfurniture.block.DresserBlock;
 import it.unimi.dsi.fastutil.ints.Int2ObjectFunction;
@@ -75,7 +76,8 @@ interface FurnitureSetDataGen {
             blocks.dropSelf(furnitureSet.block(BlockType.CHANDELIER).value());
             blocks.dropSelf(furnitureSet.block(BlockType.CHEST).value());
             blocks.dropSelf(furnitureSet.block(BlockType.COUNTER).value());
-            blocks.dropSelf(furnitureSet.block(BlockType.DESK).value());
+            blocks.dropSelf(furnitureSet.block(BlockType.DESK_LEFT).value());
+            blocks.dropSelf(furnitureSet.block(BlockType.DESK_RIGHT).value());
             blocks.dropSelf(furnitureSet.block(BlockType.DOOR_DOUBLE).value());
             blocks.dropSelf(furnitureSet.block(BlockType.DOOR_SINGLE).value());
             blocks.dropSelf(furnitureSet.block(BlockType.DRAWER).value());
@@ -109,11 +111,12 @@ interface FurnitureSetDataGen {
         bedDoubleModel(context, furnitureSet.block(BlockType.BED_DOUBLE), blockModels);
         doorModel(context, furnitureSet.block(BlockType.DOOR_DOUBLE), blockModels);
         doorModel(context, furnitureSet.block(BlockType.DOOR_SINGLE), blockModels);
+        deskModel(context, furnitureSet.block(BlockType.DESK_LEFT), blockModels);
+        deskModel(context, furnitureSet.block(BlockType.DESK_RIGHT), blockModels);
 
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(furnitureSet.block(BlockType.CHANDELIER).value(), ModelLocationUtils.getModelLocation(furnitureSet.block(BlockType.CHANDELIER).value())));
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(furnitureSet.block(BlockType.CHEST).value(), ModelLocationUtils.getModelLocation(furnitureSet.block(BlockType.CHEST).value())));
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(furnitureSet.block(BlockType.COUNTER).value(), ModelLocationUtils.getModelLocation(furnitureSet.block(BlockType.COUNTER).value())));
-        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(furnitureSet.block(BlockType.DESK).value(), ModelLocationUtils.getModelLocation(furnitureSet.block(BlockType.DESK).value())));
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(furnitureSet.block(BlockType.FLOOR_LIGHT).value(), ModelLocationUtils.getModelLocation(furnitureSet.block(BlockType.FLOOR_LIGHT).value())));
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(furnitureSet.block(BlockType.OVEN).value(), ModelLocationUtils.getModelLocation(furnitureSet.block(BlockType.OVEN).value())));
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(furnitureSet.block(BlockType.PAINTING_SMALL).value(), ModelLocationUtils.getModelLocation(furnitureSet.block(BlockType.PAINTING_SMALL).value())));
@@ -143,7 +146,7 @@ interface FurnitureSetDataGen {
         tag(context, provider, BlockTags.WOOL_CARPETS, furnitureSet::block, BlockType.CARPET);
         tag(context, provider, BlockTags.WOODEN_DOORS, furnitureSet::block, BlockType.DOOR_SINGLE, BlockType.DOOR_DOUBLE);
         tag(context, provider, BlockTags.BEDS, furnitureSet::block, BlockType.BED_SINGLE, BlockType.BED_DOUBLE);
-        tag(context, provider, Tags.Blocks.CHESTS_WOODEN, furnitureSet::block, BlockType.CHEST, BlockType.COUNTER, BlockType.DESK, BlockType.DRAWER, BlockType.DRESSER, BlockType.LOCKBOX);
+        tag(context, provider, Tags.Blocks.CHESTS_WOODEN, furnitureSet::block, BlockType.CHEST, BlockType.COUNTER, BlockType.DESK_LEFT, BlockType.DESK_RIGHT, BlockType.DRAWER, BlockType.DRESSER, BlockType.LOCKBOX);
         tag(context, provider, Tags.Blocks.PLAYER_WORKSTATIONS_FURNACES, furnitureSet::block, BlockType.OVEN);
         tag(context, provider, SeatSetup.ORIGIN_ONLY, furnitureSet::block, BlockType.CHAIR);
 
@@ -167,7 +170,7 @@ interface FurnitureSetDataGen {
         tag(context, provider, ItemTags.WOOL_CARPETS, furnitureSet::item, BlockType.CARPET);
         tag(context, provider, ItemTags.WOODEN_DOORS, furnitureSet::item, BlockType.DOOR_SINGLE, BlockType.DOOR_DOUBLE);
         tag(context, provider, ItemTags.BEDS, furnitureSet::item, BlockType.BED_SINGLE, BlockType.BED_DOUBLE);
-        tag(context, provider, Tags.Items.CHESTS_WOODEN, furnitureSet::item, BlockType.CHEST, BlockType.COUNTER, BlockType.DESK, BlockType.DRAWER, BlockType.DRESSER, BlockType.LOCKBOX);
+        tag(context, provider, Tags.Items.CHESTS_WOODEN, furnitureSet::item, BlockType.CHEST, BlockType.COUNTER, BlockType.DESK_LEFT, BlockType.DESK_RIGHT, BlockType.DRAWER, BlockType.DRESSER, BlockType.LOCKBOX);
         tag(context, provider, Tags.Items.PLAYER_WORKSTATIONS_FURNACES, furnitureSet::item, BlockType.OVEN);
     }
 
@@ -334,6 +337,29 @@ interface FurnitureSetDataGen {
                     ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(block, "_left_bottom")),
                     ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(block, "_right_bottom")),
                     ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(block, "_right_bottom"))
+            ));
+        } else {
+            registerSimpleBlockItemModel(block, blockModels);
+        }
+    }
+
+    private static void deskModel(ProviderListenerContext context, DeferredBlock<DeskBlock> holder, BlockModelGenerators blockModels) {
+        if(!isEnabled(context, holder))
+            return;
+
+        var block = holder.value();
+        var multiBlock = block.getComponentOrThrow(BlockComponentTypes.MULTI_BLOCK);
+        var facing = block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty();
+
+        blockModels.blockStateOutput.accept(MultiVariantGenerator.multiVariant(block)
+                .with(createMultiBlockPropertyDispatch(multiBlock, index -> ModelLocationUtils.getModelLocation(block, index == MultiBlock.ORIGIN_INDEX ? "_left" : "_right")))
+                .with(createHorizontalFacingDispatch(facing))
+        );
+
+        if(USE_MULTIBLOCK_ITEM_MODELS) {
+            blockModels.itemModelOutput.accept(block.asItem(), ItemModelUtils.composite(
+                    ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(block, "_left")),
+                    ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(block, "_right"))
             ));
         } else {
             registerSimpleBlockItemModel(block, blockModels);
