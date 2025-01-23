@@ -1,17 +1,17 @@
 {
   "variants": {
-    "facing=east": {
+    "facing_component=east": {
       "model": "fantasyfurniture_nordic:block/drawer",
       "y": 90
     },
-    "facing=north": {
+    "facing_component=north": {
       "model": "fantasyfurniture_nordic:block/drawer"
     },
-    "facing=south": {
+    "facing_component=south": {
       "model": "fantasyfurniture_nordic:block/drawer",
       "y": 180
     },
-    "facing=west": {
+    "facing_component=west": {
       "model": "fantasyfurniture_nordic:block/drawer",
       "y": 270
     }
