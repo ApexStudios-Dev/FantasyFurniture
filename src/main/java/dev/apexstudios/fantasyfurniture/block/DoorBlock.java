@@ -1,11 +1,9 @@
 package dev.apexstudios.fantasyfurniture.block;
 
 import dev.apexstudios.apexcore.lib.component.ComponentRegistrar;
-import dev.apexstudios.apexcore.lib.component.block.BaseBlockComponentHolder;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
-import dev.apexstudios.apexcore.lib.component.block.types.DoorBlockComponent;
-import dev.apexstudios.apexcore.lib.component.block.types.FacingBlockComponent;
+import dev.apexstudios.apexcore.lib.component.block.DoorBlockComponentHolder;
 import dev.apexstudios.apexcore.lib.component.block.types.FluidLoggedBlockComponent;
 import dev.apexstudios.apexcore.lib.multiblock.MultiBlock;
 import dev.apexstudios.apexcore.lib.multiblock.MultiBlockType;
@@ -17,7 +15,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoorHingeSide;
@@ -25,7 +22,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public final class DoorBlock extends BaseBlockComponentHolder {
+public final class DoorBlock extends DoorBlockComponentHolder {
     public static final MultiBlockType MULTI_BLOCK_TYPE = MultiBlockType.builder()
             .with(0, 1, 0)
             .rotatingFromComponent()
@@ -49,9 +46,9 @@ public final class DoorBlock extends BaseBlockComponentHolder {
     @Override
     protected VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext context) {
         var facing = getComponentOrThrow(BlockComponentTypes.FACING).get(blockState);
-        var open = blockState.getValue(DoorBlockComponent.OPEN);
+        var open = blockState.getValue(OPEN);
 
-        if(open && blockState.getValue(DoorBlockComponent.HINGE) == DoorHingeSide.RIGHT)
+        if(open && blockState.getValue(HINGE) == DoorHingeSide.RIGHT)
             facing = facing.getOpposite();
 
         var multiBlockType = getComponentOrThrow(BlockComponentTypes.MULTI_BLOCK).getMultiBlockType();
@@ -61,9 +58,7 @@ public final class DoorBlock extends BaseBlockComponentHolder {
 
     @Override
     protected void registerComponents(ComponentRegistrar<BlockComponent> registrar) {
-        FacingBlockComponent.registerHorizontal(registrar, builder -> builder.facingForPlacement(UseOnContext::getHorizontalDirection));
         registrar.register(BlockComponentTypes.MULTI_BLOCK, builder -> builder.type(MULTI_BLOCK_TYPE));
-        registrar.register(BlockComponentTypes.DOOR);
         FluidLoggedBlockComponent.registerWater(registrar);
     }
 }

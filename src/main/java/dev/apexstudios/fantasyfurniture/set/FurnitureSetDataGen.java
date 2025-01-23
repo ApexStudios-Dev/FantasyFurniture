@@ -5,7 +5,7 @@ import dev.apexstudios.apexcore.lib.component.ComponentHolder;
 import dev.apexstudios.apexcore.lib.component.ComponentType;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
-import dev.apexstudios.apexcore.lib.component.block.types.DoorBlockComponent;
+import dev.apexstudios.apexcore.lib.component.block.DoorBlockComponentHolder;
 import dev.apexstudios.apexcore.lib.data.provider.LanguageProvider;
 import dev.apexstudios.apexcore.lib.data.provider.ModelProvider;
 import dev.apexstudios.apexcore.lib.data.provider.context.ProviderListenerContext;
@@ -312,7 +312,7 @@ interface FurnitureSetDataGen {
         var facingProperty = block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty();
 
         blockModels.blockStateOutput.accept(MultiVariantGenerator.multiVariant(block)
-                .with(PropertyDispatch.properties(facingProperty, multiBlock.getMultiBlockType().property(), DoorBlockComponent.HINGE, DoorBlockComponent.OPEN).generate((facing, index, hinge, open) -> {
+                .with(PropertyDispatch.properties(facingProperty, multiBlock.getMultiBlockType().property(), DoorBlockComponentHolder.HINGE, DoorBlockComponentHolder.OPEN).generate((facing, index, hinge, open) -> {
                     var indexName = index == MultiBlock.ORIGIN_INDEX ? "bottom" : "top";
                     var openName = open ? "open" : "closed";
                     var modelPath = ModelLocationUtils.getModelLocation(block, '_' + hinge.getSerializedName() + '_' + indexName + '_' + openName);
