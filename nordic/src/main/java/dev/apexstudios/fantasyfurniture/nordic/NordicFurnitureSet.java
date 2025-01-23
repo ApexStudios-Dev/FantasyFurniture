@@ -112,6 +112,16 @@ public class NordicFurnitureSet {
                     Block.box(-10D, 12D, 30D, 10D, 16D, 32D)
             )))
             // endregion
+            // region: Door Double
+            .blockType(BlockType.DOOR_DOUBLE, block -> block.shape(() -> ApexShapes.join(
+                    Block.box(0, 0, 0, 3, 32, 16)
+            )))
+            // endregion
+            // region: Door Single
+            .blockType(BlockType.DOOR_SINGLE, block -> block.shape(() -> ApexShapes.join(
+                    Block.box(0, 0, 0, 3, 32, 16)
+            )))
+            // endregion
     );
 
     public NordicFurnitureSet(IEventBus modBus) {

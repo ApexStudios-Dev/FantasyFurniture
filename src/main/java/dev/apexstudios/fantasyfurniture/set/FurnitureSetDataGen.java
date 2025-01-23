@@ -5,6 +5,7 @@ import dev.apexstudios.apexcore.lib.component.ComponentHolder;
 import dev.apexstudios.apexcore.lib.component.ComponentType;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
+import dev.apexstudios.apexcore.lib.component.block.types.DoorBlockComponent;
 import dev.apexstudios.apexcore.lib.data.provider.LanguageProvider;
 import dev.apexstudios.apexcore.lib.data.provider.ModelProvider;
 import dev.apexstudios.apexcore.lib.data.provider.context.ProviderListenerContext;
@@ -18,6 +19,7 @@ import dev.apexstudios.fantasyfurniture.block.BedDoubleBlock;
 import dev.apexstudios.fantasyfurniture.block.BedSingleBlock;
 import dev.apexstudios.fantasyfurniture.block.BookshelfBlock;
 import dev.apexstudios.fantasyfurniture.block.ChairBlock;
+import dev.apexstudios.fantasyfurniture.block.DoorBlock;
 import dev.apexstudios.fantasyfurniture.block.DresserBlock;
 import it.unimi.dsi.fastutil.ints.Int2ObjectFunction;
 import java.util.function.BiConsumer;
@@ -47,6 +49,7 @@ import net.minecraft.world.flag.FeatureElement;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.properties.DoorHingeSide;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.neoforged.neoforge.common.Tags;
 import org.apache.commons.lang3.StringUtils;
@@ -104,13 +107,13 @@ interface FurnitureSetDataGen {
         bookshelfModel(context, furnitureSet.block(BlockType.BOOKSHELF), blockModels);
         bedSingleModel(context, furnitureSet.block(BlockType.BED_SINGLE), blockModels);
         bedDoubleModel(context, furnitureSet.block(BlockType.BED_DOUBLE), blockModels);
+        doorModel(context, furnitureSet.block(BlockType.DOOR_DOUBLE), blockModels);
+        doorModel(context, furnitureSet.block(BlockType.DOOR_SINGLE), blockModels);
 
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(furnitureSet.block(BlockType.CHANDELIER).value(), ModelLocationUtils.getModelLocation(furnitureSet.block(BlockType.CHANDELIER).value())));
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(furnitureSet.block(BlockType.CHEST).value(), ModelLocationUtils.getModelLocation(furnitureSet.block(BlockType.CHEST).value())));
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(furnitureSet.block(BlockType.COUNTER).value(), ModelLocationUtils.getModelLocation(furnitureSet.block(BlockType.COUNTER).value())));
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(furnitureSet.block(BlockType.DESK).value(), ModelLocationUtils.getModelLocation(furnitureSet.block(BlockType.DESK).value())));
-        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(furnitureSet.block(BlockType.DOOR_DOUBLE).value(), ModelLocationUtils.getModelLocation(furnitureSet.block(BlockType.DOOR_DOUBLE).value())));
-        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(furnitureSet.block(BlockType.DOOR_SINGLE).value(), ModelLocationUtils.getModelLocation(furnitureSet.block(BlockType.DOOR_SINGLE).value())));
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(furnitureSet.block(BlockType.FLOOR_LIGHT).value(), ModelLocationUtils.getModelLocation(furnitureSet.block(BlockType.FLOOR_LIGHT).value())));
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(furnitureSet.block(BlockType.OVEN).value(), ModelLocationUtils.getModelLocation(furnitureSet.block(BlockType.OVEN).value())));
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(furnitureSet.block(BlockType.PAINTING_SMALL).value(), ModelLocationUtils.getModelLocation(furnitureSet.block(BlockType.PAINTING_SMALL).value())));
@@ -297,6 +300,46 @@ interface FurnitureSetDataGen {
         }
     }
 
+    private static void doorModel(ProviderListenerContext context, DeferredBlock<DoorBlock> holder, BlockModelGenerators blockModels) {
+        if(!isEnabled(context, holder))
+            return;
+
+        var block = holder.value();
+        var multiBlock = block.getComponentOrThrow(BlockComponentTypes.MULTI_BLOCK);
+        var facingProperty = block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty();
+
+        blockModels.blockStateOutput.accept(MultiVariantGenerator.multiVariant(block)
+                .with(PropertyDispatch.properties(facingProperty, multiBlock.getMultiBlockType().property(), DoorBlockComponent.HINGE, DoorBlockComponent.OPEN).generate((facing, index, hinge, open) -> {
+                    var indexName = index == MultiBlock.ORIGIN_INDEX ? "bottom" : "top";
+                    var openName = open ? "open" : "closed";
+                    var modelPath = ModelLocationUtils.getModelLocation(block, '_' + hinge.getSerializedName() + '_' + indexName + '_' + openName);
+
+                    if(open)
+                        facing = hinge == DoorHingeSide.LEFT ? facing.getClockWise() : facing.getCounterClockWise();
+
+                    var rot = switch (facing) {
+                        case NORTH -> VariantProperties.Rotation.R270;
+                        case SOUTH -> VariantProperties.Rotation.R90;
+                        case WEST -> VariantProperties.Rotation.R180;
+                        default -> VariantProperties.Rotation.R0;
+                    };
+
+                    return Variant.variant().with(VariantProperties.MODEL, modelPath).with(VariantProperties.Y_ROT, rot);
+                }))
+        );
+
+        if(USE_MULTIBLOCK_ITEM_MODELS) {
+            blockModels.itemModelOutput.accept(block.asItem(), ItemModelUtils.composite(
+                    ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(block, "_left_top")),
+                    ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(block, "_left_bottom")),
+                    ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(block, "_right_bottom")),
+                    ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(block, "_right_bottom"))
+            ));
+        } else {
+            registerSimpleBlockItemModel(block, blockModels);
+        }
+    }
+
     private static <TBlock extends Block & ComponentHolder<BlockComponent>, TComponent extends BlockComponent> void componentBlock(ProviderListenerContext context, Supplier<TBlock> blockSupplier, ComponentType<BlockComponent, TComponent, ?> componentType, BiConsumer<TBlock, TComponent> consumer) {
         if(!isEnabled(context, blockSupplier))
             return;
@@ -318,9 +361,7 @@ interface FurnitureSetDataGen {
 
     private static PropertyDispatch createMultiBlockPropertyDispatch(MultiBlock multiBlock, Int2ObjectFunction<ResourceLocation> blockModelPathFactory) {
         return PropertyDispatch.property(multiBlock.getMultiBlockType().property())
-                .generate(index -> Variant.variant()
-                        .with(VariantProperties.MODEL, blockModelPathFactory.apply(index))
-                );
+                .generate(index -> Variant.variant().with(VariantProperties.MODEL, blockModelPathFactory.apply(index)));
     }
 
     private static PropertyDispatch createHorizontalFacingDispatch(Property<Direction> property, BiFunction<Direction, Variant, Variant> modifier) {

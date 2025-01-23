@@ -9,6 +9,7 @@ import dev.apexstudios.fantasyfurniture.block.BedDoubleBlock;
 import dev.apexstudios.fantasyfurniture.block.BedSingleBlock;
 import dev.apexstudios.fantasyfurniture.block.BookshelfBlock;
 import dev.apexstudios.fantasyfurniture.block.ChairBlock;
+import dev.apexstudios.fantasyfurniture.block.DoorBlock;
 import dev.apexstudios.fantasyfurniture.block.DrawerBlock;
 import dev.apexstudios.fantasyfurniture.block.DresserBlock;
 import dev.apexstudios.fantasyfurniture.block.FurnitureBlock;
@@ -167,13 +168,33 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     );
     // endregion
 
+    // region: Door Single
+    BlockType<DoorBlock, BlockItem> DOOR_SINGLE = new Impl<>(
+            "door_single",
+            () -> DRESSER.blockProperties().get(),
+            DoorBlock::new,
+            BlockItem::new,
+            null,
+            null
+    );
+    // endregion
+
+    // region: Door Single
+    BlockType<DoorBlock, BlockItem> DOOR_DOUBLE = new Impl<>(
+            "door_double",
+            () -> DRESSER.blockProperties().get(),
+            DoorBlock::new,
+            BlockItem::new,
+            null,
+            null
+    );
+    // endregion
+
     // region: TODO
     BlockType<FurnitureBlock, BlockItem> CHANDELIER = new Impl<>("chandelier", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
     BlockType<FurnitureBlock, BlockItem> CHEST = new Impl<>("chest", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
     BlockType<FurnitureBlock, BlockItem> COUNTER = new Impl<>("counter", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
     BlockType<FurnitureBlock, BlockItem> DESK = new Impl<>("desk", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
-    BlockType<FurnitureBlock, BlockItem> DOOR_DOUBLE = new Impl<>("door_double", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
-    BlockType<FurnitureBlock, BlockItem> DOOR_SINGLE = new Impl<>("door_single", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
     BlockType<FurnitureBlock, BlockItem> FLOOR_LIGHT = new Impl<>("floor_light", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
     BlockType<FurnitureBlock, BlockItem> OVEN = new Impl<>("oven", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
     BlockType<FurnitureBlock, BlockItem> PAINTING_SMALL = new Impl<>("painting_small", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
