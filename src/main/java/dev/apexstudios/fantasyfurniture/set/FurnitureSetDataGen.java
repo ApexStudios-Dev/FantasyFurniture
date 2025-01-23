@@ -6,13 +6,13 @@ import dev.apexstudios.apexcore.lib.component.ComponentType;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
 import dev.apexstudios.apexcore.lib.component.block.DoorBlockComponentHolder;
+import dev.apexstudios.apexcore.lib.component.block.types.MultiBlockComponent;
 import dev.apexstudios.apexcore.lib.data.provider.LanguageProvider;
 import dev.apexstudios.apexcore.lib.data.provider.ModelProvider;
 import dev.apexstudios.apexcore.lib.data.provider.context.ProviderListenerContext;
 import dev.apexstudios.apexcore.lib.data.provider.loot.LootTableProvider;
 import dev.apexstudios.apexcore.lib.data.provider.tag.IntrusiveTagProvider;
 import dev.apexstudios.apexcore.lib.data.provider.tag.TagProvider;
-import dev.apexstudios.apexcore.lib.multiblock.MultiBlock;
 import dev.apexstudios.apexcore.lib.placement.BlockPlacementRenderer;
 import dev.apexstudios.apexcore.lib.registree.holder.DeferredBlock;
 import dev.apexstudios.fantasyfurniture.block.BedDoubleBlock;
@@ -183,7 +183,7 @@ interface FurnitureSetDataGen {
         var facing = block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty();
 
         blockModels.blockStateOutput.accept(MultiVariantGenerator.multiVariant(block)
-                .with(createMultiBlockPropertyDispatch(multiBlock, index -> ModelLocationUtils.getModelLocation(block, index == MultiBlock.ORIGIN_INDEX ? "_left" : "_right")))
+                .with(createMultiBlockPropertyDispatch(multiBlock, index -> ModelLocationUtils.getModelLocation(block, index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right")))
                 .with(createHorizontalFacingDispatch(facing))
         );
 
@@ -206,7 +206,7 @@ interface FurnitureSetDataGen {
         var facing = block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty();
 
         blockModels.blockStateOutput.accept(MultiVariantGenerator.multiVariant(block)
-                .with(createMultiBlockPropertyDispatch(multiBlock, index -> ModelLocationUtils.getModelLocation(block, index == MultiBlock.ORIGIN_INDEX ? "_bottom" : "_top")))
+                .with(createMultiBlockPropertyDispatch(multiBlock, index -> ModelLocationUtils.getModelLocation(block, index == MultiBlockComponent.ORIGIN_INDEX ? "_bottom" : "_top")))
                 .with(createHorizontalFacingDispatch(facing))
         );
 
@@ -259,7 +259,7 @@ interface FurnitureSetDataGen {
         var facing = block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty();
 
         blockModels.blockStateOutput.accept(MultiVariantGenerator.multiVariant(block)
-                .with(createMultiBlockPropertyDispatch(multiBlock, index -> ModelLocationUtils.getModelLocation(block, index == MultiBlock.ORIGIN_INDEX ? "_bottom" : "_top")))
+                .with(createMultiBlockPropertyDispatch(multiBlock, index -> ModelLocationUtils.getModelLocation(block, index == MultiBlockComponent.ORIGIN_INDEX ? "_bottom" : "_top")))
                 .with(createHorizontalFacingDispatch(facing))
         );
 
@@ -312,8 +312,8 @@ interface FurnitureSetDataGen {
         var facingProperty = block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty();
 
         blockModels.blockStateOutput.accept(MultiVariantGenerator.multiVariant(block)
-                .with(PropertyDispatch.properties(facingProperty, multiBlock.getMultiBlockType().property(), DoorBlockComponentHolder.HINGE, DoorBlockComponentHolder.OPEN).generate((facing, index, hinge, open) -> {
-                    var indexName = index == MultiBlock.ORIGIN_INDEX ? "bottom" : "top";
+                .with(PropertyDispatch.properties(facingProperty, multiBlock.property(), DoorBlockComponentHolder.HINGE, DoorBlockComponentHolder.OPEN).generate((facing, index, hinge, open) -> {
+                    var indexName = index == MultiBlockComponent.ORIGIN_INDEX ? "bottom" : "top";
                     var openName = open ? "open" : "closed";
                     var modelPath = ModelLocationUtils.getModelLocation(block, '_' + hinge.getSerializedName() + '_' + indexName + '_' + openName);
 
@@ -352,7 +352,7 @@ interface FurnitureSetDataGen {
         var facing = block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty();
 
         blockModels.blockStateOutput.accept(MultiVariantGenerator.multiVariant(block)
-                .with(createMultiBlockPropertyDispatch(multiBlock, index -> ModelLocationUtils.getModelLocation(block, index == MultiBlock.ORIGIN_INDEX ? "_left" : "_right")))
+                .with(createMultiBlockPropertyDispatch(multiBlock, index -> ModelLocationUtils.getModelLocation(block, index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right")))
                 .with(createHorizontalFacingDispatch(facing))
         );
 
@@ -385,8 +385,8 @@ interface FurnitureSetDataGen {
         blockModels.registerSimpleItemModel(block, ModelLocationUtils.getModelLocation(block.asItem()));
     }
 
-    private static PropertyDispatch createMultiBlockPropertyDispatch(MultiBlock multiBlock, Int2ObjectFunction<ResourceLocation> blockModelPathFactory) {
-        return PropertyDispatch.property(multiBlock.getMultiBlockType().property())
+    private static PropertyDispatch createMultiBlockPropertyDispatch(MultiBlockComponent multiBlock, Int2ObjectFunction<ResourceLocation> blockModelPathFactory) {
+        return PropertyDispatch.property(multiBlock.property())
                 .generate(index -> Variant.variant().with(VariantProperties.MODEL, blockModelPathFactory.apply(index)));
     }
 

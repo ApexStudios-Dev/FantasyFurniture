@@ -5,8 +5,7 @@ import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
 import dev.apexstudios.apexcore.lib.component.block.DoorBlockComponentHolder;
 import dev.apexstudios.apexcore.lib.component.block.types.FluidLoggedBlockComponent;
-import dev.apexstudios.apexcore.lib.multiblock.MultiBlock;
-import dev.apexstudios.apexcore.lib.multiblock.MultiBlockType;
+import dev.apexstudios.apexcore.lib.component.block.types.MultiBlockComponent;
 import dev.apexstudios.apexcore.lib.util.shapes.ApexShapes;
 import dev.apexstudios.fantasyfurniture.set.BlockType;
 import dev.apexstudios.fantasyfurniture.set.FurnitureSet;
@@ -23,11 +22,6 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class DoorBlock extends DoorBlockComponentHolder {
-    public static final MultiBlockType MULTI_BLOCK_TYPE = MultiBlockType.builder()
-            .with(0, 1, 0)
-            .rotatingFromComponent()
-            .build();
-
     private final FurnitureSet furnitureSet;
     private final BlockType<?, ?> blockType;
     private final Map<Direction, VoxelShape> openShapes;
@@ -51,14 +45,18 @@ public final class DoorBlock extends DoorBlockComponentHolder {
         if(open && blockState.getValue(HINGE) == DoorHingeSide.RIGHT)
             facing = facing.getOpposite();
 
-        var multiBlockType = getComponentOrThrow(BlockComponentTypes.MULTI_BLOCK).getMultiBlockType();
+        var multiBlock = getComponentOrThrow(BlockComponentTypes.MULTI_BLOCK);
         var shapes = open ? openShapes : closedShapes;
-        return MultiBlock.fixVoxelShape(shapes.get(facing), multiBlockType, blockState, pos);
+        return MultiBlockComponent.fixVoxelShape(shapes.get(facing), multiBlock, blockState, pos);
     }
 
     @Override
     protected void registerComponents(ComponentRegistrar<BlockComponent> registrar) {
-        registrar.register(BlockComponentTypes.MULTI_BLOCK, builder -> builder.type(MULTI_BLOCK_TYPE));
+        registrar.register(BlockComponentTypes.MULTI_BLOCK, builder -> builder
+                .with(0, 1, 0)
+                .rotatingFromComponent()
+        );
+
         FluidLoggedBlockComponent.registerWater(registrar);
     }
 }

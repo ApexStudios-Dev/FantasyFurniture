@@ -6,9 +6,8 @@ import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
 import dev.apexstudios.apexcore.lib.component.block.types.FacingBlockComponent;
 import dev.apexstudios.apexcore.lib.component.block.types.FluidLoggedBlockComponent;
-import dev.apexstudios.apexcore.lib.multiblock.MultiBlock;
-import dev.apexstudios.apexcore.lib.multiblock.MultiBlockType;
-import dev.apexstudios.apexcore.lib.seat.SeatBlockComponent;
+import dev.apexstudios.apexcore.lib.component.block.types.MultiBlockComponent;
+import dev.apexstudios.apexcore.lib.component.block.types.SeatBlockComponent;
 import dev.apexstudios.apexcore.lib.util.shapes.ApexShapes;
 import dev.apexstudios.fantasyfurniture.set.BlockType;
 import dev.apexstudios.fantasyfurniture.set.FurnitureSet;
@@ -22,11 +21,6 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class ChairBlock extends BaseBlockComponentHolder {
-    public static final MultiBlockType MULTI_BLOCK_TYPE = MultiBlockType.builder()
-            .with(0, 1, 0)
-            .rotatingFromComponent()
-            .build();
-
     protected final FurnitureSet furnitureSet;
     protected final BlockType<?, ?> blockType;
     private final Map<Direction, VoxelShape> shapes;
@@ -45,13 +39,17 @@ public class ChairBlock extends BaseBlockComponentHolder {
         FacingBlockComponent.registerHorizontal(registrar);
         FluidLoggedBlockComponent.registerWater(registrar);
         registrar.register(SeatBlockComponent.COMPONENT_TYPE);
-        registrar.register(BlockComponentTypes.MULTI_BLOCK, builder -> builder.type(MULTI_BLOCK_TYPE));
+
+        registrar.register(BlockComponentTypes.MULTI_BLOCK, builder -> builder
+                .with(0, 1, 0)
+                .rotatingFromComponent()
+        );
     }
 
     @Override
     protected VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext context) {
         var facing = getComponentOrThrow(BlockComponentTypes.FACING).get(blockState);
-        var multiBlockType = getComponentOrThrow(BlockComponentTypes.MULTI_BLOCK).getMultiBlockType();
-        return MultiBlock.fixVoxelShape(shapes.get(facing), multiBlockType, blockState, pos);
+        var multiBlock = getComponentOrThrow(BlockComponentTypes.MULTI_BLOCK);
+        return MultiBlockComponent.fixVoxelShape(shapes.get(facing), multiBlock, blockState, pos);
     }
 }
