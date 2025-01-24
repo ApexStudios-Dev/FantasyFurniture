@@ -113,14 +113,10 @@ public class NordicFurnitureSet {
             )))
             // endregion
             // region: Door Double
-            .blockType(BlockType.DOOR_DOUBLE, block -> block.shape(() -> ApexShapes.join(
-                    Block.box(0, 0, 0, 3, 32, 16)
-            )))
+            .blockType(BlockType.DOOR_DOUBLE, block -> block.shape(() -> Block.box(0, 0, 0, 3, 32, 16)))
             // endregion
             // region: Door Single
-            .blockType(BlockType.DOOR_SINGLE, block -> block.shape(() -> ApexShapes.join(
-                    Block.box(0, 0, 0, 3, 32, 16)
-            )))
+            .blockType(BlockType.DOOR_SINGLE, block -> block.shape(() -> Block.box(0, 0, 0, 3, 32, 16)))
             // endregion
             // region: Desk Left
             .blockType(BlockType.DESK_LEFT, block -> block.shape(() -> ApexShapes.join(
@@ -150,6 +146,12 @@ public class NordicFurnitureSet {
                     Block.box(-12D, 9D, 2D, -5D, 13D, 11D)
             )))
     // endregion
+            // region: Painting Wide
+            .blockType(BlockType.PAINTING_WIDE, block -> block.shape(() -> Block.box(-16D, 0D, 14D, 16D, 16D, 16D)))
+            // endregion
+            // region: Painting Small
+            .blockType(BlockType.PAINTING_SMALL, block -> block.shape(() -> Block.box(0D, 0D, 14D, 16D, 16D, 16D)))
+            // endregion
     );
 
     public NordicFurnitureSet(IEventBus modBus) {

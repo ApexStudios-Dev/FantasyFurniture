@@ -16,6 +16,8 @@ import dev.apexstudios.fantasyfurniture.block.DresserBlock;
 import dev.apexstudios.fantasyfurniture.block.FurnitureBlock;
 import dev.apexstudios.fantasyfurniture.block.FurnitureCarpetBlock;
 import dev.apexstudios.fantasyfurniture.block.LockBoxBlock;
+import dev.apexstudios.fantasyfurniture.block.PaintingSmallBlock;
+import dev.apexstudios.fantasyfurniture.block.PaintingWideBlock;
 import dev.apexstudios.fantasyfurniture.block.SingleSeatBlock;
 import java.util.Collections;
 import java.util.Set;
@@ -213,14 +215,34 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     );
     // endregion
 
+    // region: Painting Wide
+    BlockType<PaintingWideBlock, BlockItem> PAINTING_WIDE = new Impl<>(
+            "painting_wide",
+            () -> DRESSER.blockProperties().get(),
+            PaintingWideBlock::new,
+            BlockItem::new,
+            null,
+            null
+    );
+    // endregion
+
+    // region: Painting Small
+    BlockType<PaintingSmallBlock, BlockItem> PAINTING_SMALL = new Impl<>(
+            "painting_small",
+            () -> DRESSER.blockProperties().get(),
+            PaintingSmallBlock::new,
+            BlockItem::new,
+            null,
+            null
+    );
+    // endregion
+
     // region: TODO
     BlockType<FurnitureBlock, BlockItem> CHANDELIER = new Impl<>("chandelier", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
     BlockType<FurnitureBlock, BlockItem> CHEST = new Impl<>("chest", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
     BlockType<FurnitureBlock, BlockItem> COUNTER = new Impl<>("counter", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
     BlockType<FurnitureBlock, BlockItem> FLOOR_LIGHT = new Impl<>("floor_light", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
     BlockType<FurnitureBlock, BlockItem> OVEN = new Impl<>("oven", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
-    BlockType<FurnitureBlock, BlockItem> PAINTING_SMALL = new Impl<>("painting_small", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
-    BlockType<FurnitureBlock, BlockItem> PAINTING_WIDE = new Impl<>("painting_wide", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
     BlockType<FurnitureBlock, BlockItem> SHELF = new Impl<>("shelf", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
     BlockType<FurnitureBlock, BlockItem> SOFA = new Impl<>("sofa", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
     BlockType<FurnitureBlock, BlockItem> TABLE_LARGE = new Impl<>("table_large", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);

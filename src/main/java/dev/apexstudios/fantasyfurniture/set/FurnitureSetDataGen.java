@@ -22,6 +22,7 @@ import dev.apexstudios.fantasyfurniture.block.ChairBlock;
 import dev.apexstudios.fantasyfurniture.block.DeskBlock;
 import dev.apexstudios.fantasyfurniture.block.DoorBlock;
 import dev.apexstudios.fantasyfurniture.block.DresserBlock;
+import dev.apexstudios.fantasyfurniture.block.PaintingWideBlock;
 import it.unimi.dsi.fastutil.ints.Int2ObjectFunction;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
@@ -113,14 +114,14 @@ interface FurnitureSetDataGen {
         doorModel(context, furnitureSet.block(BlockType.DOOR_SINGLE), blockModels);
         deskModel(context, furnitureSet.block(BlockType.DESK_LEFT), blockModels);
         deskModel(context, furnitureSet.block(BlockType.DESK_RIGHT), blockModels);
+        paintingWideModel(context, furnitureSet.block(BlockType.PAINTING_WIDE), blockModels);
+        componentBlock(context, furnitureSet.block(BlockType.PAINTING_SMALL), BlockComponentTypes.FACING, (block, component) -> horizontalFacingBlock(block, component.getProperty(), blockModels));
 
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(furnitureSet.block(BlockType.CHANDELIER).value(), ModelLocationUtils.getModelLocation(furnitureSet.block(BlockType.CHANDELIER).value())));
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(furnitureSet.block(BlockType.CHEST).value(), ModelLocationUtils.getModelLocation(furnitureSet.block(BlockType.CHEST).value())));
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(furnitureSet.block(BlockType.COUNTER).value(), ModelLocationUtils.getModelLocation(furnitureSet.block(BlockType.COUNTER).value())));
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(furnitureSet.block(BlockType.FLOOR_LIGHT).value(), ModelLocationUtils.getModelLocation(furnitureSet.block(BlockType.FLOOR_LIGHT).value())));
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(furnitureSet.block(BlockType.OVEN).value(), ModelLocationUtils.getModelLocation(furnitureSet.block(BlockType.OVEN).value())));
-        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(furnitureSet.block(BlockType.PAINTING_SMALL).value(), ModelLocationUtils.getModelLocation(furnitureSet.block(BlockType.PAINTING_SMALL).value())));
-        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(furnitureSet.block(BlockType.PAINTING_WIDE).value(), ModelLocationUtils.getModelLocation(furnitureSet.block(BlockType.PAINTING_WIDE).value())));
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(furnitureSet.block(BlockType.SHELF).value(), ModelLocationUtils.getModelLocation(furnitureSet.block(BlockType.SHELF).value())));
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(furnitureSet.block(BlockType.SOFA).value(), ModelLocationUtils.getModelLocation(furnitureSet.block(BlockType.SOFA).value())));
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(furnitureSet.block(BlockType.TABLE_LARGE).value(), ModelLocationUtils.getModelLocation(furnitureSet.block(BlockType.TABLE_LARGE).value())));
@@ -344,6 +345,29 @@ interface FurnitureSetDataGen {
     }
 
     private static void deskModel(ProviderListenerContext context, DeferredBlock<DeskBlock> holder, BlockModelGenerators blockModels) {
+        if(!isEnabled(context, holder))
+            return;
+
+        var block = holder.value();
+        var multiBlock = block.getComponentOrThrow(BlockComponentTypes.MULTI_BLOCK);
+        var facing = block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty();
+
+        blockModels.blockStateOutput.accept(MultiVariantGenerator.multiVariant(block)
+                .with(createMultiBlockPropertyDispatch(multiBlock, index -> ModelLocationUtils.getModelLocation(block, index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right")))
+                .with(createHorizontalFacingDispatch(facing))
+        );
+
+        if(USE_MULTIBLOCK_ITEM_MODELS) {
+            blockModels.itemModelOutput.accept(block.asItem(), ItemModelUtils.composite(
+                    ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(block, "_left")),
+                    ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(block, "_right"))
+            ));
+        } else {
+            registerSimpleBlockItemModel(block, blockModels);
+        }
+    }
+
+    private static void paintingWideModel(ProviderListenerContext context, DeferredBlock<PaintingWideBlock> holder, BlockModelGenerators blockModels) {
         if(!isEnabled(context, holder))
             return;
 
