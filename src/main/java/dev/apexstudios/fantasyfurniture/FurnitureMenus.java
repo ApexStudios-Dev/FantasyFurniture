@@ -8,7 +8,13 @@ import dev.apexstudios.fantasyfurniture.block.entity.DeskBlockEntity;
 import dev.apexstudios.fantasyfurniture.block.entity.DrawerBlockEntity;
 import dev.apexstudios.fantasyfurniture.block.entity.DresserBlockEntity;
 import dev.apexstudios.fantasyfurniture.block.entity.LockBoxBlockEntity;
+import dev.apexstudios.fantasyfurniture.oven.OvenBlockEntity;
+import dev.apexstudios.fantasyfurniture.oven.OvenMenu;
+import dev.apexstudios.fantasyfurniture.oven.OvenScreen;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.inventory.SimpleContainerData;
+import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
@@ -18,6 +24,7 @@ public interface FurnitureMenus {
     DeferredMenu<SimpleMenu> DRAWER = new DeferredMenu<>(FantasyFurniture.REGISTREE.registryKey(Registries.MENU, "drawer"));
     DeferredMenu<SimpleMenu> BOOKSHELF = new DeferredMenu<>(FantasyFurniture.REGISTREE.registryKey(Registries.MENU, "bookshelf"));
     DeferredMenu<SimpleMenu> DESK = new DeferredMenu<>(FantasyFurniture.REGISTREE.registryKey(Registries.MENU, "desk"));
+    DeferredMenu<OvenMenu> OVEN = FantasyFurniture.REGISTREE.registerMenu("oven", (containerId, inventory) -> new OvenMenu(containerId, inventory, new SimpleContainer(OvenBlockEntity.SLOTS), new SimpleContainerData(AbstractFurnaceBlockEntity.NUM_DATA_VALUES)));
 
     static void register(IEventBus modBus) {
         FantasyFurniture.REGISTREE.registerMenu("dresser", (containerId, inventory) -> new SimpleMenu(DRESSER.value(), containerId, inventory, DresserBlockEntity.ROWS));
@@ -32,6 +39,7 @@ public interface FurnitureMenus {
             event.register(DRAWER.value(), SimpleMenuScreen::new);
             event.register(BOOKSHELF.value(), SimpleMenuScreen::new);
             event.register(DESK.value(), SimpleMenuScreen::new);
+            event.register(OVEN.value(), OvenScreen::new);
         });
     }
 }

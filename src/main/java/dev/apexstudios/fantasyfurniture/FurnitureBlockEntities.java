@@ -7,6 +7,7 @@ import dev.apexstudios.fantasyfurniture.block.entity.DeskBlockEntity;
 import dev.apexstudios.fantasyfurniture.block.entity.DrawerBlockEntity;
 import dev.apexstudios.fantasyfurniture.block.entity.DresserBlockEntity;
 import dev.apexstudios.fantasyfurniture.block.entity.LockBoxBlockEntity;
+import dev.apexstudios.fantasyfurniture.oven.OvenBlockEntity;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 
@@ -16,6 +17,7 @@ public interface FurnitureBlockEntities {
     DeferredBlockEntity<DrawerBlockEntity> DRAWER = FantasyFurniture.REGISTREE.registerBlockEntity("drawer", DrawerBlockEntity::new);
     DeferredBlockEntity<BookshelfBlockEntity> BOOKSHELF = FantasyFurniture.REGISTREE.registerBlockEntity("bookshelf", BookshelfBlockEntity::new);
     DeferredBlockEntity<DeskBlockEntity> DESK = FantasyFurniture.REGISTREE.registerBlockEntity("desk", DeskBlockEntity::new);
+    DeferredBlockEntity<OvenBlockEntity> OVEN = FantasyFurniture.REGISTREE.registerBlockEntity("oven", OvenBlockEntity::new);
 
     static void register(IEventBus modBus) {
         modBus.addListener(RegisterCapabilitiesEvent.class, event -> {
@@ -24,6 +26,7 @@ public interface FurnitureBlockEntities {
             InventoryBlockEntityComponent.registerCapability(DRAWER.value(), event);
             InventoryBlockEntityComponent.registerCapability(BOOKSHELF.value(), event);
             InventoryBlockEntityComponent.registerCapability(DESK.value(), event);
+            InventoryBlockEntityComponent.registerCapability(OVEN.value(), event);
         });
     }
 }

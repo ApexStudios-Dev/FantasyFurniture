@@ -5,6 +5,7 @@
 		"particle": "fantasyfurniture_nordic:block/oven",
 		"oven": "fantasyfurniture_nordic:block/oven"
 	},
+	"render_type": "minecraft:cutout",
 	"elements": [
 		{
 			"name": "base",

@@ -3,7 +3,8 @@
     "package": "dev.apexstudios.fantasyfurniture.mixin",
     "compatibilityLevel": "JAVA_21",
     "mixins": [
-        "BlockPropertiesMixin"
+        "BlockPropertiesMixin",
+        "FurnaceResultSlotMixin"
     ],
     "client": [],
     "server": [],

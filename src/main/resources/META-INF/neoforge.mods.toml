@@ -15,7 +15,7 @@ license="AllRightsReserved"
     type="required"
     versionRange="[21.4,)"
 
-#[[accessTransformers]]
-#    file="META-INF/accesstransformer.cfg"
+[[accessTransformers]]
+    file="META-INF/accesstransformer.cfg"
 [[mixins]]
    config="META-INF/fantasyfurniture.mixins.json"

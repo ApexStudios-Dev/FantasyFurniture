@@ -16,6 +16,7 @@ import dev.apexstudios.fantasyfurniture.block.DresserBlock;
 import dev.apexstudios.fantasyfurniture.block.FurnitureBlock;
 import dev.apexstudios.fantasyfurniture.block.FurnitureCarpetBlock;
 import dev.apexstudios.fantasyfurniture.block.LockBoxBlock;
+import dev.apexstudios.fantasyfurniture.block.OvenBlock;
 import dev.apexstudios.fantasyfurniture.block.PaintingSmallBlock;
 import dev.apexstudios.fantasyfurniture.block.PaintingWideBlock;
 import dev.apexstudios.fantasyfurniture.block.SingleSeatBlock;
@@ -237,12 +238,22 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     );
     // endregion
 
+    // region: Oven
+    BlockType<OvenBlock, BlockItem> OVEN = new Impl<>(
+            "oven",
+            () -> DRESSER.blockProperties().get(),
+            OvenBlock::new,
+            BlockItem::new,
+            FurnitureBlockEntities.OVEN,
+            FurnitureMenus.OVEN
+    );
+    // endregion
+
     // region: TODO
     BlockType<FurnitureBlock, BlockItem> CHANDELIER = new Impl<>("chandelier", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
     BlockType<FurnitureBlock, BlockItem> CHEST = new Impl<>("chest", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
     BlockType<FurnitureBlock, BlockItem> COUNTER = new Impl<>("counter", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
     BlockType<FurnitureBlock, BlockItem> FLOOR_LIGHT = new Impl<>("floor_light", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
-    BlockType<FurnitureBlock, BlockItem> OVEN = new Impl<>("oven", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
     BlockType<FurnitureBlock, BlockItem> SHELF = new Impl<>("shelf", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
     BlockType<FurnitureBlock, BlockItem> SOFA = new Impl<>("sofa", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
     BlockType<FurnitureBlock, BlockItem> TABLE_LARGE = new Impl<>("table_large", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
