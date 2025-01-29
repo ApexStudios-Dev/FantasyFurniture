@@ -25,6 +25,7 @@ import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
 import net.minecraft.Util;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -36,6 +37,22 @@ import net.minecraft.world.level.material.MapColor;
 import org.jetbrains.annotations.Nullable;
 
 public sealed interface BlockType<TBlock extends Block, TItem extends Item> permits BlockType.Impl {
+    // region: Planks
+    BlockType<FurnitureBlock, BlockItem> PLANKS = new Impl<>(
+            "planks",
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.WOOD)
+                    .instrument(NoteBlockInstrument.BASS)
+                    .strength(2F, 3F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava(),
+            FurnitureBlock::new,
+            BlockItem::new,
+            null,
+            null
+    );
+    // endregion
+
     // region: Wool
     BlockType<FurnitureBlock, BlockItem> WOOL = new Impl<>(
             "wool",
@@ -70,13 +87,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Dresser
     BlockType<DresserBlock, BlockItem> DRESSER = new Impl<>(
             "dresser",
-            () -> BlockBehaviour.Properties.of()
-                    .mapColor(MapColor.WOOD)
-                    .instrument(NoteBlockInstrument.BASS)
-                    .strength(2.5F)
-                    .sound(SoundType.WOOD)
-                    .ignitedByLava()
-                    .noOcclusion(),
+            properties(PLANKS),
             DresserBlock::new,
             BlockItem::new,
             FurnitureBlockEntities.DRESSER,
@@ -87,7 +98,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Stool
     BlockType<SingleSeatBlock, BlockItem> STOOL = new Impl<>(
             "stool",
-            () -> DRESSER.blockProperties().get(),
+            properties(PLANKS),
             SingleSeatBlock::new,
             BlockItem::new,
             null,
@@ -98,7 +109,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Cushion
     BlockType<SingleSeatBlock, BlockItem> CUSHION = new Impl<>(
             "cushion",
-            () -> DRESSER.blockProperties().get(),
+            properties(PLANKS),
             SingleSeatBlock::new,
             BlockItem::new,
             null,
@@ -109,7 +120,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: LockBox
     BlockType<LockBoxBlock, BlockItem> LOCKBOX = new Impl<>(
             "lockbox",
-            () -> DRESSER.blockProperties().get(),
+            properties(PLANKS),
             LockBoxBlock::new,
             BlockItem::new,
             FurnitureBlockEntities.LOCKBOX,
@@ -120,7 +131,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Drawer
     BlockType<DrawerBlock, BlockItem> DRAWER = new Impl<>(
             "drawer",
-            () -> DRESSER.blockProperties().get(),
+            properties(PLANKS),
             DrawerBlock::new,
             BlockItem::new,
             FurnitureBlockEntities.DRAWER,
@@ -131,7 +142,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Chair
     BlockType<ChairBlock, BlockItem> CHAIR = new Impl<>(
             "chair",
-            () -> DRESSER.blockProperties().get(),
+            properties(PLANKS),
             ChairBlock::new,
             BlockItem::new,
             null,
@@ -142,7 +153,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Bookshelf
     BlockType<BookshelfBlock, BlockItem> BOOKSHELF = new Impl<>(
             "bookshelf",
-            () -> DRESSER.blockProperties().get(),
+            properties(PLANKS),
             BookshelfBlock::new,
             BlockItem::new,
             FurnitureBlockEntities.BOOKSHELF,
@@ -153,7 +164,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Bed Single
     BlockType<BedSingleBlock, BlockItem> BED_SINGLE = new Impl<>(
             "bed_single",
-            () -> DRESSER.blockProperties().get(),
+            properties(PLANKS),
             BedSingleBlock::new,
             BlockItem::new,
             null,
@@ -164,7 +175,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Bed Double
     BlockType<BedDoubleBlock, BlockItem> BED_DOUBLE = new Impl<>(
             "bed_double",
-            () -> DRESSER.blockProperties().get(),
+            properties(PLANKS),
             BedDoubleBlock::new,
             BlockItem::new,
             null,
@@ -175,7 +186,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Door Single
     BlockType<DoorBlock, BlockItem> DOOR_SINGLE = new Impl<>(
             "door_single",
-            () -> DRESSER.blockProperties().get(),
+            properties(PLANKS),
             DoorBlock::new,
             BlockItem::new,
             null,
@@ -186,7 +197,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Door Double
     BlockType<DoorBlock, BlockItem> DOOR_DOUBLE = new Impl<>(
             "door_double",
-            () -> DRESSER.blockProperties().get(),
+            properties(PLANKS),
             DoorBlock::new,
             BlockItem::new,
             null,
@@ -197,7 +208,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Desk Left
     BlockType<DeskBlock, BlockItem> DESK_LEFT = new Impl<>(
             "desk_left",
-            () -> DRESSER.blockProperties().get(),
+            properties(PLANKS),
             DeskBlock::new,
             BlockItem::new,
             FurnitureBlockEntities.DESK,
@@ -208,7 +219,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Desk Right
     BlockType<DeskBlock, BlockItem> DESK_RIGHT = new Impl<>(
             "desk_right",
-            () -> DRESSER.blockProperties().get(),
+            properties(PLANKS),
             DeskBlock::new,
             BlockItem::new,
             FurnitureBlockEntities.DESK,
@@ -219,7 +230,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Painting Wide
     BlockType<PaintingWideBlock, BlockItem> PAINTING_WIDE = new Impl<>(
             "painting_wide",
-            () -> DRESSER.blockProperties().get(),
+            properties(PLANKS),
             PaintingWideBlock::new,
             BlockItem::new,
             null,
@@ -230,7 +241,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Painting Small
     BlockType<PaintingSmallBlock, BlockItem> PAINTING_SMALL = new Impl<>(
             "painting_small",
-            () -> DRESSER.blockProperties().get(),
+            properties(PLANKS),
             PaintingSmallBlock::new,
             BlockItem::new,
             null,
@@ -241,7 +252,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Oven
     BlockType<OvenBlock, BlockItem> OVEN = new Impl<>(
             "oven",
-            () -> DRESSER.blockProperties().get(),
+            properties(PLANKS),
             OvenBlock::new,
             BlockItem::new,
             FurnitureBlockEntities.OVEN,
@@ -265,6 +276,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // LinkedSet to retain insertion order
     // UnmodifiableSet to disallow modifications
     Set<BlockType<?, ?>> VALUES = Collections.unmodifiableSet(Util.make(Sets.newLinkedHashSet(), set -> {
+        set.add(PLANKS);
         set.add(WOOL);
         set.add(CARPET);
         set.add(DRESSER);
@@ -308,6 +320,14 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     @Nullable DeferredBlockEntity<?> blockEntityType();
 
     @Nullable DeferredMenu<?> menuType();
+
+    private static Supplier<BlockBehaviour.Properties> properties(BlockType<?, ?> blockType, UnaryOperator<BlockBehaviour.Properties> modifier) {
+        return () -> modifier.apply(blockType.blockProperties().get());
+    }
+
+    private static Supplier<BlockBehaviour.Properties> properties(BlockType<?, ?> blockType) {
+        return properties(blockType, UnaryOperator.identity());
+    }
 
     record Impl<TBlock extends Block, TItem extends Item>(
             String name,

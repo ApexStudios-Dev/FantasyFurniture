@@ -64,6 +64,7 @@ interface FurnitureSetDataGen {
         provider.fromRegistree(furnitureSet.registree());
 
         provider.block(blocks -> {
+            blocks.dropSelf(furnitureSet.block(BlockType.PLANKS).value());
             blocks.dropSelf(furnitureSet.block(BlockType.WOOL).value());
             blocks.dropSelf(furnitureSet.block(BlockType.CARPET).value());
             blocks.dropSelf(furnitureSet.block(BlockType.DRESSER).value());
@@ -101,6 +102,7 @@ interface FurnitureSetDataGen {
         var blockModels = provider.blockModels();
 
         blockModels.createFullAndCarpetBlocks(furnitureSet.block(BlockType.WOOL).value(), furnitureSet.block(BlockType.CARPET).value());
+        blockModels.createTrivialCube(furnitureSet.block(BlockType.PLANKS).value());
         dresserModel(context, furnitureSet.block(BlockType.DRESSER), blockModels);
         componentBlock(context, furnitureSet.block(BlockType.STOOL), BlockComponentTypes.FACING, (block, component) -> horizontalFacingBlock(block, component.getProperty(), blockModels));
         componentBlock(context, furnitureSet.block(BlockType.CUSHION), BlockComponentTypes.FACING, (block, component) -> horizontalFacingBlock(block, component.getProperty(), blockModels));
@@ -143,6 +145,7 @@ interface FurnitureSetDataGen {
     }
 
     static void blockTags(ProviderListenerContext context, IntrusiveTagProvider<Block> provider, FurnitureSet furnitureSet) {
+        tag(context, provider, BlockTags.PLANKS, furnitureSet::block, BlockType.PLANKS);
         tag(context, provider, BlockTags.WOOL, furnitureSet::block, BlockType.WOOL);
         tag(context, provider, BlockTags.WOOL_CARPETS, furnitureSet::block, BlockType.CARPET);
         tag(context, provider, BlockTags.WOODEN_DOORS, furnitureSet::block, BlockType.DOOR_SINGLE, BlockType.DOOR_DOUBLE);
@@ -167,6 +170,7 @@ interface FurnitureSetDataGen {
     }
 
     static void itemTags(ProviderListenerContext context, IntrusiveTagProvider<Item> provider, FurnitureSet furnitureSet) {
+        tag(context, provider, ItemTags.PLANKS, furnitureSet::item, BlockType.PLANKS);
         tag(context, provider, ItemTags.WOOL, furnitureSet::item, BlockType.WOOL);
         tag(context, provider, ItemTags.WOOL_CARPETS, furnitureSet::item, BlockType.CARPET);
         tag(context, provider, ItemTags.WOODEN_DOORS, furnitureSet::item, BlockType.DOOR_SINGLE, BlockType.DOOR_DOUBLE);
