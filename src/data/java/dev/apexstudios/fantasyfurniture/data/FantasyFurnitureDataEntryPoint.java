@@ -1,26 +1,16 @@
 package dev.apexstudios.fantasyfurniture.data;
 
-import dev.apexstudios.apexcore.core.seat.SeatSetup;
-import dev.apexstudios.apexcore.lib.data.ProviderTypes;
 import dev.apexstudios.apexcore.lib.data.ResourceGenerator;
 import dev.apexstudios.fantasyfurniture.FantasyFurniture;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.neoforge.common.Tags;
 
 @Mod(value = FantasyFurniture.ID, dist = Dist.CLIENT)
 public final class FantasyFurnitureDataEntryPoint {
     public FantasyFurnitureDataEntryPoint(IEventBus modBus) {
         ResourceGenerator.of(modBus, generator -> {
-            generator.pack()
-                    .providing(ProviderTypes.LANGUAGE, (context, provider) -> {
-                        provider.addEntityType(SeatSetup.ENTITY, "Seat");
-                    })
-                    .providing(ProviderTypes.ENTITY_TYPE_TAGS, (context, provider) -> {
-                        provider.tag(Tags.EntityTypes.CAPTURING_NOT_SUPPORTED).withElement(SeatSetup.ENTITY);
-                        provider.tag(Tags.EntityTypes.TELEPORTING_NOT_SUPPORTED).withElement(SeatSetup.ENTITY);
-                    });
+            generator.pack();
         });
     }
 }
