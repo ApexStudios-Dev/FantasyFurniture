@@ -186,7 +186,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Door Single
     BlockType<DoorBlock, BlockItem> DOOR_SINGLE = new Impl<>(
             "door_single",
-            properties(PLANKS),
+            properties(PLANKS, BlockBehaviour.Properties::noOcclusion),
             DoorBlock::new,
             BlockItem::new,
             null,
@@ -197,7 +197,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Door Double
     BlockType<DoorBlock, BlockItem> DOOR_DOUBLE = new Impl<>(
             "door_double",
-            properties(PLANKS),
+            properties(PLANKS, BlockBehaviour.Properties::noOcclusion),
             DoorBlock::new,
             BlockItem::new,
             null,
@@ -252,7 +252,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Oven
     BlockType<OvenBlock, BlockItem> OVEN = new Impl<>(
             "oven",
-            properties(PLANKS),
+            properties(PLANKS, BlockBehaviour.Properties::noOcclusion),
             OvenBlock::new,
             BlockItem::new,
             FurnitureBlockEntities.OVEN,
