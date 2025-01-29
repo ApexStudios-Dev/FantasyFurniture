@@ -87,11 +87,11 @@ public final class FurnitureSet {
 
     public void registerDataGen(String englishName, ResourceGenerator generator) {
         generator.pack()
-                .providing(ProviderTypes.BLOCK_TAGS, (context, provider) -> FurnitureSetDataGen.blockTags(context, provider, this))
-                .providing(ProviderTypes.ITEM_TAGS, (context, provider) -> FurnitureSetDataGen.itemTags(context, provider, this))
-                .providing(ProviderTypes.LANGUAGE, (context, provider) -> FurnitureSetDataGen.language(context, provider, this, englishName))
-                .providing(ProviderTypes.MODELS, (context, provider) -> FurnitureSetDataGen.models(context, provider, this))
-                .providing(ProviderTypes.LOOT_TABLE, (context, provider) -> FurnitureSetDataGen.lootTables(context, provider, this));
+                .providing(ProviderTypes.BLOCK_TAGS, (context, provider) -> FurnitureSetDataGen.blockTags(provider, this))
+                .providing(ProviderTypes.ITEM_TAGS, (context, provider) -> FurnitureSetDataGen.itemTags(provider, this))
+                .providing(ProviderTypes.LANGUAGE, (context, provider) -> FurnitureSetDataGen.language(provider, this, englishName))
+                .providing(ProviderTypes.MODELS, (context, provider) -> FurnitureSetDataGen.models(provider, this))
+                .providing(ProviderTypes.LOOT_TABLE, (context, provider) -> FurnitureSetDataGen.lootTables(provider, this));
     }
 
     public static FurnitureSet create(String namespace, Function<Builder, Builder> builder) {

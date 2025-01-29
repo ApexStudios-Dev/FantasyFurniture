@@ -9,8 +9,6 @@ import net.neoforged.fml.common.Mod;
 @Mod(value = FantasyFurniture.ID, dist = Dist.CLIENT)
 public final class FantasyFurnitureDataEntryPoint {
     public FantasyFurnitureDataEntryPoint(IEventBus modBus) {
-        ResourceGenerator.of(modBus, generator -> {
-            generator.pack();
-        });
+        ResourceGenerator.of(modBus, ResourceGenerator::pack);
     }
 }
