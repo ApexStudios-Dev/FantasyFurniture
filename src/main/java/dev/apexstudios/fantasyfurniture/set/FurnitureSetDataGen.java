@@ -103,9 +103,9 @@ interface FurnitureSetDataGen {
         run(furnitureSet, BlockType.TABLE_SMALL, block -> horizontalFacingBlock(block, block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty(), blockModels));
         run(furnitureSet, BlockType.FLOOR_LIGHT, block -> multiBlockModel(block, blockModels, index -> ModelLocationUtils.getModelLocation(block, index == MultiBlockComponent.ORIGIN_INDEX ? "_bottom" : "_top")));
         run(furnitureSet, BlockType.CHANDELIER, block -> horizontalFacingBlock(block, block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty(), blockModels));
-        run(furnitureSet, BlockType.SHELF, block -> facingPropertyModel(block, blockModels, $ -> ShelfConnection.PROPERTY, connection -> ModelLocationUtils.getModelLocation(block, connection.getModelSuffix())));
-        run(furnitureSet, BlockType.SOFA, block -> facingPropertyModel(block, blockModels, $ -> SofaConnection.PROPERTY, connection -> ModelLocationUtils.getModelLocation(block, connection.getModelSuffix())));
-        run(furnitureSet, BlockType.COUNTER, block -> facingPropertyModel(block, blockModels, $ -> CounterConnection.PROPERTY, connection -> ModelLocationUtils.getModelLocation(block, connection.getModelSuffix())));
+        run(furnitureSet, BlockType.SHELF, block -> facingPropertyModel(block, blockModels, $ -> ShelfConnection.PROPERTY, connection -> ModelLocationUtils.getModelLocation(block, connection.getModelSuffix()), ShelfConnection.NONE));
+        run(furnitureSet, BlockType.SOFA, block -> facingPropertyModel(block, blockModels, $ -> SofaConnection.PROPERTY, connection -> ModelLocationUtils.getModelLocation(block, connection.getModelSuffix()), SofaConnection.NONE));
+        run(furnitureSet, BlockType.COUNTER, block -> facingPropertyModel(block, blockModels, $ -> CounterConnection.PROPERTY, connection -> ModelLocationUtils.getModelLocation(block, connection.getModelSuffix()), CounterConnection.NONE));
     }
 
     static void language(LanguageProvider provider, FurnitureSet furnitureSet, String englishName) {
@@ -159,7 +159,7 @@ interface FurnitureSetDataGen {
         return defaultBlockState.hasProperty(ShelfConnection.PROPERTY) || defaultBlockState.hasProperty(SofaConnection.PROPERTY) || defaultBlockState.hasProperty(CounterConnection.PROPERTY);
     }
 
-    private static <TBlock extends Block & ComponentHolder<BlockComponent>, TValue extends Comparable<TValue>> void facingPropertyModel(TBlock block, BlockModelGenerators blockModels, Function<TBlock, Property<TValue>> propertyGetter, Function<TValue, ResourceLocation> modelGetter) {
+    private static <TBlock extends Block & ComponentHolder<BlockComponent>, TValue extends Comparable<TValue>> void facingPropertyModel(TBlock block, BlockModelGenerators blockModels, Function<TBlock, Property<TValue>> propertyGetter, Function<TValue, ResourceLocation> modelGetter, TValue itemValue) {
         var facingProperty = block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty();
 
         blockModels.blockStateOutput.accept(MultiVariantGenerator.multiVariant(block)
@@ -167,7 +167,7 @@ interface FurnitureSetDataGen {
                 .with(createHorizontalFacingDispatch(facingProperty, (facing, variant) -> variant))
         );
 
-        registerSimpleBlockItemModel(block, blockModels);
+        blockModels.registerSimpleItemModel(block, modelGetter.apply(itemValue));
     }
 
     private static <TBlock extends Block & ComponentHolder<BlockComponent>> void multiBlockModel(TBlock block, BlockModelGenerators blockModels, IntFunction<ResourceLocation> modelGetter) {
