@@ -70,19 +70,19 @@ interface FurnitureSetDataGen {
         run(furnitureSet, BlockType.LOCKBOX, block -> horizontalFacingBlock(block, block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty(), blockModels));
         run(furnitureSet, BlockType.DRAWER, block -> horizontalFacingBlock(block, block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty(), blockModels));
         run(furnitureSet, BlockType.CHAIR, block -> multiBlockModel(block, blockModels, index -> ModelLocationUtils.getModelLocation(block, index == MultiBlockComponent.ORIGIN_INDEX ? "_bottom" : "_top")));
-        run(furnitureSet, BlockType.BOOKSHELF, block -> multiBlockModel(block, blockModels, index -> switch (index) {
-            case 1 -> ModelLocationUtils.getModelLocation(block, "_bottom_right");
-            case 2 -> ModelLocationUtils.getModelLocation(block, "_top_right");
-            case 3 -> ModelLocationUtils.getModelLocation(block, "_top_left");
-            default -> ModelLocationUtils.getModelLocation(block, "_bottom_left");
-        }));
+        run(furnitureSet, BlockType.BOOKSHELF, block -> multiBlockModel(block, blockModels, index -> ModelLocationUtils.getModelLocation(block, switch (index) {
+            case 1 -> "_bottom_right";
+            case 2 -> "_top_right";
+            case 3 -> "_top_left";
+            default -> "_bottom_left";
+        })));
         run(furnitureSet, BlockType.BED_SINGLE, block -> multiBlockModel(block, blockModels, index -> ModelLocationUtils.getModelLocation(block, index == MultiBlockComponent.ORIGIN_INDEX ? "_bottom" : "_top")));
-        run(furnitureSet, BlockType.BED_DOUBLE, block -> multiBlockModel(block, blockModels, index -> switch (index) {
-            case 1 -> ModelLocationUtils.getModelLocation(block, "_top_left");
-            case 2 -> ModelLocationUtils.getModelLocation(block, "_top_right");
-            case 3 -> ModelLocationUtils.getModelLocation(block, "_bottom_right");
-            default -> ModelLocationUtils.getModelLocation(block, "_bottom_left");
-        }));
+        run(furnitureSet, BlockType.BED_DOUBLE, block -> multiBlockModel(block, blockModels, index -> ModelLocationUtils.getModelLocation(block, switch (index) {
+            case 1 -> "_top_left";
+            case 2 -> "_top_right";
+            case 3 -> "_bottom_right";
+            default -> "_bottom_left";
+        })));
         run(furnitureSet, BlockType.DOOR_DOUBLE, block -> doorModel(block, blockModels));
         run(furnitureSet, BlockType.DOOR_SINGLE, block -> doorModel(block, blockModels));
         run(furnitureSet, BlockType.DESK_LEFT, block -> multiBlockModel(block, blockModels, index -> ModelLocationUtils.getModelLocation(block, index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right")));
@@ -91,15 +91,20 @@ interface FurnitureSetDataGen {
         run(furnitureSet, BlockType.PAINTING_SMALL, block -> horizontalFacingBlock(block, block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty(), blockModels));
         run(furnitureSet, BlockType.OVEN, block -> horizontalFacingBlock(block, block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty(), blockModels));
         run(furnitureSet, BlockType.CHEST, block -> multiBlockModel(block, blockModels, index -> ModelLocationUtils.getModelLocation(block, index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right")));
+        run(furnitureSet, BlockType.TABLE_LARGE, block -> multiBlockModel(block, blockModels, index -> ModelLocationUtils.getModelLocation(block, switch (index) {
+            case 1 -> "_top_left";
+            case 2 -> "_bottom_right";
+            case 3 -> "_top_right";
+            default -> "_bottom_left";
+        })));
+        run(furnitureSet, BlockType.TABLE_WIDE, block -> multiBlockModel(block, blockModels, index -> ModelLocationUtils.getModelLocation(block, index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right")));
+        run(furnitureSet, BlockType.TABLE_SMALL, block -> horizontalFacingBlock(block, block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty(), blockModels));
 
         run(furnitureSet, BlockType.CHANDELIER, block -> blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, ModelLocationUtils.getModelLocation(block))));
         run(furnitureSet, BlockType.COUNTER, block -> blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, ModelLocationUtils.getModelLocation(block))));
         run(furnitureSet, BlockType.FLOOR_LIGHT, block -> blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, ModelLocationUtils.getModelLocation(block))));
         run(furnitureSet, BlockType.SHELF, block -> blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, ModelLocationUtils.getModelLocation(block))));
         run(furnitureSet, BlockType.SOFA, block -> blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, ModelLocationUtils.getModelLocation(block))));
-        run(furnitureSet, BlockType.TABLE_LARGE, block -> blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, ModelLocationUtils.getModelLocation(block))));
-        run(furnitureSet, BlockType.TABLE_WIDE, block -> blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, ModelLocationUtils.getModelLocation(block))));
-        run(furnitureSet, BlockType.TABLE_SMALL, block -> blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, ModelLocationUtils.getModelLocation(block))));
     }
 
     static void language(LanguageProvider provider, FurnitureSet furnitureSet, String englishName) {

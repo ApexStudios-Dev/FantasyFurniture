@@ -15,6 +15,9 @@ import dev.apexstudios.fantasyfurniture.block.LockBoxBlock;
 import dev.apexstudios.fantasyfurniture.block.OvenBlock;
 import dev.apexstudios.fantasyfurniture.block.PaintingSmallBlock;
 import dev.apexstudios.fantasyfurniture.block.PaintingWideBlock;
+import dev.apexstudios.fantasyfurniture.block.TableLargeBlock;
+import dev.apexstudios.fantasyfurniture.block.TableSmallBlock;
+import dev.apexstudios.fantasyfurniture.block.TableWideBlock;
 import dev.apexstudios.fantasyfurniture.block.base.FurnitureBlock;
 import dev.apexstudios.fantasyfurniture.block.base.FurnitureCarpetBlock;
 import dev.apexstudios.fantasyfurniture.block.base.FurnitureDoorBlockComponentHolder;
@@ -240,7 +243,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     );
     // endregion
 
-    // region: Oven
+    // region: Chest
     BlockType<ChestBlock, BlockItem> CHEST = new Impl<>(
             "chest",
             properties(PLANKS),
@@ -250,15 +253,42 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     );
     // endregion
 
+    // region: Table Large
+    BlockType<TableLargeBlock, BlockItem> TABLE_LARGE = new Impl<>(
+            "table_large",
+            properties(PLANKS),
+            TableLargeBlock::new,
+            BlockItem::new,
+            null
+    );
+    // endregion
+
+    // region: Table Wide
+    BlockType<TableWideBlock, BlockItem> TABLE_WIDE = new Impl<>(
+            "table_wide",
+            properties(PLANKS),
+            TableWideBlock::new,
+            BlockItem::new,
+            null
+    );
+    // endregion
+
+    // region: Table Small
+    BlockType<TableSmallBlock, BlockItem> TABLE_SMALL = new Impl<>(
+            "table_small",
+            properties(PLANKS),
+            TableSmallBlock::new,
+            BlockItem::new,
+            null
+    );
+    // endregion
+
     // region: TODO
     BlockType<FurnitureBlock, BlockItem> CHANDELIER = new Impl<>("chandelier", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null);
     BlockType<FurnitureBlock, BlockItem> COUNTER = new Impl<>("counter", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null);
     BlockType<FurnitureBlock, BlockItem> FLOOR_LIGHT = new Impl<>("floor_light", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null);
     BlockType<FurnitureBlock, BlockItem> SHELF = new Impl<>("shelf", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null);
     BlockType<FurnitureBlock, BlockItem> SOFA = new Impl<>("sofa", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null);
-    BlockType<FurnitureBlock, BlockItem> TABLE_LARGE = new Impl<>("table_large", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null);
-    BlockType<FurnitureBlock, BlockItem> TABLE_WIDE = new Impl<>("table_wide", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null);
-    BlockType<FurnitureBlock, BlockItem> TABLE_SMALL = new Impl<>("table_small", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null);
     // endregion
 
     // dumb way to define registration order
