@@ -6,6 +6,7 @@ import dev.apexstudios.apexcore.lib.component.block.entity.types.InventoryBlockE
 import dev.apexstudios.apexcore.lib.registree.holder.DeferredBlockEntity;
 import dev.apexstudios.fantasyfurniture.block.entity.BookshelfBlockEntity;
 import dev.apexstudios.fantasyfurniture.block.entity.ChestBlockEntity;
+import dev.apexstudios.fantasyfurniture.block.entity.CounterBlockEntity;
 import dev.apexstudios.fantasyfurniture.block.entity.DeskBlockEntity;
 import dev.apexstudios.fantasyfurniture.block.entity.DrawerBlockEntity;
 import dev.apexstudios.fantasyfurniture.block.entity.DresserBlockEntity;
@@ -23,10 +24,11 @@ public interface FurnitureBlockEntities {
     DeferredBlockEntity<DeskBlockEntity> DESK = FantasyFurniture.REGISTREE.registerBlockEntity("desk", DeskBlockEntity::new);
     DeferredBlockEntity<OvenBlockEntity> OVEN = FantasyFurniture.REGISTREE.registerBlockEntity("oven", OvenBlockEntity::new);
     DeferredBlockEntity<ChestBlockEntity> CHEST = FantasyFurniture.REGISTREE.registerBlockEntity("chest", ChestBlockEntity::new);
+    DeferredBlockEntity<CounterBlockEntity> COUNTER = FantasyFurniture.REGISTREE.registerBlockEntity("counter", CounterBlockEntity::new);
 
     static void register(IEventBus modBus) {
         modBus.addListener(RegisterCapabilitiesEvent.class, event -> capabilities(event,
-                DRESSER, LOCKBOX, DRAWER, BOOKSHELF, DESK, OVEN, CHEST
+                DRESSER, LOCKBOX, DRAWER, BOOKSHELF, DESK, OVEN, CHEST, COUNTER
         ));
     }
 

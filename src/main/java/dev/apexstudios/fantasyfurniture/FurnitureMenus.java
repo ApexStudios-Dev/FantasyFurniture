@@ -5,6 +5,7 @@ import dev.apexstudios.apexcore.lib.menu.SimpleMenuScreen;
 import dev.apexstudios.apexcore.lib.registree.holder.DeferredMenu;
 import dev.apexstudios.fantasyfurniture.block.entity.BookshelfBlockEntity;
 import dev.apexstudios.fantasyfurniture.block.entity.ChestBlockEntity;
+import dev.apexstudios.fantasyfurniture.block.entity.CounterBlockEntity;
 import dev.apexstudios.fantasyfurniture.block.entity.DeskBlockEntity;
 import dev.apexstudios.fantasyfurniture.block.entity.DrawerBlockEntity;
 import dev.apexstudios.fantasyfurniture.block.entity.DresserBlockEntity;
@@ -27,6 +28,7 @@ public interface FurnitureMenus {
     DeferredMenu<SimpleMenu> DESK = simple("desk");
     DeferredMenu<OvenMenu> OVEN = FantasyFurniture.REGISTREE.registerMenu("oven", (containerId, inventory) -> new OvenMenu(containerId, inventory, new SimpleContainer(OvenBlockEntity.SLOTS), new SimpleContainerData(AbstractFurnaceBlockEntity.NUM_DATA_VALUES)));
     DeferredMenu<SimpleMenu> CHEST = simple("chest");
+    DeferredMenu<SimpleMenu> COUNTER = simple("counter");
 
     static void register(IEventBus modBus) {
         simple(DRESSER, DresserBlockEntity.ROWS);
@@ -35,9 +37,10 @@ public interface FurnitureMenus {
         simple(BOOKSHELF, BookshelfBlockEntity.ROWS);
         simple(DESK, DeskBlockEntity.ROWS);
         simple(CHEST, ChestBlockEntity.ROWS);
+        simple(COUNTER, CounterBlockEntity.ROWS);
 
         modBus.addListener(RegisterMenuScreensEvent.class, event -> {
-            simple(event, DRESSER, LOCKBOX, DRAWER, BOOKSHELF, DESK, CHEST);
+            simple(event, DRESSER, LOCKBOX, DRAWER, BOOKSHELF, DESK, CHEST, COUNTER);
             event.register(OVEN.value(), OvenScreen::new);
         });
     }

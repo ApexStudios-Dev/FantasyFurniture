@@ -9,6 +9,7 @@ import dev.apexstudios.fantasyfurniture.block.BookshelfBlock;
 import dev.apexstudios.fantasyfurniture.block.ChairBlock;
 import dev.apexstudios.fantasyfurniture.block.ChandelierBlock;
 import dev.apexstudios.fantasyfurniture.block.ChestBlock;
+import dev.apexstudios.fantasyfurniture.block.CounterBlock;
 import dev.apexstudios.fantasyfurniture.block.DeskBlock;
 import dev.apexstudios.fantasyfurniture.block.DrawerBlock;
 import dev.apexstudios.fantasyfurniture.block.DresserBlock;
@@ -327,8 +328,14 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     );
     // endregion
 
-    // region: TODO
-    BlockType<FurnitureBlock, BlockItem> COUNTER = new Impl<>("counter", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null);
+    // region: Counter
+    BlockType<CounterBlock, BlockItem> COUNTER = new Impl<>(
+            "counter",
+            properties(PLANKS),
+            CounterBlock::new,
+            BlockItem::new,
+            FurnitureBlockEntities.COUNTER
+    );
     // endregion
 
     // dumb way to define registration order

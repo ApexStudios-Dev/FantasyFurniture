@@ -1,6 +1,7 @@
 package dev.apexstudios.fantasyfurniture.nordic;
 
 import dev.apexstudios.apexcore.lib.util.shapes.ApexShapes;
+import dev.apexstudios.fantasyfurniture.block.property.CounterConnection;
 import dev.apexstudios.fantasyfurniture.block.property.ShelfConnection;
 import dev.apexstudios.fantasyfurniture.block.property.SofaConnection;
 import dev.apexstudios.fantasyfurniture.set.BlockType;
@@ -273,6 +274,20 @@ public class NordicFurnitureSet {
                         Block.box(0D, 3D, 0D, 16D, 6D, 16D),
                         Block.box(0D, 6D, 13D, 16D, 16D, 16D),
                         Block.box(13D, 6D, 0D, 16D, 16D, 13D)
+                );
+            }))
+            // endregion
+            // region: Counter
+            .blockType(BlockType.COUNTER, block -> block.shape(blockState -> switch (blockState.getValue(CounterConnection.PROPERTY)) {
+                case NONE -> ApexShapes.join(
+                        Block.box(0D, 0D, 3D, 16D, 13D, 16D),
+                        Block.box(0D, 13D, 0D, 16D, 16D, 16D),
+                        Block.box(1D, 1D, 2D, 15D, 12D, 3D)
+                );
+                case CORNER_INNER, CORNER_OUTER -> ApexShapes.join(
+                        Block.box(0D, 0D, 0D, 13D, 13D, 4D),
+                        Block.box(0D, 0D, 3D, 16D, 13D, 16D),
+                        Block.box(0D, 13D, 0D, 16D, 16D, 16D)
                 );
             }))
             // endregion

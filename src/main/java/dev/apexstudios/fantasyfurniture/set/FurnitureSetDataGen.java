@@ -13,6 +13,7 @@ import dev.apexstudios.apexcore.lib.data.provider.tag.IntrusiveTagProvider;
 import dev.apexstudios.apexcore.lib.data.provider.tag.TagProvider;
 import dev.apexstudios.apexcore.lib.placement.BlockPlacementRenderer;
 import dev.apexstudios.fantasyfurniture.block.base.FurnitureDoorBlockComponentHolder;
+import dev.apexstudios.fantasyfurniture.block.property.CounterConnection;
 import dev.apexstudios.fantasyfurniture.block.property.ShelfConnection;
 import dev.apexstudios.fantasyfurniture.block.property.SofaConnection;
 import java.util.function.BiFunction;
@@ -104,8 +105,7 @@ interface FurnitureSetDataGen {
         run(furnitureSet, BlockType.CHANDELIER, block -> horizontalFacingBlock(block, block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty(), blockModels));
         run(furnitureSet, BlockType.SHELF, block -> facingPropertyModel(block, blockModels, $ -> ShelfConnection.PROPERTY, connection -> ModelLocationUtils.getModelLocation(block, connection.getModelSuffix())));
         run(furnitureSet, BlockType.SOFA, block -> facingPropertyModel(block, blockModels, $ -> SofaConnection.PROPERTY, connection -> ModelLocationUtils.getModelLocation(block, connection.getModelSuffix())));
-
-        run(furnitureSet, BlockType.COUNTER, block -> blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, ModelLocationUtils.getModelLocation(block))));
+        run(furnitureSet, BlockType.COUNTER, block -> facingPropertyModel(block, blockModels, $ -> CounterConnection.PROPERTY, connection -> ModelLocationUtils.getModelLocation(block, connection.getModelSuffix())));
     }
 
     static void language(LanguageProvider provider, FurnitureSet furnitureSet, String englishName) {
@@ -156,7 +156,7 @@ interface FurnitureSetDataGen {
             return true;
 
         var defaultBlockState = block.defaultBlockState();
-        return defaultBlockState.hasProperty(ShelfConnection.PROPERTY) || defaultBlockState.hasProperty(SofaConnection.PROPERTY);
+        return defaultBlockState.hasProperty(ShelfConnection.PROPERTY) || defaultBlockState.hasProperty(SofaConnection.PROPERTY) || defaultBlockState.hasProperty(CounterConnection.PROPERTY);
     }
 
     private static <TBlock extends Block & ComponentHolder<BlockComponent>, TValue extends Comparable<TValue>> void facingPropertyModel(TBlock block, BlockModelGenerators blockModels, Function<TBlock, Property<TValue>> propertyGetter, Function<TValue, ResourceLocation> modelGetter) {
