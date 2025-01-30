@@ -1,4 +1,4 @@
-package dev.apexstudios.fantasyfurniture.block;
+package dev.apexstudios.fantasyfurniture.block.base;
 
 import dev.apexstudios.fantasyfurniture.set.BlockType;
 import dev.apexstudios.fantasyfurniture.set.FurnitureSet;

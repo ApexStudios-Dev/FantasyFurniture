@@ -1,19 +1,22 @@
-package dev.apexstudios.fantasyfurniture.block;
+package dev.apexstudios.fantasyfurniture.block.base;
 
 import dev.apexstudios.apexcore.lib.component.ComponentRegistrar;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
 import dev.apexstudios.apexcore.lib.component.block.types.FacingBlockComponent;
-import dev.apexstudios.fantasyfurniture.block.base.FurnitureBlockComponentHolder;
+import dev.apexstudios.apexcore.lib.component.block.types.SeatBlockComponent;
+import org.jetbrains.annotations.MustBeInvokedByOverriders;
 
-public final class PaintingSmallBlock extends FurnitureBlockComponentHolder {
-    public PaintingSmallBlock(Properties properties) {
+public class SeatBlock extends FurnitureBlockComponentHolder {
+    public SeatBlock(Properties properties) {
         super(properties);
     }
 
+    @MustBeInvokedByOverriders
     @Override
     protected void registerComponents(ComponentRegistrar<BlockComponent> registrar) {
         super.registerComponents(registrar);
 
         FacingBlockComponent.registerHorizontal(registrar);
+        registrar.register(SeatBlockComponent.COMPONENT_TYPE);
     }
 }

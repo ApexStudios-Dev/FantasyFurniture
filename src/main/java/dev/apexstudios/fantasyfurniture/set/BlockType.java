@@ -2,24 +2,22 @@ package dev.apexstudios.fantasyfurniture.set;
 
 import com.google.common.collect.Sets;
 import dev.apexstudios.apexcore.lib.registree.holder.DeferredBlockEntity;
-import dev.apexstudios.apexcore.lib.registree.holder.DeferredMenu;
 import dev.apexstudios.fantasyfurniture.FurnitureBlockEntities;
-import dev.apexstudios.fantasyfurniture.FurnitureMenus;
 import dev.apexstudios.fantasyfurniture.block.BedDoubleBlock;
 import dev.apexstudios.fantasyfurniture.block.BedSingleBlock;
 import dev.apexstudios.fantasyfurniture.block.BookshelfBlock;
 import dev.apexstudios.fantasyfurniture.block.ChairBlock;
 import dev.apexstudios.fantasyfurniture.block.DeskBlock;
-import dev.apexstudios.fantasyfurniture.block.DoorBlock;
 import dev.apexstudios.fantasyfurniture.block.DrawerBlock;
 import dev.apexstudios.fantasyfurniture.block.DresserBlock;
-import dev.apexstudios.fantasyfurniture.block.FurnitureBlock;
-import dev.apexstudios.fantasyfurniture.block.FurnitureCarpetBlock;
 import dev.apexstudios.fantasyfurniture.block.LockBoxBlock;
 import dev.apexstudios.fantasyfurniture.block.OvenBlock;
 import dev.apexstudios.fantasyfurniture.block.PaintingSmallBlock;
 import dev.apexstudios.fantasyfurniture.block.PaintingWideBlock;
-import dev.apexstudios.fantasyfurniture.block.SingleSeatBlock;
+import dev.apexstudios.fantasyfurniture.block.base.FurnitureBlock;
+import dev.apexstudios.fantasyfurniture.block.base.FurnitureCarpetBlock;
+import dev.apexstudios.fantasyfurniture.block.base.FurnitureDoorBlockComponentHolder;
+import dev.apexstudios.fantasyfurniture.block.base.SeatBlock;
 import java.util.Collections;
 import java.util.Set;
 import java.util.function.BiFunction;
@@ -48,7 +46,6 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
                     .ignitedByLava(),
             FurnitureBlock::new,
             BlockItem::new,
-            null,
             null
     );
     // endregion
@@ -64,7 +61,6 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
                     .ignitedByLava(),
             FurnitureBlock::new,
             BlockItem::new,
-            null,
             null
     );
     // endregion
@@ -79,7 +75,6 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
                     .ignitedByLava(),
             FurnitureCarpetBlock::new,
             BlockItem::new,
-            null,
             null
     );
     // endregion
@@ -90,29 +85,26 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
             properties(PLANKS),
             DresserBlock::new,
             BlockItem::new,
-            FurnitureBlockEntities.DRESSER,
-            FurnitureMenus.DRESSER
+            FurnitureBlockEntities.DRESSER
     );
     // endregion
 
     // region: Stool
-    BlockType<SingleSeatBlock, BlockItem> STOOL = new Impl<>(
+    BlockType<SeatBlock, BlockItem> STOOL = new Impl<>(
             "stool",
             properties(PLANKS),
-            SingleSeatBlock::new,
+            SeatBlock::new,
             BlockItem::new,
-            null,
             null
     );
     // endregion
 
     // region: Cushion
-    BlockType<SingleSeatBlock, BlockItem> CUSHION = new Impl<>(
+    BlockType<SeatBlock, BlockItem> CUSHION = new Impl<>(
             "cushion",
             properties(PLANKS),
-            SingleSeatBlock::new,
+            SeatBlock::new,
             BlockItem::new,
-            null,
             null
     );
     // endregion
@@ -123,8 +115,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
             properties(PLANKS),
             LockBoxBlock::new,
             BlockItem::new,
-            FurnitureBlockEntities.LOCKBOX,
-            FurnitureMenus.LOCKBOX
+            FurnitureBlockEntities.LOCKBOX
     );
     // endregion
 
@@ -134,8 +125,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
             properties(PLANKS),
             DrawerBlock::new,
             BlockItem::new,
-            FurnitureBlockEntities.DRAWER,
-            FurnitureMenus.DRAWER
+            FurnitureBlockEntities.DRAWER
     );
     // endregion
 
@@ -145,7 +135,6 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
             properties(PLANKS),
             ChairBlock::new,
             BlockItem::new,
-            null,
             null
     );
     // endregion
@@ -156,8 +145,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
             properties(PLANKS),
             BookshelfBlock::new,
             BlockItem::new,
-            FurnitureBlockEntities.BOOKSHELF,
-            FurnitureMenus.BOOKSHELF
+            FurnitureBlockEntities.BOOKSHELF
     );
     // endregion
 
@@ -167,7 +155,6 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
             properties(PLANKS),
             BedSingleBlock::new,
             BlockItem::new,
-            null,
             null
     );
     // endregion
@@ -178,29 +165,26 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
             properties(PLANKS),
             BedDoubleBlock::new,
             BlockItem::new,
-            null,
             null
     );
     // endregion
 
     // region: Door Single
-    BlockType<DoorBlock, BlockItem> DOOR_SINGLE = new Impl<>(
+    BlockType<FurnitureDoorBlockComponentHolder, BlockItem> DOOR_SINGLE = new Impl<>(
             "door_single",
             properties(PLANKS, BlockBehaviour.Properties::noOcclusion),
-            DoorBlock::new,
+            FurnitureDoorBlockComponentHolder::new,
             BlockItem::new,
-            null,
             null
     );
     // endregion
 
     // region: Door Double
-    BlockType<DoorBlock, BlockItem> DOOR_DOUBLE = new Impl<>(
+    BlockType<FurnitureDoorBlockComponentHolder, BlockItem> DOOR_DOUBLE = new Impl<>(
             "door_double",
             properties(PLANKS, BlockBehaviour.Properties::noOcclusion),
-            DoorBlock::new,
+            FurnitureDoorBlockComponentHolder::new,
             BlockItem::new,
-            null,
             null
     );
     // endregion
@@ -211,8 +195,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
             properties(PLANKS),
             DeskBlock::new,
             BlockItem::new,
-            FurnitureBlockEntities.DESK,
-            FurnitureMenus.DESK
+            FurnitureBlockEntities.DESK
     );
     // endregion
 
@@ -222,8 +205,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
             properties(PLANKS),
             DeskBlock::new,
             BlockItem::new,
-            FurnitureBlockEntities.DESK,
-            FurnitureMenus.DESK
+            FurnitureBlockEntities.DESK
     );
     // endregion
 
@@ -233,7 +215,6 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
             properties(PLANKS),
             PaintingWideBlock::new,
             BlockItem::new,
-            null,
             null
     );
     // endregion
@@ -244,7 +225,6 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
             properties(PLANKS),
             PaintingSmallBlock::new,
             BlockItem::new,
-            null,
             null
     );
     // endregion
@@ -255,21 +235,20 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
             properties(PLANKS, BlockBehaviour.Properties::noOcclusion),
             OvenBlock::new,
             BlockItem::new,
-            FurnitureBlockEntities.OVEN,
-            FurnitureMenus.OVEN
+            FurnitureBlockEntities.OVEN
     );
     // endregion
 
     // region: TODO
-    BlockType<FurnitureBlock, BlockItem> CHANDELIER = new Impl<>("chandelier", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
-    BlockType<FurnitureBlock, BlockItem> CHEST = new Impl<>("chest", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
-    BlockType<FurnitureBlock, BlockItem> COUNTER = new Impl<>("counter", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
-    BlockType<FurnitureBlock, BlockItem> FLOOR_LIGHT = new Impl<>("floor_light", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
-    BlockType<FurnitureBlock, BlockItem> SHELF = new Impl<>("shelf", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
-    BlockType<FurnitureBlock, BlockItem> SOFA = new Impl<>("sofa", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
-    BlockType<FurnitureBlock, BlockItem> TABLE_LARGE = new Impl<>("table_large", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
-    BlockType<FurnitureBlock, BlockItem> TABLE_WIDE = new Impl<>("table_wide", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
-    BlockType<FurnitureBlock, BlockItem> TABLE_SMALL = new Impl<>("table_small", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null, null);
+    BlockType<FurnitureBlock, BlockItem> CHANDELIER = new Impl<>("chandelier", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null);
+    BlockType<FurnitureBlock, BlockItem> CHEST = new Impl<>("chest", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null);
+    BlockType<FurnitureBlock, BlockItem> COUNTER = new Impl<>("counter", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null);
+    BlockType<FurnitureBlock, BlockItem> FLOOR_LIGHT = new Impl<>("floor_light", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null);
+    BlockType<FurnitureBlock, BlockItem> SHELF = new Impl<>("shelf", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null);
+    BlockType<FurnitureBlock, BlockItem> SOFA = new Impl<>("sofa", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null);
+    BlockType<FurnitureBlock, BlockItem> TABLE_LARGE = new Impl<>("table_large", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null);
+    BlockType<FurnitureBlock, BlockItem> TABLE_WIDE = new Impl<>("table_wide", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null);
+    BlockType<FurnitureBlock, BlockItem> TABLE_SMALL = new Impl<>("table_small", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null);
     // endregion
 
     // dumb way to define registration order
@@ -319,8 +298,6 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
 
     @Nullable DeferredBlockEntity<?> blockEntityType();
 
-    @Nullable DeferredMenu<?> menuType();
-
     private static Supplier<BlockBehaviour.Properties> properties(BlockType<?, ?> blockType, UnaryOperator<BlockBehaviour.Properties> modifier) {
         return () -> modifier.apply(blockType.blockProperties().get());
     }
@@ -335,11 +312,10 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
             Supplier<Item.Properties> itemProperties,
             Function<BlockBehaviour.Properties, TBlock> blockFactory,
             BiFunction<TBlock, Item.Properties, TItem> blockItemFactory,
-            @Nullable DeferredBlockEntity<?> blockEntityType,
-            @Nullable DeferredMenu<?> menuType
+            @Nullable DeferredBlockEntity<?> blockEntityType
     ) implements BlockType<TBlock, TItem> {
-        private Impl(String name, Supplier<BlockBehaviour.Properties> blockProperties, Function<BlockBehaviour.Properties, TBlock> blockFactory, BiFunction<TBlock, Item.Properties, TItem> blockItemFactory, @Nullable DeferredBlockEntity<?> blockEntityType, @Nullable DeferredMenu<?> menuType) {
-            this(name, blockProperties, Item.Properties::new, blockFactory, blockItemFactory, blockEntityType, menuType);
+        private Impl(String name, Supplier<BlockBehaviour.Properties> blockProperties, Function<BlockBehaviour.Properties, TBlock> blockFactory, BiFunction<TBlock, Item.Properties, TItem> blockItemFactory, @Nullable DeferredBlockEntity<?> blockEntityType) {
+            this(name, blockProperties, Item.Properties::new, blockFactory, blockItemFactory, blockEntityType);
         }
 
         @Override

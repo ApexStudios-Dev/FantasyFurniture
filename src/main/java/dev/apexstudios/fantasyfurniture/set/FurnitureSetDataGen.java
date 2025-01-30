@@ -12,7 +12,7 @@ import dev.apexstudios.apexcore.lib.data.provider.loot.LootTableProvider;
 import dev.apexstudios.apexcore.lib.data.provider.tag.IntrusiveTagProvider;
 import dev.apexstudios.apexcore.lib.data.provider.tag.TagProvider;
 import dev.apexstudios.apexcore.lib.placement.BlockPlacementRenderer;
-import dev.apexstudios.fantasyfurniture.block.DoorBlock;
+import dev.apexstudios.fantasyfurniture.block.base.FurnitureDoorBlockComponentHolder;
 import it.unimi.dsi.fastutil.ints.Int2ObjectFunction;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -167,7 +167,7 @@ interface FurnitureSetDataGen {
         }
     }
 
-    private static void doorModel(DoorBlock block, BlockModelGenerators blockModels) {
+    private static void doorModel(FurnitureDoorBlockComponentHolder block, BlockModelGenerators blockModels) {
         var multiBlock = block.getComponentOrThrow(BlockComponentTypes.MULTI_BLOCK);
         var facingProperty = block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty();
 

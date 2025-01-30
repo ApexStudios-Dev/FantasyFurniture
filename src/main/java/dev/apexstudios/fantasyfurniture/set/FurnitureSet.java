@@ -7,7 +7,7 @@ import dev.apexstudios.apexcore.lib.data.ResourceGenerator;
 import dev.apexstudios.apexcore.lib.registree.Registree;
 import dev.apexstudios.apexcore.lib.registree.holder.DeferredBlock;
 import dev.apexstudios.apexcore.lib.registree.holder.DeferredItem;
-import dev.apexstudios.fantasyfurniture.block.FurnitureBlock;
+import dev.apexstudios.fantasyfurniture.block.base.FurnitureBlock;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Function;

@@ -1,4 +1,4 @@
-package dev.apexstudios.fantasyfurniture.block;
+package dev.apexstudios.fantasyfurniture.block.base;
 
 import dev.apexstudios.apexcore.lib.component.ComponentRegistrar;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
@@ -20,19 +20,21 @@ import net.minecraft.world.level.block.state.properties.DoorHingeSide;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.MustBeInvokedByOverriders;
 
-public final class DoorBlock extends DoorBlockComponentHolder {
-    private final FurnitureSet furnitureSet;
-    private final BlockType<?, ?> blockType;
+public class FurnitureDoorBlockComponentHolder extends DoorBlockComponentHolder {
+    protected final FurnitureSet furnitureSet;
+    protected final BlockType<?, ?> blockType;
     private final Map<Direction, VoxelShape> openShapes;
     private final Map<Direction, VoxelShape> closedShapes;
 
-    public DoorBlock(Properties properties) {
+    public FurnitureDoorBlockComponentHolder(Properties properties) {
         super(properties);
 
         var injector = (FurnitureBlock.Injector) properties;
         furnitureSet = injector.FantasyFurniture$getFurnitureSet();
         blockType = injector.FantasyFurniture$getBlockType();
+
         openShapes = ApexShapes.rotateHorizontal(furnitureSet.shape(blockType, Shapes::block));
         closedShapes = openShapes.keySet().stream().collect(Collectors.toMap(Function.identity(), facing -> openShapes.get(facing.getCounterClockWise())));
     }
@@ -50,13 +52,16 @@ public final class DoorBlock extends DoorBlockComponentHolder {
         return MultiBlockComponent.fixVoxelShape(shapes.get(facing), multiBlock, blockState, pos);
     }
 
+    @MustBeInvokedByOverriders
     @Override
     protected void registerComponents(ComponentRegistrar<BlockComponent> registrar) {
+        super.registerComponents(registrar);
+
+        FluidLoggedBlockComponent.registerWater(registrar);
+
         registrar.register(BlockComponentTypes.MULTI_BLOCK, builder -> builder
                 .with(0, 1, 0)
                 .rotatingFromComponent()
         );
-
-        FluidLoggedBlockComponent.registerWater(registrar);
     }
 }

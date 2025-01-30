@@ -19,27 +19,38 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
 public interface FurnitureMenus {
-    DeferredMenu<SimpleMenu> DRESSER = new DeferredMenu<>(FantasyFurniture.REGISTREE.registryKey(Registries.MENU, "dresser"));
-    DeferredMenu<SimpleMenu> LOCKBOX = new DeferredMenu<>(FantasyFurniture.REGISTREE.registryKey(Registries.MENU, "lockbox"));
-    DeferredMenu<SimpleMenu> DRAWER = new DeferredMenu<>(FantasyFurniture.REGISTREE.registryKey(Registries.MENU, "drawer"));
-    DeferredMenu<SimpleMenu> BOOKSHELF = new DeferredMenu<>(FantasyFurniture.REGISTREE.registryKey(Registries.MENU, "bookshelf"));
-    DeferredMenu<SimpleMenu> DESK = new DeferredMenu<>(FantasyFurniture.REGISTREE.registryKey(Registries.MENU, "desk"));
+    DeferredMenu<SimpleMenu> DRESSER = simple("dresser");
+    DeferredMenu<SimpleMenu> LOCKBOX = simple("lockbox");
+    DeferredMenu<SimpleMenu> DRAWER = simple("drawer");
+    DeferredMenu<SimpleMenu> BOOKSHELF = simple("bookshelf");
+    DeferredMenu<SimpleMenu> DESK = simple("desk");
     DeferredMenu<OvenMenu> OVEN = FantasyFurniture.REGISTREE.registerMenu("oven", (containerId, inventory) -> new OvenMenu(containerId, inventory, new SimpleContainer(OvenBlockEntity.SLOTS), new SimpleContainerData(AbstractFurnaceBlockEntity.NUM_DATA_VALUES)));
 
     static void register(IEventBus modBus) {
-        FantasyFurniture.REGISTREE.registerMenu("dresser", (containerId, inventory) -> new SimpleMenu(DRESSER.value(), containerId, inventory, DresserBlockEntity.ROWS));
-        FantasyFurniture.REGISTREE.registerMenu("lockbox", (containerId, inventory) -> new SimpleMenu(LOCKBOX.value(), containerId, inventory, LockBoxBlockEntity.ROWS));
-        FantasyFurniture.REGISTREE.registerMenu("drawer", (containerId, inventory) -> new SimpleMenu(DRAWER.value(), containerId, inventory, DrawerBlockEntity.ROWS));
-        FantasyFurniture.REGISTREE.registerMenu("bookshelf", (containerId, inventory) -> new SimpleMenu(BOOKSHELF.value(), containerId, inventory, BookshelfBlockEntity.ROWS));
-        FantasyFurniture.REGISTREE.registerMenu("desk", (containerId, inventory) -> new SimpleMenu(DESK.value(), containerId, inventory, DeskBlockEntity.ROWS));
+        simple(DRESSER, DresserBlockEntity.ROWS);
+        simple(LOCKBOX, LockBoxBlockEntity.ROWS);
+        simple(DRAWER, DrawerBlockEntity.ROWS);
+        simple(BOOKSHELF, BookshelfBlockEntity.ROWS);
+        simple(DESK, DeskBlockEntity.ROWS);
 
         modBus.addListener(RegisterMenuScreensEvent.class, event -> {
-            event.register(DRESSER.value(), SimpleMenuScreen::new);
-            event.register(LOCKBOX.value(), SimpleMenuScreen::new);
-            event.register(DRAWER.value(), SimpleMenuScreen::new);
-            event.register(BOOKSHELF.value(), SimpleMenuScreen::new);
-            event.register(DESK.value(), SimpleMenuScreen::new);
+            simple(event, DRESSER, LOCKBOX, DRAWER, BOOKSHELF, DESK);
             event.register(OVEN.value(), OvenScreen::new);
         });
+    }
+
+    private static void simple(DeferredMenu<SimpleMenu> holder, int rows) {
+        FantasyFurniture.REGISTREE.registerMenu(holder.getId().getPath(), (containerId, inventory) -> new SimpleMenu(holder.value(), containerId, inventory, rows));
+    }
+
+    @SafeVarargs
+    private static void simple(RegisterMenuScreensEvent event, DeferredMenu<SimpleMenu>... holders) {
+        for(var holder : holders) {
+            event.register(holder.value(), SimpleMenuScreen::new);
+        }
+    }
+
+    private static DeferredMenu<SimpleMenu> simple(String registryName) {
+        return new DeferredMenu<>(FantasyFurniture.REGISTREE.registryKey(Registries.MENU, registryName));
     }
 }

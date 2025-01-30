@@ -1,6 +1,6 @@
 package dev.apexstudios.fantasyfurniture.mixin;
 
-import dev.apexstudios.fantasyfurniture.block.FurnitureBlock;
+import dev.apexstudios.fantasyfurniture.block.base.FurnitureBlock;
 import dev.apexstudios.fantasyfurniture.set.BlockType;
 import dev.apexstudios.fantasyfurniture.set.FurnitureSet;
 import java.util.Objects;
