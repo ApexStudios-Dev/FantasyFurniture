@@ -107,6 +107,7 @@ interface FurnitureSetDataGen {
         run(furnitureSet, BlockType.SOFA, block -> facingPropertyModel(block, blockModels, $ -> SofaConnection.PROPERTY, connection -> ModelLocationUtils.getModelLocation(block, connection.getModelSuffix()), SofaConnection.NONE));
         run(furnitureSet, BlockType.COUNTER, block -> facingPropertyModel(block, blockModels, $ -> CounterConnection.PROPERTY, connection -> ModelLocationUtils.getModelLocation(block, connection.getModelSuffix()), CounterConnection.NONE));
         run(furnitureSet, BlockType.WALL_LIGHT, block -> horizontalFacingBlock(block, block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty(), blockModels));
+        run(furnitureSet, BlockType.BENCH, block -> multiBlockModel(block, blockModels, index -> ModelLocationUtils.getModelLocation(block, index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right")));
     }
 
     static void language(LanguageProvider provider, FurnitureSet furnitureSet, String englishName) {
@@ -126,7 +127,7 @@ interface FurnitureSetDataGen {
         tag(provider, BlockTags.BEDS, furnitureSet::block, BlockType.BED_SINGLE, BlockType.BED_DOUBLE);
         tag(provider, Tags.Blocks.CHESTS_WOODEN, furnitureSet::block, BlockType.CHEST, BlockType.COUNTER, BlockType.DESK_LEFT, BlockType.DESK_RIGHT, BlockType.DRAWER, BlockType.DRESSER, BlockType.LOCKBOX);
         tag(provider, Tags.Blocks.PLAYER_WORKSTATIONS_FURNACES, furnitureSet::block, BlockType.OVEN);
-        tag(provider, SeatSetup.ORIGIN_ONLY, furnitureSet::block, BlockType.CHAIR);
+        tag(provider, SeatSetup.ORIGIN_ONLY, furnitureSet::block, BlockType.CHAIR, BlockType.BENCH);
 
         var placementRender = provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST);
         var relocation = provider.tag(Tags.Blocks.RELOCATION_NOT_SUPPORTED);

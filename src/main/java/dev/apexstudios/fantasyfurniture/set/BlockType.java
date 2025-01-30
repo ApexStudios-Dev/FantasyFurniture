@@ -5,6 +5,7 @@ import dev.apexstudios.apexcore.lib.registree.holder.DeferredBlockEntity;
 import dev.apexstudios.fantasyfurniture.FurnitureBlockEntities;
 import dev.apexstudios.fantasyfurniture.block.BedDoubleBlock;
 import dev.apexstudios.fantasyfurniture.block.BedSingleBlock;
+import dev.apexstudios.fantasyfurniture.block.BenchBlock;
 import dev.apexstudios.fantasyfurniture.block.BookshelfBlock;
 import dev.apexstudios.fantasyfurniture.block.ChairBlock;
 import dev.apexstudios.fantasyfurniture.block.ChandelierBlock;
@@ -349,6 +350,16 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     );
     // endregion
 
+    // region: Bench
+    BlockType<BenchBlock, BlockItem> BENCH = new Impl<>(
+            "bench",
+            properties(PLANKS),
+            BenchBlock::new,
+            BlockItem::new,
+            null
+    );
+    // endregion
+
     // dumb way to define registration order
     // LinkedSet to retain insertion order
     // UnmodifiableSet to disallow modifications
@@ -382,6 +393,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
         set.add(TABLE_WIDE);
         set.add(TABLE_SMALL);
         set.add(WALL_LIGHT);
+        set.add(BENCH);
     }));
 
     String name();

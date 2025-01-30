@@ -297,7 +297,21 @@ public class NordicFurnitureSet {
                     Block.box(6D, 2D, 8D, 10D, 15D, 15D)
             )))
             // endregion
-
+            // region: Bench
+            .blockType(BlockType.BENCH, block -> block.shape(() -> ApexShapes.join(
+                    Block.box(12D, 0D, 2D, 14D, 3D, 4D),
+                    Block.box(-14D, 0D, 2D, -12D, 3D, 4D),
+                    Block.box(-14D, 0D, 12D, -12D, 3D, 14D),
+                    Block.box(12D, 0D, 12D, 14D, 3D, 14D),
+                    Block.box(12D, 3D, 11.5D, 14D, 5D, 13.5D),
+                    Block.box(12D, 3D, 2.5D, 14D, 5D, 4.5D),
+                    Block.box(-14D, 3D, 2.5D, -12D, 5D, 4.5D),
+                    Block.box(-14D, 3D, 11.5D, -12D, 5D, 13.5D),
+                    Block.box(-13.5D, 3.5D, 4.5D, -12.5D, 4.5D, 11.5D),
+                    Block.box(12.5D, 3.5D, 4.5D, 13.5D, 4.5D, 11.5D),
+                    Block.box(-15D, 5D, 2D, 15D, 7D, 14D)
+            )))
+            // endregion
     );
 
     public NordicFurnitureSet(IEventBus modBus) {
