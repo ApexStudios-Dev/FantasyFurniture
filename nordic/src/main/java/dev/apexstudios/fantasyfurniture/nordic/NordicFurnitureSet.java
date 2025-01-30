@@ -291,6 +291,13 @@ public class NordicFurnitureSet {
                 );
             }))
             // endregion
+            // region: Wall Light
+            .blockType(BlockType.WALL_LIGHT, block -> block.shape(() -> ApexShapes.join(
+                    Block.box(6D, 5D, 15D, 10D, 11D, 16D),
+                    Block.box(6D, 2D, 8D, 10D, 15D, 15D)
+            )))
+            // endregion
+
     );
 
     public NordicFurnitureSet(IEventBus modBus) {

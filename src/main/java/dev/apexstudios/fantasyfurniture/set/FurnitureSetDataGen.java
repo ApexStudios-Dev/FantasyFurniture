@@ -106,6 +106,7 @@ interface FurnitureSetDataGen {
         run(furnitureSet, BlockType.SHELF, block -> facingPropertyModel(block, blockModels, $ -> ShelfConnection.PROPERTY, connection -> ModelLocationUtils.getModelLocation(block, connection.getModelSuffix()), ShelfConnection.NONE));
         run(furnitureSet, BlockType.SOFA, block -> facingPropertyModel(block, blockModels, $ -> SofaConnection.PROPERTY, connection -> ModelLocationUtils.getModelLocation(block, connection.getModelSuffix()), SofaConnection.NONE));
         run(furnitureSet, BlockType.COUNTER, block -> facingPropertyModel(block, blockModels, $ -> CounterConnection.PROPERTY, connection -> ModelLocationUtils.getModelLocation(block, connection.getModelSuffix()), CounterConnection.NONE));
+        run(furnitureSet, BlockType.WALL_LIGHT, block -> horizontalFacingBlock(block, block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty(), blockModels));
     }
 
     static void language(LanguageProvider provider, FurnitureSet furnitureSet, String englishName) {

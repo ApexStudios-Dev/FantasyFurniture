@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing_component=east": {
+      "model": "fantasyfurniture_nordic:block/wall_light",
+      "y": 90
+    },
+    "facing_component=north": {
+      "model": "fantasyfurniture_nordic:block/wall_light"
+    },
+    "facing_component=south": {
+      "model": "fantasyfurniture_nordic:block/wall_light",
+      "y": 180
+    },
+    "facing_component=west": {
+      "model": "fantasyfurniture_nordic:block/wall_light",
+      "y": 270
+    }
+  }
+}

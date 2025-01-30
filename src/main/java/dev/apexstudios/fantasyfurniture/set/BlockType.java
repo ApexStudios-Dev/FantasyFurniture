@@ -23,6 +23,7 @@ import dev.apexstudios.fantasyfurniture.block.SofaBlock;
 import dev.apexstudios.fantasyfurniture.block.TableLargeBlock;
 import dev.apexstudios.fantasyfurniture.block.TableSmallBlock;
 import dev.apexstudios.fantasyfurniture.block.TableWideBlock;
+import dev.apexstudios.fantasyfurniture.block.WallLightBlock;
 import dev.apexstudios.fantasyfurniture.block.base.FurnitureBlock;
 import dev.apexstudios.fantasyfurniture.block.base.FurnitureCarpetBlock;
 import dev.apexstudios.fantasyfurniture.block.base.FurnitureDoorBlockComponentHolder;
@@ -338,6 +339,16 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     );
     // endregion
 
+    // region: Wall Light
+    BlockType<WallLightBlock, BlockItem> WALL_LIGHT = new Impl<>(
+            "wall_light",
+            properties(PLANKS, properties -> properties.lightLevel(blockState -> 14).noCollission()),
+            WallLightBlock::new,
+            BlockItem::new,
+            null
+    );
+    // endregion
+
     // dumb way to define registration order
     // LinkedSet to retain insertion order
     // UnmodifiableSet to disallow modifications
@@ -348,7 +359,6 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
         set.add(DRESSER);
         set.add(STOOL);
         set.add(CUSHION);
-
         set.add(BED_DOUBLE);
         set.add(BED_SINGLE);
         set.add(BOOKSHELF);
@@ -371,6 +381,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
         set.add(TABLE_LARGE);
         set.add(TABLE_WIDE);
         set.add(TABLE_SMALL);
+        set.add(WALL_LIGHT);
     }));
 
     String name();
