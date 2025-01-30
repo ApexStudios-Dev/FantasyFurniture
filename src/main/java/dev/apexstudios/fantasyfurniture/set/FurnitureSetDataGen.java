@@ -12,8 +12,8 @@ import dev.apexstudios.apexcore.lib.data.provider.loot.LootTableProvider;
 import dev.apexstudios.apexcore.lib.data.provider.tag.IntrusiveTagProvider;
 import dev.apexstudios.apexcore.lib.data.provider.tag.TagProvider;
 import dev.apexstudios.apexcore.lib.placement.BlockPlacementRenderer;
+import dev.apexstudios.fantasyfurniture.block.ShelfBlock;
 import dev.apexstudios.fantasyfurniture.block.base.FurnitureDoorBlockComponentHolder;
-import it.unimi.dsi.fastutil.ints.Int2ObjectFunction;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -101,9 +101,9 @@ interface FurnitureSetDataGen {
         run(furnitureSet, BlockType.TABLE_SMALL, block -> horizontalFacingBlock(block, block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty(), blockModels));
         run(furnitureSet, BlockType.FLOOR_LIGHT, block -> multiBlockModel(block, blockModels, index -> ModelLocationUtils.getModelLocation(block, index == MultiBlockComponent.ORIGIN_INDEX ? "_bottom" : "_top")));
         run(furnitureSet, BlockType.CHANDELIER, block -> horizontalFacingBlock(block, block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty(), blockModels));
+        run(furnitureSet, BlockType.SHELF, block -> facingPropertyModel(block, blockModels, $ -> ShelfBlock.CONNECTION, connection -> ModelLocationUtils.getModelLocation(block, '_' + connection.getSerializedName())));
 
         run(furnitureSet, BlockType.COUNTER, block -> blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, ModelLocationUtils.getModelLocation(block))));
-        run(furnitureSet, BlockType.SHELF, block -> blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, ModelLocationUtils.getModelLocation(block))));
         run(furnitureSet, BlockType.SOFA, block -> blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, ModelLocationUtils.getModelLocation(block))));
     }
 
@@ -151,12 +151,23 @@ interface FurnitureSetDataGen {
         tag(provider, Tags.Items.PLAYER_WORKSTATIONS_FURNACES, furnitureSet::item, BlockType.OVEN);
     }
 
+    private static <TBlock extends Block & ComponentHolder<BlockComponent>, TValue extends Comparable<TValue>> void facingPropertyModel(TBlock block, BlockModelGenerators blockModels, Function<TBlock, Property<TValue>> propertyGetter, Function<TValue, ResourceLocation> modelGetter) {
+        var facingProperty = block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty();
+
+        blockModels.blockStateOutput.accept(MultiVariantGenerator.multiVariant(block)
+                .with(createPropertyDispatch(block, propertyGetter, modelGetter))
+                .with(createHorizontalFacingDispatch(facingProperty, (facing, variant) -> variant))
+        );
+
+        registerSimpleBlockItemModel(block, blockModels);
+    }
+
     private static <TBlock extends Block & ComponentHolder<BlockComponent>> void multiBlockModel(TBlock block, BlockModelGenerators blockModels, IntFunction<ResourceLocation> modelGetter) {
         var multiBlock = block.getComponentOrThrow(BlockComponentTypes.MULTI_BLOCK);
         var facingProperty = block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty();
 
         blockModels.blockStateOutput.accept(MultiVariantGenerator.multiVariant(block)
-                .with(createMultiBlockPropertyDispatch(multiBlock, modelGetter::apply))
+                .with(createPropertyDispatch(block, b -> block.getComponentOrThrow(BlockComponentTypes.MULTI_BLOCK).property(), modelGetter::apply))
                 .with(createHorizontalFacingDispatch(facingProperty, (facing, variant) -> variant))
         );
 
@@ -218,9 +229,9 @@ interface FurnitureSetDataGen {
         blockModels.registerSimpleItemModel(block, ModelLocationUtils.getModelLocation(block.asItem()));
     }
 
-    private static PropertyDispatch createMultiBlockPropertyDispatch(MultiBlockComponent multiBlock, Int2ObjectFunction<ResourceLocation> blockModelPathFactory) {
-        return PropertyDispatch.property(multiBlock.property())
-                .generate(index -> Variant.variant().with(VariantProperties.MODEL, blockModelPathFactory.apply(index)));
+    private static <TBlock extends Block, TValue extends Comparable<TValue>> PropertyDispatch createPropertyDispatch(TBlock block, Function<TBlock, Property<TValue>> propertyGetter, Function<TValue, ResourceLocation> modelGetter) {
+        return PropertyDispatch.property(propertyGetter.apply(block))
+                .generate(value -> Variant.variant().with(VariantProperties.MODEL, modelGetter.apply(value)));
     }
 
     private static PropertyDispatch createHorizontalFacingDispatch(Property<Direction> property, BiFunction<Direction, Variant, Variant> modifier) {

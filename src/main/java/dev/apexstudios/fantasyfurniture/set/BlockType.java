@@ -17,6 +17,7 @@ import dev.apexstudios.fantasyfurniture.block.LockBoxBlock;
 import dev.apexstudios.fantasyfurniture.block.OvenBlock;
 import dev.apexstudios.fantasyfurniture.block.PaintingSmallBlock;
 import dev.apexstudios.fantasyfurniture.block.PaintingWideBlock;
+import dev.apexstudios.fantasyfurniture.block.ShelfBlock;
 import dev.apexstudios.fantasyfurniture.block.TableLargeBlock;
 import dev.apexstudios.fantasyfurniture.block.TableSmallBlock;
 import dev.apexstudios.fantasyfurniture.block.TableWideBlock;
@@ -305,9 +306,18 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     );
     // endregion
 
+    // region: Shelf
+    BlockType<ShelfBlock, BlockItem> SHELF = new Impl<>(
+            "shelf",
+            properties(PLANKS),
+            ShelfBlock::new,
+            BlockItem::new,
+            null
+    );
+    // endregion
+
     // region: TODO
     BlockType<FurnitureBlock, BlockItem> COUNTER = new Impl<>("counter", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null);
-    BlockType<FurnitureBlock, BlockItem> SHELF = new Impl<>("shelf", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null);
     BlockType<FurnitureBlock, BlockItem> SOFA = new Impl<>("sofa", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null);
     // endregion
 

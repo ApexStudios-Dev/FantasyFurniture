@@ -207,6 +207,9 @@ public class NordicFurnitureSet {
             // region: Chandelier
             .blockType(BlockType.CHANDELIER, block -> block.shape(() -> Block.box(1D, 0D, 1D, 15, 16D, 15D)))
             // endregion
+            // region: Shelf
+            .blockType(BlockType.SHELF, block -> block.shape(() -> Block.box(0D, 14D, 0D, 16D, 16D, 16D)))
+            // endregion
     );
 
     public NordicFurnitureSet(IEventBus modBus) {

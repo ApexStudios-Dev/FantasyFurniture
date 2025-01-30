@@ -1,5 +1,4 @@
 {
-
 	"texture_size": [64, 64],
 	"textures": {
 		"shelf": "fantasyfurniture_nordic:block/shelf",
@@ -36,25 +35,25 @@
 			"scale": [0.4, 0.4, 0.4]
 		},
 		"firstperson_lefthand": {
-			"rotation": [0, 225, 0],
-			"scale": [0.4, 0.4, -0.4]
+			"rotation": [0, 45, 0],
+			"scale": [0.4, 0.4, 0.4]
 		},
 		"ground": {
 			"translation": [0, 3, 0],
 			"scale": [0.25, 0.25, 0.25]
 		},
 		"gui": {
-			"rotation": [30, 145, 0],
-			"translation": [0, -3.5, 0],
+			"rotation": [30, 225, 0],
 			"scale": [0.625, 0.625, 0.625]
 		},
 		"fixed": {
+			"translation": [0, 0, -4],
 			"scale": [0.5, 0.5, 0.5]
 		}
 	},
 	"groups": [
 		{
-			"name": "nordic_shelf",
+			"name": "center",
 			"origin": [8, 8, 8],
 			"color": 0,
 			"children": [0]
