@@ -1,6 +1,8 @@
 package dev.apexstudios.fantasyfurniture.nordic;
 
 import dev.apexstudios.apexcore.lib.util.shapes.ApexShapes;
+import dev.apexstudios.fantasyfurniture.block.property.ShelfConnection;
+import dev.apexstudios.fantasyfurniture.block.property.SofaConnection;
 import dev.apexstudios.fantasyfurniture.set.BlockType;
 import dev.apexstudios.fantasyfurniture.set.FurnitureSet;
 import net.minecraft.world.level.block.Block;
@@ -208,7 +210,71 @@ public class NordicFurnitureSet {
             .blockType(BlockType.CHANDELIER, block -> block.shape(() -> Block.box(1D, 0D, 1D, 15, 16D, 15D)))
             // endregion
             // region: Shelf
-            .blockType(BlockType.SHELF, block -> block.shape(() -> Block.box(0D, 14D, 0D, 16D, 16D, 16D)))
+            .blockType(BlockType.SHELF, block -> block.shape(blockState -> switch (blockState.getValue(ShelfConnection.PROPERTY)) {
+                case LEFT -> ApexShapes.join(
+                        Block.box(13.5D, 9D, 2D, 15.5D, 14D, 13D),
+                        Block.box(0D, 14D, 0D, 16D, 16D, 16D),
+                        Block.box(13D, 6D, 13D, 16D, 14D, 16D)
+                );
+                case RIGHT -> ApexShapes.join(
+                        Block.box(.5D, 9D, 2D, 2.5D, 14D, 13D),
+                        Block.box(0D, 14D, 0D, 16D, 16D, 16D),
+                        Block.box(0D, 6D, 13D, 3D, 14D, 16D)
+                );
+                case BOTH -> Block.box(0D, 14D, 0D, 16D, 16D, 16D);
+                case NONE -> ApexShapes.join(
+                        Block.box(.5D, 9D, 2D, 2.5D, 14D, 13D),
+                        Block.box(13.5D, 9D, 2D, 15.5D, 14D, 13D),
+                        Block.box(0D, 14D, 0D, 16D, 16D, 16D),
+                        Block.box(13D, 6D, 13D, 16D, 14D, 16D),
+                        Block.box(0D, 6D, 13D, 3D, 14D, 16D)
+                );
+            }))
+            // endregion
+            // region: Sofa
+            .blockType(BlockType.SOFA, block -> block.shape(blockState -> switch (blockState.getValue(SofaConnection.PROPERTY)) {
+                case LEFT -> ApexShapes.join(
+                        Block.box(0D, 3D, 0D, 16D, 6D, 16D),
+                        Block.box(0D, 6D, 13D, 16D, 16D, 16D),
+                        Block.box(14D, 10D, 0D, 16D, 12D, 13D),
+                        Block.box(14D, 6D, 0D, 16D, 10D, 2D),
+                        Block.box(13D, 0D, 1D, 15D, 3D, 3D),
+                        Block.box(13D, 0D, 13D, 15D, 3D, 15D)
+                );
+                case RIGHT -> ApexShapes.join(
+                        Block.box(0D, 3D, 0D, 16D, 6D, 16D),
+                        Block.box(0D, 6D, 13D, 16D, 16D, 16D),
+                        Block.box(0D, 10D, 0D, 2D, 12D, 13D),
+                        Block.box(0D, 6D, 0D, 2D, 10D, 2D),
+                        Block.box(1D, 0D, 1D, 3D, 3D, 3D),
+                        Block.box(1D, 0D, 13D, 3D, 3D, 15D)
+                );
+                case BOTH -> ApexShapes.join(
+                        Block.box(0D, 3D, 0D, 16D, 6D, 16D),
+                        Block.box(0D, 6D, 13D, 16D, 16D, 16D)
+                );
+                case NONE -> ApexShapes.join(
+                        Block.box(1D, 0D, 1D, 3D, 3D, 3D),
+                        Block.box(1D, 0D, 13D, 3D, 3D, 15D),
+                        Block.box(13D, 0D, 13D, 15D, 3D, 15D),
+                        Block.box(13D, 0D, 1D, 15D, 3D, 3D),
+                        Block.box(0D, 3D, 0D, 16D, 6D, 16D),
+                        Block.box(0D, 6D, 13D, 16D, 16D, 16D),
+                        Block.box(14D, 10D, 0D, 16D, 12D, 14D),
+                        Block.box(0D, 10D, 0D, 2D, 12D, 14D),
+                        Block.box(0D, 6D, 0D, 2D, 10D, 2D),
+                        Block.box(14D, 6D, 0D, 16D, 10D, 2D)
+                );
+                case CORNER_INNER, CORNER_OUTER -> ApexShapes.join(
+                        Block.box(1D, 0D, 1D, 3D, 3D, 3D),
+                        Block.box(1D, 0D, 13D, 3D, 3D, 15D),
+                        Block.box(13D, 0D, 13D, 15D, 3D, 15D),
+                        Block.box(13D, 0D, 1D, 15D, 3D, 3D),
+                        Block.box(0D, 3D, 0D, 16D, 6D, 16D),
+                        Block.box(0D, 6D, 13D, 16D, 16D, 16D),
+                        Block.box(13D, 6D, 0D, 16D, 16D, 13D)
+                );
+            }))
             // endregion
     );
 

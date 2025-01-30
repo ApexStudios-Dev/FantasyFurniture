@@ -1,11 +1,8 @@
 package dev.apexstudios.fantasyfurniture.block;
 
-import dev.apexstudios.apexcore.lib.component.ComponentRegistrar;
-import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
-import dev.apexstudios.apexcore.lib.component.block.types.FacingBlockComponent;
-import dev.apexstudios.fantasyfurniture.block.base.FurnitureBlockComponentHolder;
-import dev.apexstudios.fantasyfurniture.block.property.ShelfConnection;
+import dev.apexstudios.fantasyfurniture.block.base.SeatBlock;
+import dev.apexstudios.fantasyfurniture.block.property.SofaConnection;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -16,23 +13,16 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 
-public final class ShelfBlock extends FurnitureBlockComponentHolder {
-    public ShelfBlock(Properties properties) {
+public final class SofaBlock extends SeatBlock {
+    public SofaBlock(Properties properties) {
         super(properties);
 
-        registerDefaultState(defaultBlockState().setValue(ShelfConnection.PROPERTY, ShelfConnection.BOTH));
+        registerDefaultState(defaultBlockState().setValue(SofaConnection.PROPERTY, SofaConnection.BOTH));
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(ShelfConnection.PROPERTY);
-    }
-
-    @Override
-    protected void registerComponents(ComponentRegistrar<BlockComponent> registrar) {
-        super.registerComponents(registrar);
-
-        FacingBlockComponent.registerHorizontal(registrar);
+        builder.add(SofaConnection.PROPERTY);
     }
 
     @Override
@@ -45,7 +35,8 @@ public final class ShelfBlock extends FurnitureBlockComponentHolder {
         var level = context.getLevel();
         var pos = context.getClickedPos();
         var facingComponent = getComponentOrThrow(BlockComponentTypes.FACING);
-        return ShelfConnection.setConnection(level, pos, blockState, facingComponent::get);
+
+        return SofaConnection.setConnection(level, pos, blockState, facingComponent::get, facingComponent::set);
     }
 
     @Override
@@ -54,7 +45,7 @@ public final class ShelfBlock extends FurnitureBlockComponentHolder {
 
         if(facing.getAxis().isHorizontal()) {
             var facingComponent = getComponentOrThrow(BlockComponentTypes.FACING);
-            result = ShelfConnection.setConnection(level, pos, result, facingComponent::get);
+            result = SofaConnection.setConnection(level, pos, blockState, facingComponent::get, facingComponent::set);
         }
 
         return super.updateShape(result, level, tickAccess, pos, facing, neighborPos, neighborBlockState, random);

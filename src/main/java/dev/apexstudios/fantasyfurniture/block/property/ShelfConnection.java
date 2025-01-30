@@ -1,12 +1,12 @@
 package dev.apexstudios.fantasyfurniture.block.property;
 
+import java.util.function.Function;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraft.world.level.block.state.properties.Property;
 
 public enum ShelfConnection implements StringRepresentable {
     LEFT("left"),
@@ -27,9 +27,17 @@ public enum ShelfConnection implements StringRepresentable {
         return serializedName;
     }
 
-    public static ShelfConnection determine(BlockGetter level, BlockPos pos, BlockState blockState, Property<Direction> facingProperty) {
-        var hasLeft = canConnect(level, pos, blockState, facingProperty, true);
-        var hasRight = canConnect(level, pos, blockState, facingProperty, false);
+    public String getModelSuffix() {
+        return '_' + serializedName;
+    }
+
+    public static BlockState setConnection(BlockGetter level, BlockPos pos, BlockState blockState, Function<BlockState, Direction> getFacing) {
+        return blockState.setValue(PROPERTY, determine(level, pos, blockState, getFacing));
+    }
+
+    private static ShelfConnection determine(BlockGetter level, BlockPos pos, BlockState blockState, Function<BlockState, Direction> getFacing) {
+        var hasLeft = canConnect(level, pos, blockState, getFacing, true);
+        var hasRight = canConnect(level, pos, blockState, getFacing, false);
 
         if(hasLeft && hasRight)
             return BOTH;
@@ -41,17 +49,15 @@ public enum ShelfConnection implements StringRepresentable {
         return NONE;
     }
 
-    private static boolean canConnect(BlockGetter level, BlockPos pos, BlockState blockState, Property<Direction> facingProperty, boolean left) {
-        var facing = blockState.getValue(facingProperty);
+    private static boolean canConnect(BlockGetter level, BlockPos pos, BlockState blockState, Function<BlockState, Direction> getFacing, boolean left) {
+        var facing = getFacing.apply(blockState);
         var offset = left ? facing.getCounterClockWise() : facing.getClockWise();
         var otherPos = pos.relative(offset);
         var otherBlockState = level.getBlockState(otherPos);
 
         if(!otherBlockState.is(blockState.getBlock()))
             return false;
-        if(!otherBlockState.hasProperty(facingProperty))
-            return false;
 
-        return otherBlockState.getValue(facingProperty) == facing;
+        return getFacing.apply(blockState) == facing;
     }
 }

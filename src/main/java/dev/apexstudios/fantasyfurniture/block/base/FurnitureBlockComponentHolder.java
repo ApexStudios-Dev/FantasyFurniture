@@ -48,7 +48,7 @@ public class FurnitureBlockComponentHolder extends BaseBlockComponentHolder {
     private VoxelShape getShape(BlockState blockState, BlockPos pos) {
         var facing = getComponent(BlockComponentTypes.FACING);
         var multiBlock = getComponent(BlockComponentTypes.MULTI_BLOCK);
-        var baseShape = furnitureSet.shape(blockType, Shapes::block);
+        var baseShape = furnitureSet.shape(blockType, blockState, Shapes::block);
 
         if(facing != null)
             baseShape = ApexShapes.rotateHorizontal(baseShape, facing.get(blockState));

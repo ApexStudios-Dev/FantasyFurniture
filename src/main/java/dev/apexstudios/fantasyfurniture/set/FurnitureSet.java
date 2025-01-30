@@ -21,6 +21,7 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent;
@@ -76,9 +77,9 @@ public final class FurnitureSet {
         return mapping(blockType).item;
     }
 
-    public VoxelShape shape(BlockType<?, ?> blockType, Supplier<VoxelShape> defaultShape) {
-        var shape = mapping(blockType).shape;
-        return shape == null ? defaultShape.get() : shape;
+    public VoxelShape shape(BlockType<?, ?> blockType, BlockState blockState, Supplier<VoxelShape> defaultShape) {
+        var shapeGetter = mapping(blockType).shapeGetter;
+        return shapeGetter == null ? defaultShape.get() : shapeGetter.apply(blockState);
     }
 
     public ResourceKey<CreativeModeTab> creativeModeTab() {
@@ -125,7 +126,7 @@ public final class FurnitureSet {
 
     public static final class BlockTypeBuilder<TBlock extends Block, TItem extends Item> {
         private final BlockType<TBlock, TItem> blockType;
-        private Supplier<VoxelShape> shape = null;
+        @Nullable private Function<BlockState, VoxelShape> shapeGetter = null;
         private Function<BlockBehaviour.Properties, BlockBehaviour.Properties> blockProperties = Function.identity();
         private Function<Item.Properties, Item.Properties> itemProperties = Function.identity();
 
@@ -133,9 +134,13 @@ public final class FurnitureSet {
             this.blockType = blockType;
         }
 
-        public BlockTypeBuilder<TBlock, TItem> shape(Supplier<VoxelShape> shape) {
-            this.shape = shape;
+        public BlockTypeBuilder<TBlock, TItem> shape(Function<BlockState, VoxelShape> shapeGetter) {
+            this.shapeGetter = shapeGetter;
             return this;
+        }
+
+        public BlockTypeBuilder<TBlock, TItem> shape(Supplier<VoxelShape> shapeGetter) {
+            return shape(blockState -> shapeGetter.get());
         }
 
         public BlockTypeBuilder<TBlock, TItem> blockProperties(UnaryOperator<BlockBehaviour.Properties> blockProperties) {
@@ -158,12 +163,12 @@ public final class FurnitureSet {
             var block = furnitureSet.registree.registerBlock(blockType.name(), blockType::newBlock, blockProperties);
             var item = furnitureSet.registree.registerBlockItem(blockType.name(), block, blockType::newBlockItem, itemProperties);
 
-            return new Mapping<>(block, item, shape == null ? null : shape.get());
+            return new Mapping<>(block, item, shapeGetter);
         }
     }
 
     private record Mapping<
             TBlock extends Block,
             TItem extends Item
-    >(DeferredBlock<TBlock> block, DeferredItem<TItem> item, @Nullable VoxelShape shape) { }
+    >(DeferredBlock<TBlock> block, DeferredItem<TItem> item, @Nullable Function<BlockState, VoxelShape> shapeGetter) { }
 }

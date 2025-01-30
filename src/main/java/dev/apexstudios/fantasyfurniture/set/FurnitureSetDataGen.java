@@ -12,8 +12,9 @@ import dev.apexstudios.apexcore.lib.data.provider.loot.LootTableProvider;
 import dev.apexstudios.apexcore.lib.data.provider.tag.IntrusiveTagProvider;
 import dev.apexstudios.apexcore.lib.data.provider.tag.TagProvider;
 import dev.apexstudios.apexcore.lib.placement.BlockPlacementRenderer;
-import dev.apexstudios.fantasyfurniture.block.ShelfBlock;
 import dev.apexstudios.fantasyfurniture.block.base.FurnitureDoorBlockComponentHolder;
+import dev.apexstudios.fantasyfurniture.block.property.ShelfConnection;
+import dev.apexstudios.fantasyfurniture.block.property.SofaConnection;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -101,10 +102,10 @@ interface FurnitureSetDataGen {
         run(furnitureSet, BlockType.TABLE_SMALL, block -> horizontalFacingBlock(block, block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty(), blockModels));
         run(furnitureSet, BlockType.FLOOR_LIGHT, block -> multiBlockModel(block, blockModels, index -> ModelLocationUtils.getModelLocation(block, index == MultiBlockComponent.ORIGIN_INDEX ? "_bottom" : "_top")));
         run(furnitureSet, BlockType.CHANDELIER, block -> horizontalFacingBlock(block, block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty(), blockModels));
-        run(furnitureSet, BlockType.SHELF, block -> facingPropertyModel(block, blockModels, $ -> ShelfBlock.CONNECTION, connection -> ModelLocationUtils.getModelLocation(block, '_' + connection.getSerializedName())));
+        run(furnitureSet, BlockType.SHELF, block -> facingPropertyModel(block, blockModels, $ -> ShelfConnection.PROPERTY, connection -> ModelLocationUtils.getModelLocation(block, connection.getModelSuffix())));
+        run(furnitureSet, BlockType.SOFA, block -> facingPropertyModel(block, blockModels, $ -> SofaConnection.PROPERTY, connection -> ModelLocationUtils.getModelLocation(block, connection.getModelSuffix())));
 
         run(furnitureSet, BlockType.COUNTER, block -> blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, ModelLocationUtils.getModelLocation(block))));
-        run(furnitureSet, BlockType.SOFA, block -> blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, ModelLocationUtils.getModelLocation(block))));
     }
 
     static void language(LanguageProvider provider, FurnitureSet furnitureSet, String englishName) {
@@ -131,11 +132,10 @@ interface FurnitureSetDataGen {
         var mineableWithAxe = provider.tag(BlockTags.MINEABLE_WITH_AXE);
 
         furnitureSet.registree().listElements(Registries.BLOCK).map(Holder::value).forEach(block -> {
-            if(block instanceof ComponentHolder && ((ComponentHolder<BlockComponent>) block).hasComponent(BlockComponentTypes.MULTI_BLOCK)) {
+            if(usesPlacementRenderer(block))
                 placementRender.withElement(block);
+            if(block instanceof ComponentHolder && ((ComponentHolder<BlockComponent>) block).hasComponent(BlockComponentTypes.MULTI_BLOCK))
                 relocation.withElement(block);
-            }
-
             if(!furnitureSet.block(BlockType.WOOL).is(block) && !furnitureSet.block(BlockType.CARPET).is(block))
                 mineableWithAxe.withElement(block);
         });
@@ -149,6 +149,14 @@ interface FurnitureSetDataGen {
         tag(provider, ItemTags.BEDS, furnitureSet::item, BlockType.BED_SINGLE, BlockType.BED_DOUBLE);
         tag(provider, Tags.Items.CHESTS_WOODEN, furnitureSet::item, BlockType.CHEST, BlockType.COUNTER, BlockType.DESK_LEFT, BlockType.DESK_RIGHT, BlockType.DRAWER, BlockType.DRESSER, BlockType.LOCKBOX);
         tag(provider, Tags.Items.PLAYER_WORKSTATIONS_FURNACES, furnitureSet::item, BlockType.OVEN);
+    }
+
+    private static boolean usesPlacementRenderer(Block block) {
+        if(block instanceof ComponentHolder && ((ComponentHolder<BlockComponent>) block).hasComponent(BlockComponentTypes.MULTI_BLOCK))
+            return true;
+
+        var defaultBlockState = block.defaultBlockState();
+        return defaultBlockState.hasProperty(ShelfConnection.PROPERTY) || defaultBlockState.hasProperty(SofaConnection.PROPERTY);
     }
 
     private static <TBlock extends Block & ComponentHolder<BlockComponent>, TValue extends Comparable<TValue>> void facingPropertyModel(TBlock block, BlockModelGenerators blockModels, Function<TBlock, Property<TValue>> propertyGetter, Function<TValue, ResourceLocation> modelGetter) {
