@@ -152,6 +152,9 @@ public class NordicFurnitureSet {
             // region: Painting Small
             .blockType(BlockType.PAINTING_SMALL, block -> block.shape(() -> Block.box(0D, 0D, 14D, 16D, 16D, 16D)))
             // endregion
+            // region: Chest
+            .blockType(BlockType.CHEST, block -> block.shape(() -> Block.box(-15D, 0D, 2D, 15D, 14D, 16D)))
+            // endregion
     );
 
     public NordicFurnitureSet(IEventBus modBus) {

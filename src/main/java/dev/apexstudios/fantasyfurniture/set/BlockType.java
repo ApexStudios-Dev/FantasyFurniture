@@ -7,6 +7,7 @@ import dev.apexstudios.fantasyfurniture.block.BedDoubleBlock;
 import dev.apexstudios.fantasyfurniture.block.BedSingleBlock;
 import dev.apexstudios.fantasyfurniture.block.BookshelfBlock;
 import dev.apexstudios.fantasyfurniture.block.ChairBlock;
+import dev.apexstudios.fantasyfurniture.block.ChestBlock;
 import dev.apexstudios.fantasyfurniture.block.DeskBlock;
 import dev.apexstudios.fantasyfurniture.block.DrawerBlock;
 import dev.apexstudios.fantasyfurniture.block.DresserBlock;
@@ -239,9 +240,18 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     );
     // endregion
 
+    // region: Oven
+    BlockType<ChestBlock, BlockItem> CHEST = new Impl<>(
+            "chest",
+            properties(PLANKS),
+            ChestBlock::new,
+            BlockItem::new,
+            FurnitureBlockEntities.CHEST
+    );
+    // endregion
+
     // region: TODO
     BlockType<FurnitureBlock, BlockItem> CHANDELIER = new Impl<>("chandelier", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null);
-    BlockType<FurnitureBlock, BlockItem> CHEST = new Impl<>("chest", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null);
     BlockType<FurnitureBlock, BlockItem> COUNTER = new Impl<>("counter", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null);
     BlockType<FurnitureBlock, BlockItem> FLOOR_LIGHT = new Impl<>("floor_light", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null);
     BlockType<FurnitureBlock, BlockItem> SHELF = new Impl<>("shelf", BlockBehaviour.Properties::of, FurnitureBlock::new, BlockItem::new, null);

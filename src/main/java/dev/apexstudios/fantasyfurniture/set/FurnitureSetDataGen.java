@@ -90,9 +90,9 @@ interface FurnitureSetDataGen {
         run(furnitureSet, BlockType.PAINTING_WIDE, block -> multiBlockModel(block, blockModels, index -> ModelLocationUtils.getModelLocation(block, index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right")));
         run(furnitureSet, BlockType.PAINTING_SMALL, block -> horizontalFacingBlock(block, block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty(), blockModels));
         run(furnitureSet, BlockType.OVEN, block -> horizontalFacingBlock(block, block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty(), blockModels));
+        run(furnitureSet, BlockType.CHEST, block -> multiBlockModel(block, blockModels, index -> ModelLocationUtils.getModelLocation(block, index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right")));
 
         run(furnitureSet, BlockType.CHANDELIER, block -> blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, ModelLocationUtils.getModelLocation(block))));
-        run(furnitureSet, BlockType.CHEST, block -> blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, ModelLocationUtils.getModelLocation(block))));
         run(furnitureSet, BlockType.COUNTER, block -> blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, ModelLocationUtils.getModelLocation(block))));
         run(furnitureSet, BlockType.FLOOR_LIGHT, block -> blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, ModelLocationUtils.getModelLocation(block))));
         run(furnitureSet, BlockType.SHELF, block -> blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, ModelLocationUtils.getModelLocation(block))));
