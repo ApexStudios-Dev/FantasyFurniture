@@ -100,8 +100,8 @@ interface FurnitureSetDataGen {
         run(furnitureSet, BlockType.TABLE_WIDE, block -> multiBlockModel(block, blockModels, index -> ModelLocationUtils.getModelLocation(block, index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right")));
         run(furnitureSet, BlockType.TABLE_SMALL, block -> horizontalFacingBlock(block, block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty(), blockModels));
         run(furnitureSet, BlockType.FLOOR_LIGHT, block -> multiBlockModel(block, blockModels, index -> ModelLocationUtils.getModelLocation(block, index == MultiBlockComponent.ORIGIN_INDEX ? "_bottom" : "_top")));
+        run(furnitureSet, BlockType.CHANDELIER, block -> horizontalFacingBlock(block, block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty(), blockModels));
 
-        run(furnitureSet, BlockType.CHANDELIER, block -> blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, ModelLocationUtils.getModelLocation(block))));
         run(furnitureSet, BlockType.COUNTER, block -> blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, ModelLocationUtils.getModelLocation(block))));
         run(furnitureSet, BlockType.SHELF, block -> blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, ModelLocationUtils.getModelLocation(block))));
         run(furnitureSet, BlockType.SOFA, block -> blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, ModelLocationUtils.getModelLocation(block))));
