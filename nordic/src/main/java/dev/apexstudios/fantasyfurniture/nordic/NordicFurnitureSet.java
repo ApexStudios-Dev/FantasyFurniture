@@ -186,6 +186,24 @@ public class NordicFurnitureSet {
                     Block.box(-15D, 7D, 1D, -13D, 13D, 3D)
             )))
             // endregion
+            // region: Floor Light
+            .blockType(BlockType.FLOOR_LIGHT, block -> block.shape(() -> ApexShapes.join(
+                    Block.box(6D, 0D, 6D, 10D, 2D, 10D),
+                    Block.box(7D, 2D, 7D, 9D, 20D, 9D),
+                    Block.box(6.5D, 20.75D, 2.5D, 9.5D, 22.75D, 5.5D),
+                    Block.box(2.5D, 20.75D, 6.5D, 5.5D, 22.75D, 9.5D),
+                    Block.box(7.25D, 22.75D, 3.25D, 8.75D, 26.75D, 4.75D),
+                    Block.box(3.25D, 22.75D, 7.25D, 4.75D, 26.75D, 8.75D),
+                    Block.box(7.25D, 22.75D, 11.25D, 8.75D, 26.75D, 12.75D),
+                    Block.box(11.25D, 22.75D, 7.25D, 12.75D, 26.75D, 8.75D),
+                    Block.box(10.5D, 20.75D, 6.5D, 13.5D, 22.75D, 9.5D),
+                    Block.box(6.5D, 20.75D, 10.5D, 9.5D, 22.75D, 13.5D),
+                    Block.box(3D, 16.75D, 7D, 7D, 20.75, 9D),
+                    Block.box(9D, 16.75D, 7D, 13D, 20.75, 9D),
+                    Block.box(7D, 16.75D, 3D, 9D, 20.75, 7D),
+                    Block.box(7D, 16.75D, 9D, 9D, 20.75, 13D)
+            )))
+            // endregion
     );
 
     public NordicFurnitureSet(IEventBus modBus) {
