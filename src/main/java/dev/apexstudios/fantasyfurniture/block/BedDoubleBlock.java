@@ -30,5 +30,7 @@ public final class BedDoubleBlock extends FurnitureBlockComponentHolder {
                 .indices(1, 0)
                 .indices(2, 3)
         );
+
+        registrar.register(BlockComponentTypes.BOUNCE);
     }
 }

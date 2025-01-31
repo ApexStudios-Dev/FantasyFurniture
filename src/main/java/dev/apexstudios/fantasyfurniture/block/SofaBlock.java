@@ -1,5 +1,7 @@
 package dev.apexstudios.fantasyfurniture.block;
 
+import dev.apexstudios.apexcore.lib.component.ComponentRegistrar;
+import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
 import dev.apexstudios.fantasyfurniture.block.base.SeatBlock;
 import dev.apexstudios.fantasyfurniture.block.property.SofaConnection;
@@ -20,6 +22,13 @@ public final class SofaBlock extends SeatBlock {
         super(furnitureSet, blockType, properties);
 
         registerDefaultState(defaultBlockState().setValue(SofaConnection.PROPERTY, SofaConnection.BOTH));
+    }
+
+    @Override
+    protected void registerComponents(ComponentRegistrar<BlockComponent> registrar) {
+        super.registerComponents(registrar);
+
+        registrar.register(BlockComponentTypes.BOUNCE);
     }
 
     @Override

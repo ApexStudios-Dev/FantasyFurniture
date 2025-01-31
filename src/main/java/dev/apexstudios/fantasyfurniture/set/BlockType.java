@@ -13,6 +13,7 @@ import dev.apexstudios.fantasyfurniture.block.ChairBlock;
 import dev.apexstudios.fantasyfurniture.block.ChandelierBlock;
 import dev.apexstudios.fantasyfurniture.block.ChestBlock;
 import dev.apexstudios.fantasyfurniture.block.CounterBlock;
+import dev.apexstudios.fantasyfurniture.block.CushionBlock;
 import dev.apexstudios.fantasyfurniture.block.DeskBlock;
 import dev.apexstudios.fantasyfurniture.block.DrawerBlock;
 import dev.apexstudios.fantasyfurniture.block.DresserBlock;
@@ -133,11 +134,11 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // endregion
 
     // region: Cushion
-    BlockType<SeatBlock, BlockItem> CUSHION = new Impl<>(
+    BlockType<CushionBlock, BlockItem> CUSHION = new Impl<>(
             "cushion",
             properties(PLANKS),
             UnaryOperator.identity(),
-            SeatBlock::new,
+            CushionBlock::new,
             simpleBlockItem(),
             null
     );

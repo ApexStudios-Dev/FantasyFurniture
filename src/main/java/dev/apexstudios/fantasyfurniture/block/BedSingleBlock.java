@@ -25,5 +25,7 @@ public final class BedSingleBlock extends FurnitureBlockComponentHolder {
         );
 
         registrar.register(BlockComponentTypes.BED, builder -> builder.indices(1, 0));
+
+        registrar.register(BlockComponentTypes.BOUNCE);
     }
 }
