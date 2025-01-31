@@ -3,13 +3,17 @@ package dev.apexstudios.fantasyfurniture.set;
 import com.google.common.collect.Maps;
 import dev.apexstudios.apexcore.lib.component.ComponentHolder;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
+import dev.apexstudios.apexcore.lib.component.block.BlockComponentHelper;
+import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
 import dev.apexstudios.apexcore.lib.component.block.types.BedBlockComponent;
 import dev.apexstudios.apexcore.lib.data.ProviderTypes;
 import dev.apexstudios.apexcore.lib.data.ResourceGenerator;
+import dev.apexstudios.apexcore.lib.placement.PlacementRenderEvent;
 import dev.apexstudios.apexcore.lib.registree.Registree;
 import dev.apexstudios.apexcore.lib.registree.holder.DeferredBlock;
 import dev.apexstudios.apexcore.lib.registree.holder.DeferredItem;
 import dev.apexstudios.apexcore.lib.util.WoodTypeBuilder;
+import dev.apexstudios.fantasyfurniture.block.property.SofaConnection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
@@ -33,6 +37,7 @@ import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent;
 import org.jetbrains.annotations.Nullable;
 
@@ -77,6 +82,15 @@ public final class FurnitureSet {
 
         registerPoi(modBus, BlockType.BED_SINGLE);
         registerPoi(modBus, BlockType.BED_DOUBLE);
+
+        NeoForge.EVENT_BUS.addListener(PlacementRenderEvent.DefaultBlockState.class, event -> {
+            var blockState = event.defaultBlockState();
+
+            if(blockState.hasProperty(SofaConnection.PROPERTY)) {
+                var facingComponent = BlockComponentHelper.getComponentOrThrow(blockState, BlockComponentTypes.FACING);
+                event.setDefaultBlockState(SofaConnection.setConnection(event.level(), event.pos(), blockState, facingComponent::get, facingComponent::set));
+            }
+        });
     }
 
     private <TBlock extends Block & ComponentHolder<BlockComponent>>void registerPoi(IEventBus modBus, BlockType<TBlock, ?> blockType) {
