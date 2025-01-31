@@ -5,13 +5,15 @@ import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
 import dev.apexstudios.fantasyfurniture.block.base.InventoryBlock;
 import dev.apexstudios.fantasyfurniture.block.entity.BookshelfBlockEntity;
+import dev.apexstudios.fantasyfurniture.set.BlockType;
+import dev.apexstudios.fantasyfurniture.set.FurnitureSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 public final class BookshelfBlock extends InventoryBlock {
-    public BookshelfBlock(Properties properties) {
-        super(properties);
+    public BookshelfBlock(FurnitureSet furnitureSet, BlockType<?, ?> blockType, Properties properties) {
+        super(furnitureSet, blockType, properties);
     }
 
     @Override

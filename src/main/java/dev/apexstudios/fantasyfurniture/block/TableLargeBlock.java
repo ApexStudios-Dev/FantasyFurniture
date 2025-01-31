@@ -5,10 +5,12 @@ import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
 import dev.apexstudios.apexcore.lib.component.block.types.FacingBlockComponent;
 import dev.apexstudios.fantasyfurniture.block.base.FurnitureBlockComponentHolder;
+import dev.apexstudios.fantasyfurniture.set.BlockType;
+import dev.apexstudios.fantasyfurniture.set.FurnitureSet;
 
 public final class TableLargeBlock extends FurnitureBlockComponentHolder {
-    public TableLargeBlock(Properties properties) {
-        super(properties);
+    public TableLargeBlock(FurnitureSet furnitureSet, BlockType<?, ?> blockType, Properties properties) {
+        super(furnitureSet, blockType, properties);
     }
 
     @Override

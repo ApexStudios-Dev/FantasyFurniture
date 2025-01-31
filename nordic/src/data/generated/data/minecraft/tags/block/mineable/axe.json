@@ -27,6 +27,17 @@
     "fantasyfurniture_nordic:table_wide",
     "fantasyfurniture_nordic:table_small",
     "fantasyfurniture_nordic:wall_light",
-    "fantasyfurniture_nordic:bench"
+    "fantasyfurniture_nordic:bench",
+    "fantasyfurniture_nordic:stairs",
+    "fantasyfurniture_nordic:slab",
+    "fantasyfurniture_nordic:fence",
+    "fantasyfurniture_nordic:fence_gate",
+    "fantasyfurniture_nordic:trapdoor",
+    "fantasyfurniture_nordic:pressure_plate",
+    "fantasyfurniture_nordic:button",
+    "fantasyfurniture_nordic:wall_hanging_sign",
+    "fantasyfurniture_nordic:hanging_sign",
+    "fantasyfurniture_nordic:wall_sign",
+    "fantasyfurniture_nordic:sign"
   ]
 }

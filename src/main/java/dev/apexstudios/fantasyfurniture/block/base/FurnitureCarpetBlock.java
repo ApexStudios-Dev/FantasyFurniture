@@ -16,12 +16,11 @@ public class FurnitureCarpetBlock extends CarpetBlock {
     protected final BlockType<?, ?> blockType;
     private final Map<BlockState, VoxelShape> shapes = Maps.newHashMap();
 
-    public FurnitureCarpetBlock(Properties properties) {
+    public FurnitureCarpetBlock(FurnitureSet furnitureSet, BlockType<?, ?> blockType, Properties properties) {
         super(properties);
 
-        var injector = (FurnitureBlock.Injector) properties;
-        furnitureSet = injector.FantasyFurniture$getFurnitureSet();
-        blockType = injector.FantasyFurniture$getBlockType();
+        this.furnitureSet = furnitureSet;
+        this.blockType = blockType;
     }
 
     @Override

@@ -34,6 +34,7 @@ import net.minecraft.client.renderer.item.ItemModel;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.data.BlockFamily;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
@@ -44,6 +45,7 @@ import net.minecraft.world.level.block.state.properties.DoorHingeSide;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.neoforged.neoforge.common.Tags;
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.Nullable;
 
 interface FurnitureSetDataGen {
     boolean USE_MULTIBLOCK_ITEM_MODELS = false;
@@ -59,13 +61,13 @@ interface FurnitureSetDataGen {
         );
     }
 
-    static void models(ModelProvider provider, FurnitureSet furnitureSet) {
+    static void models(ModelProvider provider, FurnitureSet furnitureSet, BlockFamily family) {
         provider.fromRegistree(furnitureSet.registree());
 
         var blockModels = provider.blockModels();
 
-        run(furnitureSet, BlockType.WOOL, wool -> blockModels.createFullAndCarpetBlocks(wool, furnitureSet.block(BlockType.CARPET).value()));
-        run(furnitureSet, BlockType.PLANKS, blockModels::createTrivialCube);
+        run(furnitureSet, BlockType.WOOL, wool -> blockModels.createFullAndCarpetBlocks(wool, furnitureSet.blockOrThrow(BlockType.CARPET).value()));
+        // run(furnitureSet, BlockType.PLANKS, blockModels::createTrivialCube);
         run(furnitureSet, BlockType.DRESSER,  block -> multiBlockModel(block, blockModels, index -> ModelLocationUtils.getModelLocation(block, index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right")));
         run(furnitureSet, BlockType.STOOL, block -> horizontalFacingBlock(block, block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty(), blockModels));
         run(furnitureSet, BlockType.CUSHION, block -> horizontalFacingBlock(block, block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty(), blockModels));
@@ -108,12 +110,21 @@ interface FurnitureSetDataGen {
         run(furnitureSet, BlockType.COUNTER, block -> facingPropertyModel(block, blockModels, $ -> CounterConnection.PROPERTY, connection -> ModelLocationUtils.getModelLocation(block, connection.getModelSuffix()), CounterConnection.NONE));
         run(furnitureSet, BlockType.WALL_LIGHT, block -> horizontalFacingBlock(block, block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty(), blockModels));
         run(furnitureSet, BlockType.BENCH, block -> multiBlockModel(block, blockModels, index -> ModelLocationUtils.getModelLocation(block, index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right")));
+
+        var planks = furnitureSet.blockOrThrow(BlockType.PLANKS).value();
+        blockModels.family(planks).generateFor(family);
+        blockModels.createHangingSign(planks, furnitureSet.blockOrThrow(BlockType.HANGING_SIGN).value(), furnitureSet.blockOrThrow(BlockType.WALL_HANGING_SIGN).value());
     }
 
     static void language(LanguageProvider provider, FurnitureSet furnitureSet, String englishName) {
         BlockType.VALUES.forEach(blockType -> {
+            var item = furnitureSet.item(blockType);
+
+            if(item == null)
+                return;
+
             var name = Stream.of(StringUtils.split(blockType.name(), '_')).map(StringUtils::capitalize).collect(Collectors.joining(" "));
-            provider.addItem(furnitureSet.item(blockType), englishName + ' ' + name);
+            provider.addItem(item, englishName + ' ' + name);
         });
 
         provider.addCreativeModeTab(furnitureSet.creativeModeTab(), englishName + " Furniture Set");
@@ -124,6 +135,17 @@ interface FurnitureSetDataGen {
         tag(provider, BlockTags.WOOL, furnitureSet::block, BlockType.WOOL);
         tag(provider, BlockTags.WOOL_CARPETS, furnitureSet::block, BlockType.CARPET);
         tag(provider, BlockTags.WOODEN_DOORS, furnitureSet::block, BlockType.DOOR_SINGLE, BlockType.DOOR_DOUBLE);
+        tag(provider, BlockTags.WOODEN_BUTTONS, furnitureSet::block, BlockType.BUTTON);
+        tag(provider, BlockTags.WOODEN_STAIRS, furnitureSet::block, BlockType.STAIRS);
+        tag(provider, BlockTags.WOODEN_SLABS, furnitureSet::block, BlockType.SLAB);
+        tag(provider, BlockTags.WOODEN_FENCES, furnitureSet::block, BlockType.FENCE);
+        tag(provider, BlockTags.FENCE_GATES, furnitureSet::block, BlockType.FENCE_GATE);
+        tag(provider, BlockTags.WOODEN_PRESSURE_PLATES, furnitureSet::block, BlockType.PRESSURE_PLATE);
+        tag(provider, BlockTags.WOODEN_TRAPDOORS, furnitureSet::block, BlockType.TRAP_DOOR);
+        tag(provider, BlockTags.STANDING_SIGNS, furnitureSet::block, BlockType.SIGN);
+        tag(provider, BlockTags.WALL_SIGNS, furnitureSet::block, BlockType.WALL_SIGN);
+        tag(provider, BlockTags.CEILING_HANGING_SIGNS, furnitureSet::block, BlockType.HANGING_SIGN);
+        tag(provider, BlockTags.WALL_HANGING_SIGNS, furnitureSet::block, BlockType.WALL_HANGING_SIGN);
         tag(provider, BlockTags.BEDS, furnitureSet::block, BlockType.BED_SINGLE, BlockType.BED_DOUBLE);
         tag(provider, Tags.Blocks.CHESTS_WOODEN, furnitureSet::block, BlockType.CHEST, BlockType.COUNTER, BlockType.DESK_LEFT, BlockType.DESK_RIGHT, BlockType.DRAWER, BlockType.DRESSER, BlockType.LOCKBOX);
         tag(provider, Tags.Blocks.PLAYER_WORKSTATIONS_FURNACES, furnitureSet::block, BlockType.OVEN);
@@ -138,7 +160,7 @@ interface FurnitureSetDataGen {
                 placementRender.withElement(block);
             if(block instanceof ComponentHolder && ((ComponentHolder<BlockComponent>) block).hasComponent(BlockComponentTypes.MULTI_BLOCK))
                 relocation.withElement(block);
-            if(!furnitureSet.block(BlockType.WOOL).is(block) && !furnitureSet.block(BlockType.CARPET).is(block))
+            if(!matches(furnitureSet, BlockType.WOOL, block) && !matches(furnitureSet, BlockType.CARPET, block))
                 mineableWithAxe.withElement(block);
         });
     }
@@ -148,6 +170,18 @@ interface FurnitureSetDataGen {
         tag(provider, ItemTags.WOOL, furnitureSet::item, BlockType.WOOL);
         tag(provider, ItemTags.WOOL_CARPETS, furnitureSet::item, BlockType.CARPET);
         tag(provider, ItemTags.WOODEN_DOORS, furnitureSet::item, BlockType.DOOR_SINGLE, BlockType.DOOR_DOUBLE);
+        tag(provider, ItemTags.WOODEN_BUTTONS, furnitureSet::item, BlockType.BUTTON);
+        tag(provider, ItemTags.WOODEN_STAIRS, furnitureSet::item, BlockType.STAIRS);
+        tag(provider, ItemTags.WOODEN_SLABS, furnitureSet::item, BlockType.SLAB);
+        tag(provider, ItemTags.WOODEN_FENCES, furnitureSet::item, BlockType.FENCE);
+        tag(provider, ItemTags.FENCE_GATES, furnitureSet::item, BlockType.FENCE_GATE);
+        tag(provider, ItemTags.WOODEN_PRESSURE_PLATES, furnitureSet::item, BlockType.PRESSURE_PLATE);
+        tag(provider, ItemTags.WOODEN_TRAPDOORS, furnitureSet::item, BlockType.TRAP_DOOR);
+        tag(provider, ItemTags.SIGNS, furnitureSet::item, BlockType.SIGN);
+        tag(provider, ItemTags.HANGING_SIGNS, furnitureSet::item, BlockType.HANGING_SIGN);
+        // TODO
+        // tag(provider, ItemTags.BOATS, furnitureSet::item, ItemType.BOAT);
+        // tag(provider, ItemTags.CHEST_BOATS, furnitureSet::item, ItemType.CHEST_BOAT);
         tag(provider, ItemTags.BEDS, furnitureSet::item, BlockType.BED_SINGLE, BlockType.BED_DOUBLE);
         tag(provider, Tags.Items.CHESTS_WOODEN, furnitureSet::item, BlockType.CHEST, BlockType.COUNTER, BlockType.DESK_LEFT, BlockType.DESK_RIGHT, BlockType.DRAWER, BlockType.DRESSER, BlockType.LOCKBOX);
         tag(provider, Tags.Items.PLAYER_WORKSTATIONS_FURNACES, furnitureSet::item, BlockType.OVEN);
@@ -252,13 +286,24 @@ interface FurnitureSetDataGen {
                 .select(Direction.NORTH, modifier.apply(Direction.NORTH, Variant.variant()));
     }
 
-    private static <TRegistry> void tag(TagProvider<TRegistry, ?> provider, TagKey<TRegistry> tag, Function<BlockType<?, ?>, Holder<TRegistry>> holderGetter, BlockType<?, ?>... blockTypes) {
+    private static <TRegistry> void tag(TagProvider<TRegistry, ?> provider, TagKey<TRegistry> tag, Function<BlockType<?, ?>, @Nullable Holder<TRegistry>> holderGetter, BlockType<?, ?>... blockTypes) {
         for(var blockType : blockTypes) {
-            provider.tag(tag).withElement(holderGetter.apply(blockType));
+            var holder = holderGetter.apply(blockType);
+
+            if(holder != null)
+                provider.tag(tag).withElement(holder);
         }
     }
 
     private static <TBlock extends Block> void run(FurnitureSet furnitureSet, BlockType<TBlock, ?> blockType, Consumer<TBlock> consumer) {
-        consumer.accept(furnitureSet.block(blockType).value());
+        var block = furnitureSet.block(blockType);
+
+        if(block != null)
+            consumer.accept(block.value());
+    }
+
+    private static boolean matches(FurnitureSet furnitureSet, BlockType<?, ?> blockType, Block block) {
+        var otherBlock = furnitureSet.block(blockType);
+        return otherBlock != null && otherBlock.is(block);
     }
 }

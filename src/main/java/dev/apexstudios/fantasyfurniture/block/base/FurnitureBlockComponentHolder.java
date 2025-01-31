@@ -24,12 +24,11 @@ public class FurnitureBlockComponentHolder extends BaseBlockComponentHolder {
     protected final BlockType<?, ?> blockType;
     private final Map<BlockState, VoxelShape> shapes = Maps.newHashMap();
 
-    public FurnitureBlockComponentHolder(Properties properties) {
+    public FurnitureBlockComponentHolder(FurnitureSet furnitureSet, BlockType<?, ?> blockType, Properties properties) {
         super(properties);
 
-        var injector = (FurnitureBlock.Injector) properties;
-        furnitureSet = injector.FantasyFurniture$getFurnitureSet();
-        blockType = injector.FantasyFurniture$getBlockType();
+        this.furnitureSet = furnitureSet;
+        this.blockType = blockType;
     }
 
     @Override

@@ -16,26 +16,15 @@ public class FurnitureBlock extends Block {
     protected final BlockType<?, ?> blockType;
     private final Map<BlockState, VoxelShape> shapes = Maps.newHashMap();
 
-    public FurnitureBlock(Properties properties) {
+    public FurnitureBlock(FurnitureSet furnitureSet, BlockType<?, ?> blockType, Properties properties) {
         super(properties);
 
-        var injector = (Injector) properties;
-        furnitureSet = injector.FantasyFurniture$getFurnitureSet();
-        blockType = injector.FantasyFurniture$getBlockType();
+        this.furnitureSet = furnitureSet;
+        this.blockType = blockType;
     }
 
     @Override
     protected VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext context) {
         return shapes.computeIfAbsent(blockState, $ -> furnitureSet.shape(blockType, $, () -> super.getShape($, level, pos, context)));
-    }
-
-    public interface Injector {
-        void FantasyFurniture$setFurnitureSet(FurnitureSet furnitureSet);
-
-        FurnitureSet FantasyFurniture$getFurnitureSet();
-
-        void FantasyFurniture$setBlockType(BlockType<?, ?> blockType);
-
-        BlockType<?, ?> FantasyFurniture$getBlockType();
     }
 }

@@ -3,6 +3,8 @@ package dev.apexstudios.fantasyfurniture.block;
 import dev.apexstudios.fantasyfurniture.FurnitureBlockEntities;
 import dev.apexstudios.fantasyfurniture.block.base.InventoryBlock;
 import dev.apexstudios.fantasyfurniture.oven.OvenBlockEntity;
+import dev.apexstudios.fantasyfurniture.set.BlockType;
+import dev.apexstudios.fantasyfurniture.set.FurnitureSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
@@ -13,8 +15,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
 public final class OvenBlock extends InventoryBlock {
-    public OvenBlock(Properties properties) {
-        super(properties);
+    public OvenBlock(FurnitureSet furnitureSet, BlockType<?, ?> blockType, Properties properties) {
+        super(furnitureSet, blockType, properties);
     }
 
     @Override

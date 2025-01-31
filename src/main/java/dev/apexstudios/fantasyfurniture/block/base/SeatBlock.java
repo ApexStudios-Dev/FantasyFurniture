@@ -4,11 +4,13 @@ import dev.apexstudios.apexcore.lib.component.ComponentRegistrar;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
 import dev.apexstudios.apexcore.lib.component.block.types.FacingBlockComponent;
 import dev.apexstudios.apexcore.lib.component.block.types.SeatBlockComponent;
+import dev.apexstudios.fantasyfurniture.set.BlockType;
+import dev.apexstudios.fantasyfurniture.set.FurnitureSet;
 import org.jetbrains.annotations.MustBeInvokedByOverriders;
 
 public class SeatBlock extends FurnitureBlockComponentHolder {
-    public SeatBlock(Properties properties) {
-        super(properties);
+    public SeatBlock(FurnitureSet furnitureSet, BlockType<?, ?> blockType, Properties properties) {
+        super(furnitureSet, blockType, properties);
     }
 
     @MustBeInvokedByOverriders

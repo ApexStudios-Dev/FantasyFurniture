@@ -24,12 +24,11 @@ public abstract class FurnitureEntityBlockComponentHolder extends BaseEntityBloc
     protected final BlockType<?, ?> blockType;
     private final Map<BlockState, VoxelShape> shapes = Maps.newHashMap();
 
-    protected FurnitureEntityBlockComponentHolder(Properties properties) {
+    protected FurnitureEntityBlockComponentHolder(FurnitureSet furnitureSet, BlockType<?, ?> blockType, Properties properties) {
         super(properties);
 
-        var injector = (FurnitureBlock.Injector) properties;
-        furnitureSet = injector.FantasyFurniture$getFurnitureSet();
-        blockType = injector.FantasyFurniture$getBlockType();
+        this.furnitureSet = furnitureSet;
+        this.blockType = blockType;
     }
 
     @Override

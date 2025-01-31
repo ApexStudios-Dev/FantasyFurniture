@@ -3,12 +3,14 @@ package dev.apexstudios.fantasyfurniture.block.base;
 import dev.apexstudios.apexcore.lib.component.ComponentRegistrar;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
 import dev.apexstudios.apexcore.lib.component.block.types.FacingBlockComponent;
+import dev.apexstudios.fantasyfurniture.set.BlockType;
+import dev.apexstudios.fantasyfurniture.set.FurnitureSet;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.MustBeInvokedByOverriders;
 
 public abstract class InventoryBlock extends FurnitureEntityBlockComponentHolder {
-    protected InventoryBlock(Properties properties) {
-        super(properties);
+    protected InventoryBlock(FurnitureSet furnitureSet, BlockType<?, ?> blockType, Properties properties) {
+        super(furnitureSet, blockType, properties);
     }
 
     @MustBeInvokedByOverriders

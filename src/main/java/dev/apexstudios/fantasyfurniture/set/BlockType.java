@@ -1,7 +1,9 @@
 package dev.apexstudios.fantasyfurniture.set;
 
 import com.google.common.collect.Sets;
-import dev.apexstudios.apexcore.lib.registree.holder.DeferredBlockEntity;
+import dev.apexstudios.apexcore.lib.registree.Registree;
+import dev.apexstudios.apexcore.lib.registree.holder.DeferredBlock;
+import dev.apexstudios.apexcore.lib.registree.holder.DeferredItem;
 import dev.apexstudios.fantasyfurniture.FurnitureBlockEntities;
 import dev.apexstudios.fantasyfurniture.block.BedDoubleBlock;
 import dev.apexstudios.fantasyfurniture.block.BedSingleBlock;
@@ -31,18 +33,33 @@ import dev.apexstudios.fantasyfurniture.block.base.FurnitureDoorBlockComponentHo
 import dev.apexstudios.fantasyfurniture.block.base.SeatBlock;
 import java.util.Collections;
 import java.util.Set;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
+import net.minecraft.SharedConstants;
 import net.minecraft.Util;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.HangingSignItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.SignItem;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.ButtonBlock;
+import net.minecraft.world.level.block.CeilingHangingSignBlock;
+import net.minecraft.world.level.block.FenceBlock;
+import net.minecraft.world.level.block.FenceGateBlock;
+import net.minecraft.world.level.block.PressurePlateBlock;
+import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.StandingSignBlock;
+import net.minecraft.world.level.block.TrapDoorBlock;
+import net.minecraft.world.level.block.WallHangingSignBlock;
+import net.minecraft.world.level.block.WallSignBlock;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
 public sealed interface BlockType<TBlock extends Block, TItem extends Item> permits BlockType.Impl {
@@ -55,8 +72,9 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
                     .strength(2F, 3F)
                     .sound(SoundType.WOOD)
                     .ignitedByLava(),
+            UnaryOperator.identity(),
             FurnitureBlock::new,
-            BlockItem::new,
+            simpleBlockItem(),
             null
     );
     // endregion
@@ -70,8 +88,9 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
                     .strength(.8F)
                     .sound(SoundType.WOOL)
                     .ignitedByLava(),
+            UnaryOperator.identity(),
             FurnitureBlock::new,
-            BlockItem::new,
+            simpleBlockItem(),
             null
     );
     // endregion
@@ -84,8 +103,9 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
                     .strength(.1F)
                     .sound(SoundType.WOOL)
                     .ignitedByLava(),
+            UnaryOperator.identity(),
             FurnitureCarpetBlock::new,
-            BlockItem::new,
+            simpleBlockItem(),
             null
     );
     // endregion
@@ -94,8 +114,9 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     BlockType<DresserBlock, BlockItem> DRESSER = new Impl<>(
             "dresser",
             properties(PLANKS),
+            UnaryOperator.identity(),
             DresserBlock::new,
-            BlockItem::new,
+            simpleBlockItem(),
             FurnitureBlockEntities.DRESSER
     );
     // endregion
@@ -104,8 +125,9 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     BlockType<SeatBlock, BlockItem> STOOL = new Impl<>(
             "stool",
             properties(PLANKS),
+            UnaryOperator.identity(),
             SeatBlock::new,
-            BlockItem::new,
+            simpleBlockItem(),
             null
     );
     // endregion
@@ -114,8 +136,9 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     BlockType<SeatBlock, BlockItem> CUSHION = new Impl<>(
             "cushion",
             properties(PLANKS),
+            UnaryOperator.identity(),
             SeatBlock::new,
-            BlockItem::new,
+            simpleBlockItem(),
             null
     );
     // endregion
@@ -124,8 +147,9 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     BlockType<LockBoxBlock, BlockItem> LOCKBOX = new Impl<>(
             "lockbox",
             properties(PLANKS),
+            UnaryOperator.identity(),
             LockBoxBlock::new,
-            BlockItem::new,
+            simpleBlockItem(),
             FurnitureBlockEntities.LOCKBOX
     );
     // endregion
@@ -134,8 +158,9 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     BlockType<DrawerBlock, BlockItem> DRAWER = new Impl<>(
             "drawer",
             properties(PLANKS),
+            UnaryOperator.identity(),
             DrawerBlock::new,
-            BlockItem::new,
+            simpleBlockItem(),
             FurnitureBlockEntities.DRAWER
     );
     // endregion
@@ -144,8 +169,9 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     BlockType<ChairBlock, BlockItem> CHAIR = new Impl<>(
             "chair",
             properties(PLANKS),
+            UnaryOperator.identity(),
             ChairBlock::new,
-            BlockItem::new,
+            simpleBlockItem(),
             null
     );
     // endregion
@@ -154,8 +180,9 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     BlockType<BookshelfBlock, BlockItem> BOOKSHELF = new Impl<>(
             "bookshelf",
             properties(PLANKS),
+            UnaryOperator.identity(),
             BookshelfBlock::new,
-            BlockItem::new,
+            simpleBlockItem(),
             FurnitureBlockEntities.BOOKSHELF
     );
     // endregion
@@ -164,8 +191,9 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     BlockType<BedSingleBlock, BlockItem> BED_SINGLE = new Impl<>(
             "bed_single",
             properties(PLANKS),
+            UnaryOperator.identity(),
             BedSingleBlock::new,
-            BlockItem::new,
+            simpleBlockItem(),
             null
     );
     // endregion
@@ -174,8 +202,9 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     BlockType<BedDoubleBlock, BlockItem> BED_DOUBLE = new Impl<>(
             "bed_double",
             properties(PLANKS),
+            UnaryOperator.identity(),
             BedDoubleBlock::new,
-            BlockItem::new,
+            simpleBlockItem(),
             null
     );
     // endregion
@@ -184,8 +213,9 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     BlockType<FurnitureDoorBlockComponentHolder, BlockItem> DOOR_SINGLE = new Impl<>(
             "door_single",
             properties(PLANKS, BlockBehaviour.Properties::noOcclusion),
+            UnaryOperator.identity(),
             FurnitureDoorBlockComponentHolder::new,
-            BlockItem::new,
+            simpleBlockItem(),
             null
     );
     // endregion
@@ -194,8 +224,9 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     BlockType<FurnitureDoorBlockComponentHolder, BlockItem> DOOR_DOUBLE = new Impl<>(
             "door_double",
             properties(PLANKS, BlockBehaviour.Properties::noOcclusion),
+            UnaryOperator.identity(),
             FurnitureDoorBlockComponentHolder::new,
-            BlockItem::new,
+            simpleBlockItem(),
             null
     );
     // endregion
@@ -204,8 +235,9 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     BlockType<DeskBlock, BlockItem> DESK_LEFT = new Impl<>(
             "desk_left",
             properties(PLANKS),
+            UnaryOperator.identity(),
             DeskBlock::new,
-            BlockItem::new,
+            simpleBlockItem(),
             FurnitureBlockEntities.DESK
     );
     // endregion
@@ -214,8 +246,9 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     BlockType<DeskBlock, BlockItem> DESK_RIGHT = new Impl<>(
             "desk_right",
             properties(PLANKS),
+            UnaryOperator.identity(),
             DeskBlock::new,
-            BlockItem::new,
+            simpleBlockItem(),
             FurnitureBlockEntities.DESK
     );
     // endregion
@@ -224,8 +257,9 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     BlockType<PaintingWideBlock, BlockItem> PAINTING_WIDE = new Impl<>(
             "painting_wide",
             properties(PLANKS),
+            UnaryOperator.identity(),
             PaintingWideBlock::new,
-            BlockItem::new,
+            simpleBlockItem(),
             null
     );
     // endregion
@@ -234,8 +268,9 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     BlockType<PaintingSmallBlock, BlockItem> PAINTING_SMALL = new Impl<>(
             "painting_small",
             properties(PLANKS),
+            UnaryOperator.identity(),
             PaintingSmallBlock::new,
-            BlockItem::new,
+            simpleBlockItem(),
             null
     );
     // endregion
@@ -244,8 +279,9 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     BlockType<OvenBlock, BlockItem> OVEN = new Impl<>(
             "oven",
             properties(PLANKS, BlockBehaviour.Properties::noOcclusion),
+            UnaryOperator.identity(),
             OvenBlock::new,
-            BlockItem::new,
+            simpleBlockItem(),
             FurnitureBlockEntities.OVEN
     );
     // endregion
@@ -254,8 +290,9 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     BlockType<ChestBlock, BlockItem> CHEST = new Impl<>(
             "chest",
             properties(PLANKS),
+            UnaryOperator.identity(),
             ChestBlock::new,
-            BlockItem::new,
+            simpleBlockItem(),
             FurnitureBlockEntities.CHEST
     );
     // endregion
@@ -264,8 +301,9 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     BlockType<TableLargeBlock, BlockItem> TABLE_LARGE = new Impl<>(
             "table_large",
             properties(PLANKS),
+            UnaryOperator.identity(),
             TableLargeBlock::new,
-            BlockItem::new,
+            simpleBlockItem(),
             null
     );
     // endregion
@@ -274,8 +312,9 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     BlockType<TableWideBlock, BlockItem> TABLE_WIDE = new Impl<>(
             "table_wide",
             properties(PLANKS),
+            UnaryOperator.identity(),
             TableWideBlock::new,
-            BlockItem::new,
+            simpleBlockItem(),
             null
     );
     // endregion
@@ -284,8 +323,9 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     BlockType<TableSmallBlock, BlockItem> TABLE_SMALL = new Impl<>(
             "table_small",
             properties(PLANKS),
+            UnaryOperator.identity(),
             TableSmallBlock::new,
-            BlockItem::new,
+            simpleBlockItem(),
             null
     );
     // endregion
@@ -294,8 +334,9 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     BlockType<FloorLightBlock, BlockItem> FLOOR_LIGHT = new Impl<>(
             "floor_light",
             properties(PLANKS, properties -> properties.lightLevel(blockState -> 14)),
+            UnaryOperator.identity(),
             FloorLightBlock::new,
-            BlockItem::new,
+            simpleBlockItem(),
             null
     );
     // endregion
@@ -304,8 +345,9 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     BlockType<ChandelierBlock, BlockItem> CHANDELIER = new Impl<>(
             "chandelier",
             properties(PLANKS, properties -> properties.lightLevel(blockState -> 14)),
+            UnaryOperator.identity(),
             ChandelierBlock::new,
-            BlockItem::new,
+            simpleBlockItem(),
             null
     );
     // endregion
@@ -314,8 +356,9 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     BlockType<ShelfBlock, BlockItem> SHELF = new Impl<>(
             "shelf",
             properties(PLANKS),
+            UnaryOperator.identity(),
             ShelfBlock::new,
-            BlockItem::new,
+            simpleBlockItem(),
             null
     );
     // endregion
@@ -324,8 +367,9 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     BlockType<SofaBlock, BlockItem> SOFA = new Impl<>(
             "sofa",
             properties(PLANKS),
+            UnaryOperator.identity(),
             SofaBlock::new,
-            BlockItem::new,
+            simpleBlockItem(),
             null
     );
     // endregion
@@ -334,8 +378,9 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     BlockType<CounterBlock, BlockItem> COUNTER = new Impl<>(
             "counter",
             properties(PLANKS),
+            UnaryOperator.identity(),
             CounterBlock::new,
-            BlockItem::new,
+            simpleBlockItem(),
             FurnitureBlockEntities.COUNTER
     );
     // endregion
@@ -344,8 +389,9 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     BlockType<WallLightBlock, BlockItem> WALL_LIGHT = new Impl<>(
             "wall_light",
             properties(PLANKS, properties -> properties.lightLevel(blockState -> 14).noCollission()),
+            UnaryOperator.identity(),
             WallLightBlock::new,
-            BlockItem::new,
+            simpleBlockItem(),
             null
     );
     // endregion
@@ -354,9 +400,132 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     BlockType<BenchBlock, BlockItem> BENCH = new Impl<>(
             "bench",
             properties(PLANKS),
+            UnaryOperator.identity(),
             BenchBlock::new,
-            BlockItem::new,
+            simpleBlockItem(),
             null
+    );
+    // endregion
+
+    // region: Stairs
+    BlockType<StairBlock, BlockItem> STAIRS = new Impl<>(
+            "stairs",
+            properties(PLANKS),
+            UnaryOperator.identity(),
+            (furnitureSet, blockType, properties) -> new StairBlock(furnitureSet.blockOrThrow(PLANKS).value().defaultBlockState(), properties),
+            simpleBlockItem(),
+            null
+    );
+    // endregion
+
+    // region: Slab
+    BlockType<SlabBlock, BlockItem> SLAB = new Impl<>(
+            "slab",
+            properties(PLANKS),
+            UnaryOperator.identity(),
+            (furnitureSet, blockType, properties) -> new SlabBlock(properties),
+            simpleBlockItem(),
+            null
+    );
+    // endregion
+
+    // region: Fence
+    BlockType<FenceBlock, BlockItem> FENCE = new Impl<>(
+            "fence",
+            properties(PLANKS),
+            UnaryOperator.identity(),
+            (furnitureSet, blockType, properties) -> new FenceBlock(properties),
+            simpleBlockItem(),
+            null
+    );
+    // endregion
+
+    // region: Fence Gate
+    BlockType<FenceGateBlock, BlockItem> FENCE_GATE = new Impl<>(
+            "fence_gate",
+            properties(PLANKS),
+            UnaryOperator.identity(),
+            (furnitureSet, blockType, properties) -> new FenceGateBlock(furnitureSet.woodType(), properties),
+            simpleBlockItem(),
+            null
+    );
+    // endregion
+
+    // region: Trapdoor
+    BlockType<TrapDoorBlock, BlockItem> TRAP_DOOR = new Impl<>(
+            "trapdoor",
+            properties(PLANKS),
+            UnaryOperator.identity(),
+            (furnitureSet, blockType, properties) -> new TrapDoorBlock(furnitureSet.blockSetType(), properties),
+            simpleBlockItem(),
+            null
+    );
+    // endregion
+
+    // region: Pressure Plate
+    BlockType<PressurePlateBlock, BlockItem> PRESSURE_PLATE = new Impl<>(
+            "pressure_plate",
+            properties(PLANKS),
+            UnaryOperator.identity(),
+            (furnitureSet, blockType, properties) -> new PressurePlateBlock(furnitureSet.blockSetType(), properties),
+            simpleBlockItem(),
+            null
+    );
+    // endregion
+
+    // region: Button
+    BlockType<ButtonBlock, BlockItem> BUTTON = new Impl<>(
+            "button",
+            properties(PLANKS),
+            UnaryOperator.identity(),
+            // SharedConstants.TICKS_PER_SECOND + 10 -> same as OAK -> 30 ticks
+            (furnitureSet, blockType, properties) -> new ButtonBlock(furnitureSet.blockSetType(), SharedConstants.TICKS_PER_SECOND + 10, properties),
+            simpleBlockItem(),
+            null
+    );
+    // endregion
+
+    // region: Wall Hanging Sign
+    BlockType<WallHangingSignBlock, BlockItem> WALL_HANGING_SIGN = new Impl<>(
+            "wall_hanging_sign",
+            properties(PLANKS),
+            UnaryOperator.identity(),
+            (furnitureSet, blockType, properties) -> new WallHangingSignBlock(furnitureSet.woodType(), properties),
+            null,
+            () -> BlockEntityType.HANGING_SIGN
+    );
+    // endregion
+
+    // region: Hanging Sign
+    BlockType<CeilingHangingSignBlock, BlockItem> HANGING_SIGN = new Impl<>(
+            "hanging_sign",
+            properties(PLANKS),
+            properties -> properties.stacksTo(16),
+            (furnitureSet, blockType, properties) -> new CeilingHangingSignBlock(furnitureSet.woodType(), properties),
+            (furnitureSet, blockType, block, properties) -> new HangingSignItem(block, furnitureSet.blockOrThrow(WALL_HANGING_SIGN).value(), properties),
+            () -> BlockEntityType.HANGING_SIGN
+    );
+    // endregion
+
+    // region: Wall Sign
+    BlockType<WallSignBlock, BlockItem> WALL_SIGN = new Impl<>(
+            "wall_sign",
+            properties(PLANKS),
+            UnaryOperator.identity(),
+            (furnitureSet, blockType, properties) -> new WallSignBlock(furnitureSet.woodType(), properties),
+            null,
+            () -> BlockEntityType.SIGN
+    );
+    // endregion
+
+    // region: Sign
+    BlockType<StandingSignBlock, BlockItem> SIGN = new Impl<>(
+            "sign",
+            properties(PLANKS),
+            properties -> properties.stacksTo(16),
+            (furnitureSet, blockType, properties) -> new StandingSignBlock(furnitureSet.woodType(), properties),
+            (furnitureSet, blockType, block, properties) -> new SignItem(block, furnitureSet.blockOrThrow(WALL_SIGN).value(), properties),
+            () -> BlockEntityType.SIGN
     );
     // endregion
 
@@ -364,6 +533,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // LinkedSet to retain insertion order
     // UnmodifiableSet to disallow modifications
     Set<BlockType<?, ?>> VALUES = Collections.unmodifiableSet(Util.make(Sets.newLinkedHashSet(), set -> {
+        // region: Modded
         set.add(PLANKS);
         set.add(WOOL);
         set.add(CARPET);
@@ -394,22 +564,41 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
         set.add(TABLE_SMALL);
         set.add(WALL_LIGHT);
         set.add(BENCH);
+        // endregion
+
+        // region: Vanilla
+        set.add(STAIRS);
+        set.add(SLAB);
+        set.add(FENCE);
+        set.add(FENCE_GATE);
+        set.add(TRAP_DOOR);
+        set.add(PRESSURE_PLATE);
+        set.add(BUTTON);
+        set.add(WALL_HANGING_SIGN);
+        set.add(HANGING_SIGN);
+        set.add(WALL_SIGN);
+        set.add(SIGN);
+        // endregion
     }));
 
     String name();
 
-    Supplier<BlockBehaviour.Properties> blockProperties();
+    @ApiStatus.Internal
+    @Nullable
+    DeferredBlock<TBlock> registerBlock(Registree registree, FurnitureSet furnitureSet, Function<BlockBehaviour.Properties, BlockBehaviour.Properties> propertiesModifier);
 
-    Supplier<Item.Properties> itemProperties();
+    @ApiStatus.Internal
+    @Nullable
+    DeferredItem<TItem> registerItem(Registree registree, FurnitureSet furnitureSet, DeferredBlock<TBlock> blockHolder, Function<Item.Properties, Item.Properties> propertiesModifier);
 
-    TBlock newBlock(BlockBehaviour.Properties properties);
+    @Nullable Supplier<? extends BlockEntityType<?>> blockEntityType();
 
-    TItem newBlockItem(TBlock block, Item.Properties properties);
-
-    @Nullable DeferredBlockEntity<?> blockEntityType();
+    static <TBlock extends Block> BlockItemFactory<TBlock, BlockItem> simpleBlockItem() {
+        return (furnitureSet, blockType, block, properties) -> new BlockItem(block, properties);
+    }
 
     private static Supplier<BlockBehaviour.Properties> properties(BlockType<?, ?> blockType, UnaryOperator<BlockBehaviour.Properties> modifier) {
-        return () -> modifier.apply(blockType.blockProperties().get());
+        return () -> modifier.apply(((Impl<?, ?>) blockType).blockProperties.get());
     }
 
     private static Supplier<BlockBehaviour.Properties> properties(BlockType<?, ?> blockType) {
@@ -419,23 +608,29 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     record Impl<TBlock extends Block, TItem extends Item>(
             String name,
             Supplier<BlockBehaviour.Properties> blockProperties,
-            Supplier<Item.Properties> itemProperties,
-            Function<BlockBehaviour.Properties, TBlock> blockFactory,
-            BiFunction<TBlock, Item.Properties, TItem> blockItemFactory,
-            @Nullable DeferredBlockEntity<?> blockEntityType
+            UnaryOperator<Item.Properties> itemProperties,
+            @Nullable BlockFactory<TBlock> blockFactory,
+            @Nullable BlockItemFactory<TBlock, TItem> blockItemFactory,
+            @Nullable Supplier<? extends BlockEntityType<?>> blockEntityType
     ) implements BlockType<TBlock, TItem> {
-        private Impl(String name, Supplier<BlockBehaviour.Properties> blockProperties, Function<BlockBehaviour.Properties, TBlock> blockFactory, BiFunction<TBlock, Item.Properties, TItem> blockItemFactory, @Nullable DeferredBlockEntity<?> blockEntityType) {
-            this(name, blockProperties, Item.Properties::new, blockFactory, blockItemFactory, blockEntityType);
+        @Override
+        @Nullable
+        public DeferredBlock<TBlock> registerBlock(Registree registree, FurnitureSet furnitureSet, Function<BlockBehaviour.Properties, BlockBehaviour.Properties> propertiesModifier) {
+            if(blockFactory == null)
+                return null;
+
+            var blockProperties = propertiesModifier.apply(this.blockProperties.get());
+            return registree.registerBlock(name, properties -> blockFactory.create(furnitureSet, this, properties), blockProperties);
         }
 
         @Override
-        public TBlock newBlock(BlockBehaviour.Properties properties) {
-            return blockFactory.apply(properties);
-        }
+        @Nullable
+        public DeferredItem<TItem> registerItem(Registree registree, FurnitureSet furnitureSet, DeferredBlock<TBlock> blockHolder, Function<Item.Properties, Item.Properties> propertiesModifier) {
+            if(blockItemFactory == null)
+                return null;
 
-        @Override
-        public TItem newBlockItem(TBlock block, Item.Properties properties) {
-            return blockItemFactory.apply(block, properties);
+            var itemProperties = this.itemProperties.andThen(propertiesModifier).apply(new Item.Properties());
+            return registree.registerBlockItem(name, blockHolder, (block, properties) -> blockItemFactory.create(furnitureSet, this, block, properties), itemProperties);
         }
 
         @Override
@@ -452,5 +647,15 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
         public String toString() {
             return "BlockType(" + name + ')';
         }
+    }
+
+    @FunctionalInterface
+    interface BlockFactory<TBlock extends Block> {
+        TBlock create(FurnitureSet furnitureSet, BlockType<?, ?> blockType, BlockBehaviour.Properties properties);
+    }
+
+    @FunctionalInterface
+    interface BlockItemFactory<TBlock extends Block, TItem extends Item> {
+        TItem create(FurnitureSet furnitureSet, BlockType<?, ?> blockType, TBlock block, Item.Properties properties);
     }
 }
