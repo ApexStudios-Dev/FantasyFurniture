@@ -12,6 +12,7 @@ import dev.apexstudios.apexcore.lib.placement.PlacementRenderEvent;
 import dev.apexstudios.apexcore.lib.registree.Registree;
 import dev.apexstudios.apexcore.lib.registree.holder.DeferredBlock;
 import dev.apexstudios.apexcore.lib.registree.holder.DeferredItem;
+import dev.apexstudios.apexcore.lib.util.ApexUtil;
 import dev.apexstudios.apexcore.lib.util.WoodTypeBuilder;
 import dev.apexstudios.fantasyfurniture.block.property.SofaConnection;
 import java.util.Collections;
@@ -27,6 +28,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.ai.village.poi.PoiTypes;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -37,6 +39,7 @@ import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent;
 import org.jetbrains.annotations.Nullable;
@@ -80,8 +83,11 @@ public final class FurnitureSet {
             });
         });
 
-        registerPoi(modBus, BlockType.BED_SINGLE);
-        registerPoi(modBus, BlockType.BED_DOUBLE);
+        modBus.addListener(FMLCommonSetupEvent.class, event -> event.enqueueWork(() -> {
+            registerPoi(BlockType.BED_SINGLE, BedBlockComponent::registerPoi);
+            registerPoi(BlockType.BED_DOUBLE, BedBlockComponent::registerPoi);
+            registerPoi(BlockType.OVEN, block -> ApexUtil.registerPoiBlockStates(PoiTypes.BUTCHER, block));
+        }));
 
         NeoForge.EVENT_BUS.addListener(PlacementRenderEvent.DefaultBlockState.class, event -> {
             var blockState = event.defaultBlockState();
@@ -93,11 +99,11 @@ public final class FurnitureSet {
         });
     }
 
-    private <TBlock extends Block & ComponentHolder<BlockComponent>>void registerPoi(IEventBus modBus, BlockType<TBlock, ?> blockType) {
+    private <TBlock extends Block & ComponentHolder<BlockComponent>>void registerPoi(BlockType<TBlock, ?> blockType, Consumer<TBlock> consumer) {
         var block = block(blockType);
 
         if(block != null)
-            BedBlockComponent.registerPoi(modBus, block);
+            consumer.accept(block.value());
     }
 
     public WoodType woodType() {
