@@ -44,6 +44,7 @@ import net.minecraft.world.item.HangingSignItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SignItem;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ButtonBlock;
 import net.minecraft.world.level.block.CeilingHangingSignBlock;
 import net.minecraft.world.level.block.FenceBlock;
@@ -442,7 +443,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     BlockType<StairBlock, BlockItem> STAIRS = new Impl<>(
             "stairs",
             false,
-            properties(PLANKS),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_STAIRS),
             UnaryOperator.identity(),
             (furnitureSet, blockType, properties) -> new StairBlock(furnitureSet.blockOrThrow(PLANKS).value().defaultBlockState(), properties),
             simpleBlockItem(),
@@ -454,7 +455,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     BlockType<SlabBlock, BlockItem> SLAB = new Impl<>(
             "slab",
             false,
-            properties(PLANKS),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SLAB),
             UnaryOperator.identity(),
             (furnitureSet, blockType, properties) -> new SlabBlock(properties),
             simpleBlockItem(),
@@ -466,7 +467,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     BlockType<FenceBlock, BlockItem> FENCE = new Impl<>(
             "fence",
             false,
-            properties(PLANKS),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_FENCE),
             UnaryOperator.identity(),
             (furnitureSet, blockType, properties) -> new FenceBlock(properties),
             simpleBlockItem(),
@@ -478,7 +479,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     BlockType<FenceGateBlock, BlockItem> FENCE_GATE = new Impl<>(
             "fence_gate",
             false,
-            properties(PLANKS),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_FENCE_GATE),
             UnaryOperator.identity(),
             (furnitureSet, blockType, properties) -> new FenceGateBlock(furnitureSet.woodType(), properties),
             simpleBlockItem(),
@@ -490,7 +491,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     BlockType<TrapDoorBlock, BlockItem> TRAP_DOOR = new Impl<>(
             "trapdoor",
             false,
-            properties(PLANKS),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_TRAPDOOR),
             UnaryOperator.identity(),
             (furnitureSet, blockType, properties) -> new TrapDoorBlock(furnitureSet.blockSetType(), properties),
             simpleBlockItem(),
@@ -502,7 +503,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     BlockType<PressurePlateBlock, BlockItem> PRESSURE_PLATE = new Impl<>(
             "pressure_plate",
             false,
-            properties(PLANKS),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PRESSURE_PLATE),
             UnaryOperator.identity(),
             (furnitureSet, blockType, properties) -> new PressurePlateBlock(furnitureSet.blockSetType(), properties),
             simpleBlockItem(),
@@ -514,7 +515,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     BlockType<ButtonBlock, BlockItem> BUTTON = new Impl<>(
             "button",
             false,
-            properties(PLANKS),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_BUTTON),
             UnaryOperator.identity(),
             // SharedConstants.TICKS_PER_SECOND + 10 -> same as OAK -> 30 ticks
             (furnitureSet, blockType, properties) -> new ButtonBlock(furnitureSet.blockSetType(), SharedConstants.TICKS_PER_SECOND + 10, properties),
@@ -527,7 +528,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     BlockType<WallHangingSignBlock, BlockItem> WALL_HANGING_SIGN = new Impl<>(
             "wall_hanging_sign",
             false,
-            properties(PLANKS),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_WALL_HANGING_SIGN),
             UnaryOperator.identity(),
             (furnitureSet, blockType, properties) -> new WallHangingSignBlock(furnitureSet.woodType(), properties),
             null,
@@ -539,7 +540,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     BlockType<CeilingHangingSignBlock, BlockItem> HANGING_SIGN = new Impl<>(
             "hanging_sign",
             false,
-            properties(PLANKS),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_HANGING_SIGN),
             properties -> properties.stacksTo(16),
             (furnitureSet, blockType, properties) -> new CeilingHangingSignBlock(furnitureSet.woodType(), properties),
             (furnitureSet, blockType, block, properties) -> new HangingSignItem(block, furnitureSet.blockOrThrow(WALL_HANGING_SIGN).value(), properties),
@@ -551,7 +552,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     BlockType<WallSignBlock, BlockItem> WALL_SIGN = new Impl<>(
             "wall_sign",
             false,
-            properties(PLANKS),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_WALL_SIGN),
             UnaryOperator.identity(),
             (furnitureSet, blockType, properties) -> new WallSignBlock(furnitureSet.woodType(), properties),
             null,
@@ -563,7 +564,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     BlockType<StandingSignBlock, BlockItem> SIGN = new Impl<>(
             "sign",
             false,
-            properties(PLANKS),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SIGN),
             properties -> properties.stacksTo(16),
             (furnitureSet, blockType, properties) -> new StandingSignBlock(furnitureSet.woodType(), properties),
             (furnitureSet, blockType, block, properties) -> new SignItem(block, furnitureSet.blockOrThrow(WALL_SIGN).value(), properties),
