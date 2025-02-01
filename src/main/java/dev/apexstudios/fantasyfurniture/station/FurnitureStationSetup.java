@@ -13,6 +13,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -24,6 +25,7 @@ import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
 public interface FurnitureStationSetup {
@@ -69,5 +71,10 @@ public interface FurnitureStationSetup {
 
     static void register(IEventBus modBus) {
         modBus.addListener(RegisterMenuScreensEvent.class, event -> event.register(MENU.value(), FurnitureStationScreen::new));
+
+        modBus.addListener(BuildCreativeModeTabContentsEvent.class, event -> {
+            if(event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS)
+                event.accept(BLOCK_ITEM);
+        });
     }
 }
