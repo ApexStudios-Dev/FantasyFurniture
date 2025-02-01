@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing_component=east": {
+      "model": "fantasyfurniture:block/furniture_station",
+      "y": 90
+    },
+    "facing_component=north": {
+      "model": "fantasyfurniture:block/furniture_station"
+    },
+    "facing_component=south": {
+      "model": "fantasyfurniture:block/furniture_station",
+      "y": 180
+    },
+    "facing_component=west": {
+      "model": "fantasyfurniture:block/furniture_station",
+      "y": 270
+    }
+  }
+}

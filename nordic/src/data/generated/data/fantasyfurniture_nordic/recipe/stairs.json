@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "fantasyfurniture_nordic_stairs",
+  "key": {
+    "#": "fantasyfurniture_nordic:planks"
+  },
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "result": {
+    "count": 4,
+    "id": "fantasyfurniture_nordic:stairs"
+  }
+}

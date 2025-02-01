@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "group": "fantasyfurniture_nordic_pressure_plate",
+  "key": {
+    "#": "fantasyfurniture_nordic:planks"
+  },
+  "pattern": [
+    "##"
+  ],
+  "result": {
+    "count": 1,
+    "id": "fantasyfurniture_nordic:pressure_plate"
+  }
+}

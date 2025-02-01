@@ -67,6 +67,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Planks
     BlockType<FurnitureBlock, BlockItem> PLANKS = new Impl<>(
             "planks",
+            false,
             () -> BlockBehaviour.Properties.of()
                     .mapColor(MapColor.WOOD)
                     .instrument(NoteBlockInstrument.BASS)
@@ -83,6 +84,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Wool
     BlockType<FurnitureBlock, BlockItem> WOOL = new Impl<>(
             "wool",
+            false,
             () -> BlockBehaviour.Properties.of()
                     .mapColor(MapColor.SNOW)
                     .instrument(NoteBlockInstrument.GUITAR)
@@ -99,6 +101,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Carpet
     BlockType<FurnitureCarpetBlock, BlockItem> CARPET = new Impl<>(
             "carpet",
+            false,
             () -> BlockBehaviour.Properties.of()
                     .mapColor(MapColor.SNOW)
                     .strength(.1F)
@@ -114,6 +117,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Dresser
     BlockType<DresserBlock, BlockItem> DRESSER = new Impl<>(
             "dresser",
+            true,
             properties(PLANKS),
             UnaryOperator.identity(),
             DresserBlock::new,
@@ -125,6 +129,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Stool
     BlockType<SeatBlock, BlockItem> STOOL = new Impl<>(
             "stool",
+            true,
             properties(PLANKS),
             UnaryOperator.identity(),
             SeatBlock::new,
@@ -136,6 +141,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Cushion
     BlockType<CushionBlock, BlockItem> CUSHION = new Impl<>(
             "cushion",
+            true,
             properties(PLANKS),
             UnaryOperator.identity(),
             CushionBlock::new,
@@ -147,6 +153,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: LockBox
     BlockType<LockBoxBlock, BlockItem> LOCKBOX = new Impl<>(
             "lockbox",
+            true,
             properties(PLANKS),
             UnaryOperator.identity(),
             LockBoxBlock::new,
@@ -158,6 +165,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Drawer
     BlockType<DrawerBlock, BlockItem> DRAWER = new Impl<>(
             "drawer",
+            true,
             properties(PLANKS),
             UnaryOperator.identity(),
             DrawerBlock::new,
@@ -169,6 +177,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Chair
     BlockType<ChairBlock, BlockItem> CHAIR = new Impl<>(
             "chair",
+            true,
             properties(PLANKS),
             UnaryOperator.identity(),
             ChairBlock::new,
@@ -180,6 +189,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Bookshelf
     BlockType<BookshelfBlock, BlockItem> BOOKSHELF = new Impl<>(
             "bookshelf",
+            true,
             properties(PLANKS),
             UnaryOperator.identity(),
             BookshelfBlock::new,
@@ -191,6 +201,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Bed Single
     BlockType<BedSingleBlock, BlockItem> BED_SINGLE = new Impl<>(
             "bed_single",
+            true,
             properties(PLANKS),
             UnaryOperator.identity(),
             BedSingleBlock::new,
@@ -202,6 +213,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Bed Double
     BlockType<BedDoubleBlock, BlockItem> BED_DOUBLE = new Impl<>(
             "bed_double",
+            true,
             properties(PLANKS),
             UnaryOperator.identity(),
             BedDoubleBlock::new,
@@ -213,6 +225,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Door Single
     BlockType<FurnitureDoorBlockComponentHolder, BlockItem> DOOR_SINGLE = new Impl<>(
             "door_single",
+            true,
             properties(PLANKS, BlockBehaviour.Properties::noOcclusion),
             UnaryOperator.identity(),
             FurnitureDoorBlockComponentHolder::new,
@@ -224,6 +237,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Door Double
     BlockType<FurnitureDoorBlockComponentHolder, BlockItem> DOOR_DOUBLE = new Impl<>(
             "door_double",
+            true,
             properties(PLANKS, BlockBehaviour.Properties::noOcclusion),
             UnaryOperator.identity(),
             FurnitureDoorBlockComponentHolder::new,
@@ -235,6 +249,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Desk Left
     BlockType<DeskBlock, BlockItem> DESK_LEFT = new Impl<>(
             "desk_left",
+            true,
             properties(PLANKS),
             UnaryOperator.identity(),
             DeskBlock::new,
@@ -246,6 +261,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Desk Right
     BlockType<DeskBlock, BlockItem> DESK_RIGHT = new Impl<>(
             "desk_right",
+            true,
             properties(PLANKS),
             UnaryOperator.identity(),
             DeskBlock::new,
@@ -257,6 +273,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Painting Wide
     BlockType<PaintingWideBlock, BlockItem> PAINTING_WIDE = new Impl<>(
             "painting_wide",
+            true,
             properties(PLANKS),
             UnaryOperator.identity(),
             PaintingWideBlock::new,
@@ -268,6 +285,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Painting Small
     BlockType<PaintingSmallBlock, BlockItem> PAINTING_SMALL = new Impl<>(
             "painting_small",
+            true,
             properties(PLANKS),
             UnaryOperator.identity(),
             PaintingSmallBlock::new,
@@ -279,6 +297,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Oven
     BlockType<OvenBlock, BlockItem> OVEN = new Impl<>(
             "oven",
+            true,
             properties(PLANKS, BlockBehaviour.Properties::noOcclusion),
             UnaryOperator.identity(),
             OvenBlock::new,
@@ -290,6 +309,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Chest
     BlockType<ChestBlock, BlockItem> CHEST = new Impl<>(
             "chest",
+            true,
             properties(PLANKS),
             UnaryOperator.identity(),
             ChestBlock::new,
@@ -301,6 +321,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Table Large
     BlockType<TableLargeBlock, BlockItem> TABLE_LARGE = new Impl<>(
             "table_large",
+            true,
             properties(PLANKS),
             UnaryOperator.identity(),
             TableLargeBlock::new,
@@ -312,6 +333,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Table Wide
     BlockType<TableWideBlock, BlockItem> TABLE_WIDE = new Impl<>(
             "table_wide",
+            true,
             properties(PLANKS),
             UnaryOperator.identity(),
             TableWideBlock::new,
@@ -323,6 +345,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Table Small
     BlockType<TableSmallBlock, BlockItem> TABLE_SMALL = new Impl<>(
             "table_small",
+            true,
             properties(PLANKS),
             UnaryOperator.identity(),
             TableSmallBlock::new,
@@ -334,6 +357,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Floor Light
     BlockType<FloorLightBlock, BlockItem> FLOOR_LIGHT = new Impl<>(
             "floor_light",
+            true,
             properties(PLANKS, properties -> properties.lightLevel(blockState -> 14)),
             UnaryOperator.identity(),
             FloorLightBlock::new,
@@ -345,6 +369,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Chandelier
     BlockType<ChandelierBlock, BlockItem> CHANDELIER = new Impl<>(
             "chandelier",
+            true,
             properties(PLANKS, properties -> properties.lightLevel(blockState -> 14)),
             UnaryOperator.identity(),
             ChandelierBlock::new,
@@ -356,6 +381,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Shelf
     BlockType<ShelfBlock, BlockItem> SHELF = new Impl<>(
             "shelf",
+            true,
             properties(PLANKS),
             UnaryOperator.identity(),
             ShelfBlock::new,
@@ -367,6 +393,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Sofa
     BlockType<SofaBlock, BlockItem> SOFA = new Impl<>(
             "sofa",
+            true,
             properties(PLANKS),
             UnaryOperator.identity(),
             SofaBlock::new,
@@ -378,6 +405,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Counter
     BlockType<CounterBlock, BlockItem> COUNTER = new Impl<>(
             "counter",
+            true,
             properties(PLANKS),
             UnaryOperator.identity(),
             CounterBlock::new,
@@ -389,6 +417,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Wall Light
     BlockType<WallLightBlock, BlockItem> WALL_LIGHT = new Impl<>(
             "wall_light",
+            true,
             properties(PLANKS, properties -> properties.lightLevel(blockState -> 14).noCollission()),
             UnaryOperator.identity(),
             WallLightBlock::new,
@@ -400,6 +429,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Bench
     BlockType<BenchBlock, BlockItem> BENCH = new Impl<>(
             "bench",
+            true,
             properties(PLANKS),
             UnaryOperator.identity(),
             BenchBlock::new,
@@ -411,6 +441,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Stairs
     BlockType<StairBlock, BlockItem> STAIRS = new Impl<>(
             "stairs",
+            false,
             properties(PLANKS),
             UnaryOperator.identity(),
             (furnitureSet, blockType, properties) -> new StairBlock(furnitureSet.blockOrThrow(PLANKS).value().defaultBlockState(), properties),
@@ -422,6 +453,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Slab
     BlockType<SlabBlock, BlockItem> SLAB = new Impl<>(
             "slab",
+            false,
             properties(PLANKS),
             UnaryOperator.identity(),
             (furnitureSet, blockType, properties) -> new SlabBlock(properties),
@@ -433,6 +465,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Fence
     BlockType<FenceBlock, BlockItem> FENCE = new Impl<>(
             "fence",
+            false,
             properties(PLANKS),
             UnaryOperator.identity(),
             (furnitureSet, blockType, properties) -> new FenceBlock(properties),
@@ -444,6 +477,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Fence Gate
     BlockType<FenceGateBlock, BlockItem> FENCE_GATE = new Impl<>(
             "fence_gate",
+            false,
             properties(PLANKS),
             UnaryOperator.identity(),
             (furnitureSet, blockType, properties) -> new FenceGateBlock(furnitureSet.woodType(), properties),
@@ -455,6 +489,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Trapdoor
     BlockType<TrapDoorBlock, BlockItem> TRAP_DOOR = new Impl<>(
             "trapdoor",
+            false,
             properties(PLANKS),
             UnaryOperator.identity(),
             (furnitureSet, blockType, properties) -> new TrapDoorBlock(furnitureSet.blockSetType(), properties),
@@ -466,6 +501,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Pressure Plate
     BlockType<PressurePlateBlock, BlockItem> PRESSURE_PLATE = new Impl<>(
             "pressure_plate",
+            false,
             properties(PLANKS),
             UnaryOperator.identity(),
             (furnitureSet, blockType, properties) -> new PressurePlateBlock(furnitureSet.blockSetType(), properties),
@@ -477,6 +513,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Button
     BlockType<ButtonBlock, BlockItem> BUTTON = new Impl<>(
             "button",
+            false,
             properties(PLANKS),
             UnaryOperator.identity(),
             // SharedConstants.TICKS_PER_SECOND + 10 -> same as OAK -> 30 ticks
@@ -489,6 +526,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Wall Hanging Sign
     BlockType<WallHangingSignBlock, BlockItem> WALL_HANGING_SIGN = new Impl<>(
             "wall_hanging_sign",
+            false,
             properties(PLANKS),
             UnaryOperator.identity(),
             (furnitureSet, blockType, properties) -> new WallHangingSignBlock(furnitureSet.woodType(), properties),
@@ -500,6 +538,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Hanging Sign
     BlockType<CeilingHangingSignBlock, BlockItem> HANGING_SIGN = new Impl<>(
             "hanging_sign",
+            false,
             properties(PLANKS),
             properties -> properties.stacksTo(16),
             (furnitureSet, blockType, properties) -> new CeilingHangingSignBlock(furnitureSet.woodType(), properties),
@@ -511,6 +550,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Wall Sign
     BlockType<WallSignBlock, BlockItem> WALL_SIGN = new Impl<>(
             "wall_sign",
+            false,
             properties(PLANKS),
             UnaryOperator.identity(),
             (furnitureSet, blockType, properties) -> new WallSignBlock(furnitureSet.woodType(), properties),
@@ -522,6 +562,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     // region: Sign
     BlockType<StandingSignBlock, BlockItem> SIGN = new Impl<>(
             "sign",
+            false,
             properties(PLANKS),
             properties -> properties.stacksTo(16),
             (furnitureSet, blockType, properties) -> new StandingSignBlock(furnitureSet.woodType(), properties),
@@ -584,6 +625,8 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
 
     String name();
 
+    boolean forFurnitureStation();
+
     @ApiStatus.Internal
     @Nullable
     DeferredBlock<TBlock> registerBlock(Registree registree, FurnitureSet furnitureSet, Function<BlockBehaviour.Properties, BlockBehaviour.Properties> propertiesModifier);
@@ -608,6 +651,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
 
     record Impl<TBlock extends Block, TItem extends Item>(
             String name,
+            boolean forFurnitureStation,
             Supplier<BlockBehaviour.Properties> blockProperties,
             UnaryOperator<Item.Properties> itemProperties,
             @Nullable BlockFactory<TBlock> blockFactory,

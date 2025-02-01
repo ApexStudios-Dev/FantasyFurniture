@@ -174,7 +174,8 @@ public final class FurnitureSet {
                 .providing(ProviderTypes.ITEM_TAGS, (context, provider) -> FurnitureSetDataGen.itemTags(provider, this))
                 .providing(ProviderTypes.LANGUAGE, (context, provider) -> FurnitureSetDataGen.language(provider, this, englishName))
                 .providing(ProviderTypes.MODELS, (context, provider) -> FurnitureSetDataGen.models(provider, this, family))
-                .providing(ProviderTypes.LOOT_TABLE, (context, provider) -> FurnitureSetDataGen.lootTables(provider, this));
+                .providing(ProviderTypes.LOOT_TABLE, (context, provider) -> FurnitureSetDataGen.lootTables(provider, this))
+                .providing(ProviderTypes.RECIPES, (context, provider) -> FurnitureSetDataGen.recipes(context, provider, this, family));
     }
 
     private <TBlock extends Block> void ifPresent(BlockType<TBlock, ?> blockType, Consumer<TBlock> consumer) {

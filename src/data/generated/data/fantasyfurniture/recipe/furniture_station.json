@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "#c:player_workstations/crafting_tables",
+    "#c:leathers"
+  ],
+  "result": {
+    "count": 1,
+    "id": "fantasyfurniture:furniture_station"
+  }
+}

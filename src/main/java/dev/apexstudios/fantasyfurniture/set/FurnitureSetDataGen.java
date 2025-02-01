@@ -8,14 +8,20 @@ import dev.apexstudios.apexcore.lib.component.block.DoorBlockComponentHolder;
 import dev.apexstudios.apexcore.lib.component.block.types.MultiBlockComponent;
 import dev.apexstudios.apexcore.lib.data.provider.LanguageProvider;
 import dev.apexstudios.apexcore.lib.data.provider.ModelProvider;
+import dev.apexstudios.apexcore.lib.data.provider.RecipeProvider;
+import dev.apexstudios.apexcore.lib.data.provider.context.ProviderListenerContext;
 import dev.apexstudios.apexcore.lib.data.provider.loot.LootTableProvider;
 import dev.apexstudios.apexcore.lib.data.provider.tag.IntrusiveTagProvider;
 import dev.apexstudios.apexcore.lib.data.provider.tag.TagProvider;
 import dev.apexstudios.apexcore.lib.placement.BlockPlacementRenderer;
+import dev.apexstudios.fantasyfurniture.FantasyFurniture;
 import dev.apexstudios.fantasyfurniture.block.base.FurnitureDoorBlockComponentHolder;
 import dev.apexstudios.fantasyfurniture.block.property.CounterConnection;
 import dev.apexstudios.fantasyfurniture.block.property.ShelfConnection;
 import dev.apexstudios.fantasyfurniture.block.property.SofaConnection;
+import dev.apexstudios.fantasyfurniture.station.FurnitureStationRecipeBuilder;
+import dev.apexstudios.fantasyfurniture.station.FurnitureStationSetup;
+import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -35,15 +41,21 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.BlockFamily;
+import net.minecraft.data.recipes.RecipeBuilder;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.SingleItemRecipeBuilder;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.DoorHingeSide;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.crafting.DifferenceIngredient;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.Nullable;
 
@@ -166,8 +178,8 @@ interface FurnitureSetDataGen {
     }
 
     static void itemTags(IntrusiveTagProvider<Item> provider, FurnitureSet furnitureSet) {
-        tag(provider, ItemTags.PLANKS, furnitureSet::item, BlockType.PLANKS);
-        tag(provider, ItemTags.WOOL, furnitureSet::item, BlockType.WOOL);
+        tag(provider, FantasyFurniture.FURNITURE_PLANKS, furnitureSet::item, BlockType.PLANKS);
+        tag(provider, FantasyFurniture.FURNITURE_WOOL, furnitureSet::item, BlockType.WOOL);
         tag(provider, ItemTags.WOOL_CARPETS, furnitureSet::item, BlockType.CARPET);
         tag(provider, ItemTags.WOODEN_DOORS, furnitureSet::item, BlockType.DOOR_SINGLE, BlockType.DOOR_DOUBLE);
         tag(provider, ItemTags.WOODEN_BUTTONS, furnitureSet::item, BlockType.BUTTON);
@@ -185,6 +197,32 @@ interface FurnitureSetDataGen {
         tag(provider, ItemTags.BEDS, furnitureSet::item, BlockType.BED_SINGLE, BlockType.BED_DOUBLE);
         tag(provider, Tags.Items.CHESTS_WOODEN, furnitureSet::item, BlockType.CHEST, BlockType.COUNTER, BlockType.DESK_LEFT, BlockType.DESK_RIGHT, BlockType.DRAWER, BlockType.DRESSER, BlockType.LOCKBOX);
         tag(provider, Tags.Items.PLAYER_WORKSTATIONS_FURNACES, furnitureSet::item, BlockType.OVEN);
+    }
+
+    static void recipes(ProviderListenerContext context, RecipeProvider provider, FurnitureSet furnitureSet, BlockFamily family) {
+        provider.generateRecipes(family, context.enabledFeatures());
+
+        var planks = furnitureSet.blockOrThrow(BlockType.PLANKS);
+        SingleItemRecipeBuilder.stonecutting(DifferenceIngredient.of(provider.tag(ItemTags.PLANKS), provider.tag(FantasyFurniture.FURNITURE_PLANKS)), RecipeCategory.MISC, planks)
+                .unlockedBy("has_planks", provider.has(ItemTags.PLANKS))
+                .save(provider.output(), ResourceKey.create(Registries.RECIPE, RecipeBuilder.getDefaultRecipeId(planks).withPrefix("conversion/")));
+
+        var wool = furnitureSet.blockOrThrow(BlockType.WOOL);
+        SingleItemRecipeBuilder.stonecutting(DifferenceIngredient.of(provider.tag(ItemTags.WOOL), provider.tag(FantasyFurniture.FURNITURE_WOOL)), RecipeCategory.MISC, wool)
+                .unlockedBy("has_wool", provider.has(ItemTags.WOOL))
+                .save(provider.output(), ResourceKey.create(Registries.RECIPE, RecipeBuilder.getDefaultRecipeId(wool).withPrefix("conversion/")));
+
+        run(furnitureSet, BlockType.CARPET, carpet -> provider.carpet(carpet, wool));
+
+        BlockType.VALUES.stream()
+                .filter(BlockType::forFurnitureStation)
+                .map(furnitureSet::item)
+                .filter(Objects::nonNull)
+                .forEach(item -> FurnitureStationRecipeBuilder
+                        .builder(RecipeCategory.MISC, Ingredient.of(planks), Ingredient.of(wool), provider.tag(FurnitureStationSetup.BINDING_AGENT), item)
+                        .unlockedBy("has_planks", provider.has(planks))
+                        .save(provider.output(), ResourceKey.create(Registries.RECIPE, RecipeBuilder.getDefaultRecipeId(item).withPrefix("furniture_station/")))
+                );
     }
 
     private static boolean usesPlacementRenderer(Block block) {
