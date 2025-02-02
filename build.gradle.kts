@@ -4,6 +4,7 @@ import dev.apexstudios.gradle.single.ApexSingleExtension
 plugins {
     id("apex-conventions.neoforge")
     id("apex-conventions.immaculate")
+    id("apex-conventions.mod-publishing")
 }
 
 group = "dev.apexstudios"
@@ -26,4 +27,21 @@ dependencies {
 
     "nordicMainImplementation"(libs.apexcore)
     "nordicDataImplementation"(libs.apexcore)
+}
+
+publishMods {
+    additionalFiles.from(sourceSets
+        .filter { it.name != SourceSet.MAIN_SOURCE_SET_NAME && it.name.endsWith(SourceSet.MAIN_SOURCE_SET_NAME, true) }
+        .mapNotNull { tasks.named(it.jarTaskName, Jar::class.java).orNull }
+        .map { it.archiveFile }
+    )
+
+    modrinth {
+        projectId = "A0nfCqYw"
+    }
+
+    curseforge {
+        projectId = "579564"
+        projectSlug = "fantasys-furniture"
+    }
 }
