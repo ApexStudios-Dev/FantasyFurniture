@@ -8,7 +8,9 @@ license="AllRightsReserved"
     displayName="Fantasy's Furniture - Nordic"
     credits="Apex - Programming"
     authors="ApexStudios"
-    description="Fantasy's Furniture - Nordic"
+    description="Nordic Furniture set for Fantasy's Furniture"
+    logoFile="logo.png"
+    displayURL="https://modrinth.com/project/fantasys-furniture-nordic"
 
 [[dependencies.fantasyfurniture_nordic]]
     modId="apexcore"

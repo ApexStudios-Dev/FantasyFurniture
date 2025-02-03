@@ -6,9 +6,11 @@ license="AllRightsReserved"
     modId="fantasyfurniture"
     version="${file.jarVersion}"
     displayName="Fantasy's Furniture"
-    credits="Apex - Programming"
+    credits="Apex - Programming, Fantasy - Artist"
     authors="ApexStudios"
-    description="Fantasy's Furniture"
+    description="Fantasy's Furniture is a modular mod which adds various new Furniture Sets and Decorational blocks to Minecraft"
+    logoFile="logo.png"
+    displayURL="https://modrinth.com/mod/fantasy-furniture"
 
 [[dependencies.fantasyfurniture]]
     modId="apexcore"
