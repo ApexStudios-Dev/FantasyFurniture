@@ -1,5 +1,6 @@
 import dev.apexstudios.gradle.multi.ModuleBuilder
 import dev.apexstudios.gradle.single.ApexSingleExtension
+import me.modmuss50.mpp.ReleaseType
 
 plugins {
     id("apex-conventions.neoforge")
