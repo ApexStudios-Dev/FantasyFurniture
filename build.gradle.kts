@@ -40,9 +40,9 @@ publishMods {
         .map { it.archiveFile }
     )
 
-    modrinth {
-        projectId = "A0nfCqYw"
-    }
+//    modrinth {
+//        projectId = "A0nfCqYw"
+//    }
 
     curseforge {
         projectId = "579564"
