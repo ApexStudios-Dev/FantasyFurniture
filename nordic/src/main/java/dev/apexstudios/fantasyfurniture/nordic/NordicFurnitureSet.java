@@ -312,6 +312,16 @@ public class NordicFurnitureSet {
                     Block.box(-15D, 5D, 2D, 15D, 7D, 14D)
             )))
             // endregion
+            // region: Wardrobe
+            .blockType(BlockType.WARDROBE, block -> block.shape(() -> ApexShapes.join(
+                    Block.box(-14.75D, 0D, .25D, -12.25D, 31D, 2.75D),
+                    Block.box(-14.75D, 0D, 13.25D, -12.25D, 31D, 15.75D),
+                    Block.box(12.25D, 0D, .25D, 14.75D, 31D, 2.75D),
+                    Block.box(-14D, 2D, 1D, 14D, 31D, 15D),
+                    Block.box(-15D, 31D, 0D, 16D, 45.75D, 16D),
+                    Block.box(12.25D, 0D, 13.25D, 14.75D, 31D, 15.75D)
+            )))
+            // endregion
     );
 
     public NordicFurnitureSet(IEventBus modBus) {
