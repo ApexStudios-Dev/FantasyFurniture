@@ -1,15 +1,18 @@
 {
+  "__comment0": "Base blockstate json",
   "variants": {
     "": {
       "model": "fantasyfurniture_nordic:block/wool"
     }
   },
+
+  "__comment1": "CTM texture logic",
   "athena:loader": "athena:ctm",
   "ctm_textures": {
-    "center": "fantasyfurniture_nordic:block/wool_center",
-    "empty": "fantasyfurniture_nordic:block/wool_empty",
-    "horizontal": "fantasyfurniture_nordic:block/wool_horizontal",
-    "vertical": "fantasyfurniture_nordic:block/wool_vertical",
+    "center": "fantasyfurniture_nordic:block/ctm/wool_center",
+    "empty": "fantasyfurniture_nordic:block/ctm/wool_empty",
+    "horizontal": "fantasyfurniture_nordic:block/ctm/wool_horizontal",
+    "vertical": "fantasyfurniture_nordic:block/ctm/wool_vertical",
     "particle": "fantasyfurniture_nordic:block/wool"
   }
 }
