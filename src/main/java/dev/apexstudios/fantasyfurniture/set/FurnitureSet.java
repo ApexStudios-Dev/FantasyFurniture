@@ -53,7 +53,8 @@ import org.jetbrains.annotations.Nullable;
 
 public final class FurnitureSet {
     private static final Map<String, CtmPack> CTM_PACKS = Map.of(
-            "athena", new CtmPack("ctm-athena", "Athena CTM")
+            "athena", new CtmPack("ctm-athena", "Athena CTM"),
+            "fusion", new CtmPack("ctm-fusion", "Fusion CTM")
     );
 
     private final Registree registree;
