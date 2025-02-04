@@ -24,6 +24,9 @@ dependencyResolutionManagement {
         library("apexcore", "dev.apexstudios", "apexcore").version {
             strictly("[21.4.0,21.5.0)")
         }
+
+        // match version in ApexGradle
+        plugin("modpublish", "me.modmuss50.mod-publish-plugin").version("0.8.4")
     }
 }
 
@@ -31,12 +34,12 @@ plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "0.8.0"
 }
 
-//if(file("../ApexCore/build.gradle.kts").exists()) {
-//    includeBuild("../ApexCore") {
-//        dependencySubstitution {
-//            substitute(module("dev.apexstudios:apexcore")).using(project(":"))
-//        }
-//    }
-//}
+if(file("../ApexCore/build.gradle.kts").exists()) {
+    includeBuild("../ApexCore") {
+        dependencySubstitution {
+            substitute(module("dev.apexstudios:apexcore")).using(project(":"))
+        }
+    }
+}
 
 rootProject.name = "FantasyFurniture"
