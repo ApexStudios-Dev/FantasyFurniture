@@ -122,6 +122,14 @@ interface FurnitureSetDataGen {
         run(furnitureSet, BlockType.COUNTER, block -> facingPropertyModel(block, blockModels, $ -> CounterConnection.PROPERTY, connection -> ModelLocationUtils.getModelLocation(block, connection.getModelSuffix()), CounterConnection.NONE));
         run(furnitureSet, BlockType.WALL_LIGHT, block -> horizontalFacingBlock(block, block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty(), blockModels));
         run(furnitureSet, BlockType.BENCH, block -> multiBlockModel(block, blockModels, index -> ModelLocationUtils.getModelLocation(block, index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right")));
+        run(furnitureSet, BlockType.WARDROBE, block -> multiBlockModel(block, blockModels, index -> ModelLocationUtils.getModelLocation(block, switch (index) {
+            case 1 -> "_bottom_right";
+            case 2 -> "_middle_right";
+            case 3 -> "_middle_left";
+            case 4 -> "_top_right";
+            case 5 -> "_top_left";
+            default -> "_bottom_left";
+        })));
 
         var planks = furnitureSet.blockOrThrow(BlockType.PLANKS).value();
         blockModels.family(planks).generateFor(family);

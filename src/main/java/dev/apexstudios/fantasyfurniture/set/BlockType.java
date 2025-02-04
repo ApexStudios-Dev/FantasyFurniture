@@ -28,6 +28,7 @@ import dev.apexstudios.fantasyfurniture.block.TableLargeBlock;
 import dev.apexstudios.fantasyfurniture.block.TableSmallBlock;
 import dev.apexstudios.fantasyfurniture.block.TableWideBlock;
 import dev.apexstudios.fantasyfurniture.block.WallLightBlock;
+import dev.apexstudios.fantasyfurniture.block.WardrobeBlock;
 import dev.apexstudios.fantasyfurniture.block.base.FurnitureBlock;
 import dev.apexstudios.fantasyfurniture.block.base.FurnitureCarpetBlock;
 import dev.apexstudios.fantasyfurniture.block.base.FurnitureDoorBlockComponentHolder;
@@ -451,6 +452,18 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     );
     // endregion
 
+    // region: Wardrobe
+    BlockType<WardrobeBlock, BlockItem> WARDROBE = new Impl<>(
+            "wardrobe",
+            true,
+            properties(PLANKS),
+            UnaryOperator.identity(),
+            WardrobeBlock::new,
+            simpleBlockItem(),
+            FurnitureBlockEntities.WARDROBE
+    );
+    // endregion
+
     // region: Slab
     BlockType<SlabBlock, BlockItem> SLAB = new Impl<>(
             "slab",
@@ -607,6 +620,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
         set.add(TABLE_SMALL);
         set.add(WALL_LIGHT);
         set.add(BENCH);
+        set.add(WARDROBE);
         // endregion
 
         // region: Vanilla

@@ -10,11 +10,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "fantasyfurniture_nordic:hanging_sign"
+          "name": "fantasyfurniture_nordic:wardrobe"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "fantasyfurniture_nordic:blocks/wall_hanging_sign"
+  "random_sequence": "fantasyfurniture_nordic:blocks/wardrobe"
 }
