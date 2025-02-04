@@ -15,6 +15,7 @@ public class NordicFurnitureSet {
     public static final String ID = "fantasyfurniture_nordic";
 
     public static final FurnitureSet FURNITURE_SET = FurnitureSet.create(ID, builder -> builder
+            .englishName("Nordic")
             // region: Dresser
             .blockType(BlockType.DRESSER, block -> block.shape(() -> ApexShapes.join(
                     Block.box(-15D, 0D, 1D, 15D, 16D, 15D),

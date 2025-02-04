@@ -26,8 +26,12 @@ import net.minecraft.Util;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.BlockFamily;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.repository.Pack;
+import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.world.entity.ai.village.poi.PoiTypes;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -39,19 +43,28 @@ import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.AddPackFindersEvent;
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.Nullable;
 
 public final class FurnitureSet {
+    private static final Map<String, CtmPack> CTM_PACKS = Map.of(
+            "athena", new CtmPack("ctm-athena", "Athena CTM")
+    );
+
     private final Registree registree;
     private final Map<BlockType<?, ?>, Mapping<?, ?>> mappings;
     private final ResourceKey<CreativeModeTab> creativeModeTab;
     private final WoodType woodType;
+    private final String englishName;
 
     private FurnitureSet(String namespace, Builder builder) {
         registree = new Registree(namespace);
+        englishName = Objects.requireNonNullElseGet(builder.englishName, () -> StringUtils.capitalize(namespace));
         woodType = builder.woodTypeBuilder.build(namespace + ResourceLocation.NAMESPACE_SEPARATOR + "wood_type");
         mappings = builder.register(this);
 
@@ -97,6 +110,19 @@ public final class FurnitureSet {
                 event.setDefaultBlockState(SofaConnection.setConnection(event.level(), event.pos(), blockState, facingComponent::get, facingComponent::set));
             }
         });
+
+        modBus.addListener(AddPackFindersEvent.class, event -> CTM_PACKS.entrySet().stream()
+                .filter(entry -> ModList.get().isLoaded(entry.getKey()))
+                .map(Map.Entry::getValue)
+                .forEach(pack -> event.addPackFinders(
+                        registree.registryName("packs/" + pack.packId),
+                        PackType.CLIENT_RESOURCES,
+                        Component.literal(pack.packName + " (" + englishName + ')'),
+                        PackSource.BUILT_IN,
+                        false,
+                        Pack.Position.TOP
+                ))
+        );
     }
 
     private <TBlock extends Block & ComponentHolder<BlockComponent>>void registerPoi(BlockType<TBlock, ?> blockType, Consumer<TBlock> consumer) {
@@ -157,7 +183,7 @@ public final class FurnitureSet {
         return creativeModeTab;
     }
 
-    public void registerDataGen(String englishName, ResourceGenerator generator) {
+    public void registerDataGen(ResourceGenerator generator) {
         var family = Util.make(() -> {
             var builder = new BlockFamily.Builder(blockOrThrow(BlockType.PLANKS).value())
                     .recipeGroupPrefix(registree.namespace())
@@ -182,6 +208,11 @@ public final class FurnitureSet {
                 .providing(ProviderTypes.MODELS, (context, provider) -> FurnitureSetDataGen.models(provider, this, family))
                 .providing(ProviderTypes.LOOT_TABLE, (context, provider) -> FurnitureSetDataGen.lootTables(provider, this))
                 .providing(ProviderTypes.RECIPES, (context, provider) -> FurnitureSetDataGen.recipes(context, provider, this, family));
+
+        CTM_PACKS.forEach((modId, pack) -> {
+            generator.pack(pack.packId)
+                    .description("Enables " + pack.packName + " support");
+        });
     }
 
     private <TBlock extends Block> void ifPresent(BlockType<TBlock, ?> blockType, Consumer<TBlock> consumer) {
@@ -198,9 +229,15 @@ public final class FurnitureSet {
     public static final class Builder {
         private final Map<BlockType<?, ?>, Consumer<? extends BlockTypeBuilder<?, ?>>> blockTypes = Maps.newHashMapWithExpectedSize(BlockType.VALUES.size());
         private final WoodTypeBuilder woodTypeBuilder = WoodTypeBuilder.builder();
+        @Nullable private String englishName = null;
 
         private Builder() {
 
+        }
+
+        public Builder englishName(String englishName) {
+            this.englishName = englishName;
+            return this;
         }
 
         public <TBlock extends Block, TItem extends Item> Builder blockType(BlockType<TBlock, TItem> blockType, Consumer<BlockTypeBuilder<TBlock, TItem>> builder) {
@@ -278,4 +315,6 @@ public final class FurnitureSet {
             TBlock extends Block,
             TItem extends Item
     >(@Nullable DeferredBlock<TBlock> block, @Nullable DeferredItem<TItem> item, @Nullable Function<BlockState, VoxelShape> shapeGetter) { }
+
+    private record CtmPack(String packId, String packName) { }
 }
