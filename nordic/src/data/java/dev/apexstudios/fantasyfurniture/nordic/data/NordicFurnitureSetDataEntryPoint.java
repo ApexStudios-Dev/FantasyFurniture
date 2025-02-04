@@ -8,6 +8,6 @@ import net.neoforged.fml.common.Mod;
 @Mod(NordicFurnitureSet.ID)
 public final class NordicFurnitureSetDataEntryPoint {
     public NordicFurnitureSetDataEntryPoint(IEventBus modBus) {
-        ResourceGenerator.of(modBus, generator -> NordicFurnitureSet.FURNITURE_SET.registerDataGen("Nordic", generator));
+        ResourceGenerator.of(modBus, NordicFurnitureSet.FURNITURE_SET::registerDataGen);
     }
 }
