@@ -30,6 +30,8 @@ dependencies {
 }
 
 publishMods {
+    type = ReleaseType.ALPHA
+
     additionalFiles.from(sourceSets
         .filter { it.name != SourceSet.MAIN_SOURCE_SET_NAME && it.name.endsWith(SourceSet.MAIN_SOURCE_SET_NAME, true) }
         .mapNotNull { tasks.named(it.jarTaskName, Jar::class.java).orNull }
