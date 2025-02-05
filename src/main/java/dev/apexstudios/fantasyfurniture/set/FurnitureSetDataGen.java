@@ -15,12 +15,15 @@ import dev.apexstudios.apexcore.lib.data.provider.tag.IntrusiveTagProvider;
 import dev.apexstudios.apexcore.lib.data.provider.tag.TagProvider;
 import dev.apexstudios.apexcore.lib.placement.BlockPlacementRenderer;
 import dev.apexstudios.fantasyfurniture.FantasyFurniture;
+import dev.apexstudios.fantasyfurniture.block.TableBlock;
 import dev.apexstudios.fantasyfurniture.block.base.FurnitureDoorBlockComponentHolder;
 import dev.apexstudios.fantasyfurniture.block.property.CounterConnection;
 import dev.apexstudios.fantasyfurniture.block.property.ShelfConnection;
 import dev.apexstudios.fantasyfurniture.block.property.SofaConnection;
 import dev.apexstudios.fantasyfurniture.station.FurnitureStationRecipeBuilder;
 import dev.apexstudios.fantasyfurniture.station.FurnitureStationSetup;
+import java.util.Comparator;
+import java.util.EnumSet;
 import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -52,6 +55,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.properties.DoorHingeSide;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.neoforged.neoforge.common.Tags;
@@ -107,14 +111,6 @@ interface FurnitureSetDataGen {
         run(furnitureSet, BlockType.PAINTING_SMALL, block -> horizontalFacingBlock(block, block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty(), blockModels));
         run(furnitureSet, BlockType.OVEN, block -> horizontalFacingBlock(block, block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty(), blockModels));
         run(furnitureSet, BlockType.CHEST, block -> multiBlockModel(block, blockModels, index -> ModelLocationUtils.getModelLocation(block, index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right")));
-        run(furnitureSet, BlockType.TABLE_LARGE, block -> multiBlockModel(block, blockModels, index -> ModelLocationUtils.getModelLocation(block, switch (index) {
-            case 1 -> "_top_left";
-            case 2 -> "_bottom_right";
-            case 3 -> "_top_right";
-            default -> "_bottom_left";
-        })));
-        run(furnitureSet, BlockType.TABLE_WIDE, block -> multiBlockModel(block, blockModels, index -> ModelLocationUtils.getModelLocation(block, index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right")));
-        run(furnitureSet, BlockType.TABLE_SMALL, block -> horizontalFacingBlock(block, block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty(), blockModels));
         run(furnitureSet, BlockType.FLOOR_LIGHT, block -> multiBlockModel(block, blockModels, index -> ModelLocationUtils.getModelLocation(block, index == MultiBlockComponent.ORIGIN_INDEX ? "_bottom" : "_top")));
         run(furnitureSet, BlockType.CHANDELIER, block -> horizontalFacingBlock(block, block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty(), blockModels));
         run(furnitureSet, BlockType.SHELF, block -> facingPropertyModel(block, blockModels, $ -> ShelfConnection.PROPERTY, connection -> ModelLocationUtils.getModelLocation(block, connection.getModelSuffix()), ShelfConnection.NONE));
@@ -130,6 +126,7 @@ interface FurnitureSetDataGen {
             case 5 -> "_top_left";
             default -> "_bottom_left";
         })));
+        run(furnitureSet, BlockType.TABLE, block -> tableModel(block, blockModels));
 
         var planks = furnitureSet.blockOrThrow(BlockType.PLANKS).value();
         blockModels.family(planks).generateFor(family);
@@ -234,6 +231,8 @@ interface FurnitureSetDataGen {
     }
 
     private static boolean usesPlacementRenderer(Block block) {
+        if(block instanceof TableBlock)
+            return true;
         if(block instanceof ComponentHolder && ((ComponentHolder<BlockComponent>) block).hasComponent(BlockComponentTypes.MULTI_BLOCK))
             return true;
 
@@ -312,6 +311,62 @@ interface FurnitureSetDataGen {
     private static void horizontalFacingBlock(Block block, Property<Direction> property, BlockModelGenerators blockModels) {
         blockModels.blockStateOutput.accept(MultiVariantGenerator.multiVariant(block)
                 .with(createHorizontalFacingDispatch(property, (facing, variant) -> variant.with(VariantProperties.MODEL, ModelLocationUtils.getModelLocation(block))))
+        );
+    }
+
+    private static void tableModel(TableBlock block, BlockModelGenerators blockModels) {
+        var facingProperty = block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty();
+
+        blockModels.blockStateOutput.accept(MultiVariantGenerator.multiVariant(block)
+                .with(PropertyDispatch.properties(facingProperty, TableBlock.NORTH, TableBlock.EAST, TableBlock.SOUTH, TableBlock.WEST).generate((facing, north, east, south, west) -> {
+                    var connections = EnumSet.noneOf(Direction.class);
+                    var facingForConnection = TableBlock.getFacingForConnection(facing);
+
+                    if(north)
+                        connections.add(Direction.NORTH);
+                    if(east)
+                        connections.add(Direction.EAST);
+                    if(south)
+                        connections.add(Direction.SOUTH);
+                    if(west)
+                        connections.add(Direction.WEST);
+
+                    var rotation = switch (facingForConnection) {
+                        case EAST -> Rotation.CLOCKWISE_90;
+                        case SOUTH -> Rotation.CLOCKWISE_180;
+                        case WEST -> Rotation.COUNTERCLOCKWISE_90;
+                        default -> Rotation.NONE;
+                    };
+
+                    // might not be the best way to do this but its datagen so who cares about performance
+                    // collects connected sides
+                    // rotates them to be in correct orientation for facing direction
+                    // sorts them into N<-E<-S<-W order
+                    // truncates down to single letter per direction
+                    // joins entries to single string
+                    var suffix = connections.stream().map(rotation::rotate).sorted(Comparator.comparingInt(connection -> switch (connection) {
+                        case NORTH -> 0;
+                        case EAST -> 1;
+                        case SOUTH -> 2;
+                        case WEST -> 3;
+                        default -> -1;
+                    })).map(connection -> switch (connection) {
+                        case NORTH -> 'n';
+                        case EAST -> 'e';
+                        case SOUTH -> 's';
+                        case WEST -> 'w';
+                        default -> null;
+                    }).filter(Objects::nonNull).map(String::valueOf).collect(Collectors.joining(""));
+
+                    return Variant.variant()
+                            .with(VariantProperties.MODEL, ModelLocationUtils.getModelLocation(block, suffix.isBlank() ? "" : '_' + suffix))
+                            .with(VariantProperties.Y_ROT, switch (facing) {
+                                case EAST -> VariantProperties.Rotation.R90;
+                                case SOUTH -> VariantProperties.Rotation.R180;
+                                case WEST -> VariantProperties.Rotation.R270;
+                                default -> VariantProperties.Rotation.R0;
+                            });
+                }))
         );
     }
 

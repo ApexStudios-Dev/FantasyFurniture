@@ -24,9 +24,7 @@ import dev.apexstudios.fantasyfurniture.block.PaintingSmallBlock;
 import dev.apexstudios.fantasyfurniture.block.PaintingWideBlock;
 import dev.apexstudios.fantasyfurniture.block.ShelfBlock;
 import dev.apexstudios.fantasyfurniture.block.SofaBlock;
-import dev.apexstudios.fantasyfurniture.block.TableLargeBlock;
-import dev.apexstudios.fantasyfurniture.block.TableSmallBlock;
-import dev.apexstudios.fantasyfurniture.block.TableWideBlock;
+import dev.apexstudios.fantasyfurniture.block.TableBlock;
 import dev.apexstudios.fantasyfurniture.block.WallLightBlock;
 import dev.apexstudios.fantasyfurniture.block.WardrobeBlock;
 import dev.apexstudios.fantasyfurniture.block.base.FurnitureBlock;
@@ -66,6 +64,7 @@ import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
 public sealed interface BlockType<TBlock extends Block, TItem extends Item> permits BlockType.Impl {
+    // region: Modded
     // region: Planks
     BlockType<FurnitureBlock, BlockItem> PLANKS = new Impl<>(
             "planks",
@@ -320,42 +319,6 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     );
     // endregion
 
-    // region: Table Large
-    BlockType<TableLargeBlock, BlockItem> TABLE_LARGE = new Impl<>(
-            "table_large",
-            true,
-            properties(PLANKS),
-            UnaryOperator.identity(),
-            TableLargeBlock::new,
-            simpleBlockItem(),
-            null
-    );
-    // endregion
-
-    // region: Table Wide
-    BlockType<TableWideBlock, BlockItem> TABLE_WIDE = new Impl<>(
-            "table_wide",
-            true,
-            properties(PLANKS),
-            UnaryOperator.identity(),
-            TableWideBlock::new,
-            simpleBlockItem(),
-            null
-    );
-    // endregion
-
-    // region: Table Small
-    BlockType<TableSmallBlock, BlockItem> TABLE_SMALL = new Impl<>(
-            "table_small",
-            true,
-            properties(PLANKS),
-            UnaryOperator.identity(),
-            TableSmallBlock::new,
-            simpleBlockItem(),
-            null
-    );
-    // endregion
-
     // region: Floor Light
     BlockType<FloorLightBlock, BlockItem> FLOOR_LIGHT = new Impl<>(
             "floor_light",
@@ -440,18 +403,6 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
     );
     // endregion
 
-    // region: Stairs
-    BlockType<StairBlock, BlockItem> STAIRS = new Impl<>(
-            "stairs",
-            false,
-            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_STAIRS),
-            UnaryOperator.identity(),
-            (furnitureSet, blockType, properties) -> new StairBlock(furnitureSet.blockOrThrow(PLANKS).value().defaultBlockState(), properties),
-            simpleBlockItem(),
-            null
-    );
-    // endregion
-
     // region: Wardrobe
     BlockType<WardrobeBlock, BlockItem> WARDROBE = new Impl<>(
             "wardrobe",
@@ -461,6 +412,32 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
             WardrobeBlock::new,
             simpleBlockItem(),
             FurnitureBlockEntities.WARDROBE
+    );
+    // endregion
+
+    // region: Table
+    BlockType<TableBlock, BlockItem> TABLE = new Impl<>(
+            "table",
+            true,
+            properties(PLANKS),
+            UnaryOperator.identity(),
+            TableBlock::new,
+            simpleBlockItem(),
+            null
+    );
+    // endregion
+    // endregion
+
+    // region: Vanilla
+    // region: Stairs
+    BlockType<StairBlock, BlockItem> STAIRS = new Impl<>(
+            "stairs",
+            false,
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_STAIRS),
+            UnaryOperator.identity(),
+            (furnitureSet, blockType, properties) -> new StairBlock(furnitureSet.blockOrThrow(PLANKS).value().defaultBlockState(), properties),
+            simpleBlockItem(),
+            null
     );
     // endregion
 
@@ -584,6 +561,7 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
             () -> BlockEntityType.SIGN
     );
     // endregion
+    // endregion
 
     // dumb way to define registration order
     // LinkedSet to retain insertion order
@@ -615,12 +593,10 @@ public sealed interface BlockType<TBlock extends Block, TItem extends Item> perm
         set.add(PAINTING_WIDE);
         set.add(SHELF);
         set.add(SOFA);
-        set.add(TABLE_LARGE);
-        set.add(TABLE_WIDE);
-        set.add(TABLE_SMALL);
         set.add(WALL_LIGHT);
         set.add(BENCH);
         set.add(WARDROBE);
+        set.add(TABLE);
         // endregion
 
         // region: Vanilla

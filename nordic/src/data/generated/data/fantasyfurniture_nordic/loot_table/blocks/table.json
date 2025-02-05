@@ -10,11 +10,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "fantasyfurniture_nordic:table_large"
+          "name": "fantasyfurniture_nordic:table"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "fantasyfurniture_nordic:blocks/table_large"
+  "random_sequence": "fantasyfurniture_nordic:blocks/table"
 }
