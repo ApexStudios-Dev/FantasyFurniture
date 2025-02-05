@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_nordic:furniture_station/table_wide"
+        "recipe": "fantasyfurniture_nordic:furniture_station/table"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "fantasyfurniture_nordic:furniture_station/table_wide"
+      "fantasyfurniture_nordic:furniture_station/table"
     ]
   }
 }

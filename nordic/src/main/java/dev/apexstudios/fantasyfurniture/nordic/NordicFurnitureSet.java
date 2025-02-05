@@ -1,18 +1,23 @@
 package dev.apexstudios.fantasyfurniture.nordic;
 
 import dev.apexstudios.apexcore.lib.util.shapes.ApexShapes;
+import dev.apexstudios.fantasyfurniture.block.TableBlock;
 import dev.apexstudios.fantasyfurniture.block.property.CounterConnection;
 import dev.apexstudios.fantasyfurniture.block.property.ShelfConnection;
 import dev.apexstudios.fantasyfurniture.block.property.SofaConnection;
 import dev.apexstudios.fantasyfurniture.set.BlockType;
 import dev.apexstudios.fantasyfurniture.set.FurnitureSet;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 
 @Mod(NordicFurnitureSet.ID)
 public class NordicFurnitureSet {
     public static final String ID = "fantasyfurniture_nordic";
+
+    public static final VoxelShape SHAPE_TABLE_TOP = Block.box(0, 13, 0, 16, 16, 16);
+    public static final VoxelShape SHAPE_TABLE_LEG = Block.box(13, 0, 1, 15, 13, 3);
 
     public static final FurnitureSet FURNITURE_SET = FurnitureSet.create(ID, builder -> builder
             .englishName("Nordic")
@@ -159,37 +164,6 @@ public class NordicFurnitureSet {
             // region: Chest
             .blockType(BlockType.CHEST, block -> block.shape(() -> Block.box(-15D, 0D, 2D, 15D, 14D, 16D)))
             // endregion
-            // region: Table Large
-            .blockType(BlockType.TABLE_LARGE, block -> block.shape(() -> ApexShapes.join(
-                    Block.box(12D, 0D, 2D, 14D, 13D, 4D),
-                    Block.box(-14D, 0D, 2D, -12D, 13D, 4D),
-                    Block.box(-14D, 0D, 28D, -12D, 13D, 30D),
-                    Block.box(12D, 0D, 28D, 14D, 13D, 30D),
-                    Block.box(-16D, 13D, 0D, 16D, 16D, 32D)
-            )))
-            // endregion
-            // region: Table Small
-            .blockType(BlockType.TABLE_SMALL, block -> block.shape(() -> ApexShapes.join(
-                    Block.box(1D, 0D, 1D, 3D, 13D, 3D),
-                    Block.box(1D, 0D, 13D, 3D, 13D, 15D),
-                    Block.box(13D, 0D, 13D, 15D, 13D, 15D),
-                    Block.box(13D, 0D, 1D, 15D, 13D, 3D),
-                    Block.box(0D, 13D, 0D, 16D, 16D, 16D)
-            )))
-            // endregion
-            // region: Table Wide
-            .blockType(BlockType.TABLE_WIDE, block -> block.shape(() -> ApexShapes.join(
-                    Block.box(13D, 0D, 0D, 15D, 9D, 2D),
-                    Block.box(13D, 7D, 1D, 15D, 13D, 3D),
-                    Block.box(13D, 7D, 13D, 15D, 13D, 15D),
-                    Block.box(-15D, 7D, 13D, -13D, 13D, 15D),
-                    Block.box(-15D, 0D, 0D, -13D, 9D, 2D),
-                    Block.box(-15D, 0D, 14D, -13D, 9D, 16D),
-                    Block.box(13D, 0D, 14D, 15D, 9D, 16D),
-                    Block.box(-16D, 13D, 0D, 16D, 16D, 16D),
-                    Block.box(-15D, 7D, 1D, -13D, 13D, 3D)
-            )))
-            // endregion
             // region: Floor Light
             .blockType(BlockType.FLOOR_LIGHT, block -> block.shape(() -> ApexShapes.join(
                     Block.box(6D, 0D, 6D, 10D, 2D, 10D),
@@ -322,6 +296,9 @@ public class NordicFurnitureSet {
                     Block.box(-15D, 31D, 0D, 16D, 45.75D, 16D),
                     Block.box(12.25D, 0D, 13.25D, 14.75D, 31D, 15.75D)
             )))
+            // endregion
+            // region: Table
+            .blockType(BlockType.TABLE, block -> block.shape(blockState -> TableBlock.getShape(blockState, SHAPE_TABLE_TOP, SHAPE_TABLE_LEG)))
             // endregion
     );
 
