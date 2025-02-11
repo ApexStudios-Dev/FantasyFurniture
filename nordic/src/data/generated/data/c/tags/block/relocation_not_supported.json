@@ -1,18 +1,18 @@
 {
   "values": [
-    "fantasyfurniture_nordic:dresser",
-    "fantasyfurniture_nordic:bed_double",
-    "fantasyfurniture_nordic:bed_single",
-    "fantasyfurniture_nordic:bookshelf",
-    "fantasyfurniture_nordic:chair",
-    "fantasyfurniture_nordic:chest",
-    "fantasyfurniture_nordic:desk_left",
-    "fantasyfurniture_nordic:desk_right",
-    "fantasyfurniture_nordic:door_double",
-    "fantasyfurniture_nordic:door_single",
-    "fantasyfurniture_nordic:floor_light",
     "fantasyfurniture_nordic:painting_wide",
+    "fantasyfurniture_nordic:desk_right",
+    "fantasyfurniture_nordic:bed_single",
+    "fantasyfurniture_nordic:door_double",
+    "fantasyfurniture_nordic:wardrobe",
+    "fantasyfurniture_nordic:floor_light",
+    "fantasyfurniture_nordic:chest",
+    "fantasyfurniture_nordic:chair",
+    "fantasyfurniture_nordic:bed_double",
     "fantasyfurniture_nordic:bench",
-    "fantasyfurniture_nordic:wardrobe"
+    "fantasyfurniture_nordic:dresser",
+    "fantasyfurniture_nordic:desk_left",
+    "fantasyfurniture_nordic:bookshelf",
+    "fantasyfurniture_nordic:door_single"
   ]
 }

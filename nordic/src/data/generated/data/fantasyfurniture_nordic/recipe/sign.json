@@ -1,7 +1,7 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "misc",
-  "group": "fantasyfurniture_nordic_sign",
+  "group": "sign",
   "key": {
     "#": "fantasyfurniture_nordic:planks",
     "X": "minecraft:stick"

@@ -1,7 +1,6 @@
 {
   "type": "minecraft:crafting_shapeless",
   "category": "redstone",
-  "group": "fantasyfurniture_nordic_button",
   "ingredients": [
     "fantasyfurniture_nordic:planks"
   ],

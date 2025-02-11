@@ -6,8 +6,6 @@ import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
 import dev.apexstudios.apexcore.lib.component.block.types.FacingBlockComponent;
 import dev.apexstudios.fantasyfurniture.block.base.FurnitureBlockComponentHolder;
 import dev.apexstudios.fantasyfurniture.block.property.ShelfConnection;
-import dev.apexstudios.fantasyfurniture.set.BlockType;
-import dev.apexstudios.fantasyfurniture.set.FurnitureSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -18,9 +16,9 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 
-public final class ShelfBlock extends FurnitureBlockComponentHolder {
-    public ShelfBlock(FurnitureSet furnitureSet, BlockType<?, ?> blockType, Properties properties) {
-        super(furnitureSet, blockType, properties);
+public class ShelfBlock extends FurnitureBlockComponentHolder {
+    public ShelfBlock(Properties properties) {
+        super(properties);
 
         registerDefaultState(defaultBlockState().setValue(ShelfConnection.PROPERTY, ShelfConnection.BOTH));
     }

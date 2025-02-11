@@ -7,8 +7,6 @@ import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
 import dev.apexstudios.apexcore.lib.component.block.types.FacingBlockComponent;
 import dev.apexstudios.apexcore.lib.util.shapes.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.base.FurnitureBlockComponentHolder;
-import dev.apexstudios.fantasyfurniture.set.BlockType;
-import dev.apexstudios.fantasyfurniture.set.FurnitureSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -25,14 +23,14 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-public final class TableBlock extends FurnitureBlockComponentHolder {
+public class TableBlock extends FurnitureBlockComponentHolder {
     public static final BooleanProperty NORTH = BlockStateProperties.NORTH;
     public static final BooleanProperty EAST = BlockStateProperties.EAST;
     public static final BooleanProperty SOUTH = BlockStateProperties.SOUTH;
     public static final BooleanProperty WEST = BlockStateProperties.WEST;
 
-    public TableBlock(FurnitureSet furnitureSet, BlockType<?, ?> blockType, Properties properties) {
-        super(furnitureSet, blockType, properties);
+    public TableBlock(Properties properties) {
+        super(properties);
 
         registerDefaultState(defaultBlockState()
                 .setValue(NORTH, false)

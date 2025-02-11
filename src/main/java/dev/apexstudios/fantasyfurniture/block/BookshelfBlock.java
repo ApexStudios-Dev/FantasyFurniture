@@ -3,17 +3,15 @@ package dev.apexstudios.fantasyfurniture.block;
 import dev.apexstudios.apexcore.lib.component.ComponentRegistrar;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
-import dev.apexstudios.fantasyfurniture.block.base.InventoryBlock;
 import dev.apexstudios.fantasyfurniture.block.entity.BookshelfBlockEntity;
-import dev.apexstudios.fantasyfurniture.set.BlockType;
-import dev.apexstudios.fantasyfurniture.set.FurnitureSet;
+import dev.apexstudios.fantasyfurniture.block.base.InventoryBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-public final class BookshelfBlock extends InventoryBlock {
-    public BookshelfBlock(FurnitureSet furnitureSet, BlockType<?, ?> blockType, Properties properties) {
-        super(furnitureSet, blockType, properties);
+public class BookshelfBlock extends InventoryBlock {
+    public BookshelfBlock(Properties properties) {
+        super(properties);
     }
 
     @Override

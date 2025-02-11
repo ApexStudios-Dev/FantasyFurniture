@@ -4,17 +4,15 @@ import dev.apexstudios.apexcore.lib.component.ComponentRegistrar;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
 import dev.apexstudios.apexcore.lib.component.block.types.FacingBlockComponent;
 import dev.apexstudios.fantasyfurniture.block.base.FurnitureBlockComponentHolder;
-import dev.apexstudios.fantasyfurniture.set.BlockType;
-import dev.apexstudios.fantasyfurniture.set.FurnitureSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
-public final class ChandelierBlock extends FurnitureBlockComponentHolder {
-    public ChandelierBlock(FurnitureSet furnitureSet, BlockType<?, ?> blockType, Properties properties) {
-        super(furnitureSet, blockType, properties);
+public class ChandelierBlock extends FurnitureBlockComponentHolder {
+    public ChandelierBlock(Properties properties) {
+        super(properties);
     }
 
     @Override

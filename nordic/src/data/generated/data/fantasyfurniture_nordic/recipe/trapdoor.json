@@ -1,7 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "redstone",
-  "group": "fantasyfurniture_nordic_trapdoor",
   "key": {
     "#": "fantasyfurniture_nordic:planks"
   },
