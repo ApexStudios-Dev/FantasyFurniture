@@ -1,0 +1,6 @@
+{
+  "pack": {
+    "description": "Enables Athena CTM support",
+    "pack_format": 61
+  }
+}

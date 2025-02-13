@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/button",
+  "textures": {
+    "texture": "fantasyfurniture_venthyr:block/planks"
+  }
+}

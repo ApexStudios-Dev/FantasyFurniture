@@ -34,6 +34,7 @@ plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "0.9.0"
 }
 
+// Does not work well with the modular projects
 //if(file("../ApexCore/build.gradle.kts").exists()) {
 //    includeBuild("../ApexCore") {
 //        dependencySubstitution {

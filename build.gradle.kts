@@ -1,6 +1,8 @@
+import dev.apexstudios.gradle.ApexExtension
 import dev.apexstudios.gradle.multi.ModuleBuilder
 import dev.apexstudios.gradle.single.ApexSingleExtension
 import me.modmuss50.mpp.ReleaseType
+import org.gradle.configurationcache.extensions.capitalized
 
 plugins {
     id("apex-conventions.neoforge")
@@ -18,46 +20,68 @@ apex.extendCompilerErrors()
 val single = ApexSingleExtension.getOrCreate(project)
 single.withDataGen()
 
+class ModProject(val id: String, val name: String, val projectId: String? = null, val slug: String? = null) {
+    fun sourceSetId(): String = when (id) {
+        SourceSet.MAIN_SOURCE_SET_NAME -> SourceSet.MAIN_SOURCE_SET_NAME
+        else -> "$id${SourceSet.MAIN_SOURCE_SET_NAME.capitalized()}"
+    }
+
+    fun dataSourceSetId(): String = when (id) {
+        SourceSet.MAIN_SOURCE_SET_NAME -> ApexExtension.DATA_NAME
+        else -> "$id${ApexExtension.DATA_NAME.capitalized()}"
+    }
+
+    fun sourceSet(): SourceSet = sourceSets[sourceSetId()]
+    fun dataSourceSet(): SourceSet = sourceSets[dataSourceSetId()]
+}
+
+val furnitureSets = listOf(
+    ModProject(
+        SourceSet.MAIN_SOURCE_SET_NAME,
+        "Fantasy's Furniture",
+        "579564",
+        "fantasys-furniture"
+    ),
+    ModProject(
+        "nordic",
+        "Fantasy's Furniture - Nordic",
+        "1191799",
+        "fantasys-furniture-nordic"
+    ),
+    ModProject(
+        "venthyr",
+        "Fantasy's Furniture - Venthyr"
+    )
+)
+
 ModuleBuilder.modules(project) {
-    module("nordic") { hasData() }
+    furnitureSets.filterNot { it.id == SourceSet.MAIN_SOURCE_SET_NAME }.forEach {
+        module(it.id) { hasData() }
+    }
 }
 
 dependencies {
-    implementation(libs.apexcore)
     accessTransformers(libs.apexcore)
     interfaceInjectionData(libs.apexcore)
-    "dataImplementation"(libs.apexcore)
 
-    "nordicMainImplementation"(libs.apexcore)
-    "nordicDataImplementation"(libs.apexcore)
+    furnitureSets.forEach {
+        it.sourceSet().implementationConfigurationName(libs.apexcore)
+        it.dataSourceSet().implementationConfigurationName(libs.apexcore)
+    }
 }
-
-class ModProject(val name: String, val projectId: String, val slug: String)
 
 // Try to match `apex-conventions.mod-publishing`
 publishMods {
     type = ReleaseType.ALPHA
     modLoaders.add("neoforge")
     changelog = ""
+    dryRun = true
 
     val commonCF = curseforgeOptions {
         accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
         minecraftVersions.add(neoForge.minecraftVersion)
         announcementTitle = "Download from CurseForge"
     }
-
-    val setProperties = mapOf(
-        "main" to ModProject(
-            "Fantasy's Furniture",
-            "579564",
-            "fantasys-furniture"
-        ),
-        "nordic" to ModProject(
-            "Fantasy's Furniture - Nordic",
-            "1191799",
-            "fantasys-furniture-nordic"
-        )
-    )
 
     discord {
         webhookUrl = providers.environmentVariable("DISCORD_WEBHOOK_URL")
@@ -66,17 +90,13 @@ publishMods {
         content = "# Fantasy's Furniture v${project.version} is out!"
     }
 
-    sourceSets
-        .filter { it.name.contains(SourceSet.MAIN_SOURCE_SET_NAME, true) }
-        .forEach { it ->
-            val setName = if(it.name.equals(SourceSet.MAIN_SOURCE_SET_NAME, true)) SourceSet.MAIN_SOURCE_SET_NAME else it.name.substring(0, it.name.length - SourceSet.MAIN_SOURCE_SET_NAME.length)
-
-            curseforge(setName) {
-                from(commonCF)
-                displayName = "${setProperties[setName]!!.name} - ${project.version}"
-                projectId = setProperties[setName]!!.projectId
-                projectSlug = setProperties[setName]!!.slug
-                file = tasks.named(it.jarTaskName, Jar::class.java).map { it.archiveFile }.get()
-            }
+    furnitureSets.filterNot { it.projectId == null && it.slug == null }.forEach { furnitureSet ->
+        curseforge(furnitureSet.id) {
+            from(commonCF)
+            displayName = "${furnitureSet.name} - ${project.version}"
+            projectId = furnitureSet.projectId
+            projectSlug = furnitureSet.slug
+            file = tasks.named(furnitureSet.sourceSet().jarTaskName, Jar::class.java).map { it.archiveFile }.get()
         }
+    }
 }
