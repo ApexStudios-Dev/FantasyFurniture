@@ -2,13 +2,12 @@ package dev.apexstudios.fantasyfurniture.set;
 
 import com.google.common.collect.Sets;
 import dev.apexstudios.apexcore.core.seat.SeatSetup;
-import dev.apexstudios.apexcore.lib.component.ComponentHolder;
-import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
 import dev.apexstudios.apexcore.lib.component.block.DoorBlockComponentHolder;
 import dev.apexstudios.apexcore.lib.component.block.types.BedBlockComponent;
 import dev.apexstudios.apexcore.lib.component.block.types.MultiBlockComponent;
 import dev.apexstudios.apexcore.lib.data.provider.RecipeProvider;
+import dev.apexstudios.apexcore.lib.data.provider.model.ModelUtil;
 import dev.apexstudios.apexcore.lib.placement.BlockPlacementRenderer;
 import dev.apexstudios.apexcore.lib.placement.PlacementRenderEvent;
 import dev.apexstudios.apexcore.lib.util.ApexUtil;
@@ -49,9 +48,6 @@ import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.Objects;
 import java.util.Set;
-import java.util.function.BiFunction;
-import java.util.function.Function;
-import java.util.function.IntFunction;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
@@ -67,13 +63,8 @@ import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TexturedModel;
 import net.minecraft.core.Direction;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.SingleItemRecipeBuilder;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.ai.village.poi.PoiTypes;
@@ -90,7 +81,6 @@ import net.minecraft.world.level.block.CeilingHangingSignBlock;
 import net.minecraft.world.level.block.FenceBlock;
 import net.minecraft.world.level.block.FenceGateBlock;
 import net.minecraft.world.level.block.PressurePlateBlock;
-import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.StandingSignBlock;
@@ -100,7 +90,6 @@ import net.minecraft.world.level.block.WallSignBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.DoorHingeSide;
-import net.minecraft.world.level.block.state.properties.Property;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.crafting.DifferenceIngredient;
@@ -145,7 +134,7 @@ public interface BlockTypes {
                                     item
                             )
                             .unlockedBy("has_planks", provider.has(item))
-                            .save(provider.output(), ResourceKey.create(Registries.RECIPE, RecipeBuilder.getDefaultRecipeId(item).withPrefix("conversion/")))
+                            .save(provider.output(), RecipeProvider.recipeKeyWithPrefix(item, "conversion/"))
                     )
     );
     // endregion
@@ -168,7 +157,7 @@ public interface BlockTypes {
                                     item
                             )
                             .unlockedBy("has_wool", provider.has(item))
-                            .save(provider.output(), ResourceKey.create(Registries.RECIPE, RecipeBuilder.getDefaultRecipeId(item).withPrefix("conversion/")))
+                            .save(provider.output(), RecipeProvider.recipeKeyWithPrefix(item, "conversion/"))
                     )
     );
     // endregion
@@ -198,7 +187,7 @@ public interface BlockTypes {
                     .initialBlockProperties(PLANK_PROPERTIES)
                     .blockEntity(FurnitureBlockEntities.DRESSER)
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
-                    .model((context, models, furnitureSet, block) -> multiBlockModel(block, models, index -> ModelLocationUtils.getModelLocation(block, index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right")))
+                    .model((context, models, furnitureSet, block) -> ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right"))
                     .translation("Dresser")
                     .blockTags((provider, furnitureSet, block) -> {
                         provider.tag(Tags.Blocks.CHESTS_WOODEN).withElement(block);
@@ -218,7 +207,7 @@ public interface BlockTypes {
             builder -> builder
                     .initialBlockProperties(PLANK_PROPERTIES)
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
-                    .model((context, models, furnitureSet, block) -> horizontalFacingBlock(block, block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty(), models))
+                    .model((context, models, furnitureSet, block) -> ModelUtil.horizontalFacingBlock(block, models))
                     .translation("Stool")
                     .blockTags((provider, furnitureSet, block) -> provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block))
                     .recipe(BlockTypes::furnitureStationRecipe)
@@ -232,7 +221,7 @@ public interface BlockTypes {
             builder -> builder
                     .initialBlockProperties(PLANK_PROPERTIES)
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
-                    .model((context, models, furnitureSet, block) -> horizontalFacingBlock(block, block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty(), models))
+                    .model((context, models, furnitureSet, block) -> ModelUtil.horizontalFacingBlock(block, models))
                     .translation("Cushion")
                     .blockTags((provider, furnitureSet, block) -> provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block))
                     .recipe(BlockTypes::furnitureStationRecipe)
@@ -247,7 +236,7 @@ public interface BlockTypes {
                     .initialBlockProperties(PLANK_PROPERTIES)
                     .blockEntity(FurnitureBlockEntities.LOCKBOX)
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
-                    .model((context, models, furnitureSet, block) -> horizontalFacingBlock(block, block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty(), models))
+                    .model((context, models, furnitureSet, block) -> ModelUtil.horizontalFacingBlock(block, models))
                     .translation("Lockbox")
                     .blockTags((provider, furnitureSet, block) -> {
                         provider.tag(Tags.Blocks.CHESTS_WOODEN).withElement(block);
@@ -266,7 +255,7 @@ public interface BlockTypes {
                     .initialBlockProperties(PLANK_PROPERTIES)
                     .blockEntity(FurnitureBlockEntities.DRAWER)
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
-                    .model((context, models, furnitureSet, block) -> horizontalFacingBlock(block, block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty(), models))
+                    .model((context, models, furnitureSet, block) -> ModelUtil.horizontalFacingBlock(block, models))
                     .translation("Drawer")
                     .blockTags((provider, furnitureSet, block) -> {
                         provider.tag(Tags.Blocks.CHESTS_WOODEN).withElement(block);
@@ -284,7 +273,7 @@ public interface BlockTypes {
             builder -> builder
                     .initialBlockProperties(PLANK_PROPERTIES)
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
-                    .model((context, models, furnitureSet, block) -> multiBlockModel(block, models, index -> ModelLocationUtils.getModelLocation(block, index == MultiBlockComponent.ORIGIN_INDEX ? "_bottom" : "_top")))
+                    .model((context, models, furnitureSet, block) -> ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_bottom" : "_top"))
                     .translation("Chair")
                     .blockTags((provider, furnitureSet, block) -> {
                         provider.tag(SeatSetup.ORIGIN_ONLY).withElement(block);
@@ -304,12 +293,12 @@ public interface BlockTypes {
                     .initialBlockProperties(PLANK_PROPERTIES)
                     .blockEntity(FurnitureBlockEntities.BOOKSHELF)
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
-                    .model((context, models, furnitureSet, block) -> multiBlockModel(block, models, index -> ModelLocationUtils.getModelLocation(block, switch (index) {
+                    .model((context, models, furnitureSet, block) -> ModelUtil.multiBlockModelSuffix(block, models, index -> switch (index) {
                         case 1 -> "_bottom_right";
                         case 2 -> "_top_right";
                         case 3 -> "_top_left";
                         default -> "_bottom_left";
-                    })))
+                    }))
                     .translation("Bookshelf")
                     .blockTags((provider, furnitureSet, block) -> {
                         provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
@@ -327,7 +316,7 @@ public interface BlockTypes {
             builder -> builder
                     .initialBlockProperties(PLANK_PROPERTIES)
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
-                    .model((context, models, furnitureSet, block) -> multiBlockModel(block, models, index -> ModelLocationUtils.getModelLocation(block, index == MultiBlockComponent.ORIGIN_INDEX ? "_bottom" : "_top")))
+                    .model((context, models, furnitureSet, block) -> ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_bottom" : "_top"))
                     .translation("Bed Single")
                     .blockTags((provider, furnitureSet, block) -> {
                         provider.tag(BlockTags.BEDS).withElement(block);
@@ -348,12 +337,12 @@ public interface BlockTypes {
             builder -> builder
                     .initialBlockProperties(PLANK_PROPERTIES)
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
-                    .model((context, models, furnitureSet, block) -> multiBlockModel(block, models, index -> ModelLocationUtils.getModelLocation(block, switch (index) {
+                    .model((context, models, furnitureSet, block) -> ModelUtil.multiBlockModelSuffix(block, models, index -> switch (index) {
                         case 1 -> "_top_left";
                         case 2 -> "_top_right";
                         case 3 -> "_bottom_right";
                         default -> "_bottom_left";
-                    })))
+                    }))
                     .translation("Bed Double")
                     .blockTags((provider, furnitureSet, block) -> {
                         provider.tag(BlockTags.BEDS).withElement(block);
@@ -415,7 +404,7 @@ public interface BlockTypes {
                     .initialBlockProperties(PLANK_PROPERTIES)
                     .blockEntity(FurnitureBlockEntities.DESK)
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
-                    .model((context, models, furnitureSet, block) -> multiBlockModel(block, models, index -> ModelLocationUtils.getModelLocation(block, index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right")))
+                    .model((context, models, furnitureSet, block) -> ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right"))
                     .translation("Desk Left")
                     .blockTags((provider, furnitureSet, block) -> {
                         provider.tag(Tags.Blocks.CHESTS_WOODEN).withElement(block);
@@ -436,7 +425,7 @@ public interface BlockTypes {
                     .initialBlockProperties(PLANK_PROPERTIES)
                     .blockEntity(FurnitureBlockEntities.DESK)
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
-                    .model((context, models, furnitureSet, block) -> multiBlockModel(block, models, index -> ModelLocationUtils.getModelLocation(block, index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right")))
+                    .model((context, models, furnitureSet, block) -> ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right"))
                     .translation("Desk Right")
                     .blockTags((provider, furnitureSet, block) -> {
                         provider.tag(Tags.Blocks.CHESTS_WOODEN).withElement(block);
@@ -456,7 +445,7 @@ public interface BlockTypes {
             builder -> builder
                     .initialBlockProperties(PLANK_PROPERTIES)
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
-                    .model((context, models, furnitureSet, block) -> multiBlockModel(block, models, index -> ModelLocationUtils.getModelLocation(block, index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right")))
+                    .model((context, models, furnitureSet, block) -> ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right"))
                     .translation("Painting Wide")
                     .blockTags((provider, furnitureSet, block) -> {
                         provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
@@ -474,7 +463,7 @@ public interface BlockTypes {
             builder -> builder
                     .initialBlockProperties(PLANK_PROPERTIES)
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
-                    .model((context, models, furnitureSet, block) -> horizontalFacingBlock(block, block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty(), models))
+                    .model((context, models, furnitureSet, block) -> ModelUtil.horizontalFacingBlock(block, models))
                     .translation("Painting Small")
                     .blockTags((provider, furnitureSet, block) -> provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block))
                     .recipe(BlockTypes::furnitureStationRecipe)
@@ -489,7 +478,7 @@ public interface BlockTypes {
                     .initialBlockProperties(PLANK_PROPERTIES)
                     .blockEntity(FurnitureBlockEntities.OVEN)
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
-                    .model((context, models, furnitureSet, block) -> horizontalFacingBlock(block, block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty(), models))
+                    .model((context, models, furnitureSet, block) -> ModelUtil.horizontalFacingBlock(block, models))
                     .translation("Oven")
                     .blockTags((provider, furnitureSet, block) -> {
                         provider.tag(Tags.Blocks.PLAYER_WORKSTATIONS_FURNACES).withElement(block);
@@ -509,7 +498,7 @@ public interface BlockTypes {
                     .initialBlockProperties(PLANK_PROPERTIES)
                     .blockEntity(FurnitureBlockEntities.CHEST)
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
-                    .model((context, models, furnitureSet, block) -> multiBlockModel(block, models, index -> ModelLocationUtils.getModelLocation(block, index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right")))
+                    .model((context, models, furnitureSet, block) -> ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right"))
                     .translation("Chest")
                     .blockTags((provider, furnitureSet, block) -> {
                         provider.tag(Tags.Blocks.CHESTS_WOODEN).withElement(block);
@@ -530,7 +519,7 @@ public interface BlockTypes {
                     .initialBlockProperties(PLANK_PROPERTIES)
                     .blockProperties(properties -> properties.lightLevel(blockState -> 14))
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
-                    .model((context, models, furnitureSet, block) -> multiBlockModel(block, models, index -> ModelLocationUtils.getModelLocation(block, index == MultiBlockComponent.ORIGIN_INDEX ? "_bottom" : "_top")))
+                    .model((context, models, furnitureSet, block) -> ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_bottom" : "_top"))
                     .translation("Floor Light")
                     .blockTags((provider, furnitureSet, block) -> {
                         provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
@@ -549,7 +538,7 @@ public interface BlockTypes {
                     .initialBlockProperties(PLANK_PROPERTIES)
                     .blockProperties(properties -> properties.lightLevel(blockState -> 14))
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
-                    .model((context, models, furnitureSet, block) -> horizontalFacingBlock(block, block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty(), models))
+                    .model((context, models, furnitureSet, block) -> ModelUtil.horizontalFacingBlock(block, models))
                     .translation("Chandelier")
                     .blockTags((provider, furnitureSet, block) -> provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block))
                     .recipe(BlockTypes::furnitureStationRecipe)
@@ -563,7 +552,7 @@ public interface BlockTypes {
             builder -> builder
                     .initialBlockProperties(PLANK_PROPERTIES)
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
-                    .model((context, models, furnitureSet, block) -> facingPropertyModel(block, models, $ -> ShelfConnection.PROPERTY, connection -> ModelLocationUtils.getModelLocation(block, connection.getModelSuffix()), ShelfConnection.NONE))
+                    .model((context, models, furnitureSet, block) -> ModelUtil.facingPropertyModelSuffix(block, models, ShelfConnection.PROPERTY, ShelfConnection::getModelSuffix, ShelfConnection.NONE))
                     .translation("Shelf")
                     .blockTags((provider, furnitureSet, block) -> {
                         provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
@@ -580,7 +569,7 @@ public interface BlockTypes {
             builder -> builder
                     .initialBlockProperties(PLANK_PROPERTIES)
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
-                    .model((context, models, furnitureSet, block) -> facingPropertyModel(block, models, $ -> SofaConnection.PROPERTY, connection -> ModelLocationUtils.getModelLocation(block, connection.getModelSuffix()), SofaConnection.NONE))
+                    .model((context, models, furnitureSet, block) -> ModelUtil.facingPropertyModelSuffix(block, models, SofaConnection.PROPERTY, SofaConnection::getModelSuffix, SofaConnection.NONE))
                     .translation("Sofa")
                     .blockTags((provider, furnitureSet, block) -> {
                         provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
@@ -606,7 +595,7 @@ public interface BlockTypes {
                     .initialBlockProperties(PLANK_PROPERTIES)
                     .blockEntity(FurnitureBlockEntities.COUNTER)
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
-                    .model((context, models, furnitureSet, block) -> facingPropertyModel(block, models, $ -> CounterConnection.PROPERTY, connection -> ModelLocationUtils.getModelLocation(block, connection.getModelSuffix()), CounterConnection.NONE))
+                    .model((context, models, furnitureSet, block) -> ModelUtil.facingPropertyModelSuffix(block, models, CounterConnection.PROPERTY, CounterConnection::getModelSuffix, CounterConnection.NONE))
                     .translation("Counter")
                     .blockTags((provider, furnitureSet, block) -> {
                         provider.tag(Tags.Blocks.CHESTS_WOODEN).withElement(block);
@@ -626,7 +615,7 @@ public interface BlockTypes {
                     .initialBlockProperties(PLANK_PROPERTIES)
                     .blockProperties(properties -> properties.lightLevel(blockState -> 14).noCollission())
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
-                    .model((context, models, furnitureSet, block) -> horizontalFacingBlock(block, block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty(), models))
+                    .model((context, models, furnitureSet, block) -> ModelUtil.horizontalFacingBlock(block, models))
                     .translation("Wall Light")
                     .blockTags((provider, furnitureSet, block) -> {
                         provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
@@ -643,7 +632,7 @@ public interface BlockTypes {
             builder -> builder
                     .initialBlockProperties(PLANK_PROPERTIES)
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
-                    .model((context, models, furnitureSet, block) -> multiBlockModel(block, models, index -> ModelLocationUtils.getModelLocation(block, index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right")))
+                    .model((context, models, furnitureSet, block) -> ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right"))
                     .translation("Bench")
                     .blockTags((provider, furnitureSet, block) -> {
                         provider.tag(SeatSetup.ORIGIN_ONLY).withElement(block);
@@ -663,14 +652,14 @@ public interface BlockTypes {
                     .initialBlockProperties(PLANK_PROPERTIES)
                     .blockEntity(FurnitureBlockEntities.WARDROBE)
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
-                    .model((context, models, furnitureSet, block) -> multiBlockModel(block, models, index -> ModelLocationUtils.getModelLocation(block, switch (index) {
+                    .model((context, models, furnitureSet, block) -> ModelUtil.multiBlockModelSuffix(block, models, index -> switch (index) {
                         case 1 -> "_bottom_right";
                         case 2 -> "_middle_right";
                         case 3 -> "_middle_left";
                         case 4 -> "_top_right";
                         case 5 -> "_top_left";
                         default -> "_bottom_left";
-                    })))
+                    }))
                     .translation("Wardrobe")
                     .blockTags((provider, furnitureSet, block) -> {
                         provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
@@ -1003,36 +992,6 @@ public interface BlockTypes {
         set.add(WOOL);
     }));
 
-    static <TBlock extends Block & ComponentHolder<BlockComponent>, TValue extends Comparable<TValue>> void facingPropertyModel(TBlock block, BlockModelGenerators blockModels, Function<TBlock, Property<TValue>> propertyGetter, Function<TValue, ResourceLocation> modelGetter, TValue itemValue) {
-        var facingProperty = block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty();
-
-        blockModels.blockStateOutput.accept(MultiVariantGenerator.multiVariant(block)
-                .with(createPropertyDispatch(block, propertyGetter, modelGetter))
-                .with(createHorizontalFacingDispatch(facingProperty, (facing, variant) -> variant))
-        );
-
-        blockModels.registerSimpleItemModel(block, modelGetter.apply(itemValue));
-    }
-
-    static <TBlock extends Block & ComponentHolder<BlockComponent>> void multiBlockModel(TBlock block, BlockModelGenerators blockModels, IntFunction<ResourceLocation> modelGetter) {
-        var multiBlock = block.getComponentOrThrow(BlockComponentTypes.MULTI_BLOCK);
-        var facingProperty = block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty();
-
-        blockModels.blockStateOutput.accept(MultiVariantGenerator.multiVariant(block)
-                .with(createPropertyDispatch(block, b -> block.getComponentOrThrow(BlockComponentTypes.MULTI_BLOCK).property(), modelGetter::apply))
-                .with(createHorizontalFacingDispatch(facingProperty, (facing, variant) -> variant))
-        );
-
-        /*blockModels.itemModelOutput.accept(block.asItem(), ItemModelUtils.composite(IntStream
-                .range(0, multiBlock.size())
-                .mapToObj(modelGetter)
-                .map(ItemModelUtils::plainModel)
-                .toArray(ItemModel.Unbaked[]::new)
-        ));*/
-
-        registerBlockItemModel(block, blockModels);
-    }
-
     static void doorModel(FurnitureDoorBlockComponentHolder block, BlockModelGenerators blockModels) {
         var multiBlock = block.getComponentOrThrow(BlockComponentTypes.MULTI_BLOCK);
         var facingProperty = block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty();
@@ -1057,25 +1016,8 @@ public interface BlockTypes {
                 }))
         );
 
-        /*blockModels.itemModelOutput.accept(block.asItem(), ItemModelUtils.composite(
-                ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(block, "_left_top")),
-                ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(block, "_left_bottom")),
-                ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(block, "_right_bottom")),
-                ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(block, "_right_bottom"))
-        ));*/
-
-        registerBlockItemModel(block, blockModels);
-    }
-
-    static void registerBlockItemModel(Block block, BlockModelGenerators blockModels) {
-        var item = block.asItem();
-        blockModels.registerSimpleItemModel(item, ModelLocationUtils.getModelLocation(item));
-    }
-
-    static void horizontalFacingBlock(Block block, Property<Direction> property, BlockModelGenerators blockModels) {
-        blockModels.blockStateOutput.accept(MultiVariantGenerator.multiVariant(block)
-                .with(createHorizontalFacingDispatch(property, (facing, variant) -> variant.with(VariantProperties.MODEL, ModelLocationUtils.getModelLocation(block))))
-        );
+        // ModelUtils.registerCompositeBlockItemModel(block, blockModels, "_left_top", "_left_bottom", "_right_bottom", "_right_bottom");
+        ModelUtil.registerBlockItemModel(block, blockModels);
     }
 
     static void tableModel(TableBlock block, BlockModelGenerators blockModels) {
@@ -1095,12 +1037,7 @@ public interface BlockTypes {
                     if(west)
                         connections.add(Direction.WEST);
 
-                    var rotation = switch (facingForConnection) {
-                        case EAST -> Rotation.CLOCKWISE_90;
-                        case SOUTH -> Rotation.CLOCKWISE_180;
-                        case WEST -> Rotation.COUNTERCLOCKWISE_90;
-                        default -> Rotation.NONE;
-                    };
+                    var rotation = ModelUtil.facingToRotation(facingForConnection);
 
                     // might not be the best way to do this but its datagen so who cares about performance
                     // collects connected sides
@@ -1124,38 +1061,16 @@ public interface BlockTypes {
 
                     return Variant.variant()
                             .with(VariantProperties.MODEL, ModelLocationUtils.getModelLocation(block, suffix.isBlank() ? "" : '_' + suffix))
-                            .with(VariantProperties.Y_ROT, switch (facing) {
-                                case EAST -> VariantProperties.Rotation.R90;
-                                case SOUTH -> VariantProperties.Rotation.R180;
-                                case WEST -> VariantProperties.Rotation.R270;
-                                default -> VariantProperties.Rotation.R0;
-                            });
+                            .with(VariantProperties.Y_ROT, ModelUtil.facingToModelRotation(facing));
                 }))
         );
-    }
-
-    static <TBlock extends Block, TValue extends Comparable<TValue>> PropertyDispatch createPropertyDispatch(TBlock block, Function<TBlock, Property<TValue>> propertyGetter, Function<TValue, ResourceLocation> modelGetter) {
-        return PropertyDispatch.property(propertyGetter.apply(block))
-                .generate(value -> Variant.variant().with(VariantProperties.MODEL, modelGetter.apply(value)));
-    }
-
-    static PropertyDispatch createHorizontalFacingDispatch(Property<Direction> property, BiFunction<Direction, Variant, Variant> modifier) {
-        return PropertyDispatch.property(property)
-                .select(Direction.EAST, modifier.apply(Direction.EAST, Variant.variant().with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90)))
-                .select(Direction.SOUTH, modifier.apply(Direction.SOUTH, Variant.variant().with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180)))
-                .select(Direction.WEST, modifier.apply(Direction.WEST, Variant.variant().with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270)))
-                .select(Direction.NORTH, modifier.apply(Direction.NORTH, Variant.variant()));
-    }
-
-    static String namespace(Block block) {
-        return BuiltInRegistries.BLOCK.getKey(block).getNamespace();
     }
 
     static <TItem extends Item> void furnitureStationRecipe(RecipeProvider provider, FurnitureSet furnitureSet, TItem item) {
         FurnitureStationRecipeBuilder
                 .builder(RecipeCategory.MISC, Ingredient.of(furnitureSet.getOrThrow(PLANKS)), Ingredient.of(furnitureSet.getOrThrow(WOOL)), provider.tag(FurnitureStationSetup.BINDING_AGENT), item)
                 .unlockedBy("has_planks", provider.has(furnitureSet.getOrThrow(PLANKS)))
-                .save(provider.output(), ResourceKey.create(Registries.RECIPE, RecipeBuilder.getDefaultRecipeId(item).withPrefix("furniture_station/")));
+                .save(provider.output(), RecipeProvider.recipeKeyWithPrefix(item, "furniture_station/"));
     }
 
     @ApiStatus.Internal
