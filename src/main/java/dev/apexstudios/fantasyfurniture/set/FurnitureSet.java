@@ -6,6 +6,7 @@ import dev.apexstudios.apexcore.lib.data.ResourceGenerator;
 import dev.apexstudios.apexcore.lib.registree.Registree;
 import java.util.Collection;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -13,6 +14,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
@@ -142,6 +144,25 @@ public final class FurnitureSet {
 
     public boolean is(Item item) {
         return registree.listElements(Registries.ITEM).map(Holder::value).anyMatch(value -> value == item);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj)
+            return true;
+        if(obj instanceof FurnitureSet other)
+            return ownerNamespace().equals(other.ownerNamespace()) && name.equals(other.name);
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ownerNamespace(), name);
+    }
+
+    @Override
+    public String toString() {
+        return "FurnitureSet{" + ownerNamespace() + ResourceLocation.NAMESPACE_SEPARATOR + name + '}';
     }
 
     public static FurnitureSet create(Registree registree, String name, Consumer<FurnitureSetBuilder> consumer) {

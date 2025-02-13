@@ -8,42 +8,47 @@ import dev.apexstudios.fantasyfurniture.set.function.ItemFactory;
 import dev.apexstudios.fantasyfurniture.set.function.ProviderListener;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
-import java.util.function.UnaryOperator;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import org.apache.commons.lang3.function.Consumers;
 import org.jetbrains.annotations.Nullable;
 
 sealed class BlockTypeBuilderImpl<TBlock extends Block, TSelf extends BlockTypeBuilder<TBlock, TSelf>> implements BlockTypeBuilder<TBlock, TSelf> {
     final String registryName;
     final BlockFactory<TBlock> blockFactory;
-    Function<BlockBehaviour.Properties, BlockBehaviour.Properties> blockPropertiesModifier = Function.identity();
-    Supplier<BlockBehaviour.Properties> initialBlockProperties = () -> BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS);
+    BiFunction<FurnitureSet, BlockBehaviour.Properties, BlockBehaviour.Properties> blockPropertiesModifier = (furnitureSet, properties) -> properties;
+    Function<FurnitureSet, BlockBehaviour.Properties> initialBlockProperties = furnitureSet -> BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS);
     @Nullable Supplier<? extends BlockEntityType<?>> blockEntityType = null;
     Map<ProviderType<?>, ProviderListener<?, TBlock>> providerListeners = Maps.newLinkedHashMap();
-    Consumer<TBlock> onRegister = Consumers.nop();
-    Consumer<TBlock> onRegisterEnqueued = Consumers.nop();
+    BiConsumer<FurnitureSet, TBlock> onRegister = (furnitureSet, block) -> { };
+    BiConsumer<FurnitureSet, TBlock> onRegisterEnqueued = (furnitureSet, block) -> { };
     Set<BlockType<?>> required = Sets.newLinkedHashSet();
 
     private BlockTypeBuilderImpl(String registryName, BlockFactory<TBlock> blockFactory) {
         this.registryName = registryName;
         this.blockFactory = blockFactory;
+
+        blockTags((provider, furnitureSet, block) -> {
+            if(block.defaultBlockState().canBeReplaced())
+                provider.tag(BlockTags.REPLACEABLE).withElement(block);
+        });
     }
 
     @Override
-    public TSelf blockProperties(UnaryOperator<BlockBehaviour.Properties> propertiesModifier) {
-        blockPropertiesModifier = blockPropertiesModifier.andThen(propertiesModifier);
+    public TSelf blockProperties(BiFunction<FurnitureSet, BlockBehaviour.Properties, BlockBehaviour.Properties> propertiesModifier) {
+        blockPropertiesModifier = andThen(blockPropertiesModifier, propertiesModifier);
         return (TSelf) this;
     }
 
     @Override
-    public TSelf initialBlockProperties(Supplier<BlockBehaviour.Properties> initialProperties) {
+    public TSelf initialBlockProperties(Function<FurnitureSet, BlockBehaviour.Properties> initialProperties) {
         initialBlockProperties = initialProperties;
         return (TSelf) this;
     }
@@ -61,7 +66,7 @@ sealed class BlockTypeBuilderImpl<TBlock extends Block, TSelf extends BlockTypeB
     }
 
     @Override
-    public TSelf onRegister(Consumer<TBlock> listener, boolean enqueued) {
+    public TSelf onRegister(BiConsumer<FurnitureSet, TBlock> listener, boolean enqueued) {
         if(enqueued)
             onRegisterEnqueued = onRegisterEnqueued.andThen(listener);
         else
@@ -72,8 +77,12 @@ sealed class BlockTypeBuilderImpl<TBlock extends Block, TSelf extends BlockTypeB
 
     @Override
     public <TProvider> TSelf providing(ProviderType<TProvider> providerType, ProviderListener<TProvider, TBlock> listener) {
-        providerListeners.put(providerType, listener);
+        providerListeners.compute(providerType, ($, existing) -> existing == null ? listener : ((ProviderListener<TProvider, TBlock>) existing).andThen(listener));
         return (TSelf) this;
+    }
+
+    private static <TLeft, TRight> BiFunction<TLeft, TRight, TRight> andThen(BiFunction<TLeft, TRight, TRight> before, BiFunction<TLeft, TRight, TRight> after) {
+        return (furnitureSet, properties) -> after.apply(furnitureSet, before.apply(furnitureSet, properties));
     }
 
     public static final class NoItem<TBlock extends Block> extends BlockTypeBuilderImpl<TBlock, BlockTypeBuilder.NoItem<TBlock>> implements BlockTypeBuilder.NoItem<TBlock> {
@@ -84,8 +93,8 @@ sealed class BlockTypeBuilderImpl<TBlock extends Block, TSelf extends BlockTypeB
 
     public static final class WithItem<TBlock extends Block, TItem extends Item> extends BlockTypeBuilderImpl<TBlock, BlockTypeBuilder.WithItem<TBlock, TItem>> implements BlockTypeBuilder.WithItem<TBlock, TItem> {
         final ItemFactory<TBlock, TItem> itemFactory;
-        Function<Item.Properties, Item.Properties> itemPropertiesModifier = Function.identity();
-        Supplier<Item.Properties> initialItemProperties = Item.Properties::new;
+        BiFunction<FurnitureSet, Item.Properties, Item.Properties> itemPropertiesModifier = (furnitureSet, properties) -> properties;
+        Function<FurnitureSet, Item.Properties> initialItemProperties = furnitureSet -> new Item.Properties();
 
         public WithItem(String registryName, BlockFactory<TBlock> blockFactory, ItemFactory<TBlock, TItem> itemFactory) {
             super(registryName, blockFactory);
@@ -94,13 +103,13 @@ sealed class BlockTypeBuilderImpl<TBlock extends Block, TSelf extends BlockTypeB
         }
 
         @Override
-        public BlockTypeBuilderImpl.WithItem<TBlock, TItem> itemProperties(UnaryOperator<Item.Properties> propertiesModifier) {
-            itemPropertiesModifier = itemPropertiesModifier.andThen(propertiesModifier);
+        public BlockTypeBuilderImpl.WithItem<TBlock, TItem> itemProperties(BiFunction<FurnitureSet, Item.Properties, Item.Properties> propertiesModifier) {
+            itemPropertiesModifier = andThen(itemPropertiesModifier, propertiesModifier);
             return this;
         }
 
         @Override
-        public BlockTypeBuilder.WithItem<TBlock, TItem> initialItemProperties(Supplier<Item.Properties> initialProperties) {
+        public BlockTypeBuilder.WithItem<TBlock, TItem> initialItemProperties(Function<FurnitureSet, Item.Properties> initialProperties) {
             this.initialItemProperties = initialProperties;
             return this;
         }

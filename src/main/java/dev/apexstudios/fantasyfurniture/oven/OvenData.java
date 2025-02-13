@@ -2,6 +2,7 @@ package dev.apexstudios.fantasyfurniture.oven;
 
 import com.google.common.collect.Lists;
 import dev.apexstudios.apexcore.lib.component.block.entity.BlockEntityComponentTypes;
+import dev.apexstudios.fantasyfurniture.block.OvenBlock;
 import it.unimi.dsi.fastutil.objects.Reference2IntOpenHashMap;
 import java.util.List;
 import net.minecraft.core.BlockPos;
@@ -25,6 +26,7 @@ import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.item.crafting.SmokingRecipe;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -106,7 +108,7 @@ public final class OvenData implements ContainerData, RecipeCraftingHolder {
 
         if (wasLit != isLit()) {
             changed = true;
-            // level.setBlock(pos, blockState.setValue(AbstractFurnaceBlock.LIT, isLit()), Block.UPDATE_ALL);
+            level.setBlock(pos, blockState.setValue(OvenBlock.LIT, isLit()), Block.UPDATE_ALL);
         }
 
         if (changed)
