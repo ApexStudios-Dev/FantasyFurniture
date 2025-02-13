@@ -73,7 +73,7 @@ publishMods {
 
             curseforge(setName) {
                 from(commonCF)
-                displayName = setProperties[setName]!!.name
+                displayName = "${setProperties[setName]!!.name} - ${project.version}"
                 projectId = setProperties[setName]!!.projectId
                 projectSlug = setProperties[setName]!!.slug
                 file = tasks.named(it.jarTaskName, Jar::class.java).map { it.archiveFile }.get()
