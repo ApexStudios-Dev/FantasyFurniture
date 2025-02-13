@@ -68,18 +68,6 @@ public sealed interface BlockTypeBuilder<TBlock extends Block, TSelf extends Blo
         return onRegister((furnitureSet, block) -> listener.accept(block));
     }
 
-    TSelf require(BlockType<?> blockType);
-
-    default TSelf require(BlockType<?> blockType, BlockType<?>... blockTypes) {
-        require(blockType);
-
-        for(var other : blockTypes) {
-            require(other);
-        }
-
-        return (TSelf) this;
-    }
-
     <TProvider> TSelf providing(ProviderType<TProvider> providerType, ProviderListener<TProvider, TBlock> listener);
 
     default TSelf translation(String translation) {

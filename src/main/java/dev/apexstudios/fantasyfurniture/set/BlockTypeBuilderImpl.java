@@ -1,13 +1,11 @@
 package dev.apexstudios.fantasyfurniture.set;
 
 import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
 import dev.apexstudios.apexcore.lib.data.ProviderType;
 import dev.apexstudios.fantasyfurniture.set.function.BlockFactory;
 import dev.apexstudios.fantasyfurniture.set.function.ItemFactory;
 import dev.apexstudios.fantasyfurniture.set.function.ProviderListener;
 import java.util.Map;
-import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -29,7 +27,6 @@ sealed class BlockTypeBuilderImpl<TBlock extends Block, TSelf extends BlockTypeB
     Map<ProviderType<?>, ProviderListener<?, TBlock>> providerListeners = Maps.newLinkedHashMap();
     BiConsumer<FurnitureSet, TBlock> onRegister = (furnitureSet, block) -> { };
     BiConsumer<FurnitureSet, TBlock> onRegisterEnqueued = (furnitureSet, block) -> { };
-    Set<BlockType<?>> required = Sets.newLinkedHashSet();
 
     private BlockTypeBuilderImpl(String registryName, BlockFactory<TBlock> blockFactory) {
         this.registryName = registryName;
@@ -56,12 +53,6 @@ sealed class BlockTypeBuilderImpl<TBlock extends Block, TSelf extends BlockTypeB
     @Override
     public TSelf blockEntity(Supplier<? extends BlockEntityType<?>> blockEntityType) {
         this.blockEntityType = blockEntityType;
-        return (TSelf) this;
-    }
-
-    @Override
-    public TSelf require(BlockType<?> blockType) {
-        required.add(blockType);
         return (TSelf) this;
     }
 

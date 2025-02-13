@@ -1,6 +1,5 @@
 package dev.apexstudios.fantasyfurniture.set;
 
-import com.google.common.collect.Sets;
 import dev.apexstudios.apexcore.core.seat.SeatSetup;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
 import dev.apexstudios.apexcore.lib.component.block.DoorBlockComponentHolder;
@@ -43,14 +42,11 @@ import dev.apexstudios.fantasyfurniture.block.property.SofaConnection;
 import dev.apexstudios.fantasyfurniture.set.function.BlockFactory;
 import dev.apexstudios.fantasyfurniture.station.FurnitureStationRecipeBuilder;
 import dev.apexstudios.fantasyfurniture.station.FurnitureStationSetup;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 import net.minecraft.SharedConstants;
-import net.minecraft.Util;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
@@ -809,7 +805,6 @@ public interface BlockTypes {
                             .unlockedBy("has_planks", provider.has(furnitureSet.getOrThrow(PLANKS)))
                             .save(provider.output())
                     )
-                    .require(FENCE)
     );
     // endregion
 
@@ -930,7 +925,6 @@ public interface BlockTypes {
                         provider.tag(BlockTags.WALL_HANGING_SIGNS).withElement(block);
                         provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
                     })
-                    .require(HANGING_SIGN)
     );
     // endregion
 
@@ -977,14 +971,8 @@ public interface BlockTypes {
                         provider.tag(BlockTags.WALL_SIGNS).withElement(block);
                         provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
                     })
-                    .require(SIGN)
     );
     // endregion
-
-    Set<BlockType<?>> REQUIRED = Collections.unmodifiableSet(Util.make(Sets.newLinkedHashSet(), set -> {
-        set.add(PLANKS);
-        set.add(WOOL);
-    }));
 
     static void doorModel(FurnitureDoorBlockComponentHolder block, BlockModelGenerators blockModels) {
         var multiBlock = block.getComponentOrThrow(BlockComponentTypes.MULTI_BLOCK);

@@ -4,12 +4,13 @@ import com.google.common.collect.Sets;
 import dev.apexstudios.apexcore.lib.data.ProviderTypes;
 import dev.apexstudios.apexcore.lib.data.ResourceGenerator;
 import dev.apexstudios.apexcore.lib.registree.Registree;
-import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.function.UnaryOperator;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -29,7 +30,6 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.function.Consumers;
 
 public final class FurnitureSet {
     private static final Map<String, CtmPack> CTM_PACKS = Map.of(
@@ -47,7 +47,7 @@ public final class FurnitureSet {
     private FurnitureSet(FurnitureSetBuilder builder) {
         registree = builder.registree;
         name = builder.name;
-        blockTypes = injectRequired(builder.blockTypes);
+        blockTypes = Collections.unmodifiableSet(Sets.newLinkedHashSet(builder.blockTypes.values()));
         woodType = builder.woodType.build(name + "_wood_type", name + "_block_set");
 
         creativeModeTab = registree.registerCreativeModeTab(name, () -> new ItemStack(getOrThrow(BlockTypes.WOOL)), (parameters, output) -> {
@@ -165,35 +165,12 @@ public final class FurnitureSet {
         return "FurnitureSet{" + ownerNamespace() + ResourceLocation.NAMESPACE_SEPARATOR + name + '}';
     }
 
-    public static FurnitureSet create(Registree registree, String name, Consumer<FurnitureSetBuilder> consumer) {
-        var builder = new FurnitureSetBuilder(registree, name);
-        consumer.accept(builder);
-        return new FurnitureSet(builder);
+    public static FurnitureSet create(Registree registree, String name, UnaryOperator<FurnitureSetBuilder> builder) {
+        return builder.andThen(FurnitureSet::new).apply(new FurnitureSetBuilder(registree, name));
     }
 
-    public static FurnitureSet createDefault(Registree registree, String name, Consumer<FurnitureSetBuilder> consumer) {
-        return create(registree, name, builder -> {
-            BlockTypeImpl.forEach(builder::with);
-            consumer.accept(builder);
-        });
-    }
-
-    public static FurnitureSet createDefault(Registree registree, String name) {
-        return createDefault(registree, name, Consumers.nop());
-    }
-
-    private static Set<BlockType<?>> injectRequired(Collection<BlockType<?>> blockTypes) {
-        var result = Sets.<BlockType<?>>newLinkedHashSet();
-        BlockTypes.REQUIRED.forEach(blockType -> injectRequired(result, blockType));
-        blockTypes.forEach(blockType -> injectRequired(result, blockType));
-        return result;
-    }
-
-    private static void injectRequired(Set<BlockType<?>> set, BlockType<?> blockType) {
-        if(set.add(blockType)) {
-            ((BlockTypeImpl<?>) blockType).required.forEach(required -> injectRequired(set, required));
-            set.add(blockType);
-        }
+    public static FurnitureSet create(Registree registree, String name) {
+        return create(registree, name, UnaryOperator.identity());
     }
 
     private record CtmPack(String packId, String packName) { }
