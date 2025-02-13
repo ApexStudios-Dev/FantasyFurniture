@@ -1,7 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "building",
-  "group": "fantasyfurniture_nordic_slab",
   "key": {
     "#": "fantasyfurniture_nordic:planks"
   },

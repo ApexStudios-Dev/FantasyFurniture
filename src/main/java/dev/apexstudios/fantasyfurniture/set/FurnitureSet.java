@@ -1,55 +1,35 @@
 package dev.apexstudios.fantasyfurniture.set;
 
-import com.google.common.collect.Maps;
-import dev.apexstudios.apexcore.lib.component.ComponentHolder;
-import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
-import dev.apexstudios.apexcore.lib.component.block.BlockComponentHelper;
-import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
-import dev.apexstudios.apexcore.lib.component.block.types.BedBlockComponent;
+import com.google.common.collect.Sets;
 import dev.apexstudios.apexcore.lib.data.ProviderTypes;
 import dev.apexstudios.apexcore.lib.data.ResourceGenerator;
-import dev.apexstudios.apexcore.lib.placement.PlacementRenderEvent;
 import dev.apexstudios.apexcore.lib.registree.Registree;
-import dev.apexstudios.apexcore.lib.registree.holder.DeferredBlock;
-import dev.apexstudios.apexcore.lib.registree.holder.DeferredItem;
-import dev.apexstudios.apexcore.lib.util.ApexUtil;
-import dev.apexstudios.apexcore.lib.util.WoodTypeBuilder;
-import dev.apexstudios.fantasyfurniture.block.property.SofaConnection;
-import java.util.Collections;
+import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Supplier;
-import java.util.function.UnaryOperator;
-import net.minecraft.Util;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.BlockFamily;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
-import net.minecraft.world.entity.ai.village.poi.PoiTypes;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.WoodType;
-import net.minecraft.world.phys.shapes.Shapes;
-import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModList;
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
-import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent;
 import org.apache.commons.lang3.StringUtils;
-import org.jetbrains.annotations.Nullable;
+import org.apache.commons.lang3.function.Consumers;
 
 public final class FurnitureSet {
     private static final Map<String, CtmPack> CTM_PACKS = Map.of(
@@ -59,59 +39,31 @@ public final class FurnitureSet {
     );
 
     private final Registree registree;
-    private final Map<BlockType<?, ?>, Mapping<?, ?>> mappings;
-    private final ResourceKey<CreativeModeTab> creativeModeTab;
+    private final String name;
+    private final Set<BlockType<?>> blockTypes;
     private final WoodType woodType;
-    private final String englishName;
+    private final ResourceKey<CreativeModeTab> creativeModeTab;
 
-    private FurnitureSet(String namespace, Builder builder) {
-        registree = new Registree(namespace);
-        englishName = Objects.requireNonNullElseGet(builder.englishName, () -> StringUtils.capitalize(namespace));
-        woodType = builder.woodTypeBuilder.build(namespace + ResourceLocation.NAMESPACE_SEPARATOR + "wood_type");
-        mappings = builder.register(this);
+    private FurnitureSet(FurnitureSetBuilder builder) {
+        registree = builder.registree;
+        name = builder.name;
+        blockTypes = injectRequired(builder.blockTypes);
+        woodType = builder.woodType.build(name + "_wood_type", name + "_block_set");
 
-        creativeModeTab = registree.registerCreativeModeTab("items", () -> itemOrThrow(BlockType.WOOL).toStack(), (parameters, output) -> registree
-                .asLookup(Registries.ITEM)
-                .filterFeatures(parameters.enabledFeatures())
-                .listElements()
-                .map(Holder::value)
-                .forEach(output::accept)
-        );
-    }
+        creativeModeTab = registree.registerCreativeModeTab(name, () -> new ItemStack(getOrThrow(BlockTypes.WOOL)), (parameters, output) -> {
+            blockTypes.forEach(blockType -> {
+                var block = getOrThrow(blockType);
 
-    public Registree registree() {
-        return registree;
+                if(block.isEnabled(parameters.enabledFeatures()))
+                    output.accept(block);
+            });
+        });
     }
 
     public void register(IEventBus modBus) {
-        registree.registerEvents(modBus);
-
-        modBus.addListener(BlockEntityTypeAddBlocksEvent.class, event -> {
-            mappings.forEach((blockType, mapping) -> {
-                if(mapping.block == null)
-                    return;
-
-                var blockEntityType = blockType.blockEntityType();
-
-                if(blockEntityType != null)
-                    event.modify(blockEntityType.get(), mapping.block.value());
-            });
-        });
-
-        modBus.addListener(FMLCommonSetupEvent.class, event -> event.enqueueWork(() -> {
-            registerPoi(BlockType.BED_SINGLE, BedBlockComponent::registerPoi);
-            registerPoi(BlockType.BED_DOUBLE, BedBlockComponent::registerPoi);
-            registerPoi(BlockType.OVEN, block -> ApexUtil.registerPoiBlockStates(PoiTypes.BUTCHER, block));
-        }));
-
-        NeoForge.EVENT_BUS.addListener(PlacementRenderEvent.DefaultBlockState.class, event -> {
-            var blockState = event.defaultBlockState();
-
-            if(blockState.hasProperty(SofaConnection.PROPERTY)) {
-                var facingComponent = BlockComponentHelper.getComponentOrThrow(blockState, BlockComponentTypes.FACING);
-                event.setDefaultBlockState(SofaConnection.setConnection(event.level(), event.pos(), blockState, facingComponent::get, facingComponent::set));
-            }
-        });
+        for(var blockType : blockTypes) {
+            ((BlockTypeImpl<?>) blockType).register(modBus, this, registree);
+        }
 
         modBus.addListener(AddPackFindersEvent.class, event -> CTM_PACKS.entrySet().stream()
                 .filter(entry -> ModList.get().isLoaded(entry.getKey()))
@@ -119,7 +71,7 @@ public final class FurnitureSet {
                 .forEach(pack -> event.addPackFinders(
                         registree.registryName("packs/" + pack.packId),
                         PackType.CLIENT_RESOURCES,
-                        Component.literal(pack.packName + " (" + englishName + ')'),
+                        Component.literal(pack.packName + " (" + StringUtils.capitalize(name) + ')'),
                         PackSource.BUILT_IN,
                         false,
                         Pack.Position.TOP
@@ -127,196 +79,122 @@ public final class FurnitureSet {
         );
     }
 
-    private <TBlock extends Block & ComponentHolder<BlockComponent>>void registerPoi(BlockType<TBlock, ?> blockType, Consumer<TBlock> consumer) {
-        var block = block(blockType);
+    public void registerDataGen(ResourceGenerator generator) {
+        var pack = generator.pack();
 
-        if(block != null)
-            consumer.accept(block.value());
+        for(var blockType : blockTypes) {
+            ((BlockTypeImpl<?>) blockType).registerDataGen(pack, this);
+        }
+
+        pack.providing(ProviderTypes.LANGUAGE, (context, provider) -> provider.addCreativeModeTab(creativeModeTab, StringUtils.capitalize(name)));
+
+        CTM_PACKS.forEach((modId, ctm) -> {
+            generator.pack(ctm.packId)
+                    .description("Enables " + ctm.packName + " support");
+        });
+    }
+
+    public String ownerNamespace() {
+        return registree.namespace();
+    }
+
+    public String name() {
+        return name;
+    }
+
+    public BlockSetType blockSet() {
+        return woodType.setType();
     }
 
     public WoodType woodType() {
         return woodType;
     }
 
-    public BlockSetType blockSetType() {
-        return woodType.setType();
-    }
-
-    @Nullable
-    private <TBlock extends Block, TItem extends Item> Mapping<TBlock, TItem> mapping(BlockType<TBlock, TItem> blockType) {
-        return (Mapping<TBlock, TItem>) mappings.get(blockType);
-    }
-
-    private <TBlock extends Block, TItem extends Item> Mapping<TBlock, TItem> mappingOrThrow(BlockType<TBlock, TItem> blockType) {
-        return Objects.requireNonNull(mapping(blockType));
-    }
-
-    @Nullable
-    public <TBlock extends Block> DeferredBlock<TBlock> block(BlockType<TBlock, ?> blockType) {
-        var mapping = mapping(blockType);
-        return mapping == null ? null : mapping.block;
-    }
-
-    public <TBlock extends Block> DeferredBlock<TBlock> blockOrThrow(BlockType<TBlock, ?> blockType) {
-        return Objects.requireNonNull(block(blockType));
-    }
-
-    @Nullable
-    public <TItem extends Item> DeferredItem<TItem> item(BlockType<?, TItem> blockType) {
-        var mapping = mapping(blockType);
-        return mapping == null ? null : mapping.item;
-    }
-
-    public <TItem extends Item> DeferredItem<TItem> itemOrThrow(BlockType<?, TItem> blockType) {
-        return Objects.requireNonNull(item(blockType));
-    }
-
-    public VoxelShape shape(BlockType<?, ?> blockType, BlockState blockState, Supplier<VoxelShape> defaultShape) {
-        var mapping = mapping(blockType);
-
-        if(mapping == null)
-            return Shapes.block();
-
-        var shapeGetter = mapping.shapeGetter;
-        return shapeGetter == null ? defaultShape.get() : shapeGetter.apply(blockState);
-    }
-
     public ResourceKey<CreativeModeTab> creativeModeTab() {
         return creativeModeTab;
     }
 
-    public void registerDataGen(ResourceGenerator generator) {
-        var family = Util.make(() -> {
-            var builder = new BlockFamily.Builder(blockOrThrow(BlockType.PLANKS).value())
-                    .recipeGroupPrefix(registree.namespace())
-                    .recipeUnlockedBy("has_planks");
+    public boolean isRegistered(BlockType<?> blockType) {
+        return registree.containsKey(Registries.BLOCK, blockType.registryName());
+    }
 
-            ifPresent(BlockType.STAIRS, builder::stairs);
-            ifPresent(BlockType.SLAB, builder::slab);
-            ifPresent(BlockType.FENCE, builder::fence);
-            ifPresent(BlockType.FENCE_GATE, builder::fenceGate);
-            ifPresent(BlockType.TRAP_DOOR, builder::trapdoor);
-            ifPresent(BlockType.PRESSURE_PLATE, builder::pressurePlate);
-            ifPresent(BlockType.BUTTON, builder::button);
-            ifPresent(BlockType.SIGN, block -> builder.sign(block, blockOrThrow(BlockType.WALL_SIGN).value()));
+    public <TBlock extends Block> Optional<TBlock> get(BlockType<TBlock> blockType) {
+        return registree.getOptional(Registries.BLOCK, blockType.registryName()).map(value -> (TBlock) value);
+    }
 
-            return builder.getFamily();
+    public <TBlock extends Block> TBlock getOrThrow(BlockType<TBlock> blockType) {
+        return get(blockType).orElseThrow();
+    }
+
+    public <TBlock extends Block> void ifRegistered(BlockType<TBlock> blockType, Consumer<TBlock> consumer) {
+        get(blockType).ifPresent(consumer);
+    }
+
+    public boolean is(ItemStack stack) {
+        return registree.listElements(Registries.ITEM).anyMatch(stack::is);
+    }
+
+    public boolean is(BlockState blockState) {
+        return registree.listElements(Registries.BLOCK).anyMatch(blockState::is);
+    }
+
+    public boolean is(Block block) {
+        return registree.listElements(Registries.BLOCK).map(Holder::value).anyMatch(value -> value == block);
+    }
+
+    public boolean is(Item item) {
+        return registree.listElements(Registries.ITEM).map(Holder::value).anyMatch(value -> value == item);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj)
+            return true;
+        if(obj instanceof FurnitureSet other)
+            return ownerNamespace().equals(other.ownerNamespace()) && name.equals(other.name);
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ownerNamespace(), name);
+    }
+
+    @Override
+    public String toString() {
+        return "FurnitureSet{" + ownerNamespace() + ResourceLocation.NAMESPACE_SEPARATOR + name + '}';
+    }
+
+    public static FurnitureSet create(Registree registree, String name, Consumer<FurnitureSetBuilder> consumer) {
+        var builder = new FurnitureSetBuilder(registree, name);
+        consumer.accept(builder);
+        return new FurnitureSet(builder);
+    }
+
+    public static FurnitureSet createDefault(Registree registree, String name, Consumer<FurnitureSetBuilder> consumer) {
+        return create(registree, name, builder -> {
+            BlockTypeImpl.forEach(builder::with);
+            consumer.accept(builder);
         });
-
-        generator.pack()
-                .providing(ProviderTypes.BLOCK_TAGS, (context, provider) -> FurnitureSetDataGen.blockTags(provider, this))
-                .providing(ProviderTypes.ITEM_TAGS, (context, provider) -> FurnitureSetDataGen.itemTags(provider, this))
-                .providing(ProviderTypes.LANGUAGE, (context, provider) -> FurnitureSetDataGen.language(provider, this, englishName))
-                .providing(ProviderTypes.MODELS, (context, provider) -> FurnitureSetDataGen.models(provider, this, family))
-                .providing(ProviderTypes.LOOT_TABLE, (context, provider) -> FurnitureSetDataGen.lootTables(provider, this))
-                .providing(ProviderTypes.RECIPES, (context, provider) -> FurnitureSetDataGen.recipes(context, provider, this, family));
-
-        CTM_PACKS.forEach((modId, pack) -> {
-            generator.pack(pack.packId)
-                    .description("Enables " + pack.packName + " support");
-        });
     }
 
-    private <TBlock extends Block> void ifPresent(BlockType<TBlock, ?> blockType, Consumer<TBlock> consumer) {
-        var block = block(blockType);
-
-        if(block != null)
-            consumer.accept(block.value());
+    public static FurnitureSet createDefault(Registree registree, String name) {
+        return createDefault(registree, name, Consumers.nop());
     }
 
-    public static FurnitureSet create(String namespace, Function<Builder, Builder> builder) {
-        return new FurnitureSet(namespace, builder.apply(new Builder()));
+    private static Set<BlockType<?>> injectRequired(Collection<BlockType<?>> blockTypes) {
+        var result = Sets.<BlockType<?>>newLinkedHashSet();
+        BlockTypes.REQUIRED.forEach(blockType -> injectRequired(result, blockType));
+        blockTypes.forEach(blockType -> injectRequired(result, blockType));
+        return result;
     }
 
-    public static final class Builder {
-        private final Map<BlockType<?, ?>, Consumer<? extends BlockTypeBuilder<?, ?>>> blockTypes = Maps.newHashMapWithExpectedSize(BlockType.VALUES.size());
-        private final WoodTypeBuilder woodTypeBuilder = WoodTypeBuilder.builder();
-        @Nullable private String englishName = null;
-
-        private Builder() {
-
-        }
-
-        public Builder englishName(String englishName) {
-            this.englishName = englishName;
-            return this;
-        }
-
-        public <TBlock extends Block, TItem extends Item> Builder blockType(BlockType<TBlock, TItem> blockType, Consumer<BlockTypeBuilder<TBlock, TItem>> builder) {
-            blockTypes.put(blockType, builder);
-            return this;
-        }
-
-        public Builder woodType(Consumer<WoodTypeBuilder> consumer) {
-            consumer.accept(woodTypeBuilder);
-            return this;
-        }
-
-        private Map<BlockType<?, ?>, Mapping<?, ?>> register(FurnitureSet furnitureSet) {
-            var mappings = Maps.<BlockType<?, ?>, Mapping<?, ?>>newHashMap();
-
-            BlockType.VALUES.forEach(blockType -> {
-                var builder = new BlockTypeBuilder<>(blockType);
-                var consumer = blockTypes.get(blockType);
-
-                if(consumer != null)
-                    ((Consumer<BlockTypeBuilder<?, ?>>) consumer).accept(builder);
-
-                var mapping = builder.register(furnitureSet);
-
-                if(mapping != null)
-                    mappings.put(blockType, mapping);
-            });
-
-            return Collections.unmodifiableMap(mappings);
+    private static void injectRequired(Set<BlockType<?>> set, BlockType<?> blockType) {
+        if(set.add(blockType)) {
+            ((BlockTypeImpl<?>) blockType).required.forEach(required -> injectRequired(set, required));
+            set.add(blockType);
         }
     }
-
-    public static final class BlockTypeBuilder<TBlock extends Block, TItem extends Item> {
-        private final BlockType<TBlock, TItem> blockType;
-        @Nullable private Function<BlockState, VoxelShape> shapeGetter = null;
-        private Function<BlockBehaviour.Properties, BlockBehaviour.Properties> blockProperties = Function.identity();
-        private Function<Item.Properties, Item.Properties> itemProperties = Function.identity();
-
-        private BlockTypeBuilder(BlockType<TBlock, TItem> blockType) {
-            this.blockType = blockType;
-        }
-
-        public BlockTypeBuilder<TBlock, TItem> shape(Function<BlockState, VoxelShape> shapeGetter) {
-            this.shapeGetter = shapeGetter;
-            return this;
-        }
-
-        public BlockTypeBuilder<TBlock, TItem> shape(Supplier<VoxelShape> shapeGetter) {
-            return shape(blockState -> shapeGetter.get());
-        }
-
-        public BlockTypeBuilder<TBlock, TItem> blockProperties(UnaryOperator<BlockBehaviour.Properties> blockProperties) {
-            this.blockProperties = this.blockProperties.andThen(blockProperties);
-            return this;
-        }
-
-        public BlockTypeBuilder<TBlock, TItem> itemProperties(UnaryOperator<Item.Properties> itemProperties) {
-            this.itemProperties = this.itemProperties.andThen(itemProperties);
-            return this;
-        }
-
-        @Nullable
-        private Mapping<TBlock, TItem> register(FurnitureSet furnitureSet) {
-            var block = blockType.registerBlock(furnitureSet.registree, furnitureSet, blockProperties);
-
-            if(block == null)
-                return null;
-
-            var item = blockType.registerItem(furnitureSet.registree, furnitureSet, block, itemProperties);
-            return new Mapping<>(block, item, shapeGetter);
-        }
-    }
-
-    private record Mapping<
-            TBlock extends Block,
-            TItem extends Item
-    >(@Nullable DeferredBlock<TBlock> block, @Nullable DeferredItem<TItem> item, @Nullable Function<BlockState, VoxelShape> shapeGetter) { }
 
     private record CtmPack(String packId, String packName) { }
 }

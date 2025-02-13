@@ -1,7 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "misc",
-  "group": "fantasyfurniture_nordic_fence",
   "key": {
     "#": "minecraft:stick",
     "W": "fantasyfurniture_nordic:planks"

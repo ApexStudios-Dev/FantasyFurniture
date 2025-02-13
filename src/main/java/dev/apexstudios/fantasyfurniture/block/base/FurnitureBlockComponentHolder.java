@@ -1,39 +1,22 @@
 package dev.apexstudios.fantasyfurniture.block.base;
 
-import com.google.common.collect.Maps;
 import dev.apexstudios.apexcore.lib.component.ComponentRegistrar;
 import dev.apexstudios.apexcore.lib.component.block.BaseBlockComponentHolder;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
+import dev.apexstudios.apexcore.lib.component.block.BlockComponentHelper;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
 import dev.apexstudios.apexcore.lib.component.block.types.FluidLoggedBlockComponent;
 import dev.apexstudios.apexcore.lib.component.block.types.MultiBlockComponent;
-import dev.apexstudios.apexcore.lib.util.shapes.ApexShapes;
-import dev.apexstudios.fantasyfurniture.set.BlockType;
-import dev.apexstudios.fantasyfurniture.set.FurnitureSet;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.BlockGetter;
+import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.MustBeInvokedByOverriders;
 
 public class FurnitureBlockComponentHolder extends BaseBlockComponentHolder {
-    protected final FurnitureSet furnitureSet;
-    protected final BlockType<?, ?> blockType;
-    private final Map<BlockState, VoxelShape> shapes = Maps.newHashMap();
-
-    public FurnitureBlockComponentHolder(FurnitureSet furnitureSet, BlockType<?, ?> blockType, Properties properties) {
+    protected FurnitureBlockComponentHolder(Properties properties) {
         super(properties);
-
-        this.furnitureSet = furnitureSet;
-        this.blockType = blockType;
-    }
-
-    @Override
-    protected VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return shapes.computeIfAbsent(blockState, $ -> getShape($, pos));
     }
 
     @MustBeInvokedByOverriders
@@ -44,14 +27,17 @@ public class FurnitureBlockComponentHolder extends BaseBlockComponentHolder {
         FluidLoggedBlockComponent.registerWater(registrar);
     }
 
-    private VoxelShape getShape(BlockState blockState, BlockPos pos) {
-        var facing = getComponent(BlockComponentTypes.FACING);
-        var multiBlock = getComponent(BlockComponentTypes.MULTI_BLOCK);
-        var baseShape = furnitureSet.shape(blockType, blockState, Shapes::block);
+    public static VoxelShape getShape(Map<Direction, VoxelShape> shapes, BlockState blockState, BlockPos pos) {
+        var facing = BlockComponentHelper.getComponentOrThrow(blockState, BlockComponentTypes.FACING).get(blockState);
+        return getShape(shapes.get(facing), blockState, pos);
+    }
 
-        if(facing != null)
-            baseShape = ApexShapes.rotateHorizontal(baseShape, facing.get(blockState));
+    public static VoxelShape getShape(VoxelShape shape, BlockState blockState, BlockPos pos) {
+        var multiBlock = BlockComponentHelper.getComponent(blockState, BlockComponentTypes.MULTI_BLOCK);
 
-        return multiBlock == null ? baseShape : MultiBlockComponent.fixVoxelShape(baseShape, multiBlock, blockState, pos);
+        if(multiBlock == null)
+            return shape;
+
+        return MultiBlockComponent.fixVoxelShape(shape, multiBlock, blockState, pos);
     }
 }

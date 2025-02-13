@@ -1,8 +1,8 @@
 {
   "values": [
-    "fantasyfurniture_nordic:dresser",
     "fantasyfurniture_nordic:bed_double",
     "fantasyfurniture_nordic:bed_single",
+    "fantasyfurniture_nordic:bench",
     "fantasyfurniture_nordic:bookshelf",
     "fantasyfurniture_nordic:chair",
     "fantasyfurniture_nordic:chest",
@@ -10,9 +10,9 @@
     "fantasyfurniture_nordic:desk_right",
     "fantasyfurniture_nordic:door_double",
     "fantasyfurniture_nordic:door_single",
+    "fantasyfurniture_nordic:dresser",
     "fantasyfurniture_nordic:floor_light",
     "fantasyfurniture_nordic:painting_wide",
-    "fantasyfurniture_nordic:bench",
     "fantasyfurniture_nordic:wardrobe"
   ]
 }
