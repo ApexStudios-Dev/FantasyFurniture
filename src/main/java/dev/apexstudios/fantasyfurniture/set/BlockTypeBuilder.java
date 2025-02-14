@@ -82,8 +82,8 @@ public sealed interface BlockTypeBuilder<TBlock extends Block, TSelf extends Blo
         return providing(ProviderTypes.LOOT_TABLE, (context, provider, furnitureSet, block) -> provider.block(blocks -> listener.accept(blocks, furnitureSet, block)));
     }
 
-    default TSelf model(ModelProviderListener<TBlock> listener) {
-        return providing(ProviderTypes.MODELS, (context, provider, furnitureSet, block) -> listener.accept(context, provider.blockModels(), furnitureSet, block));
+    default TSelf model(Supplier<ModelProviderListener<TBlock>> listener) {
+        return providing(ProviderTypes.MODELS, (context, provider, furnitureSet, block) -> listener.get().accept(context, provider.blockModels(), furnitureSet, block));
     }
 
     default TSelf blockTags(TagListener<Block, TBlock> listener) {
