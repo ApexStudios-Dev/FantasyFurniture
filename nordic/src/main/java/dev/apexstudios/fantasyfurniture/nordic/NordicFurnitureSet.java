@@ -35,7 +35,8 @@ public class NordicFurnitureSet {
     public static final String ID = "fantasyfurniture_nordic";
     public static final Registree REGISTREE = new Registree(ID);
 
-    public static final FurnitureSet FURNITURE_SET = FurnitureSet.createDefault(REGISTREE, "nordic", builder -> builder
+    public static final FurnitureSet FURNITURE_SET = FurnitureSet.create(REGISTREE, "nordic", builder -> builder
+            .withDefault()
             .with(BlockTypes.DRESSER.extend(BlockFactory.wrapping(NordicDresserBlock::new)))
             .with(BlockTypes.CUSHION.extend(BlockFactory.wrapping(NordicCushionBlock::new)))
             .with(BlockTypes.STOOL.extend(BlockFactory.wrapping(NordicStoolBlock::new)))

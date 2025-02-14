@@ -1,6 +1,5 @@
 package dev.apexstudios.fantasyfurniture.set;
 
-import com.google.common.collect.Sets;
 import com.google.errorprone.annotations.OverridingMethodsMustInvokeSuper;
 import dev.apexstudios.apexcore.lib.data.ProviderType;
 import dev.apexstudios.apexcore.lib.data.pack.ModPackGenerator;
@@ -10,7 +9,6 @@ import dev.apexstudios.fantasyfurniture.set.function.ItemFactory;
 import dev.apexstudios.fantasyfurniture.set.function.ProviderListener;
 import java.util.Collections;
 import java.util.Map;
-import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -28,17 +26,14 @@ import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent;
 import org.jetbrains.annotations.Nullable;
 
 abstract sealed class BlockTypeImpl<TBlock extends Block> implements BlockType<TBlock> {
-    protected static final Set<BlockType<?>> REGISTRY = Sets.newLinkedHashSet();
-
     private final String registryName;
     private final BiFunction<FurnitureSet, BlockBehaviour.Properties, BlockBehaviour.Properties> blockPropertiesModifier;
     private final Function<FurnitureSet, BlockBehaviour.Properties> initialBlockProperties;
-    protected BlockFactory<TBlock> blockFactory;
+    protected final BlockFactory<TBlock> blockFactory;
     @Nullable private final Supplier<? extends BlockEntityType<?>> blockEntityType;
     private final Map<ProviderType<?>, ProviderListener<?, TBlock>> providerListeners;
     private final BiConsumer<FurnitureSet, TBlock> onRegister;
     private final BiConsumer<FurnitureSet, TBlock> onRegisterEnqueued;
-    final Set<BlockType<?>> required;
 
     private BlockTypeImpl(BlockTypeBuilderImpl<TBlock, ?> builder) {
         registryName = builder.registryName;
@@ -49,8 +44,6 @@ abstract sealed class BlockTypeImpl<TBlock extends Block> implements BlockType<T
         providerListeners = Collections.unmodifiableMap(builder.providerListeners);
         onRegister = builder.onRegister;
         onRegisterEnqueued = builder.onRegisterEnqueued;
-        required = Sets.newLinkedHashSet(builder.required);
-        required.forEach(blockType -> ((BlockTypeImpl<?>) blockType).required.add(this));
     }
 
     @Override
@@ -100,8 +93,15 @@ abstract sealed class BlockTypeImpl<TBlock extends Block> implements BlockType<T
         generator.providing(providerType, (context, provider) -> ((ProviderListener<TProvider, TBlock>) providerListeners.get(providerType)).accept(context, provider, furnitureSet, furnitureSet.getOrThrow(this)));
     }
 
-    public static void forEach(Consumer<BlockType<?>> consumer) {
-        REGISTRY.forEach(consumer);
+    protected final <TBuilder extends BlockTypeBuilderImpl<TBlock, ? super TBuilder>> TBuilder copyInto(TBuilder builder) {
+        var result = (TBuilder) builder.initialBlockProperties(initialBlockProperties)
+                .blockProperties(blockPropertiesModifier)
+                .blockEntity(blockEntityType)
+                .onRegister(onRegister, false)
+                .onRegister(onRegisterEnqueued, true);
+
+        result.providerListeners.putAll(providerListeners);
+        return result;
     }
 
     static {
@@ -114,16 +114,15 @@ abstract sealed class BlockTypeImpl<TBlock extends Block> implements BlockType<T
         }
 
         @Override
-        public BlockType.NoItem<TBlock> extend(BlockFactory<TBlock> blockFactory) {
-            this.blockFactory = blockFactory;
-            return this;
+        public BlockType.NoItem<TBlock> extend(BlockFactory<TBlock> blockFactory, Consumer<BlockTypeBuilder.NoItem<TBlock>> consumer) {
+            return BlockType.noItem(registryName(), blockFactory, builder -> consumer.accept(copyInto((BlockTypeBuilderImpl.NoItem<TBlock>) builder)));
         }
     }
 
     public static final class WithItem<TBlock extends Block, TItem extends Item> extends BlockTypeImpl<TBlock> implements BlockType.WithItem<TBlock, TItem> {
         private final BiFunction<FurnitureSet, Item.Properties, Item.Properties> itemPropertiesModifier;
         private final Function<FurnitureSet, Item.Properties> initialItemProperties;
-        private ItemFactory<TBlock, TItem> itemFactory;
+        private final ItemFactory<TBlock, TItem> itemFactory;
 
         public WithItem(BlockTypeBuilderImpl.WithItem<TBlock, TItem> builder) {
             super(builder);
@@ -139,20 +138,21 @@ abstract sealed class BlockTypeImpl<TBlock extends Block> implements BlockType<T
         }
 
         @Override
-        public BlockType.WithItem<TBlock, TItem> extend(BlockFactory<TBlock> blockFactory, ItemFactory<TBlock, TItem> itemFactory) {
-            this.blockFactory = blockFactory;
-            this.itemFactory = itemFactory;
-            return this;
+        public BlockType.WithItem<TBlock, TItem> extend(BlockFactory<TBlock> blockFactory, ItemFactory<TBlock, TItem> itemFactory, Consumer<BlockTypeBuilder.WithItem<TBlock, TItem>> consumer) {
+            return BlockType.withItem(registryName(), blockFactory, itemFactory, builder -> consumer.accept(copyInto((BlockTypeBuilderImpl.WithItem<TBlock, TItem>) builder)
+                    .initialItemProperties(initialItemProperties)
+                    .itemProperties(itemPropertiesModifier)
+            ));
         }
 
         @Override
-        public BlockType.WithItem<TBlock, TItem> extend(BlockFactory<TBlock> blockFactory) {
-            return extend(blockFactory, itemFactory);
+        public BlockType.WithItem<TBlock, TItem> extend(BlockFactory<TBlock> blockFactory, Consumer<BlockTypeBuilder.WithItem<TBlock, TItem>> consumer) {
+            return extend(blockFactory, itemFactory, consumer);
         }
 
         @Override
-        public BlockType.WithItem<TBlock, TItem> extend(ItemFactory<TBlock, TItem> itemFactory) {
-            return extend(blockFactory, itemFactory);
+        public BlockType.WithItem<TBlock, TItem> extend(ItemFactory<TBlock, TItem> itemFactory, Consumer<BlockTypeBuilder.WithItem<TBlock, TItem>> consumer) {
+            return extend(blockFactory, itemFactory, consumer);
         }
 
         @Override
