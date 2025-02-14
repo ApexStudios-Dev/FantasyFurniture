@@ -2,8 +2,8 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [64, 64],
 	"textures": {
-		"oven": "fantasyfurniture:block/models/venthyr/oven",
-		"particle": "fantasyfurniture:block/particles/venthyr"
+		"oven": "fantasyfurniture_venthyr:block/oven",
+		"particle": "fantasyfurniture_venthyr:block/particle"
 	},
 	"elements": [
 		{

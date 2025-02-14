@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [128, 128],
 	"textures": {
-		"sofa": "fantasyfurniture:block/models/venthyr/sofa",
-		"particle": "fantasyfurniture:block/particles/venthyr"
+		"sofa": "fantasyfurniture_venthyr:block/sofa",
+		"particle": "fantasyfurniture_venthyr:block/particle"
 	},
 	"elements": [
 		{

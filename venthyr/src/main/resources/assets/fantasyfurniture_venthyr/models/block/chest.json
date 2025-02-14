@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [128, 128],
 	"textures": {
-		"venthyr_chest": "fantasyfurniture:block/models/venthyr/chest",
-		"particle": "fantasyfurniture:block/particles/venthyr"
+		"venthyr_chest": "fantasyfurniture_venthyr:block/chest",
+		"particle": "fantasyfurniture_venthyr:block/particle"
 	},
 	"elements": [
 		{
