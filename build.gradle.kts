@@ -1,4 +1,3 @@
-import dev.apexstudios.gradle.ApexExtension
 import dev.apexstudios.gradle.multi.ModuleBuilder
 import dev.apexstudios.gradle.single.ApexSingleExtension
 import me.modmuss50.mpp.ReleaseType
@@ -21,10 +20,6 @@ single.withDataGen()
 
 ModuleBuilder.modules(project) {
     module("nordic") { hasData() }
-}
-
-repositories {
-    ApexExtension.withApexStudiosGithubMaven(this, "ApexCore")
 }
 
 dependencies {
