@@ -94,8 +94,34 @@ jobs:
             curseforge_id: 1191799
             release_type: alpha
 
+    publish-modrinth-main:
+        needs: [ get-vars, build ]
+        if: success()
+        uses: ApexStudios-Dev/.github/.github/workflows/_publish-modrinth.yml@master
+        secrets: inherit
+        with:
+            java_version: 17
+            java_vendor: temurin
+            artifact-id: artifacts-main
+            version: ${{ needs.get-vars.outputs.version }}
+            curseforge_id: 579564
+            release_type: alpha
+
+    publish-modrinth-nordic:
+        needs: [ get-vars, build ]
+        if: success()
+        uses: ApexStudios-Dev/.github/.github/workflows/_publish-modrinth.yml@master
+        secrets: inherit
+        with:
+            java_version: 17
+            java_vendor: temurin
+            artifact-id: artifacts-nordic
+            version: ${{ needs.get-vars.outputs.version }}
+            curseforge_id: 1191799
+            release_type: alpha
+
     announce-discord-main:
-        needs: [ get-vars, publish-maven, publish-curseforge-main ]
+        needs: [ get-vars, publish-maven, publish-curseforge-main, publish-modrinth-main ]
         if: success()
         uses: ApexStudios-Dev/.github/.github/workflows/_announce-discord.yml@master
         secrets: inherit
@@ -108,7 +134,7 @@ jobs:
             color: "9946855" # 97C6E7
 
     announce-discord-nordic:
-        needs: [ get-vars, publish-maven, publish-curseforge-nordic ]
+        needs: [ get-vars, publish-maven, publish-curseforge-nordic, publish-modrinth-nordic ]
         if: success()
         uses: ApexStudios-Dev/.github/.github/workflows/_announce-discord.yml@master
         secrets: inherit
