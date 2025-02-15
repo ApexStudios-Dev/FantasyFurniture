@@ -27,7 +27,7 @@ jobs:
                     bump_each_commit: true
 
     build:
-        name: Build - v${{ inputs.version }}
+        name: Build - v${{ needs.get-vars.outputs.version }}
         runs-on: apexstudios
         steps:
             - name: Checkout repository
@@ -36,8 +36,8 @@ jobs:
             - name: Setup Java
               uses: actions/setup-java@v4
               with:
-                  distribution: ${{ inputs.java_vendor }}
-                  java-version: ${{ inputs.java_version }}
+                  distribution: temurin
+                  java-version: 17
 
             - name: Setup Gradle
               uses: gradle/actions/setup-gradle@v4
@@ -50,7 +50,7 @@ jobs:
             - name: Build
               run: ./gradlew :build
               env:
-                  VERSION: ${{ inputs.version }}
+                  VERSION: ${{ needs.get-vars.outputs.version }}
 
             - name: Upload Built Artifacts (Main)
               uses: actions/upload-artifact@v4
