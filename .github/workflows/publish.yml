@@ -68,6 +68,17 @@ jobs:
                   # only nordic, no sources or data jars
                   path: ./build/libs/*[nordic][!(sources|data)].jar
 
+    publish-maven:
+        needs: [ get-vars, build ]
+        if: success()
+        uses: ApexStudios-Dev/.github/.github/workflows/_publish-maven.yml@master
+        secrets: inherit
+        with:
+            java_version: 17
+            java_vendor: temurin
+            version: ${{ needs.get-vars.outputs.version }}
+            github_package_url: "https://maven.pkg.github.com/ApexStudios-Dev/FantasyFurniture"
+
     publish-curseforge-main:
         needs: [ get-vars, build ]
         if: success()
