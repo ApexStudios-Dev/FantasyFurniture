@@ -79,7 +79,7 @@ jobs:
     publish-main:
         needs: [ get-vars, build ]
         if: success()
-        uses: .github/workflows/_publish-furnitureset.yml@master
+        uses: ./.github/workflows/_publish-furnitureset.yml@master
         secrets: inherit
         with:
             java_version: 17
@@ -96,7 +96,7 @@ jobs:
     publish-nordic:
         needs: [ get-vars, build ]
         if: success()
-        uses: .github/workflows/_publish-furnitureset.yml@master
+        uses: ./.github/workflows/_publish-furnitureset.yml@master
         secrets: inherit
         with:
             java_version: 17
