@@ -5,11 +5,107 @@ on:
         paths: [ "**/src/**" ]
 
 jobs:
-    publish:
-        uses: ApexStudios-Dev/.github/.github/workflows/publish-mod.yml@master
-        secrets:
-            MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
-            MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
-            CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
-#            MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
-            DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+    get-vars:
+        name: Get Variables
+        runs-on: apexstudios
+        outputs:
+            version: ${{ steps.version.outputs.version }}
+        steps:
+            -   name: Checkout repository
+                uses: actions/checkout@v4
+                with:
+                    fetch-depth: 0
+                    fetch-tags: true
+
+            -   name: Determine version
+                uses: paulhatch/semantic-version@v5.4.0
+                id: version
+                with:
+                    change_path: "./"
+                    version_format: "${major}.${minor}.${patch}"
+                    search_commit_body: true
+                    bump_each_commit: true
+
+    build:
+        name: Build - v${{ inputs.version }}
+        runs-on: apexstudios
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Setup Java
+              uses: actions/setup-java@v4
+              with:
+                  distribution: ${{ inputs.java_vendor }}
+                  java-version: ${{ inputs.java_version }}
+
+            - name: Setup Gradle
+              uses: gradle/actions/setup-gradle@v4
+              with:
+                  cache-disabled: ${{ ! env.ACT }}
+
+            - name: Mark Gradle as Executable
+              run: chmod +x ./gradlew
+
+            - name: Build
+              run: ./gradlew :build
+              env:
+                  VERSION: ${{ inputs.version }}
+
+            - name: Upload Built Artifacts (Main)
+              uses: actions/upload-artifact@v4
+              with:
+                  name: artifacts-main
+                  # no sources or data jars and ignoring furniture sets
+                  path: ./build/libs/*[!(main|sources|data)].jar
+
+            - name: Upload Built Artifacts (Nordic)
+              uses: actions/upload-artifact@v4
+              with:
+                  name: artifacts-nordic
+                  # only nordic, no sources or data jars
+                  path: ./build/libs/*[nordic][!(sources|data)].jar
+
+    publish-maven:
+        needs: [ get-vars, build ]
+        if: success()
+        uses: ApexStudios-Dev/.github/.github/workflows/_publish-maven.yml@master
+        secrets: inherit
+        with:
+            java_version: 17
+            java_vendor: temurin
+            version: ${{ needs.get-vars.outputs.version }}
+
+    publish-main:
+        needs: [ get-vars, build ]
+        if: success()
+        uses: .github/workflows/_publish-furnitureset.yml@master
+        secrets: inherit
+        with:
+            java_version: 17
+            java_vendor: temurin
+            artifact-id: artifacts-main
+            version: ${{ needs.get-vars.outputs.version }}
+            curseforge_id: 579564
+            modrinth_id: A0nfCqYw
+            release_type: alpha
+            name: "Fantasy's Furniture"
+            logo: "https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/new/fantasyfurniture.png"
+            color: "9946855" # 97C6E7
+
+    publish-nordic:
+        needs: [ get-vars, build ]
+        if: success()
+        uses: .github/workflows/_publish-furnitureset.yml@master
+        secrets: inherit
+        with:
+            java_version: 17
+            java_vendor: temurin
+            artifact-id: artifacts-nordic
+            version: ${{ needs.get-vars.outputs.version }}
+            curseforge_id: 1191799
+            modrinth_id: DIHzMa8h
+            release_type: alpha
+            name: "Fantasy's Furniture - Nordic"
+            logo: "https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/new/fantasyfurniture_nordic.png"
+            color: "9946855" # 97C6E7
