@@ -47,19 +47,20 @@ jobs:
             curseforge_id: ${{ inputs.curseforge_id }}
             release_type: ${{ inputs.release_type }}
 
-    publish-modrinth:
-        uses: ApexStudios-Dev/.github/.github/workflows/_publish-modrinth.yml@master
-        secrets: inherit
-        with:
-            java_version: ${{ inputs.java_version }}
-            java_vendor: ${{ inputs.java_vendor }}
-            artifact-id: artifacts-${{ inputs.furniture_set }}
-            version: ${{ inputs.version }}
-            modrinth_id: ${{ inputs.modrinth_id }}
-            release_type: ${{ inputs.release_type }}
+#    publish-modrinth:
+#        uses: ApexStudios-Dev/.github/.github/workflows/_publish-modrinth.yml@master
+#        secrets: inherit
+#        with:
+#            java_version: ${{ inputs.java_version }}
+#            java_vendor: ${{ inputs.java_vendor }}
+#            artifact-id: artifacts-${{ inputs.furniture_set }}
+#            version: ${{ inputs.version }}
+#            modrinth_id: ${{ inputs.modrinth_id }}
+#            release_type: ${{ inputs.release_type }}
 
     announce-discord:
-        needs: [ publish-curseforge, publish-modrinth ]
+        # needs: [ publish-curseforge, publish-modrinth ]
+        needs: [ publish-curseforge ]
         if: success()
         uses: ApexStudios-Dev/.github/.github/workflows/_announce-discord.yml@master
         secrets: inherit
