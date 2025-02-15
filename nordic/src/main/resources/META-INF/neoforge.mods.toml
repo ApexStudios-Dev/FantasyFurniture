@@ -14,13 +14,26 @@ issueTrackerURL="https://github.com/ApexStudios-Dev/Issues/issues"
     displayURL="https://modrinth.com/project/fantasys-furniture-nordic"
 
 [[dependencies.fantasyfurniture_nordic]]
+    modId="minecraft"
+    type="required"
+    versionRange="[1.21.4,1.21.5)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.fantasyfurniture_nordic]]
+    modId="neoforge"
+    type="required"
+    versionRange="[21.4,21.5)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.fantasyfurniture_nordic]]
     modId="apexcore"
     type="required"
-    versionRange="[21.4,)"
+    versionRange="[21.4,21.5)"
 [[dependencies.fantasyfurniture_nordic]]
     modId="fantasyfurniture"
     type="required"
-    versionRange="[21.4,)"
+    versionRange="[21.4,21.5)"
 
 #[[accessTransformers]]
 #    file="META-INF/accesstransformer.cfg"
