@@ -22,9 +22,6 @@ on:
             release_type:
                 type: string
                 required: true
-            furniture_set:
-                type: string
-                required: true
             name:
                 type: string
                 required: true
@@ -42,7 +39,7 @@ jobs:
         with:
             java_version: ${{ inputs.java_version }}
             java_vendor: ${{ inputs.java_vendor }}
-            artifact-id: artifacts-${{ inputs.furniture_set }}
+            artifact_id: ${{ inputs.artifact_id }}
             version: ${{ inputs.version }}
             curseforge_id: ${{ inputs.curseforge_id }}
             release_type: ${{ inputs.release_type }}
@@ -54,7 +51,7 @@ jobs:
 #        with:
 #            java_version: ${{ inputs.java_version }}
 #            java_vendor: ${{ inputs.java_vendor }}
-#            artifact-id: artifacts-${{ inputs.furniture_set }}
+#            artifact_id: ${{ inputs.artifact_id }}
 #            version: ${{ inputs.version }}
 #            modrinth_id: ${{ inputs.modrinth_id }}
 #            release_type: ${{ inputs.release_type }}
