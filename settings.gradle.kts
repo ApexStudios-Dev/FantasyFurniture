@@ -1,6 +1,6 @@
 pluginManagement {
     if(file("../ApexGradle/build.gradle.kts").exists()) {
-        includeBuild("../ApexGradle")
+//        includeBuild("../ApexGradle")
     }
 
     repositories {
@@ -25,7 +25,7 @@ pluginManagement {
     resolutionStrategy {
         eachPlugin {
             if(requested.id.namespace == "apex-conventions") {
-                useVersion("[0.1,)")
+                useVersion("0.1-SNAPSHOT")
             }
         }
     }
