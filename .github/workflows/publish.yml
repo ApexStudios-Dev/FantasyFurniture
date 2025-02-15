@@ -84,7 +84,7 @@ jobs:
         with:
             java_version: 17
             java_vendor: temurin
-            artifact-id: artifacts-main
+            artifact_id: artifacts-main
             version: ${{ needs.get-vars.outputs.version }}
             curseforge_id: 579564
             modrinth_id: A0nfCqYw
@@ -101,7 +101,7 @@ jobs:
         with:
             java_version: 17
             java_vendor: temurin
-            artifact-id: artifacts-nordic
+            artifact_id: artifacts-nordic
             version: ${{ needs.get-vars.outputs.version }}
             curseforge_id: 1191799
             modrinth_id: DIHzMa8h
