@@ -28,6 +28,7 @@ jobs:
 
     build:
         name: Build - v${{ needs.get-vars.outputs.version }}
+        needs: [ get-vars ]
         runs-on: apexstudios
         steps:
             - name: Checkout repository
