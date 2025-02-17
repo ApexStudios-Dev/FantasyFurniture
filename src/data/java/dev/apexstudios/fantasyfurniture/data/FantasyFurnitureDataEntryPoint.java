@@ -39,6 +39,9 @@ public final class FantasyFurnitureDataEntryPoint {
                 })
                 .providing(ProviderTypes.LANGUAGE, (context, provider) -> provider
                         .addBlock(FurnitureStationSetup.BLOCK, "Furniture Station")
+                        .add(FantasyFurniture.FURNITURE_PLANKS, "Planks (Furniture Input)")
+                        .add(FantasyFurniture.FURNITURE_WOOL, "Wools (Furniture Input)")
+                        .add(FurnitureStationSetup.BINDING_AGENT, "Furniture Binding Agents")
                 )
                 .providing(ProviderTypes.MODELS, (context, provider) -> {
                     provider.fromRegistree(FantasyFurniture.REGISTREE);
