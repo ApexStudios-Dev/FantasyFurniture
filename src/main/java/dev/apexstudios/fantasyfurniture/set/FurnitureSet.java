@@ -11,6 +11,9 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.UnaryOperator;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.Sheets;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -28,6 +31,7 @@ import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModList;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
 import org.apache.commons.lang3.StringUtils;
 
@@ -64,6 +68,25 @@ public final class FurnitureSet {
         for(var blockType : blockTypes) {
             ((BlockTypeImpl<?>) blockType).register(modBus, this, registree);
         }
+
+        modBus.addListener(FMLClientSetupEvent.class, event -> event.enqueueWork(() -> {
+            // vanilla uses the wood type id to construct the texture location
+            // our wood type id == '${furniture_set}_wood_type'
+            // but we want only '$furniture_set' for the texture name
+            //
+            // this also registers both ground & hanging sign materials
+            // when furniture set potentially only needs 1 of them
+            // Sheets.addWoodType(woodType);
+
+            // we register the sign materials manually to match our desired texture path
+            // and only register materials when the matching block types are registered
+            if(isRegistered(BlockTypes.HANGING_SIGN) || isRegistered(BlockTypes.WALL_HANGING_SIGN))
+                Sheets.HANGING_SIGN_MATERIALS.put(woodType, Sheets.createHangingSignMaterial(registree.registryName(name)));
+            if(isRegistered(BlockTypes.SIGN) || isRegistered(BlockTypes.WALL_SIGN))
+                Sheets.SIGN_MATERIALS.put(woodType, Sheets.createSignMaterial(registree.registryName(name)));
+
+            ifRegistered(BlockTypes.TRAP_DOOR, block -> ItemBlockRenderTypes.setRenderLayer(block, RenderType.cutout()));
+        }));
 
         modBus.addListener(AddPackFindersEvent.class, event -> CTM_PACKS.entrySet().stream()
                 .filter(entry -> ModList.get().isLoaded(entry.getKey()))
