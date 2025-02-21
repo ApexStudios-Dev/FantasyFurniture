@@ -383,7 +383,7 @@ public interface BlockTypes {
     // region: Desk Left
     BlockType.WithItem<DeskBlock, BlockItem> DESK_LEFT = BlockType.withItem(
             "desk_left",
-            BlockFactory.wrapping(DeskBlock::new),
+            BlockFactory.wrapping(properties -> new DeskBlock(properties, true)),
             builder -> builder
                     .copyInitialBlockPropertiesLegacy(() -> Blocks.CHEST)
                     .blockProperties(properties -> properties.pushReaction(PushReaction.BLOCK))
@@ -404,7 +404,7 @@ public interface BlockTypes {
     // region: Desk Right
     BlockType.WithItem<DeskBlock, BlockItem> DESK_RIGHT = BlockType.withItem(
             "desk_right",
-            BlockFactory.wrapping(DeskBlock::new),
+            BlockFactory.wrapping(properties -> new DeskBlock(properties, false)),
             builder -> builder
                     .copyInitialBlockPropertiesLegacy(() -> Blocks.CHEST)
                     .blockProperties(properties -> properties.pushReaction(PushReaction.BLOCK))
