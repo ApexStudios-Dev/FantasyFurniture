@@ -66,7 +66,7 @@ public final class FurnitureSet {
 
     public void register(IEventBus modBus) {
         for(var blockType : blockTypes) {
-            ((BlockTypeImpl<?>) blockType).register(modBus, this, registree);
+            blockType.register(modBus, this, registree);
         }
 
         modBus.addListener(FMLClientSetupEvent.class, event -> event.enqueueWork(() -> {
@@ -106,7 +106,7 @@ public final class FurnitureSet {
         var pack = generator.pack();
 
         for(var blockType : blockTypes) {
-            ((BlockTypeImpl<?>) blockType).registerDataGen(pack, this);
+            blockType.registerDataGen(pack, this);
         }
 
         pack.providing(ProviderTypes.LANGUAGE, (context, provider) -> provider.addCreativeModeTab(creativeModeTab, StringUtils.capitalize(name)));
@@ -138,11 +138,11 @@ public final class FurnitureSet {
     }
 
     public boolean isRegistered(BlockType<?> blockType) {
-        return registree.containsKey(Registries.BLOCK, blockType.registryName());
+        return registree.containsKey(Registries.BLOCK, blockType.registryName);
     }
 
     public <TBlock extends Block> Optional<TBlock> get(BlockType<TBlock> blockType) {
-        return registree.getOptional(Registries.BLOCK, blockType.registryName()).map(value -> (TBlock) value);
+        return registree.getOptional(Registries.BLOCK, blockType.registryName).map(value -> (TBlock) value);
     }
 
     public <TBlock extends Block> TBlock getOrThrow(BlockType<TBlock> blockType) {

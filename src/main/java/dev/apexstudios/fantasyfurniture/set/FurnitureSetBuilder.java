@@ -41,7 +41,7 @@ public final class FurnitureSetBuilder {
     }
 
     public FurnitureSetBuilder with(BlockType<?> blockType) {
-        blockTypes.put(blockType.registryName(), blockType);
+        blockTypes.put(blockType.registryName, blockType);
         return this;
     }
 
