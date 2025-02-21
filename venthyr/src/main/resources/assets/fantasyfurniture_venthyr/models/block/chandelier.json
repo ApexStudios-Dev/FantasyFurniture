@@ -4,6 +4,7 @@
 		"chandelier": "fantasyfurniture_venthyr:block/chandelier",
 		"particle": "fantasyfurniture_venthyr:block/particle"
 	},
+	"render_type": "minecraft:cutout",
 	"elements": [
 		{
 			"name": "top_chain_1",

@@ -1,5 +1,6 @@
 package dev.apexstudios.fantasyfurniture.set;
 
+import com.google.common.collect.Sets;
 import com.google.errorprone.annotations.OverridingMethodsMustInvokeSuper;
 import dev.apexstudios.apexcore.lib.data.ProviderType;
 import dev.apexstudios.apexcore.lib.data.pack.ModPackGenerator;
@@ -24,6 +25,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent;
+import net.neoforged.neoforge.mixins.BlockEntityTypeAccessor;
 import org.apache.commons.lang3.function.Consumers;
 import org.jetbrains.annotations.Nullable;
 
@@ -82,7 +84,7 @@ public sealed class BlockType<TBlock extends Block> {
         modBus.addListener(FMLCommonSetupEvent.class, event -> event.enqueueWork(() -> onRegisterEnqueued.accept(furnitureSet, furnitureSet.getOrThrow(this))));
 
         if(blockEntityType != null)
-            modBus.addListener(BlockEntityTypeAddBlocksEvent.class, event -> event.modify(blockEntityType.get(), furnitureSet.getOrThrow(this)));
+            modBus.addListener(BlockEntityTypeAddBlocksEvent.class, event -> markAsValidBlockEntityBlock(furnitureSet, blockEntityType.get()));
     }
 
     void registerDataGen(ModPackGenerator generator, FurnitureSet furnitureSet) {
@@ -91,6 +93,25 @@ public sealed class BlockType<TBlock extends Block> {
 
     private <TProvider> void registerProvider(ModPackGenerator generator, ProviderType<TProvider> providerType, FurnitureSet furnitureSet) {
         generator.providing(providerType, (context, provider) -> ((ProviderListener<TProvider, TBlock>) providerListeners.get(providerType)).accept(context, provider, furnitureSet, furnitureSet.getOrThrow(this)));
+    }
+
+    private void markAsValidBlockEntityBlock(FurnitureSet furnitureSet, BlockEntityType<?> blockEntityType) {
+        // 'BlockEntityTypeAddBlocksEvent' does some internal class comparison testing
+        // to ensure blocks share a common super type
+        // this leads to a issue where our BlockTypes which have been extended/copied
+        // can change the common super type
+        // for example
+        // the nordic dresser block is registered using the class 'NordicDresserBlock'
+        // and venthyr is registered using 'VenthyrDresserBlock'
+        // while both extend 'DresserBlock'
+        // neoforge extracts the common super type from the already existing valid blocks
+        // which for us initially is empty, which causes the event to listen for the first valid block (which could vary between game launches)
+        // nordic registers first now all 'dresser' blocks must extend 'NordicDresserBlock'
+        // venthyr registers first now they must be 'VenthyrDresserBlocks'
+        // not the actual super type we are after 'DresserBlock'
+        var validBlocks = Sets.newHashSet(blockEntityType.getValidBlocks());
+        validBlocks.add(furnitureSet.getOrThrow(this));
+        ((BlockEntityTypeAccessor) blockEntityType).neoforge$setValidBlocks(validBlocks);
     }
 
     public static <TBlock extends Block, TItem extends Item> WithItem<TBlock, TItem> withItem(String registryName, BlockFactory<TBlock> blockFactory, ItemFactory<TBlock, TItem> itemFactory, Consumer<BlockTypeBuilder.WithItem<TBlock, TItem>> consumer) {

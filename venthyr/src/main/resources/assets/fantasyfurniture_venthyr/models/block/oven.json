@@ -5,6 +5,7 @@
 		"oven": "fantasyfurniture_venthyr:block/oven",
 		"particle": "fantasyfurniture_venthyr:block/particle"
 	},
+	"render_type": "minecraft:cutout",
 	"elements": [
 		{
 			"name": "post_1",

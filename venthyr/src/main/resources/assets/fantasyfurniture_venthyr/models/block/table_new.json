@@ -13,7 +13,7 @@
 			"faces": {
 				"south": {"uv": [6.5, 0, 10.5, 0.75], "texture": "#table", "cullface": "south"},
 				"up": {"uv": [4, 4, 0, 0], "texture": "#table", "cullface": "up"},
-				"down": {"uv": [4, 0, 0, 4], "texture": "#table", "cullface": "south"}
+				"down": {"uv": [4, 0, 0, 4], "texture": "#table"}
 			}
 		}
 	],

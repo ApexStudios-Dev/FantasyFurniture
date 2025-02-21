@@ -33,17 +33,17 @@
 			"faces": {
 				"north": {
 					"uv": [9.25, 4.625, 11.25, 5],
-					"cullface": "west",
+					"cullface": "north",
 					"texture": 0
 				},
 				"east": {
 					"uv": [9.25, 5, 11.25, 5.375],
-					"cullface": "west",
+					"cullface": "east",
 					"texture": 0
 				},
 				"south": {
 					"uv": [9.25, 5.375, 11.25, 5.75],
-					"cullface": "west",
+					"cullface": "south",
 					"texture": 0
 				},
 				"west": {
@@ -53,12 +53,11 @@
 				},
 				"up": {
 					"uv": [2, 2, 0, 0],
-					"cullface": "west",
+					"cullface": "up",
 					"texture": 0
 				},
 				"down": {
 					"uv": [2, 2, 0, 4],
-					"cullface": "west",
 					"texture": 0
 				}
 			},
@@ -81,17 +80,16 @@
 			"faces": {
 				"north": {
 					"uv": [2, 4, 4, 5.625],
-					"cullface": "west",
 					"texture": 0
 				},
 				"east": {
 					"uv": [6, 3.25, 7.625, 4.875],
-					"cullface": "west",
+					"cullface": "east",
 					"texture": 0
 				},
 				"south": {
 					"uv": [4, 2, 6, 3.625],
-					"cullface": "west",
+					"cullface": "south",
 					"texture": 0
 				},
 				"west": {
@@ -105,7 +103,7 @@
 				},
 				"down": {
 					"uv": [6, 5.25, 4, 6.875],
-					"cullface": "west",
+					"cullface": "down",
 					"texture": 0
 				}
 			},
@@ -128,12 +126,11 @@
 			"faces": {
 				"north": {
 					"uv": [6, 6.5, 7.625, 8.125],
-					"cullface": "west",
+					"cullface": "north",
 					"texture": 0
 				},
 				"east": {
 					"uv": [3.25, 8.875, 3.625, 10.5],
-					"cullface": "west",
 					"texture": 0
 				},
 				"south": {
@@ -151,7 +148,7 @@
 				},
 				"down": {
 					"uv": [11.25, 2.375, 9.625, 2.75],
-					"cullface": "west",
+					"cullface": "down",
 					"texture": 0
 				}
 			},
@@ -390,7 +387,7 @@
 			"locked": false,
 			"visibility": true,
 			"autouv": 0,
-			"selected": false,
+			"selected": true,
 			"children": ["bdcd89ca-da79-d685-44d9-322162ac913b", "502053f5-9742-f2f1-9a16-b7b47a1b41e2", "21289f0b-d5ca-7cd2-c336-e9ab9797cfbe"]
 		},
 		{
@@ -404,7 +401,7 @@
 			"locked": false,
 			"visibility": true,
 			"autouv": 0,
-			"selected": true,
+			"selected": false,
 			"children": [
 				"77fef900-31b0-c560-b466-105056fd0a4d",
 				"00131c08-e80a-f1e8-cc71-003d09e283f5",

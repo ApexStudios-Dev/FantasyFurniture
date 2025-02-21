@@ -253,7 +253,6 @@
 			"faces": {
 				"north": {
 					"uv": [44, 12, 60, 14],
-					"cullface": "west",
 					"texture": 0
 				},
 				"east": {
@@ -262,7 +261,7 @@
 				},
 				"south": {
 					"uv": [44, 14, 60, 16],
-					"cullface": "west",
+					"cullface": "south",
 					"texture": 0
 				},
 				"west": {
@@ -272,12 +271,11 @@
 				},
 				"up": {
 					"uv": [60, 18, 44, 16],
-					"cullface": "west",
 					"texture": 0
 				},
 				"down": {
 					"uv": [60, 18, 44, 20],
-					"cullface": "west",
+					"cullface": "down",
 					"texture": 0
 				}
 			},
@@ -300,7 +298,6 @@
 			"faces": {
 				"north": {
 					"uv": [44, 20, 60, 22],
-					"cullface": "west",
 					"texture": 0
 				},
 				"east": {
@@ -309,7 +306,7 @@
 				},
 				"south": {
 					"uv": [44, 22, 60, 24],
-					"cullface": "west",
+					"cullface": "south",
 					"texture": 0
 				},
 				"west": {
@@ -319,12 +316,11 @@
 				},
 				"up": {
 					"uv": [60, 26, 44, 24],
-					"cullface": "west",
+					"cullface": "up",
 					"texture": 0
 				},
 				"down": {
 					"uv": [60, 26, 44, 28],
-					"cullface": "west",
 					"texture": 0
 				}
 			},
@@ -347,17 +343,15 @@
 			"faces": {
 				"north": {
 					"uv": [0, 36, 2, 48],
-					"cullface": "west",
 					"texture": 0
 				},
 				"east": {
 					"uv": [2, 36, 4, 48],
-					"cullface": "west",
 					"texture": 0
 				},
 				"south": {
 					"uv": [4, 36, 6, 48],
-					"cullface": "west",
+					"cullface": "south",
 					"texture": 0
 				},
 				"west": {
@@ -402,7 +396,7 @@
 				},
 				"south": {
 					"uv": [0, 12, 28, 24],
-					"cullface": "west",
+					"cullface": "south",
 					"texture": 0
 				},
 				"west": {
@@ -497,7 +491,7 @@
 			"locked": false,
 			"visibility": true,
 			"autouv": 0,
-			"selected": false,
+			"selected": true,
 			"children": [
 				"c593d0e5-ff7a-ea22-d093-03dfac0f7ddc",
 				"1649aece-50a3-1fac-2a3e-9c18d36def7c",

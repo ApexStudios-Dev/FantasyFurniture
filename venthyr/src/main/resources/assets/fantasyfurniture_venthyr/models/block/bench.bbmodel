@@ -4,7 +4,7 @@
 		"model_format": "java_block",
 		"box_uv": false
 	},
-	"name": "bench_right",
+	"name": "bench",
 	"parent": "",
 	"ambientocclusion": true,
 	"front_gui_light": false,
@@ -164,7 +164,6 @@
 			"faces": {
 				"north": {
 					"uv": [15, 28, 30, 31],
-					"cullface": "west",
 					"texture": 0
 				},
 				"east": {
@@ -173,7 +172,6 @@
 				},
 				"south": {
 					"uv": [30, 0, 45, 3],
-					"cullface": "west",
 					"texture": 0
 				},
 				"west": {
@@ -183,12 +181,10 @@
 				},
 				"up": {
 					"uv": [30, 14, 15, 0],
-					"cullface": "west",
 					"texture": 0
 				},
 				"down": {
 					"uv": [30, 14, 15, 28],
-					"cullface": "west",
 					"texture": 0
 				}
 			},
@@ -211,22 +207,18 @@
 			"faces": {
 				"north": {
 					"uv": [30, 9, 33, 13],
-					"cullface": "west",
 					"texture": 0
 				},
 				"east": {
 					"uv": [30, 13, 33, 17],
-					"cullface": "west",
 					"texture": 0
 				},
 				"south": {
 					"uv": [30, 17, 33, 21],
-					"cullface": "west",
 					"texture": 0
 				},
 				"west": {
 					"uv": [30, 21, 33, 25],
-					"cullface": "west",
 					"texture": 0
 				},
 				"up": {
@@ -235,7 +227,7 @@
 				},
 				"down": {
 					"uv": [36, 12, 33, 15],
-					"cullface": "west",
+					"cullface": "down",
 					"texture": 0
 				}
 			},
@@ -258,22 +250,18 @@
 			"faces": {
 				"north": {
 					"uv": [30, 25, 33, 29],
-					"cullface": "west",
 					"texture": 0
 				},
 				"east": {
 					"uv": [30, 29, 33, 33],
-					"cullface": "west",
 					"texture": 0
 				},
 				"south": {
 					"uv": [0, 31, 3, 35],
-					"cullface": "west",
 					"texture": 0
 				},
 				"west": {
 					"uv": [3, 31, 6, 35],
-					"cullface": "west",
 					"texture": 0
 				},
 				"up": {
@@ -282,7 +270,7 @@
 				},
 				"down": {
 					"uv": [36, 18, 33, 21],
-					"cullface": "west",
+					"cullface": "down",
 					"texture": 0
 				}
 			},

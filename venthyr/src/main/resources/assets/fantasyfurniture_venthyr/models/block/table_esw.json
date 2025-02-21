@@ -12,8 +12,8 @@
 			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
 			"faces": {
 				"north": {"uv": [6.5, 0, 10.5, 0.75], "texture": "#table", "cullface": "north"},
-				"up": {"uv": [4, 0, 0, 4], "texture": "#table", "cullface": "north"},
-				"down": {"uv": [4, 0, 0, 4], "texture": "#table", "cullface": "north"}
+				"up": {"uv": [4, 0, 0, 4], "texture": "#table", "cullface": "up"},
+				"down": {"uv": [4, 0, 0, 4], "texture": "#table"}
 			}
 		}
 	],
