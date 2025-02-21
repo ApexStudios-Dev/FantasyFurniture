@@ -5,27 +5,22 @@ import dev.apexstudios.fantasyfurniture.block.FloorLightBlock;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class VenthyrFloorLightBlock extends FloorLightBlock {
     public static final VoxelShape SHAPE = ApexShapes.join(
             box(6D, 0D, 6D, 10D, 2D, 10D),
             box(7D, 2D, 7D, 9D, 20D, 9D),
-            box(6.5D, 20.75D, 2.5D, 9.5D, 22.75D, 5.5D),
-            box(2.5D, 20.75D, 6.5D, 5.5D, 22.75D, 9.5D),
-            box(7.25D, 22.75D, 3.25D, 8.75D, 26.75D, 4.75D),
-            box(3.25D, 22.75D, 7.25D, 4.75D, 26.75D, 8.75D),
-            box(7.25D, 22.75D, 11.25D, 8.75D, 26.75D, 12.75D),
-            box(11.25D, 22.75D, 7.25D, 12.75D, 26.75D, 8.75D),
-            box(10.5D, 20.75D, 6.5D, 13.5D, 22.75D, 9.5D),
-            box(6.5D, 20.75D, 10.5D, 9.5D, 22.75D, 13.5D),
-            box(3D, 16.75D, 7D, 7D, 20.75, 9D),
-            box(9D, 16.75D, 7D, 13D, 20.75, 9D),
-            box(7D, 16.75D, 3D, 9D, 20.75, 7D),
-            box(7D, 16.75D, 9D, 9D, 20.75, 13D)
+            box(4D, 17.75D, 7D, 7D, 21.75D, 9D),
+            box(9D, 17.75D, 7D, 12D, 21.75D, 9D),
+            box(7D, 17.75D, 4D, 9D, 21.75D, 7D),
+            box(7D, 17.75D, 9D, 9D, 21.75D, 12D),
+            box(2.5D, 20.75D, 2.5D, 13.5D, 24D, 13.5D),
+            box(10.25D, 24D, 10.25D, 12.5D, 28.75D, 12.5D),
+            box(3.5D, 24D, 10.25D, 5.75D, 28.75D, 12.5D),
+            box(3.5D, 24D, 3.5D, 5.75D, 28.75D, 5.75D),
+            box(10.25D, 24D, 3.5D, 12.5D, 28.75D, 5.75D)
     );
 
     public static final Map<Direction, VoxelShape> FACING_SHAPES = ApexShapes.rotateHorizontal(SHAPE);
@@ -35,7 +30,7 @@ public final class VenthyrFloorLightBlock extends FloorLightBlock {
     }
 
     @Override
-    protected VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext context) {
+    protected VoxelShape getFurnitureShape(BlockState blockState, BlockPos pos) {
         return getShape(FACING_SHAPES, blockState, pos);
     }
 }

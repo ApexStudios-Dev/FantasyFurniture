@@ -5,15 +5,16 @@ import dev.apexstudios.fantasyfurniture.block.WallLightBlock;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class VenthyrWallLightBlock extends WallLightBlock {
     public static final VoxelShape SHAPE = ApexShapes.join(
-            box(6D, 5D, 15D, 10D, 11D, 16D),
-            box(6D, 2D, 8D, 10D, 15D, 15D)
+            box(6D, 1D, 15D, 10D, 3D, 16D),
+            box(5D, 3D, 15D, 11D, 12D, 16D),
+            box(6D, 12D, 15D, 10D, 14D, 16D),
+            box(7D, 3.5D, 14D, 9D, 5.5D, 15D),
+            box(4.25D, 2.5D, 10.5D, 11.75D, 11.5D, 14D)
     );
 
     public static final Map<Direction, VoxelShape> FACING_SHAPES = ApexShapes.rotateHorizontal(SHAPE);
@@ -23,7 +24,7 @@ public final class VenthyrWallLightBlock extends WallLightBlock {
     }
 
     @Override
-    protected VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext context) {
+    protected VoxelShape getFurnitureShape(BlockState blockState, BlockPos pos) {
         return getShape(FACING_SHAPES, blockState, pos);
     }
 }

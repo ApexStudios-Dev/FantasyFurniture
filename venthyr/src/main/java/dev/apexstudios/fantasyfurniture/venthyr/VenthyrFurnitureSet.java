@@ -9,26 +9,18 @@ import dev.apexstudios.fantasyfurniture.set.function.BlockFactory;
 import dev.apexstudios.fantasyfurniture.venthyr.block.VenthyrBedDoubleBlock;
 import dev.apexstudios.fantasyfurniture.venthyr.block.VenthyrBedSingleBlock;
 import dev.apexstudios.fantasyfurniture.venthyr.block.VenthyrBenchBlock;
-import dev.apexstudios.fantasyfurniture.venthyr.block.VenthyrBookshelfBlock;
 import dev.apexstudios.fantasyfurniture.venthyr.block.VenthyrChairBlock;
-import dev.apexstudios.fantasyfurniture.venthyr.block.VenthyrChandelierBlock;
 import dev.apexstudios.fantasyfurniture.venthyr.block.VenthyrChestBlock;
-import dev.apexstudios.fantasyfurniture.venthyr.block.VenthyrCounterBlock;
 import dev.apexstudios.fantasyfurniture.venthyr.block.VenthyrCushionBlock;
 import dev.apexstudios.fantasyfurniture.venthyr.block.VenthyrDeskBlock;
-import dev.apexstudios.fantasyfurniture.venthyr.block.VenthyrDoorBlock;
-import dev.apexstudios.fantasyfurniture.venthyr.block.VenthyrDrawerBlock;
 import dev.apexstudios.fantasyfurniture.venthyr.block.VenthyrDresserBlock;
 import dev.apexstudios.fantasyfurniture.venthyr.block.VenthyrFloorLightBlock;
 import dev.apexstudios.fantasyfurniture.venthyr.block.VenthyrLockBoxBlock;
-import dev.apexstudios.fantasyfurniture.venthyr.block.VenthyrPaintingSmallBlock;
-import dev.apexstudios.fantasyfurniture.venthyr.block.VenthyrPaintingWideBlock;
 import dev.apexstudios.fantasyfurniture.venthyr.block.VenthyrShelfBlock;
 import dev.apexstudios.fantasyfurniture.venthyr.block.VenthyrSofaBlock;
 import dev.apexstudios.fantasyfurniture.venthyr.block.VenthyrStoolBlock;
 import dev.apexstudios.fantasyfurniture.venthyr.block.VenthyrTableBlock;
 import dev.apexstudios.fantasyfurniture.venthyr.block.VenthyrWallLightBlock;
-import dev.apexstudios.fantasyfurniture.venthyr.block.VenthyrWardrobeBlock;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 
@@ -50,26 +42,17 @@ public class VenthyrFurnitureSet {
             .with(BlockTypes.CUSHION.extend(BlockFactory.wrapping(VenthyrCushionBlock::new)))
             .with(BlockTypes.STOOL.extend(BlockFactory.wrapping(VenthyrStoolBlock::new)))
             .with(BlockTypes.LOCKBOX.extend(BlockFactory.wrapping(VenthyrLockBoxBlock::new)))
-            .with(BlockTypes.DRAWER.extend(BlockFactory.wrapping(VenthyrDrawerBlock::new)))
             .with(BlockTypes.CHAIR.extend(BlockFactory.wrapping(VenthyrChairBlock::new)))
-            .with(BlockTypes.BOOKSHELF.extend(BlockFactory.wrapping(VenthyrBookshelfBlock::new)))
             .with(BlockTypes.BED_SINGLE.extend(BlockFactory.wrapping(VenthyrBedSingleBlock::new)))
             .with(BlockTypes.BED_DOUBLE.extend(BlockFactory.wrapping(VenthyrBedDoubleBlock::new)))
-            .with(BlockTypes.DOOR_DOUBLE.extend(BlockFactory.wrapping(VenthyrDoorBlock::new)))
-            .with(BlockTypes.DOOR_SINGLE.extend(BlockFactory.wrapping(VenthyrDoorBlock::new)))
             .with(BlockTypes.DESK_LEFT.extend((furnitureSet, properties) -> new VenthyrDeskBlock(properties, true)))
             .with(BlockTypes.DESK_RIGHT.extend((furnitureSet, properties) -> new VenthyrDeskBlock(properties, false)))
-            .with(BlockTypes.PAINTING_WIDE.extend(BlockFactory.wrapping(VenthyrPaintingWideBlock::new)))
-            .with(BlockTypes.PAINTING_SMALL.extend(BlockFactory.wrapping(VenthyrPaintingSmallBlock::new)))
             .with(BlockTypes.CHEST.extend(BlockFactory.wrapping(VenthyrChestBlock::new)))
             .with(BlockTypes.FLOOR_LIGHT.extend(BlockFactory.wrapping(VenthyrFloorLightBlock::new)))
-            .with(BlockTypes.CHANDELIER.extend(BlockFactory.wrapping(VenthyrChandelierBlock::new)))
             .with(BlockTypes.SHELF.extend(BlockFactory.wrapping(VenthyrShelfBlock::new)))
             .with(BlockTypes.SOFA.extend(BlockFactory.wrapping(VenthyrSofaBlock::new)))
-            .with(BlockTypes.COUNTER.extend(BlockFactory.wrapping(VenthyrCounterBlock::new)))
             .with(BlockTypes.WALL_LIGHT.extend(BlockFactory.wrapping(VenthyrWallLightBlock::new)))
             .with(BlockTypes.BENCH.extend(BlockFactory.wrapping(VenthyrBenchBlock::new)))
-            .with(BlockTypes.WARDROBE.extend(BlockFactory.wrapping(VenthyrWardrobeBlock::new)))
             .with(BlockTypes.TABLE.extend(BlockFactory.wrapping(VenthyrTableBlock::new)))
     );
 
