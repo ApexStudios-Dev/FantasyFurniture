@@ -178,10 +178,11 @@
 				},
 				"up": {
 					"uv": [25, 15, 24, 14],
-					"texture": 0
+					"texture": null
 				},
 				"down": {
 					"uv": [25, 19, 24, 20],
+					"cullface": "down",
 					"texture": 0
 				}
 			},
@@ -221,10 +222,11 @@
 				},
 				"up": {
 					"uv": [30, 34, 29, 33],
-					"texture": 0
+					"texture": null
 				},
 				"down": {
 					"uv": [11, 34, 10, 35],
+					"cullface": "down",
 					"texture": 0
 				}
 			},
@@ -264,10 +266,11 @@
 				},
 				"up": {
 					"uv": [6, 39, 5, 38],
-					"texture": 0
+					"texture": null
 				},
 				"down": {
 					"uv": [7, 38, 6, 39],
+					"cullface": "down",
 					"texture": 0
 				}
 			},
@@ -307,10 +310,11 @@
 				},
 				"up": {
 					"uv": [39, 12, 38, 11],
-					"texture": 0
+					"texture": null
 				},
 				"down": {
 					"uv": [39, 12, 38, 13],
+					"cullface": "down",
 					"texture": 0
 				}
 			},
@@ -353,6 +357,7 @@
 				},
 				"down": {
 					"uv": [10, 6, 4, 8],
+					"cullface": "down",
 					"texture": 0
 				}
 			},
@@ -396,6 +401,7 @@
 				},
 				"down": {
 					"uv": [4, 18, 2, 23],
+					"cullface": "down",
 					"texture": 0
 				}
 			},
@@ -439,6 +445,7 @@
 				},
 				"down": {
 					"uv": [20, 13, 18, 18],
+					"cullface": "down",
 					"texture": 0
 				}
 			},
@@ -482,6 +489,7 @@
 				},
 				"down": {
 					"uv": [20, 20, 18, 25],
+					"cullface": "down",
 					"texture": 0
 				}
 			},
@@ -524,6 +532,7 @@
 				},
 				"down": {
 					"uv": [16, 0, 10, 2],
+					"cullface": "down",
 					"texture": 0
 				}
 			},
@@ -566,6 +575,7 @@
 				},
 				"down": {
 					"uv": [10, 10, 8, 16],
+					"cullface": "down",
 					"texture": 0
 				}
 			},
@@ -608,6 +618,7 @@
 				},
 				"down": {
 					"uv": [4, 12, 2, 18],
+					"cullface": "down",
 					"texture": 0
 				}
 			},
@@ -651,6 +662,7 @@
 				},
 				"down": {
 					"uv": [18, 22, 16, 27],
+					"cullface": "down",
 					"texture": 0
 				}
 			},
@@ -2214,7 +2226,7 @@
 			"locked": false,
 			"visibility": true,
 			"autouv": 0,
-			"selected": false,
+			"selected": true,
 			"children": [
 				"6a71d503-7690-e1cb-0b44-232751cc4875",
 				"b4d05ef5-d900-58de-87a9-87521431a1e3",
