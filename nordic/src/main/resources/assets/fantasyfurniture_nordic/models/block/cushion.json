@@ -1,5 +1,4 @@
 {
-	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
 		"cushion": "fantasyfurniture_nordic:block/cushion",
@@ -16,7 +15,7 @@
 				"south": {"uv": [1.5, 6.5, 2, 7], "texture": "#cushion"},
 				"west": {"uv": [2, 6.5, 2.5, 7], "texture": "#cushion"},
 				"up": {"uv": [7, 2.5, 6.5, 2], "texture": "#cushion"},
-				"down": {"uv": [3, 6.5, 2.5, 7], "texture": "#cushion"}
+				"down": {"uv": [3, 6.5, 2.5, 7], "texture": "#cushion", "cullface": "down"}
 			}
 		},
 		{
@@ -29,7 +28,7 @@
 				"south": {"uv": [6.5, 3, 7, 3.5], "texture": "#cushion"},
 				"west": {"uv": [3.5, 6.5, 4, 7], "texture": "#cushion"},
 				"up": {"uv": [7, 4, 6.5, 3.5], "texture": "#cushion"},
-				"down": {"uv": [4.5, 6.5, 4, 7], "texture": "#cushion"}
+				"down": {"uv": [4.5, 6.5, 4, 7], "texture": "#cushion", "cullface": "down"}
 			}
 		},
 		{
@@ -42,7 +41,7 @@
 				"south": {"uv": [6.5, 4.5, 7, 5], "texture": "#cushion"},
 				"west": {"uv": [5, 6.5, 5.5, 7], "texture": "#cushion"},
 				"up": {"uv": [7, 5.5, 6.5, 5], "texture": "#cushion"},
-				"down": {"uv": [6, 6.5, 5.5, 7], "texture": "#cushion"}
+				"down": {"uv": [6, 6.5, 5.5, 7], "texture": "#cushion", "cullface": "down"}
 			}
 		},
 		{
@@ -55,7 +54,7 @@
 				"south": {"uv": [0.5, 7, 1, 7.5], "texture": "#cushion"},
 				"west": {"uv": [1, 7, 1.5, 7.5], "texture": "#cushion"},
 				"up": {"uv": [2, 7.5, 1.5, 7], "texture": "#cushion"},
-				"down": {"uv": [2.5, 7, 2, 7.5], "texture": "#cushion"}
+				"down": {"uv": [2.5, 7, 2, 7.5], "texture": "#cushion", "cullface": "down"}
 			}
 		},
 		{
@@ -67,7 +66,6 @@
 				"east": {"uv": [2.5, 7, 3, 7.5], "texture": "#cushion"},
 				"south": {"uv": [7, 2.5, 7.5, 3], "texture": "#cushion"},
 				"west": {"uv": [3, 7, 3.5, 7.5], "texture": "#cushion"},
-				"up": {"uv": [7.5, 3.5, 7, 3], "texture": "#cushion"},
 				"down": {"uv": [4, 7, 3.5, 7.5], "texture": "#cushion"}
 			}
 		},
@@ -80,7 +78,6 @@
 				"east": {"uv": [4, 7, 4.5, 7.5], "texture": "#cushion"},
 				"south": {"uv": [7, 4, 7.5, 4.5], "texture": "#cushion"},
 				"west": {"uv": [4.5, 7, 5, 7.5], "texture": "#cushion"},
-				"up": {"uv": [7.5, 5, 7, 4.5], "texture": "#cushion"},
 				"down": {"uv": [5.5, 7, 5, 7.5], "texture": "#cushion"}
 			}
 		},
@@ -93,7 +90,6 @@
 				"east": {"uv": [5.5, 7, 6, 7.5], "texture": "#cushion"},
 				"south": {"uv": [6, 7, 6.5, 7.5], "texture": "#cushion"},
 				"west": {"uv": [6.5, 7, 7, 7.5], "texture": "#cushion"},
-				"up": {"uv": [7.5, 7, 7, 6.5], "texture": "#cushion"},
 				"down": {"uv": [7.5, 7, 7, 7.5], "texture": "#cushion"}
 			}
 		},
@@ -106,7 +102,6 @@
 				"east": {"uv": [1, 7.5, 1.5, 8], "texture": "#cushion"},
 				"south": {"uv": [1.5, 7.5, 2, 8], "texture": "#cushion"},
 				"west": {"uv": [2, 7.5, 2.5, 8], "texture": "#cushion"},
-				"up": {"uv": [8, 2.5, 7.5, 2], "texture": "#cushion"},
 				"down": {"uv": [3, 7.5, 2.5, 8], "texture": "#cushion"}
 			}
 		},
@@ -115,9 +110,7 @@
 			"from": [2.5, 2.5, 4.5],
 			"to": [3.5, 3.5, 11.5],
 			"faces": {
-				"north": {"uv": [7.5, 2.5, 7.75, 2.75], "texture": "#cushion"},
 				"east": {"uv": [6.25, 1.5, 8, 1.75], "texture": "#cushion"},
-				"south": {"uv": [7.5, 2.75, 7.75, 3], "texture": "#cushion"},
 				"west": {"uv": [6.25, 1.75, 8, 2], "texture": "#cushion"},
 				"up": {"uv": [6.5, 3.75, 6.25, 2], "texture": "#cushion"},
 				"down": {"uv": [6.5, 3.75, 6.25, 5.5], "texture": "#cushion"}
@@ -128,9 +121,7 @@
 			"from": [12.5, 2.5, 4.5],
 			"to": [13.5, 3.5, 11.5],
 			"faces": {
-				"north": {"uv": [3, 7.5, 3.25, 7.75], "texture": "#cushion"},
 				"east": {"uv": [6.25, 5.5, 8, 5.75], "texture": "#cushion"},
-				"south": {"uv": [7.5, 3, 7.75, 3.25], "texture": "#cushion"},
 				"west": {"uv": [6.25, 5.75, 8, 6], "texture": "#cushion"},
 				"up": {"uv": [0.25, 8.25, 0, 6.5], "texture": "#cushion"},
 				"down": {"uv": [0.5, 6.5, 0.25, 8.25], "texture": "#cushion"}
@@ -158,8 +149,7 @@
 				"east": {"uv": [3, 6, 6, 6.5], "texture": "#cushion"},
 				"south": {"uv": [6, 6, 9, 6.5], "texture": "#cushion"},
 				"west": {"uv": [6.25, 0, 9.25, 0.5], "texture": "#cushion"},
-				"up": {"uv": [6.25, 3, 3.25, 0], "texture": "#cushion"},
-				"down": {"uv": [6.25, 3, 3.25, 6], "texture": "#cushion"}
+				"up": {"uv": [6.25, 3, 3.25, 0], "texture": "#cushion"}
 			}
 		}
 	],

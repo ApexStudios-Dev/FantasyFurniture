@@ -10,7 +10,7 @@
 			"from": [0, 13, 0],
 			"to": [16, 16, 16],
 			"faces": {
-				"up": {"uv": [12, 12, 8, 8], "texture": "#table"},
+				"up": {"uv": [12, 12, 8, 8], "texture": "#table", "cullface": "up"},
 				"down": {"uv": [12, 8, 8, 12], "texture": "#table"}
 			}
 		}

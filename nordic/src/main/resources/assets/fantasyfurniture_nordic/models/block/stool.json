@@ -1,5 +1,4 @@
 {
-	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
 		"nordic_stool": "fantasyfurniture_nordic:block/stool",
@@ -16,7 +15,7 @@
 				"south": {"uv": [8.5, 7.5, 9.5, 9], "texture": "#nordic_stool"},
 				"west": {"uv": [8.5, 9, 9.5, 10.5], "texture": "#nordic_stool"},
 				"up": {"uv": [11, 5, 10, 4], "texture": "#nordic_stool"},
-				"down": {"uv": [8.5, 11, 7.5, 12], "texture": "#nordic_stool"}
+				"down": {"uv": [8.5, 11, 7.5, 12], "texture": "#nordic_stool", "cullface": "down"}
 			}
 		},
 		{
@@ -29,7 +28,7 @@
 				"south": {"uv": [9.5, 7.5, 10.5, 9], "texture": "#nordic_stool"},
 				"west": {"uv": [9.5, 9, 10.5, 10.5], "texture": "#nordic_stool"},
 				"up": {"uv": [12.5, 6.5, 11.5, 5.5], "texture": "#nordic_stool"},
-				"down": {"uv": [7.5, 11.5, 6.5, 12.5], "texture": "#nordic_stool"}
+				"down": {"uv": [7.5, 11.5, 6.5, 12.5], "texture": "#nordic_stool", "cullface": "down"}
 			}
 		},
 		{
@@ -42,7 +41,7 @@
 				"south": {"uv": [10.5, 7.5, 11.5, 9], "texture": "#nordic_stool"},
 				"west": {"uv": [8.5, 10.5, 9.5, 12], "texture": "#nordic_stool"},
 				"up": {"uv": [12.5, 7.5, 11.5, 6.5], "texture": "#nordic_stool"},
-				"down": {"uv": [12.5, 7.5, 11.5, 8.5], "texture": "#nordic_stool"}
+				"down": {"uv": [12.5, 7.5, 11.5, 8.5], "texture": "#nordic_stool", "cullface": "down"}
 			}
 		},
 		{
@@ -55,7 +54,7 @@
 				"south": {"uv": [10.5, 10.5, 11.5, 12], "texture": "#nordic_stool"},
 				"west": {"uv": [11, 4, 12, 5.5], "texture": "#nordic_stool"},
 				"up": {"uv": [12.5, 9.5, 11.5, 8.5], "texture": "#nordic_stool"},
-				"down": {"uv": [12.5, 9.5, 11.5, 10.5], "texture": "#nordic_stool"}
+				"down": {"uv": [12.5, 9.5, 11.5, 10.5], "texture": "#nordic_stool", "cullface": "down"}
 			}
 		},
 		{
@@ -67,7 +66,6 @@
 				"east": {"uv": [11.5, 11.5, 12.5, 12.5], "texture": "#nordic_stool"},
 				"south": {"uv": [12, 4, 13, 5], "texture": "#nordic_stool"},
 				"west": {"uv": [7.5, 12, 8.5, 13], "texture": "#nordic_stool"},
-				"up": {"uv": [9.5, 13, 8.5, 12], "texture": "#nordic_stool"},
 				"down": {"uv": [10.5, 12, 9.5, 13], "texture": "#nordic_stool"}
 			}
 		},
@@ -80,7 +78,6 @@
 				"east": {"uv": [12.5, 5, 13.5, 6], "texture": "#nordic_stool"},
 				"south": {"uv": [12.5, 6, 13.5, 7], "texture": "#nordic_stool"},
 				"west": {"uv": [6.5, 12.5, 7.5, 13.5], "texture": "#nordic_stool"},
-				"up": {"uv": [13.5, 8, 12.5, 7], "texture": "#nordic_stool"},
 				"down": {"uv": [13.5, 8, 12.5, 9], "texture": "#nordic_stool"}
 			}
 		},
@@ -93,7 +90,6 @@
 				"east": {"uv": [12.5, 10, 13.5, 11], "texture": "#nordic_stool"},
 				"south": {"uv": [12.5, 11, 13.5, 12], "texture": "#nordic_stool"},
 				"west": {"uv": [11.5, 12.5, 12.5, 13.5], "texture": "#nordic_stool"},
-				"up": {"uv": [13.5, 13, 12.5, 12], "texture": "#nordic_stool"},
 				"down": {"uv": [1, 13, 0, 14], "texture": "#nordic_stool"}
 			}
 		},
@@ -106,7 +102,6 @@
 				"east": {"uv": [1, 13, 2, 14], "texture": "#nordic_stool"},
 				"south": {"uv": [13, 1, 14, 2], "texture": "#nordic_stool"},
 				"west": {"uv": [2, 13, 3, 14], "texture": "#nordic_stool"},
-				"up": {"uv": [14, 3, 13, 2], "texture": "#nordic_stool"},
 				"down": {"uv": [4, 13, 3, 14], "texture": "#nordic_stool"}
 			}
 		},
@@ -115,9 +110,7 @@
 			"from": [12.5, 3.5, 4.5],
 			"to": [13.5, 4.5, 11.5],
 			"faces": {
-				"north": {"uv": [11, 5.5, 11.5, 6], "texture": "#nordic_stool"},
 				"east": {"uv": [6.5, 4, 10, 4.5], "texture": "#nordic_stool"},
-				"south": {"uv": [12, 5, 12.5, 5.5], "texture": "#nordic_stool"},
 				"west": {"uv": [6.5, 4.5, 10, 5], "texture": "#nordic_stool"},
 				"up": {"uv": [7, 8.5, 6.5, 5], "texture": "#nordic_stool"},
 				"down": {"uv": [7.5, 5, 7, 8.5], "texture": "#nordic_stool"}
@@ -128,9 +121,7 @@
 			"from": [2.5, 3.5, 4.5],
 			"to": [3.5, 4.5, 11.5],
 			"faces": {
-				"north": {"uv": [13, 3, 13.5, 3.5], "texture": "#nordic_stool"},
 				"east": {"uv": [7.5, 5, 11, 5.5], "texture": "#nordic_stool"},
-				"south": {"uv": [13, 3.5, 13.5, 4], "texture": "#nordic_stool"},
 				"west": {"uv": [7.5, 5.5, 11, 6], "texture": "#nordic_stool"},
 				"up": {"uv": [8, 9.5, 7.5, 6], "texture": "#nordic_stool"},
 				"down": {"uv": [8.5, 6, 8, 9.5], "texture": "#nordic_stool"}

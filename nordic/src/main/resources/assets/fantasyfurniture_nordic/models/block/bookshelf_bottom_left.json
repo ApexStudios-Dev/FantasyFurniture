@@ -1,5 +1,4 @@
 {
-	"credit": "Made by Fantasy",
 	"texture_size": [128, 128],
 	"textures": {
 		"3": "fantasyfurniture_nordic:block/bookshelf",
@@ -15,7 +14,7 @@
 				"east": {"uv": [2, 5.625, 2.25, 7.625], "texture": "#3"},
 				"south": {"uv": [2.25, 5.625, 2.5, 7.625], "texture": "#3"},
 				"west": {"uv": [2.5, 5.625, 2.75, 7.625], "texture": "#3"},
-				"down": {"uv": [5.125, 4.25, 4.875, 4.5], "texture": "#3"}
+				"down": {"uv": [5.125, 4.25, 4.875, 4.5], "texture": "#3", "cullface": "down"}
 			}
 		},
 		{
@@ -28,7 +27,7 @@
 				"east": {"uv": [2.25, 5.625, 2, 7.625], "texture": "#3"},
 				"south": {"uv": [5.125, 5.375, 4.875, 7.375], "texture": "#3"},
 				"west": {"uv": [2.75, 5.625, 2.5, 7.625], "texture": "#3"},
-				"down": {"uv": [5.125, 4.5, 4.875, 4.25], "texture": "#3"}
+				"down": {"uv": [5.125, 4.5, 4.875, 4.25], "texture": "#3", "cullface": "down"}
 			}
 		},
 		{
@@ -38,7 +37,7 @@
 			"faces": {
 				"north": {"uv": [6.5, 2.875, 8.125, 3], "texture": "#3"},
 				"up": {"uv": [4.5, 3.375, 2.875, 2], "texture": "#3"},
-				"down": {"uv": [4.5, 2, 2.875, 3.375], "texture": "#3"}
+				"down": {"uv": [4.5, 2, 2.875, 3.375], "texture": "#3", "cullface": "down"}
 			}
 		},
 		{
@@ -59,7 +58,7 @@
 			"faces": {
 				"east": {"uv": [1.625, 2, 2.875, 4], "texture": "#3"},
 				"west": {"uv": [1.625, 2, 2.875, 4], "texture": "#3"},
-				"down": {"uv": [1.875, 5.875, 1.75, 7.125], "texture": "#3"}
+				"down": {"uv": [1.875, 5.875, 1.75, 7.125], "texture": "#3", "cullface": "down"}
 			}
 		},
 		{
@@ -69,11 +68,9 @@
 			"rotation": {"angle": 0, "axis": "y", "origin": [0, 16, 0]},
 			"faces": {
 				"north": {"uv": [0, 4, 1.625, 2], "texture": "#3"},
-				"east": {"uv": [10.5, 14.25, 10.625, 10.5], "texture": "#3"},
 				"south": {"uv": [2, 0, 3.625, 2], "texture": "#3"},
-				"west": {"uv": [10.625, 13.25, 10.75, 9.5], "texture": "#3"},
-				"up": {"uv": [8.125, 3.125, 6.5, 3], "texture": "#3"},
-				"down": {"uv": [8.125, 3, 6.5, 3.125], "texture": "#3"}
+				"west": {"uv": [10.625, 13.25, 10.75, 9.5], "texture": "#3", "cullface": "west"},
+				"down": {"uv": [8.125, 3, 6.5, 3.125], "texture": "#3", "cullface": "down"}
 			}
 		},
 		{

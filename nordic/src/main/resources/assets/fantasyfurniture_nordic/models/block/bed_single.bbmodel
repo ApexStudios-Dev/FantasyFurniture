@@ -37,10 +37,12 @@
 				},
 				"east": {
 					"uv": [16, 22, 14, 30],
+					"cullface": "east",
 					"texture": 1
 				},
 				"south": {
 					"uv": [14, 22, 12, 30],
+					"cullface": "south",
 					"texture": 1
 				},
 				"west": {
@@ -53,6 +55,7 @@
 				},
 				"down": {
 					"uv": [27, 30, 25, 28],
+					"cullface": "down",
 					"texture": 1
 				}
 			},
@@ -83,6 +86,7 @@
 				},
 				"south": {
 					"uv": [10, 26, 8, 30],
+					"cullface": "south",
 					"texture": 1
 				},
 				"west": {
@@ -122,10 +126,12 @@
 				},
 				"east": {
 					"uv": [31, 24, 29, 26],
+					"cullface": "east",
 					"texture": 1
 				},
 				"south": {
 					"uv": [31, 22, 23, 24],
+					"cullface": "south",
 					"texture": 1
 				},
 				"west": {
@@ -168,6 +174,7 @@
 				},
 				"south": {
 					"uv": [30, 10, 24, 12],
+					"cullface": "south",
 					"texture": 1
 				},
 				"west": {
@@ -294,6 +301,7 @@
 				},
 				"east": {
 					"uv": [33, 12, 19, 14],
+					"cullface": "east",
 					"texture": 1
 				},
 				"south": {
@@ -462,10 +470,12 @@
 			"faces": {
 				"north": {
 					"uv": [12, 22, 14, 30],
+					"cullface": "north",
 					"texture": 1
 				},
 				"east": {
 					"uv": [14, 22, 16, 30],
+					"cullface": "east",
 					"texture": 1
 				},
 				"south": {
@@ -482,6 +492,7 @@
 				},
 				"down": {
 					"uv": [27, 28, 25, 30],
+					"cullface": "down",
 					"texture": 1
 				}
 			},
@@ -504,6 +515,7 @@
 			"faces": {
 				"north": {
 					"uv": [8, 26, 10, 30],
+					"cullface": "north",
 					"texture": 1
 				},
 				"east": {
@@ -547,10 +559,12 @@
 			"faces": {
 				"north": {
 					"uv": [23, 22, 31, 24],
+					"cullface": "north",
 					"texture": 1
 				},
 				"east": {
 					"uv": [29, 24, 31, 26],
+					"cullface": "east",
 					"texture": 1
 				},
 				"south": {
@@ -589,6 +603,7 @@
 			"faces": {
 				"north": {
 					"uv": [24, 10, 30, 12],
+					"cullface": "north",
 					"texture": 1
 				},
 				"east": {
@@ -723,6 +738,7 @@
 				},
 				"east": {
 					"uv": [19, 12, 33, 14],
+					"cullface": "east",
 					"texture": 1
 				},
 				"south": {
@@ -1073,10 +1089,12 @@
 				},
 				"south": {
 					"uv": [12, 22, 14, 30],
+					"cullface": "south",
 					"texture": 1
 				},
 				"west": {
 					"uv": [14, 22, 16, 30],
+					"cullface": "west",
 					"texture": 1
 				},
 				"up": {
@@ -1085,6 +1103,7 @@
 				},
 				"down": {
 					"uv": [25, 30, 27, 28],
+					"cullface": "down",
 					"texture": 1
 				}
 			},
@@ -1115,6 +1134,7 @@
 				},
 				"south": {
 					"uv": [8, 26, 10, 30],
+					"cullface": "south",
 					"texture": 1
 				},
 				"west": {
@@ -1158,10 +1178,12 @@
 				},
 				"south": {
 					"uv": [23, 22, 31, 24],
+					"cullface": "south",
 					"texture": 1
 				},
 				"west": {
 					"uv": [29, 24, 31, 26],
+					"cullface": "west",
 					"texture": 1
 				},
 				"up": {
@@ -1200,6 +1222,7 @@
 				},
 				"south": {
 					"uv": [24, 10, 30, 12],
+					"cullface": "south",
 					"texture": 1
 				},
 				"west": {
@@ -1334,6 +1357,7 @@
 				},
 				"west": {
 					"uv": [19, 12, 33, 14],
+					"cullface": "west",
 					"texture": 1
 				},
 				"up": {
@@ -1668,6 +1692,7 @@
 			"faces": {
 				"north": {
 					"uv": [14, 22, 12, 30],
+					"cullface": "north",
 					"texture": 1
 				},
 				"east": {
@@ -1680,6 +1705,7 @@
 				},
 				"west": {
 					"uv": [16, 22, 14, 30],
+					"cullface": "west",
 					"texture": 1
 				},
 				"up": {
@@ -1688,6 +1714,7 @@
 				},
 				"down": {
 					"uv": [25, 28, 27, 30],
+					"cullface": "down",
 					"texture": 1
 				}
 			},
@@ -1710,6 +1737,7 @@
 			"faces": {
 				"north": {
 					"uv": [10, 26, 8, 30],
+					"cullface": "north",
 					"texture": 1
 				},
 				"east": {
@@ -1753,6 +1781,7 @@
 			"faces": {
 				"north": {
 					"uv": [31, 22, 23, 24],
+					"cullface": "north",
 					"texture": 1
 				},
 				"east": {
@@ -1765,6 +1794,7 @@
 				},
 				"west": {
 					"uv": [31, 24, 29, 26],
+					"cullface": "west",
 					"texture": 1
 				},
 				"up": {
@@ -1795,6 +1825,7 @@
 			"faces": {
 				"north": {
 					"uv": [30, 10, 24, 12],
+					"cullface": "north",
 					"texture": 1
 				},
 				"east": {
@@ -1937,6 +1968,7 @@
 				},
 				"west": {
 					"uv": [33, 12, 19, 14],
+					"cullface": "west",
 					"texture": 1
 				},
 				"up": {
@@ -2094,6 +2126,7 @@
 			"locked": false,
 			"visibility": true,
 			"autouv": 0,
+			"selected": false,
 			"children": [
 				{
 					"name": "left",
@@ -2106,6 +2139,7 @@
 					"locked": false,
 					"visibility": true,
 					"autouv": 0,
+					"selected": false,
 					"children": [
 						{
 							"name": "bed_frame",
@@ -2118,6 +2152,7 @@
 							"locked": false,
 							"visibility": true,
 							"autouv": 0,
+							"selected": false,
 							"children": [
 								"e520b12f-00c5-039a-35ea-094fe9643343",
 								"d68bab58-4d7c-4cb4-b20e-e1558f3890b2",
@@ -2140,6 +2175,7 @@
 							"locked": false,
 							"visibility": true,
 							"autouv": 0,
+							"selected": false,
 							"children": [
 								"38850f44-46e6-6da7-4208-3cfd982180c3",
 								"dba8d515-8f0b-2589-c0ed-78aa68a4f5dc",
@@ -2160,6 +2196,7 @@
 							"locked": false,
 							"visibility": true,
 							"autouv": 0,
+							"selected": false,
 							"children": []
 						}
 					]
@@ -2175,6 +2212,7 @@
 					"locked": false,
 					"visibility": true,
 					"autouv": 0,
+					"selected": false,
 					"children": [
 						{
 							"name": "bed_frame",
@@ -2187,6 +2225,7 @@
 							"locked": false,
 							"visibility": true,
 							"autouv": 0,
+							"selected": false,
 							"children": [
 								"65939ccc-0789-cc0f-5aef-bfb9b7852fcf",
 								"69ecb91a-b6ed-5f3e-ba96-136df4203f36",
@@ -2209,6 +2248,7 @@
 							"locked": false,
 							"visibility": true,
 							"autouv": 0,
+							"selected": false,
 							"children": [
 								"89c42e57-12b0-3e10-fb2e-94e1feef45d8",
 								"d50a1cfb-e5c4-fbcc-9d6e-8eab519b75e7",
@@ -2229,6 +2269,7 @@
 							"locked": false,
 							"visibility": true,
 							"autouv": 0,
+							"selected": false,
 							"children": []
 						}
 					]
@@ -2246,6 +2287,7 @@
 			"locked": false,
 			"visibility": true,
 			"autouv": 0,
+			"selected": false,
 			"children": [
 				{
 					"name": "left",
@@ -2258,6 +2300,7 @@
 					"locked": false,
 					"visibility": true,
 					"autouv": 0,
+					"selected": false,
 					"children": [
 						{
 							"name": "bed_frame",
@@ -2270,6 +2313,7 @@
 							"locked": false,
 							"visibility": true,
 							"autouv": 0,
+							"selected": false,
 							"children": [
 								"6faed1ac-241d-9436-9796-178a4c586077",
 								"6d9b82e1-046e-935d-47fc-489fe2724dda",
@@ -2292,6 +2336,7 @@
 							"locked": false,
 							"visibility": true,
 							"autouv": 0,
+							"selected": false,
 							"children": ["b036abd8-8216-eeb1-772f-12185143e7d8", "23d812d7-c107-b3de-ae16-b4bb4c8b1893"]
 						},
 						{
@@ -2305,6 +2350,7 @@
 							"locked": false,
 							"visibility": true,
 							"autouv": 0,
+							"selected": false,
 							"children": []
 						}
 					]
@@ -2320,6 +2366,7 @@
 					"locked": false,
 					"visibility": true,
 					"autouv": 0,
+					"selected": false,
 					"children": [
 						{
 							"name": "bed_frame",
@@ -2332,6 +2379,7 @@
 							"locked": false,
 							"visibility": true,
 							"autouv": 0,
+							"selected": false,
 							"children": [
 								"e494c6ac-06df-d108-2a69-6a4b6ae17466",
 								"7bc76471-aa67-6686-7c11-1c18f555d7bd",
@@ -2354,6 +2402,7 @@
 							"locked": false,
 							"visibility": true,
 							"autouv": 0,
+							"selected": false,
 							"children": ["b9f8e336-de15-194e-8561-af28a582f40e", "52fd60b5-c0d6-bb28-965b-857f2df663fc"]
 						},
 						{
@@ -2367,6 +2416,7 @@
 							"locked": false,
 							"visibility": true,
 							"autouv": 0,
+							"selected": false,
 							"children": []
 						}
 					]
@@ -2376,7 +2426,7 @@
 	],
 	"textures": [
 		{
-			"path": "C:\\Users\\fanta\\OneDrive\\Documents\\GitHub\\FantasyFurniture-Private\\nordic\\src\\main\\resources\\assets\\fantasyfurniture_nordic\\textures\\block\\particle.png",
+			"path": "/mnt/development/Modding/ApexStudios/FantasyFurniture/nordic/src/main/resources/assets/fantasyfurniture_nordic/textures/block/particle.png",
 			"name": "particle.png",
 			"folder": "block",
 			"namespace": "fantasyfurniture_nordic",
@@ -2405,7 +2455,7 @@
 			"source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAC9JREFUOE9jtNSV/8+AB0iJcOGTZmAcNWBYhEGwoybedCDAx40/HYwawMA49MMAAMyYHRmk1QpOAAAAAElFTkSuQmCC"
 		},
 		{
-			"path": "C:\\Users\\fanta\\OneDrive\\Documents\\GitHub\\FantasyFurniture-Private\\nordic\\src\\main\\resources\\assets\\fantasyfurniture_nordic\\textures\\block\\bed_single.png",
+			"path": "/mnt/development/Modding/ApexStudios/FantasyFurniture/nordic/src/main/resources/assets/fantasyfurniture_nordic/textures/block/bed_single.png",
 			"name": "bed_single.png",
 			"folder": "block",
 			"namespace": "fantasyfurniture_nordic",
