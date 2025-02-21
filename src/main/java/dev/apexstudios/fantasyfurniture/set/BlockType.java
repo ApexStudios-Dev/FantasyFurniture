@@ -4,6 +4,7 @@ import dev.apexstudios.fantasyfurniture.set.function.BlockFactory;
 import dev.apexstudios.fantasyfurniture.set.function.ItemFactory;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
+import java.util.function.UnaryOperator;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -14,6 +15,12 @@ public sealed interface BlockType<TBlock extends Block> permits BlockType.NoItem
     String registryName();
 
     BlockBehaviour.Properties blockProperties(FurnitureSet furnitureSet);
+
+    BlockType<TBlock> copy(String registryName);
+
+    default BlockType<TBlock> copy(UnaryOperator<String> registryNameMutator) {
+        return copy(registryNameMutator.apply(registryName()));
+    }
 
     static <TBlock extends Block, TItem extends Item> BlockType.WithItem<TBlock, TItem> withItem(String registryName, BlockFactory<TBlock> blockFactory, ItemFactory<TBlock, TItem> itemFactory, Consumer<BlockTypeBuilder.WithItem<TBlock, TItem>> consumer) {
         var builder = new BlockTypeBuilderImpl.WithItem<>(registryName, blockFactory, itemFactory);
@@ -53,6 +60,14 @@ public sealed interface BlockType<TBlock extends Block> permits BlockType.NoItem
         default NoItem<TBlock> extend(BlockFactory<TBlock> blockFactory) {
             return extend(blockFactory, Consumers.nop());
         }
+
+        @Override
+        NoItem<TBlock> copy(String registryName);
+
+        @Override
+        default NoItem<TBlock> copy(UnaryOperator<String> registryNameMutator) {
+            return (NoItem<TBlock>) BlockType.super.copy(registryNameMutator);
+        }
     }
 
     sealed interface WithItem<TBlock extends Block, TItem extends Item> extends BlockType<TBlock> permits BlockTypeImpl.WithItem {
@@ -74,6 +89,14 @@ public sealed interface BlockType<TBlock extends Block> permits BlockType.NoItem
 
         default WithItem<TBlock, TItem> extend(ItemFactory<TBlock, TItem> itemFactory) {
             return extend(itemFactory, Consumers.nop());
+        }
+
+        @Override
+        WithItem<TBlock, TItem> copy(String registryName);
+
+        @Override
+        default WithItem<TBlock, TItem> copy(UnaryOperator<String> registryNameMutator) {
+            return (WithItem<TBlock, TItem>) BlockType.super.copy(registryNameMutator);
         }
     }
 }

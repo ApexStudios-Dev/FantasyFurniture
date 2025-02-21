@@ -117,6 +117,11 @@ abstract sealed class BlockTypeImpl<TBlock extends Block> implements BlockType<T
         public BlockType.NoItem<TBlock> extend(BlockFactory<TBlock> blockFactory, Consumer<BlockTypeBuilder.NoItem<TBlock>> consumer) {
             return BlockType.noItem(registryName(), blockFactory, builder -> consumer.accept(copyInto((BlockTypeBuilderImpl.NoItem<TBlock>) builder)));
         }
+
+        @Override
+        public BlockType.NoItem<TBlock> copy(String registryName) {
+            return BlockType.noItem(registryName, blockFactory, builder -> copyInto((BlockTypeBuilderImpl.NoItem<TBlock>) builder));
+        }
     }
 
     public static final class WithItem<TBlock extends Block, TItem extends Item> extends BlockTypeImpl<TBlock> implements BlockType.WithItem<TBlock, TItem> {
@@ -153,6 +158,14 @@ abstract sealed class BlockTypeImpl<TBlock extends Block> implements BlockType<T
         @Override
         public BlockType.WithItem<TBlock, TItem> extend(ItemFactory<TBlock, TItem> itemFactory, Consumer<BlockTypeBuilder.WithItem<TBlock, TItem>> consumer) {
             return extend(blockFactory, itemFactory, consumer);
+        }
+
+        @Override
+        public BlockType.WithItem<TBlock, TItem> copy(String registryName) {
+            return BlockType.withItem(registryName, blockFactory, itemFactory, builder -> copyInto((BlockTypeBuilderImpl.WithItem<TBlock, TItem>) builder)
+                    .initialItemProperties(initialItemProperties)
+                    .itemProperties(itemPropertiesModifier)
+            );
         }
 
         @Override
