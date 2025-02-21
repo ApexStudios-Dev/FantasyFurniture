@@ -111,7 +111,7 @@ public abstract sealed class BlockTypeBuilder<TBlock extends Block, TType extend
     }
 
     public <TProvider> TSelf providing(ProviderType<TProvider> providerType, ProviderListener<TProvider, TBlock> listener) {
-        providerListeners.compute(providerType, ($, existing) -> existing == null ? listener : ((ProviderListener<TProvider, TBlock>) existing).andThen(listener));
+        providerListeners.put(providerType, listener);
         return (TSelf) this;
     }
 
