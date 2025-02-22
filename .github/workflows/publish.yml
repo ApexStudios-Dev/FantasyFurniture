@@ -67,10 +67,10 @@ jobs:
                   # only nordic, no sources or data jars
                   path: ./build/libs/*[nordic][!(sources|data)].jar
 
-            - name: Upload Built Artifacts (Nordic)
+            - name: Upload Built Artifacts (Venthyr)
               uses: actions/upload-artifact@v4
               with:
-                  name: artifacts-nordic
+                  name: artifacts-venthyr
                   # only venthyr, no sources or data jars
                   path: ./build/libs/*[venthyr][!(sources|data)].jar
 
