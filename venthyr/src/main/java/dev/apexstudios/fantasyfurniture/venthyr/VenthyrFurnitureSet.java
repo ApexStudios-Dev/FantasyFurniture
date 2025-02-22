@@ -10,6 +10,7 @@ import dev.apexstudios.fantasyfurniture.venthyr.block.VenthyrBedDoubleBlock;
 import dev.apexstudios.fantasyfurniture.venthyr.block.VenthyrBedSingleBlock;
 import dev.apexstudios.fantasyfurniture.venthyr.block.VenthyrBenchBlock;
 import dev.apexstudios.fantasyfurniture.venthyr.block.VenthyrChairBlock;
+import dev.apexstudios.fantasyfurniture.venthyr.block.VenthyrChandelierBlock;
 import dev.apexstudios.fantasyfurniture.venthyr.block.VenthyrChestBlock;
 import dev.apexstudios.fantasyfurniture.venthyr.block.VenthyrCushionBlock;
 import dev.apexstudios.fantasyfurniture.venthyr.block.VenthyrDeskBlock;
@@ -49,6 +50,7 @@ public class VenthyrFurnitureSet {
             .with(BlockTypes.DESK_RIGHT.extend((furnitureSet, properties) -> new VenthyrDeskBlock(properties, false)))
             .with(BlockTypes.CHEST.extend(BlockFactory.wrapping(VenthyrChestBlock::new)))
             .with(BlockTypes.FLOOR_LIGHT.extend(BlockFactory.wrapping(VenthyrFloorLightBlock::new)))
+            .with(BlockTypes.CHANDELIER.extend(BlockFactory.wrapping(VenthyrChandelierBlock::new)))
             .with(BlockTypes.SHELF.extend(BlockFactory.wrapping(VenthyrShelfBlock::new)))
             .with(BlockTypes.SOFA.extend(BlockFactory.wrapping(VenthyrSofaBlock::new)))
             .with(BlockTypes.WALL_LIGHT.extend(BlockFactory.wrapping(VenthyrWallLightBlock::new)))
