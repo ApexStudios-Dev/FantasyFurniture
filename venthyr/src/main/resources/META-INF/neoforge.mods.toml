@@ -1,0 +1,34 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="AllRightsReserved"
+issueTrackerURL="https://github.com/ApexStudios-Dev/Issues/issues"
+
+[[mods]]
+    modId="fantasyfurniture_venthyr"
+    version="${file.jarVersion}"
+    displayName="Fantasy's Furniture - Venthyr"
+    credits="Apex - Programming"
+    authors="ApexStudios"
+    description="Venthyr Furniture set for Fantasy's Furniture"
+    logoFile="logo.png"
+    displayURL="https://modrinth.com/project/fantasys-furniture-venthyr"
+
+[[dependencies.fantasyfurniture_venthyr]]
+    modId="apexcore"
+    type="required"
+    versionRange="[21.4,21.5)"
+    [dependencies.fantasyfurniture_venthyr.mc-publish]
+        modrinth="xl3myxch"
+        curseforge="550778"
+[[dependencies.fantasyfurniture_venthyr]]
+    modId="fantasyfurniture"
+    type="required"
+    versionRange="[21.4,21.5)"
+    [dependencies.fantasyfurniture_venthyr.mc-publish]
+        modrinth="A0nfCqYw"
+        curseforge="579564"
+
+#[[accessTransformers]]
+#    file="META-INF/accesstransformer.cfg"
+#[[mixins]]
+#    config="META-INF/fantasyfurniture_venthyr.mixins.json"

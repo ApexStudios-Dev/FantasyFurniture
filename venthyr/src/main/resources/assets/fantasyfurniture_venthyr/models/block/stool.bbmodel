@@ -1,0 +1,357 @@
+{
+	"meta": {
+		"format_version": "4.10",
+		"model_format": "java_block",
+		"box_uv": false
+	},
+	"name": "stool",
+	"parent": "",
+	"credit": "Made with Blockbench",
+	"ambientocclusion": true,
+	"front_gui_light": false,
+	"visible_box": [1, 1, 0],
+	"variable_placeholders": "",
+	"variable_placeholder_buttons": [],
+	"unhandled_root_fields": {},
+	"resolution": {
+		"width": 32,
+		"height": 32
+	},
+	"elements": [
+		{
+			"name": "post_1",
+			"box_uv": false,
+			"rescale": false,
+			"locked": false,
+			"light_emission": 0,
+			"render_order": "default",
+			"allow_mirror_modeling": true,
+			"from": [2, 0, 2],
+			"to": [5, 4, 5],
+			"autouv": 0,
+			"color": 6,
+			"origin": [0, 0, 0],
+			"faces": {
+				"north": {
+					"uv": [14, 12, 17, 16],
+					"texture": 0
+				},
+				"east": {
+					"uv": [14, 16, 17, 20],
+					"texture": 0
+				},
+				"south": {
+					"uv": [17, 12, 20, 16],
+					"texture": 0
+				},
+				"west": {
+					"uv": [17, 16, 20, 20],
+					"texture": 0
+				},
+				"up": {
+					"uv": [29, 15, 26, 12],
+					"texture": null
+				},
+				"down": {
+					"uv": [29, 15, 26, 18],
+					"cullface": "down",
+					"texture": 0
+				}
+			},
+			"type": "cube",
+			"uuid": "862928d9-245f-a5d6-4bd4-89bb713a2db9"
+		},
+		{
+			"name": "post_2",
+			"box_uv": false,
+			"rescale": false,
+			"locked": false,
+			"light_emission": 0,
+			"render_order": "default",
+			"allow_mirror_modeling": true,
+			"from": [2, 0, 11],
+			"to": [5, 4, 14],
+			"autouv": 0,
+			"color": 0,
+			"origin": [0, 0, 0],
+			"faces": {
+				"north": {
+					"uv": [20, 12, 23, 16],
+					"texture": 0
+				},
+				"east": {
+					"uv": [14, 20, 17, 24],
+					"texture": 0
+				},
+				"south": {
+					"uv": [20, 16, 23, 20],
+					"texture": 0
+				},
+				"west": {
+					"uv": [17, 20, 20, 24],
+					"texture": 0
+				},
+				"up": {
+					"uv": [29, 21, 26, 18],
+					"texture": null
+				},
+				"down": {
+					"uv": [29, 21, 26, 24],
+					"cullface": "down",
+					"texture": 0
+				}
+			},
+			"type": "cube",
+			"uuid": "c9cd7269-a092-5214-5fd1-5f727049c155"
+		},
+		{
+			"name": "post_3",
+			"box_uv": false,
+			"rescale": false,
+			"locked": false,
+			"light_emission": 0,
+			"render_order": "default",
+			"allow_mirror_modeling": true,
+			"from": [11, 0, 11],
+			"to": [14, 4, 14],
+			"autouv": 0,
+			"color": 7,
+			"origin": [0, 0, 0],
+			"faces": {
+				"north": {
+					"uv": [20, 20, 23, 24],
+					"texture": 0
+				},
+				"east": {
+					"uv": [23, 12, 26, 16],
+					"texture": 0
+				},
+				"south": {
+					"uv": [23, 16, 26, 20],
+					"texture": 0
+				},
+				"west": {
+					"uv": [23, 20, 26, 24],
+					"texture": 0
+				},
+				"up": {
+					"uv": [29, 27, 26, 24],
+					"texture": null
+				},
+				"down": {
+					"uv": [29, 27, 26, 30],
+					"cullface": "down",
+					"texture": 0
+				}
+			},
+			"type": "cube",
+			"uuid": "361629fc-dd32-fd76-aaf7-487d2751650e"
+		},
+		{
+			"name": "post_4",
+			"box_uv": false,
+			"rescale": false,
+			"locked": false,
+			"light_emission": 0,
+			"render_order": "default",
+			"allow_mirror_modeling": true,
+			"from": [11, 0, 2],
+			"to": [14, 4, 5],
+			"autouv": 0,
+			"color": 2,
+			"origin": [0, 0, 0],
+			"faces": {
+				"north": {
+					"uv": [14, 24, 17, 28],
+					"texture": 0
+				},
+				"east": {
+					"uv": [17, 24, 20, 28],
+					"texture": 0
+				},
+				"south": {
+					"uv": [20, 24, 23, 28],
+					"texture": 0
+				},
+				"west": {
+					"uv": [23, 24, 26, 28],
+					"texture": 0
+				},
+				"up": {
+					"uv": [3, 31, 0, 28],
+					"texture": null
+				},
+				"down": {
+					"uv": [31, 0, 28, 3],
+					"cullface": "down",
+					"texture": 0
+				}
+			},
+			"type": "cube",
+			"uuid": "ce22db90-764d-2997-d791-ec6fdb9f314c"
+		},
+		{
+			"name": "seat",
+			"box_uv": false,
+			"rescale": false,
+			"locked": false,
+			"light_emission": 0,
+			"render_order": "default",
+			"allow_mirror_modeling": true,
+			"from": [1, 4, 1],
+			"to": [15, 7, 15],
+			"autouv": 0,
+			"color": 5,
+			"origin": [0, 0, 0],
+			"faces": {
+				"north": {
+					"uv": [14, 0, 28, 3],
+					"texture": 0
+				},
+				"east": {
+					"uv": [14, 3, 28, 6],
+					"texture": 0
+				},
+				"south": {
+					"uv": [14, 6, 28, 9],
+					"texture": 0
+				},
+				"west": {
+					"uv": [14, 9, 28, 12],
+					"texture": 0
+				},
+				"up": {
+					"uv": [14, 14, 0, 0],
+					"texture": 0
+				},
+				"down": {
+					"uv": [14, 14, 0, 28],
+					"texture": 0
+				}
+			},
+			"type": "cube",
+			"uuid": "ef868a30-530c-6fa1-6fbb-59253c0eb2f5"
+		}
+	],
+	"outliner": [
+		{
+			"name": "venthyr_stool",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"uuid": "96d8d7c9-5e58-56bc-c6fb-a2e908df00e2",
+			"export": true,
+			"mirror_uv": false,
+			"isOpen": false,
+			"locked": false,
+			"visibility": true,
+			"autouv": 0,
+			"selected": true,
+			"children": [
+				"862928d9-245f-a5d6-4bd4-89bb713a2db9",
+				"c9cd7269-a092-5214-5fd1-5f727049c155",
+				"361629fc-dd32-fd76-aaf7-487d2751650e",
+				"ce22db90-764d-2997-d791-ec6fdb9f314c",
+				"ef868a30-530c-6fa1-6fbb-59253c0eb2f5"
+			]
+		}
+	],
+	"textures": [
+		{
+			"path": "/mnt/development/Modding/ApexStudios/FantasyFurniture/venthyr/src/main/resources/assets/fantasyfurniture_venthyr/textures/block/stool.png",
+			"name": "stool.png",
+			"folder": "block",
+			"namespace": "fantasyfurniture_venthyr",
+			"id": "venthyr_stool",
+			"group": "",
+			"width": 32,
+			"height": 32,
+			"uv_width": 32,
+			"uv_height": 32,
+			"particle": false,
+			"use_as_default": false,
+			"layers_enabled": false,
+			"sync_to_project": "",
+			"render_mode": "default",
+			"render_sides": "auto",
+			"pbr_channel": "color",
+			"frame_time": 1,
+			"frame_order_type": "loop",
+			"frame_order": "",
+			"frame_interpolate": false,
+			"visible": true,
+			"internal": true,
+			"saved": true,
+			"uuid": "727f0fb9-6d4b-4330-0912-f5ebf26af915",
+			"relative_path": "../../textures/block/stool.png",
+			"source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAbdJREFUWEfdV7tOxEAMTCq4QIfuT2gRHYKOgpavo6WgA9EhWv7kRMfloAJ5xUQTx77sLuaQuOayL3s8Hjub9vzk+LP5/h0uDvBo/r9t1uZ87bmH55e2vTo7TQAWXZeMd/t7Iyf9+8cw3vT98Cxg4BhnPfQ4pwNIAK4vLxIA7dgyBjBikI2FMpDLAhiQ6AFIgGAsdpgljCVqDq5lDciCF42Vf96rnWUD0BoAujkteILcquKmaSYMlGgAxkULq9fV4KtEAxMAwoBXAToaLcKaKjABwBGXE6eAHWNvbRXsRIS6Mhi0y4BuJp4IuamEVYE4z2lEEomkQzeiOeXzehYDcyWoNWMBQlOSvbwu87ePT0MzGjWiknLyHACctY65m7t7G0AJlRqsbkxWMNBZCIASsHov62DyLig1rKlGlKgWjLlz/j8Auaz9uQbCqwDKzylJ3uv2gVwqcXGpASBnQ0QoUTMABm/1BJ4LAVDC1q/0geXRMtn16h2dEJHz/hAN1ADASykkBXO3Z80AayYEQJgG5FKKPOnLwk+c6LP8/TFiQK7lVm4inYutrQCgZlZnNADP3ug7bVdO2c8X7SCnMPDHlEAAAAAASUVORK5CYII="
+		},
+		{
+			"path": "/mnt/development/Modding/ApexStudios/FantasyFurniture/venthyr/src/main/resources/assets/fantasyfurniture_venthyr/textures/block/particle.png",
+			"name": "particle.png",
+			"folder": "block",
+			"namespace": "fantasyfurniture_venthyr",
+			"id": "particle",
+			"group": "",
+			"width": 16,
+			"height": 16,
+			"uv_width": 32,
+			"uv_height": 32,
+			"particle": true,
+			"use_as_default": false,
+			"layers_enabled": false,
+			"sync_to_project": "",
+			"render_mode": "default",
+			"render_sides": "auto",
+			"pbr_channel": "color",
+			"frame_time": 1,
+			"frame_order_type": "loop",
+			"frame_order": "",
+			"frame_interpolate": false,
+			"visible": true,
+			"internal": true,
+			"saved": true,
+			"uuid": "1b66a8c0-8549-094b-e42c-3ea4b09abefc",
+			"relative_path": "../../textures/block/particle.png",
+			"source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAC9JREFUOE9j9LA1+c+AB/BwcuOTZmAcNWBYhEGImz3edMDJxYU/HYwawMA49MMAAEXEHnncqZXpAAAAAElFTkSuQmCC"
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 225, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"ground": {
+			"translation": [0, 3, 0],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"scale": [0.625, 0.625, 0.625]
+		},
+		"head": {
+			"translation": [0, 14.5, 0]
+		},
+		"fixed": {
+			"rotation": [-90, 0, 0],
+			"translation": [0, 0, -4],
+			"scale": [0.5, 0.5, 0.5]
+		}
+	},
+	"tint_color": [1, 0.705, 0.294]
+}

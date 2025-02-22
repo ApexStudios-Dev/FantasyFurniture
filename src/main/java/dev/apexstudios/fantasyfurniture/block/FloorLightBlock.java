@@ -36,8 +36,16 @@ public class FloorLightBlock extends FurnitureBlockComponentHolder {
 
     public static final Map<Direction, VoxelShape> FACING_SHAPES = ApexShapes.rotateHorizontal(SHAPE);
 
-    public FloorLightBlock(Properties properties) {
+    private final int particleCount;
+
+    public FloorLightBlock(Properties properties, int particleCount) {
         super(properties);
+
+        this.particleCount = particleCount;
+    }
+
+    public FloorLightBlock(Properties properties) {
+        this(properties, 4);
     }
 
     @Override
@@ -62,12 +70,12 @@ public class FloorLightBlock extends FurnitureBlockComponentHolder {
         if(getComponentOrThrow(BlockComponentTypes.MULTI_BLOCK).indexOf(blockState) == MultiBlockComponent.ORIGIN_INDEX)
             return;
 
-        for(var i = 0; i < 4; i++) {
+        for(var i = 0; i < particleCount; i++) {
             addParticle(level, pos, i);
         }
     }
 
-    private void addParticle(Level level, BlockPos pos, int index) {
+    protected void addParticle(Level level, BlockPos pos, int index) {
         var x = pos.getX() + .5D;
         var y = pos.getY() + .85D;
         var z = pos.getZ() + .5D;

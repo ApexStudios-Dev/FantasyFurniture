@@ -18,8 +18,16 @@ public class ChandelierBlock extends FurnitureBlockComponentHolder {
     public static final VoxelShape SHAPE = box(1D, 0D, 1D, 15, 16D, 15D);
     public static final Map<Direction, VoxelShape> FACING_SHAPES = ApexShapes.rotateHorizontal(SHAPE);
 
-    public ChandelierBlock(Properties properties) {
+    private final int particleCount;
+
+    public ChandelierBlock(Properties properties, int particleCount) {
         super(properties);
+
+        this.particleCount = particleCount;
+    }
+
+    public ChandelierBlock(Properties properties) {
+        this(properties, 4);
     }
 
     @Override
@@ -36,12 +44,12 @@ public class ChandelierBlock extends FurnitureBlockComponentHolder {
 
     @Override
     public void animateTick(BlockState blockState, Level level, BlockPos pos, RandomSource random) {
-        for(var i = 0; i < 4; i++) {
+        for(var i = 0; i < particleCount; i++) {
             addParticle(level, pos, i);
         }
     }
 
-    private void addParticle(Level level, BlockPos pos, int index) {
+    protected void addParticle(Level level, BlockPos pos, int index) {
         var x = pos.getX() + .5D;
         var y = pos.getY() + .65D;
         var z = pos.getZ() + .5D;

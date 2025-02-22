@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    "fantasyfurniture_venthyr:planks"
+  ],
+  "result": {
+    "count": 1,
+    "id": "fantasyfurniture_venthyr:button"
+  }
+}
