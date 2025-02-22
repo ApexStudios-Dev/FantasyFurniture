@@ -5,20 +5,18 @@ import dev.apexstudios.apexcore.lib.data.ProviderTypes;
 import dev.apexstudios.apexcore.lib.data.ResourceGenerator;
 import dev.apexstudios.apexcore.lib.registree.Registree;
 import java.util.Collections;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.UnaryOperator;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.Sheets;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.PackType;
-import net.minecraft.server.packs.repository.Pack;
-import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -27,17 +25,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.ModList;
-import net.neoforged.neoforge.event.AddPackFindersEvent;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import org.apache.commons.lang3.StringUtils;
 
 public final class FurnitureSet {
-    private static final Map<String, CtmPack> CTM_PACKS = Map.of(
-            "athena", new CtmPack("ctm-athena", "Athena CTM"),
-            "fusion", new CtmPack("ctm-fusion", "Fusion CTM"),
-            "ctm", new CtmPack("ctm", "CTM")
-    );
-
     private final Registree registree;
     private final String name;
     private final Set<BlockType<?>> blockTypes;
@@ -62,36 +53,37 @@ public final class FurnitureSet {
 
     public void register(IEventBus modBus) {
         for(var blockType : blockTypes) {
-            ((BlockTypeImpl<?>) blockType).register(modBus, this, registree);
+            blockType.register(modBus, this, registree);
         }
 
-        modBus.addListener(AddPackFindersEvent.class, event -> CTM_PACKS.entrySet().stream()
-                .filter(entry -> ModList.get().isLoaded(entry.getKey()))
-                .map(Map.Entry::getValue)
-                .forEach(pack -> event.addPackFinders(
-                        registree.registryName("packs/" + pack.packId),
-                        PackType.CLIENT_RESOURCES,
-                        Component.literal(pack.packName + " (" + StringUtils.capitalize(name) + ')'),
-                        PackSource.BUILT_IN,
-                        false,
-                        Pack.Position.TOP
-                ))
-        );
+        modBus.addListener(FMLClientSetupEvent.class, event -> event.enqueueWork(() -> {
+            // vanilla uses the wood type id to construct the texture location
+            // our wood type id == '${furniture_set}_wood_type'
+            // but we want only '$furniture_set' for the texture name
+            //
+            // this also registers both ground & hanging sign materials
+            // when furniture set potentially only needs 1 of them
+            // Sheets.addWoodType(woodType);
+
+            // we register the sign materials manually to match our desired texture path
+            // and only register materials when the matching block types are registered
+            if(isRegistered(BlockTypes.HANGING_SIGN) || isRegistered(BlockTypes.WALL_HANGING_SIGN))
+                Sheets.HANGING_SIGN_MATERIALS.put(woodType, Sheets.createHangingSignMaterial(registree.registryName(name)));
+            if(isRegistered(BlockTypes.SIGN) || isRegistered(BlockTypes.WALL_SIGN))
+                Sheets.SIGN_MATERIALS.put(woodType, Sheets.createSignMaterial(registree.registryName(name)));
+
+            ifRegistered(BlockTypes.TRAP_DOOR, block -> ItemBlockRenderTypes.setRenderLayer(block, RenderType.cutout()));
+        }));
     }
 
     public void registerDataGen(ResourceGenerator generator) {
         var pack = generator.pack();
 
         for(var blockType : blockTypes) {
-            ((BlockTypeImpl<?>) blockType).registerDataGen(pack, this);
+            blockType.registerDataGen(pack, this);
         }
 
         pack.providing(ProviderTypes.LANGUAGE, (context, provider) -> provider.addCreativeModeTab(creativeModeTab, StringUtils.capitalize(name)));
-
-        CTM_PACKS.forEach((modId, ctm) -> {
-            generator.pack(ctm.packId)
-                    .description("Enables " + ctm.packName + " support");
-        });
     }
 
     public String ownerNamespace() {
@@ -115,11 +107,11 @@ public final class FurnitureSet {
     }
 
     public boolean isRegistered(BlockType<?> blockType) {
-        return registree.containsKey(Registries.BLOCK, blockType.registryName());
+        return registree.containsKey(Registries.BLOCK, blockType.registryName);
     }
 
     public <TBlock extends Block> Optional<TBlock> get(BlockType<TBlock> blockType) {
-        return registree.getOptional(Registries.BLOCK, blockType.registryName()).map(value -> (TBlock) value);
+        return registree.getOptional(Registries.BLOCK, blockType.registryName).map(value -> (TBlock) value);
     }
 
     public <TBlock extends Block> TBlock getOrThrow(BlockType<TBlock> blockType) {
@@ -172,6 +164,4 @@ public final class FurnitureSet {
     public static FurnitureSet create(Registree registree, String name) {
         return create(registree, name, UnaryOperator.identity());
     }
-
-    private record CtmPack(String packId, String packName) { }
 }

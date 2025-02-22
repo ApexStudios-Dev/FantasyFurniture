@@ -4,18 +4,34 @@ import dev.apexstudios.apexcore.lib.component.ComponentRegistrar;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
 import dev.apexstudios.apexcore.lib.component.block.types.FacingBlockComponent;
+import dev.apexstudios.apexcore.lib.util.shapes.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.base.FurnitureBlockComponentHolder;
+import java.util.Map;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 public class WallLightBlock extends FurnitureBlockComponentHolder {
+    public static final VoxelShape SHAPE = ApexShapes.join(
+            box(6D, 5D, 15D, 10D, 11D, 16D),
+            box(6D, 2D, 8D, 10D, 15D, 15D)
+    );
+
+    public static final Map<Direction, VoxelShape> FACING_SHAPES = ApexShapes.rotateHorizontal(SHAPE);
+
     public WallLightBlock(Properties properties) {
         super(properties);
+    }
+
+    @Override
+    protected VoxelShape getFurnitureShape(BlockState blockState, BlockPos pos) {
+        return getShape(FACING_SHAPES, blockState, pos);
     }
 
     @Override

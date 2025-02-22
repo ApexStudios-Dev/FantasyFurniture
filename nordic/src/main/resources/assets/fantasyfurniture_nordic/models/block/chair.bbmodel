@@ -11,9 +11,7 @@
 	"visible_box": [1, 1, 0],
 	"variable_placeholders": "",
 	"variable_placeholder_buttons": [],
-	"unhandled_root_fields": {
-		"render_type": "minecraft:cutout"
-	},
+	"unhandled_root_fields": {},
 	"resolution": {
 		"width": 64,
 		"height": 64
@@ -55,6 +53,7 @@
 				},
 				"down": {
 					"uv": [24, 16, 22, 18],
+					"cullface": "down",
 					"texture": 1
 				}
 			},
@@ -97,6 +96,7 @@
 				},
 				"down": {
 					"uv": [34, 6, 32, 8],
+					"cullface": "down",
 					"texture": 1
 				}
 			},
@@ -139,6 +139,7 @@
 				},
 				"down": {
 					"uv": [34, 8, 32, 10],
+					"cullface": "down",
 					"texture": 1
 				}
 			},
@@ -181,6 +182,7 @@
 				},
 				"down": {
 					"uv": [34, 10, 32, 12],
+					"cullface": "down",
 					"texture": 1
 				}
 			},
@@ -585,7 +587,7 @@
 				},
 				"east": {
 					"uv": [0, 0, 0, 7],
-					"texture": 1
+					"texture": null
 				},
 				"south": {
 					"uv": [12, 7, 18, 14],
@@ -593,15 +595,15 @@
 				},
 				"west": {
 					"uv": [0, 0, 0, 7],
-					"texture": 1
+					"texture": null
 				},
 				"up": {
 					"uv": [6, 0, 0, 0],
-					"texture": 1
+					"texture": null
 				},
 				"down": {
 					"uv": [6, 0, 0, 0],
-					"texture": 1
+					"texture": null
 				}
 			},
 			"type": "cube",
@@ -837,7 +839,7 @@
 				},
 				"east": {
 					"uv": [0, 0, 0, 7],
-					"texture": 1
+					"texture": null
 				},
 				"south": {
 					"uv": [18, 18, 24, 21],
@@ -845,15 +847,15 @@
 				},
 				"west": {
 					"uv": [0, 0, 0, 7],
-					"texture": 1
+					"texture": null
 				},
 				"up": {
 					"uv": [6, 0, 0, 0],
-					"texture": 1
+					"texture": null
 				},
 				"down": {
 					"uv": [6, 0, 0, 0],
-					"texture": 1
+					"texture": null
 				}
 			},
 			"type": "cube",
@@ -879,7 +881,7 @@
 				},
 				"east": {
 					"uv": [0, 0, 0, 4],
-					"texture": 1
+					"texture": null
 				},
 				"south": {
 					"uv": [18, 0, 26, 4],
@@ -887,15 +889,15 @@
 				},
 				"west": {
 					"uv": [0, 0, 0, 4],
-					"texture": 1
+					"texture": null
 				},
 				"up": {
 					"uv": [8, 0, 0, 0],
-					"texture": 1
+					"texture": null
 				},
 				"down": {
 					"uv": [8, 0, 0, 0],
-					"texture": 1
+					"texture": null
 				}
 			},
 			"type": "cube",
@@ -914,6 +916,7 @@
 			"locked": false,
 			"visibility": true,
 			"autouv": 0,
+			"selected": false,
 			"children": [
 				"93ab2fad-750b-da28-7f56-a5d7fe32bc47",
 				"0392ea0c-8d4d-1a5e-f197-f232e7d7daee",
@@ -942,6 +945,7 @@
 			"locked": false,
 			"visibility": true,
 			"autouv": 0,
+			"selected": false,
 			"children": [
 				"3465d6d8-41fa-a881-d1c1-c1a169a2dd7d",
 				"d4b16d90-0296-9b23-3444-341cb65c3a1d",
@@ -955,7 +959,7 @@
 	],
 	"textures": [
 		{
-			"path": "C:\\Users\\fanta\\OneDrive\\Documents\\GitHub\\FantasyFurniture-Private\\nordic\\src\\main\\resources\\assets\\fantasyfurniture_nordic\\textures\\block\\particle.png",
+			"path": "/mnt/development/Modding/ApexStudios/FantasyFurniture/nordic/src/main/resources/assets/fantasyfurniture_nordic/textures/block/particle.png",
 			"name": "particle.png",
 			"folder": "block",
 			"namespace": "fantasyfurniture_nordic",
@@ -984,7 +988,7 @@
 			"source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAC9JREFUOE9jtNSV/8+AB0iJcOGTZmAcNWBYhEGwoybedCDAx40/HYwawMA49MMAAMyYHRmk1QpOAAAAAElFTkSuQmCC"
 		},
 		{
-			"path": "C:\\Users\\fanta\\OneDrive\\Documents\\GitHub\\FantasyFurniture-Private\\nordic\\src\\main\\resources\\assets\\fantasyfurniture_nordic\\textures\\block\\chair.png",
+			"path": "/mnt/development/Modding/ApexStudios/FantasyFurniture/nordic/src/main/resources/assets/fantasyfurniture_nordic/textures/block/chair.png",
 			"name": "chair.png",
 			"folder": "block",
 			"namespace": "fantasyfurniture_nordic",

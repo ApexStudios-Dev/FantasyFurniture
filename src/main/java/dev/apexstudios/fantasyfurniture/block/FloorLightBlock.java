@@ -5,16 +5,52 @@ import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
 import dev.apexstudios.apexcore.lib.component.block.types.FacingBlockComponent;
 import dev.apexstudios.apexcore.lib.component.block.types.MultiBlockComponent;
+import dev.apexstudios.apexcore.lib.util.shapes.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.base.FurnitureBlockComponentHolder;
+import java.util.Map;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class FloorLightBlock extends FurnitureBlockComponentHolder {
-    public FloorLightBlock(Properties properties) {
+    public static final VoxelShape SHAPE = ApexShapes.join(
+            box(6D, 0D, 6D, 10D, 2D, 10D),
+            box(7D, 2D, 7D, 9D, 20D, 9D),
+            box(6.5D, 20.75D, 2.5D, 9.5D, 22.75D, 5.5D),
+            box(2.5D, 20.75D, 6.5D, 5.5D, 22.75D, 9.5D),
+            box(7.25D, 22.75D, 3.25D, 8.75D, 26.75D, 4.75D),
+            box(3.25D, 22.75D, 7.25D, 4.75D, 26.75D, 8.75D),
+            box(7.25D, 22.75D, 11.25D, 8.75D, 26.75D, 12.75D),
+            box(11.25D, 22.75D, 7.25D, 12.75D, 26.75D, 8.75D),
+            box(10.5D, 20.75D, 6.5D, 13.5D, 22.75D, 9.5D),
+            box(6.5D, 20.75D, 10.5D, 9.5D, 22.75D, 13.5D),
+            box(3D, 16.75D, 7D, 7D, 20.75, 9D),
+            box(9D, 16.75D, 7D, 13D, 20.75, 9D),
+            box(7D, 16.75D, 3D, 9D, 20.75, 7D),
+            box(7D, 16.75D, 9D, 9D, 20.75, 13D)
+    );
+
+    public static final Map<Direction, VoxelShape> FACING_SHAPES = ApexShapes.rotateHorizontal(SHAPE);
+
+    private final int particleCount;
+
+    public FloorLightBlock(Properties properties, int particleCount) {
         super(properties);
+
+        this.particleCount = particleCount;
+    }
+
+    public FloorLightBlock(Properties properties) {
+        this(properties, 4);
+    }
+
+    @Override
+    protected VoxelShape getFurnitureShape(BlockState blockState, BlockPos pos) {
+        return getShape(FACING_SHAPES, blockState, pos);
     }
 
     @Override
@@ -34,12 +70,12 @@ public class FloorLightBlock extends FurnitureBlockComponentHolder {
         if(getComponentOrThrow(BlockComponentTypes.MULTI_BLOCK).indexOf(blockState) == MultiBlockComponent.ORIGIN_INDEX)
             return;
 
-        for(var i = 0; i < 4; i++) {
+        for(var i = 0; i < particleCount; i++) {
             addParticle(level, pos, i);
         }
     }
 
-    private void addParticle(Level level, BlockPos pos, int index) {
+    protected void addParticle(Level level, BlockPos pos, int index) {
         var x = pos.getX() + .5D;
         var y = pos.getY() + .85D;
         var z = pos.getZ() + .5D;

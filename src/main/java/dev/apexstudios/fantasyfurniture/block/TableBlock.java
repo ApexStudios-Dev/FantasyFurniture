@@ -24,6 +24,9 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 public class TableBlock extends FurnitureBlockComponentHolder {
+    public static final VoxelShape SHAPE_TABLE_TOP = box(0D, 13D, 0D, 16D, 16D, 16D);
+    public static final VoxelShape SHAPE_TABLE_LEG = box(13D, 0D, 1D, 15D, 13D, 3D);
+
     public static final BooleanProperty NORTH = BlockStateProperties.NORTH;
     public static final BooleanProperty EAST = BlockStateProperties.EAST;
     public static final BooleanProperty SOUTH = BlockStateProperties.SOUTH;
@@ -38,6 +41,12 @@ public class TableBlock extends FurnitureBlockComponentHolder {
                 .setValue(SOUTH, false)
                 .setValue(WEST, false)
         );
+    }
+
+    @Override
+    protected VoxelShape getFurnitureShape(BlockState blockState, BlockPos pos) {
+        var facing = getComponentOrThrow(BlockComponentTypes.FACING).get(blockState);
+        return ApexShapes.rotateHorizontal(getShape(blockState, SHAPE_TABLE_TOP, SHAPE_TABLE_LEG), facing);
     }
 
     @Override

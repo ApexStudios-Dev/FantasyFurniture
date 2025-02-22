@@ -67,6 +67,13 @@ jobs:
                   # only nordic, no sources or data jars
                   path: ./build/libs/*[nordic][!(sources|data)].jar
 
+            - name: Upload Built Artifacts (Nordic)
+              uses: actions/upload-artifact@v4
+              with:
+                  name: artifacts-nordic
+                  # only venthyr, no sources or data jars
+                  path: ./build/libs/*[venthyr][!(sources|data)].jar
+
     publish-maven:
         needs: [ get-vars, build ]
         if: success()
@@ -109,4 +116,21 @@ jobs:
             release_type: alpha
             name: "Fantasy's Furniture - Nordic"
             logo: "https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/new/fantasyfurniture_nordic.png"
+            color: "9946855" # 97C6E7
+
+    publish-venthyr:
+        needs: [ get-vars, build ]
+        if: success()
+        uses: ./.github/workflows/_publish-furnitureset.yml
+        secrets: inherit
+        with:
+            java_version: 17
+            java_vendor: temurin
+            artifact_id: artifacts-venthyr
+            version: ${{ needs.get-vars.outputs.version }}
+            curseforge_id: 1206300
+            modrinth_id: FjHW4JvP
+            release_type: alpha
+            name: "Fantasy's Furniture - Venthyr"
+            logo: "https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/new/fantasyfurniture_venthyr.png"
             color: "9946855" # 97C6E7

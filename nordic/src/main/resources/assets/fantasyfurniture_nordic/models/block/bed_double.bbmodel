@@ -6,7 +6,6 @@
 	},
 	"name": "bed_double",
 	"parent": "",
-	"credit": "Made with Blockbench",
 	"ambientocclusion": true,
 	"front_gui_light": false,
 	"visible_box": [1, 1, 0],
@@ -38,6 +37,7 @@
 				},
 				"east": {
 					"uv": [28, 21, 42, 23],
+					"cullface": "east",
 					"texture": 0
 				},
 				"south": {
@@ -375,10 +375,12 @@
 				},
 				"east": {
 					"uv": [33, 37, 31, 45],
+					"cullface": "east",
 					"texture": 0
 				},
 				"south": {
 					"uv": [31, 37, 29, 45],
+					"cullface": "south",
 					"texture": 0
 				},
 				"west": {
@@ -391,6 +393,7 @@
 				},
 				"down": {
 					"uv": [6, 40, 8, 42],
+					"cullface": "down",
 					"texture": 0
 				}
 			},
@@ -421,6 +424,7 @@
 				},
 				"south": {
 					"uv": [4, 40, 2, 44],
+					"cullface": "south",
 					"texture": 0
 				},
 				"west": {
@@ -459,10 +463,12 @@
 				},
 				"east": {
 					"uv": [42, 35, 40, 37],
+					"cullface": "east",
 					"texture": 0
 				},
 				"south": {
 					"uv": [8, 38, 0, 40],
+					"cullface": "south",
 					"texture": 0
 				},
 				"west": {
@@ -505,6 +511,7 @@
 				},
 				"south": {
 					"uv": [44, 25, 30, 27],
+					"cullface": "south",
 					"texture": 0
 				},
 				"west": {
@@ -547,14 +554,17 @@
 				},
 				"south": {
 					"uv": [40, 35, 30, 37],
+					"cullface": "south",
 					"texture": 0
 				},
 				"west": {
 					"uv": [43, 6, 41, 8],
+					"cullface": "west",
 					"texture": 0
 				},
 				"up": {
 					"uv": [0, 38, 10, 36],
+					"cullface": "up",
 					"texture": 0
 				},
 				"down": {
@@ -719,6 +729,7 @@
 				},
 				"west": {
 					"uv": [42, 21, 28, 23],
+					"cullface": "west",
 					"texture": 0
 				},
 				"up": {
@@ -1052,10 +1063,12 @@
 				},
 				"south": {
 					"uv": [29, 37, 31, 45],
+					"cullface": "south",
 					"texture": 0
 				},
 				"west": {
 					"uv": [31, 37, 33, 45],
+					"cullface": "west",
 					"texture": 0
 				},
 				"up": {
@@ -1064,6 +1077,7 @@
 				},
 				"down": {
 					"uv": [8, 40, 6, 42],
+					"cullface": "down",
 					"texture": 0
 				}
 			},
@@ -1094,6 +1108,7 @@
 				},
 				"south": {
 					"uv": [2, 40, 4, 44],
+					"cullface": "south",
 					"texture": 0
 				},
 				"west": {
@@ -1136,10 +1151,12 @@
 				},
 				"south": {
 					"uv": [0, 38, 8, 40],
+					"cullface": "south",
 					"texture": 0
 				},
 				"west": {
 					"uv": [40, 35, 42, 37],
+					"cullface": "west",
 					"texture": 0
 				},
 				"up": {
@@ -1178,6 +1195,7 @@
 				},
 				"south": {
 					"uv": [30, 25, 44, 27],
+					"cullface": "south",
 					"texture": 0
 				},
 				"west": {
@@ -1216,10 +1234,12 @@
 				},
 				"east": {
 					"uv": [41, 6, 43, 8],
+					"cullface": "east",
 					"texture": 0
 				},
 				"south": {
 					"uv": [30, 35, 40, 37],
+					"cullface": "south",
 					"texture": 0
 				},
 				"west": {
@@ -1228,6 +1248,7 @@
 				},
 				"up": {
 					"uv": [10, 38, 0, 36],
+					"cullface": "up",
 					"texture": 0
 				},
 				"down": {
@@ -1380,10 +1401,12 @@
 			"faces": {
 				"north": {
 					"uv": [29, 37, 31, 45],
+					"cullface": "north",
 					"texture": 0
 				},
 				"east": {
 					"uv": [31, 37, 33, 45],
+					"cullface": "east",
 					"texture": 0
 				},
 				"south": {
@@ -1400,6 +1423,7 @@
 				},
 				"down": {
 					"uv": [6, 42, 8, 40],
+					"cullface": "down",
 					"texture": 0
 				}
 			},
@@ -1422,6 +1446,7 @@
 			"faces": {
 				"north": {
 					"uv": [2, 40, 4, 44],
+					"cullface": "north",
 					"texture": 0
 				},
 				"east": {
@@ -1464,10 +1489,12 @@
 			"faces": {
 				"north": {
 					"uv": [0, 38, 8, 40],
+					"cullface": "north",
 					"texture": 0
 				},
 				"east": {
 					"uv": [40, 35, 42, 37],
+					"cullface": "east",
 					"texture": 0
 				},
 				"south": {
@@ -1506,6 +1533,7 @@
 			"faces": {
 				"north": {
 					"uv": [30, 25, 44, 27],
+					"cullface": "north",
 					"texture": 0
 				},
 				"east": {
@@ -1552,6 +1580,7 @@
 				},
 				"east": {
 					"uv": [30, 31, 44, 33],
+					"cullface": "east",
 					"texture": 0
 				},
 				"south": {
@@ -1590,6 +1619,7 @@
 			"faces": {
 				"north": {
 					"uv": [30, 35, 40, 37],
+					"cullface": "north",
 					"texture": 0
 				},
 				"east": {
@@ -1602,10 +1632,12 @@
 				},
 				"west": {
 					"uv": [41, 6, 43, 8],
+					"cullface": "west",
 					"texture": 0
 				},
 				"up": {
 					"uv": [0, 36, 10, 38],
+					"cullface": "up",
 					"texture": 0
 				},
 				"down": {
@@ -1884,6 +1916,7 @@
 			"faces": {
 				"north": {
 					"uv": [31, 37, 29, 45],
+					"cullface": "north",
 					"texture": 0
 				},
 				"east": {
@@ -1896,6 +1929,7 @@
 				},
 				"west": {
 					"uv": [33, 37, 31, 45],
+					"cullface": "west",
 					"texture": 0
 				},
 				"up": {
@@ -1904,6 +1938,7 @@
 				},
 				"down": {
 					"uv": [8, 42, 6, 40],
+					"cullface": "down",
 					"texture": 0
 				}
 			},
@@ -1926,6 +1961,7 @@
 			"faces": {
 				"north": {
 					"uv": [4, 40, 2, 44],
+					"cullface": "north",
 					"texture": 0
 				},
 				"east": {
@@ -1968,6 +2004,7 @@
 			"faces": {
 				"north": {
 					"uv": [8, 38, 0, 40],
+					"cullface": "north",
 					"texture": 0
 				},
 				"east": {
@@ -1980,6 +2017,7 @@
 				},
 				"west": {
 					"uv": [42, 35, 40, 37],
+					"cullface": "west",
 					"texture": 0
 				},
 				"up": {
@@ -2010,6 +2048,7 @@
 			"faces": {
 				"north": {
 					"uv": [44, 25, 30, 27],
+					"cullface": "north",
 					"texture": 0
 				},
 				"east": {
@@ -2064,6 +2103,7 @@
 				},
 				"west": {
 					"uv": [44, 31, 30, 33],
+					"cullface": "west",
 					"texture": 0
 				},
 				"up": {
@@ -2094,10 +2134,12 @@
 			"faces": {
 				"north": {
 					"uv": [40, 35, 30, 37],
+					"cullface": "north",
 					"texture": 0
 				},
 				"east": {
 					"uv": [43, 6, 41, 8],
+					"cullface": "east",
 					"texture": 0
 				},
 				"south": {
@@ -2110,6 +2152,7 @@
 				},
 				"up": {
 					"uv": [10, 36, 0, 38],
+					"cullface": "up",
 					"texture": 0
 				},
 				"down": {
@@ -2375,265 +2418,265 @@
 	],
 	"outliner": [
 		{
-			"name": "group",
+			"name": "top_left",
 			"origin": [8, 8, 8],
 			"color": 0,
-			"uuid": "92c61607-a6b2-9a1b-c5b3-8c4b5bae09e4",
+			"uuid": "3da9a757-f546-0ca2-5de7-8c7e2daf9a39",
 			"export": true,
 			"mirror_uv": false,
-			"isOpen": true,
+			"isOpen": false,
 			"locked": false,
 			"visibility": true,
 			"autouv": 0,
+			"selected": false,
 			"children": [
 				{
-					"name": "top_left",
+					"name": "frame",
 					"origin": [8, 8, 8],
 					"color": 0,
-					"uuid": "3da9a757-f546-0ca2-5de7-8c7e2daf9a39",
+					"uuid": "fa84e0c9-216c-45f8-cc85-94cd8cc9853c",
+					"export": true,
+					"mirror_uv": false,
+					"isOpen": false,
+					"locked": false,
+					"visibility": true,
+					"autouv": 0,
+					"selected": false,
+					"children": ["69cfecc2-ae7b-e80d-ec90-8242f04e9c28"]
+				},
+				"b965b450-e9b5-d126-2b0d-8cac253af5a2",
+				{
+					"name": "bedding",
+					"origin": [8, 8, 8],
+					"color": 0,
+					"uuid": "501a9657-ceb7-8abc-6a2a-09d50a93d0fc",
 					"export": true,
 					"mirror_uv": false,
 					"isOpen": true,
 					"locked": false,
 					"visibility": true,
 					"autouv": 0,
+					"selected": false,
 					"children": [
-						{
-							"name": "frame",
-							"origin": [8, 8, 8],
-							"color": 0,
-							"uuid": "fa84e0c9-216c-45f8-cc85-94cd8cc9853c",
-							"export": true,
-							"mirror_uv": false,
-							"isOpen": false,
-							"locked": false,
-							"visibility": true,
-							"autouv": 0,
-							"children": ["69cfecc2-ae7b-e80d-ec90-8242f04e9c28"]
-						},
-						"b965b450-e9b5-d126-2b0d-8cac253af5a2",
-						{
-							"name": "bedding",
-							"origin": [8, 8, 8],
-							"color": 0,
-							"uuid": "501a9657-ceb7-8abc-6a2a-09d50a93d0fc",
-							"export": true,
-							"mirror_uv": false,
-							"isOpen": true,
-							"locked": false,
-							"visibility": true,
-							"autouv": 0,
-							"children": [
-								"1cd12b4b-d5be-20f6-1722-968126f37da8",
-								"0924b745-6035-fb13-5fb1-70351c708507",
-								"cdf7be8f-84d2-b985-f72d-2844f4c9e264",
-								"dbbb9313-18d6-5b47-79ed-66a304c0ac18",
-								"b45c48c1-dd32-1997-f43d-e585876b5db1",
-								"d6d7f1a4-57fc-7904-fbcf-d9ffc655e1e6"
-							]
-						},
-						{
-							"name": "group",
-							"origin": [0, 0, 32],
-							"color": 0,
-							"uuid": "f208abdb-5efc-5cd5-cbe1-876ff28319cd",
-							"export": true,
-							"mirror_uv": false,
-							"isOpen": false,
-							"locked": false,
-							"visibility": true,
-							"autouv": 0,
-							"children": [
-								"dc14a4dd-b6b7-9eb7-dc70-bab223a65622",
-								"c8c77486-fd1c-1f7e-922d-d63cfd6a0988",
-								"be2dea09-a403-1679-1022-283b908c3326",
-								"48ae8da4-1498-1a75-2f69-ffee5d977409",
-								"c849f12b-7f03-1926-c506-7461a3b19ce0",
-								"9e2790a5-d9ff-dab9-8906-1c2c0fb01909",
-								"486d1dad-70b1-9467-7971-4e4c6e102f45",
-								"a6071f44-63a7-7edb-60eb-31913f2b58c7"
-							]
-						}
+						"1cd12b4b-d5be-20f6-1722-968126f37da8",
+						"0924b745-6035-fb13-5fb1-70351c708507",
+						"cdf7be8f-84d2-b985-f72d-2844f4c9e264",
+						"dbbb9313-18d6-5b47-79ed-66a304c0ac18",
+						"b45c48c1-dd32-1997-f43d-e585876b5db1",
+						"d6d7f1a4-57fc-7904-fbcf-d9ffc655e1e6"
 					]
 				},
 				{
-					"name": "top_right",
-					"origin": [8, 8, 8],
+					"name": "group",
+					"origin": [0, 0, 32],
 					"color": 0,
-					"uuid": "a9f43868-1a40-141c-62d5-175de3f7b5f2",
+					"uuid": "f208abdb-5efc-5cd5-cbe1-876ff28319cd",
 					"export": true,
 					"mirror_uv": false,
 					"isOpen": false,
 					"locked": false,
 					"visibility": true,
 					"autouv": 0,
+					"selected": false,
 					"children": [
-						{
-							"name": "frame",
-							"origin": [8, 8, 8],
-							"color": 0,
-							"uuid": "2897ed02-53a6-14da-fa6b-e226be0f9302",
-							"export": true,
-							"mirror_uv": false,
-							"isOpen": false,
-							"locked": false,
-							"visibility": true,
-							"autouv": 0,
-							"children": ["1eff63f4-e8bc-7712-6165-5d47d44be79b"]
-						},
-						"d05508e1-75db-e096-b7a3-e66619e381f9",
-						{
-							"name": "bedding",
-							"origin": [8, 8, 8],
-							"color": 0,
-							"uuid": "4afe3b94-fbe0-3468-98fc-0fe25fe7ca32",
-							"export": true,
-							"mirror_uv": false,
-							"isOpen": false,
-							"locked": false,
-							"visibility": true,
-							"autouv": 0,
-							"children": [
-								"56906ae7-78a1-d432-3101-838559f2277a",
-								"1bdffeb5-7ad3-c362-bef5-1725c1555b24",
-								"686efdd8-c1ad-e067-ed1c-2b286d8edafd",
-								"b23700bb-86d3-a607-29d6-0f4b3f98dd74",
-								"4f9b2288-16d3-2561-34d7-8eae68ffd60c",
-								"30cfc37b-7431-af22-9eed-d6ea4f97c04f"
-							]
-						},
-						{
-							"name": "group",
-							"origin": [0, 0, 32],
-							"color": 0,
-							"uuid": "d82abd6e-c83b-8abc-eb24-9d2b613a801f",
-							"export": true,
-							"mirror_uv": false,
-							"isOpen": false,
-							"locked": false,
-							"visibility": true,
-							"autouv": 0,
-							"children": [
-								"5b16d7b7-cff5-03b0-532a-2139de25275e",
-								"e6413b37-40f9-2ec0-c8b4-512aacd1e883",
-								"2eed9cbf-10df-a782-e7c4-f678d1bb61d0",
-								"734cc34f-5ce0-d802-22e5-11ca6d4fc0c7",
-								"76d6d0f8-72fc-4315-63b4-6158ceb1c954",
-								"14fa3359-9556-d1dd-2778-da0a7e0a864b",
-								"8e09fbdf-fdef-60d8-6905-b17092c8c97c",
-								"879ba55d-1337-61e9-41d3-a3179c7c9540"
-							]
-						}
-					]
-				},
-				{
-					"name": "bottom_left",
-					"origin": [8, 8, 8],
-					"color": 0,
-					"uuid": "0dbfca33-0283-0c85-c2bb-cdf2960f1439",
-					"export": true,
-					"mirror_uv": false,
-					"isOpen": false,
-					"locked": false,
-					"visibility": true,
-					"autouv": 0,
-					"children": [
-						{
-							"name": "frame",
-							"origin": [8, 8, 8],
-							"color": 0,
-							"uuid": "11d3165a-7bce-f6c8-a267-fcddc85e757c",
-							"export": true,
-							"mirror_uv": false,
-							"isOpen": false,
-							"locked": false,
-							"visibility": true,
-							"autouv": 0,
-							"children": [
-								"11288e8a-f183-95ab-b149-adea96daeef0",
-								"76e7df62-650b-31ca-754d-78645ce0f9cf",
-								"c93be6c9-9325-750a-f43d-2647a7856c00",
-								"dcde114b-bb1a-0f7a-7834-23e0d34d8965",
-								"59371ea5-c7e0-9996-9b47-46efabd6e056",
-								"b4f7b667-bda6-6ff8-5f5b-4b8956b00f60"
-							]
-						},
-						"da2b4d43-01bf-a842-0754-905864eff998",
-						{
-							"name": "bedding",
-							"origin": [8, 8, 8],
-							"color": 0,
-							"uuid": "a98b9003-5c96-801e-fa94-8b09b44e9706",
-							"export": true,
-							"mirror_uv": false,
-							"isOpen": false,
-							"locked": false,
-							"visibility": true,
-							"autouv": 0,
-							"children": ["5adf38f4-a279-084c-7ccf-dfb7078d10f2", "28fc1092-c102-b5dc-81df-a308c9c2704c"]
-						},
-						"bc431f38-f8fb-a158-e30b-d49c04e00b43",
-						"b451c0b9-4cf5-38ed-4d05-688a5a3284f2",
-						"e8184271-982a-45ad-f08c-ef1f40f70310"
-					]
-				},
-				{
-					"name": "bottom_right",
-					"origin": [8, 8, 8],
-					"color": 0,
-					"uuid": "98adc2ec-d8cb-324e-1fd5-695c38b8b6ee",
-					"export": true,
-					"mirror_uv": false,
-					"isOpen": false,
-					"locked": false,
-					"visibility": true,
-					"autouv": 0,
-					"children": [
-						{
-							"name": "frame",
-							"origin": [8, 8, 8],
-							"color": 0,
-							"uuid": "a03ef47a-8e42-0068-138f-970b93496d01",
-							"export": true,
-							"mirror_uv": false,
-							"isOpen": false,
-							"locked": false,
-							"visibility": true,
-							"autouv": 0,
-							"children": [
-								"91cb6818-d41a-3b5b-9d1d-f50a4cbaa2a5",
-								"5f372afa-d3b5-78b9-bee4-fd747851a72e",
-								"2a7dfc34-ba57-7ea0-760d-54d24802d69e",
-								"8e908a2f-f639-dcff-242d-f7e0eb81bfb1",
-								"8dfa29ef-a06b-1ada-62a9-f3375196ade4",
-								"91532954-9177-9bf4-0247-d12acb46612b"
-							]
-						},
-						"cbdf8315-962e-dcb9-4ced-1e9dfd2b6461",
-						{
-							"name": "bedding",
-							"origin": [8, 8, 8],
-							"color": 0,
-							"uuid": "facbf1f7-0063-002b-a0d7-4ea74628a359",
-							"export": true,
-							"mirror_uv": false,
-							"isOpen": false,
-							"locked": false,
-							"visibility": true,
-							"autouv": 0,
-							"children": ["7b861143-42e3-575c-e54a-07d9d3ecae2b", "4821b61f-50a2-fb60-27e1-7c83cdf33363"]
-						},
-						"21faee69-d70b-90a5-f923-e04d977fef92",
-						"846bbd42-6291-df53-5884-2f9948f45806",
-						"5ca7fd71-c01d-e2c2-f3bb-ca4138f77b6e"
+						"dc14a4dd-b6b7-9eb7-dc70-bab223a65622",
+						"c8c77486-fd1c-1f7e-922d-d63cfd6a0988",
+						"be2dea09-a403-1679-1022-283b908c3326",
+						"48ae8da4-1498-1a75-2f69-ffee5d977409",
+						"c849f12b-7f03-1926-c506-7461a3b19ce0",
+						"9e2790a5-d9ff-dab9-8906-1c2c0fb01909",
+						"486d1dad-70b1-9467-7971-4e4c6e102f45",
+						"a6071f44-63a7-7edb-60eb-31913f2b58c7"
 					]
 				}
+			]
+		},
+		{
+			"name": "top_right",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"uuid": "a9f43868-1a40-141c-62d5-175de3f7b5f2",
+			"export": true,
+			"mirror_uv": false,
+			"isOpen": false,
+			"locked": false,
+			"visibility": true,
+			"autouv": 0,
+			"selected": false,
+			"children": [
+				{
+					"name": "frame",
+					"origin": [8, 8, 8],
+					"color": 0,
+					"uuid": "2897ed02-53a6-14da-fa6b-e226be0f9302",
+					"export": true,
+					"mirror_uv": false,
+					"isOpen": false,
+					"locked": false,
+					"visibility": true,
+					"autouv": 0,
+					"selected": false,
+					"children": ["1eff63f4-e8bc-7712-6165-5d47d44be79b"]
+				},
+				"d05508e1-75db-e096-b7a3-e66619e381f9",
+				{
+					"name": "bedding",
+					"origin": [8, 8, 8],
+					"color": 0,
+					"uuid": "4afe3b94-fbe0-3468-98fc-0fe25fe7ca32",
+					"export": true,
+					"mirror_uv": false,
+					"isOpen": false,
+					"locked": false,
+					"visibility": true,
+					"autouv": 0,
+					"selected": false,
+					"children": [
+						"56906ae7-78a1-d432-3101-838559f2277a",
+						"1bdffeb5-7ad3-c362-bef5-1725c1555b24",
+						"686efdd8-c1ad-e067-ed1c-2b286d8edafd",
+						"b23700bb-86d3-a607-29d6-0f4b3f98dd74",
+						"4f9b2288-16d3-2561-34d7-8eae68ffd60c",
+						"30cfc37b-7431-af22-9eed-d6ea4f97c04f"
+					]
+				},
+				{
+					"name": "group",
+					"origin": [0, 0, 32],
+					"color": 0,
+					"uuid": "d82abd6e-c83b-8abc-eb24-9d2b613a801f",
+					"export": true,
+					"mirror_uv": false,
+					"isOpen": false,
+					"locked": false,
+					"visibility": true,
+					"autouv": 0,
+					"selected": false,
+					"children": [
+						"5b16d7b7-cff5-03b0-532a-2139de25275e",
+						"e6413b37-40f9-2ec0-c8b4-512aacd1e883",
+						"2eed9cbf-10df-a782-e7c4-f678d1bb61d0",
+						"734cc34f-5ce0-d802-22e5-11ca6d4fc0c7",
+						"76d6d0f8-72fc-4315-63b4-6158ceb1c954",
+						"14fa3359-9556-d1dd-2778-da0a7e0a864b",
+						"8e09fbdf-fdef-60d8-6905-b17092c8c97c",
+						"879ba55d-1337-61e9-41d3-a3179c7c9540"
+					]
+				}
+			]
+		},
+		{
+			"name": "bottom_left",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"uuid": "0dbfca33-0283-0c85-c2bb-cdf2960f1439",
+			"export": true,
+			"mirror_uv": false,
+			"isOpen": false,
+			"locked": false,
+			"visibility": true,
+			"autouv": 0,
+			"selected": false,
+			"children": [
+				{
+					"name": "frame",
+					"origin": [8, 8, 8],
+					"color": 0,
+					"uuid": "11d3165a-7bce-f6c8-a267-fcddc85e757c",
+					"export": true,
+					"mirror_uv": false,
+					"isOpen": false,
+					"locked": false,
+					"visibility": true,
+					"autouv": 0,
+					"selected": false,
+					"children": [
+						"11288e8a-f183-95ab-b149-adea96daeef0",
+						"76e7df62-650b-31ca-754d-78645ce0f9cf",
+						"c93be6c9-9325-750a-f43d-2647a7856c00",
+						"dcde114b-bb1a-0f7a-7834-23e0d34d8965",
+						"59371ea5-c7e0-9996-9b47-46efabd6e056",
+						"b4f7b667-bda6-6ff8-5f5b-4b8956b00f60"
+					]
+				},
+				"da2b4d43-01bf-a842-0754-905864eff998",
+				{
+					"name": "bedding",
+					"origin": [8, 8, 8],
+					"color": 0,
+					"uuid": "a98b9003-5c96-801e-fa94-8b09b44e9706",
+					"export": true,
+					"mirror_uv": false,
+					"isOpen": false,
+					"locked": false,
+					"visibility": true,
+					"autouv": 0,
+					"selected": false,
+					"children": ["5adf38f4-a279-084c-7ccf-dfb7078d10f2", "28fc1092-c102-b5dc-81df-a308c9c2704c"]
+				},
+				"bc431f38-f8fb-a158-e30b-d49c04e00b43",
+				"b451c0b9-4cf5-38ed-4d05-688a5a3284f2",
+				"e8184271-982a-45ad-f08c-ef1f40f70310"
+			]
+		},
+		{
+			"name": "bottom_right",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"uuid": "98adc2ec-d8cb-324e-1fd5-695c38b8b6ee",
+			"export": true,
+			"mirror_uv": false,
+			"isOpen": false,
+			"locked": false,
+			"visibility": true,
+			"autouv": 0,
+			"selected": false,
+			"children": [
+				{
+					"name": "frame",
+					"origin": [8, 8, 8],
+					"color": 0,
+					"uuid": "a03ef47a-8e42-0068-138f-970b93496d01",
+					"export": true,
+					"mirror_uv": false,
+					"isOpen": false,
+					"locked": false,
+					"visibility": true,
+					"autouv": 0,
+					"selected": false,
+					"children": [
+						"91cb6818-d41a-3b5b-9d1d-f50a4cbaa2a5",
+						"5f372afa-d3b5-78b9-bee4-fd747851a72e",
+						"2a7dfc34-ba57-7ea0-760d-54d24802d69e",
+						"8e908a2f-f639-dcff-242d-f7e0eb81bfb1",
+						"8dfa29ef-a06b-1ada-62a9-f3375196ade4",
+						"91532954-9177-9bf4-0247-d12acb46612b"
+					]
+				},
+				"cbdf8315-962e-dcb9-4ced-1e9dfd2b6461",
+				{
+					"name": "bedding",
+					"origin": [8, 8, 8],
+					"color": 0,
+					"uuid": "facbf1f7-0063-002b-a0d7-4ea74628a359",
+					"export": true,
+					"mirror_uv": false,
+					"isOpen": false,
+					"locked": false,
+					"visibility": true,
+					"autouv": 0,
+					"selected": false,
+					"children": ["7b861143-42e3-575c-e54a-07d9d3ecae2b", "4821b61f-50a2-fb60-27e1-7c83cdf33363"]
+				},
+				"21faee69-d70b-90a5-f923-e04d977fef92",
+				"846bbd42-6291-df53-5884-2f9948f45806",
+				"5ca7fd71-c01d-e2c2-f3bb-ca4138f77b6e"
 			]
 		}
 	],
 	"textures": [
 		{
-			"path": "C:\\Users\\fanta\\OneDrive\\Documents\\GitHub\\FantasyFurniture-Private\\nordic\\src\\main\\resources\\assets\\fantasyfurniture_nordic\\textures\\block\\bed_double.png",
+			"path": "/mnt/development/Modding/ApexStudios/FantasyFurniture/nordic/src/main/resources/assets/fantasyfurniture_nordic/textures/block/bed_double.png",
 			"name": "bed_double.png",
 			"folder": "block",
 			"namespace": "fantasyfurniture_nordic",
@@ -2659,10 +2702,10 @@
 			"saved": true,
 			"uuid": "89a31a4f-6396-b2a8-6d1c-91f3c2eef522",
 			"relative_path": "../../textures/block/bed_double.png",
-			"source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAABSRJREFUeF7tWkloFEEUrUHw4OiQxEhiFJe44g6KEvGoeBQX8KIHFXGXqETEJWoUCQRX3FBEXBAUFxQ8CEEvohhco7jEMS64TDDGMDoXPUR+jX+s7qmeqf5dnS6h6zRdU13169X77/+q6siT+1c6GKE82FNDeIux8WurWWEsPWRRr1JLH21fE/z5ezLCli6oZLHuPVg0GuV1qVTK8vvG3WcRkgG2lyIfmi67BgAMLHt+x9X4r+Nx3r7vvPmZiUcLyi19pNqb+TMAMXf2ms4BgMqA1LXTrgDAxgiAffL4P4CAAEAdsABK8ucPy3h3n77Xw4CK0f1dMwAsWTy6SAmAV4mkpd2Ko3WcAaoAOA2iDYDpFaNIAOxcu4jb1pr4zIpLy7LslNVD3cjpFUousGbJJlYQi7L2ZIr3Lf6G50u3XuhhANUFCn+lcWv59J6V9OmfBYCsHuq6DhygJIJn9x9ixcU9WWvrN963+Lst2c5OXL2vBwCqCA4qLGFtLYkMAEUl/xRdVo91F65dd5wYTLLhcWPWind0ifG6y/X3tExaXK1IZzMgHwD2FW/++In5CgBVBA9UV5I04GbDo5wMsAOgk+4yQY1QRfD47nQi5FYD3DLAdwCoLkDVAKfoYI8kF48cZDOmjOEgv4y/YwvPPdLu/9A3OROkAgCD2qOGjEWHNld1DgBUBlDDoBsAhpWm1R+KbwwwXQQxNOpKfOxCaLwIAgBNzW+0JT5ZAFBdgKoBtYePOaa4stQX63xjADUTpGoAAFDet09WeuuU9mJ93Zl6f6IAlQG/3r4jJUIX62+xoliBOQBQRZC6HY53dM24odNuT1bvmwtQM8Gt04bIMsu8deuuPMzbRtZA1/5fmwhSj8SMA4AqgtRD0fNvf/NFwMNOVTr4sRXmqTBVBFUNt7eD014oeNan2o+uU+AsF6CK4PlLe1Vtt7SD014vRbcW0DPBU7R7AeMAoLoAXm64XU0EAF0gaC0gb4e9AoDABa0FgYlgb+EQVYVFcDUGRbcYcgBU7upqqjZyA8QsbeK4MdJja8zfG+MJHu6+tCS46oPxVNFFkLSLIOQBeEmZ664OLipgE5Nv0wKG/pcA5Luq8gIA3uxCMmMsA/IBsL1qF9/FURggA8AYDVB1gfptO9jwwQO4K1693cjmLFtp0a7VNfu4n8MtLvo7bLRAA2QAuFV/vB3WrgGqIgi5vwjAip111gxvSfo+XxWAoyf3Kd0RYuqse+JovHIUEDc/cOVtB6Df5Fn8xAZ8XIUB/x0A2zfUOoZr8fMVMeTlcgHUAPFd2QB+xf8MA2ZNneT4fYD9uxwnBJD2GPOhHVA2HwDQP76bq2/sTyVhctsmogsA+8AyAIAdUEStgGcRQHj264MoGTiZVZINDIah+LiN3zIAcMWB/khtkTXi90Dib78EEObMExOngaFBWXG3DHCyw8rqul0WYEXVtruAEwBbazdkIgJ2Jn4qpzv/Fw3OZGYyWkLDEeW9ch5jr9qy3BoO/x54wKqJ4IorbWcAACAr61dt4XsJv47DOANglYDqaBTuz9FfUa2djLCfKeJ+PxcACDbqgdMKI4MCAQAHRZFUBaDf0HQ+ICuoI6oAiDmFW3VXbe/oAqp+Z2eATgBUJ+Glnef7NvuR2tgJM/MyQBYyvUzCy7ueAfAyuAnvhgCYsApB2hAyIEj0TRg7ZIAJqxCkDSEDgkTfhLFDBpiwCkHaEDIgSPRNGDtkgAmrEKQNIQOCRN+EsUMGmLAKQdrwBwjytn19CXp6AAAAAElFTkSuQmCC"
+			"source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAABS9JREFUeF7tWkloFEEUrUHIwdEhiZHEKC5xxR0UJeJR8Sgu4EUPKuIuRomIS9QoEgzuK4oHFwTFBQUPQtCLKIprFJc4xkSMTjDGMDoXPUR+jX+srqmeqf5TnW6k69RTU13169X7r3796tDzR9c6GaE83ldNeIuxCeuqWEEkOWRh7xJLH+1fY/z393iILVu4lkV69GThcJjXJRIJy/Ot+y9DJAOkl0IfG646BgAMLH11z9H476JR3r7f/AWpiYfzyyx9JDoa+W8AYt6ciq4BgMqAxI2zjgDAxgiAPHn8H0BAAKAOWAAl/vOHZbz7L5rNMKB8zADHDABLlowp1ALgbSxuabfyRC1ngC4AdoMYA2BG+WgSALvWLea2tcU+s6KS0jQ7VfVQN2pGuZYLVCzdzPIjYdYRT/C+xWf4feXOazMMoLpAwa8kbq0tzay474A0AFT1UJc3aKCWCJ4/eJQVFfVibW3feN/ic3u8g52+/sgMAFQRHFxQzNpbYykACov/KbqqHusu3bhpOzGY5MNn9Wkr3tktwuuu1j0wMmlxtUJdzYBsAMgr3viphbkKAFUED1WtJWnA7YdPMzJABsAk3VWCGqKK4Km9yUDIqQY4ZYDrAFBdgKoBdruDvJNcPn6EzZw6loP8JtrEFl14atz/oW9yJEgFAAaVdw0Vi45uqewaAKgMoG6DTgAYXpJUfyiuMcDvIohbo6nARxZC34sgANDQ+N5Y4JMGANUFqBpQc+ykbYirCn2xzjUGUCNBqgYAAGX9+qaFt3ZhL9bXnqtzZxegMuDXhyZSIHS57g4rjOT7BwCqCFKPw9HOvJQb2p32VPWuuQA1Etw2fagqssxat/7ak6xtVA1Mnf+NiSA1JeY7AKgiSE2KXvzwmy8CJjt16eDGUZiHwlQR1DVcbgfZXiiY69Ptx1QWOM0FqCJ48cp+Xdst7SDbm0sxrQX0SPAM7V7AdwBQXQAvN5yuJub78T2vtYB8HM4VAMzze60FnoigeOWlyyC4GoNiWgw5ADp3ddWVm7gBYpQ2afxYZdoa4/f6aIxvd19aY1z1wXgQXXiWb3p0gTAughAH4CVlprs6uKiAQ0y2QwtMRAcA3QljOwTMNQCyXVXlAgDe7EIw41sGZANgR+VufoqjMEAFgFP1d00DdF2gbvtONmLIQM7I63fr2dzlqywsXlN9gPu5SFU4aMFEVQD4xgV0RRBifxGAlbtqrRHe0n8RHgpeJgD2HN6pdUeIobNp30fjtXcB8fADV94yAP2nzOYZG/RxUPz/CoAdG2tsWSt+viJueZkAUH36ohrALd9PMWD2tMm23wfI3+XYIQB+j8ENAAAFKJsNAOgf383UN/bnVDd02odMASAPpgIAwRHFEp+74oMoFSCpVYI/5RWH1UHxcXpsVgGAK96nuISPBQUjRXgWvwcSn90SQBgzFZjAD5GOuJ2VFnVPAadKVlbV7rYAK6q27AJ2AGyr2ZjaEbAz8VM50/G/aDAHANFXATCyrHfGNPbqrSus2+HfhAesGu4I8krLDAAAVGXD6q2cIW6lwzgDYJVg4mgUqjP6K9RDsTNCziliwiMTALIG2K0wMsgTAHBQFEldAPoPS8YDqiKzDZlnB4AYU+goOqWNrQvo+p3MAJMAUCbk9J2c79vklNq4ibOyMkC1ZTo13FT7nAEwZYhX/QQAeIW8X8YNGOCXlfDKjoABXiHvl3EDBvhlJbyyI2CAV8j7ZdyAAX5ZCa/sCBjgFfJ+GTdggF9Wwis7AgZ4hbxfxv0DJzK/fdRsrxcAAAAASUVORK5CYII="
 		},
 		{
-			"path": "C:\\Users\\fanta\\OneDrive\\Documents\\GitHub\\FantasyFurniture-Private\\nordic\\src\\main\\resources\\assets\\fantasyfurniture_nordic\\textures\\block\\particle.png",
+			"path": "/mnt/development/Modding/ApexStudios/FantasyFurniture/nordic/src/main/resources/assets/fantasyfurniture_nordic/textures/block/particle.png",
 			"name": "particle.png",
 			"folder": "block",
 			"namespace": "fantasyfurniture_nordic",

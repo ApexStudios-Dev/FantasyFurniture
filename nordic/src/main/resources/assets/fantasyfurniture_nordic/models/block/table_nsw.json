@@ -10,8 +10,8 @@
 			"from": [0, 13, 0],
 			"to": [16, 16, 16],
 			"faces": {
-				"east": {"uv": [4, 1.5, 8, 2.25], "texture": "#table"},
-				"up": {"uv": [16, 12, 12, 8], "texture": "#table"},
+				"east": {"uv": [4, 1.5, 8, 2.25], "texture": "#table", "cullface": "east"},
+				"up": {"uv": [16, 12, 12, 8], "texture": "#table", "cullface": "up"},
 				"down": {"uv": [16, 12, 12, 16], "texture": "#table"}
 			}
 		}

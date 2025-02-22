@@ -1,3 +1,6 @@
 {
-  "block.fantasyfurniture.furniture_station": "Furniture Station"
+  "block.fantasyfurniture.furniture_station": "Furniture Station",
+  "tag.item.fantasyfurniture.binding_agent": "Furniture Binding Agents",
+  "tag.item.fantasyfurniture.furniture_planks": "Planks (Furniture Input)",
+  "tag.item.fantasyfurniture.furniture_wool": "Wools (Furniture Input)"
 }

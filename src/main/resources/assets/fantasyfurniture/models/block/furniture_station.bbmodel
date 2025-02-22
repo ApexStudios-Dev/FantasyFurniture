@@ -6,7 +6,6 @@
 	},
 	"name": "furniture_station",
 	"parent": "",
-	"credit": "Made with Blockbench",
 	"ambientocclusion": true,
 	"front_gui_light": false,
 	"visible_box": [1, 1, 0],
@@ -54,6 +53,7 @@
 				},
 				"down": {
 					"uv": [42, 30, 40, 32],
+					"cullface": "down",
 					"texture": 0
 				}
 			},
@@ -96,6 +96,7 @@
 				},
 				"down": {
 					"uv": [41, 40, 39, 42],
+					"cullface": "down",
 					"texture": 0
 				}
 			},
@@ -138,6 +139,7 @@
 				},
 				"down": {
 					"uv": [44, 4, 42, 6],
+					"cullface": "down",
 					"texture": 0
 				}
 			},
@@ -180,6 +182,7 @@
 				},
 				"down": {
 					"uv": [44, 28, 42, 30],
+					"cullface": "down",
 					"texture": 0
 				}
 			},
@@ -286,22 +289,27 @@
 			"faces": {
 				"north": {
 					"uv": [28, 12, 44, 14],
+					"cullface": "north",
 					"texture": 0
 				},
 				"east": {
 					"uv": [28, 14, 44, 16],
+					"cullface": "east",
 					"texture": 0
 				},
 				"south": {
 					"uv": [28, 16, 44, 18],
+					"cullface": "south",
 					"texture": 0
 				},
 				"west": {
 					"uv": [28, 18, 44, 20],
+					"cullface": "west",
 					"texture": 0
 				},
 				"up": {
 					"uv": [16, 16, 0, 0],
+					"cullface": "up",
 					"texture": 0
 				},
 				"down": {

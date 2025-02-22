@@ -1,5 +1,4 @@
 {
-	"credit": "Made by Fantasy",
 	"texture_size": [128, 128],
 	"textures": {
 		"3": "fantasyfurniture_nordic:block/bookshelf",
@@ -67,11 +66,10 @@
 			"to": [16, 16, 16],
 			"rotation": {"angle": 0, "axis": "y", "origin": [16, -16, 0]},
 			"faces": {
-				"north": {"uv": [6.625, 0.875, 4.625, 1.125], "texture": "#3"},
-				"east": {"uv": [11.75, 2.5, 9.75, 2.75], "texture": "#3"},
-				"south": {"uv": [7.625, 0, 5.625, 0.25], "texture": "#3"},
-				"west": {"uv": [2, 5.625, 0, 5.875], "texture": "#3"},
-				"up": {"uv": [0, 2, 2, 0], "texture": "#3"},
+				"north": {"uv": [6.625, 0.875, 4.625, 1.125], "texture": "#3", "cullface": "north"},
+				"south": {"uv": [7.625, 0, 5.625, 0.25], "texture": "#3", "cullface": "south"},
+				"west": {"uv": [2, 5.625, 0, 5.875], "texture": "#3", "cullface": "west"},
+				"up": {"uv": [0, 2, 2, 0], "texture": "#3", "cullface": "up"},
 				"down": {"uv": [0, 0, 2, 2], "texture": "#3"}
 			}
 		},
@@ -82,8 +80,7 @@
 			"rotation": {"angle": 0, "axis": "y", "origin": [16, -2, 0]},
 			"faces": {
 				"north": {"uv": [1.625, 4, 0, 2.25], "texture": "#3"},
-				"south": {"uv": [3.625, 2, 2, 0.25], "texture": "#3"},
-				"down": {"uv": [6.5, 3, 8.125, 3.125], "texture": "#3"}
+				"south": {"uv": [3.625, 2, 2, 0.25], "texture": "#3"}
 			}
 		},
 		{
@@ -105,8 +102,7 @@
 			"rotation": {"angle": 0, "axis": "y", "origin": [16, 14, 0]},
 			"faces": {
 				"east": {"uv": [2.875, 4, 1.625, 2.25], "texture": "#3"},
-				"west": {"uv": [2.875, 4, 1.625, 2.25], "texture": "#3"},
-				"up": {"uv": [1.75, 7.125, 1.875, 5.875], "texture": "#3"}
+				"west": {"uv": [2.875, 4, 1.625, 2.25], "texture": "#3"}
 			}
 		},
 		{

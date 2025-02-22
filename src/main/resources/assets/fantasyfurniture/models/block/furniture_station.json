@@ -1,5 +1,4 @@
 {
-	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
 		"furniture_station": "fantasyfurniture:block/furniture_station",
@@ -15,7 +14,7 @@
 				"east": {"uv": [7.5, 5, 8, 8.5], "texture": "#furniture_station"},
 				"south": {"uv": [0, 8, 0.5, 11.5], "texture": "#furniture_station"},
 				"west": {"uv": [0.5, 8, 1, 11.5], "texture": "#furniture_station"},
-				"down": {"uv": [10.5, 7.5, 10, 8], "texture": "#furniture_station"}
+				"down": {"uv": [10.5, 7.5, 10, 8], "texture": "#furniture_station", "cullface": "down"}
 			}
 		},
 		{
@@ -27,7 +26,7 @@
 				"east": {"uv": [1.5, 8, 2, 11.5], "texture": "#furniture_station"},
 				"south": {"uv": [2, 8, 2.5, 11.5], "texture": "#furniture_station"},
 				"west": {"uv": [2.5, 8, 3, 11.5], "texture": "#furniture_station"},
-				"down": {"uv": [10.25, 10, 9.75, 10.5], "texture": "#furniture_station"}
+				"down": {"uv": [10.25, 10, 9.75, 10.5], "texture": "#furniture_station", "cullface": "down"}
 			}
 		},
 		{
@@ -39,7 +38,7 @@
 				"east": {"uv": [3.5, 8, 4, 11.5], "texture": "#furniture_station"},
 				"south": {"uv": [8, 5, 8.5, 8.5], "texture": "#furniture_station"},
 				"west": {"uv": [8.5, 5, 9, 8.5], "texture": "#furniture_station"},
-				"down": {"uv": [11, 1, 10.5, 1.5], "texture": "#furniture_station"}
+				"down": {"uv": [11, 1, 10.5, 1.5], "texture": "#furniture_station", "cullface": "down"}
 			}
 		},
 		{
@@ -51,7 +50,7 @@
 				"east": {"uv": [7.5, 8.5, 8, 12], "texture": "#furniture_station"},
 				"south": {"uv": [8, 8.5, 8.5, 12], "texture": "#furniture_station"},
 				"west": {"uv": [8.5, 8.5, 9, 12], "texture": "#furniture_station"},
-				"down": {"uv": [11, 7, 10.5, 7.5], "texture": "#furniture_station"}
+				"down": {"uv": [11, 7, 10.5, 7.5], "texture": "#furniture_station", "cullface": "down"}
 			}
 		},
 		{
@@ -85,11 +84,11 @@
 			"from": [0, 14, 0],
 			"to": [16, 16, 16],
 			"faces": {
-				"north": {"uv": [7, 3, 11, 3.5], "texture": "#furniture_station"},
-				"east": {"uv": [7, 3.5, 11, 4], "texture": "#furniture_station"},
-				"south": {"uv": [7, 4, 11, 4.5], "texture": "#furniture_station"},
-				"west": {"uv": [7, 4.5, 11, 5], "texture": "#furniture_station"},
-				"up": {"uv": [4, 4, 0, 0], "texture": "#furniture_station"},
+				"north": {"uv": [7, 3, 11, 3.5], "texture": "#furniture_station", "cullface": "north"},
+				"east": {"uv": [7, 3.5, 11, 4], "texture": "#furniture_station", "cullface": "east"},
+				"south": {"uv": [7, 4, 11, 4.5], "texture": "#furniture_station", "cullface": "south"},
+				"west": {"uv": [7, 4.5, 11, 5], "texture": "#furniture_station", "cullface": "west"},
+				"up": {"uv": [4, 4, 0, 0], "texture": "#furniture_station", "cullface": "up"},
 				"down": {"uv": [4, 4, 0, 8], "texture": "#furniture_station"}
 			}
 		},
