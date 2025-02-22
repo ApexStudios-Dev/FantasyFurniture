@@ -5,7 +5,6 @@ import dev.apexstudios.apexcore.lib.data.ProviderTypes;
 import dev.apexstudios.apexcore.lib.data.ResourceGenerator;
 import dev.apexstudios.apexcore.lib.registree.Registree;
 import java.util.Collections;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -16,12 +15,8 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.PackType;
-import net.minecraft.server.packs.repository.Pack;
-import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -30,18 +25,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.ModList;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.neoforge.event.AddPackFindersEvent;
 import org.apache.commons.lang3.StringUtils;
 
 public final class FurnitureSet {
-    private static final Map<String, CtmPack> CTM_PACKS = Map.of(
-            "athena", new CtmPack("ctm-athena", "Athena CTM"),
-            "fusion", new CtmPack("ctm-fusion", "Fusion CTM"),
-            "ctm", new CtmPack("ctm", "CTM")
-    );
-
     private final Registree registree;
     private final String name;
     private final Set<BlockType<?>> blockTypes;
@@ -87,19 +74,6 @@ public final class FurnitureSet {
 
             ifRegistered(BlockTypes.TRAP_DOOR, block -> ItemBlockRenderTypes.setRenderLayer(block, RenderType.cutout()));
         }));
-
-        modBus.addListener(AddPackFindersEvent.class, event -> CTM_PACKS.entrySet().stream()
-                .filter(entry -> ModList.get().isLoaded(entry.getKey()))
-                .map(Map.Entry::getValue)
-                .forEach(pack -> event.addPackFinders(
-                        registree.registryName("packs/" + pack.packId),
-                        PackType.CLIENT_RESOURCES,
-                        Component.literal(pack.packName + " (" + StringUtils.capitalize(name) + ')'),
-                        PackSource.BUILT_IN,
-                        false,
-                        Pack.Position.TOP
-                ))
-        );
     }
 
     public void registerDataGen(ResourceGenerator generator) {
@@ -110,11 +84,6 @@ public final class FurnitureSet {
         }
 
         pack.providing(ProviderTypes.LANGUAGE, (context, provider) -> provider.addCreativeModeTab(creativeModeTab, StringUtils.capitalize(name)));
-
-        CTM_PACKS.forEach((modId, ctm) -> {
-            generator.pack(ctm.packId)
-                    .description("Enables " + ctm.packName + " support");
-        });
     }
 
     public String ownerNamespace() {
@@ -195,6 +164,4 @@ public final class FurnitureSet {
     public static FurnitureSet create(Registree registree, String name) {
         return create(registree, name, UnaryOperator.identity());
     }
-
-    private record CtmPack(String packId, String packName) { }
 }

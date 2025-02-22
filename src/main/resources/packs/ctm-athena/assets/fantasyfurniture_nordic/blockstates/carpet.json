@@ -1,0 +1,15 @@
+{
+  "athena:loader": "athena:carpet_ctm",
+  "ctm_textures": {
+    "center": "fantasyfurniture_nordic:block/ctm/wool_center",
+    "empty": "fantasyfurniture_nordic:block/ctm/wool_empty",
+    "horizontal": "fantasyfurniture_nordic:block/ctm/wool_horizontal",
+    "particle": "fantasyfurniture_nordic:block/wool",
+    "vertical": "fantasyfurniture_nordic:block/ctm/wool_vertical"
+  },
+  "variants": {
+    "": {
+      "model": "fantasyfurniture_nordic:block/carpet"
+    }
+  }
+}
