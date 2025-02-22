@@ -128,9 +128,8 @@ jobs:
             java_vendor: temurin
             artifact_id: artifacts-venthyr
             version: ${{ needs.get-vars.outputs.version }}
-            # TODO: These ids point to our dummy projects, venthyr curseforge/modrinth pages need to be created
-            curseforge_id: 835372
-            modrinth_id: EjjiYArZ
+            curseforge_id: 1206300
+            modrinth_id: FjHW4JvP
             release_type: alpha
             name: "Fantasy's Furniture - Venthyr"
             logo: "https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/new/fantasyfurniture_venthyr.png"
