@@ -24,9 +24,6 @@ dependencyResolutionManagement {
         library("apexcore", "dev.apexstudios", "apexcore").version {
             strictly("[21.4.0,21.5.0)")
         }
-
-        // match version in ApexGradle
-        plugin("modpublish", "me.modmuss50.mod-publish-plugin").version("0.8.4")
     }
 }
 
