@@ -53,6 +53,8 @@ ModuleBuilder.modules(project) {
     }
 }
 
+furnitureSets.filterNot { it.id == SourceSet.MAIN_SOURCE_SET_NAME }.forEach(::fixJarName)
+
 dependencies {
     accessTransformers(libs.apexcore)
     interfaceInjectionData(libs.apexcore)
@@ -60,5 +62,20 @@ dependencies {
     furnitureSets.forEach {
         it.sourceSet().implementationConfigurationName(libs.apexcore)
         it.dataSourceSet().implementationConfigurationName(libs.apexcore)
+    }
+}
+
+fun fixJarName(furnitureSet: ModProject) {
+    fixJarName(furnitureSet.sourceSet(), furnitureSet.id)
+    fixJarName(furnitureSet.dataSourceSet(), "${furnitureSet.id}-data")
+}
+
+fun fixJarName(sourceSet: SourceSet, mainName: String, sourcesName: String = mainName) {
+    project.tasks.named(sourceSet.jarTaskName, Jar::class.java) {
+        archiveBaseName.set("${single.getModId().get()}-$mainName")
+    }
+
+    project.tasks.named(sourceSet.sourcesJarTaskName, Jar::class.java) {
+        archiveBaseName.set("${single.getModId().get()}-$sourcesName")
     }
 }
