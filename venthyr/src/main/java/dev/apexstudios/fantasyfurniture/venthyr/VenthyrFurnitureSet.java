@@ -36,8 +36,7 @@ public class VenthyrFurnitureSet {
             .builder(builder -> builder.translation("Table Cloth"))
     );
 
-    public static final FurnitureSet FURNITURE_SET = FurnitureSet.create(REGISTREE, "venthyr", builder -> builder
-            .withDefault()
+    public static final FurnitureSet FURNITURE_SET = FurnitureSet.createWoodLike(REGISTREE, "venthyr", builder -> builder
             .with(TABLE_CLOTH)
             .with(BlockTypes.DRESSER.extend(BlockFactory.wrapping(VenthyrDresserBlock::new)))
             .with(BlockTypes.CUSHION.extend(BlockFactory.wrapping(VenthyrCushionBlock::new)))

@@ -21,10 +21,11 @@ public abstract sealed class BlockTypeCopier<TBlock extends Block, TType extends
 
         builder(builder -> {
             builder.blockProperties(blockType.blockPropertiesModifier)
-                    .initialBlockProperties(blockType.initialBlockProperties)
                     .blockEntity(blockType.blockEntityType)
                     .onRegister(blockType.onRegister, false)
-                    .onRegister(blockType.onRegisterEnqueued, true);
+                    .onRegister(blockType.onRegisterEnqueued, true)
+                    .baseBlock(blockType.baseBlock)
+                    .usesMineableTag(blockType.usesMineableTag);
 
             builder.providerListeners.putAll(blockType.providerListeners);
         });
@@ -69,11 +70,7 @@ public abstract sealed class BlockTypeCopier<TBlock extends Block, TType extends
             super(blockType);
 
             itemFactory = blockType.itemFactory;
-
-            builder(builder -> builder
-                    .itemProperties(blockType.itemPropertiesModifier)
-                    .initialItemProperties(blockType.initialItemProperties)
-            );
+            builder(builder -> builder.itemProperties(blockType.itemPropertiesModifier));
         }
 
         public WithItem<TBlock, TItem> itemFactory(ItemFactory<TBlock, TItem> itemFactory) {

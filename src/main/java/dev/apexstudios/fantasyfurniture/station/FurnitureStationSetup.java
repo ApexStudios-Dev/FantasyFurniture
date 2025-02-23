@@ -45,14 +45,14 @@ public interface FurnitureStationSetup {
             RecordCodecBuilder.mapCodec(instance -> instance.group(
                     Codec.STRING.optionalFieldOf("group", "").forGetter(FurnitureStationRecipe::group),
                     Ingredient.CODEC.fieldOf("planks").forGetter(FurnitureStationRecipe::planks),
-                    Ingredient.CODEC.fieldOf("wool").forGetter(FurnitureStationRecipe::wool),
+                    Ingredient.CODEC.optionalFieldOf("wool").forGetter(FurnitureStationRecipe::wool),
                     Ingredient.CODEC.fieldOf("binding_agent").forGetter(FurnitureStationRecipe::bindingAgent),
                     ItemStack.STRICT_CODEC.fieldOf("result").forGetter(FurnitureStationRecipe::result)
             ).apply(instance, FurnitureStationRecipe::new)),
             StreamCodec.composite(
                     ByteBufCodecs.STRING_UTF8, FurnitureStationRecipe::group,
                     Ingredient.CONTENTS_STREAM_CODEC, FurnitureStationRecipe::planks,
-                    Ingredient.CONTENTS_STREAM_CODEC, FurnitureStationRecipe::wool,
+                    ByteBufCodecs.optional(Ingredient.CONTENTS_STREAM_CODEC), FurnitureStationRecipe::wool,
                     Ingredient.CONTENTS_STREAM_CODEC, FurnitureStationRecipe::bindingAgent,
                     ItemStack.STREAM_CODEC, FurnitureStationRecipe::result,
                     FurnitureStationRecipe::new

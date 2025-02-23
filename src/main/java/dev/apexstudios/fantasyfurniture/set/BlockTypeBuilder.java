@@ -14,13 +14,11 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import org.apache.commons.lang3.StringUtils;
@@ -30,11 +28,12 @@ public abstract sealed class BlockTypeBuilder<TBlock extends Block, TType extend
     final String registryName;
     final BlockFactory<TBlock> blockFactory;
     BiFunction<FurnitureSet, BlockBehaviour.Properties, BlockBehaviour.Properties> blockPropertiesModifier = (furnitureSet, properties) -> properties;
-    Function<FurnitureSet, BlockBehaviour.Properties> initialBlockProperties = furnitureSet -> BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS);
     @Nullable Supplier<? extends BlockEntityType<?>> blockEntityType = null;
     Map<ProviderType<?>, ProviderListener<?, TBlock>> providerListeners = Maps.newLinkedHashMap();
     BiConsumer<FurnitureSet, TBlock> onRegister = (furnitureSet, block) -> { };
     BiConsumer<FurnitureSet, TBlock> onRegisterEnqueued = (furnitureSet, block) -> { };
+    @Nullable Supplier<? extends BlockBehaviour> baseBlock = null;
+    boolean usesMineableTag = true;
 
     private BlockTypeBuilder(String registryName, BlockFactory<TBlock> blockFactory) {
         this.registryName = registryName;
@@ -55,33 +54,9 @@ public abstract sealed class BlockTypeBuilder<TBlock extends Block, TType extend
         return blockProperties((furnitureSet, properties) -> blockPropertiesModifier.apply(properties));
     }
 
-    public TSelf initialBlockProperties(Function<FurnitureSet, BlockBehaviour.Properties> initialBlockProperties) {
-        this.initialBlockProperties = initialBlockProperties;
+    public TSelf baseBlock(Supplier<? extends BlockBehaviour> baseBlock) {
+        this.baseBlock = baseBlock;
         return (TSelf) this;
-    }
-
-    public TSelf initialBlockProperties(Supplier<BlockBehaviour.Properties> initialBlockProperties) {
-        return initialBlockProperties(furnitureSet -> initialBlockProperties.get());
-    }
-
-    public TSelf initialBlockProperties(BlockBehaviour.Properties initialBlockProperties) {
-        return initialBlockProperties(() -> initialBlockProperties);
-    }
-
-    public TSelf copyInitialBlockPropertiesFull(Function<FurnitureSet, BlockBehaviour> blockGetter) {
-        return initialBlockProperties(furnitureSet -> BlockBehaviour.Properties.ofFullCopy(blockGetter.apply(furnitureSet)));
-    }
-
-    public TSelf copyInitialBlockPropertiesFull(Supplier<BlockBehaviour> block) {
-        return copyInitialBlockPropertiesFull(furnitureSet -> block.get());
-    }
-
-    public TSelf copyInitialBlockPropertiesLegacy(Function<FurnitureSet, BlockBehaviour> blockGetter) {
-        return initialBlockProperties(furnitureSet -> BlockBehaviour.Properties.ofLegacyCopy(blockGetter.apply(furnitureSet)));
-    }
-
-    public TSelf copyInitialBlockPropertiesLegacy(Supplier<BlockBehaviour> block) {
-        return copyInitialBlockPropertiesLegacy(furnitureSet -> block.get());
     }
 
     public TSelf blockEntity(Supplier<? extends BlockEntityType<?>> blockEntityType) {
@@ -135,6 +110,19 @@ public abstract sealed class BlockTypeBuilder<TBlock extends Block, TType extend
         return providing(ProviderTypes.BLOCK_TAGS, (context, provider, furnitureSet, block) -> listener.accept(provider, furnitureSet, block));
     }
 
+    public TSelf usesMineableTag(boolean usesMineableTag) {
+        this.usesMineableTag = usesMineableTag;
+        return (TSelf) this;
+    }
+
+    public TSelf usesMineableTag() {
+        return usesMineableTag(true);
+    }
+
+    public TSelf noMineableTag() {
+        return usesMineableTag(false);
+    }
+
     abstract TType build();
 
     private static <TLeft, TRight> BiFunction<TLeft, TRight, TRight> andThen(BiFunction<TLeft, TRight, TRight> before, BiFunction<TLeft, TRight, TRight> after) {
@@ -155,7 +143,6 @@ public abstract sealed class BlockTypeBuilder<TBlock extends Block, TType extend
     public static final class WithItem<TBlock extends Block, TItem extends Item> extends BlockTypeBuilder<TBlock, BlockType.WithItem<TBlock, TItem>, WithItem<TBlock, TItem>> {
         final ItemFactory<TBlock, TItem> itemFactory;
         BiFunction<FurnitureSet, Item.Properties, Item.Properties> itemPropertiesModifier = (furnitureSet, properties) -> properties;
-        Function<FurnitureSet, Item.Properties> initialItemProperties = furnitureSet -> new Item.Properties();
 
         WithItem(String registryName, BlockFactory<TBlock> blockFactory, ItemFactory<TBlock, TItem> itemFactory) {
             super(registryName, blockFactory);
@@ -170,19 +157,6 @@ public abstract sealed class BlockTypeBuilder<TBlock extends Block, TType extend
 
         public WithItem<TBlock, TItem> itemProperties(UnaryOperator<Item.Properties> itemPropertiesModifier) {
             return itemProperties((furnitureSet, properties) -> itemPropertiesModifier.apply(properties));
-        }
-
-        public WithItem<TBlock, TItem> initialItemProperties(Function<FurnitureSet, Item.Properties> initialItemProperties) {
-            this.initialItemProperties = initialItemProperties;
-            return this;
-        }
-
-        public WithItem<TBlock, TItem> initialItemProperties(Supplier<Item.Properties> initialItemProperties) {
-            return initialItemProperties(furnitureSet -> initialItemProperties.get());
-        }
-
-        public WithItem<TBlock, TItem> initialItemProperties(Item.Properties initialItemProperties) {
-            return initialItemProperties(() -> initialItemProperties);
         }
 
         public WithItem<TBlock, TItem> itemTags(TagListener<Item, TItem> listener) {

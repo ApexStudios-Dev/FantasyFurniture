@@ -25,6 +25,7 @@ public final class FantasyFurniture {
     public static final Registree REGISTREE = new Registree(ID);
     public static final TagKey<Item> FURNITURE_PLANKS = REGISTREE.tag(Registries.ITEM, "furniture_planks");
     public static final TagKey<Item> FURNITURE_WOOL = REGISTREE.tag(Registries.ITEM, "furniture_wool");
+    public static final TagKey<Item> FURNITURE_BRICKS = REGISTREE.tag(Registries.ITEM, "furniture_bricks");
 
     private static final Map<String, CtmPack> CTM_PACKS = Map.of(
             "athena", new CtmPack("ctm-athena", "Athena CTM"),

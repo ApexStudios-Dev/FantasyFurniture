@@ -96,14 +96,11 @@ public interface BlockTypes {
             "planks",
             BlockFactory.wrapping(Block::new),
             builder -> builder
-                    .copyInitialBlockPropertiesLegacy(() -> Blocks.OAK_PLANKS)
+                    .baseBlock(() -> Blocks.OAK_PLANKS)
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> models.createTrivialCube(block))
                     .translation("Planks")
-                    .blockTags((provider, furnitureSet, block) -> {
-                        provider.tag(BlockTags.PLANKS).withElement(block);
-                        provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
-                    })
+                    .blockTags((provider, furnitureSet, block) -> provider.tag(BlockTags.PLANKS).withElement(block))
                     .itemTags((provider, furnitureSet, item) -> provider.tag(FantasyFurniture.FURNITURE_PLANKS).withElement(item))
                     .recipe((provider, furnitureSet, item) -> SingleItemRecipeBuilder
                             .stonecutting(
@@ -117,15 +114,39 @@ public interface BlockTypes {
     );
     // endregion
 
+    // region: Bricks
+    BlockType.WithItem<Block, BlockItem> BRICKS = BlockType.withItem(
+            "bricks",
+            BlockFactory.wrapping(Block::new),
+            builder -> builder
+                    .baseBlock(() -> Blocks.STONE)
+                    .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
+                    .model(() -> (context, models, furnitureSet, block) -> models.createTrivialCube(block))
+                    .translation("Bricks")
+                    .blockTags((provider, furnitureSet, block) -> provider.tag(Tags.Blocks.STONES).withElement(block))
+                    .itemTags((provider, furnitureSet, item) -> provider.tag(FantasyFurniture.FURNITURE_BRICKS).withElement(item))
+                    .recipe((provider, furnitureSet, item) -> SingleItemRecipeBuilder
+                            .stonecutting(
+                                    DifferenceIngredient.of(provider.tag(ItemTags.STONE_CRAFTING_MATERIALS), provider.tag(FantasyFurniture.FURNITURE_BRICKS)),
+                                    RecipeCategory.MISC,
+                                    item
+                            )
+                            .unlockedBy("has_bricks", provider.has(item))
+                            .save(provider.output(), RecipeProvider.recipeKeyWithPrefix(item, "conversion/"))
+                    )
+    );
+    // endregion
+
     // region: Wool
     BlockType.WithItem<Block, BlockItem> WOOL = BlockType.withItem(
             "wool",
             BlockFactory.wrapping(Block::new),
             builder -> builder
-                    .copyInitialBlockPropertiesLegacy(() -> Blocks.WHITE_WOOL)
+                    .baseBlock(() -> Blocks.WHITE_WOOL)
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> models.createTrivialCube(block))
                     .translation("Wool")
+                    .noMineableTag()
                     .blockTags((provider, furnitureSet, block) -> provider.tag(BlockTags.WOOL).withElement(block))
                     .itemTags((provider, furnitureSet, item) -> provider.tag(FantasyFurniture.FURNITURE_WOOL).withElement(item))
                     .recipe((provider, furnitureSet, item) -> SingleItemRecipeBuilder
@@ -145,12 +166,13 @@ public interface BlockTypes {
             "carpet",
             BlockFactory.wrapping(CarpetBlock::new),
             builder -> builder
-                    .copyInitialBlockPropertiesLegacy(() -> Blocks.WHITE_CARPET)
+                    .baseBlock(() -> Blocks.WHITE_CARPET)
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> models.blockStateOutput.accept(
                             BlockModelGenerators.createSimpleBlock(block, TexturedModel.CARPET.get(furnitureSet.getOrThrow(WOOL)).create(block, models.modelOutput))
                     ))
                     .translation("Carpet")
+                    .noMineableTag()
                     .blockTags((provider, furnitureSet, block) -> provider.tag(BlockTags.WOOL_CARPETS).withElement(block))
                     .itemTags((provider, furnitureSet, item) -> provider.tag(ItemTags.WOOL_CARPETS).withElement(item))
                     .recipe((provider, furnitureSet, item) -> provider.carpet(item, furnitureSet.getOrThrow(WOOL)))
@@ -162,17 +184,15 @@ public interface BlockTypes {
             "dresser",
             BlockFactory.wrapping(DresserBlock::new),
             builder -> builder
-                    .copyInitialBlockPropertiesLegacy(() -> Blocks.CHEST)
+                    .baseBlock(() -> Blocks.CHEST)
                     .blockProperties(properties -> properties.pushReaction(PushReaction.BLOCK))
                     .blockEntity(FurnitureBlockEntities.DRESSER)
                     .lootTable((blocks, furnitureSet, block) -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)))
                     .model(() -> (context, models, furnitureSet, block) -> ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right"))
                     .translation("Dresser")
                     .blockTags((provider, furnitureSet, block) -> {
-                        provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
                         provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block);
                         provider.tag(Tags.Blocks.RELOCATION_NOT_SUPPORTED).withElement(block);
-                        provider.tag(BlockTags.GUARDED_BY_PIGLINS).withElement(block);
                     })
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
@@ -183,11 +203,9 @@ public interface BlockTypes {
             "stool",
             BlockFactory.wrapping(SeatBlock::new),
             builder -> builder
-                    .copyInitialBlockPropertiesLegacy(() -> Blocks.OAK_PLANKS)
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> ModelUtil.horizontalFacingBlock(block, models))
                     .translation("Stool")
-                    .blockTags((provider, furnitureSet, block) -> provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block))
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
     // endregion
@@ -197,11 +215,9 @@ public interface BlockTypes {
             "cushion",
             BlockFactory.wrapping(CushionBlock::new),
             builder -> builder
-                    .copyInitialBlockPropertiesLegacy(() -> Blocks.OAK_PLANKS)
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> ModelUtil.horizontalFacingBlock(block, models))
                     .translation("Cushion")
-                    .blockTags((provider, furnitureSet, block) -> provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block))
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
     // endregion
@@ -211,15 +227,11 @@ public interface BlockTypes {
             "lockbox",
             BlockFactory.wrapping(LockBoxBlock::new),
             builder -> builder
-                    .copyInitialBlockPropertiesLegacy(() -> Blocks.CHEST)
+                    .baseBlock(() -> Blocks.CHEST)
                     .blockEntity(FurnitureBlockEntities.LOCKBOX)
                     .lootTable((blocks, furnitureSet, block) -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)))
                     .model(() -> (context, models, furnitureSet, block) -> ModelUtil.horizontalFacingBlock(block, models))
                     .translation("Lockbox")
-                    .blockTags((provider, furnitureSet, block) -> {
-                        provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
-                        provider.tag(BlockTags.GUARDED_BY_PIGLINS).withElement(block);
-                    })
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
     // endregion
@@ -229,16 +241,12 @@ public interface BlockTypes {
             "drawer",
             BlockFactory.wrapping(DrawerBlock::new),
             builder -> builder
-                    .copyInitialBlockPropertiesLegacy(() -> Blocks.CHEST)
+                    .baseBlock(() -> Blocks.CHEST)
                     .blockProperties(properties -> properties.pushReaction(PushReaction.BLOCK))
                     .blockEntity(FurnitureBlockEntities.DRAWER)
                     .lootTable((blocks, furnitureSet, block) -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)))
                     .model(() -> (context, models, furnitureSet, block) -> ModelUtil.horizontalFacingBlock(block, models))
                     .translation("Drawer")
-                    .blockTags((provider, furnitureSet, block) -> {
-                        provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
-                        provider.tag(BlockTags.GUARDED_BY_PIGLINS).withElement(block);
-                    })
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
     // endregion
@@ -248,14 +256,12 @@ public interface BlockTypes {
             "chair",
             BlockFactory.wrapping(ChairBlock::new),
             builder -> builder
-                    .copyInitialBlockPropertiesLegacy(() -> Blocks.OAK_PLANKS)
                     .blockProperties(properties -> properties.pushReaction(PushReaction.BLOCK))
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_bottom" : "_top"))
                     .translation("Chair")
                     .blockTags((provider, furnitureSet, block) -> {
                         provider.tag(SeatSetup.ORIGIN_ONLY).withElement(block);
-                        provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
                         provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block);
                         provider.tag(Tags.Blocks.RELOCATION_NOT_SUPPORTED).withElement(block);
                     })
@@ -268,7 +274,7 @@ public interface BlockTypes {
             "bookshelf",
             BlockFactory.wrapping(BookshelfBlock::new),
             builder -> builder
-                    .copyInitialBlockPropertiesLegacy(() -> Blocks.CHEST)
+                    .baseBlock(() -> Blocks.CHEST)
                     .blockProperties(properties -> properties.pushReaction(PushReaction.BLOCK))
                     .blockEntity(FurnitureBlockEntities.BOOKSHELF)
                     .lootTable((blocks, furnitureSet, block) -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)))
@@ -280,10 +286,8 @@ public interface BlockTypes {
                     }))
                     .translation("Bookshelf")
                     .blockTags((provider, furnitureSet, block) -> {
-                        provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
                         provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block);
                         provider.tag(Tags.Blocks.RELOCATION_NOT_SUPPORTED).withElement(block);
-                        provider.tag(BlockTags.GUARDED_BY_PIGLINS).withElement(block);
                     })
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
@@ -294,14 +298,12 @@ public interface BlockTypes {
             "bed_single",
             BlockFactory.wrapping(BedSingleBlock::new),
             builder -> builder
-                    .copyInitialBlockPropertiesLegacy(() -> Blocks.OAK_PLANKS)
                     .blockProperties(properties -> properties.pushReaction(PushReaction.BLOCK))
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_bottom" : "_top"))
                     .translation("Bed Single")
                     .blockTags((provider, furnitureSet, block) -> {
                         provider.tag(BlockTags.BEDS).withElement(block);
-                        provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
                         provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block);
                         provider.tag(Tags.Blocks.RELOCATION_NOT_SUPPORTED).withElement(block);
                     })
@@ -316,7 +318,6 @@ public interface BlockTypes {
             "bed_double",
             BlockFactory.wrapping(BedDoubleBlock::new),
             builder -> builder
-                    .copyInitialBlockPropertiesLegacy(() -> Blocks.OAK_PLANKS)
                     .blockProperties(properties -> properties.pushReaction(PushReaction.BLOCK))
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> ModelUtil.multiBlockModelSuffix(block, models, index -> switch (index) {
@@ -328,7 +329,6 @@ public interface BlockTypes {
                     .translation("Bed Double")
                     .blockTags((provider, furnitureSet, block) -> {
                         provider.tag(BlockTags.BEDS).withElement(block);
-                        provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
                         provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block);
                         provider.tag(Tags.Blocks.RELOCATION_NOT_SUPPORTED).withElement(block);
                     })
@@ -343,14 +343,13 @@ public interface BlockTypes {
             "door_single",
             FurnitureDoorBlockComponentHolder::new,
             builder -> builder
-                    .copyInitialBlockPropertiesLegacy(() -> Blocks.OAK_DOOR)
+                    .baseBlock(() -> Blocks.OAK_DOOR)
                     .blockProperties(properties -> properties.pushReaction(PushReaction.BLOCK))
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> doorModel(block, models))
                     .translation("Door Single")
                     .blockTags((provider, furnitureSet, block) -> {
                         provider.tag(BlockTags.WOODEN_DOORS).withElement(block);
-                        provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
                         provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block);
                         provider.tag(Tags.Blocks.RELOCATION_NOT_SUPPORTED).withElement(block);
                     })
@@ -364,14 +363,13 @@ public interface BlockTypes {
             "door_double",
             FurnitureDoorBlockComponentHolder::new,
             builder -> builder
-                    .copyInitialBlockPropertiesLegacy(() -> Blocks.OAK_DOOR)
+                    .baseBlock(() -> Blocks.OAK_DOOR)
                     .blockProperties(properties -> properties.pushReaction(PushReaction.BLOCK))
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> doorModel(block, models))
                     .translation("Door Double")
                     .blockTags((provider, furnitureSet, block) -> {
                         provider.tag(BlockTags.WOODEN_DOORS).withElement(block);
-                        provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
                         provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block);
                         provider.tag(Tags.Blocks.RELOCATION_NOT_SUPPORTED).withElement(block);
                     })
@@ -385,17 +383,15 @@ public interface BlockTypes {
             "desk_left",
             BlockFactory.wrapping(properties -> new DeskBlock(properties, true)),
             builder -> builder
-                    .copyInitialBlockPropertiesLegacy(() -> Blocks.CHEST)
+                    .baseBlock(() -> Blocks.CHEST)
                     .blockProperties(properties -> properties.pushReaction(PushReaction.BLOCK))
                     .blockEntity(FurnitureBlockEntities.DESK)
                     .lootTable((blocks, furnitureSet, block) -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)))
                     .model(() -> (context, models, furnitureSet, block) -> ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right"))
                     .translation("Desk Left")
                     .blockTags((provider, furnitureSet, block) -> {
-                        provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
                         provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block);
                         provider.tag(Tags.Blocks.RELOCATION_NOT_SUPPORTED).withElement(block);
-                        provider.tag(BlockTags.GUARDED_BY_PIGLINS).withElement(block);
                     })
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
@@ -406,17 +402,15 @@ public interface BlockTypes {
             "desk_right",
             BlockFactory.wrapping(properties -> new DeskBlock(properties, false)),
             builder -> builder
-                    .copyInitialBlockPropertiesLegacy(() -> Blocks.CHEST)
+                    .baseBlock(() -> Blocks.CHEST)
                     .blockProperties(properties -> properties.pushReaction(PushReaction.BLOCK))
                     .blockEntity(FurnitureBlockEntities.DESK)
                     .lootTable((blocks, furnitureSet, block) -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)))
                     .model(() -> (context, models, furnitureSet, block) -> ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right"))
                     .translation("Desk Right")
                     .blockTags((provider, furnitureSet, block) -> {
-                        provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
                         provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block);
                         provider.tag(Tags.Blocks.RELOCATION_NOT_SUPPORTED).withElement(block);
-                        provider.tag(BlockTags.GUARDED_BY_PIGLINS).withElement(block);
                     })
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
@@ -427,13 +421,11 @@ public interface BlockTypes {
             "painting_wide",
             BlockFactory.wrapping(PaintingWideBlock::new),
             builder -> builder
-                    .copyInitialBlockPropertiesLegacy(() -> Blocks.OAK_PLANKS)
                     .blockProperties(properties -> properties.pushReaction(PushReaction.BLOCK))
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right"))
                     .translation("Painting Wide")
                     .blockTags((provider, furnitureSet, block) -> {
-                        provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
                         provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block);
                         provider.tag(Tags.Blocks.RELOCATION_NOT_SUPPORTED).withElement(block);
                     })
@@ -446,11 +438,9 @@ public interface BlockTypes {
             "painting_small",
             BlockFactory.wrapping(PaintingSmallBlock::new),
             builder -> builder
-                    .copyInitialBlockPropertiesLegacy(() -> Blocks.OAK_PLANKS)
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> ModelUtil.horizontalFacingBlock(block, models))
                     .translation("Painting Small")
-                    .blockTags((provider, furnitureSet, block) -> provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block))
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
     // endregion
@@ -460,15 +450,16 @@ public interface BlockTypes {
             "oven",
             BlockFactory.wrapping(OvenBlock::new),
             builder -> builder
-                    .copyInitialBlockPropertiesLegacy(() -> Blocks.SMOKER)
+                    .baseBlock(() -> Blocks.SMOKER)
                     .blockProperties(BlockBehaviour.Properties::noOcclusion)
                     .blockEntity(FurnitureBlockEntities.OVEN)
                     .lootTable((blocks, furnitureSet, block) -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)))
                     .model(() -> (context, models, furnitureSet, block) -> ModelUtil.horizontalFacingBlock(block, models))
                     .translation("Oven")
+                    .noMineableTag() // forcefully use the pickaxe tag
                     .blockTags((provider, furnitureSet, block) -> {
-                        provider.tag(Tags.Blocks.PLAYER_WORKSTATIONS_FURNACES).withElement(block);
                         provider.tag(BlockTags.MINEABLE_WITH_PICKAXE).withElement(block);
+                        provider.tag(Tags.Blocks.PLAYER_WORKSTATIONS_FURNACES).withElement(block);
                     })
                     .itemTags((provider, furnitureSet, item) -> provider.tag(Tags.Items.PLAYER_WORKSTATIONS_FURNACES).withElement(item))
                     .recipe(BlockTypes::furnitureStationRecipe)
@@ -481,17 +472,15 @@ public interface BlockTypes {
             "chest",
             BlockFactory.wrapping(ChestBlock::new),
             builder -> builder
-                    .copyInitialBlockPropertiesLegacy(() -> Blocks.CHEST)
+                    .baseBlock(() -> Blocks.CHEST)
                     .blockProperties(properties -> properties.pushReaction(PushReaction.BLOCK))
                     .blockEntity(FurnitureBlockEntities.CHEST)
                     .lootTable((blocks, furnitureSet, block) -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)))
                     .model(() -> (context, models, furnitureSet, block) -> ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right"))
                     .translation("Chest")
                     .blockTags((provider, furnitureSet, block) -> {
-                        provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
                         provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block);
                         provider.tag(Tags.Blocks.RELOCATION_NOT_SUPPORTED).withElement(block);
-                        provider.tag(BlockTags.GUARDED_BY_PIGLINS).withElement(block);
                     })
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
@@ -502,13 +491,11 @@ public interface BlockTypes {
             "floor_light",
             BlockFactory.wrapping(FloorLightBlock::new),
             builder -> builder
-                    .copyInitialBlockPropertiesLegacy(() -> Blocks.OAK_PLANKS)
                     .blockProperties(properties -> properties.pushReaction(PushReaction.BLOCK).lightLevel(blockState -> 14))
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_bottom" : "_top"))
                     .translation("Floor Light")
                     .blockTags((provider, furnitureSet, block) -> {
-                        provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
                         provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block);
                         provider.tag(Tags.Blocks.RELOCATION_NOT_SUPPORTED).withElement(block);
                     })
@@ -521,12 +508,10 @@ public interface BlockTypes {
             "chandelier",
             BlockFactory.wrapping(ChandelierBlock::new),
             builder -> builder
-                    .copyInitialBlockPropertiesLegacy(() -> Blocks.OAK_PLANKS)
                     .blockProperties(properties -> properties.lightLevel(blockState -> 14))
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> ModelUtil.horizontalFacingBlock(block, models))
                     .translation("Chandelier")
-                    .blockTags((provider, furnitureSet, block) -> provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block))
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
     // endregion
@@ -536,14 +521,10 @@ public interface BlockTypes {
             "shelf",
             BlockFactory.wrapping(ShelfBlock::new),
             builder -> builder
-                    .copyInitialBlockPropertiesLegacy(() -> Blocks.OAK_PLANKS)
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> ModelUtil.facingPropertyModelSuffix(block, models, ShelfConnection.PROPERTY, ShelfConnection::getModelSuffix, ShelfConnection.NONE))
                     .translation("Shelf")
-                    .blockTags((provider, furnitureSet, block) -> {
-                        provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
-                        provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block);
-                    })
+                    .blockTags((provider, furnitureSet, block) -> provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block))
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
     // endregion
@@ -553,14 +534,10 @@ public interface BlockTypes {
             "sofa",
             BlockFactory.wrapping(SofaBlock::new),
             builder -> builder
-                    .copyInitialBlockPropertiesLegacy(() -> Blocks.OAK_PLANKS)
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> ModelUtil.facingPropertyModelSuffix(block, models, SofaConnection.PROPERTY, SofaConnection::getModelSuffix, SofaConnection.NONE))
                     .translation("Sofa")
-                    .blockTags((provider, furnitureSet, block) -> {
-                        provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
-                        provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block);
-                    })
+                    .blockTags((provider, furnitureSet, block) -> provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block))
                     .recipe(BlockTypes::furnitureStationRecipe)
                     .onRegister(block -> NeoForge.EVENT_BUS.addListener(PlacementRenderEvent.DefaultBlockState.class, event -> {
                         var blockState = event.defaultBlockState();
@@ -578,16 +555,11 @@ public interface BlockTypes {
             "counter",
             BlockFactory.wrapping(CounterBlock::new),
             builder -> builder
-                    .copyInitialBlockPropertiesLegacy(() -> Blocks.OAK_PLANKS)
                     .blockEntity(FurnitureBlockEntities.COUNTER)
                     .lootTable((blocks, furnitureSet, block) -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)))
                     .model(() -> (context, models, furnitureSet, block) -> ModelUtil.facingPropertyModelSuffix(block, models, CounterConnection.PROPERTY, CounterConnection::getModelSuffix, CounterConnection.NONE))
                     .translation("Counter")
-                    .blockTags((provider, furnitureSet, block) -> {
-                        provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
-                        provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block);
-                        provider.tag(BlockTags.GUARDED_BY_PIGLINS).withElement(block);
-                    })
+                    .blockTags((provider, furnitureSet, block) -> provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block))
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
     // endregion
@@ -597,15 +569,11 @@ public interface BlockTypes {
             "wall_light",
             BlockFactory.wrapping(WallLightBlock::new),
             builder -> builder
-                    .copyInitialBlockPropertiesLegacy(() -> Blocks.OAK_PLANKS)
                     .blockProperties(properties -> properties.pushReaction(PushReaction.DESTROY).lightLevel(blockState -> 14).noCollission().instabreak())
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> ModelUtil.horizontalFacingBlock(block, models))
                     .translation("Wall Light")
-                    .blockTags((provider, furnitureSet, block) -> {
-                        provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
-                        provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block);
-                    })
+                    .blockTags((provider, furnitureSet, block) -> provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block))
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
     // endregion
@@ -615,14 +583,12 @@ public interface BlockTypes {
             "bench",
             BlockFactory.wrapping(BenchBlock::new),
             builder -> builder
-                    .copyInitialBlockPropertiesLegacy(() -> Blocks.OAK_PLANKS)
                     .blockProperties(properties -> properties.pushReaction(PushReaction.BLOCK))
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right"))
                     .translation("Bench")
                     .blockTags((provider, furnitureSet, block) -> {
                         provider.tag(SeatSetup.ORIGIN_ONLY).withElement(block);
-                        provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
                         provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block);
                         provider.tag(Tags.Blocks.RELOCATION_NOT_SUPPORTED).withElement(block);
                     })
@@ -635,7 +601,7 @@ public interface BlockTypes {
             "wardrobe",
             BlockFactory.wrapping(WardrobeBlock::new),
             builder -> builder
-                    .copyInitialBlockPropertiesLegacy(() -> Blocks.CHEST)
+                    .baseBlock(() -> Blocks.CHEST)
                     .blockProperties(properties -> properties.pushReaction(PushReaction.BLOCK))
                     .blockEntity(FurnitureBlockEntities.WARDROBE)
                     .lootTable((blocks, furnitureSet, block) -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)))
@@ -649,10 +615,8 @@ public interface BlockTypes {
                     }))
                     .translation("Wardrobe")
                     .blockTags((provider, furnitureSet, block) -> {
-                        provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
                         provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block);
                         provider.tag(Tags.Blocks.RELOCATION_NOT_SUPPORTED).withElement(block);
-                        provider.tag(BlockTags.GUARDED_BY_PIGLINS).withElement(block);
                     })
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
@@ -663,14 +627,10 @@ public interface BlockTypes {
             "table",
             BlockFactory.wrapping(TableBlock::new),
             builder -> builder
-                    .copyInitialBlockPropertiesLegacy(() -> Blocks.OAK_PLANKS)
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> tableModel(block, models))
                     .translation("Table")
-                    .blockTags((provider, furnitureSet, block) -> {
-                        provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
-                        provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block);
-                    })
+                    .blockTags((provider, furnitureSet, block) -> provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block))
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
     // endregion
@@ -678,12 +638,12 @@ public interface BlockTypes {
     // region: Stairs
     BlockType.WithItem<StairBlock, BlockItem> STAIRS = BlockType.withItem(
             "stairs",
-            (furnitureSet, properties) -> new StairBlock(furnitureSet.getOrThrow(PLANKS).defaultBlockState(), properties),
+            (furnitureSet, properties) -> new StairBlock(furnitureSet.getCoreBlock().defaultBlockState(), properties),
             builder -> builder
-                    .copyInitialBlockPropertiesLegacy(() -> Blocks.OAK_STAIRS)
+                    .baseBlock(() -> Blocks.OAK_STAIRS)
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> {
-                        var textures = TextureMapping.cube(furnitureSet.getOrThrow(PLANKS));
+                        var textures = TextureMapping.cube(furnitureSet.getCoreBlock());
                         var straightModel = ModelTemplates.STAIRS_STRAIGHT.create(block, textures, models.modelOutput);
 
                         models.blockStateOutput.accept(BlockModelGenerators.createStairs(
@@ -696,14 +656,11 @@ public interface BlockTypes {
                         models.registerSimpleItemModel(block, straightModel);
                     })
                     .translation("Stairs")
-                    .blockTags((provider, furnitureSet, block) -> {
-                        provider.tag(BlockTags.WOODEN_STAIRS).withElement(block);
-                        provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
-                    })
+                    .blockTags((provider, furnitureSet, block) -> provider.tag(BlockTags.WOODEN_STAIRS).withElement(block))
                     .itemTags((provider, furnitureSet, item) -> provider.tag(ItemTags.STAIRS).withElement(item))
                     .recipe((provider, furnitureSet, item) -> provider
-                            .stairBuilder(item, Ingredient.of(furnitureSet.getOrThrow(PLANKS)))
-                            .unlockedBy("has_planks", provider.has(furnitureSet.getOrThrow(PLANKS)))
+                            .stairBuilder(item, Ingredient.of(furnitureSet.getCoreBlock()))
+                            .unlockedBy("has_core_block", provider.has(furnitureSet.getCoreBlock()))
                             .save(provider.output())
                     )
     );
@@ -714,30 +671,27 @@ public interface BlockTypes {
             "slab",
             BlockFactory.wrapping(SlabBlock::new),
             builder -> builder
-                    .copyInitialBlockPropertiesLegacy(() -> Blocks.OAK_SLAB)
+                    .baseBlock(() -> Blocks.OAK_SLAB)
                     .lootTable((blocks, furnitureSet, block) -> blocks.accept(block, blocks.createSlabItemTable(block)))
                     .model(() -> (context, models, furnitureSet, block) -> {
-                        var textures = TextureMapping.cube(furnitureSet.getOrThrow(PLANKS));
+                        var textures = TextureMapping.cube(furnitureSet.getCoreBlock());
                         var bottomModel = ModelTemplates.SLAB_BOTTOM.create(block, textures, models.modelOutput);
 
                         models.blockStateOutput.accept(BlockModelGenerators.createSlab(
                                 block,
                                 bottomModel,
                                 ModelTemplates.SLAB_TOP.create(block, textures, models.modelOutput),
-                                ModelLocationUtils.getModelLocation(furnitureSet.getOrThrow(PLANKS))
+                                ModelLocationUtils.getModelLocation(furnitureSet.getCoreBlock())
                         ));
 
                         models.registerSimpleItemModel(block, bottomModel);
                     })
                     .translation("Slab")
-                    .blockTags((provider, furnitureSet, block) -> {
-                        provider.tag(BlockTags.WOODEN_SLABS).withElement(block);
-                        provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
-                    })
+                    .blockTags((provider, furnitureSet, block) -> provider.tag(BlockTags.WOODEN_SLABS).withElement(block))
                     .itemTags((provider, furnitureSet, item) -> provider.tag(ItemTags.WOODEN_SLABS).withElement(item))
                     .recipe((provider, furnitureSet, item) -> provider
-                            .slabBuilder(RecipeCategory.BUILDING_BLOCKS, item, Ingredient.of(furnitureSet.getOrThrow(PLANKS)))
-                            .unlockedBy("has_planks", provider.has(furnitureSet.getOrThrow(PLANKS)))
+                            .slabBuilder(RecipeCategory.BUILDING_BLOCKS, item, Ingredient.of(furnitureSet.getCoreBlock()))
+                            .unlockedBy("has_core_block", provider.has(furnitureSet.getCoreBlock()))
                             .save(provider.output())
                     )
     );
@@ -748,10 +702,10 @@ public interface BlockTypes {
             "fence",
             BlockFactory.wrapping(FenceBlock::new),
             builder -> builder
-                    .copyInitialBlockPropertiesLegacy(() -> Blocks.OAK_FENCE)
+                    .baseBlock(() -> Blocks.OAK_FENCE)
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> {
-                        var textures = TextureMapping.cube(furnitureSet.getOrThrow(PLANKS));
+                        var textures = TextureMapping.cube(furnitureSet.getCoreBlock());
 
                         models.blockStateOutput.accept(BlockModelGenerators.createFence(
                                 block,
@@ -762,14 +716,11 @@ public interface BlockTypes {
                         models.registerSimpleItemModel(block, ModelTemplates.FENCE_INVENTORY.create(block, textures, models.modelOutput));
                     })
                     .translation("Fence")
-                    .blockTags((provider, furnitureSet, block) -> {
-                        provider.tag(BlockTags.WOODEN_FENCES).withElement(block);
-                        provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
-                    })
+                    .blockTags((provider, furnitureSet, block) -> provider.tag(BlockTags.WOODEN_FENCES).withElement(block))
                     .itemTags((provider, furnitureSet, item) -> provider.tag(ItemTags.WOODEN_FENCES).withElement(item))
                     .recipe((provider, furnitureSet, item) -> provider
-                            .fenceBuilder(item, Ingredient.of(furnitureSet.getOrThrow(PLANKS)))
-                            .unlockedBy("has_planks", provider.has(furnitureSet.getOrThrow(PLANKS)))
+                            .fenceBuilder(item, Ingredient.of(furnitureSet.getCoreBlock()))
+                            .unlockedBy("has_core_block", provider.has(furnitureSet.getCoreBlock()))
                             .save(provider.output())
                     )
     );
@@ -780,10 +731,10 @@ public interface BlockTypes {
             "fence_gate",
             (furnitureSet, properties) -> new FenceGateBlock(furnitureSet.woodType(), properties),
             builder -> builder
-                    .copyInitialBlockPropertiesLegacy(() -> Blocks.OAK_FENCE_GATE)
+                    .baseBlock(() -> Blocks.OAK_FENCE_GATE)
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> {
-                        var textures = TextureMapping.cube(furnitureSet.getOrThrow(PLANKS));
+                        var textures = TextureMapping.cube(furnitureSet.getCoreBlock());
 
                         models.blockStateOutput.accept(BlockModelGenerators.createFenceGate(
                                 block,
@@ -795,14 +746,11 @@ public interface BlockTypes {
                         ));
                     })
                     .translation("Fence Gate")
-                    .blockTags((provider, furnitureSet, block) -> {
-                        provider.tag(BlockTags.FENCE_GATES).withElement(block);
-                        provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
-                    })
+                    .blockTags((provider, furnitureSet, block) -> provider.tag(BlockTags.FENCE_GATES).withElement(block))
                     .itemTags((provider, furnitureSet, item) -> provider.tag(ItemTags.FENCE_GATES).withElement(item))
                     .recipe((provider, furnitureSet, item) -> provider
-                            .fenceGateBuilder(item, Ingredient.of(furnitureSet.getOrThrow(PLANKS)))
-                            .unlockedBy("has_planks", provider.has(furnitureSet.getOrThrow(PLANKS)))
+                            .fenceGateBuilder(item, Ingredient.of(furnitureSet.getCoreBlock()))
+                            .unlockedBy("has_core_block", provider.has(furnitureSet.getCoreBlock()))
                             .save(provider.output())
                     )
     );
@@ -813,18 +761,15 @@ public interface BlockTypes {
             "trapdoor",
             (furnitureSet, properties) -> new TrapDoorBlock(furnitureSet.blockSet(), properties),
             builder -> builder
-                    .copyInitialBlockPropertiesLegacy(() -> Blocks.OAK_TRAPDOOR)
+                    .baseBlock(() -> Blocks.OAK_TRAPDOOR)
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> models.createOrientableTrapdoor(block))
                     .translation("Trapdoor")
-                    .blockTags((provider, furnitureSet, block) -> {
-                        provider.tag(BlockTags.WOODEN_TRAPDOORS).withElement(block);
-                        provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
-                    })
+                    .blockTags((provider, furnitureSet, block) -> provider.tag(BlockTags.WOODEN_TRAPDOORS).withElement(block))
                     .itemTags((provider, furnitureSet, item) -> provider.tag(ItemTags.WOODEN_TRAPDOORS).withElement(item))
                     .recipe((provider, furnitureSet, item) -> provider
-                            .trapdoorBuilder(item, Ingredient.of(furnitureSet.getOrThrow(PLANKS)))
-                            .unlockedBy("has_planks", provider.has(furnitureSet.getOrThrow(PLANKS)))
+                            .trapdoorBuilder(item, Ingredient.of(furnitureSet.getCoreBlock()))
+                            .unlockedBy("has_core_block", provider.has(furnitureSet.getCoreBlock()))
                             .save(provider.output())
                     )
     );
@@ -835,10 +780,10 @@ public interface BlockTypes {
             "pressure_plate",
             (furnitureSet, properties) -> new PressurePlateBlock(furnitureSet.blockSet(), properties),
             builder -> builder
-                    .copyInitialBlockPropertiesLegacy(() -> Blocks.OAK_PRESSURE_PLATE)
+                    .baseBlock(() -> Blocks.OAK_PRESSURE_PLATE)
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> {
-                        var textures = TextureMapping.cube(furnitureSet.getOrThrow(PLANKS));
+                        var textures = TextureMapping.cube(furnitureSet.getCoreBlock());
 
                         models.blockStateOutput.accept(BlockModelGenerators.createPressurePlate(
                                 block,
@@ -847,10 +792,7 @@ public interface BlockTypes {
                         ));
                     })
                     .translation("Pressure Plate")
-                    .blockTags((provider, furnitureSet, block) -> {
-                        provider.tag(BlockTags.WOODEN_PRESSURE_PLATES).withElement(block);
-                        provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
-                    })
+                    .blockTags((provider, furnitureSet, block) -> provider.tag(BlockTags.WOODEN_PRESSURE_PLATES).withElement(block))
                     .itemTags((provider, furnitureSet, item) -> provider.tag(ItemTags.WOODEN_PRESSURE_PLATES).withElement(item))
     );
     // endregion
@@ -861,10 +803,10 @@ public interface BlockTypes {
             // SharedConstants.TICKS_PER_SECOND + 10 -> same as OAK -> 30 ticks
             (furnitureSet, properties) -> new ButtonBlock(furnitureSet.blockSet(), SharedConstants.TICKS_PER_SECOND + 10, properties),
             builder -> builder
-                    .copyInitialBlockPropertiesLegacy(() -> Blocks.OAK_BUTTON)
+                    .baseBlock(() -> Blocks.OAK_BUTTON)
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> {
-                        var textures = TextureMapping.cube(furnitureSet.getOrThrow(PLANKS));
+                        var textures = TextureMapping.cube(furnitureSet.getCoreBlock());
 
                         models.blockStateOutput.accept(BlockModelGenerators.createButton(
                                 block,
@@ -878,14 +820,11 @@ public interface BlockTypes {
                         );
                     })
                     .translation("Button")
-                    .blockTags((provider, furnitureSet, block) -> {
-                        provider.tag(BlockTags.WOODEN_BUTTONS).withElement(block);
-                        provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
-                    })
+                    .blockTags((provider, furnitureSet, block) -> provider.tag(BlockTags.WOODEN_BUTTONS).withElement(block))
                     .itemTags((provider, furnitureSet, item) -> provider.tag(ItemTags.WOODEN_BUTTONS).withElement(item))
                     .recipe((provider, furnitureSet, item) -> provider
-                            .buttonBuilder(item, Ingredient.of(furnitureSet.getOrThrow(PLANKS)))
-                            .unlockedBy("has_planks", provider.has(furnitureSet.getOrThrow(PLANKS)))
+                            .buttonBuilder(item, Ingredient.of(furnitureSet.getCoreBlock()))
+                            .unlockedBy("has_core_block", provider.has(furnitureSet.getCoreBlock()))
                             .save(provider.output())
                     )
     );
@@ -897,18 +836,15 @@ public interface BlockTypes {
             (furnitureSet, properties) -> new CeilingHangingSignBlock(furnitureSet.woodType(), properties),
             (furnitureSet, block, properties) -> new HangingSignItem(block, wallHangingSign(furnitureSet), properties),
             builder -> builder
-                    .copyInitialBlockPropertiesLegacy(() -> Blocks.OAK_HANGING_SIGN)
+                    .baseBlock(() -> Blocks.OAK_HANGING_SIGN)
                     .itemProperties(properties -> properties.stacksTo(16))
                     .blockEntity(() -> BlockEntityType.HANGING_SIGN)
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
-                    .model(() -> (context, models, furnitureSet, block) -> models.createHangingSign(furnitureSet.getOrThrow(PLANKS), block, wallHangingSign(furnitureSet)))
+                    .model(() -> (context, models, furnitureSet, block) -> models.createHangingSign(furnitureSet.getCoreBlock(), block, wallHangingSign(furnitureSet)))
                     .translation("Hanging Sign")
-                    .blockTags((provider, furnitureSet, block) -> {
-                        provider.tag(BlockTags.CEILING_HANGING_SIGNS).withElement(block);
-                        provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
-                    })
+                    .blockTags((provider, furnitureSet, block) -> provider.tag(BlockTags.CEILING_HANGING_SIGNS).withElement(block))
                     .itemTags((provider, furnitureSet, item) -> provider.tag(ItemTags.HANGING_SIGNS).withElement(item))
-                    .recipe((provider, furnitureSet, item) -> provider.hangingSign(item, furnitureSet.getOrThrow(PLANKS)))
+                    .recipe((provider, furnitureSet, item) -> provider.hangingSign(item, furnitureSet.getCoreBlock()))
                     // .require(WALL_HANGING_SIGN)
     );
     // endregion
@@ -918,13 +854,10 @@ public interface BlockTypes {
             "wall_hanging_sign",
             (furnitureSet, properties) -> new WallHangingSignBlock(furnitureSet.woodType(), properties),
             builder -> builder
-                    .copyInitialBlockPropertiesLegacy(() -> Blocks.OAK_WALL_HANGING_SIGN)
+                    .baseBlock(() -> Blocks.OAK_WALL_HANGING_SIGN)
                     .blockProperties((furnitureSet, properties) -> properties.overrideLootTable(furnitureSet.getOrThrow(HANGING_SIGN).getLootTable()))
                     .blockEntity(() -> BlockEntityType.HANGING_SIGN)
-                    .blockTags((provider, furnitureSet, block) -> {
-                        provider.tag(BlockTags.WALL_HANGING_SIGNS).withElement(block);
-                        provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
-                    })
+                    .blockTags((provider, furnitureSet, block) -> provider.tag(BlockTags.WALL_HANGING_SIGNS).withElement(block))
     );
     // endregion
 
@@ -934,25 +867,22 @@ public interface BlockTypes {
             (furnitureSet, properties) -> new StandingSignBlock(furnitureSet.woodType(), properties),
             (furnitureSet, block, properties) -> new SignItem(block, wallSign(furnitureSet), properties),
             builder -> builder
-                    .copyInitialBlockPropertiesLegacy(() -> Blocks.OAK_SIGN)
+                    .baseBlock(() -> Blocks.OAK_SIGN)
                     .itemProperties(properties -> properties.stacksTo(16))
                     .blockEntity(() -> BlockEntityType.SIGN)
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> {
-                        var model = ModelTemplates.PARTICLE_ONLY.create(block, TextureMapping.particle(furnitureSet.getOrThrow(PLANKS)), models.modelOutput);
+                        var model = ModelTemplates.PARTICLE_ONLY.create(block, TextureMapping.particle(furnitureSet.getCoreBlock()), models.modelOutput);
                         models.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, model));
                         models.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(wallSign(furnitureSet), model));
                         models.registerSimpleFlatItemModel(block.asItem());
                     })
                     .translation("Sign")
-                    .blockTags((provider, furnitureSet, block) -> {
-                        provider.tag(BlockTags.STANDING_SIGNS).withElement(block);
-                        provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
-                    })
+                    .blockTags((provider, furnitureSet, block) -> provider.tag(BlockTags.STANDING_SIGNS).withElement(block))
                     .itemTags((provider, furnitureSet, item) -> provider.tag(ItemTags.SIGNS).withElement(item))
                     .recipe((provider, furnitureSet, item) -> provider
-                            .signBuilder(item, Ingredient.of(furnitureSet.getOrThrow(PLANKS)))
-                            .unlockedBy("has_planks", provider.has(furnitureSet.getOrThrow(PLANKS)))
+                            .signBuilder(item, Ingredient.of(furnitureSet.getCoreBlock()))
+                            .unlockedBy("has_core_block", provider.has(furnitureSet.getCoreBlock()))
                             .save(provider.output())
                     )
                     // .require(WALL_SIGN)
@@ -964,13 +894,10 @@ public interface BlockTypes {
             "wall_sign",
             (furnitureSet, properties) -> new WallSignBlock(furnitureSet.woodType(), properties),
             builder -> builder
-                    .copyInitialBlockPropertiesLegacy(() -> Blocks.OAK_WALL_SIGN)
+                    .baseBlock(() -> Blocks.OAK_WALL_SIGN)
                     .blockProperties((furnitureSet, properties) -> properties.overrideLootTable(furnitureSet.getOrThrow(SIGN).getLootTable()))
                     .blockEntity(() -> BlockEntityType.SIGN)
-                    .blockTags((provider, furnitureSet, block) -> {
-                        provider.tag(BlockTags.WALL_SIGNS).withElement(block);
-                        provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
-                    })
+                    .blockTags((provider, furnitureSet, block) -> provider.tag(BlockTags.WALL_SIGNS).withElement(block))
     );
     // endregion
 
@@ -1049,9 +976,11 @@ public interface BlockTypes {
     }
 
     static <TItem extends Item> void furnitureStationRecipe(RecipeProvider provider, FurnitureSet furnitureSet, TItem item) {
+        var wool = furnitureSet.getWool();
+
         FurnitureStationRecipeBuilder
-                .builder(RecipeCategory.MISC, Ingredient.of(furnitureSet.getOrThrow(PLANKS)), Ingredient.of(furnitureSet.getOrThrow(WOOL)), provider.tag(FurnitureStationSetup.BINDING_AGENT), item)
-                .unlockedBy("has_planks", provider.has(furnitureSet.getOrThrow(PLANKS)))
+                .builder(RecipeCategory.MISC, Ingredient.of(furnitureSet.getCoreBlock()), wool == null ? null : Ingredient.of(wool), provider.tag(FurnitureStationSetup.BINDING_AGENT), item)
+                .unlockedBy("has_core_block", provider.has(furnitureSet.getCoreBlock()))
                 .save(provider.output(), RecipeProvider.recipeKeyWithPrefix(item, "furniture_station/"));
     }
 

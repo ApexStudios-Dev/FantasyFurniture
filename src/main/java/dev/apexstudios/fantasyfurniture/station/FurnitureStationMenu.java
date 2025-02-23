@@ -20,6 +20,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.neoforged.neoforge.network.PacketDistributor;
+import org.jetbrains.annotations.Nullable;
 
 public final class FurnitureStationMenu extends AbstractContainerMenu {
     private final ContainerLevelAccess levelAccess;
@@ -43,7 +44,7 @@ public final class FurnitureStationMenu extends AbstractContainerMenu {
         var slotX = 8;
 
         addSlot(new InputSlot(FurnitureStationSetup.SLOT_PLANKS, slotX + 8 + SLOT_SIZE, FurnitureStationRecipe::planks));
-        addSlot(new InputSlot(FurnitureStationSetup.SLOT_WOOL, slotX + 8 + SLOT_SIZE * 2, FurnitureStationRecipe::wool));
+        addSlot(new InputSlot(FurnitureStationSetup.SLOT_WOOL, slotX + 8 + SLOT_SIZE * 2, recipe -> recipe.wool().orElse(null)));
         addSlot(new InputSlot(FurnitureStationSetup.SLOT_BINDING_AGENT, slotX, FurnitureStationRecipe::bindingAgent));
 
         addSlot(new Slot(resultContainer, 0, 150, 8) {
@@ -226,9 +227,9 @@ public final class FurnitureStationMenu extends AbstractContainerMenu {
     }
 
     private class InputSlot extends Slot {
-        private final Function<FurnitureStationRecipe, Ingredient> ingredientGetter;
+        private final Function<FurnitureStationRecipe, @Nullable Ingredient> ingredientGetter;
 
-        private InputSlot(int index, int x, Function<FurnitureStationRecipe, Ingredient> ingredientGetter) {
+        private InputSlot(int index, int x, Function<FurnitureStationRecipe, @Nullable Ingredient> ingredientGetter) {
             super(inputContainer, index, x, 8);
 
             this.ingredientGetter = ingredientGetter;
@@ -249,9 +250,9 @@ public final class FurnitureStationMenu extends AbstractContainerMenu {
             var recipes = sPlayer.serverLevel().recipeAccess().recipeMap().byType(FurnitureStationSetup.RECIPE_TYPE.value());
 
             for(var holder : recipes) {
-                var recipe = holder.value();
+                var ingredient = ingredientGetter.apply(holder.value());
 
-                if(ingredientGetter.apply(recipe).test(stack))
+                if(ingredient != null && ingredient.test(stack))
                     return true;
             }
 

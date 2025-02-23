@@ -9,7 +9,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
-import java.util.function.UnaryOperator;
+import java.util.function.Supplier;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.Sheets;
@@ -17,31 +17,49 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.function.Consumers;
+import org.jetbrains.annotations.Nullable;
 
 public final class FurnitureSet {
-    private final Registree registree;
+    final Registree registree;
     private final String name;
     private final Set<BlockType<?>> blockTypes;
     private final WoodType woodType;
     private final ResourceKey<CreativeModeTab> creativeModeTab;
+    private final boolean usesPrefix;
+    final Supplier<? extends BlockBehaviour> baseBlock;
+    private final TagKey<Block> mineableTag;
+    private final BlockType<?> coreBlockType;
+    @Nullable private final ItemLike woolItem;
 
     private FurnitureSet(FurnitureSetBuilder builder) {
         registree = builder.registree;
         name = builder.name;
-        blockTypes = Collections.unmodifiableSet(Sets.newLinkedHashSet(builder.blockTypes.values()));
+        blockTypes = blockTypes(builder);
         woodType = builder.woodType.build(name + "_wood_type", name + "_block_set");
+        usesPrefix = builder.usesPrefix;
+        baseBlock = builder.baseBlock;
+        mineableTag = builder.mineableTag;
+        coreBlockType = builder.coreBlockType;
+        woolItem = builder.woolItem;
 
-        creativeModeTab = registree.registerCreativeModeTab(name, () -> new ItemStack(getOrThrow(BlockTypes.WOOL)), (parameters, output) -> {
+        // TODO: look into having the tab icon cycle between all registered blocks
+        creativeModeTab = registree.registerCreativeModeTab(name, () -> new ItemStack(getOrThrow(BlockTypes.BED_SINGLE)), (parameters, output) -> {
             blockTypes.forEach(blockType -> {
                 var block = getOrThrow(blockType);
 
@@ -51,9 +69,13 @@ public final class FurnitureSet {
         });
     }
 
+    String registrationName(String registrationName) {
+        return usesPrefix ? name + '_' + registrationName : registrationName;
+    }
+
     public void register(IEventBus modBus) {
         for(var blockType : blockTypes) {
-            blockType.register(modBus, this, registree);
+            blockType.register(modBus, this);
         }
 
         modBus.addListener(FMLClientSetupEvent.class, event -> event.enqueueWork(() -> {
@@ -84,6 +106,13 @@ public final class FurnitureSet {
         }
 
         pack.providing(ProviderTypes.LANGUAGE, (context, provider) -> provider.addCreativeModeTab(creativeModeTab, StringUtils.capitalize(name)));
+
+        pack.providing(ProviderTypes.BLOCK_TAGS, (context, provider) -> {
+            for(var blockType : blockTypes) {
+                if(blockType.usesMineableTag)
+                    provider.tag(mineableTag).withElement(getOrThrow(blockType));
+            }
+        });
     }
 
     public String ownerNamespace() {
@@ -107,19 +136,35 @@ public final class FurnitureSet {
     }
 
     public boolean isRegistered(BlockType<?> blockType) {
-        return registree.containsKey(Registries.BLOCK, blockType.registryName);
+        return registree.containsKey(Registries.BLOCK, registrationName(blockType.registryName));
     }
 
     public <TBlock extends Block> Optional<TBlock> get(BlockType<TBlock> blockType) {
-        return registree.getOptional(Registries.BLOCK, blockType.registryName).map(value -> (TBlock) value);
+        return registree.getOptional(Registries.BLOCK, registrationName(blockType.registryName)).map(value -> (TBlock) value);
     }
 
     public <TBlock extends Block> TBlock getOrThrow(BlockType<TBlock> blockType) {
-        return get(blockType).orElseThrow();
+        return get(blockType).orElseThrow(() -> new NullPointerException());
     }
 
     public <TBlock extends Block> void ifRegistered(BlockType<TBlock> blockType, Consumer<TBlock> consumer) {
         get(blockType).ifPresent(consumer);
+    }
+
+    public BlockType<?> coreBlockType() {
+        return coreBlockType;
+    }
+
+    public Block getCoreBlock() {
+        return getOrThrow(coreBlockType);
+    }
+
+    @Nullable
+    public ItemLike getWool() {
+        if(woolItem != null)
+            return woolItem;
+
+        return get(BlockTypes.WOOL).orElse(null);
     }
 
     public boolean is(ItemStack stack) {
@@ -157,11 +202,48 @@ public final class FurnitureSet {
         return "FurnitureSet{" + ownerNamespace() + ResourceLocation.NAMESPACE_SEPARATOR + name + '}';
     }
 
-    public static FurnitureSet create(Registree registree, String name, UnaryOperator<FurnitureSetBuilder> builder) {
-        return builder.andThen(FurnitureSet::new).apply(new FurnitureSetBuilder(registree, name));
+    public static FurnitureSet create(Registree registree, String name, Consumer<FurnitureSetBuilder> consumer) {
+        var builder = new FurnitureSetBuilder(registree, name);
+        consumer.accept(builder);
+        return new FurnitureSet(builder);
     }
 
-    public static FurnitureSet create(Registree registree, String name) {
-        return create(registree, name, UnaryOperator.identity());
+    public static FurnitureSet createWoodLike(Registree registree, String name, Consumer<FurnitureSetBuilder> consumer) {
+        return create(registree, name, builder -> {
+            builder.baseBlock(() -> Blocks.OAK_PLANKS)
+                    .mineable(BlockTags.MINEABLE_WITH_AXE)
+                    .baseBlockType(BlockTypes.PLANKS)
+                    .woodType(woodType -> woodType.copy(WoodType.OAK))
+                    .with(FurnitureSetBuilder.WOODEN_BLOCK_TYPES);
+
+            consumer.accept(builder);
+        });
+    }
+
+    public static FurnitureSet createWoodLike(Registree registree, String name) {
+        return createWoodLike(registree, name, Consumers.nop());
+    }
+
+    public static FurnitureSet createStoneLike(Registree registree, String name, Consumer<FurnitureSetBuilder> consumer) {
+        return createWoodLike(registree, name, builder -> {
+            builder.baseBlock(() -> Blocks.STONE)
+                    .mineable(BlockTags.MINEABLE_WITH_PICKAXE)
+                    .baseBlockType(BlockTypes.BRICKS)
+                    .blockSet(blockSet -> blockSet.copy(BlockSetType.STONE))
+                    .remove(BlockTypes.PLANKS);
+
+            consumer.accept(builder);
+        });
+    }
+
+    public static FurnitureSet createStoneLike(Registree registree, String name) {
+        return createStoneLike(registree, name, Consumers.nop());
+    }
+
+    private static Set<BlockType<?>> blockTypes(FurnitureSetBuilder builder) {
+        var blockTypes = Sets.newLinkedHashSet(builder.blockTypes.values());
+        // core block type is required and must always be registered first
+        blockTypes.addFirst(builder.coreBlockType);
+        return Collections.unmodifiableSet(blockTypes);
     }
 }
