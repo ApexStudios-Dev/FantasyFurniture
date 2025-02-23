@@ -14,6 +14,19 @@ issueTrackerURL="https://github.com/ApexStudios-Dev/Issues/issues"
     displayURL="https://modrinth.com/project/fantasys-furniture-venthyr"
 
 [[dependencies.fantasyfurniture_venthyr]]
+    modId="minecraft"
+    type="required"
+    versionRange="[1.21.4,1.21.5)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.fantasyfurniture_venthyr]]
+    modId="neoforge"
+    type="required"
+    versionRange="[21.4,21.5)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.fantasyfurniture_venthyr]]
     modId="apexcore"
     type="required"
     versionRange="[21.4,21.5)"
