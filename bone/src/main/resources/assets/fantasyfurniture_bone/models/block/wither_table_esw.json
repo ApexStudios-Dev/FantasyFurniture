@@ -1,0 +1,7 @@
+{
+	"parent": "fantasyfurniture_bone:block/templates/table_esw",
+	"textures": {
+		"table": "fantasyfurniture_bone:block/wither_table",
+		"particle": "fantasyfurniture_bone:block/wither_particle"
+	}
+}

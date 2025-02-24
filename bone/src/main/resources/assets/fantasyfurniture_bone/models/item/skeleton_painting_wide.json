@@ -1,0 +1,6 @@
+{
+	"parent": "fantasyfurniture_bone:item/templates/painting_wide",
+	"textures": {
+		"painting_wide": "fantasyfurniture_bone:block/skeleton_painting_wide"
+	}
+}

@@ -1,0 +1,7 @@
+{
+	"parent": "fantasyfurniture_bone:block/templates/bed_single_top",
+	"textures": {
+		"bed_single": "fantasyfurniture_bone:block/skeleton_bed_single",
+		"particle": "fantasyfurniture_bone:block/skeleton_particle"
+	}
+}

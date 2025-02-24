@@ -1,0 +1,6 @@
+{
+	"parent": "fantasyfurniture_bone:item/templates/bed_single",
+	"textures": {
+		"bed_single": "fantasyfurniture_bone:block/wither_bed_single"
+	}
+}

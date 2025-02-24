@@ -1,0 +1,6 @@
+{
+	"parent": "fantasyfurniture_bone:item/templates/door_single",
+	"textures": {
+		"door_single": "fantasyfurniture_bone:block/wither_door_single"
+	}
+}

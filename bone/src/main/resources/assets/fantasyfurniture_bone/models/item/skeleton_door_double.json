@@ -1,0 +1,6 @@
+{
+	"parent": "fantasyfurniture_bone:item/templates/door_double",
+	"textures": {
+		"door_double": "fantasyfurniture_bone:block/skeleton_door_double"
+	}
+}

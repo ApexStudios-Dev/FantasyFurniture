@@ -1,0 +1,7 @@
+{
+	"parent": "fantasyfurniture_bone:block/templates/bookshelf_bottom_left",
+	"textures": {
+		"bookshelf": "fantasyfurniture_bone:block/wither_bookshelf",
+		"particle": "fantasyfurniture_bone:block/wither_particle"
+	}
+}

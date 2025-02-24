@@ -1,0 +1,6 @@
+{
+	"parent": "fantasyfurniture_bone:item/templates/chest",
+	"textures": {
+		"chest": "fantasyfurniture_bone:block/wither_chest"
+	}
+}

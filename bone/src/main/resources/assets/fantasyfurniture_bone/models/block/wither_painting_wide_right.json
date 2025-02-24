@@ -1,0 +1,7 @@
+{
+	"parent": "fantasyfurniture_bone:block/templates/painting_wide_right",
+	"textures": {
+		"painting_wide": "fantasyfurniture_bone:block/wither_painting_wide",
+		"particle": "fantasyfurniture_bone:block/wither_particle"
+	}
+}
