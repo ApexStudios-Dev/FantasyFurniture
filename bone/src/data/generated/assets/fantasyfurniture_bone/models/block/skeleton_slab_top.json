@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "fantasyfurniture_bone:block/skeleton_bricks",
+    "side": "fantasyfurniture_bone:block/skeleton_bricks",
+    "top": "fantasyfurniture_bone:block/skeleton_bricks"
+  }
+}

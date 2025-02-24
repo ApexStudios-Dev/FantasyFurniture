@@ -96,3 +96,21 @@ jobs:
             logo: "https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/new/fantasyfurniture_venthyr.png"
             color: "15433856" # EB8080
             artifact_id: fantasyfurniture-venthyr
+
+    publish-bone:
+        needs: [ get-vars, build ]
+        if: success()
+        uses: ./.github/workflows/_publish-furnitureset.yml
+        secrets: inherit
+        with:
+            java_version: 17
+            java_vendor: temurin
+            artifact_id: artifacts-bone
+            version: ${{ needs.get-vars.outputs.version }}
+            # TODO: These point towards the dummy projects
+            curseforge_id: 835372
+            modrinth_id: EjjiYArZ
+            release_type: alpha
+            name: "Fantasy's Furniture - Bone"
+            logo: "https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/new/fantasyfurniture_bone.png"
+            color: "16775652" # FFF9E4
