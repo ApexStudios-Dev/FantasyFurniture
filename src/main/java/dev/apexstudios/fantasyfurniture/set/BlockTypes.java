@@ -76,6 +76,7 @@ import net.minecraft.world.level.block.FenceBlock;
 import net.minecraft.world.level.block.FenceGateBlock;
 import net.minecraft.world.level.block.PressurePlateBlock;
 import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.StandingSignBlock;
 import net.minecraft.world.level.block.TrapDoorBlock;
@@ -143,6 +144,7 @@ public interface BlockTypes {
             BlockFactory.wrapping(Block::new),
             builder -> builder
                     .baseBlock(() -> Blocks.WHITE_WOOL)
+                    .blockProperties(properties -> properties.sound(SoundType.WOOL))
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> models.createTrivialCube(block))
                     .translation("Wool")
@@ -167,6 +169,7 @@ public interface BlockTypes {
             BlockFactory.wrapping(CarpetBlock::new),
             builder -> builder
                     .baseBlock(() -> Blocks.WHITE_CARPET)
+                    .blockProperties(properties -> properties.sound(SoundType.WOOL))
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> models.blockStateOutput.accept(
                             BlockModelGenerators.createSimpleBlock(block, TexturedModel.CARPET.get(furnitureSet.getOrThrow(WOOL)).create(block, models.modelOutput))
