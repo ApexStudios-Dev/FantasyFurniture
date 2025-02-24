@@ -33,7 +33,7 @@ public final class BoneFurnitureSet {
                 )
                 .blockSet(blockSet -> blockSet.soundType(SoundType.BONE_BLOCK))
                 .wool(Items.SOUL_SAND)
-                .remove(BlockTypes.WOOL, BlockTypes.CARPET)
+                .remove(BlockTypes.WOOL, BlockTypes.CARPET, BlockTypes.FENCE_GATE)
         );
     }
 }
