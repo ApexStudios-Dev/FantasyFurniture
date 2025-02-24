@@ -72,5 +72,9 @@
   "block.fantasyfurniture_bone.wither_wall_light": "Wither Wall Light",
   "block.fantasyfurniture_bone.wither_wardrobe": "Wither Wardrobe",
   "itemGroup.fantasyfurniture_bone.skeleton": "Skeleton",
-  "itemGroup.fantasyfurniture_bone.wither": "Wither"
+  "itemGroup.fantasyfurniture_bone.wither": "Wither",
+  "tag.block.fantasyfurniture.skeleton": "Skeleton (Blocks)",
+  "tag.block.fantasyfurniture.wither": "Wither (Blocks)",
+  "tag.item.fantasyfurniture.skeleton": "Skeleton (Items)",
+  "tag.item.fantasyfurniture.wither": "Wither (Items)"
 }
