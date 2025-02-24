@@ -38,5 +38,7 @@
   "block.fantasyfurniture_venthyr.wall_light": "Venthyr Wall Light",
   "block.fantasyfurniture_venthyr.wardrobe": "Venthyr Wardrobe",
   "block.fantasyfurniture_venthyr.wool": "Venthyr Wool",
-  "itemGroup.fantasyfurniture_venthyr.venthyr": "Venthyr"
+  "itemGroup.fantasyfurniture_venthyr.venthyr": "Venthyr",
+  "tag.block.fantasyfurniture.venthyr": "Venthyr (Blocks)",
+  "tag.item.fantasyfurniture.venthyr": "Venthyr (Items)"
 }

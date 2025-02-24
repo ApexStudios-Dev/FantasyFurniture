@@ -41,6 +41,7 @@ public final class FantasyFurnitureDataEntryPoint {
                         .addBlock(FurnitureStationSetup.BLOCK, "Furniture Station")
                         .add(FantasyFurniture.FURNITURE_PLANKS, "Planks (Furniture Input)")
                         .add(FantasyFurniture.FURNITURE_WOOL, "Wools (Furniture Input)")
+                        .add(FantasyFurniture.FURNITURE_BRICKS, "Bricks (Furniture Input)")
                         .add(FurnitureStationSetup.BINDING_AGENT, "Furniture Binding Agents")
                 )
                 .providing(ProviderTypes.MODELS, (context, provider) -> {

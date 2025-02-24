@@ -4,6 +4,7 @@ import com.google.common.collect.Sets;
 import dev.apexstudios.apexcore.lib.data.ProviderTypes;
 import dev.apexstudios.apexcore.lib.data.ResourceGenerator;
 import dev.apexstudios.apexcore.lib.registree.Registree;
+import dev.apexstudios.fantasyfurniture.FantasyFurniture;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Optional;
@@ -13,7 +14,6 @@ import java.util.function.Supplier;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.Sheets;
-import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -22,6 +22,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -45,6 +46,8 @@ public final class FurnitureSet {
     final Supplier<? extends BlockBehaviour> baseBlock;
     private final TagKey<Block> mineableTag;
     private final BlockType<?> coreBlockType;
+    private final TagKey<Block> blockTag;
+    private final TagKey<Item> itemTag;
     @Nullable private final ItemLike woolItem;
 
     private FurnitureSet(FurnitureSetBuilder builder) {
@@ -57,6 +60,9 @@ public final class FurnitureSet {
         mineableTag = builder.mineableTag;
         coreBlockType = builder.coreBlockType;
         woolItem = builder.woolItem;
+
+        blockTag = TagKey.create(Registries.BLOCK, FantasyFurniture.identifier(name));
+        itemTag = TagKey.create(Registries.ITEM, FantasyFurniture.identifier(name));
 
         // TODO: look into having the tab icon cycle between all registered blocks
         creativeModeTab = registree.registerCreativeModeTab(name, () -> new ItemStack(getOrThrow(BlockTypes.BED_SINGLE)), (parameters, output) -> {
@@ -105,12 +111,29 @@ public final class FurnitureSet {
             blockType.registerDataGen(pack, this);
         }
 
-        pack.providing(ProviderTypes.LANGUAGE, (context, provider) -> provider.addCreativeModeTab(creativeModeTab, StringUtils.capitalize(name)));
+        pack.providing(ProviderTypes.LANGUAGE, (context, provider) -> {
+            var englishName = StringUtils.capitalize(name);
+
+            provider.addCreativeModeTab(creativeModeTab, englishName);
+            provider.add(blockTag, englishName + " (Blocks)");
+            provider.add(itemTag, englishName + " (Items)");
+        });
 
         pack.providing(ProviderTypes.BLOCK_TAGS, (context, provider) -> {
             for(var blockType : blockTypes) {
+                provider.tag(blockTag).withElement(getOrThrow(blockType));
+
                 if(blockType.usesMineableTag)
                     provider.tag(mineableTag).withElement(getOrThrow(blockType));
+            }
+        });
+
+        pack.providing(ProviderTypes.ITEM_TAGS, (context, provider) -> {
+            for(var blockType : blockTypes) {
+                var item = getOrThrow(blockType).asItem();
+
+                if(item != Items.AIR)
+                    provider.tag(itemTag).withElement(item);
             }
         });
     }
@@ -168,19 +191,19 @@ public final class FurnitureSet {
     }
 
     public boolean is(ItemStack stack) {
-        return registree.listElements(Registries.ITEM).anyMatch(stack::is);
+        return stack.is(itemTag);
     }
 
     public boolean is(BlockState blockState) {
-        return registree.listElements(Registries.BLOCK).anyMatch(blockState::is);
+        return blockState.is(blockTag);
     }
 
     public boolean is(Block block) {
-        return registree.listElements(Registries.BLOCK).map(Holder::value).anyMatch(value -> value == block);
+        return block.builtInRegistryHolder().is(blockTag);
     }
 
     public boolean is(Item item) {
-        return registree.listElements(Registries.ITEM).map(Holder::value).anyMatch(value -> value == item);
+        return item.builtInRegistryHolder().is(itemTag);
     }
 
     @Override
