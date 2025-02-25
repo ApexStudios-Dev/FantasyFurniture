@@ -3,6 +3,7 @@ package dev.apexstudios.fantasyfurniture.station;
 import com.google.common.collect.Maps;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.Criterion;
@@ -22,15 +23,15 @@ public final class FurnitureStationRecipeBuilder implements RecipeBuilder {
     private final RecipeCategory category;
     @Nullable private String group = null;
     private final Ingredient planks;
-    private final Ingredient wool;
+    private final Optional<Ingredient> wool;
     private final Ingredient bindingAgent;
     private final ItemStack result;
     private final Map<String, Criterion<?>> criteria = Maps.newLinkedHashMap();
 
-    private FurnitureStationRecipeBuilder(RecipeCategory category, Ingredient planks, Ingredient wool, Ingredient bindingAgent, ItemStack result) {
+    private FurnitureStationRecipeBuilder(RecipeCategory category, Ingredient planks, @Nullable Ingredient wool, Ingredient bindingAgent, ItemStack result) {
         this.category = category;
         this.planks = planks;
-        this.wool = wool;
+        this.wool = Optional.ofNullable(wool);
         this.bindingAgent = bindingAgent;
         this.result = result;
     }
@@ -68,15 +69,15 @@ public final class FurnitureStationRecipeBuilder implements RecipeBuilder {
         output.accept(recipeKey, recipe, advancement.build(recipeKey.location().withPrefix("recipes/" + category.getFolderName() + '/')));
     }
 
-    public static FurnitureStationRecipeBuilder builder(RecipeCategory category, Ingredient planks, Ingredient wool, Ingredient bindingAgent, ItemStack result) {
+    public static FurnitureStationRecipeBuilder builder(RecipeCategory category, Ingredient planks, @Nullable Ingredient wool, Ingredient bindingAgent, ItemStack result) {
         return new FurnitureStationRecipeBuilder(category, planks, wool, bindingAgent, result);
     }
 
-    public static FurnitureStationRecipeBuilder builder(RecipeCategory category, Ingredient planks, Ingredient wool, Ingredient bindingAgent, ItemLike result, int count) {
+    public static FurnitureStationRecipeBuilder builder(RecipeCategory category, Ingredient planks, @Nullable Ingredient wool, Ingredient bindingAgent, ItemLike result, int count) {
         return builder(category, planks, wool, bindingAgent, new ItemStack(result, count));
     }
 
-    public static FurnitureStationRecipeBuilder builder(RecipeCategory category, Ingredient planks, Ingredient wool, Ingredient bindingAgent, ItemLike result) {
+    public static FurnitureStationRecipeBuilder builder(RecipeCategory category, Ingredient planks, @Nullable Ingredient wool, Ingredient bindingAgent, ItemLike result) {
         return builder(category, planks, wool, bindingAgent, new ItemStack(result));
     }
 }

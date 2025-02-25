@@ -37,5 +37,7 @@
   "block.fantasyfurniture_nordic.wall_light": "Nordic Wall Light",
   "block.fantasyfurniture_nordic.wardrobe": "Nordic Wardrobe",
   "block.fantasyfurniture_nordic.wool": "Nordic Wool",
-  "itemGroup.fantasyfurniture_nordic.nordic": "Nordic"
+  "itemGroup.fantasyfurniture_nordic.nordic": "Nordic",
+  "tag.block.fantasyfurniture.nordic": "Nordic (Blocks)",
+  "tag.item.fantasyfurniture.nordic": "Nordic (Items)"
 }

@@ -1,6 +1,7 @@
 package dev.apexstudios.fantasyfurniture.station;
 
 import java.util.List;
+import java.util.Optional;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -14,11 +15,11 @@ import net.minecraft.world.level.Level;
 public final class FurnitureStationRecipe implements Recipe<FurnitureStationRecipeInput> {
     private final String group;
     private final Ingredient planks;
-    private final Ingredient wool;
+    private final Optional<Ingredient> wool;
     private final Ingredient bindingAgent;
     private final ItemStack result;
 
-    FurnitureStationRecipe(String group, Ingredient planks, Ingredient wool, Ingredient bindingAgent, ItemStack result) {
+    FurnitureStationRecipe(String group, Ingredient planks, Optional<Ingredient> wool, Ingredient bindingAgent, ItemStack result) {
         this.group = group;
         this.planks = planks;
         this.wool = wool;
@@ -30,7 +31,7 @@ public final class FurnitureStationRecipe implements Recipe<FurnitureStationReci
         return planks;
     }
 
-    public Ingredient wool() {
+    public Optional<Ingredient> wool() {
         return wool;
     }
 
@@ -43,7 +44,10 @@ public final class FurnitureStationRecipe implements Recipe<FurnitureStationReci
     }
 
     private boolean matches(FurnitureStationRecipeInput input) {
-        return planks.test(input.planks()) && wool.test(input.wool()) && bindingAgent.test(input.bindingAgent());
+        if(wool.isPresent() && !wool.get().test(input.wool()))
+            return false;
+
+        return planks.test(input.planks()) && bindingAgent.test(input.bindingAgent());
     }
 
     @Override
@@ -68,7 +72,7 @@ public final class FurnitureStationRecipe implements Recipe<FurnitureStationReci
 
     @Override
     public PlacementInfo placementInfo() {
-        return PlacementInfo.create(List.of(planks, wool, bindingAgent));
+        return PlacementInfo.create(wool.map(wool -> List.of(planks, wool, bindingAgent)).orElseGet(() -> List.of(planks, bindingAgent)));
     }
 
     @Override
