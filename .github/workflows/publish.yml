@@ -105,7 +105,6 @@ jobs:
         with:
             java_version: 17
             java_vendor: temurin
-            artifact_id: artifacts-bone
             version: ${{ needs.get-vars.outputs.version }}
             # TODO: These point towards the dummy projects
             curseforge_id: 835372
@@ -114,3 +113,4 @@ jobs:
             name: "Fantasy's Furniture - Bone"
             logo: "https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/new/fantasyfurniture_bone.png"
             color: "16775652" # FFF9E4
+            artifact_id: fantasyfurniture-bone
