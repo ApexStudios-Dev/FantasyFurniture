@@ -1,0 +1,10 @@
+{
+  "type": "fantasyfurniture:furniture_station",
+  "binding_agent": "#fantasyfurniture:binding_agent",
+  "planks": "fantasyfurniture_bone:skeleton_bricks",
+  "result": {
+    "count": 1,
+    "id": "fantasyfurniture_bone:skeleton_dresser"
+  },
+  "wool": "minecraft:soul_sand"
+}

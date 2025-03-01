@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    "fantasyfurniture_bone:wither_bricks"
+  ],
+  "result": {
+    "count": 1,
+    "id": "fantasyfurniture_bone:wither_button"
+  }
+}

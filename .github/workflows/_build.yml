@@ -59,3 +59,10 @@ jobs:
                   name: artifacts-fantasyfurniture-venthyr
                   path: ./build/libs/fantasyfurniture-venthyr-${{ inputs.version }}.jar
                   if-no-files-found: error
+
+            - name: Upload Built Artifacts (Bone)
+              uses: actions/upload-artifact@v4
+              with:
+                  name: artifacts-fantasyfurniture-bone
+                  path: ./build/libs/fantasyfurniture-bone-${{ inputs.version }}.jar
+                  if-no-files-found: error
