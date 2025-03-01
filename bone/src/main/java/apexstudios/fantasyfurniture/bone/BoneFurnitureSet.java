@@ -27,6 +27,7 @@ public final class BoneFurnitureSet {
         return FurnitureSet.createStoneLike(REGISTREE, name, builder -> builder
                 .usesPrefix()
                 .baseBlock(() -> Blocks.BONE_BLOCK)
+                .with(BlockTypes.CUSHION.copy(copier -> copier.builder($ -> $.translation("\"Cushion\""))))
                 .woodType(woodType -> woodType
                         .soundType(SoundType.BONE_BLOCK)
                         .hangingSignSoundType(SoundType.BONE_BLOCK)
