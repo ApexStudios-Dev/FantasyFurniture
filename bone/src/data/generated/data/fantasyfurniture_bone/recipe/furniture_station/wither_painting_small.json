@@ -1,0 +1,10 @@
+{
+  "type": "fantasyfurniture:furniture_station",
+  "binding_agent": "#fantasyfurniture:binding_agent",
+  "planks": "fantasyfurniture_bone:wither_bricks",
+  "result": {
+    "count": 1,
+    "id": "fantasyfurniture_bone:wither_painting_small"
+  },
+  "wool": "minecraft:soul_sand"
+}

@@ -1,0 +1,7 @@
+{
+	"parent": "fantasyfurniture_bone:block/templates/door_double_left_top_open",
+	"textures": {
+		"door_double": "fantasyfurniture_bone:block/wither_door_double",
+		"particle": "fantasyfurniture_bone:block/wither_particle"
+	}
+}

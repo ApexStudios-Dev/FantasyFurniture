@@ -1,0 +1,7 @@
+{
+	"parent": "fantasyfurniture_bone:block/templates/dresser_right",
+	"textures": {
+		"dresser": "fantasyfurniture_bone:block/wither_dresser",
+		"particle": "fantasyfurniture_bone:block/wither_particle"
+	}
+}

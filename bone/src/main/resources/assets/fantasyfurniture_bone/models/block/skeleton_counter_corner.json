@@ -1,0 +1,7 @@
+{
+	"parent": "fantasyfurniture_bone:block/templates/counter_corner",
+	"textures": {
+		"counter": "fantasyfurniture_bone:block/skeleton_counter",
+		"particle": "fantasyfurniture_bone:block/skeleton_particle"
+	}
+}

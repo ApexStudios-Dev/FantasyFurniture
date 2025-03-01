@@ -1,0 +1,32 @@
+{
+  "values": [
+    "fantasyfurniture_bone:skeleton_bed_double",
+    "fantasyfurniture_bone:skeleton_bed_single",
+    "fantasyfurniture_bone:skeleton_bench",
+    "fantasyfurniture_bone:skeleton_bookshelf",
+    "fantasyfurniture_bone:skeleton_chair",
+    "fantasyfurniture_bone:skeleton_chest",
+    "fantasyfurniture_bone:skeleton_desk_left",
+    "fantasyfurniture_bone:skeleton_desk_right",
+    "fantasyfurniture_bone:skeleton_door_double",
+    "fantasyfurniture_bone:skeleton_door_single",
+    "fantasyfurniture_bone:skeleton_dresser",
+    "fantasyfurniture_bone:skeleton_floor_light",
+    "fantasyfurniture_bone:skeleton_painting_wide",
+    "fantasyfurniture_bone:skeleton_wardrobe",
+    "fantasyfurniture_bone:wither_bed_double",
+    "fantasyfurniture_bone:wither_bed_single",
+    "fantasyfurniture_bone:wither_bench",
+    "fantasyfurniture_bone:wither_bookshelf",
+    "fantasyfurniture_bone:wither_chair",
+    "fantasyfurniture_bone:wither_chest",
+    "fantasyfurniture_bone:wither_desk_left",
+    "fantasyfurniture_bone:wither_desk_right",
+    "fantasyfurniture_bone:wither_door_double",
+    "fantasyfurniture_bone:wither_door_single",
+    "fantasyfurniture_bone:wither_dresser",
+    "fantasyfurniture_bone:wither_floor_light",
+    "fantasyfurniture_bone:wither_painting_wide",
+    "fantasyfurniture_bone:wither_wardrobe"
+  ]
+}

@@ -1,0 +1,7 @@
+{
+	"parent": "fantasyfurniture_bone:block/templates/sofa_center",
+	"textures": {
+		"sofa": "fantasyfurniture_bone:block/wither_sofa",
+		"particle": "fantasyfurniture_bone:block/wither_particle"
+	}
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_core_block": {
+      "conditions": {
+        "items": [
+          {
+            "items": "fantasyfurniture_bone:wither_bricks"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "fantasyfurniture_bone:furniture_station/wither_wall_light"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_core_block"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "fantasyfurniture_bone:furniture_station/wither_wall_light"
+    ]
+  }
+}

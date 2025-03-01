@@ -1,0 +1,7 @@
+{
+	"parent": "fantasyfurniture_bone:block/templates/painting_small",
+	"textures": {
+		"painting_small": "fantasyfurniture_bone:block/wither_painting_small",
+		"particle": "fantasyfurniture_bone:block/wither_particle"
+	}
+}

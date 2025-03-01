@@ -1,0 +1,68 @@
+on:
+    workflow_call:
+        inputs:
+            java_version:
+                type: string
+                required: true
+            java_vendor:
+                type: string
+                required: true
+            version:
+                type: string
+                required: true
+
+jobs:
+    build:
+        name: Build - v${{ inputs.version }}
+        runs-on: apexstudios
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Setup Java
+              uses: actions/setup-java@v4
+              with:
+                  distribution: ${{ inputs.java_vendor }}
+                  java-version: ${{ inputs.java_version }}
+
+            - name: Setup Gradle
+              uses: gradle/actions/setup-gradle@v4
+              with:
+                  cache-disabled: ${{ ! env.ACT }}
+                  cache-read-only: false
+
+            - name: Mark Gradle as Executable
+              run: chmod +x ./gradlew
+
+            - name: Build
+              run: ./gradlew :build
+              env:
+                  VERSION: ${{ inputs.version }}
+
+            - name: Upload Built Artifacts (Main)
+              uses: actions/upload-artifact@v4
+              with:
+                  name: artifacts-fantasyfurniture
+                  path: ./build/libs/fantasyfurniture-${{ inputs.version }}.jar
+                  if-no-files-found: error
+
+            - name: Upload Built Artifacts (Nordic)
+              uses: actions/upload-artifact@v4
+              with:
+                  name: artifacts-fantasyfurniture-nordic
+                  path: ./build/libs/fantasyfurniture-nordic-${{ inputs.version }}.jar
+                  if-no-files-found: error
+
+            - name: Upload Built Artifacts (Venthyr)
+              uses: actions/upload-artifact@v4
+              with:
+                  name: artifacts-fantasyfurniture-venthyr
+                  path: ./build/libs/fantasyfurniture-venthyr-${{ inputs.version }}.jar
+                  if-no-files-found: error
+
+            - name: Upload Built Artifacts (Bone)
+              uses: actions/upload-artifact@v4
+              with:
+                  name: artifacts-fantasyfurniture-bone
+                  path: ./build/libs/fantasyfurniture-bone-${{ inputs.version }}.jar
+                  if-no-files-found: error
