@@ -106,9 +106,8 @@ jobs:
             java_version: 17
             java_vendor: temurin
             version: ${{ needs.get-vars.outputs.version }}
-            # TODO: These point towards the dummy projects
-            curseforge_id: 835372
-            modrinth_id: EjjiYArZ
+            curseforge_id: 1209697
+            modrinth_id: oJ4TI49S
             release_type: alpha
             name: "Fantasy's Furniture - Bone"
             logo: "https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/new/fantasyfurniture_bone.png"
