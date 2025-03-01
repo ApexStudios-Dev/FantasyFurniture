@@ -2,6 +2,7 @@
 	"textures": {
 		"wall_light": "fantasyfurniture_bone:block/skeleton_wall_light"
 	},
+	"render_type": "minecraft:cutout",
 	"elements": [
 		{
 			"name": "base_1",
