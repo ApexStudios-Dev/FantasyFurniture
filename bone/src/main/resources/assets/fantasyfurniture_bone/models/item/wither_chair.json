@@ -1,6 +1,7 @@
 {
 	"parent": "fantasyfurniture_bone:item/templates/chair",
 	"textures": {
-		"chair": "fantasyfurniture_bone:block/wither_chair"
+		"chair": "fantasyfurniture_bone:block/wither_chair",
+		"particle": "fantasyfurniture_bone:block/wither_particle"
 	}
 }

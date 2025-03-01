@@ -1,6 +1,7 @@
 {
 	"parent": "fantasyfurniture_bone:item/templates/bed_double",
 	"textures": {
-		"bed_double": "fantasyfurniture_bone:block/wither_bed_double"
+		"bed_double": "fantasyfurniture_bone:block/wither_bed_double",
+		"particle": "fantasyfurniture_bone:block/wither_particle"
 	}
 }

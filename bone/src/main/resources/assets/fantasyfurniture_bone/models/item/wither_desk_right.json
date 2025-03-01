@@ -1,6 +1,7 @@
 {
 	"parent": "fantasyfurniture_bone:item/templates/desk_right",
 	"textures": {
-		"desk": "fantasyfurniture_bone:block/wither_desk"
+		"desk": "fantasyfurniture_bone:block/wither_desk",
+		"particle": "fantasyfurniture_bone:block/wither_particle"
 	}
 }
