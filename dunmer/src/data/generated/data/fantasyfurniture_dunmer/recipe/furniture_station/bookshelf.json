@@ -1,0 +1,10 @@
+{
+  "type": "fantasyfurniture:furniture_station",
+  "binding_agent": "#fantasyfurniture:binding_agent",
+  "planks": "fantasyfurniture_dunmer:planks",
+  "result": {
+    "count": 1,
+    "id": "fantasyfurniture_dunmer:bookshelf"
+  },
+  "wool": "fantasyfurniture_dunmer:wool"
+}

@@ -48,6 +48,10 @@ val furnitureSets = listOf(
     ModProject(
         "bone",
         "Fantasy's Furniture - Bone"
+    ),
+    ModProject(
+        "dunmer",
+        "Fantasy's Furniture - Dunmer"
     )
 )
 
