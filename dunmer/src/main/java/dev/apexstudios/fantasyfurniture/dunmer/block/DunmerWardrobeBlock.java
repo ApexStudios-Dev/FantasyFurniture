@@ -11,12 +11,12 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class DunmerWardrobeBlock extends WardrobeBlock {
     public static final VoxelShape SHAPE = ApexShapes.join(
-            box(13D, 0D, 1D, 15D, 8D, 3D),
-            box(-15D, 0D, 1D, -13D, 8D, 3D),
-            box(-15D, 0D, 13D, -13D, 8D, 15D),
-            box(13D, 0D, 13D, 15D, 8D, 15D),
-            box(-16D, 8D, 0D, 16D, 10D, 16D),
-            box(-13D, 0D, 2D, 13D, 8D, 14D),
+            box(13D, 32D, 1D, 15D, 40D, 3D),
+            box(-15D, 32D, 1D, -13D, 40D, 3D),
+            box(-15D, 32D, 13D, -13D, 40D, 15D),
+            box(13D, 32D, 13D, 15D, 40D, 15D),
+            box(-16D, 40D, 0D, 16D, 42D, 16D),
+            box(-13D, 32D, 2D, 13D, 40D, 14D),
             box(-15D, 0D, 1D, -13D, 30D, 3D),
             box(-15D, 0D, 13D, -13D, 30D, 15D),
             box(13D, 0D, 13D, 15D, 30D, 15D),
