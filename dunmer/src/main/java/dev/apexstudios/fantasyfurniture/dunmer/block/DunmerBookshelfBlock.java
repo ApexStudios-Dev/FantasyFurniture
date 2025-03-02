@@ -1,0 +1,34 @@
+package dev.apexstudios.fantasyfurniture.dunmer.block;
+
+import dev.apexstudios.apexcore.lib.util.shapes.ApexShapes;
+import dev.apexstudios.fantasyfurniture.block.BookshelfBlock;
+import dev.apexstudios.fantasyfurniture.block.base.FurnitureBlockComponentHolder;
+import java.util.Map;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.VoxelShape;
+
+public final class DunmerBookshelfBlock extends BookshelfBlock {
+    public static final VoxelShape SHAPE = ApexShapes.join(
+            box(-14D, 0D, 2D, -12D, 30D, 4D),
+            box(-14D, 0D, 12D, -12D, 30D, 14D),
+            box(12D, 0D, 12D, 14D, 30D, 14D),
+            box(12D, 0D, 2D, 14D, 30D, 4D),
+            box(-12D, 9D, 4D, 12D, 32D, 12D),
+            box(-15D, 9D, 1D, 15D, 11D, 15D),
+            box(-15D, 19D, 1D, 15D, 21D, 15D),
+            box(-15D, 30D, 1D, 15D, 32D, 15D)
+    );
+
+    public static final Map<Direction, VoxelShape> FACING_SHAPES = ApexShapes.rotateHorizontal(SHAPE);
+
+    public DunmerBookshelfBlock(Properties properties) {
+        super(properties);
+    }
+
+    @Override
+    protected VoxelShape getFurnitureShape(BlockState blockState, BlockPos pos) {
+        return FurnitureBlockComponentHolder.getShape(FACING_SHAPES, blockState, pos);
+    }
+}

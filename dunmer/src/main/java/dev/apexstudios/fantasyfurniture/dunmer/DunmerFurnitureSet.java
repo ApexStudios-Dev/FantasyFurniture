@@ -6,7 +6,29 @@ import dev.apexstudios.apexcore.lib.data.provider.model.ModelUtil;
 import dev.apexstudios.apexcore.lib.placement.BlockPlacementRenderer;
 import dev.apexstudios.apexcore.lib.registree.Registree;
 import dev.apexstudios.fantasyfurniture.block.OvenBlock;
+import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerBedDoubleBlock;
+import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerBedSingleBlock;
+import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerBenchBlock;
+import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerBookshelfBlock;
+import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerChairBlock;
+import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerChandelierBlock;
+import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerChestBlock;
+import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerCounterBlock;
+import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerCushionBlock;
+import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerDeskBlock;
+import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerDrawerBlock;
+import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerDresserBlock;
+import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerFloorLightBlock;
+import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerLockBoxBlock;
 import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerOvenBlock;
+import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerPaintingSmallBlock;
+import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerPaintingWideBlock;
+import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerShelfBlock;
+import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerSofaBlock;
+import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerStoolBlock;
+import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerTableBlock;
+import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerWallLightBlock;
+import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerWardrobeBlock;
 import dev.apexstudios.fantasyfurniture.set.BlockTypes;
 import dev.apexstudios.fantasyfurniture.set.FurnitureSet;
 import dev.apexstudios.fantasyfurniture.set.function.BlockFactory;
@@ -49,6 +71,29 @@ public class DunmerFurnitureSet {
                             })
                     )
             ))
+            .with(BlockTypes.DRESSER.extend(BlockFactory.wrapping(DunmerDresserBlock::new)))
+            .with(BlockTypes.STOOL.extend(BlockFactory.wrapping(DunmerStoolBlock::new)))
+            .with(BlockTypes.CUSHION.extend(BlockFactory.wrapping(DunmerCushionBlock::new)))
+            .with(BlockTypes.LOCKBOX.extend(BlockFactory.wrapping(DunmerLockBoxBlock::new)))
+            .with(BlockTypes.DRAWER.extend(BlockFactory.wrapping(DunmerDrawerBlock::new)))
+            .with(BlockTypes.CHAIR.extend(BlockFactory.wrapping(DunmerChairBlock::new)))
+            .with(BlockTypes.BOOKSHELF.extend(BlockFactory.wrapping(DunmerBookshelfBlock::new)))
+            .with(BlockTypes.BED_SINGLE.extend(BlockFactory.wrapping(DunmerBedSingleBlock::new)))
+            .with(BlockTypes.BED_DOUBLE.extend(BlockFactory.wrapping(DunmerBedDoubleBlock::new)))
+            .with(BlockTypes.DESK_LEFT.extend((furnitureSet, properties) -> new DunmerDeskBlock(properties, true)))
+            .with(BlockTypes.DESK_RIGHT.extend((furnitureSet, properties) -> new DunmerDeskBlock(properties, false)))
+            .with(BlockTypes.PAINTING_WIDE.extend(BlockFactory.wrapping(DunmerPaintingWideBlock::new)))
+            .with(BlockTypes.PAINTING_SMALL.extend(BlockFactory.wrapping(DunmerPaintingSmallBlock::new)))
+            .with(BlockTypes.CHEST.extend(BlockFactory.wrapping(DunmerChestBlock::new)))
+            .with(BlockTypes.FLOOR_LIGHT.extend(BlockFactory.wrapping(DunmerFloorLightBlock::new)))
+            .with(BlockTypes.CHANDELIER.extend(BlockFactory.wrapping(DunmerChandelierBlock::new)))
+            .with(BlockTypes.SHELF.extend(BlockFactory.wrapping(DunmerShelfBlock::new)))
+            .with(BlockTypes.SOFA.extend(BlockFactory.wrapping(DunmerSofaBlock::new)))
+            .with(BlockTypes.COUNTER.extend(BlockFactory.wrapping(DunmerCounterBlock::new)))
+            .with(BlockTypes.WALL_LIGHT.extend(BlockFactory.wrapping(DunmerWallLightBlock::new)))
+            .with(BlockTypes.BENCH.extend(BlockFactory.wrapping(DunmerBenchBlock::new)))
+            .with(BlockTypes.WARDROBE.extend(BlockFactory.wrapping(DunmerWardrobeBlock::new)))
+            .with(BlockTypes.TABLE.extend(BlockFactory.wrapping(DunmerTableBlock::new)))
     );
 
     public DunmerFurnitureSet(IEventBus modBus) {
