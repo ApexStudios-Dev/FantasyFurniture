@@ -63,6 +63,16 @@ ModuleBuilder.modules(project) {
 
 furnitureSets.filterNot { it.id == SourceSet.MAIN_SOURCE_SET_NAME }.forEach(::fixJarName)
 
+tasks.register("publishModulesToMaven") {
+    val modules = (System.getenv("PUBLISH_MODULES") ?: "").split(",").filter(String::isNotBlank)
+    // modules.forEach { println("module: $it") }
+    val publishTaskNames = modules.map { "publish${if(it == "main") "" else it.capitalized()}ReleasePublicationToApexStudios-ReleasesRepository" }
+    // publishTaskNames.forEach { println("taskName: $it") }
+    val publishTasks = publishTaskNames.mapNotNull(tasks::findByName)
+    // publishTasks.forEach { println("task: ${it.name}") }
+    dependsOn(publishTasks)
+}
+
 dependencies {
     accessTransformers(libs.apexcore)
     interfaceInjectionData(libs.apexcore)
