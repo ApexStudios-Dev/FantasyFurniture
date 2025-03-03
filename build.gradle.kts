@@ -17,70 +17,49 @@ apex.extendCompilerErrors()
 val single = ApexSingleExtension.getOrCreate(project)
 single.withDataGen()
 
-class ModProject(val id: String, val name: String) {
-    fun sourceSetId(): String = when (id) {
-        SourceSet.MAIN_SOURCE_SET_NAME -> SourceSet.MAIN_SOURCE_SET_NAME
-        else -> "$id${SourceSet.MAIN_SOURCE_SET_NAME.capitalized()}"
-    }
-
-    fun dataSourceSetId(): String = when (id) {
-        SourceSet.MAIN_SOURCE_SET_NAME -> ApexExtension.DATA_NAME
-        else -> "$id${ApexExtension.DATA_NAME.capitalized()}"
-    }
-
-    fun sourceSet(): SourceSet = sourceSets[sourceSetId()]
-    fun dataSourceSet(): SourceSet = sourceSets[dataSourceSetId()]
-}
-
-val furnitureSets = listOf(
-    ModProject(
-        SourceSet.MAIN_SOURCE_SET_NAME,
-        "Fantasy's Furniture"
-    ),
-    ModProject(
-        "nordic",
-        "Fantasy's Furniture - Nordic"
-    ),
-    ModProject(
-        "venthyr",
-        "Fantasy's Furniture - Venthyr"
-    ),
-    ModProject(
-        "bone",
-        "Fantasy's Furniture - Bone"
-    ),
-    ModProject(
-        "dunmer",
-        "Fantasy's Furniture - Dunmer"
-    )
+val furnitureSets = setOf(
+    "nordic",
+    "venthyr",
+    "bone",
+    "dunmer"
 )
 
-ModuleBuilder.modules(project) {
-    furnitureSets.filterNot { it.id == SourceSet.MAIN_SOURCE_SET_NAME }.forEach {
-        module(it.id) { hasData() }
-    }
+ModuleBuilder.modules(project) { furnitureSets.forEach {
+    module(it) { hasData() }
+} }
+
+furnitureSets.forEach {
+    fixJarName(sourceSet(it, SourceSet.MAIN_SOURCE_SET_NAME), it)
+    fixJarName(sourceSet(it, ApexExtension.DATA_NAME), "$it-data")
 }
 
-furnitureSets.filterNot { it.id == SourceSet.MAIN_SOURCE_SET_NAME }.forEach(::fixJarName)
+tasks.register("publishModulesToMaven") {
+    val modules = (System.getenv("PUBLISH_MODULES") ?: "").split(",").filter(String::isNotBlank)
+    // modules.forEach { println("module: $it") }
+    val publishTaskNames = modules.map { "publish${if(it == "main") "" else it.capitalized()}ReleasePublicationToApexStudios-ReleasesRepository" }
+    // publishTaskNames.forEach { println("taskName: $it") }
+    val publishTasks = publishTaskNames.mapNotNull(tasks::findByName)
+    // publishTasks.forEach { println("task: ${it.name}") }
+    dependsOn(publishTasks)
+}
 
 dependencies {
+    implementation(libs.apexcore)
+    "dataImplementation"(libs.apexcore)
     accessTransformers(libs.apexcore)
     interfaceInjectionData(libs.apexcore)
 
     furnitureSets.forEach {
-        it.sourceSet().implementationConfigurationName(libs.apexcore)
-        it.dataSourceSet().implementationConfigurationName(libs.apexcore)
+        sourceSet(it, SourceSet.MAIN_SOURCE_SET_NAME).implementationConfigurationName(libs.apexcore)
+        sourceSet(it, ApexExtension.DATA_NAME).implementationConfigurationName(libs.apexcore)
     }
 }
 
-fun fixJarName(furnitureSet: ModProject) {
-    fixJarName(furnitureSet.sourceSet(), furnitureSet.id)
-    fixJarName(furnitureSet.dataSourceSet(), "${furnitureSet.id}-data")
-}
+fun sourceSet(furnitureSet: String, sourceSet: String): SourceSet = sourceSets["$furnitureSet${sourceSet.capitalized()}"]
 
-fun fixJarName(sourceSet: SourceSet, mainName: String, sourcesName: String = mainName) {
+fun fixJarName(sourceSet: SourceSet, baseName: String, sourcesName: String = baseName) {
     project.tasks.named(sourceSet.jarTaskName, Jar::class.java) {
-        archiveBaseName.set("${single.getModId().get()}-$mainName")
+        archiveBaseName.set("${single.getModId().get()}-$baseName")
     }
 
     project.tasks.named(sourceSet.sourcesJarTaskName, Jar::class.java) {
