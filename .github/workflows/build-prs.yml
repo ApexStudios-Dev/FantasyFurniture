@@ -36,3 +36,11 @@ jobs:
             java_version: 17
             java_vendor: temurin
             version: ${{ needs.get-vars.outputs.version }}
+
+    publish-pr:
+        needs: [ build ]
+        runs-on: apexstudios
+        steps:
+            - name: Publish PR artifacts
+              if: ${{ github.event_name == 'pull_request' }}
+              uses: neoforged/action-pr-publishing/upload@v1
