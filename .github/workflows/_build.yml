@@ -73,3 +73,7 @@ jobs:
                   name: artifacts-fantasyfurniture-dunmer
                   path: ./build/libs/fantasyfurniture-dunmer-${{ inputs.version }}.jar
                   if-no-files-found: error
+
+            - name: Publish PR artifacts
+              if: ${{ github.event_name == 'pull_request' }}
+              uses: neoforged/action-pr-publishing/upload@v1

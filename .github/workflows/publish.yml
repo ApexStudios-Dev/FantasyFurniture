@@ -10,6 +10,12 @@ jobs:
         runs-on: apexstudios
         outputs:
             version: ${{ steps.version.outputs.version }}
+            main_changed: ${{ steps.changes.outputs.main }}
+            nordic_changed: ${{ steps.changes.outputs.nordic }}
+            venthyr_changed: ${{ steps.changes.outputs.venthyr }}
+            bone_changed: ${{ steps.changes.outputs.bone }}
+            dunmer_changed: ${{ steps.changes.outputs.dunmer }}
+            changed_modules: ${{ steps.changes.outputs.changes }}
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
@@ -26,6 +32,18 @@ jobs:
                   search_commit_body: true
                   bump_each_commit: true
 
+            - name: Determine module changes
+              uses: dorny/paths-filter@v3
+              id: changes
+              with:
+                  # base: HEAD # Uncomment for ACT testing
+                  filters: |
+                      main: [ 'src/**' ]
+                      nordic: [ 'nordic/**' ]
+                      venthyr: [ 'venthyr/**' ]
+                      bone: [ 'bone/**' ]
+                      dunmer: [ 'dunmer/**' ]
+
     build:
         name: Build - v${{ needs.get-vars.outputs.version }}
         needs: [ get-vars ]
@@ -37,18 +55,19 @@ jobs:
             version: ${{ needs.get-vars.outputs.version }}
 
     publish-maven:
-        needs: [ get-vars, build ]
-        if: success()
-        uses: ApexStudios-Dev/.github/.github/workflows/_publish-maven.yml@master
+        name: Publish Maven - v${{ needs.get-vars.outputs.version }}
+        needs: [ get-vars ]
+        uses: ./.github/workflows/_publish-maven.yml
         secrets: inherit
         with:
             java_version: 17
             java_vendor: temurin
             version: ${{ needs.get-vars.outputs.version }}
+            publish_modules: ${{ join(fromJSON(needs.get-vars.outputs.changed_modules)) }}
 
     publish-main:
-        needs: [ get-vars, build ]
-        if: success()
+        needs: [ get-vars, build, publish-maven ]
+        if: ${{ needs.get-vars.outputs.main_changed == 'true' && success() }}
         uses: ./.github/workflows/_publish-furnitureset.yml
         secrets: inherit
         with:
@@ -64,8 +83,8 @@ jobs:
             artifact_id: fantasyfurniture
 
     publish-nordic:
-        needs: [ get-vars, build ]
-        if: success()
+        needs: [ get-vars, build, publish-maven ]
+        if: ${{ needs.get-vars.outputs.nordic_changed == 'true' && success() }}
         uses: ./.github/workflows/_publish-furnitureset.yml
         secrets: inherit
         with:
@@ -81,8 +100,8 @@ jobs:
             artifact_id: fantasyfurniture-nordic
 
     publish-venthyr:
-        needs: [ get-vars, build ]
-        if: success()
+        needs: [ get-vars, build, publish-maven ]
+        if: ${{ needs.get-vars.outputs.venthyr_changed == 'true' && success() }}
         uses: ./.github/workflows/_publish-furnitureset.yml
         secrets: inherit
         with:
@@ -98,8 +117,8 @@ jobs:
             artifact_id: fantasyfurniture-venthyr
 
     publish-bone:
-        needs: [ get-vars, build ]
-        if: success()
+        needs: [ get-vars, build, publish-maven ]
+        if: ${{ needs.get-vars.outputs.bone_changed == 'true' && success() }}
         uses: ./.github/workflows/_publish-furnitureset.yml
         secrets: inherit
         with:
@@ -115,8 +134,8 @@ jobs:
             artifact_id: fantasyfurniture-bone
 
     publish-dunmer:
-        needs: [ get-vars, build ]
-        if: success()
+        needs: [ get-vars, build, publish-maven ]
+        if: ${{ needs.get-vars.outputs.dunmer_changed == 'true' && success() }}
         uses: ./.github/workflows/_publish-furnitureset.yml
         secrets: inherit
         with:
