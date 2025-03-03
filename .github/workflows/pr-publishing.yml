@@ -1,6 +1,6 @@
 on:
     workflow_run:
-        workflows: []
+        workflows: [ Build PRs ]
         types:
             - completed
     issue_comment:
@@ -8,7 +8,11 @@ on:
             - edited
     pull_request:
         types:
+            - synchronize
             - opened
+
+permissions:
+    packages: write
 
 jobs:
     publish-prs:
@@ -22,12 +26,12 @@ jobs:
                   private_key: ${{ secrets.PR_PUBLISHING_GH_APP_KEY }}
                   repository: ${{ github.repository }}
             - name: Publish PR
-              uses: neoforged/action-pr-publish@v1
+              uses: neoforged/action-pr-publishing@v1
               env:
                   GITHUB_TOKEN: ${{ steps.gen_repo_token.outputs.token }}
               with:
                   publishing-token: ${{ github.token }}
                   uploader-workflow-name: Build PRs
-                  artifacts-base-path: dev/apexstudios/fantasyfurniture
+                  artifacts-base-path: dev/apexstudios/fantasyfurniture/
                   self-name: 'apexstudios-pr-publishing[bot]'
                   base-maven-url: 'https://maven.apexstudios.dev/pr-publishing'
