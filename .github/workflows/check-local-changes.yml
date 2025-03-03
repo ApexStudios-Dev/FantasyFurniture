@@ -29,7 +29,12 @@ jobs:
               run: chmod +x ./gradlew
 
             - name: Run datagen
-              run: ./gradlew :runData :runNordicData :runVenthyrData :runBoneData :runDunmerData
+              run: ./gradlew :runData :runNordicData :runVenthyrData :runBoneData :runDunmerData --refresh-dependencies
+
+            # This is needed otherwise the 'git status' below reports as 'gradlew' being changed
+            # Tried running 'git update-index --chmod=+x ./gradlew' to have perms tracked but this did not work
+            - name: Mark Gradle as not Executable
+              run: chmod -x ./gradlew
 
             - name: Check no local changes are present
               run: |
