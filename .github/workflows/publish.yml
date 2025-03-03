@@ -7,7 +7,7 @@ on:
 jobs:
     get-vars:
         name: Get Variables
-        runs-on: apexstudios
+        runs-on: ubuntu-latest
         outputs:
             version: ${{ steps.version.outputs.version }}
             main_changed: ${{ steps.changes.outputs.main }}
