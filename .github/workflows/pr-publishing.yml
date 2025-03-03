@@ -29,5 +29,5 @@ jobs:
                   publishing-token: ${{ github.token }}
                   uploader-workflow-name: Build PRs
                   artifacts-base-path: dev/apexstudios/fantasyfurniture/
-                  self-name: 'apexstudios-pr-publishing[bot]'
+                  self-name: 'apexstudios-app[bot]'
                   base-maven-url: 'https://maven.apexstudios.dev/pr-publishing'
