@@ -47,7 +47,6 @@ dependencies {
     implementation(libs.apexcore)
     "dataImplementation"(libs.apexcore)
     accessTransformers(libs.apexcore)
-    interfaceInjectionData(libs.apexcore)
 
     furnitureSets.forEach {
         sourceSet(it, SourceSet.MAIN_SOURCE_SET_NAME).implementationConfigurationName(libs.apexcore)
