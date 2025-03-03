@@ -11,7 +11,7 @@ plugins {
 
 group = "dev.apexstudios"
 
-apex.neoVersion("21.4.50-beta", "2025.01.05")
+apex.neoVersion("21.4.96-beta", "2025.02.16")
 apex.extendCompilerErrors()
 
 val single = ApexSingleExtension.getOrCreate(project)
@@ -47,7 +47,6 @@ dependencies {
     implementation(libs.apexcore)
     "dataImplementation"(libs.apexcore)
     accessTransformers(libs.apexcore)
-    interfaceInjectionData(libs.apexcore)
 
     furnitureSets.forEach {
         sourceSet(it, SourceSet.MAIN_SOURCE_SET_NAME).implementationConfigurationName(libs.apexcore)

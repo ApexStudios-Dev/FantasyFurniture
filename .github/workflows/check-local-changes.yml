@@ -1,0 +1,42 @@
+on:
+    pull_request:
+        types:
+            - synchronize
+            - opened
+            - ready_for_review
+            - reopened
+
+jobs:
+    check-local-changes:
+        runs-on: apexstudios
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Setup Java
+              uses: actions/setup-java@v4
+              with:
+                  distribution: temurin
+                  java-version: 17
+
+            - name: Setup Gradle
+              uses: gradle/actions/setup-gradle@v4
+              with:
+                  cache-disabled: ${{ ! env.ACT }}
+                  cache-read-only: false
+
+            - name: Mark Gradle as Executable
+              run: chmod +x ./gradlew
+
+            - name: Run datagen
+              run: ./gradlew :runData :runNordicData :runVenthyrData :runBoneData :runDunmerData --refresh-dependencies
+
+            # This is needed otherwise the 'git status' below reports as 'gradlew' being changed
+            # Tried running 'git update-index --chmod=+x ./gradlew' to have perms tracked but this did not work
+            - name: Mark Gradle as not Executable
+              run: chmod -x ./gradlew
+
+            - name: Check no local changes are present
+              run: |
+                git status
+                if [ -n "$(git status --porcelain)" ]; then exit 1; fi
