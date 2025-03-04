@@ -6,6 +6,10 @@ on:
         branches: [ "**/main" ]
         paths: [ "**/src/**" ]
 
+permissions:
+    contents: read
+    pull-requests: read
+
 jobs:
     determine-module-changes:
         name: Determine Module Changes

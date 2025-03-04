@@ -8,6 +8,10 @@ on:
             - ready_for_review
             - reopened
 
+permissions:
+    contents: read
+    pull-requests: read
+
 jobs:
     determine-module-changes:
         name: Determine Module Changes
