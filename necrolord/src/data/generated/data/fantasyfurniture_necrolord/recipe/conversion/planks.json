@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "neoforge:ingredient_type": "neoforge:difference",
+    "base": "#minecraft:planks",
+    "subtracted": "#fantasyfurniture:furniture_planks"
+  },
+  "result": {
+    "count": 1,
+    "id": "fantasyfurniture_necrolord:planks"
+  }
+}
