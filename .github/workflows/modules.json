@@ -1,0 +1,42 @@
+{
+    "main": {
+        "display_name": "Fantasy's Furniture",
+        "logo_url": "https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/new/fantasyfurniture.png",
+        "curseforge_id": "579564",
+        "modrinth_id": "A0nfCqYw",
+        "color": "0x97C6E7",
+        "artifact_id": "fantasyfurniture"
+    },
+    "nordic": {
+        "display_name": "Fantasy's Furniture - Nordic",
+        "logo_url": "https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/new/fantasyfurniture_nordic.png",
+        "curseforge_id": "1191799",
+        "modrinth_id": "DIHzMa8h",
+        "color": "0x97C6E7",
+        "artifact_id": "fantasyfurniture-nordic"
+    },
+    "venthyr": {
+        "display_name": "Fantasy's Furniture - Venthyr",
+        "logo_url": "https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/new/fantasyfurniture_venthyr.png",
+        "curseforge_id": "1206300",
+        "modrinth_id": "FjHW4JvP",
+        "color": "0xEB8080",
+        "artifact_id": "fantasyfurniture-venthyr"
+    },
+    "bone": {
+        "display_name": "Fantasy's Furniture - Bone",
+        "logo_url": "https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/new/fantasyfurniture_bone.png",
+        "curseforge_id": "1209697",
+        "modrinth_id": "oJ4TI49S",
+        "color": "0xFFF9E4",
+        "artifact_id": "fantasyfurniture-bone"
+    },
+    "dunmer": {
+        "display_name": "Fantasy's Furniture - Dunmer",
+        "logo_url": "https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/new/fantasyfurniture_dunmer.png",
+        "curseforge_id": "1209702",
+        "modrinth_id": "Bs7e2IyQ",
+        "color": "0x94DC8A",
+        "artifact_id": "fantasyfurniture-dunmer"
+    }
+}

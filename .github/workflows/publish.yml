@@ -1,3 +1,5 @@
+name: Publish
+
 on:
     workflow_dispatch:
     push:
@@ -5,147 +7,100 @@ on:
         paths: [ "**/src/**" ]
 
 jobs:
-    get-vars:
-        name: Get Variables
+    determine-module-changes:
+        name: Determine Module Changes
+        uses: ./.github/workflows/_module-changes.yml
+
+    parse-modules:
+        name: Parse Modules
         runs-on: ubuntu-latest
+        needs: determine-module-changes
+        if: needs.determine-module-changes.outputs.changes != '[]'
         outputs:
-            version: ${{ steps.version.outputs.version }}
-            main_changed: ${{ steps.changes.outputs.main }}
-            nordic_changed: ${{ steps.changes.outputs.nordic }}
-            venthyr_changed: ${{ steps.changes.outputs.venthyr }}
-            bone_changed: ${{ steps.changes.outputs.bone }}
-            dunmer_changed: ${{ steps.changes.outputs.dunmer }}
-            changed_modules: ${{ steps.changes.outputs.changes }}
+            modules: ${{ steps.modules.outputs.json }}
         steps:
-            - name: Checkout repository
-              uses: actions/checkout@v4
-              with:
-                  fetch-depth: 0
-                  fetch-tags: true
+            - name: Checkout Repository
+              uses: ApexStudios-Dev/.github/actions/checkout@master
 
-            - name: Determine version
-              uses: paulhatch/semantic-version@v5.4.0
-              id: version
+            - name: Parse Modules
+              id: modules
+              uses: ApexStudios-Dev/.github/actions/parse-json@master
               with:
-                  change_path: "./"
-                  version_format: "${major}.${minor}.${patch}"
-                  search_commit_body: true
-                  bump_each_commit: true
-
-            - name: Determine module changes
-              uses: dorny/paths-filter@v3
-              id: changes
-              with:
-                  # base: HEAD # Uncomment for ACT testing
-                  filters: |
-                      main: [ 'src/**' ]
-                      nordic: [ 'nordic/**' ]
-                      venthyr: [ 'venthyr/**' ]
-                      bone: [ 'bone/**' ]
-                      dunmer: [ 'dunmer/**' ]
+                  path: ./.github/workflows/modules.json
 
     build:
-        name: Build - v${{ needs.get-vars.outputs.version }}
-        needs: [ get-vars ]
-        uses: ./.github/workflows/_build.yml
-        secrets: inherit
-        with:
-            java_vendor: temurin
-            java_version: 17
-            version: ${{ needs.get-vars.outputs.version }}
+        name: Build
+        runs-on: apexstudios
+        needs: determine-module-changes
+        if: needs.determine-module-changes.outputs.changes != '[]'
+        outputs:
+            timestamp: ${{ steps.timestamp.outputs.output }}
+            version: ${{ steps.checkout.outputs.version }}
+        steps:
+            - name: Checkout Repository
+              id: checkout
+              uses: ApexStudios-Dev/.github/actions/checkout@master
+
+            - name: Setup Java
+              uses: ApexStudios-Dev/.github/actions/setup-java@master
+
+            - name: Build with Gradle
+              uses: ApexStudios-Dev/.github/actions/run-gradle@master
+              with:
+                  setup: true
+                  tasks: :build
+              env:
+                  VERSION: ${{ steps.checkout.outputs.version }}
+
+            - name: Generate Timestamp
+              id: timestamp
+              shell: bash
+              run: echo "output=$(date --iso-8601=seconds)" >> $GITHUB_OUTPUT
+
+            - name: Upload Artifacts
+              uses: actions/upload-artifact@v4
+              with:
+                  name: artifacts
+                  path: ./build/libs/*.jar
+                  if-no-files-found: error
 
     publish-maven:
-        name: Publish Maven - v${{ needs.get-vars.outputs.version }}
-        needs: [ get-vars ]
-        uses: ./.github/workflows/_publish-maven.yml
-        secrets: inherit
-        with:
-            java_version: 17
-            java_vendor: temurin
-            version: ${{ needs.get-vars.outputs.version }}
-            publish_modules: ${{ join(fromJSON(needs.get-vars.outputs.changed_modules)) }}
+        name: Publish to Maven
+        needs: determine-module-changes
+        if: ${{ success() && needs.determine-module-changes.outputs.changes != '[]' }}
+        runs-on: apexstudios
+        steps:
+            - name: Checkout Repository
+              id: checkout
+              uses: ApexStudios-Dev/.github/actions/checkout@master
 
-    publish-main:
-        needs: [ get-vars, build, publish-maven ]
-        if: ${{ needs.get-vars.outputs.main_changed == 'true' && success() }}
-        uses: ./.github/workflows/_publish-furnitureset.yml
-        secrets: inherit
-        with:
-            java_version: 17
-            java_vendor: temurin
-            version: ${{ needs.get-vars.outputs.version }}
-            curseforge_id: 579564
-            modrinth_id: A0nfCqYw
-            release_type: alpha
-            name: "Fantasy's Furniture"
-            logo: "https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/new/fantasyfurniture.png"
-            color: "9946855" # 97C6E7
-            artifact_id: fantasyfurniture
+            - name: Setup Java
+              uses: ApexStudios-Dev/.github/actions/setup-java@master
 
-    publish-nordic:
-        needs: [ get-vars, build, publish-maven ]
-        if: ${{ needs.get-vars.outputs.nordic_changed == 'true' && success() }}
-        uses: ./.github/workflows/_publish-furnitureset.yml
-        secrets: inherit
-        with:
-            java_version: 17
-            java_vendor: temurin
-            version: ${{ needs.get-vars.outputs.version }}
-            curseforge_id: 1191799
-            modrinth_id: DIHzMa8h
-            release_type: alpha
-            name: "Fantasy's Furniture - Nordic"
-            logo: "https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/new/fantasyfurniture_nordic.png"
-            color: "9946855" # 97C6E7
-            artifact_id: fantasyfurniture-nordic
+            - name: Build with Gradle
+              uses: ApexStudios-Dev/.github/actions/run-gradle@master
+              if: ${{ !env.ACT }}
+              with:
+                  setup: true
+                  tasks: :publishModulesToMaven
+              env:
+                  VERSION: ${{ steps.checkout.outputs.version }}
+                  MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
+                  MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
+                  PUBLISH_MODULES: ${{ join(fromJSON(needs.determine-module-changes.outputs.changes)) }}
 
-    publish-venthyr:
-        needs: [ get-vars, build, publish-maven ]
-        if: ${{ needs.get-vars.outputs.venthyr_changed == 'true' && success() }}
-        uses: ./.github/workflows/_publish-furnitureset.yml
-        secrets: inherit
+    publish-modules:
+        name: Publish Module - ${{ matrix.module }}
+        needs: [ determine-module-changes, parse-modules, build ]
+        if: ${{ success() && needs.determine-module-changes.outputs.changes != '[]' }}
+        uses: ./.github/workflows/_publish-module.yml
+        strategy:
+            matrix:
+                module: ${{ fromJSON(needs.determine-module-changes.outputs.changes) }}
         with:
-            java_version: 17
-            java_vendor: temurin
-            version: ${{ needs.get-vars.outputs.version }}
-            curseforge_id: 1206300
-            modrinth_id: FjHW4JvP
             release_type: alpha
-            name: "Fantasy's Furniture - Venthyr"
-            logo: "https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/new/fantasyfurniture_venthyr.png"
-            color: "15433856" # EB8080
-            artifact_id: fantasyfurniture-venthyr
 
-    publish-bone:
-        needs: [ get-vars, build, publish-maven ]
-        if: ${{ needs.get-vars.outputs.bone_changed == 'true' && success() }}
-        uses: ./.github/workflows/_publish-furnitureset.yml
-        secrets: inherit
-        with:
-            java_version: 17
-            java_vendor: temurin
-            version: ${{ needs.get-vars.outputs.version }}
-            curseforge_id: 1209697
-            modrinth_id: oJ4TI49S
-            release_type: alpha
-            name: "Fantasy's Furniture - Bone"
-            logo: "https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/new/fantasyfurniture_bone.png"
-            color: "16775652" # FFF9E4
-            artifact_id: fantasyfurniture-bone
-
-    publish-dunmer:
-        needs: [ get-vars, build, publish-maven ]
-        if: ${{ needs.get-vars.outputs.dunmer_changed == 'true' && success() }}
-        uses: ./.github/workflows/_publish-furnitureset.yml
-        secrets: inherit
-        with:
-            java_version: 17
-            java_vendor: temurin
-            version: ${{ needs.get-vars.outputs.version }}
-            curseforge_id: 1209702
-            modrinth_id: Bs7e2IyQ
-            release_type: alpha
-            name: "Fantasy's Furniture - Dunmer"
-            logo: "https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/new/fantasyfurniture_dunmer.png"
-            color: "9755786" # 94DC8A
-            artifact_id: fantasyfurniture-dunmer
+            version: ${{ needs.build.outputs.version }}
+            build_timestamp: ${{ needs.build.outputs.timestamp }}
+            module: ${{ matrix.module }}
+            modules_json: ${{ needs.parse-modules.outputs.modules }}

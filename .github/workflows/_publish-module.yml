@@ -1,0 +1,63 @@
+name: Publish Module
+
+on:
+    workflow_call:
+        inputs:
+            version:
+                type: string
+                required: true
+            build_timestamp:
+                type: string
+                required: true
+            release_type:
+                type: string
+                required: false
+                default: release
+
+            module:
+                type: string
+                required: true
+            modules_json:
+                type: string
+                required: true
+
+jobs:
+    extract-module-data:
+        name: Extract Module Information (${{ inputs.module }}
+        runs-on: ubuntu-latest
+        outputs:
+            display_name: ${{ steps.data.outputs.display_name }}
+            logo_url: ${{ steps.data.outputs.logo_url }}
+            curseforge_id: ${{ steps.data.outputs.curseforge_id }}
+            modrinth_id: ${{ steps.data.outputs.modrinth_id }}
+            color: ${{ steps.data.outputs.color }}
+            artifact_id: ${{ steps.data.outputs.artifact_id }}
+        steps:
+            - name: Extract Module Data
+              id: data
+              shell: bash
+              run: |
+                  echo display_name=$(echo $MODULES_JSON | jq -r .${{ inputs.module }}.display_name) >> $GITHUB_OUTPUT
+                  echo logo_url=$(echo $MODULES_JSON | jq -r .${{ inputs.module }}.logo_url) >> $GITHUB_OUTPUT
+                  echo curseforge_id=$(echo $MODULES_JSON | jq -r .${{ inputs.module }}.curseforge_id) >> $GITHUB_OUTPUT
+                  echo modrinth_id=$(echo $MODULES_JSON | jq -r .${{ inputs.module }}.modrinth_id) >> $GITHUB_OUTPUT
+                  echo color="$(($(echo $MODULES_JSON | jq -r .${{ inputs.module }}.color)))" >> $GITHUB_OUTPUT
+                  echo artifact_id=$(echo $MODULES_JSON | jq -r .${{ inputs.module }}.artifact_id) >> $GITHUB_OUTPUT
+              env:
+                  MODULES_JSON: ${{ inputs.modules_json }}
+
+    publish-platforms:
+        name: Publish to Platforms
+        needs: extract-module-data
+        if: success()
+        uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod-platforms.yml@master
+        with:
+            version: ${{ inputs.version }}
+            build_timestamp: ${{ inputs.build_timestamp }}
+            display_name: ${{ needs.extract-module-data.outputs.display_name }}
+            logo_url: ${{ needs.extract-module-data.outputs.logo_url }}
+            color: ${{ needs.extract-module-data.outputs.color }}
+            release_type: ${{ inputs.release_type }}
+            artifact_id: ${{ needs.extract-module-data.outputs.artifact_id }}
+            curseforge_id: ${{ needs.extract-module-data.outputs.curseforge_id }}
+            modrinth_id: ${{ needs.extract-module-data.outputs.modrinth_id }}
