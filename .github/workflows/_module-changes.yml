@@ -1,0 +1,33 @@
+name: Determine Module Changes
+
+on:
+    workflow_call:
+        outputs:
+            changes:
+                value: ${{ jobs.determine-module-changes.outputs.changes }}
+
+permissions:
+    contents: read
+    pull-requests: read
+
+jobs:
+    determine-module-changes:
+        name: Determine Module Changes
+        runs-on: ubuntu-latest
+        outputs:
+            changes: ${{ steps.changes.outputs.changes }}
+        steps:
+            - name: Checkout Repository
+              uses: ApexStudios-Dev/.github/actions/checkout@master
+
+            - name: Determine module changes
+              uses: dorny/paths-filter@v3
+              id: changes
+              with:
+                  # base: HEAD # Uncomment for ACT testing
+                  filters: |
+                      main: [ 'src/**' ]
+                      nordic: [ 'nordic/**' ]
+                      venthyr: [ 'venthyr/**' ]
+                      bone: [ 'bone/**' ]
+                      dunmer: [ 'dunmer/**' ]

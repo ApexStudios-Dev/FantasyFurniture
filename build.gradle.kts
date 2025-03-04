@@ -43,6 +43,16 @@ tasks.register("publishModulesToMaven") {
     dependsOn(publishTasks)
 }
 
+tasks.register("generateModulesData") {
+    val modules = (System.getenv("DATA_MODULES") ?: "").split(",").filter(String::isNotBlank)
+    // modules.forEach { println("module: $it") }
+    val dataTaskNames = modules.map { "run${if(it == "main") "" else it.capitalized()}Data" }
+    // dataTaskNames.forEach { println("taskName: $it") }
+    val dataTasks = dataTaskNames.mapNotNull(tasks::findByName)
+    // dataTasks.forEach { println("task: ${it.name}") }
+    dependsOn(dataTasks)
+}
+
 dependencies {
     implementation(libs.apexcore)
     "dataImplementation"(libs.apexcore)
