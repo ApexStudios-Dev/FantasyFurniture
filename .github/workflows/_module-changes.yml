@@ -12,6 +12,8 @@ jobs:
         runs-on: ubuntu-latest
         outputs:
             changes: ${{ steps.changes.outputs.changes }}
+        permissions:
+            pull-requests: read
         steps:
             - name: Checkout Repository
               uses: ApexStudios-Dev/.github/actions/checkout@master
