@@ -15,6 +15,7 @@ jobs:
             venthyr_changed: ${{ steps.changes.outputs.venthyr }}
             bone_changed: ${{ steps.changes.outputs.bone }}
             dunmer_changed: ${{ steps.changes.outputs.dunmer }}
+            necrolord_changed: ${{ steps.changes.outputs.necrolord }}
             changed_modules: ${{ steps.changes.outputs.changes }}
         steps:
             - name: Checkout repository
@@ -43,6 +44,7 @@ jobs:
                       venthyr: [ 'venthyr/**' ]
                       bone: [ 'bone/**' ]
                       dunmer: [ 'dunmer/**' ]
+                      necrolord: [ 'necrolord/**' ]
 
     build:
         name: Build - v${{ needs.get-vars.outputs.version }}
@@ -149,3 +151,20 @@ jobs:
             logo: "https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/new/fantasyfurniture_dunmer.png"
             color: "9755786" # 94DC8A
             artifact_id: fantasyfurniture-dunmer
+
+    publish-necrolord:
+        needs: [ get-vars, build, publish-maven ]
+        if: ${{ needs.get-vars.outputs.necrolord_changed == 'true' && success() }}
+        uses: ./.github/workflows/_publish-furnitureset.yml
+        secrets: inherit
+        with:
+            java_version: 17
+            java_vendor: temurin
+            version: ${{ needs.get-vars.outputs.version }}
+            curseforge_id: 1209752
+            modrinth_id: V9TnGtTg
+            release_type: alpha
+            name: "Fantasy's Furniture - Necrolord"
+            logo: "https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/new/fantasyfurniture_necrolord.png"
+            color: "11704295" # B297E7
+            artifact_id: fantasyfurniture-necrolord

@@ -73,3 +73,10 @@ jobs:
                   name: artifacts-fantasyfurniture-dunmer
                   path: ./build/libs/fantasyfurniture-dunmer-${{ inputs.version }}.jar
                   if-no-files-found: error
+
+            - name: Upload Built Artifacts (Necrolord)
+              uses: actions/upload-artifact@v4
+              with:
+                  name: artifacts-fantasyfurniture-necrolord
+                  path: ./build/libs/fantasyfurniture-necrolord-${{ inputs.version }}.jar
+                  if-no-files-found: error
