@@ -29,6 +29,7 @@ import dev.apexstudios.fantasyfurniture.set.function.BlockFactory;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 
@@ -65,7 +66,10 @@ public final class BoneFurnitureSet {
                 .with(BlockTypes.DESK_RIGHT.extend((furnitureSet, properties) -> new BoneDeskBlock(properties, false)))
                 .with(BlockTypes.CHEST.extend(BlockFactory.wrapping(BoneChestBlock::new)))
                 .with(BlockTypes.DRAWER.extend(BlockFactory.wrapping(BoneDrawerBlock::new)))
-                .with(BlockTypes.CHANDELIER.extend(BlockFactory.wrapping(BoneChandelierBlock::new)))
+                .with(BlockTypes.CHANDELIER.copy($ -> $
+                        .blockFactory(BlockFactory.wrapping(BoneChandelierBlock::new))
+                        .builder($$ -> $$.blockProperties(BlockBehaviour.Properties::noOcclusion))
+                ))
                 .with(BlockTypes.SHELF.extend(BlockFactory.wrapping(BoneShelfBlock::new)))
                 .with(BlockTypes.SOFA.extend(BlockFactory.wrapping(BoneSofaBlock::new)))
                 .with(BlockTypes.WALL_LIGHT.extend(BlockFactory.wrapping(BoneWallLightBlock::new)))
