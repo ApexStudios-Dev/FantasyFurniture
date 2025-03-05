@@ -14,6 +14,7 @@ on:
                     - venthyr
                     - bone
                     - dunmer
+                    - necrolord
             release_type:
                 description: Mod release type
                 type: string
