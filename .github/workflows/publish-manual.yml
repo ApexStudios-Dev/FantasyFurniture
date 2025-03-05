@@ -1,0 +1,46 @@
+name: Publish (Manual)
+
+on:
+    workflow_dispatch:
+        inputs:
+            modules:
+                description: Modules to publish (CSV)
+                type: string
+                required: true
+                default: main,nordic
+                options:
+                    - main
+                    - nordic
+                    - venthyr
+                    - bone
+                    - dunmer
+            release_type:
+                description: Mod release type
+                type: string
+                required: false
+                default: release
+                options:
+                    - release
+                    - beta
+                    - alpha
+
+jobs:
+    split-modules:
+        name: Split Modules
+        runs-on: ubuntu-latest
+        outputs:
+            split_modules: ${{ steps.split.outputs.output }}
+        steps:
+            - name: Split Modules
+              id: split
+              shell: bash
+              run: echo "output=$(echo '"${{ inputs.modules }}"' | jq -c '. | split(",") | map(select(length > 0))')" >> $GITHUB_OUTPUT
+
+    publish:
+        name: Publish
+        needs: split-modules
+        uses: ./.github/workflows/_publish-modules.yml
+        secrets: inherit
+        with:
+            modules: ${{ needs.split-modules.outputs.split_modules }}
+            release_type: ${{ inputs.release_type }}

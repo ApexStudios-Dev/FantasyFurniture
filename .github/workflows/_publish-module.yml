@@ -23,7 +23,7 @@ on:
 
 jobs:
     extract-module-data:
-        name: Extract Module Information (${{ inputs.module }}
+        name: Extract Module Information (${{ inputs.module }})
         runs-on: ubuntu-latest
         outputs:
             display_name: ${{ steps.data.outputs.display_name }}
@@ -44,20 +44,68 @@ jobs:
                   echo color="$(($(echo $MODULES_JSON | jq -r .${{ inputs.module }}.color)))" >> $GITHUB_OUTPUT
                   echo artifact_id=$(echo $MODULES_JSON | jq -r .${{ inputs.module }}.artifact_id) >> $GITHUB_OUTPUT
               env:
-                  MODULES_JSON: ${{ inputs.modules_json }}
+                  MODULES_JSON: ${{ format('{0}', inputs.modules_json) }}
 
-    publish-platforms:
-        name: Publish to Platforms
+    # Causes too many workflows to be called, removing this trims it by one getting us back within the call limit
+    # publish-platforms:
+    #     name: Publish to Platforms
+    #     needs: extract-module-data
+    #     if: success()
+    #     uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod-platforms.yml@master
+    #     secrets: inherit
+    #     with:
+    #         version: ${{ inputs.version }}
+    #         build_timestamp: ${{ inputs.build_timestamp }}
+    #         display_name: ${{ needs.extract-module-data.outputs.display_name }}
+    #         logo_url: ${{ needs.extract-module-data.outputs.logo_url }}
+    #         color: ${{ needs.extract-module-data.outputs.color }}
+    #         release_type: ${{ inputs.release_type }}
+    #         artifact_id: ${{ needs.extract-module-data.outputs.artifact_id }}
+    #         curseforge_id: ${{ needs.extract-module-data.outputs.curseforge_id }}
+    #         modrinth_id: ${{ needs.extract-module-data.outputs.modrinth_id }}
+
+    # Basically exact copy from 'ApexStudios-Dev/.github/.github/workflows/_publish-mod-platforms.yml'
+    # Should be kept inline with upstream
+    publish-curseforge:
+        name: Publish to CurseForge
         needs: extract-module-data
-        if: success()
-        uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod-platforms.yml@master
+        uses: ApexStudios-Dev/.github/.github/workflows/_publish-curseforge.yml@master
+        if: needs.extract-module-data.outputs.curseforge_id
+        secrets: inherit
         with:
-            version: ${{ inputs.version }}
-            build_timestamp: ${{ inputs.build_timestamp }}
             display_name: ${{ needs.extract-module-data.outputs.display_name }}
-            logo_url: ${{ needs.extract-module-data.outputs.logo_url }}
-            color: ${{ needs.extract-module-data.outputs.color }}
+            version: ${{ inputs.version }}
             release_type: ${{ inputs.release_type }}
             artifact_id: ${{ needs.extract-module-data.outputs.artifact_id }}
             curseforge_id: ${{ needs.extract-module-data.outputs.curseforge_id }}
+
+    publish-modrinth:
+        name: Publish to Modrinth
+        needs: extract-module-data
+        uses: ApexStudios-Dev/.github/.github/workflows/_publish-modrinth.yml@master
+        if: needs.extract-module-data.outputs.modrinth_id
+        secrets: inherit
+        with:
+            display_name: ${{ needs.extract-module-data.outputs.display_name }}
+            version: ${{ inputs.version }}
+            release_type: ${{ inputs.release_type }}
+            artifact_id: ${{ needs.extract-module-data.outputs.artifact_id }}
             modrinth_id: ${{ needs.extract-module-data.outputs.modrinth_id }}
+
+    notify-discord:
+        name: Send Announcement to Discord
+        needs: [ extract-module-data, publish-curseforge, publish-modrinth ]
+        if: success()
+        runs-on: ubuntu-latest
+        steps:
+            - name: Send Announcement to Discord
+              uses: ApexStudios-Dev/.github/actions/discord-version-notify@master
+              with:
+                  webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
+                  display_name: ${{ needs.extract-module-data.outputs.display_name }}
+                  version: ${{ inputs.version }}
+                  logo_url: ${{ needs.extract-module-data.outputs.logo_url }}
+                  color: ${{ needs.extract-module-data.outputs.color }}
+                  build_timestamp: ${{ inputs.build_timestamp }}
+                  curseforge_url: ${{ needs.publish-curseforge.outputs.curseforge_download }}
+                  modrinth_url: ${{ needs.publish-modrinth.outputs.modrinth_download }}

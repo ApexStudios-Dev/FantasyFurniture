@@ -1,7 +1,6 @@
 name: Publish
 
 on:
-    workflow_dispatch:
     push:
         branches: [ "**/main" ]
         paths: [ "**/src/**" ]
@@ -15,96 +14,11 @@ jobs:
         name: Determine Module Changes
         uses: ./.github/workflows/_module-changes.yml
 
-    parse-modules:
-        name: Parse Modules
-        runs-on: ubuntu-latest
+    publish:
+        name: Publish
         needs: determine-module-changes
-        if: needs.determine-module-changes.outputs.changes != '[]'
-        outputs:
-            modules: ${{ steps.modules.outputs.json }}
-        steps:
-            - name: Checkout Repository
-              uses: ApexStudios-Dev/.github/actions/checkout@master
-
-            - name: Parse Modules
-              id: modules
-              uses: ApexStudios-Dev/.github/actions/parse-json@master
-              with:
-                  path: ./.github/workflows/modules.json
-
-    build:
-        name: Build
-        runs-on: apexstudios
-        needs: determine-module-changes
-        if: needs.determine-module-changes.outputs.changes != '[]'
-        outputs:
-            timestamp: ${{ steps.timestamp.outputs.output }}
-            version: ${{ steps.checkout.outputs.version }}
-        steps:
-            - name: Checkout Repository
-              id: checkout
-              uses: ApexStudios-Dev/.github/actions/checkout@master
-
-            - name: Setup Java
-              uses: ApexStudios-Dev/.github/actions/setup-java@master
-
-            - name: Build with Gradle
-              uses: ApexStudios-Dev/.github/actions/run-gradle@master
-              with:
-                  setup: true
-                  tasks: :build
-              env:
-                  VERSION: ${{ steps.checkout.outputs.version }}
-
-            - name: Generate Timestamp
-              id: timestamp
-              shell: bash
-              run: echo "output=$(date --iso-8601=seconds)" >> $GITHUB_OUTPUT
-
-            - name: Upload Artifacts
-              uses: actions/upload-artifact@v4
-              with:
-                  name: artifacts
-                  path: ./build/libs/*.jar
-                  if-no-files-found: error
-
-    publish-maven:
-        name: Publish to Maven
-        needs: determine-module-changes
-        if: ${{ success() && needs.determine-module-changes.outputs.changes != '[]' }}
-        runs-on: apexstudios
-        steps:
-            - name: Checkout Repository
-              id: checkout
-              uses: ApexStudios-Dev/.github/actions/checkout@master
-
-            - name: Setup Java
-              uses: ApexStudios-Dev/.github/actions/setup-java@master
-
-            - name: Build with Gradle
-              uses: ApexStudios-Dev/.github/actions/run-gradle@master
-              if: ${{ !env.ACT }}
-              with:
-                  setup: true
-                  tasks: :publishModulesToMaven
-              env:
-                  VERSION: ${{ steps.checkout.outputs.version }}
-                  MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
-                  MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
-                  PUBLISH_MODULES: ${{ join(fromJSON(needs.determine-module-changes.outputs.changes)) }}
-
-    publish-modules:
-        name: Publish Module - ${{ matrix.module }}
-        needs: [ determine-module-changes, parse-modules, build ]
-        if: ${{ success() && needs.determine-module-changes.outputs.changes != '[]' }}
-        uses: ./.github/workflows/_publish-module.yml
-        strategy:
-            matrix:
-                module: ${{ fromJSON(needs.determine-module-changes.outputs.changes) }}
+        uses: ./.github/workflows/_publish-modules.yml
+        secrets: inherit
         with:
+            modules: ${{ needs.determine-module-changes.outputs.changes }}
             release_type: alpha
-
-            version: ${{ needs.build.outputs.version }}
-            build_timestamp: ${{ needs.build.outputs.timestamp }}
-            module: ${{ matrix.module }}
-            modules_json: ${{ needs.parse-modules.outputs.modules }}
