@@ -166,13 +166,13 @@ public class TableBlock extends FurnitureBlockComponentHolder {
             Direction face = null;
 
             if(north)
-                face = Direction.SOUTH;
-            else if(east)
-                face = Direction.WEST;
-            else if(south)
-                face = Direction.NORTH;
-            else if(west)
                 face = Direction.EAST;
+            else if(east)
+                face = Direction.SOUTH;
+            else if(south)
+                face = Direction.WEST;
+            else if(west)
+                face = Direction.NORTH;
 
             if(face != null)
                 result = ApexShapes.join(result, rotateShape(leg, face, facing), rotateShape(leg, face.getClockWise(), facing));
@@ -191,7 +191,7 @@ public class TableBlock extends FurnitureBlockComponentHolder {
                 face = Direction.NORTH;
 
             if(face != null)
-                result = ApexShapes.join(result, rotateShape(leg, face.getClockWise(), facing));
+                result = ApexShapes.join(result, rotateShape(leg, face, facing));
         }
 
         return result;
