@@ -47,14 +47,12 @@ jobs:
               uses: ApexStudios-Dev/.github/actions/setup-gradle@master
 
             - name: Build with Gradle
-              shell: bash
               run: ./gradlew :build
               env:
                   VERSION: ${{ steps.checkout.outputs.version }}
 
             - name: Generate Timestamp
               id: timestamp
-              shell: bash
               run: echo "output=$(date --iso-8601=seconds)" >> $GITHUB_OUTPUT
 
             - name: Upload Artifacts
@@ -82,7 +80,6 @@ jobs:
 
             - name: Build with Gradle
               if: ${{ !env.ACT }}
-              shell: bash
               run: ./gradlew :publishModulesToMaven
               env:
                   VERSION: ${{ steps.checkout.outputs.version }}

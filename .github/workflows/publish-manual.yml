@@ -33,7 +33,6 @@ jobs:
         steps:
             - name: Split Modules
               id: split
-              shell: bash
               run: echo "output=$(echo '"${{ inputs.modules }}"' | jq -c '. | split(",") | map(select(length > 0))')" >> $GITHUB_OUTPUT
 
     publish:
