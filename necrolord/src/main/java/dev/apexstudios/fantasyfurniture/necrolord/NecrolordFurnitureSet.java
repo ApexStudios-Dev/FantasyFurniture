@@ -10,7 +10,7 @@ public class NecrolordFurnitureSet {
     public static final String ID = "fantasyfurniture_necrolord";
     public static final Registree REGISTREE = new Registree(ID);
 
-    public static final FurnitureSet FURNITURE_SET = FurnitureSet.createWoodLike(REGISTREE, "necrolord");
+    public static final FurnitureSet FURNITURE_SET = FurnitureSet.createStoneLike(REGISTREE, "necrolord");
 
     public NecrolordFurnitureSet(IEventBus modBus) {
         FURNITURE_SET.register(modBus);
