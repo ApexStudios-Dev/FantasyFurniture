@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "redstone",
   "ingredients": [
-    "fantasyfurniture_necrolord:planks"
+    "fantasyfurniture_necrolord:bricks"
   ],
   "result": {
     "count": 1,

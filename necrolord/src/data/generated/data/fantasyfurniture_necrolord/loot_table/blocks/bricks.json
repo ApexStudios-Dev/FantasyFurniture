@@ -10,11 +10,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "fantasyfurniture_necrolord:planks"
+          "name": "fantasyfurniture_necrolord:bricks"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "fantasyfurniture_necrolord:blocks/planks"
+  "random_sequence": "fantasyfurniture_necrolord:blocks/bricks"
 }
