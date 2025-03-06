@@ -25,7 +25,7 @@ val furnitureSets = setOf(
 )
 
 ModuleBuilder.modules(project) { furnitureSets.forEach {
-    module(it) { hasData() }
+    module(it, "fantasyfurniture_$it") { hasData() }
 } }
 
 furnitureSets.forEach {
