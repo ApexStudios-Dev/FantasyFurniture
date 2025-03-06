@@ -16,6 +16,7 @@ jobs:
     determine-module-changes:
         name: Determine Module Changes
         uses: ./.github/workflows/_module-changes.yml
+        secrets: inherit
 
     check-local-changes:
         name: Check Local Changes
@@ -34,7 +35,6 @@ jobs:
               uses: ApexStudios-Dev/.github/actions/setup-gradle@master
 
             - name: Generate Data
-              shell: bash
               run: ./gradlew :generateModulesData
               env:
                   VERSION: ${{ steps.checkout.outputs.version }}
@@ -46,7 +46,6 @@ jobs:
               run: chmod -x ./gradlew
 
             - name: Check no local changes are present
-              shell: bash
               run: |
                 git status
                 if [ -n "$(git status --porcelain)" ]; then exit 1; fi

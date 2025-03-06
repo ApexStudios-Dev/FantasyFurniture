@@ -13,6 +13,7 @@ jobs:
     determine-module-changes:
         name: Determine Module Changes
         uses: ./.github/workflows/_module-changes.yml
+        secrets: inherit
 
     publish:
         name: Publish

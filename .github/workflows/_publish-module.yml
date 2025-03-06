@@ -35,7 +35,6 @@ jobs:
         steps:
             - name: Extract Module Data
               id: data
-              shell: bash
               run: |
                   echo display_name=$(echo $MODULES_JSON | jq -r .${{ inputs.module }}.display_name) >> $GITHUB_OUTPUT
                   echo logo_url=$(echo $MODULES_JSON | jq -r .${{ inputs.module }}.logo_url) >> $GITHUB_OUTPUT
