@@ -6,7 +6,6 @@
 	},
 	"name": "drawer",
 	"parent": "",
-	"credit": "Made by Fantasy",
 	"ambientocclusion": true,
 	"front_gui_light": false,
 	"visible_box": [1, 1, 0],

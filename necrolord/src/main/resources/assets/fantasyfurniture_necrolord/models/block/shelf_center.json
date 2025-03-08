@@ -1,5 +1,4 @@
 {
-	"credit": "Made by Fantasy",
 	"texture_size": [64, 64],
 	"textures": {
 		"shelf": "fantasyfurniture_necrolord:block/shelf",
@@ -11,12 +10,12 @@
 			"from": [0, 14, 0],
 			"to": [16, 16, 16],
 			"faces": {
-				"north": {"uv": [8, 10, 12, 10.5], "texture": "#shelf"},
-				"east": {"uv": [8, 10.5, 12, 11], "texture": "#shelf"},
-				"south": {"uv": [8, 11, 12, 11.5], "texture": "#shelf"},
-				"west": {"uv": [8, 11.5, 12, 12], "texture": "#shelf"},
-				"up": {"uv": [8, 4, 4, 0], "texture": "#shelf"},
-				"down": {"uv": [8, 4, 4, 8], "texture": "#shelf"}
+				"north": {"uv": [8, 8, 12, 8.5], "texture": "#shelf", "cullface": "north"},
+				"east": {"uv": [8, 8.5, 12, 9], "texture": "#shelf", "cullface": "east"},
+				"south": {"uv": [8, 9, 12, 9.5], "texture": "#shelf", "cullface": "south"},
+				"west": {"uv": [8, 9.5, 12, 10], "texture": "#shelf", "cullface": "west"},
+				"up": {"uv": [4, 4, 0, 0], "texture": "#shelf", "cullface": "up"},
+				"down": {"uv": [4, 4, 0, 8], "texture": "#shelf"}
 			}
 		}
 	],
@@ -36,25 +35,25 @@
 			"scale": [0.4, 0.4, 0.4]
 		},
 		"firstperson_lefthand": {
-			"rotation": [0, 225, 0],
-			"scale": [0.4, 0.4, -0.4]
+			"rotation": [0, 45, 0],
+			"scale": [0.4, 0.4, 0.4]
 		},
 		"ground": {
 			"translation": [0, 3, 0],
 			"scale": [0.25, 0.25, 0.25]
 		},
 		"gui": {
-			"rotation": [30, 145, 0],
-			"translation": [0, -3.5, 0],
+			"rotation": [30, 225, 0],
 			"scale": [0.625, 0.625, 0.625]
 		},
 		"fixed": {
+			"translation": [0, 0, -4],
 			"scale": [0.5, 0.5, 0.5]
 		}
 	},
 	"groups": [
 		{
-			"name": "shelf_center",
+			"name": "shelf_single",
 			"origin": [8, 8, 8],
 			"color": 0,
 			"children": [0]
