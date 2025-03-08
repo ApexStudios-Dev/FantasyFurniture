@@ -2,12 +2,11 @@ package dev.apexstudios.fantasyfurniture.necrolord.block;
 
 import dev.apexstudios.apexcore.lib.util.shapes.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.WallLightBlock;
+import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.VoxelShape;
-
-import java.util.Map;
 
 public final class NecrolordWallLightBlock extends WallLightBlock {
     public static final VoxelShape SHAPE = box(6D, 4D, 8D, 10D, 14.5D, 16D);

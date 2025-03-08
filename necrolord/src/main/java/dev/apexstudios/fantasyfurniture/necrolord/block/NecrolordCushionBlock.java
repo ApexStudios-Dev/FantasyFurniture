@@ -3,12 +3,11 @@ package dev.apexstudios.fantasyfurniture.necrolord.block;
 import dev.apexstudios.apexcore.lib.util.shapes.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.CushionBlock;
 import dev.apexstudios.fantasyfurniture.block.base.FurnitureBlockComponentHolder;
+import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.VoxelShape;
-
-import java.util.Map;
 
 public final class NecrolordCushionBlock extends CushionBlock {
     public static final VoxelShape SHAPE = ApexShapes.join(

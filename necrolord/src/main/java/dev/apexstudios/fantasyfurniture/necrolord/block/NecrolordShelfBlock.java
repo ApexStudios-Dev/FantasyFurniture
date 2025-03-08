@@ -3,12 +3,11 @@ package dev.apexstudios.fantasyfurniture.necrolord.block;
 import dev.apexstudios.apexcore.lib.util.shapes.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.ShelfBlock;
 import dev.apexstudios.fantasyfurniture.block.property.ShelfConnection;
+import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.VoxelShape;
-
-import java.util.Map;
 
 public final class NecrolordShelfBlock extends ShelfBlock {
     public static final VoxelShape LEFT_SHAPE = ApexShapes.join(
