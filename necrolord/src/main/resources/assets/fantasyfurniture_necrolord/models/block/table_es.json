@@ -5,6 +5,7 @@
 		"table_small": "fantasyfurniture_necrolord:block/table_small",
 		"table_combined": "fantasyfurniture_necrolord:block/table_combined"
 	},
+	"render_type": "minecraft:cutout",
 	"elements": [
 		{
 			"name": "beam_8",

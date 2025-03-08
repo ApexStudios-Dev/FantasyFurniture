@@ -3,6 +3,7 @@
 	"textures": {
 		"oven": "fantasyfurniture_necrolord:block/oven"
 	},
+	"render_type": "minecraft:cutout",
 	"elements": [
 		{
 			"name": "post_1",

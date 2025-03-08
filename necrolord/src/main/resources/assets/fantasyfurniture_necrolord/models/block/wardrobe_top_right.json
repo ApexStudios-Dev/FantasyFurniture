@@ -4,6 +4,7 @@
 		"wardrobe": "fantasyfurniture_necrolord:block/wardrobe",
 		"particle": "fantasyfurniture_necrolord:block/particle"
 	},
+	"render_type": "minecraft:cutout",
 	"elements": [
 		{
 			"name": "post_8",

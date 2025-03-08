@@ -4,6 +4,7 @@
 		"particle": "fantasyfurniture_necrolord:block/particle",
 		"table_small": "fantasyfurniture_necrolord:block/table_small"
 	},
+	"render_type": "minecraft:cutout",
 	"elements": [
 		{
 			"name": "cap_1",
