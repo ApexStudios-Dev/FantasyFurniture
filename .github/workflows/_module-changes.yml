@@ -31,3 +31,4 @@ jobs:
                       venthyr: [ 'venthyr/**' ]
                       bone: [ 'bone/**' ]
                       dunmer: [ 'dunmer/**' ]
+                      necrolord: [ 'necrolord/**' ]

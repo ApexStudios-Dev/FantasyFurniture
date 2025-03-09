@@ -1,0 +1,13 @@
+{
+  "ctm": {
+    "type": "CTM",
+    "ctm_version": 1,
+    "extra": {
+      "connect_inside": true
+    },
+    "layer": "CUTOUT",
+    "textures": [
+      "fantasyfurniture_necrolord:block/ctm/wool_simple"
+    ]
+  }
+}

@@ -38,5 +38,13 @@
         "modrinth_id": "Bs7e2IyQ",
         "color": "0x94DC8A",
         "artifact_id": "fantasyfurniture-dunmer"
+    },
+    "necrolord": {
+        "display_name": "Fantasy's Furniture - Necrolord",
+        "logo_url": "https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/new/fantasyfurniture_necrolord.png",
+        "curseforge_id": "1209752",
+        "modrinth_id": "V9TnGtTg",
+        "color": "0xB297E7",
+        "artifact_id": "fantasyfurniture-necrolord"
     }
 }

@@ -1,0 +1,10 @@
+{
+  "type": "fantasyfurniture:furniture_station",
+  "binding_agent": "#fantasyfurniture:binding_agent",
+  "planks": "fantasyfurniture_necrolord:bricks",
+  "result": {
+    "count": 1,
+    "id": "fantasyfurniture_necrolord:bed_double"
+  },
+  "wool": "fantasyfurniture_necrolord:wool"
+}
