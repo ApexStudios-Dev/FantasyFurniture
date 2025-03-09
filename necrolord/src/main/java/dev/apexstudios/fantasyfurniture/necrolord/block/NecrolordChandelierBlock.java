@@ -2,6 +2,7 @@ package dev.apexstudios.fantasyfurniture.necrolord.block;
 
 import dev.apexstudios.apexcore.lib.util.shapes.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.ChandelierBlock;
+import dev.apexstudios.fantasyfurniture.necrolord.NecrolordFurnitureSet;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -30,6 +31,6 @@ public final class NecrolordChandelierBlock extends ChandelierBlock {
         var z = pos.getZ() + .5D;
 
         level.addParticle(ParticleTypes.SMOKE, x, y, z, 0D, 0D, 0D);
-        level.addParticle(ParticleTypes.FLAME, x, y, z, 0D, 0D, 0D);
+        level.addParticle(NecrolordFurnitureSet.FLAME_PARTICLE.value(), x, y, z, 0D, 0D, 0D);
     }
 }

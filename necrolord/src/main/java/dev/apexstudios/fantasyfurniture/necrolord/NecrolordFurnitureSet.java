@@ -1,10 +1,32 @@
 package dev.apexstudios.fantasyfurniture.necrolord;
 
 import dev.apexstudios.apexcore.lib.registree.Registree;
-import dev.apexstudios.fantasyfurniture.necrolord.block.*;
+import dev.apexstudios.apexcore.lib.registree.holder.DeferredParticleType;
+import dev.apexstudios.fantasyfurniture.necrolord.block.NecrolordBedDoubleBlock;
+import dev.apexstudios.fantasyfurniture.necrolord.block.NecrolordBedSingleBlock;
+import dev.apexstudios.fantasyfurniture.necrolord.block.NecrolordBenchBlock;
+import dev.apexstudios.fantasyfurniture.necrolord.block.NecrolordBookshelfBlock;
+import dev.apexstudios.fantasyfurniture.necrolord.block.NecrolordChairBlock;
+import dev.apexstudios.fantasyfurniture.necrolord.block.NecrolordChandelierBlock;
+import dev.apexstudios.fantasyfurniture.necrolord.block.NecrolordChestBlock;
+import dev.apexstudios.fantasyfurniture.necrolord.block.NecrolordCushionBlock;
+import dev.apexstudios.fantasyfurniture.necrolord.block.NecrolordDeskBlock;
+import dev.apexstudios.fantasyfurniture.necrolord.block.NecrolordDrawerBlock;
+import dev.apexstudios.fantasyfurniture.necrolord.block.NecrolordDresserBlock;
+import dev.apexstudios.fantasyfurniture.necrolord.block.NecrolordFloorLightBlock;
+import dev.apexstudios.fantasyfurniture.necrolord.block.NecrolordLockBoxBlock;
+import dev.apexstudios.fantasyfurniture.necrolord.block.NecrolordPaintingSmallBlock;
+import dev.apexstudios.fantasyfurniture.necrolord.block.NecrolordPaintingWideBlock;
+import dev.apexstudios.fantasyfurniture.necrolord.block.NecrolordShelfBlock;
+import dev.apexstudios.fantasyfurniture.necrolord.block.NecrolordSofaBlock;
+import dev.apexstudios.fantasyfurniture.necrolord.block.NecrolordStoolBlock;
+import dev.apexstudios.fantasyfurniture.necrolord.block.NecrolordTableBlock;
+import dev.apexstudios.fantasyfurniture.necrolord.block.NecrolordWallLightBlock;
+import dev.apexstudios.fantasyfurniture.necrolord.block.NecrolordWardrobeBlock;
 import dev.apexstudios.fantasyfurniture.set.BlockTypes;
 import dev.apexstudios.fantasyfurniture.set.FurnitureSet;
 import dev.apexstudios.fantasyfurniture.set.function.BlockFactory;
+import net.minecraft.core.particles.SimpleParticleType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 
@@ -12,6 +34,8 @@ import net.neoforged.fml.common.Mod;
 public class NecrolordFurnitureSet {
     public static final String ID = "fantasyfurniture_necrolord";
     public static final Registree REGISTREE = new Registree(ID);
+
+    public static final DeferredParticleType<SimpleParticleType, SimpleParticleType> FLAME_PARTICLE = REGISTREE.registerSimpleParticle("flame", false);
 
     public static final FurnitureSet FURNITURE_SET = FurnitureSet.createStoneLike(REGISTREE, "necrolord", $ -> $
             .with(BlockTypes.BED_DOUBLE.extend(BlockFactory.wrapping(NecrolordBedDoubleBlock::new)))
