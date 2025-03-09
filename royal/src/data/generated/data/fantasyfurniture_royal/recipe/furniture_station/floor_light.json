@@ -1,0 +1,10 @@
+{
+  "type": "fantasyfurniture:furniture_station",
+  "binding_agent": "#fantasyfurniture:binding_agent",
+  "planks": "fantasyfurniture_royal:planks",
+  "result": {
+    "count": 1,
+    "id": "fantasyfurniture_royal:floor_light"
+  },
+  "wool": "fantasyfurniture_royal:wool"
+}
