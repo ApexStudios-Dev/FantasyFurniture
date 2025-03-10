@@ -32,7 +32,13 @@ public final class RoyalFurnitureSetClientSetup {
     }
 
     static void woolModel(ProviderListenerContext context, BlockModelGenerators models, FurnitureSet furnitureSet, Block block) {
-        var model = ApexModelTemplates.Textured.CUBE_ALL_TINTED.create(block, models.modelOutput);
+        var model = ApexModelTemplates.Textured.CUBE_ALL_TINTED
+                .updateTemplate(template -> template.extend()
+                        .renderType("cutout")
+                        .build()
+                )
+                .create(block, models.modelOutput);
+
         models.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, model));
         models.registerSimpleTintedItemModel(block, model, new DyeColorItemTintSource(DyeColor.WHITE));
     }
