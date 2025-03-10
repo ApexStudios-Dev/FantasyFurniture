@@ -15,6 +15,7 @@ on:
                     - bone
                     - dunmer
                     - necrolord
+                    - royal
             release_type:
                 description: Mod release type
                 type: string
