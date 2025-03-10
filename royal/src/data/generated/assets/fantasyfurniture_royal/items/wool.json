@@ -5,7 +5,7 @@
     "tints": [
       {
         "type": "apexcore:dye_color",
-        "default": "red"
+        "default": "white"
       }
     ]
   }
