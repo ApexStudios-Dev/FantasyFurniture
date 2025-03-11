@@ -1,5 +1,4 @@
 {
-	"credit": "Made by Fantasy",
 	"texture_size": [32, 32],
 	"textures": {
 		"chandelier": "fantasyfurniture_royal:block/chandelier",
@@ -16,8 +15,7 @@
 				"east": {"uv": [1, 11, 2, 13], "texture": "#chandelier"},
 				"south": {"uv": [2, 11, 3, 13], "texture": "#chandelier"},
 				"west": {"uv": [11, 9.5, 12, 11.5], "texture": "#chandelier"},
-				"up": {"uv": [9, 14.5, 8, 13.5], "texture": "#chandelier"},
-				"down": {"uv": [10, 13.5, 9, 14.5], "texture": "#chandelier"}
+				"up": {"uv": [9, 14.5, 8, 13.5], "texture": "#chandelier"}
 			}
 		},
 		{
@@ -30,8 +28,7 @@
 				"east": {"uv": [3.5, 7.5, 4, 8], "texture": "#chandelier"},
 				"south": {"uv": [10.5, 9.5, 11, 10], "texture": "#chandelier"},
 				"west": {"uv": [3, 11, 3.5, 11.5], "texture": "#chandelier"},
-				"up": {"uv": [12.5, 11.5, 12, 11], "texture": "#chandelier"},
-				"down": {"uv": [13, 11, 12.5, 11.5], "texture": "#chandelier"}
+				"up": {"uv": [12.5, 11.5, 12, 11], "texture": "#chandelier"}
 			}
 		},
 		{
@@ -58,8 +55,7 @@
 				"east": {"uv": [2.5, 13, 3, 13.5], "texture": "#chandelier"},
 				"south": {"uv": [4, 14.5, 4.5, 15], "texture": "#chandelier"},
 				"west": {"uv": [14.5, 4, 15, 4.5], "texture": "#chandelier"},
-				"up": {"uv": [5, 15, 4.5, 14.5], "texture": "#chandelier"},
-				"down": {"uv": [15, 4.5, 14.5, 5], "texture": "#chandelier"}
+				"up": {"uv": [5, 15, 4.5, 14.5], "texture": "#chandelier"}
 			}
 		},
 		{
@@ -72,8 +68,7 @@
 				"east": {"uv": [5, 11.5, 6, 13.5], "texture": "#chandelier"},
 				"south": {"uv": [6, 11.5, 7, 13.5], "texture": "#chandelier"},
 				"west": {"uv": [11.5, 6, 12.5, 8], "texture": "#chandelier"},
-				"up": {"uv": [13, 14.5, 12, 13.5], "texture": "#chandelier"},
-				"down": {"uv": [1, 14, 0, 15], "texture": "#chandelier"}
+				"up": {"uv": [13, 14.5, 12, 13.5], "texture": "#chandelier"}
 			}
 		},
 		{
@@ -86,8 +81,7 @@
 				"east": {"uv": [14.5, 5, 15, 5.5], "texture": "#chandelier"},
 				"south": {"uv": [5.5, 14.5, 6, 15], "texture": "#chandelier"},
 				"west": {"uv": [14.5, 5.5, 15, 6], "texture": "#chandelier"},
-				"up": {"uv": [6.5, 15, 6, 14.5], "texture": "#chandelier"},
-				"down": {"uv": [15, 6, 14.5, 6.5], "texture": "#chandelier"}
+				"up": {"uv": [6.5, 15, 6, 14.5], "texture": "#chandelier"}
 			}
 		},
 		{
@@ -114,8 +108,7 @@
 				"east": {"uv": [14.5, 6.5, 15, 7], "texture": "#chandelier"},
 				"south": {"uv": [7, 14.5, 7.5, 15], "texture": "#chandelier"},
 				"west": {"uv": [14.5, 7, 15, 7.5], "texture": "#chandelier"},
-				"up": {"uv": [8, 15, 7.5, 14.5], "texture": "#chandelier"},
-				"down": {"uv": [15, 7.5, 14.5, 8], "texture": "#chandelier"}
+				"up": {"uv": [8, 15, 7.5, 14.5], "texture": "#chandelier"}
 			}
 		},
 		{
@@ -127,7 +120,7 @@
 				"east": {"uv": [12, 8, 14, 9], "texture": "#chandelier"},
 				"south": {"uv": [12, 9, 14, 10], "texture": "#chandelier"},
 				"west": {"uv": [12, 10, 14, 11], "texture": "#chandelier"},
-				"up": {"uv": [6, 2, 4, 0], "texture": "#chandelier"},
+				"up": {"uv": [6, 2, 4, 0], "texture": "#chandelier", "cullface": "up"},
 				"down": {"uv": [6, 2, 4, 4], "texture": "#chandelier"}
 			}
 		},
@@ -139,9 +132,7 @@
 				"north": {"uv": [0, 0, 1, 5], "texture": "#chandelier"},
 				"east": {"uv": [1, 0, 2, 5], "texture": "#chandelier"},
 				"south": {"uv": [2, 0, 3, 5], "texture": "#chandelier"},
-				"west": {"uv": [3, 0, 4, 5], "texture": "#chandelier"},
-				"up": {"uv": [15, 10, 14, 9], "texture": "#chandelier"},
-				"down": {"uv": [15, 10, 14, 11], "texture": "#chandelier"}
+				"west": {"uv": [3, 0, 4, 5], "texture": "#chandelier"}
 			}
 		},
 		{
@@ -166,7 +157,6 @@
 				"north": {"uv": [0, 7, 3.5, 8], "texture": "#chandelier"},
 				"east": {"uv": [13, 14, 14, 15], "texture": "#chandelier"},
 				"south": {"uv": [0, 8, 3.5, 9], "texture": "#chandelier"},
-				"west": {"uv": [14, 14, 15, 15], "texture": "#chandelier"},
 				"up": {"uv": [11.5, 1, 8, 0], "texture": "#chandelier"},
 				"down": {"uv": [11.5, 1, 8, 2], "texture": "#chandelier"}
 			}
@@ -192,7 +182,6 @@
 			"rotation": {"angle": -45, "axis": "y", "origin": [5, 2.5, 5]},
 			"faces": {
 				"north": {"uv": [8, 2, 11.5, 3], "texture": "#chandelier"},
-				"east": {"uv": [14.5, 0, 15.5, 1], "texture": "#chandelier"},
 				"south": {"uv": [8, 3, 11.5, 4], "texture": "#chandelier"},
 				"west": {"uv": [14.5, 1, 15.5, 2], "texture": "#chandelier"},
 				"up": {"uv": [7, 9, 3.5, 8], "texture": "#chandelier"},
@@ -220,7 +209,6 @@
 			"rotation": {"angle": 45, "axis": "y", "origin": [5, 2.5, 11]},
 			"faces": {
 				"north": {"uv": [8, 5, 11.5, 6], "texture": "#chandelier"},
-				"east": {"uv": [2, 14.5, 3, 15.5], "texture": "#chandelier"},
 				"south": {"uv": [8, 6, 11.5, 7], "texture": "#chandelier"},
 				"west": {"uv": [14.5, 2, 15.5, 3], "texture": "#chandelier"},
 				"up": {"uv": [10.5, 9, 7, 8], "texture": "#chandelier"},
@@ -250,7 +238,6 @@
 				"north": {"uv": [0, 9, 3.5, 10], "texture": "#chandelier"},
 				"east": {"uv": [3, 14.5, 4, 15.5], "texture": "#chandelier"},
 				"south": {"uv": [3.5, 9, 7, 10], "texture": "#chandelier"},
-				"west": {"uv": [14.5, 3, 15.5, 4], "texture": "#chandelier"},
 				"up": {"uv": [10.5, 10, 7, 9], "texture": "#chandelier"},
 				"down": {"uv": [3.5, 10, 0, 11], "texture": "#chandelier"}
 			}
