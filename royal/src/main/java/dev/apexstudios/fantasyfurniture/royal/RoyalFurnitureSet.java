@@ -5,6 +5,7 @@ import dev.apexstudios.fantasyfurniture.royal.block.RoyalBedDoubleBlock;
 import dev.apexstudios.fantasyfurniture.royal.block.RoyalBedSingleBlock;
 import dev.apexstudios.fantasyfurniture.royal.block.RoyalBenchBlock;
 import dev.apexstudios.fantasyfurniture.royal.block.RoyalBookshelfBlock;
+import dev.apexstudios.fantasyfurniture.royal.block.RoyalCarpetBlock;
 import dev.apexstudios.fantasyfurniture.royal.block.RoyalChairBlock;
 import dev.apexstudios.fantasyfurniture.royal.block.RoyalChandelierBlock;
 import dev.apexstudios.fantasyfurniture.royal.block.RoyalChestBlock;
@@ -41,6 +42,13 @@ public class RoyalFurnitureSet {
                     .blockFactory(BlockFactory.wrapping(RoyalWoolBlock::new))
                     .builder($$$ -> $$$
                             .model(() -> RoyalFurnitureSetClientSetup::woolModel)
+                            .itemProperties(properties -> properties.component(DataComponents.BASE_COLOR, DyeColor.WHITE))
+                    )
+            ))
+            .with(BlockTypes.CARPET.copy($$ -> $$
+                    .blockFactory(BlockFactory.wrapping(RoyalCarpetBlock::new))
+                    .builder($$$ -> $$$
+                            .model(() -> RoyalFurnitureSetClientSetup::carpetModel)
                             .itemProperties(properties -> properties.component(DataComponents.BASE_COLOR, DyeColor.WHITE))
                     )
             ))

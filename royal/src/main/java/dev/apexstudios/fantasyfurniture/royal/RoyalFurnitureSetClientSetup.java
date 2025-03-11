@@ -5,12 +5,16 @@ import dev.apexstudios.apexcore.lib.component.block.BlockComponentHelper;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
 import dev.apexstudios.apexcore.lib.data.provider.context.ProviderListenerContext;
 import dev.apexstudios.apexcore.lib.data.provider.model.ApexModelTemplates;
+import dev.apexstudios.fantasyfurniture.royal.block.RoyalCarpetBlock;
 import dev.apexstudios.fantasyfurniture.set.BlockTypes;
 import dev.apexstudios.fantasyfurniture.set.FurnitureSet;
 import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.client.data.models.model.TextureSlot;
 import net.minecraft.util.CommonColors;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.CarpetBlock;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
@@ -28,11 +32,34 @@ public final class RoyalFurnitureSetClientSetup {
 
                 return CommonColors.WHITE;
             }, RoyalFurnitureSet.FURNITURE_SET.getOrThrow(BlockTypes.WOOL));
+
+            event.register(
+                    (blockState, level, pos, tintIndex) -> tintIndex == 0 ? blockState.getValue(RoyalCarpetBlock.COLOR).getTextureDiffuseColor() : CommonColors.WHITE,
+                    RoyalFurnitureSet.FURNITURE_SET.getOrThrow(BlockTypes.CARPET)
+            );
         });
     }
 
     static void woolModel(ProviderListenerContext context, BlockModelGenerators models, FurnitureSet furnitureSet, Block block) {
         var model = ApexModelTemplates.Textured.CUBE_ALL_TINTED
+                .updateTemplate(template -> template.extend()
+                        .renderType("cutout")
+                        .build()
+                )
+                .create(block, models.modelOutput);
+
+        models.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, model));
+        models.registerSimpleTintedItemModel(block, model, new DyeColorItemTintSource(DyeColor.WHITE));
+    }
+
+    static void carpetModel(ProviderListenerContext context, BlockModelGenerators models, FurnitureSet furnitureSet, CarpetBlock block) {
+        var wool = furnitureSet.getOrThrow(BlockTypes.WOOL);
+
+        var model = ApexModelTemplates.Textured.CARPET_TINTED
+                .updateTexture(mapping -> mapping
+                        .put(TextureSlot.WOOL, TextureMapping.getBlockTexture(wool))
+                        .put(ApexModelTemplates.SLOT_WOOL_TINTED, TextureMapping.getBlockTexture(wool).withSuffix("_tint"))
+                )
                 .updateTemplate(template -> template.extend()
                         .renderType("cutout")
                         .build()
