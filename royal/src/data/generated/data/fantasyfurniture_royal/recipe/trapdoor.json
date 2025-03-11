@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "redstone",
   "key": {
-    "#": "fantasyfurniture_royal:planks"
+    "#": "fantasyfurniture_royal:bricks"
   },
   "pattern": [
     "###",

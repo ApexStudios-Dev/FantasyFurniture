@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "#": "minecraft:stick",
-    "W": "fantasyfurniture_royal:planks"
+    "W": "fantasyfurniture_royal:bricks"
   },
   "pattern": [
     "W#W",

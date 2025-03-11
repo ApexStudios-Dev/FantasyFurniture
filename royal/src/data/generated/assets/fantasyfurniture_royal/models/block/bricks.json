@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "fantasyfurniture_royal:block/planks"
+    "all": "fantasyfurniture_royal:block/bricks"
   }
 }

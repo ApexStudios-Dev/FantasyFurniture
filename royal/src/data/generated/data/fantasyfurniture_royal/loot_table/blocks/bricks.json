@@ -10,11 +10,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "fantasyfurniture_royal:planks"
+          "name": "fantasyfurniture_royal:bricks"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "fantasyfurniture_royal:blocks/planks"
+  "random_sequence": "fantasyfurniture_royal:blocks/bricks"
 }

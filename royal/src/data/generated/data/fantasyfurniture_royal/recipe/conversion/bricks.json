@@ -2,11 +2,11 @@
   "type": "minecraft:stonecutting",
   "ingredient": {
     "neoforge:ingredient_type": "neoforge:difference",
-    "base": "#minecraft:planks",
-    "subtracted": "#fantasyfurniture:furniture_planks"
+    "base": "#minecraft:stone_crafting_materials",
+    "subtracted": "#fantasyfurniture:furniture_bricks"
   },
   "result": {
     "count": 1,
-    "id": "fantasyfurniture_royal:planks"
+    "id": "fantasyfurniture_royal:bricks"
   }
 }
