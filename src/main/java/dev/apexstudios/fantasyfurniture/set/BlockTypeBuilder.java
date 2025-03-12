@@ -1,8 +1,6 @@
 package dev.apexstudios.fantasyfurniture.set;
 
 import com.google.common.collect.Maps;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.MultimapBuilder;
 import com.google.common.collect.Sets;
 import dev.apexstudios.apexcore.lib.data.ProviderType;
 import dev.apexstudios.apexcore.lib.data.ProviderTypes;
@@ -20,7 +18,6 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -35,7 +32,6 @@ public abstract sealed class BlockTypeBuilder<TBlock extends Block, TType extend
     BiFunction<FurnitureSet, BlockBehaviour.Properties, BlockBehaviour.Properties> blockPropertiesModifier = (furnitureSet, properties) -> properties;
     @Nullable Supplier<? extends BlockEntityType<?>> blockEntityType = null;
     Map<ProviderType<?>, ProviderListener<?, TBlock>> providerListeners = Maps.newLinkedHashMap();
-    final Multimap<ResourceKey<?>, TagKey<?>> tags = MultimapBuilder.hashKeys().hashSetValues().build();
     BiConsumer<FurnitureSet, TBlock> onRegister = (furnitureSet, block) -> { };
     BiConsumer<FurnitureSet, TBlock> onRegisterEnqueued = (furnitureSet, block) -> { };
     @Nullable Supplier<? extends BlockBehaviour> baseBlock = null;

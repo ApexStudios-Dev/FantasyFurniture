@@ -3,8 +3,8 @@ package dev.apexstudios.fantasyfurniture.dunmer;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
 import dev.apexstudios.apexcore.lib.component.block.types.MultiBlockComponent;
 import dev.apexstudios.apexcore.lib.data.provider.model.ModelUtil;
-import dev.apexstudios.apexcore.lib.placement.BlockPlacementRenderer;
 import dev.apexstudios.apexcore.lib.registree.Registree;
+import dev.apexstudios.apexcore.lib.util.ApexTags;
 import dev.apexstudios.fantasyfurniture.block.OvenBlock;
 import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerBedDoubleBlock;
 import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerBedSingleBlock;
@@ -62,7 +62,7 @@ public class DunmerFurnitureSet {
 
                                 ModelUtil.registerBlockItemModel(block, models);
                             })
-                            .blockTags(BlockPlacementRenderer.BLOCK_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
+                            .blockTags(ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
                     )
             ))
             .with(BlockTypes.DRESSER.extend(BlockFactory.wrapping(DunmerDresserBlock::new)))

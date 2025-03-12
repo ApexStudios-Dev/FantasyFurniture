@@ -1,14 +1,13 @@
 package dev.apexstudios.fantasyfurniture.set;
 
-import dev.apexstudios.apexcore.core.seat.SeatSetup;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
 import dev.apexstudios.apexcore.lib.component.block.DoorBlockComponentHolder;
 import dev.apexstudios.apexcore.lib.component.block.types.BedBlockComponent;
 import dev.apexstudios.apexcore.lib.component.block.types.MultiBlockComponent;
 import dev.apexstudios.apexcore.lib.data.provider.RecipeProvider;
 import dev.apexstudios.apexcore.lib.data.provider.model.ModelUtil;
-import dev.apexstudios.apexcore.lib.placement.BlockPlacementRenderer;
 import dev.apexstudios.apexcore.lib.placement.PlacementRenderEvent;
+import dev.apexstudios.apexcore.lib.util.ApexTags;
 import dev.apexstudios.apexcore.lib.util.ApexUtil;
 import dev.apexstudios.fantasyfurniture.FantasyFurniture;
 import dev.apexstudios.fantasyfurniture.FurnitureBlockEntities;
@@ -194,7 +193,7 @@ public interface BlockTypes {
                         ModelUtil.registerBlockItemModel(block, models);
                     })
                     .translation("Dresser")
-                    .blockTags(BlockPlacementRenderer.BLOCK_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
+                    .blockTags(ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
     // endregion
@@ -264,7 +263,7 @@ public interface BlockTypes {
                         ModelUtil.registerBlockItemModel(block, models);
                     })
                     .translation("Chair")
-                    .blockTags(SeatSetup.ORIGIN_ONLY, BlockPlacementRenderer.BLOCK_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
+                    .blockTags(ApexTags.Blocks.SEAT_ORIGIN_ONLY, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
     // endregion
@@ -283,7 +282,7 @@ public interface BlockTypes {
                         ModelUtil.registerBlockItemModel(block, models);
                     })
                     .translation("Bookshelf")
-                    .blockTags(BlockPlacementRenderer.BLOCK_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
+                    .blockTags(ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
     // endregion
@@ -300,7 +299,7 @@ public interface BlockTypes {
                         ModelUtil.registerBlockItemModel(block, models);
                     })
                     .translation("Bed Single")
-                    .blockTags(BlockTags.BEDS, BlockPlacementRenderer.BLOCK_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
+                    .blockTags(BlockTags.BEDS, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
                     .itemTags(ItemTags.BEDS)
                     .recipe(BlockTypes::furnitureStationRecipe)
                     .onRegister(block -> BedBlockComponent.registerPoi(block), true)
@@ -319,7 +318,7 @@ public interface BlockTypes {
                         ModelUtil.registerBlockItemModel(block, models);
                     })
                     .translation("Bed Double")
-                    .blockTags(BlockTags.BEDS, BlockPlacementRenderer.BLOCK_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
+                    .blockTags(BlockTags.BEDS, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
                     .itemTags(ItemTags.BEDS)
                     .recipe(BlockTypes::furnitureStationRecipe)
                     .onRegister(block -> BedBlockComponent.registerPoi(block), true)
@@ -339,7 +338,7 @@ public interface BlockTypes {
                         ModelUtil.registerBlockItemModel(block, models);
                     })
                     .translation("Door Single")
-                    .blockTags(BlockTags.WOODEN_DOORS, BlockPlacementRenderer.BLOCK_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
+                    .blockTags(BlockTags.WOODEN_DOORS, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
                     .itemTags(ItemTags.WOODEN_DOORS)
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
@@ -358,7 +357,7 @@ public interface BlockTypes {
                         ModelUtil.registerBlockItemModel(block, models);
                     })
                     .translation("Door Double")
-                    .blockTags(BlockTags.WOODEN_DOORS, BlockPlacementRenderer.BLOCK_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
+                    .blockTags(BlockTags.WOODEN_DOORS, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
                     .itemTags(ItemTags.WOODEN_DOORS)
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
@@ -378,7 +377,7 @@ public interface BlockTypes {
                         ModelUtil.registerBlockItemModel(block, models);
                     })
                     .translation("Desk Left")
-                    .blockTags(BlockPlacementRenderer.BLOCK_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
+                    .blockTags(ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
     // endregion
@@ -397,7 +396,7 @@ public interface BlockTypes {
                         ModelUtil.registerBlockItemModel(block, models);
                     })
                     .translation("Desk Right")
-                    .blockTags(BlockPlacementRenderer.BLOCK_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
+                    .blockTags(ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
     // endregion
@@ -414,7 +413,7 @@ public interface BlockTypes {
                         ModelUtil.registerBlockItemModel(block, models);
                     })
                     .translation("Painting Wide")
-                    .blockTags(BlockPlacementRenderer.BLOCK_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
+                    .blockTags(ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
     // endregion
@@ -464,7 +463,7 @@ public interface BlockTypes {
                         ModelUtil.registerBlockItemModel(block, models);
                     })
                     .translation("Chest")
-                    .blockTags(BlockPlacementRenderer.BLOCK_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
+                    .blockTags(ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
     // endregion
@@ -481,7 +480,7 @@ public interface BlockTypes {
                         ModelUtil.registerBlockItemModel(block, models);
                     })
                     .translation("Floor Light")
-                    .blockTags(BlockPlacementRenderer.BLOCK_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
+                    .blockTags(ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
     // endregion
@@ -510,7 +509,7 @@ public interface BlockTypes {
                         models.registerSimpleItemModel(block, ModelLocationUtils.getModelLocation(block, "_single"));
                     })
                     .translation("Shelf")
-                    .blockTags(BlockPlacementRenderer.BLOCK_WHITELIST)
+                    .blockTags(ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST)
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
     // endregion
@@ -526,7 +525,7 @@ public interface BlockTypes {
                         models.registerSimpleItemModel(block, ModelLocationUtils.getModelLocation(block, "_single"));
                     })
                     .translation("Sofa")
-                    .blockTags(BlockPlacementRenderer.BLOCK_WHITELIST)
+                    .blockTags(ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST)
                     .recipe(BlockTypes::furnitureStationRecipe)
                     .onRegister(block -> NeoForge.EVENT_BUS.addListener(PlacementRenderEvent.DefaultBlockState.class, event -> {
                         var blockState = event.defaultBlockState();
@@ -551,7 +550,7 @@ public interface BlockTypes {
                         models.registerSimpleItemModel(block, ModelLocationUtils.getModelLocation(block, "_single"));
                     })
                     .translation("Counter")
-                    .blockTags(BlockPlacementRenderer.BLOCK_WHITELIST)
+                    .blockTags(ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST)
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
     // endregion
@@ -565,7 +564,7 @@ public interface BlockTypes {
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> ModelUtil.horizontalFacingBlock(block, models))
                     .translation("Wall Light")
-                    .blockTags(BlockPlacementRenderer.BLOCK_WHITELIST)
+                    .blockTags(ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST)
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
     // endregion
@@ -582,7 +581,7 @@ public interface BlockTypes {
                         ModelUtil.registerBlockItemModel(block, models);
                     })
                     .translation("Bench")
-                    .blockTags(SeatSetup.ORIGIN_ONLY, BlockPlacementRenderer.BLOCK_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
+                    .blockTags(ApexTags.Blocks.SEAT_ORIGIN_ONLY, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
     // endregion
@@ -601,7 +600,7 @@ public interface BlockTypes {
                         ModelUtil.registerBlockItemModel(block, models);
                     })
                     .translation("Wardrobe")
-                    .blockTags(BlockPlacementRenderer.BLOCK_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
+                    .blockTags(ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
     // endregion
@@ -614,7 +613,7 @@ public interface BlockTypes {
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> tableModel(block, models))
                     .translation("Table")
-                    .blockTags(BlockPlacementRenderer.BLOCK_WHITELIST)
+                    .blockTags(ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST)
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
     // endregion
