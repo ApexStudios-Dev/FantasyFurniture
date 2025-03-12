@@ -46,5 +46,13 @@
         "modrinth_id": "V9TnGtTg",
         "color": "0xB297E7",
         "artifact_id": "fantasyfurniture-necrolord"
+    },
+    "royal": {
+        "display_name": "Fantasy's Furniture - Royal",
+        "logo_url": "https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/new/fantasyfurniture_royal.png",
+        "curseforge_id": "1209706",
+        "modrinth_id": "OIAm13ki",
+        "color": "0xFFE88E",
+        "artifact_id": "fantasyfurniture-royal"
     }
 }

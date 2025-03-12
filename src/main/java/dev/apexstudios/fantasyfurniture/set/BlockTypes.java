@@ -1,14 +1,13 @@
 package dev.apexstudios.fantasyfurniture.set;
 
-import dev.apexstudios.apexcore.core.seat.SeatSetup;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
 import dev.apexstudios.apexcore.lib.component.block.DoorBlockComponentHolder;
 import dev.apexstudios.apexcore.lib.component.block.types.BedBlockComponent;
 import dev.apexstudios.apexcore.lib.component.block.types.MultiBlockComponent;
 import dev.apexstudios.apexcore.lib.data.provider.RecipeProvider;
 import dev.apexstudios.apexcore.lib.data.provider.model.ModelUtil;
-import dev.apexstudios.apexcore.lib.placement.BlockPlacementRenderer;
 import dev.apexstudios.apexcore.lib.placement.PlacementRenderEvent;
+import dev.apexstudios.apexcore.lib.util.ApexTags;
 import dev.apexstudios.apexcore.lib.util.ApexUtil;
 import dev.apexstudios.fantasyfurniture.FantasyFurniture;
 import dev.apexstudios.fantasyfurniture.FurnitureBlockEntities;
@@ -101,8 +100,8 @@ public interface BlockTypes {
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> models.createTrivialCube(block))
                     .translation("Planks")
-                    .blockTags((provider, furnitureSet, block) -> provider.tag(BlockTags.PLANKS).withElement(block))
-                    .itemTags((provider, furnitureSet, item) -> provider.tag(FantasyFurniture.FURNITURE_PLANKS).withElement(item))
+                    .blockTags(BlockTags.PLANKS)
+                    .itemTags(FantasyFurniture.FURNITURE_PLANKS)
                     .recipe((provider, furnitureSet, item) -> SingleItemRecipeBuilder
                             .stonecutting(
                                     DifferenceIngredient.of(provider.tag(ItemTags.PLANKS), provider.tag(FantasyFurniture.FURNITURE_PLANKS)),
@@ -124,8 +123,8 @@ public interface BlockTypes {
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> models.createTrivialCube(block))
                     .translation("Bricks")
-                    .blockTags((provider, furnitureSet, block) -> provider.tag(Tags.Blocks.STONES).withElement(block))
-                    .itemTags((provider, furnitureSet, item) -> provider.tag(FantasyFurniture.FURNITURE_BRICKS).withElement(item))
+                    .blockTags(Tags.Blocks.STONES)
+                    .itemTags(FantasyFurniture.FURNITURE_BRICKS)
                     .recipe((provider, furnitureSet, item) -> SingleItemRecipeBuilder
                             .stonecutting(
                                     DifferenceIngredient.of(provider.tag(ItemTags.STONE_CRAFTING_MATERIALS), provider.tag(FantasyFurniture.FURNITURE_BRICKS)),
@@ -149,8 +148,8 @@ public interface BlockTypes {
                     .model(() -> (context, models, furnitureSet, block) -> models.createTrivialCube(block))
                     .translation("Wool")
                     .noMineableTag()
-                    .blockTags((provider, furnitureSet, block) -> provider.tag(BlockTags.WOOL).withElement(block))
-                    .itemTags((provider, furnitureSet, item) -> provider.tag(FantasyFurniture.FURNITURE_WOOL).withElement(item))
+                    .blockTags(BlockTags.WOOL)
+                    .itemTags(FantasyFurniture.FURNITURE_WOOL)
                     .recipe((provider, furnitureSet, item) -> SingleItemRecipeBuilder
                             .stonecutting(
                                     DifferenceIngredient.of(provider.tag(ItemTags.WOOL), provider.tag(FantasyFurniture.FURNITURE_WOOL)),
@@ -171,13 +170,11 @@ public interface BlockTypes {
                     .baseBlock(() -> Blocks.WHITE_CARPET)
                     .blockProperties(properties -> properties.sound(SoundType.WOOL))
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
-                    .model(() -> (context, models, furnitureSet, block) -> models.blockStateOutput.accept(
-                            BlockModelGenerators.createSimpleBlock(block, TexturedModel.CARPET.get(furnitureSet.getOrThrow(WOOL)).create(block, models.modelOutput))
-                    ))
+                    .model(() -> (context, models, furnitureSet, block) -> carpetModel(block, furnitureSet, models))
                     .translation("Carpet")
                     .noMineableTag()
-                    .blockTags((provider, furnitureSet, block) -> provider.tag(BlockTags.WOOL_CARPETS).withElement(block))
-                    .itemTags((provider, furnitureSet, item) -> provider.tag(ItemTags.WOOL_CARPETS).withElement(item))
+                    .blockTags(BlockTags.WOOL_CARPETS)
+                    .itemTags(ItemTags.WOOL_CARPETS)
                     .recipe((provider, furnitureSet, item) -> provider.carpet(item, furnitureSet.getOrThrow(WOOL)))
     );
     // endregion
@@ -191,12 +188,12 @@ public interface BlockTypes {
                     .blockProperties(properties -> properties.pushReaction(PushReaction.BLOCK))
                     .blockEntity(FurnitureBlockEntities.DRESSER)
                     .lootTable((blocks, furnitureSet, block) -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)))
-                    .model(() -> (context, models, furnitureSet, block) -> ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right"))
-                    .translation("Dresser")
-                    .blockTags((provider, furnitureSet, block) -> {
-                        provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block);
-                        provider.tag(Tags.Blocks.RELOCATION_NOT_SUPPORTED).withElement(block);
+                    .model(() -> (context, models, furnitureSet, block) -> {
+                        dresserModel(block, models);
+                        ModelUtil.registerBlockItemModel(block, models);
                     })
+                    .translation("Dresser")
+                    .blockTags(ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
     // endregion
@@ -261,13 +258,12 @@ public interface BlockTypes {
             builder -> builder
                     .blockProperties(properties -> properties.pushReaction(PushReaction.BLOCK))
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
-                    .model(() -> (context, models, furnitureSet, block) -> ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_bottom" : "_top"))
-                    .translation("Chair")
-                    .blockTags((provider, furnitureSet, block) -> {
-                        provider.tag(SeatSetup.ORIGIN_ONLY).withElement(block);
-                        provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block);
-                        provider.tag(Tags.Blocks.RELOCATION_NOT_SUPPORTED).withElement(block);
+                    .model(() -> (context, models, furnitureSet, block) -> {
+                        chairModel(block, models);
+                        ModelUtil.registerBlockItemModel(block, models);
                     })
+                    .translation("Chair")
+                    .blockTags(ApexTags.Blocks.SEAT_ORIGIN_ONLY, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
     // endregion
@@ -281,17 +277,12 @@ public interface BlockTypes {
                     .blockProperties(properties -> properties.pushReaction(PushReaction.BLOCK))
                     .blockEntity(FurnitureBlockEntities.BOOKSHELF)
                     .lootTable((blocks, furnitureSet, block) -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)))
-                    .model(() -> (context, models, furnitureSet, block) -> ModelUtil.multiBlockModelSuffix(block, models, index -> switch (index) {
-                        case 1 -> "_bottom_right";
-                        case 2 -> "_top_right";
-                        case 3 -> "_top_left";
-                        default -> "_bottom_left";
-                    }))
-                    .translation("Bookshelf")
-                    .blockTags((provider, furnitureSet, block) -> {
-                        provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block);
-                        provider.tag(Tags.Blocks.RELOCATION_NOT_SUPPORTED).withElement(block);
+                    .model(() -> (context, models, furnitureSet, block) -> {
+                        bookshelfModel(block, models);
+                        ModelUtil.registerBlockItemModel(block, models);
                     })
+                    .translation("Bookshelf")
+                    .blockTags(ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
     // endregion
@@ -303,14 +294,13 @@ public interface BlockTypes {
             builder -> builder
                     .blockProperties(properties -> properties.pushReaction(PushReaction.BLOCK))
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
-                    .model(() -> (context, models, furnitureSet, block) -> ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_bottom" : "_top"))
-                    .translation("Bed Single")
-                    .blockTags((provider, furnitureSet, block) -> {
-                        provider.tag(BlockTags.BEDS).withElement(block);
-                        provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block);
-                        provider.tag(Tags.Blocks.RELOCATION_NOT_SUPPORTED).withElement(block);
+                    .model(() -> (context, models, furnitureSet, block) -> {
+                        bedSingleModel(block, models);
+                        ModelUtil.registerBlockItemModel(block, models);
                     })
-                    .itemTags((provider, furnitureSet, item) -> provider.tag(ItemTags.BEDS).withElement(item))
+                    .translation("Bed Single")
+                    .blockTags(BlockTags.BEDS, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
+                    .itemTags(ItemTags.BEDS)
                     .recipe(BlockTypes::furnitureStationRecipe)
                     .onRegister(block -> BedBlockComponent.registerPoi(block), true)
     );
@@ -323,19 +313,13 @@ public interface BlockTypes {
             builder -> builder
                     .blockProperties(properties -> properties.pushReaction(PushReaction.BLOCK))
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
-                    .model(() -> (context, models, furnitureSet, block) -> ModelUtil.multiBlockModelSuffix(block, models, index -> switch (index) {
-                        case 1 -> "_top_left";
-                        case 2 -> "_top_right";
-                        case 3 -> "_bottom_right";
-                        default -> "_bottom_left";
-                    }))
-                    .translation("Bed Double")
-                    .blockTags((provider, furnitureSet, block) -> {
-                        provider.tag(BlockTags.BEDS).withElement(block);
-                        provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block);
-                        provider.tag(Tags.Blocks.RELOCATION_NOT_SUPPORTED).withElement(block);
+                    .model(() -> (context, models, furnitureSet, block) -> {
+                        bedDoubleModel(block, models);
+                        ModelUtil.registerBlockItemModel(block, models);
                     })
-                    .itemTags((provider, furnitureSet, item) -> provider.tag(ItemTags.BEDS).withElement(item))
+                    .translation("Bed Double")
+                    .blockTags(BlockTags.BEDS, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
+                    .itemTags(ItemTags.BEDS)
                     .recipe(BlockTypes::furnitureStationRecipe)
                     .onRegister(block -> BedBlockComponent.registerPoi(block), true)
     );
@@ -349,14 +333,13 @@ public interface BlockTypes {
                     .baseBlock(() -> Blocks.OAK_DOOR)
                     .blockProperties(properties -> properties.pushReaction(PushReaction.BLOCK))
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
-                    .model(() -> (context, models, furnitureSet, block) -> doorModel(block, models))
-                    .translation("Door Single")
-                    .blockTags((provider, furnitureSet, block) -> {
-                        provider.tag(BlockTags.WOODEN_DOORS).withElement(block);
-                        provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block);
-                        provider.tag(Tags.Blocks.RELOCATION_NOT_SUPPORTED).withElement(block);
+                    .model(() -> (context, models, furnitureSet, block) -> {
+                        doorModel(block, models);
+                        ModelUtil.registerBlockItemModel(block, models);
                     })
-                    .itemTags((provider, furnitureSet, item) -> provider.tag(ItemTags.WOODEN_DOORS).withElement(item))
+                    .translation("Door Single")
+                    .blockTags(BlockTags.WOODEN_DOORS, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
+                    .itemTags(ItemTags.WOODEN_DOORS)
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
     // endregion
@@ -369,14 +352,13 @@ public interface BlockTypes {
                     .baseBlock(() -> Blocks.OAK_DOOR)
                     .blockProperties(properties -> properties.pushReaction(PushReaction.BLOCK))
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
-                    .model(() -> (context, models, furnitureSet, block) -> doorModel(block, models))
-                    .translation("Door Double")
-                    .blockTags((provider, furnitureSet, block) -> {
-                        provider.tag(BlockTags.WOODEN_DOORS).withElement(block);
-                        provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block);
-                        provider.tag(Tags.Blocks.RELOCATION_NOT_SUPPORTED).withElement(block);
+                    .model(() -> (context, models, furnitureSet, block) -> {
+                        doorModel(block, models);
+                        ModelUtil.registerBlockItemModel(block, models);
                     })
-                    .itemTags((provider, furnitureSet, item) -> provider.tag(ItemTags.WOODEN_DOORS).withElement(item))
+                    .translation("Door Double")
+                    .blockTags(BlockTags.WOODEN_DOORS, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
+                    .itemTags(ItemTags.WOODEN_DOORS)
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
     // endregion
@@ -390,12 +372,12 @@ public interface BlockTypes {
                     .blockProperties(properties -> properties.pushReaction(PushReaction.BLOCK))
                     .blockEntity(FurnitureBlockEntities.DESK)
                     .lootTable((blocks, furnitureSet, block) -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)))
-                    .model(() -> (context, models, furnitureSet, block) -> ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right"))
-                    .translation("Desk Left")
-                    .blockTags((provider, furnitureSet, block) -> {
-                        provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block);
-                        provider.tag(Tags.Blocks.RELOCATION_NOT_SUPPORTED).withElement(block);
+                    .model(() -> (context, models, furnitureSet, block) -> {
+                        deskModel(block, models);
+                        ModelUtil.registerBlockItemModel(block, models);
                     })
+                    .translation("Desk Left")
+                    .blockTags(ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
     // endregion
@@ -409,12 +391,12 @@ public interface BlockTypes {
                     .blockProperties(properties -> properties.pushReaction(PushReaction.BLOCK))
                     .blockEntity(FurnitureBlockEntities.DESK)
                     .lootTable((blocks, furnitureSet, block) -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)))
-                    .model(() -> (context, models, furnitureSet, block) -> ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right"))
-                    .translation("Desk Right")
-                    .blockTags((provider, furnitureSet, block) -> {
-                        provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block);
-                        provider.tag(Tags.Blocks.RELOCATION_NOT_SUPPORTED).withElement(block);
+                    .model(() -> (context, models, furnitureSet, block) -> {
+                        deskModel(block, models);
+                        ModelUtil.registerBlockItemModel(block, models);
                     })
+                    .translation("Desk Right")
+                    .blockTags(ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
     // endregion
@@ -426,12 +408,12 @@ public interface BlockTypes {
             builder -> builder
                     .blockProperties(properties -> properties.pushReaction(PushReaction.BLOCK))
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
-                    .model(() -> (context, models, furnitureSet, block) -> ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right"))
-                    .translation("Painting Wide")
-                    .blockTags((provider, furnitureSet, block) -> {
-                        provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block);
-                        provider.tag(Tags.Blocks.RELOCATION_NOT_SUPPORTED).withElement(block);
+                    .model(() -> (context, models, furnitureSet, block) -> {
+                        paintingWideModel(block, models);
+                        ModelUtil.registerBlockItemModel(block, models);
                     })
+                    .translation("Painting Wide")
+                    .blockTags(ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
     // endregion
@@ -460,11 +442,8 @@ public interface BlockTypes {
                     .model(() -> (context, models, furnitureSet, block) -> ModelUtil.horizontalFacingBlock(block, models))
                     .translation("Oven")
                     .noMineableTag() // forcefully use the pickaxe tag
-                    .blockTags((provider, furnitureSet, block) -> {
-                        provider.tag(BlockTags.MINEABLE_WITH_PICKAXE).withElement(block);
-                        provider.tag(Tags.Blocks.PLAYER_WORKSTATIONS_FURNACES).withElement(block);
-                    })
-                    .itemTags((provider, furnitureSet, item) -> provider.tag(Tags.Items.PLAYER_WORKSTATIONS_FURNACES).withElement(item))
+                    .blockTags(BlockTags.MINEABLE_WITH_PICKAXE, Tags.Blocks.PLAYER_WORKSTATIONS_FURNACES)
+                    .itemTags(Tags.Items.PLAYER_WORKSTATIONS_FURNACES)
                     .recipe(BlockTypes::furnitureStationRecipe)
                     .onRegister(block -> ApexUtil.registerPoiBlockStates(PoiTypes.BUTCHER, block), true)
     );
@@ -479,12 +458,12 @@ public interface BlockTypes {
                     .blockProperties(properties -> properties.pushReaction(PushReaction.BLOCK))
                     .blockEntity(FurnitureBlockEntities.CHEST)
                     .lootTable((blocks, furnitureSet, block) -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)))
-                    .model(() -> (context, models, furnitureSet, block) -> ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right"))
-                    .translation("Chest")
-                    .blockTags((provider, furnitureSet, block) -> {
-                        provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block);
-                        provider.tag(Tags.Blocks.RELOCATION_NOT_SUPPORTED).withElement(block);
+                    .model(() -> (context, models, furnitureSet, block) -> {
+                        chestModel(block, models);
+                        ModelUtil.registerBlockItemModel(block, models);
                     })
+                    .translation("Chest")
+                    .blockTags(ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
     // endregion
@@ -496,12 +475,12 @@ public interface BlockTypes {
             builder -> builder
                     .blockProperties(properties -> properties.pushReaction(PushReaction.BLOCK).lightLevel(blockState -> 14))
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
-                    .model(() -> (context, models, furnitureSet, block) -> ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_bottom" : "_top"))
-                    .translation("Floor Light")
-                    .blockTags((provider, furnitureSet, block) -> {
-                        provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block);
-                        provider.tag(Tags.Blocks.RELOCATION_NOT_SUPPORTED).withElement(block);
+                    .model(() -> (context, models, furnitureSet, block) -> {
+                        floorLightModel(block, models);
+                        ModelUtil.registerBlockItemModel(block, models);
                     })
+                    .translation("Floor Light")
+                    .blockTags(ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
     // endregion
@@ -525,9 +504,12 @@ public interface BlockTypes {
             BlockFactory.wrapping(ShelfBlock::new),
             builder -> builder
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
-                    .model(() -> (context, models, furnitureSet, block) -> ModelUtil.facingPropertyModelSuffix(block, models, ShelfConnection.PROPERTY, ShelfConnection::getModelSuffix, ShelfConnection.NONE))
+                    .model(() -> (context, models, furnitureSet, block) -> {
+                        shelfModel(block, models);
+                        models.registerSimpleItemModel(block, ModelLocationUtils.getModelLocation(block, "_single"));
+                    })
                     .translation("Shelf")
-                    .blockTags((provider, furnitureSet, block) -> provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block))
+                    .blockTags(ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST)
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
     // endregion
@@ -538,9 +520,12 @@ public interface BlockTypes {
             BlockFactory.wrapping(SofaBlock::new),
             builder -> builder
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
-                    .model(() -> (context, models, furnitureSet, block) -> ModelUtil.facingPropertyModelSuffix(block, models, SofaConnection.PROPERTY, SofaConnection::getModelSuffix, SofaConnection.NONE))
+                    .model(() -> (context, models, furnitureSet, block) -> {
+                        sofaModel(block, models);
+                        models.registerSimpleItemModel(block, ModelLocationUtils.getModelLocation(block, "_single"));
+                    })
                     .translation("Sofa")
-                    .blockTags((provider, furnitureSet, block) -> provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block))
+                    .blockTags(ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST)
                     .recipe(BlockTypes::furnitureStationRecipe)
                     .onRegister(block -> NeoForge.EVENT_BUS.addListener(PlacementRenderEvent.DefaultBlockState.class, event -> {
                         var blockState = event.defaultBlockState();
@@ -560,9 +545,12 @@ public interface BlockTypes {
             builder -> builder
                     .blockEntity(FurnitureBlockEntities.COUNTER)
                     .lootTable((blocks, furnitureSet, block) -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)))
-                    .model(() -> (context, models, furnitureSet, block) -> ModelUtil.facingPropertyModelSuffix(block, models, CounterConnection.PROPERTY, CounterConnection::getModelSuffix, CounterConnection.NONE))
+                    .model(() -> (context, models, furnitureSet, block) -> {
+                        counterModel(block, models);
+                        models.registerSimpleItemModel(block, ModelLocationUtils.getModelLocation(block, "_single"));
+                    })
                     .translation("Counter")
-                    .blockTags((provider, furnitureSet, block) -> provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block))
+                    .blockTags(ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST)
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
     // endregion
@@ -576,7 +564,7 @@ public interface BlockTypes {
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> ModelUtil.horizontalFacingBlock(block, models))
                     .translation("Wall Light")
-                    .blockTags((provider, furnitureSet, block) -> provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block))
+                    .blockTags(ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST)
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
     // endregion
@@ -588,13 +576,12 @@ public interface BlockTypes {
             builder -> builder
                     .blockProperties(properties -> properties.pushReaction(PushReaction.BLOCK))
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
-                    .model(() -> (context, models, furnitureSet, block) -> ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right"))
-                    .translation("Bench")
-                    .blockTags((provider, furnitureSet, block) -> {
-                        provider.tag(SeatSetup.ORIGIN_ONLY).withElement(block);
-                        provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block);
-                        provider.tag(Tags.Blocks.RELOCATION_NOT_SUPPORTED).withElement(block);
+                    .model(() -> (context, models, furnitureSet, block) -> {
+                        benchModel(block, models);
+                        ModelUtil.registerBlockItemModel(block, models);
                     })
+                    .translation("Bench")
+                    .blockTags(ApexTags.Blocks.SEAT_ORIGIN_ONLY, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
     // endregion
@@ -608,19 +595,12 @@ public interface BlockTypes {
                     .blockProperties(properties -> properties.pushReaction(PushReaction.BLOCK))
                     .blockEntity(FurnitureBlockEntities.WARDROBE)
                     .lootTable((blocks, furnitureSet, block) -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)))
-                    .model(() -> (context, models, furnitureSet, block) -> ModelUtil.multiBlockModelSuffix(block, models, index -> switch (index) {
-                        case 1 -> "_bottom_right";
-                        case 2 -> "_middle_right";
-                        case 3 -> "_middle_left";
-                        case 4 -> "_top_right";
-                        case 5 -> "_top_left";
-                        default -> "_bottom_left";
-                    }))
-                    .translation("Wardrobe")
-                    .blockTags((provider, furnitureSet, block) -> {
-                        provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block);
-                        provider.tag(Tags.Blocks.RELOCATION_NOT_SUPPORTED).withElement(block);
+                    .model(() -> (context, models, furnitureSet, block) -> {
+                        wardrobeModel(block, models);
+                        ModelUtil.registerBlockItemModel(block, models);
                     })
+                    .translation("Wardrobe")
+                    .blockTags(ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
     // endregion
@@ -633,7 +613,7 @@ public interface BlockTypes {
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> tableModel(block, models))
                     .translation("Table")
-                    .blockTags((provider, furnitureSet, block) -> provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block))
+                    .blockTags(ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST)
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
     // endregion
@@ -659,8 +639,8 @@ public interface BlockTypes {
                         models.registerSimpleItemModel(block, straightModel);
                     })
                     .translation("Stairs")
-                    .blockTags((provider, furnitureSet, block) -> provider.tag(BlockTags.WOODEN_STAIRS).withElement(block))
-                    .itemTags((provider, furnitureSet, item) -> provider.tag(ItemTags.STAIRS).withElement(item))
+                    .blockTags(BlockTags.WOODEN_STAIRS)
+                    .itemTags(ItemTags.STAIRS)
                     .recipe((provider, furnitureSet, item) -> provider
                             .stairBuilder(item, Ingredient.of(furnitureSet.getCoreBlock()))
                             .unlockedBy("has_core_block", provider.has(furnitureSet.getCoreBlock()))
@@ -690,8 +670,8 @@ public interface BlockTypes {
                         models.registerSimpleItemModel(block, bottomModel);
                     })
                     .translation("Slab")
-                    .blockTags((provider, furnitureSet, block) -> provider.tag(BlockTags.WOODEN_SLABS).withElement(block))
-                    .itemTags((provider, furnitureSet, item) -> provider.tag(ItemTags.WOODEN_SLABS).withElement(item))
+                    .blockTags(BlockTags.WOODEN_SLABS)
+                    .itemTags(ItemTags.WOODEN_SLABS)
                     .recipe((provider, furnitureSet, item) -> provider
                             .slabBuilder(RecipeCategory.BUILDING_BLOCKS, item, Ingredient.of(furnitureSet.getCoreBlock()))
                             .unlockedBy("has_core_block", provider.has(furnitureSet.getCoreBlock()))
@@ -719,8 +699,8 @@ public interface BlockTypes {
                         models.registerSimpleItemModel(block, ModelTemplates.FENCE_INVENTORY.create(block, textures, models.modelOutput));
                     })
                     .translation("Fence")
-                    .blockTags((provider, furnitureSet, block) -> provider.tag(BlockTags.WOODEN_FENCES).withElement(block))
-                    .itemTags((provider, furnitureSet, item) -> provider.tag(ItemTags.WOODEN_FENCES).withElement(item))
+                    .blockTags(BlockTags.WOODEN_FENCES)
+                    .itemTags(ItemTags.WOODEN_FENCES)
                     .recipe((provider, furnitureSet, item) -> provider
                             .fenceBuilder(item, Ingredient.of(furnitureSet.getCoreBlock()))
                             .unlockedBy("has_core_block", provider.has(furnitureSet.getCoreBlock()))
@@ -749,8 +729,8 @@ public interface BlockTypes {
                         ));
                     })
                     .translation("Fence Gate")
-                    .blockTags((provider, furnitureSet, block) -> provider.tag(BlockTags.FENCE_GATES).withElement(block))
-                    .itemTags((provider, furnitureSet, item) -> provider.tag(ItemTags.FENCE_GATES).withElement(item))
+                    .blockTags(BlockTags.FENCE_GATES)
+                    .itemTags(ItemTags.FENCE_GATES)
                     .recipe((provider, furnitureSet, item) -> provider
                             .fenceGateBuilder(item, Ingredient.of(furnitureSet.getCoreBlock()))
                             .unlockedBy("has_core_block", provider.has(furnitureSet.getCoreBlock()))
@@ -768,8 +748,8 @@ public interface BlockTypes {
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> models.createOrientableTrapdoor(block))
                     .translation("Trapdoor")
-                    .blockTags((provider, furnitureSet, block) -> provider.tag(BlockTags.WOODEN_TRAPDOORS).withElement(block))
-                    .itemTags((provider, furnitureSet, item) -> provider.tag(ItemTags.WOODEN_TRAPDOORS).withElement(item))
+                    .blockTags(BlockTags.WOODEN_TRAPDOORS)
+                    .itemTags(ItemTags.WOODEN_TRAPDOORS)
                     .recipe((provider, furnitureSet, item) -> provider
                             .trapdoorBuilder(item, Ingredient.of(furnitureSet.getCoreBlock()))
                             .unlockedBy("has_core_block", provider.has(furnitureSet.getCoreBlock()))
@@ -795,8 +775,8 @@ public interface BlockTypes {
                         ));
                     })
                     .translation("Pressure Plate")
-                    .blockTags((provider, furnitureSet, block) -> provider.tag(BlockTags.WOODEN_PRESSURE_PLATES).withElement(block))
-                    .itemTags((provider, furnitureSet, item) -> provider.tag(ItemTags.WOODEN_PRESSURE_PLATES).withElement(item))
+                    .blockTags(BlockTags.WOODEN_PRESSURE_PLATES)
+                    .itemTags(ItemTags.WOODEN_PRESSURE_PLATES)
     );
     // endregion
 
@@ -823,8 +803,8 @@ public interface BlockTypes {
                         );
                     })
                     .translation("Button")
-                    .blockTags((provider, furnitureSet, block) -> provider.tag(BlockTags.WOODEN_BUTTONS).withElement(block))
-                    .itemTags((provider, furnitureSet, item) -> provider.tag(ItemTags.WOODEN_BUTTONS).withElement(item))
+                    .blockTags(BlockTags.WOODEN_BUTTONS)
+                    .itemTags(ItemTags.WOODEN_BUTTONS)
                     .recipe((provider, furnitureSet, item) -> provider
                             .buttonBuilder(item, Ingredient.of(furnitureSet.getCoreBlock()))
                             .unlockedBy("has_core_block", provider.has(furnitureSet.getCoreBlock()))
@@ -845,8 +825,8 @@ public interface BlockTypes {
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> models.createHangingSign(furnitureSet.getCoreBlock(), block, wallHangingSign(furnitureSet)))
                     .translation("Hanging Sign")
-                    .blockTags((provider, furnitureSet, block) -> provider.tag(BlockTags.CEILING_HANGING_SIGNS).withElement(block))
-                    .itemTags((provider, furnitureSet, item) -> provider.tag(ItemTags.HANGING_SIGNS).withElement(item))
+                    .blockTags(BlockTags.CEILING_HANGING_SIGNS)
+                    .itemTags(ItemTags.HANGING_SIGNS)
                     .recipe((provider, furnitureSet, item) -> provider.hangingSign(item, furnitureSet.getCoreBlock()))
                     // .require(WALL_HANGING_SIGN)
     );
@@ -860,7 +840,7 @@ public interface BlockTypes {
                     .baseBlock(() -> Blocks.OAK_WALL_HANGING_SIGN)
                     .blockProperties((furnitureSet, properties) -> properties.overrideLootTable(furnitureSet.getOrThrow(HANGING_SIGN).getLootTable()))
                     .blockEntity(() -> BlockEntityType.HANGING_SIGN)
-                    .blockTags((provider, furnitureSet, block) -> provider.tag(BlockTags.WALL_HANGING_SIGNS).withElement(block))
+                    .blockTags(BlockTags.WALL_HANGING_SIGNS)
     );
     // endregion
 
@@ -881,8 +861,8 @@ public interface BlockTypes {
                         models.registerSimpleFlatItemModel(block.asItem());
                     })
                     .translation("Sign")
-                    .blockTags((provider, furnitureSet, block) -> provider.tag(BlockTags.STANDING_SIGNS).withElement(block))
-                    .itemTags((provider, furnitureSet, item) -> provider.tag(ItemTags.SIGNS).withElement(item))
+                    .blockTags(BlockTags.STANDING_SIGNS)
+                    .itemTags(ItemTags.SIGNS)
                     .recipe((provider, furnitureSet, item) -> provider
                             .signBuilder(item, Ingredient.of(furnitureSet.getCoreBlock()))
                             .unlockedBy("has_core_block", provider.has(furnitureSet.getCoreBlock()))
@@ -900,9 +880,45 @@ public interface BlockTypes {
                     .baseBlock(() -> Blocks.OAK_WALL_SIGN)
                     .blockProperties((furnitureSet, properties) -> properties.overrideLootTable(furnitureSet.getOrThrow(SIGN).getLootTable()))
                     .blockEntity(() -> BlockEntityType.SIGN)
-                    .blockTags((provider, furnitureSet, block) -> provider.tag(BlockTags.WALL_SIGNS).withElement(block))
+                    .blockTags(BlockTags.WALL_SIGNS)
     );
     // endregion
+
+    static void carpetModel(CarpetBlock block, FurnitureSet furnitureSet, BlockModelGenerators models) {
+        models.blockStateOutput.accept(
+                BlockModelGenerators.createSimpleBlock(block, TexturedModel.CARPET.get(furnitureSet.getOrThrow(WOOL)).create(block, models.modelOutput))
+        );
+    }
+
+    static void dresserModel(DresserBlock block, BlockModelGenerators models) {
+        ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right");
+    }
+
+    static void chairModel(ChairBlock block, BlockModelGenerators models) {
+        ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_bottom" : "_top");
+    }
+
+    static void bookshelfModel(BookshelfBlock block, BlockModelGenerators models) {
+        ModelUtil.multiBlockModelSuffix(block, models, index -> switch (index) {
+            case 1 -> "_bottom_right";
+            case 2 -> "_top_right";
+            case 3 -> "_top_left";
+            default -> "_bottom_left";
+        });
+    }
+
+    static void bedSingleModel(BedSingleBlock block, BlockModelGenerators models) {
+        ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_bottom" : "_top");
+    }
+
+    static void bedDoubleModel(BedDoubleBlock block, BlockModelGenerators models) {
+        ModelUtil.multiBlockModelSuffix(block, models, index -> switch (index) {
+            case 1 -> "_top_left";
+            case 2 -> "_top_right";
+            case 3 -> "_bottom_right";
+            default -> "_bottom_left";
+        });
+    }
 
     static void doorModel(FurnitureDoorBlockComponentHolder block, BlockModelGenerators blockModels) {
         var multiBlock = block.getComponentOrThrow(BlockComponentTypes.MULTI_BLOCK);
@@ -927,9 +943,49 @@ public interface BlockTypes {
                     return Variant.variant().with(VariantProperties.MODEL, modelPath).with(VariantProperties.Y_ROT, rot);
                 }))
         );
+    }
 
-        // ModelUtils.registerCompositeBlockItemModel(block, blockModels, "_left_top", "_left_bottom", "_right_bottom", "_right_bottom");
-        ModelUtil.registerBlockItemModel(block, blockModels);
+    static void deskModel(DeskBlock block, BlockModelGenerators models) {
+        ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right");
+    }
+
+    static void paintingWideModel(PaintingWideBlock block, BlockModelGenerators models) {
+        ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right");
+    }
+
+    static void chestModel(ChestBlock block, BlockModelGenerators models) {
+        ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right");
+    }
+
+    static void floorLightModel(FloorLightBlock block, BlockModelGenerators models) {
+        ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_bottom" : "_top");
+    }
+
+    static void shelfModel(ShelfBlock block, BlockModelGenerators models) {
+        ModelUtil.facingPropertyModelSuffix(block, models, ShelfConnection.PROPERTY, ShelfConnection::getModelSuffix, ShelfConnection.NONE);
+    }
+
+    static void sofaModel(SofaBlock block, BlockModelGenerators models) {
+        ModelUtil.facingPropertyModelSuffix(block, models, SofaConnection.PROPERTY, SofaConnection::getModelSuffix, SofaConnection.NONE);
+    }
+
+    static void counterModel(CounterBlock block, BlockModelGenerators models) {
+        ModelUtil.facingPropertyModelSuffix(block, models, CounterConnection.PROPERTY, CounterConnection::getModelSuffix, CounterConnection.NONE);
+    }
+
+    static void benchModel(BenchBlock block, BlockModelGenerators models) {
+        ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right");
+    }
+
+    static void wardrobeModel(WardrobeBlock block, BlockModelGenerators models) {
+        ModelUtil.multiBlockModelSuffix(block, models, index -> switch (index) {
+            case 1 -> "_bottom_right";
+            case 2 -> "_middle_right";
+            case 3 -> "_middle_left";
+            case 4 -> "_top_right";
+            case 5 -> "_top_left";
+            default -> "_bottom_left";
+        });
     }
 
     static void tableModel(TableBlock block, BlockModelGenerators blockModels) {

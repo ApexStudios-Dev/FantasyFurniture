@@ -3,6 +3,7 @@ package dev.apexstudios.fantasyfurniture.set;
 import com.google.common.collect.Sets;
 import com.google.errorprone.annotations.OverridingMethodsMustInvokeSuper;
 import dev.apexstudios.apexcore.lib.data.ProviderType;
+import dev.apexstudios.apexcore.lib.data.ProviderTypes;
 import dev.apexstudios.apexcore.lib.data.pack.PackGenerator;
 import dev.apexstudios.fantasyfurniture.set.function.BlockFactory;
 import dev.apexstudios.fantasyfurniture.set.function.ItemFactory;
@@ -10,12 +11,15 @@ import dev.apexstudios.fantasyfurniture.set.function.ProviderListener;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -38,6 +42,7 @@ public sealed class BlockType<TBlock extends Block> {
     protected final BiConsumer<FurnitureSet, TBlock> onRegisterEnqueued;
     @Nullable protected final Supplier<? extends BlockBehaviour> baseBlock;
     protected final boolean usesMineableTag;
+    protected final Set<TagKey<Block>> blockTags;
 
     private BlockType(BlockTypeBuilder<TBlock, ? extends BlockType<TBlock>, ?> builder) {
         registryName = builder.registryName;
@@ -49,6 +54,7 @@ public sealed class BlockType<TBlock extends Block> {
         onRegisterEnqueued = builder.onRegisterEnqueued;
         baseBlock = builder.baseBlock;
         usesMineableTag = builder.usesMineableTag;
+        blockTags = Set.copyOf(builder.blockTags);
     }
 
     public String registryName() {
@@ -80,7 +86,7 @@ public sealed class BlockType<TBlock extends Block> {
     }
 
     @OverridingMethodsMustInvokeSuper
-    protected void register(IEventBus modBus, FurnitureSet furnitureSet) {
+    void register(IEventBus modBus, FurnitureSet furnitureSet) {
         var blockRegistryName = furnitureSet.registrationName(registryName);
         furnitureSet.registree.register(Registries.BLOCK, blockRegistryName, registryName -> blockFactory.create(furnitureSet, blockProperties(furnitureSet).setId(ResourceKey.create(Registries.BLOCK, registryName))));
         furnitureSet.registree.listenFor(Registries.BLOCK, blockRegistryName, block -> onRegister.accept(furnitureSet, (TBlock) block));
@@ -90,8 +96,18 @@ public sealed class BlockType<TBlock extends Block> {
             modBus.addListener(BlockEntityTypeAddBlocksEvent.class, event -> markAsValidBlockEntityBlock(furnitureSet, blockEntityType.get()));
     }
 
+    @OverridingMethodsMustInvokeSuper
     void registerDataGen(PackGenerator<?> generator, FurnitureSet furnitureSet) {
         providerListeners.keySet().forEach(providerType -> registerProvider(generator, providerType, furnitureSet));
+
+        generator.providing(ProviderTypes.BLOCK_TAGS, (context, provider) -> blockTags.forEach(tag -> {
+            var block = furnitureSet.getOrThrow(this);
+
+            provider.tag(tag).withElement(block);
+
+            if(block.defaultBlockState().canBeReplaced())
+                provider.tag(BlockTags.REPLACEABLE).withElement(block);
+        }));
     }
 
     private <TProvider> void registerProvider(PackGenerator<?> generator, ProviderType<TProvider> providerType, FurnitureSet furnitureSet) {
@@ -176,12 +192,14 @@ public sealed class BlockType<TBlock extends Block> {
     public static final class WithItem<TBlock extends Block, TItem extends Item> extends BlockType<TBlock> {
         final BiFunction<FurnitureSet, Item.Properties, Item.Properties> itemPropertiesModifier;
         final ItemFactory<TBlock, TItem> itemFactory;
+        final Set<TagKey<Item>> itemTags;
 
         WithItem(BlockTypeBuilder.WithItem<TBlock, TItem> builder) {
             super(builder);
 
             itemPropertiesModifier = builder.itemPropertiesModifier;
             itemFactory = builder.itemFactory;
+            itemTags = Set.copyOf(builder.itemTags);
         }
 
         public Item.Properties itemProperties(FurnitureSet furnitureSet) {
@@ -217,9 +235,18 @@ public sealed class BlockType<TBlock extends Block> {
         }
 
         @Override
-        protected void register(IEventBus modBus, FurnitureSet furnitureSet) {
+        void register(IEventBus modBus, FurnitureSet furnitureSet) {
             super.register(modBus, furnitureSet);
             furnitureSet.registree.register(Registries.ITEM, furnitureSet.registrationName(registryName), registryName -> itemFactory.create(furnitureSet, furnitureSet.getOrThrow(this), itemProperties(furnitureSet).useBlockDescriptionPrefix().setId(ResourceKey.create(Registries.ITEM, registryName))));
+        }
+
+        @Override
+        void registerDataGen(PackGenerator<?> generator, FurnitureSet furnitureSet) {
+            super.registerDataGen(generator, furnitureSet);
+
+            generator.providing(ProviderTypes.ITEM_TAGS, (context, provider) -> itemTags
+                    .forEach(tag -> provider.tag(tag).withElement(furnitureSet.getOrThrow(this).asItem()))
+            );
         }
     }
 }

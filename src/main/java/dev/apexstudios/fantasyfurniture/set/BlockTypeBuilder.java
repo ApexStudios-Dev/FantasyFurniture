@@ -1,6 +1,7 @@
 package dev.apexstudios.fantasyfurniture.set;
 
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import dev.apexstudios.apexcore.lib.data.ProviderType;
 import dev.apexstudios.apexcore.lib.data.ProviderTypes;
 import dev.apexstudios.fantasyfurniture.set.function.BlockFactory;
@@ -9,14 +10,15 @@ import dev.apexstudios.fantasyfurniture.set.function.ItemFactory;
 import dev.apexstudios.fantasyfurniture.set.function.ModelProviderListener;
 import dev.apexstudios.fantasyfurniture.set.function.ProviderListener;
 import dev.apexstudios.fantasyfurniture.set.function.RecipeListener;
-import dev.apexstudios.fantasyfurniture.set.function.TagListener;
+import java.util.Collections;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
-import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -34,15 +36,11 @@ public abstract sealed class BlockTypeBuilder<TBlock extends Block, TType extend
     BiConsumer<FurnitureSet, TBlock> onRegisterEnqueued = (furnitureSet, block) -> { };
     @Nullable Supplier<? extends BlockBehaviour> baseBlock = null;
     boolean usesMineableTag = true;
+    final Set<TagKey<Block>> blockTags = Sets.newHashSet();
 
     private BlockTypeBuilder(String registryName, BlockFactory<TBlock> blockFactory) {
         this.registryName = registryName;
         this.blockFactory = blockFactory;
-
-        blockTags((provider, furnitureSet, block) -> {
-            if(block.defaultBlockState().canBeReplaced())
-                provider.tag(BlockTags.REPLACEABLE).withElement(block);
-        });
     }
 
     public TSelf blockProperties(BiFunction<FurnitureSet, BlockBehaviour.Properties, BlockBehaviour.Properties> blockPropertiesModifier) {
@@ -106,8 +104,10 @@ public abstract sealed class BlockTypeBuilder<TBlock extends Block, TType extend
         return providing(ProviderTypes.MODELS, (context, provider, furnitureSet, block) -> listener.get().accept(context, provider.blockModels(), furnitureSet, block));
     }
 
-    public TSelf blockTags(TagListener<Block, TBlock> listener) {
-        return providing(ProviderTypes.BLOCK_TAGS, (context, provider, furnitureSet, block) -> listener.accept(provider, furnitureSet, block));
+    @SafeVarargs
+    public final TSelf blockTags(TagKey<Block>... tags) {
+        Collections.addAll(blockTags, tags);
+        return (TSelf) this;
     }
 
     public TSelf usesMineableTag(boolean usesMineableTag) {
@@ -143,6 +143,7 @@ public abstract sealed class BlockTypeBuilder<TBlock extends Block, TType extend
     public static final class WithItem<TBlock extends Block, TItem extends Item> extends BlockTypeBuilder<TBlock, BlockType.WithItem<TBlock, TItem>, WithItem<TBlock, TItem>> {
         final ItemFactory<TBlock, TItem> itemFactory;
         BiFunction<FurnitureSet, Item.Properties, Item.Properties> itemPropertiesModifier = (furnitureSet, properties) -> properties;
+        final Set<TagKey<Item>> itemTags = Sets.newHashSet();
 
         WithItem(String registryName, BlockFactory<TBlock> blockFactory, ItemFactory<TBlock, TItem> itemFactory) {
             super(registryName, blockFactory);
@@ -159,8 +160,10 @@ public abstract sealed class BlockTypeBuilder<TBlock extends Block, TType extend
             return itemProperties((furnitureSet, properties) -> itemPropertiesModifier.apply(properties));
         }
 
-        public WithItem<TBlock, TItem> itemTags(TagListener<Item, TItem> listener) {
-            return providing(ProviderTypes.ITEM_TAGS, (context, provider, furnitureSet, block) -> listener.accept(provider, furnitureSet, (TItem) block.asItem()));
+        @SafeVarargs
+        public final WithItem<TBlock, TItem> itemTags(TagKey<Item>... tags) {
+            Collections.addAll(itemTags, tags);
+            return this;
         }
 
         public WithItem<TBlock, TItem> recipe(RecipeListener<TItem> listener) {

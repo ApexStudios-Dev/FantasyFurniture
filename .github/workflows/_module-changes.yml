@@ -32,3 +32,4 @@ jobs:
                       bone: [ 'bone/**' ]
                       dunmer: [ 'dunmer/**' ]
                       necrolord: [ 'necrolord/**' ]
+                      royal: [ 'royal/**' ]

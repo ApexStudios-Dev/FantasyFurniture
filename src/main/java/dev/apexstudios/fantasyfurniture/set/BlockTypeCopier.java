@@ -5,6 +5,7 @@ import dev.apexstudios.fantasyfurniture.set.function.ItemFactory;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import org.apache.commons.lang3.function.Consumers;
@@ -25,7 +26,8 @@ public abstract sealed class BlockTypeCopier<TBlock extends Block, TType extends
                     .onRegister(blockType.onRegister, false)
                     .onRegister(blockType.onRegisterEnqueued, true)
                     .baseBlock(blockType.baseBlock)
-                    .usesMineableTag(blockType.usesMineableTag);
+                    .usesMineableTag(blockType.usesMineableTag)
+                    .blockTags(blockType.blockTags.toArray(TagKey[]::new));
 
             builder.providerListeners.putAll(blockType.providerListeners);
         });
@@ -70,7 +72,11 @@ public abstract sealed class BlockTypeCopier<TBlock extends Block, TType extends
             super(blockType);
 
             itemFactory = blockType.itemFactory;
-            builder(builder -> builder.itemProperties(blockType.itemPropertiesModifier));
+
+            builder(builder -> builder
+                    .itemProperties(blockType.itemPropertiesModifier)
+                    .itemTags(blockType.itemTags.toArray(TagKey[]::new))
+            );
         }
 
         public WithItem<TBlock, TItem> itemFactory(ItemFactory<TBlock, TItem> itemFactory) {
