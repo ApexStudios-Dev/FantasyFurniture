@@ -549,32 +549,32 @@
 			"faces": {
 				"north": {
 					"uv": [11, 0, 22, 2],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				},
 				"east": {
 					"uv": [11, 2, 22, 4],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				},
 				"south": {
 					"uv": [11, 4, 22, 6],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				},
 				"west": {
 					"uv": [11, 6, 22, 8],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				},
 				"up": {
 					"uv": [11, 11, 0, 0],
-					"tint": 1,
+					"tint": 0,
 					"texture": 1
 				},
 				"down": {
 					"uv": [11, 11, 0, 22],
-					"tint": 1,
+					"tint": 0,
 					"texture": 1
 				}
 			},

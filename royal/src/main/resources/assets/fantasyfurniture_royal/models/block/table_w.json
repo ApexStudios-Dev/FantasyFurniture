@@ -120,8 +120,8 @@
 			"from": [0, 14, 2],
 			"to": [14, 16, 14],
 			"faces": {
-				"up": {"uv": [6, 6, 0, 0], "texture": "#table_tint", "cullface": "up"},
-				"down": {"uv": [6, 6, 0, 12], "texture": "#table_tint"}
+				"up": {"uv": [6, 6, 0, 0], "texture": "#table_tint", "cullface": "up", "tintindex": 0},
+				"down": {"uv": [6, 6, 0, 12], "texture": "#table_tint", "tintindex": 0}
 			}
 		}
 	],

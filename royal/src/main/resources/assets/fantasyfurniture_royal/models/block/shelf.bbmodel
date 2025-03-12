@@ -271,13 +271,13 @@
 				},
 				"up": {
 					"uv": [12, 36, 0, 24],
-					"tint": 1,
+					"tint": 0,
 					"cullface": "up",
 					"texture": 1
 				},
 				"down": {
 					"uv": [24, 24, 12, 36],
-					"tint": 1,
+					"tint": 0,
 					"cullface": "up",
 					"texture": 1
 				}

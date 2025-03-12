@@ -1,5 +1,8 @@
 package dev.apexstudios.fantasyfurniture.royal.block;
 
+import dev.apexstudios.apexcore.lib.component.ComponentRegistrar;
+import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
+import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
 import dev.apexstudios.apexcore.lib.util.shapes.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.ShelfBlock;
 import dev.apexstudios.fantasyfurniture.block.property.ShelfConnection;
@@ -57,5 +60,12 @@ public final class RoyalShelfBlock extends ShelfBlock {
             case BOTH -> BOTH_FACING_SHAPES;
             case NONE -> FACING_SHAPES;
         }, blockState, pos);
+    }
+
+    @Override
+    protected void registerComponents(ComponentRegistrar<BlockComponent> registrar) {
+        super.registerComponents(registrar);
+
+        registrar.register(BlockComponentTypes.DYEABLE);
     }
 }

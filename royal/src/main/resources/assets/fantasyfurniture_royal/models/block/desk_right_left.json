@@ -121,8 +121,8 @@
 			"from": [0, 14, 2],
 			"to": [14, 16, 14],
 			"faces": {
-				"up": {"uv": [3.5, 3, 0, 0], "texture": "#desk_left_tint", "cullface": "up", "tintindex": 1},
-				"down": {"uv": [3.5, 3, 0, 6], "texture": "#desk_left_tint", "tintindex": 1}
+				"up": {"uv": [3.5, 3, 0, 0], "texture": "#desk_left_tint", "cullface": "up", "tintindex": 0},
+				"down": {"uv": [3.5, 3, 0, 6], "texture": "#desk_left_tint", "tintindex": 0}
 			}
 		}
 	],

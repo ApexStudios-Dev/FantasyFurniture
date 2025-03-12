@@ -30,8 +30,8 @@
 			"from": [0, 14, 2],
 			"to": [16, 16, 14],
 			"faces": {
-				"up": {"uv": [13, 10.5, 6, 4.5], "texture": "#table_tint", "cullface": "up"},
-				"down": {"uv": [13, 4.5, 6, 10.5], "texture": "#table_tint"}
+				"up": {"uv": [13, 10.5, 6, 4.5], "texture": "#table_tint", "cullface": "up", "tintindex": 0},
+				"down": {"uv": [13, 4.5, 6, 10.5], "texture": "#table_tint", "tintindex": 0}
 			}
 		}
 	],

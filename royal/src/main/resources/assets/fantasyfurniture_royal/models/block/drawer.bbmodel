@@ -847,33 +847,33 @@
 			"faces": {
 				"north": {
 					"uv": [0, 24, 12, 26],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				},
 				"east": {
 					"uv": [0, 26, 12, 28],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				},
 				"south": {
 					"uv": [0, 28, 12, 30],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				},
 				"west": {
 					"uv": [12, 28, 24, 30],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				},
 				"up": {
 					"uv": [12, 12, 0, 0],
-					"tint": 1,
+					"tint": 0,
 					"cullface": "up",
 					"texture": 1
 				},
 				"down": {
 					"uv": [12, 12, 0, 24],
-					"tint": 1,
+					"tint": 0,
 					"texture": 1
 				}
 			},
@@ -896,32 +896,32 @@
 			"faces": {
 				"north": {
 					"uv": [16, 30, 17, 37],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				},
 				"east": {
 					"uv": [22, 0, 30, 7],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				},
 				"south": {
 					"uv": [17, 30, 18, 37],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				},
 				"west": {
 					"uv": [22, 7, 30, 14],
-					"tint": 1,
+					"tint": 0,
 					"texture": 1
 				},
 				"up": {
 					"uv": [31, 9, 30, 1],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				},
 				"down": {
 					"uv": [31, 9, 30, 17],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				}
 			},
@@ -944,32 +944,32 @@
 			"faces": {
 				"north": {
 					"uv": [30, 17, 31, 24],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				},
 				"east": {
 					"uv": [22, 14, 30, 21],
-					"tint": 1,
+					"tint": 0,
 					"texture": 1
 				},
 				"south": {
 					"uv": [18, 30, 19, 37],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				},
 				"west": {
 					"uv": [22, 21, 30, 28],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				},
 				"up": {
 					"uv": [11, 38, 10, 30],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				},
 				"down": {
 					"uv": [12, 30, 11, 38],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				}
 			},
@@ -992,32 +992,32 @@
 			"faces": {
 				"north": {
 					"uv": [12, 14, 22, 21],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				},
 				"east": {
 					"uv": [14, 30, 15, 37],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				},
 				"south": {
 					"uv": [12, 21, 22, 28],
-					"tint": 1,
+					"tint": 0,
 					"texture": 1
 				},
 				"west": {
 					"uv": [15, 30, 16, 37],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				},
 				"up": {
 					"uv": [10, 31, 0, 30],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				},
 				"down": {
 					"uv": [40, 0, 30, 1],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				}
 			},
@@ -1082,32 +1082,32 @@
 			"faces": {
 				"north": {
 					"uv": [12, 0, 22, 3],
-					"tint": 1,
+					"tint": 0,
 					"texture": 1
 				},
 				"east": {
 					"uv": [12, 30, 13, 37],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				},
 				"south": {
 					"uv": [12, 7, 22, 14],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				},
 				"west": {
 					"uv": [13, 30, 14, 37],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				},
 				"up": {
 					"uv": [34, 29, 24, 28],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				},
 				"down": {
 					"uv": [34, 29, 24, 30],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				}
 			},
@@ -1130,32 +1130,32 @@
 			"faces": {
 				"north": {
 					"uv": [12, 4, 22, 7],
-					"tint": 1,
+					"tint": 0,
 					"texture": 1
 				},
 				"east": {
 					"uv": [12, 30, 13, 37],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				},
 				"south": {
 					"uv": [12, 7, 22, 14],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				},
 				"west": {
 					"uv": [13, 30, 14, 37],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				},
 				"up": {
 					"uv": [34, 29, 24, 28],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				},
 				"down": {
 					"uv": [34, 29, 24, 30],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				}
 			},

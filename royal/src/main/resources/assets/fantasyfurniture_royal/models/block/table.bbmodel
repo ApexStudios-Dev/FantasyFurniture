@@ -51,11 +51,13 @@
 				"up": {
 					"uv": [13, 11, 6, 4],
 					"cullface": "up",
-					"texture": 1
+					"texture": 1,
+					"tint": 0
 				},
 				"down": {
 					"uv": [13, 4, 6, 11],
-					"texture": 1
+					"texture": 1,
+					"tint": 0
 				}
 			},
 			"type": "cube",
@@ -140,11 +142,13 @@
 				"up": {
 					"uv": [13, 11, 6, 4],
 					"cullface": "up",
-					"texture": 1
+					"texture": 1,
+					"tint": 0
 				},
 				"down": {
 					"uv": [13, 4, 6, 11],
-					"texture": 1
+					"texture": 1,
+					"tint": 0
 				}
 			},
 			"type": "cube",
@@ -229,11 +233,13 @@
 				"up": {
 					"uv": [13, 11, 6, 4],
 					"cullface": "up",
-					"texture": 1
+					"texture": 1,
+					"tint": 0
 				},
 				"down": {
 					"uv": [13, 4, 6, 11],
-					"texture": 1
+					"texture": 1,
+					"tint": 0
 				}
 			},
 			"type": "cube",
@@ -497,11 +503,13 @@
 				"up": {
 					"uv": [13, 11, 6, 4],
 					"cullface": "up",
-					"texture": 1
+					"texture": 1,
+					"tint": 0
 				},
 				"down": {
 					"uv": [13, 4, 6, 11],
-					"texture": 1
+					"texture": 1,
+					"tint": 0
 				}
 			},
 			"type": "cube",
@@ -591,11 +599,13 @@
 				"up": {
 					"uv": [13, 11, 6, 4],
 					"cullface": "up",
-					"texture": 1
+					"texture": 1,
+					"tint": 0
 				},
 				"down": {
 					"uv": [13, 4, 6, 11],
-					"texture": 1
+					"texture": 1,
+					"tint": 0
 				}
 			},
 			"type": "cube",
@@ -863,11 +873,13 @@
 				"up": {
 					"uv": [13, 11, 6, 4],
 					"cullface": "up",
-					"texture": 1
+					"texture": 1,
+					"tint": 0
 				},
 				"down": {
 					"uv": [13, 4, 6, 11],
-					"texture": 1
+					"texture": 1,
+					"tint": 0
 				}
 			},
 			"type": "cube",
@@ -957,11 +969,13 @@
 				"up": {
 					"uv": [13, 11, 6, 4],
 					"cullface": "up",
-					"texture": 1
+					"texture": 1,
+					"tint": 0
 				},
 				"down": {
 					"uv": [13, 4, 6, 11],
-					"texture": 1
+					"texture": 1,
+					"tint": 0
 				}
 			},
 			"type": "cube",
@@ -1229,11 +1243,13 @@
 				"up": {
 					"uv": [13, 11, 6, 4],
 					"cullface": "up",
-					"texture": 1
+					"texture": 1,
+					"tint": 0
 				},
 				"down": {
 					"uv": [13, 4, 6, 11],
-					"texture": 1
+					"texture": 1,
+					"tint": 0
 				}
 			},
 			"type": "cube",
@@ -1501,11 +1517,13 @@
 				"up": {
 					"uv": [13, 11, 6, 4],
 					"cullface": "up",
-					"texture": 1
+					"texture": 1,
+					"tint": 0
 				},
 				"down": {
 					"uv": [13, 4, 6, 11],
-					"texture": 1
+					"texture": 1,
+					"tint": 0
 				}
 			},
 			"type": "cube",
@@ -1951,11 +1969,13 @@
 				"up": {
 					"uv": [6, 6, 0, 0],
 					"cullface": "up",
-					"texture": 1
+					"texture": 1,
+					"tint": 0
 				},
 				"down": {
 					"uv": [6, 6, 0, 12],
-					"texture": 1
+					"texture": 1,
+					"tint": 0
 				}
 			},
 			"type": "cube",
@@ -2091,11 +2111,13 @@
 				"up": {
 					"uv": [13, 10.5, 6, 4.5],
 					"cullface": "up",
-					"texture": 1
+					"texture": 1,
+					"tint": 0
 				},
 				"down": {
 					"uv": [13, 4.5, 6, 10.5],
-					"texture": 1
+					"texture": 1,
+					"tint": 0
 				}
 			},
 			"type": "cube",
@@ -2541,11 +2563,13 @@
 				"up": {
 					"uv": [6, 6, 0, 0],
 					"cullface": "up",
-					"texture": 1
+					"texture": 1,
+					"tint": 0
 				},
 				"down": {
 					"uv": [6, 6, 0, 12],
-					"texture": 1
+					"texture": 1,
+					"tint": 0
 				}
 			},
 			"type": "cube",
@@ -2681,11 +2705,13 @@
 				"up": {
 					"uv": [12.5, 11, 6.5, 4],
 					"cullface": "up",
-					"texture": 1
+					"texture": 1,
+					"tint": 0
 				},
 				"down": {
 					"uv": [12.5, 4, 6.5, 11],
-					"texture": 1
+					"texture": 1,
+					"tint": 0
 				}
 			},
 			"type": "cube",
@@ -3131,11 +3157,13 @@
 				"up": {
 					"uv": [6, 6, 0, 0],
 					"cullface": "up",
-					"texture": 1
+					"texture": 1,
+					"tint": 0
 				},
 				"down": {
 					"uv": [6, 6, 0, 12],
-					"texture": 1
+					"texture": 1,
+					"tint": 0
 				}
 			},
 			"type": "cube",
@@ -3581,11 +3609,13 @@
 				"up": {
 					"uv": [6, 6, 0, 0],
 					"cullface": "up",
-					"texture": 1
+					"texture": 1,
+					"tint": 0
 				},
 				"down": {
 					"uv": [6, 6, 0, 12],
-					"texture": 1
+					"texture": 1,
+					"tint": 0
 				}
 			},
 			"type": "cube",
@@ -4165,11 +4195,13 @@
 				"up": {
 					"uv": [6, 6, 0, 0],
 					"cullface": "up",
-					"texture": 1
+					"texture": 1,
+					"tint": 0
 				},
 				"down": {
 					"uv": [6, 6, 0, 12],
-					"texture": 1
+					"texture": 1,
+					"tint": 0
 				}
 			},
 			"type": "cube",

@@ -20,8 +20,8 @@
 			"from": [0, 14, 0],
 			"to": [16, 16, 14],
 			"faces": {
-				"up": {"uv": [13, 11, 6, 4], "texture": "#table_tint", "cullface": "up"},
-				"down": {"uv": [13, 4, 6, 11], "texture": "#table_tint"}
+				"up": {"uv": [13, 11, 6, 4], "texture": "#table_tint", "cullface": "up", "tintindex": 0},
+				"down": {"uv": [13, 4, 6, 11], "texture": "#table_tint", "tintindex": 0}
 			}
 		}
 	],

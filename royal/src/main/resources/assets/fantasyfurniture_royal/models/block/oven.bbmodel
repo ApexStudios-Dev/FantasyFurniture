@@ -1239,32 +1239,32 @@
 			"faces": {
 				"north": {
 					"uv": [4, 25, 5, 33],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				},
 				"east": {
 					"uv": [0, 0, 13, 8],
-					"tint": 1,
+					"tint": 0,
 					"texture": 1
 				},
 				"south": {
 					"uv": [5, 25, 6, 33],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				},
 				"west": {
 					"uv": [0, 8, 13, 16],
-					"tint": 1,
+					"tint": 0,
 					"texture": 1
 				},
 				"up": {
 					"uv": [1, 37, 0, 24],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				},
 				"down": {
 					"uv": [2, 24, 1, 37],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				}
 			},
@@ -1287,32 +1287,32 @@
 			"faces": {
 				"north": {
 					"uv": [6, 25, 7, 33],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				},
 				"east": {
 					"uv": [13, 0, 26, 8],
-					"tint": 1,
+					"tint": 0,
 					"texture": 1
 				},
 				"south": {
 					"uv": [7, 25, 8, 33],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				},
 				"west": {
 					"uv": [13, 8, 26, 16],
-					"tint": 1,
+					"tint": 0,
 					"texture": 1
 				},
 				"up": {
 					"uv": [3, 37, 2, 24],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				},
 				"down": {
 					"uv": [4, 24, 3, 37],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				}
 			},
@@ -1335,32 +1335,32 @@
 			"faces": {
 				"north": {
 					"uv": [0, 16, 13, 24],
-					"tint": 1,
+					"tint": 0,
 					"texture": 1
 				},
 				"east": {
 					"uv": [8, 25, 9, 33],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				},
 				"south": {
 					"uv": [13, 16, 26, 24],
-					"tint": 1,
+					"tint": 0,
 					"texture": 1
 				},
 				"west": {
 					"uv": [9, 25, 10, 33],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				},
 				"up": {
 					"uv": [17, 25, 4, 24],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				},
 				"down": {
 					"uv": [30, 24, 17, 25],
-					"tint": 1,
+					"tint": 0,
 					"texture": null
 				}
 			},

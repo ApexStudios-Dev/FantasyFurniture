@@ -1,5 +1,7 @@
 package dev.apexstudios.fantasyfurniture.royal.block;
 
+import dev.apexstudios.apexcore.lib.component.ComponentRegistrar;
+import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
 import dev.apexstudios.apexcore.lib.util.shapes.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.TableBlock;
@@ -19,5 +21,12 @@ public final class RoyalTableBlock extends TableBlock {
     protected VoxelShape getFurnitureShape(BlockState blockState, BlockPos pos) {
         var facing = getComponentOrThrow(BlockComponentTypes.FACING).get(blockState);
         return ApexShapes.rotateHorizontal(getShape(blockState, SHAPE_TABLE_TOP, SHAPE_TABLE_LEG), facing);
+    }
+
+    @Override
+    protected void registerComponents(ComponentRegistrar<BlockComponent> registrar) {
+        super.registerComponents(registrar);
+
+        registrar.register(BlockComponentTypes.DYEABLE);
     }
 }

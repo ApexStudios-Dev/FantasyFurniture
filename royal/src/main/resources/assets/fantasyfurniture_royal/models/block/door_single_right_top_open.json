@@ -50,8 +50,8 @@
 			"to": [2.5, 14, 15],
 			"rotation": {"angle": 0, "axis": "y", "origin": [0, -16, 16]},
 			"faces": {
-				"east": {"uv": [3.5, 0, 7, 3.5], "texture": "#door_tint", "tintindex": 1},
-				"west": {"uv": [0, 0, 3.5, 3.5], "texture": "#door_tint", "tintindex": 1}
+				"east": {"uv": [3.5, 0, 7, 3.5], "texture": "#door_tint", "tintindex": 0},
+				"west": {"uv": [0, 0, 3.5, 3.5], "texture": "#door_tint", "tintindex": 0}
 			}
 		}
 	],

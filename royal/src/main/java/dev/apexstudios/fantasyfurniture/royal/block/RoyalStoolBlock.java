@@ -1,5 +1,8 @@
 package dev.apexstudios.fantasyfurniture.royal.block;
 
+import dev.apexstudios.apexcore.lib.component.ComponentRegistrar;
+import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
+import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
 import dev.apexstudios.apexcore.lib.util.shapes.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.base.SeatBlock;
 import java.util.Map;
@@ -26,5 +29,12 @@ public final class RoyalStoolBlock extends SeatBlock {
     @Override
     protected VoxelShape getFurnitureShape(BlockState blockState, BlockPos pos) {
         return getShape(FACING_SHAPES, blockState, pos);
+    }
+
+    @Override
+    protected void registerComponents(ComponentRegistrar<BlockComponent> registrar) {
+        super.registerComponents(registrar);
+
+        registrar.register(BlockComponentTypes.DYEABLE);
     }
 }

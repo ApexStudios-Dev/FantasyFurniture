@@ -36,9 +36,9 @@
 			"from": [0.5, 0, 1],
 			"to": [2.5, 16, 15],
 			"faces": {
-				"east": {"uv": [7, 3.5, 3.5, 7.5], "texture": "#door_tint", "tintindex": 1},
-				"west": {"uv": [3.5, 3.5, 0, 7.5], "texture": "#door_tint", "tintindex": 1},
-				"down": {"uv": [0.5, 7.5, 4, 8], "rotation": 90, "texture": "#door_tint", "cullface": "down", "tintindex": 1}
+				"east": {"uv": [7, 3.5, 3.5, 7.5], "texture": "#door_tint", "tintindex": 0},
+				"west": {"uv": [3.5, 3.5, 0, 7.5], "texture": "#door_tint", "tintindex": 0},
+				"down": {"uv": [0.5, 7.5, 4, 8], "rotation": 90, "texture": "#door_tint", "cullface": "down", "tintindex": 0}
 			}
 		},
 		{

@@ -132,7 +132,7 @@
 			"to": [3, 16, 12],
 			"rotation": {"angle": 0, "axis": "y", "origin": [2, 5, 6]},
 			"faces": {
-				"west": {"uv": [0, 7.75, 1, 9], "texture": "#wardrobe_bottom_tint", "tintindex": 1}
+				"west": {"uv": [0, 7.75, 1, 9], "texture": "#wardrobe_bottom_tint", "tintindex": 0}
 			}
 		},
 		{
@@ -141,7 +141,7 @@
 			"to": [16, 16, 13],
 			"rotation": {"angle": 0, "axis": "y", "origin": [4, 5, 7]},
 			"faces": {
-				"south": {"uv": [0, 4.75, 1.5, 6], "texture": "#wardrobe_bottom_tint", "tintindex": 1}
+				"south": {"uv": [0, 4.75, 1.5, 6], "texture": "#wardrobe_bottom_tint", "tintindex": 0}
 			}
 		},
 		{
@@ -150,7 +150,7 @@
 			"to": [16, 12, 3],
 			"rotation": {"angle": 0, "axis": "y", "origin": [4, -3, -3]},
 			"faces": {
-				"north": {"uv": [7.5, 6, 9, 6.75], "texture": "#wardrobe_bottom_tint", "tintindex": 1}
+				"north": {"uv": [7.5, 6, 9, 6.75], "texture": "#wardrobe_bottom_tint", "tintindex": 0}
 			}
 		},
 		{
@@ -159,7 +159,7 @@
 			"to": [15, 16, 3],
 			"rotation": {"angle": 0, "axis": "y", "origin": [-9, 5, -3]},
 			"faces": {
-				"north": {"uv": [6, 3.75, 7.375, 4], "texture": "#wardrobe_bottom_tint", "tintindex": 1}
+				"north": {"uv": [6, 3.75, 7.375, 4], "texture": "#wardrobe_bottom_tint", "tintindex": 0}
 			}
 		}
 	],

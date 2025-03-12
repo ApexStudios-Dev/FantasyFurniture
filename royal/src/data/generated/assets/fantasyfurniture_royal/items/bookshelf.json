@@ -1,6 +1,12 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "fantasyfurniture_royal:item/bookshelf"
+    "model": "fantasyfurniture_royal:item/bookshelf",
+    "tints": [
+      {
+        "type": "apexcore:dye_color",
+        "default": "white"
+      }
+    ]
   }
 }
