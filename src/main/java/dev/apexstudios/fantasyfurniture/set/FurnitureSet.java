@@ -146,6 +146,10 @@ public final class FurnitureSet {
         return name;
     }
 
+    public Set<BlockType<?>> blockTypes() {
+        return blockTypes;
+    }
+
     public BlockSetType blockSet() {
         return woodType.setType();
     }

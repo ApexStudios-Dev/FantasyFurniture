@@ -37,7 +37,6 @@ import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.blockstates.Variant;
 import net.minecraft.client.data.models.blockstates.VariantProperties;
 import net.minecraft.client.data.models.model.ModelLocationUtils;
-import net.minecraft.tags.BlockTags;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.Tags;
@@ -63,12 +62,7 @@ public class DunmerFurnitureSet {
 
                                 ModelUtil.registerBlockItemModel(block, models);
                             })
-                            .blockTags((provider, furnitureSet, block) -> {
-                                provider.tag(BlockPlacementRenderer.BLOCK_WHITELIST).withElement(block);
-                                provider.tag(Tags.Blocks.RELOCATION_NOT_SUPPORTED).withElement(block);
-                                provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
-                                provider.tag(Tags.Blocks.PLAYER_WORKSTATIONS_FURNACES).withElement(block);
-                            })
+                            .blockTags(BlockPlacementRenderer.BLOCK_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
                     )
             ))
             .with(BlockTypes.DRESSER.extend(BlockFactory.wrapping(DunmerDresserBlock::new)))
