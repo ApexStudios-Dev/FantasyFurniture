@@ -282,7 +282,7 @@ public interface BlockTypes {
                         ModelUtil.registerBlockItemModel(block, models);
                     })
                     .translation("Bookshelf")
-                    .blockTags(ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
+                    .blockTags(ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED, BlockTags.ENCHANTMENT_POWER_PROVIDER)
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
     // endregion
