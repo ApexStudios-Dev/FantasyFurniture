@@ -2,10 +2,10 @@ package dev.apexstudios.fantasyfurniture.royal.block;
 
 import dev.apexstudios.apexcore.lib.util.shapes.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.ChandelierBlock;
+import dev.apexstudios.fantasyfurniture.royal.RoyalFurnitureSet;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -15,7 +15,7 @@ public final class RoyalChandelierBlock extends ChandelierBlock {
     public static final Map<Direction, VoxelShape> FACING_SHAPES = ApexShapes.rotateHorizontal(SHAPE);
 
     public RoyalChandelierBlock(Properties properties) {
-        super(properties, 4);
+        super(RoyalFurnitureSet.FURNITURE_SET, properties, 4);
     }
 
     @Override
@@ -39,7 +39,6 @@ public final class RoyalChandelierBlock extends ChandelierBlock {
             z = even ? z + offset : z - offset;
         }
 
-        level.addParticle(ParticleTypes.SMOKE, x, y, z, 0D, 0D, 0D);
-        level.addParticle(ParticleTypes.FLAME, x, y, z, 0D, 0D, 0D);
+        playParticles(level, x, y, z);
     }
 }

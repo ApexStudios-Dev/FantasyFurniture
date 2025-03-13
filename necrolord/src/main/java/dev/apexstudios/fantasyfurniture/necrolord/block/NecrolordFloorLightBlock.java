@@ -6,7 +6,6 @@ import dev.apexstudios.fantasyfurniture.necrolord.NecrolordFurnitureSet;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -26,7 +25,7 @@ public final class NecrolordFloorLightBlock extends FloorLightBlock {
     public static final Map<Direction, VoxelShape> FACING_SHAPES = ApexShapes.rotateHorizontal(SHAPE);
 
     public NecrolordFloorLightBlock(Properties properties) {
-        super(properties, 3);
+        super(NecrolordFurnitureSet.FURNITURE_SET, properties, 3);
     }
 
     @Override
@@ -48,7 +47,6 @@ public final class NecrolordFloorLightBlock extends FloorLightBlock {
             y += .1D;
         }
 
-        level.addParticle(ParticleTypes.SMOKE, x, y, z, 0D, 0D, 0D);
-        level.addParticle(NecrolordFurnitureSet.FLAME_PARTICLE.value(), x, y, z, 0D, 0D, 0D);
+        playParticles(level, x, y, z);
     }
 }

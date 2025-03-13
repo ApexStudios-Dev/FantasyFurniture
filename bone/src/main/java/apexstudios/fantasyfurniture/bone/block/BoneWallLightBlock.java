@@ -2,6 +2,7 @@ package apexstudios.fantasyfurniture.bone.block;
 
 import dev.apexstudios.apexcore.lib.util.shapes.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.WallLightBlock;
+import dev.apexstudios.fantasyfurniture.set.FurnitureSet;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -13,8 +14,8 @@ public final class BoneWallLightBlock extends WallLightBlock {
 
     public static final Map<Direction, VoxelShape> FACING_SHAPES = ApexShapes.rotateHorizontal(SHAPE);
 
-    public BoneWallLightBlock(Properties properties) {
-        super(properties);
+    public BoneWallLightBlock(FurnitureSet furnitureSet, Properties properties) {
+        super(furnitureSet, properties);
     }
 
     @Override

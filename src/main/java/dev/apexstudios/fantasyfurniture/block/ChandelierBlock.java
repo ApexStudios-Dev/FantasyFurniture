@@ -5,6 +5,7 @@ import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
 import dev.apexstudios.apexcore.lib.component.block.types.FacingBlockComponent;
 import dev.apexstudios.apexcore.lib.util.shapes.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.base.FurnitureBlockComponentHolder;
+import dev.apexstudios.fantasyfurniture.set.FurnitureSet;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -18,16 +19,18 @@ public class ChandelierBlock extends FurnitureBlockComponentHolder {
     public static final VoxelShape SHAPE = box(1D, 0D, 1D, 15, 16D, 15D);
     public static final Map<Direction, VoxelShape> FACING_SHAPES = ApexShapes.rotateHorizontal(SHAPE);
 
+    private final FurnitureSet furnitureSet;
     private final int particleCount;
 
-    public ChandelierBlock(Properties properties, int particleCount) {
+    public ChandelierBlock(FurnitureSet furnitureSet, Properties properties, int particleCount) {
         super(properties);
 
+        this.furnitureSet = furnitureSet;
         this.particleCount = particleCount;
     }
 
-    public ChandelierBlock(Properties properties) {
-        this(properties, 4);
+    public ChandelierBlock(FurnitureSet furnitureSet, Properties properties) {
+        this(furnitureSet, properties, 4);
     }
 
     @Override
@@ -64,7 +67,11 @@ public class ChandelierBlock extends FurnitureBlockComponentHolder {
             z = even ? z + offset : z - offset;
         }
 
+        playParticles(level, x, y, z);
+    }
+
+    protected void playParticles(Level level, double x, double y, double z) {
         level.addParticle(ParticleTypes.SMOKE, x, y, z, 0D, 0D, 0D);
-        level.addParticle(ParticleTypes.FLAME, x, y, z, 0D, 0D, 0D);
+        level.addParticle(furnitureSet.flameParticle(), x, y, z, 0D, 0D, 0D);
     }
 }

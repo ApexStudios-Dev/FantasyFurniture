@@ -3,10 +3,10 @@ package dev.apexstudios.fantasyfurniture.venthyr.block;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
 import dev.apexstudios.apexcore.lib.util.shapes.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.WallLightBlock;
+import dev.apexstudios.fantasyfurniture.venthyr.VenthyrFurnitureSet;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -24,7 +24,7 @@ public final class VenthyrWallLightBlock extends WallLightBlock {
     public static final Map<Direction, VoxelShape> FACING_SHAPES = ApexShapes.rotateHorizontal(SHAPE);
 
     public VenthyrWallLightBlock(Properties properties) {
-        super(properties);
+        super(VenthyrFurnitureSet.FURNITURE_SET, properties);
     }
 
     @Override
@@ -47,10 +47,6 @@ public final class VenthyrWallLightBlock extends WallLightBlock {
         x += .25D * facing.getStepX();
         z += .25D * facing.getStepZ();
 
-        level.addParticle(ParticleTypes.SMOKE, x + xOffset, y, z + zOffset, 0D, 0D, 0D);
-        level.addParticle(ParticleTypes.FLAME, x + xOffset, y, z + zOffset, 0D, 0D, 0D);
-
-        level.addParticle(ParticleTypes.SMOKE, x - xOffset, y, z - zOffset, 0D, 0D, 0D);
-        level.addParticle(ParticleTypes.FLAME, x - xOffset, y, z - zOffset, 0D, 0D, 0D);
+        playParticles(level, x + xOffset, y, z + zOffset);
     }
 }
