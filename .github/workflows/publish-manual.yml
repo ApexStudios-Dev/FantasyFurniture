@@ -16,6 +16,7 @@ on:
                     - dunmer
                     - necrolord
                     - royal
+                    - decorations
             release_type:
                 description: Mod release type
                 type: string

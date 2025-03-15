@@ -54,5 +54,13 @@
         "modrinth_id": "OIAm13ki",
         "color": "0xFFE88E",
         "artifact_id": "fantasyfurniture-royal"
+    },
+    "decorations": {
+        "display_name": "Fantasy's Furniture - Decorations",
+        "logo_url": "https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/new/fantasyfurniture_decorations.png",
+        "curseforge_id": "",
+        "modrinth_id": "",
+        "color": "0xFFE88E",
+        "artifact_id": "fantasyfurniture-decorations"
     }
 }
