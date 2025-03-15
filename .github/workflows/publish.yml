@@ -32,6 +32,7 @@ jobs:
                       dunmer: [ 'dunmer/**' ]
                       necrolord: [ 'necrolord/**' ]
                       royal: [ 'royal/**' ]
+                      decorations: [ 'decorations/**' ]
 
     publish:
         name: Publish

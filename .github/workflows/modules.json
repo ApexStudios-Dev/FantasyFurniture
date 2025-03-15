@@ -68,5 +68,13 @@
         "artifact_id": "fantasyfurniture-royal",
         "jar_task": ":royalMainJar",
         "publish_task": ":publishRoyalReleasePublicationTo{0}"
+    },
+    "decorations": {
+        "display_name": "Fantasy's Furniture - Decorations",
+        "logo_url": "https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/new/fantasyfurniture_decorations.png",
+        "curseforge_id": "",
+        "modrinth_id": "",
+        "color": "0xFFE88E",
+        "artifact_id": "fantasyfurniture-decorations"
     }
 }

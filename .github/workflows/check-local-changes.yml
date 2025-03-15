@@ -24,7 +24,7 @@ jobs:
               uses: ApexStudios-Dev/.github/actions/setup-gradle@master
 
             - name: Generate Data
-              run: ./gradlew :runData :runNordicData :runVenthyrData :runDunmerData :runNecrolordData :runBoneData :runRoyalData
+              run: ./gradlew :runData :runNordicData :runVenthyrData :runDunmerData :runNecrolordData :runBoneData :runRoyalData :runDecorationsData
               env:
                   VERSION: ${{ steps.checkout.outputs.version }}
 
