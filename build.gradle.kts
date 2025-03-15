@@ -23,7 +23,7 @@ val furnitureSets = setOf(
     "bone",
     "dunmer",
     "necrolord",
-    "royal"
+    "royal",
     "decorations"
 )
 
