@@ -39,10 +39,10 @@ jobs:
   publish:
     name: Publish ${{ matrix.module }}
     needs: parse-modules
-    runs-on: ubuntu-latest
+    runs-on: apexstudios
     if: ${{ success() && inputs.modules != '' && inputs.modules != '[]' }}
     strategy:
-      max-parallel: 1
+      max-parallel: 2 # we only have 2 local runners, dont overwhelm them
       matrix:
         module: ${{ inputs.is_manual && fromJSON(needs.parse-modules.outputs.split) || fromJSON(inputs.modules) }}
     steps:
