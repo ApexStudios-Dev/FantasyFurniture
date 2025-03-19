@@ -1,12 +1,13 @@
 package dev.apexstudios.fantasyfurniture.necrolord.block;
 
-import dev.apexstudios.apexcore.lib.util.shapes.ApexShapes;
+import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.DeskBlock;
 import dev.apexstudios.fantasyfurniture.block.base.FurnitureBlockComponentHolder;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class NecrolordDeskBlock extends DeskBlock {
@@ -48,8 +49,8 @@ public final class NecrolordDeskBlock extends DeskBlock {
             box(11D, 0D, 11D, 15D, 2D, 15D)
     );
 
-    public static final Map<Direction, VoxelShape> LEFT_FACING_SHAPES = ApexShapes.rotateHorizontal(SHAPE_LEFT);
-    public static final Map<Direction, VoxelShape> RIGHT_FACING_SHAPES = ApexShapes.rotateHorizontal(SHAPE_RIGHT);
+    public static final Map<Direction, VoxelShape> LEFT_FACING_SHAPES = Shapes.rotateHorizontal(SHAPE_LEFT);
+    public static final Map<Direction, VoxelShape> RIGHT_FACING_SHAPES = Shapes.rotateHorizontal(SHAPE_RIGHT);
 
     public NecrolordDeskBlock(Properties properties, boolean left) {
         super(properties, left);

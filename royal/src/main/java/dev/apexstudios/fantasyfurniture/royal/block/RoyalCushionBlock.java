@@ -3,13 +3,14 @@ package dev.apexstudios.fantasyfurniture.royal.block;
 import dev.apexstudios.apexcore.lib.component.ComponentRegistrar;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
-import dev.apexstudios.apexcore.lib.util.shapes.ApexShapes;
+import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.CushionBlock;
 import dev.apexstudios.fantasyfurniture.block.base.FurnitureBlockComponentHolder;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class RoyalCushionBlock extends CushionBlock {
@@ -22,7 +23,7 @@ public final class RoyalCushionBlock extends CushionBlock {
             box(2D, 6D, 2D, 14D, 9D, 14D)
     );
 
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = ApexShapes.rotateHorizontal(SHAPE);
+    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
 
     public RoyalCushionBlock(Properties properties) {
         super(properties);

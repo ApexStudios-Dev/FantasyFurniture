@@ -1,11 +1,12 @@
 package apexstudios.fantasyfurniture.bone.block;
 
-import dev.apexstudios.apexcore.lib.util.shapes.ApexShapes;
+import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.PaintingSmallBlock;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class BonePaintingSmallBlock extends PaintingSmallBlock {
@@ -19,7 +20,7 @@ public final class BonePaintingSmallBlock extends PaintingSmallBlock {
             box(.5D, 3D, 13.5D, 15.5D, 13D, 15.5D)
     );
 
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = ApexShapes.rotateHorizontal(SHAPE);
+    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
 
     public BonePaintingSmallBlock(Properties properties) {
         super(properties);

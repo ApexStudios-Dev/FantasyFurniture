@@ -5,7 +5,7 @@ import dev.apexstudios.apexcore.lib.component.block.BaseBlockComponentHolder;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
 import dev.apexstudios.apexcore.lib.component.block.types.FacingBlockComponent;
 import dev.apexstudios.apexcore.lib.component.block.types.FluidLoggedBlockComponent;
-import dev.apexstudios.apexcore.lib.util.shapes.ApexShapes;
+import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleMenuProvider;

@@ -7,7 +7,7 @@ import dev.apexstudios.apexcore.lib.component.block.BlockComponentHelper;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
 import dev.apexstudios.apexcore.lib.component.block.DoorBlockComponentHolder;
 import dev.apexstudios.apexcore.lib.component.block.types.FluidLoggedBlockComponent;
-import dev.apexstudios.apexcore.lib.util.shapes.ApexShapes;
+import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.set.FurnitureSet;
 import java.util.Map;
 import net.minecraft.SharedConstants;

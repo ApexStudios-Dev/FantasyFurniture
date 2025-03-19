@@ -1,6 +1,6 @@
 package dev.apexstudios.fantasyfurniture.block;
 
-import dev.apexstudios.apexcore.lib.util.shapes.ApexShapes;
+import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.base.FurnitureBlockComponentHolder;
 import dev.apexstudios.fantasyfurniture.block.base.InventoryBlock;
 import dev.apexstudios.fantasyfurniture.block.entity.LockBoxBlockEntity;
@@ -9,6 +9,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class LockBoxBlock extends InventoryBlock {
@@ -17,7 +18,7 @@ public class LockBoxBlock extends InventoryBlock {
             box(2D, 9D, 5D, 14D, 10D, 11D)
     );
 
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = ApexShapes.rotateHorizontal(SHAPE);
+    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
 
     public LockBoxBlock(Properties properties) {
         super(properties);

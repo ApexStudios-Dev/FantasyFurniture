@@ -1,6 +1,6 @@
 package apexstudios.fantasyfurniture.bone.block;
 
-import dev.apexstudios.apexcore.lib.util.shapes.ApexShapes;
+import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.FloorLightBlock;
 import dev.apexstudios.fantasyfurniture.set.FurnitureSet;
 import java.util.Map;
@@ -8,6 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class BoneFloorLightBlock extends FloorLightBlock {
@@ -24,7 +25,7 @@ public final class BoneFloorLightBlock extends FloorLightBlock {
             box(9D, 17.75D, 7D, 13D, 21.75D, 9D)
     );
 
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = ApexShapes.rotateHorizontal(SHAPE);
+    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
 
     public BoneFloorLightBlock(FurnitureSet furnitureSet, Properties properties) {
         super(furnitureSet, properties, 3);
