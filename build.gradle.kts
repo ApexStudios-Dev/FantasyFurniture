@@ -49,6 +49,16 @@ tasks.register("publishModulesToMaven") {
     dependsOn(publishTasks)
 }
 
+tasks.register("publishModulesToPrivateMaven") {
+    val modules = mutableSetOf("main")
+    modules.addAll(furnitureSets)
+    val publishTaskNames = modules.map { "publish${if(it == "main") "" else it.capitalized()}ReleasePublicationToApexStudios-PrivateRepository" }
+    // publishTaskNames.forEach { println("taskName: $it") }
+    val publishTasks = publishTaskNames.mapNotNull(tasks::findByName)
+    // publishTasks.forEach { println("task: ${it.name}") }
+    dependsOn(publishTasks)
+}
+
 repositories {
     maven("https://maven.apexstudios.dev/private")
 }
