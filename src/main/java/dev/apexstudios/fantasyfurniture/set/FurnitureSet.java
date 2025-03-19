@@ -99,9 +99,9 @@ public final class FurnitureSet {
             // we register the sign materials manually to match our desired texture path
             // and only register materials when the matching block types are registered
             if(isRegistered(BlockTypes.HANGING_SIGN) || isRegistered(BlockTypes.WALL_HANGING_SIGN))
-                Sheets.HANGING_SIGN_MATERIALS.put(woodType, Sheets.createHangingSignMaterial(registree.registryName(name)));
+                Sheets.HANGING_SIGN_MATERIALS.put(woodType, Sheets.HANGING_SIGN_MAPPER.apply(registree.registryName(name)));
             if(isRegistered(BlockTypes.SIGN) || isRegistered(BlockTypes.WALL_SIGN))
-                Sheets.SIGN_MATERIALS.put(woodType, Sheets.createSignMaterial(registree.registryName(name)));
+                Sheets.SIGN_MATERIALS.put(woodType, Sheets.SIGN_MAPPER.apply(registree.registryName(name)));
 
             ifRegistered(BlockTypes.TRAP_DOOR, block -> ItemBlockRenderTypes.setRenderLayer(block, RenderType.cutout()));
         }));

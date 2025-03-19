@@ -11,11 +11,15 @@ plugins {
 
 group = "dev.apexstudios"
 
-apex.neoVersion("21.4.96-beta", "2025.02.16")
+apex.neoVersion("21.5.0-alpha.25w09a.20250319.011826", "1.21.4", "2025.02.16")
 apex.extendCompilerErrors()
 
 val single = ApexSingleExtension.getOrCreate(project)
 single.withDataGen()
+
+neoForge {
+    validateAccessTransformers.set(false)
+}
 
 val furnitureSets = setOf(
     "nordic",
@@ -43,6 +47,10 @@ tasks.register("publishModulesToMaven") {
     val publishTasks = publishTaskNames.mapNotNull(tasks::findByName)
     // publishTasks.forEach { println("task: ${it.name}") }
     dependsOn(publishTasks)
+}
+
+repositories {
+    maven("https://maven.apexstudios.dev/private")
 }
 
 dependencies {

@@ -4,13 +4,12 @@ import com.google.common.collect.Lists;
 import dev.apexstudios.apexcore.lib.component.block.entity.BlockEntityComponentTypes;
 import dev.apexstudios.fantasyfurniture.block.OvenBlock;
 import it.unimi.dsi.fastutil.objects.Reference2IntOpenHashMap;
+import java.util.Collections;
 import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
@@ -91,7 +90,7 @@ public final class OvenData implements ContainerData, RecipeCraftingHolder {
                 cookingTimer++;
 
                 if (cookingTimer == cookingTotalTime) {
-                    cookingTimer = 0;
+                    cookingTimer = AbstractFurnaceBlockEntity.DEFAULT_COOKING_TIMER;
                     cookingTotalTime = getTotalCookTime(level, inventory);
 
                     if (burn(level.registryAccess(), recipeholder, singlerecipeinput, inventory))
@@ -100,7 +99,7 @@ public final class OvenData implements ContainerData, RecipeCraftingHolder {
                     changed = true;
                 }
             } else {
-                cookingTimer = 0;
+                cookingTimer = AbstractFurnaceBlockEntity.DEFAULT_COOKING_TIMER;
             }
         } else if (!isLit() && cookingTimer > 0) {
             cookingTimer = Mth.clamp(cookingTimer - AbstractFurnaceBlockEntity.BURN_COOL_SPEED, 0, cookingTotalTime);
@@ -121,22 +120,17 @@ public final class OvenData implements ContainerData, RecipeCraftingHolder {
         tag.putInt(NBT_LIT_TIME_REMAINING, litTimeRemaining);
         tag.putInt(NBT_LIT_TOTAL_TIME, litTotalTime);
 
-        var recipesUsedTag = new CompoundTag();
-        recipesUsed.forEach((key, count) -> recipesUsedTag.putInt(key.location().toString(), count));
-        tag.put(NBT_RECIPES_USED, recipesUsedTag);
+        tag.store(NBT_RECIPES_USED, AbstractFurnaceBlockEntity.RECIPES_USED_CODEC, recipesUsed);
     }
 
     void load(CompoundTag tag) {
-        cookingTimer = tag.getInt(NBT_COOKING_TIMER);
-        cookingTotalTime = tag.getInt(NBT_COOKING_TOTAL_TIME);
-        litTimeRemaining = tag.getInt(NBT_LIT_TIME_REMAINING);
-        litTotalTime = tag.getInt(NBT_LIT_TOTAL_TIME);
+        cookingTimer = tag.getIntOr(NBT_COOKING_TIMER, AbstractFurnaceBlockEntity.DEFAULT_COOKING_TIMER);
+        cookingTotalTime = tag.getIntOr(NBT_COOKING_TOTAL_TIME, AbstractFurnaceBlockEntity.DEFAULT_COOKING_TOTAL_TIME);
+        litTimeRemaining = tag.getIntOr(NBT_LIT_TIME_REMAINING, AbstractFurnaceBlockEntity.DEFAULT_LIT_TIME_REMAINING);
+        litTotalTime = tag.getIntOr(NBT_LIT_TOTAL_TIME, AbstractFurnaceBlockEntity.DEFAULT_LIT_TOTAL_TIME);
 
-        var recipesUsedTag = tag.getCompound(NBT_RECIPES_USED);
-
-        for(var key : recipesUsedTag.getAllKeys()) {
-            recipesUsed.put(ResourceKey.create(Registries.RECIPE, ResourceLocation.parse(key)), recipesUsedTag.getInt(key));
-        }
+        recipesUsed.clear();
+        recipesUsed.putAll(tag.read(NBT_RECIPES_USED, AbstractFurnaceBlockEntity.RECIPES_USED_CODEC).orElseGet(Collections::emptyMap));
     }
 
     @Override

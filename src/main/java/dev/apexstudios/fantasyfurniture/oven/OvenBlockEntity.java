@@ -11,7 +11,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.Tags;
@@ -68,10 +67,10 @@ public final class OvenBlockEntity extends BaseBlockEntityComponentHolder {
     }
 
     @Override
-    public void onRemove(BlockState blockState, Level level, BlockState newBlockState, boolean movedByPiston) {
-        if(!blockState.is(newBlockState.getBlock()) && level instanceof ServerLevel sLevel)
-            data.getRecipesToAwardAndPopExperience(sLevel, Vec3.atCenterOf(worldPosition));
+    public void preRemoveSideEffects(BlockPos pos, BlockState blockState) {
+        if(level instanceof ServerLevel sLevel)
+            data.getRecipesToAwardAndPopExperience(sLevel, Vec3.atCenterOf(pos));
 
-        super.onRemove(blockState, level, newBlockState, movedByPiston);
+        super.preRemoveSideEffects(pos, blockState);
     }
 }

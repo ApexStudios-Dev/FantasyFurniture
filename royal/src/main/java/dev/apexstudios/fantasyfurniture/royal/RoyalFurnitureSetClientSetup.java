@@ -70,13 +70,13 @@ public final class RoyalFurnitureSetClientSetup {
     }
 
     static void woolModel(ProviderListenerContext context, BlockModelGenerators models, FurnitureSet furnitureSet, Block block) {
-        models.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, ApexModelTemplates.Textured.CUBE_ALL_TINTED
+        models.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, BlockModelGenerators.plainVariant(ApexModelTemplates.Textured.CUBE_ALL_TINTED
                 .updateTemplate(template -> template.extend()
                         .renderType("cutout")
                         .build()
                 )
                 .create(block, models.modelOutput)
-        ));
+        )));
 
         dyeableItemModel(block, ModelLocationUtils.getModelLocation(block), models);
     }
@@ -84,7 +84,7 @@ public final class RoyalFurnitureSetClientSetup {
     static void carpetModel(ProviderListenerContext context, BlockModelGenerators models, FurnitureSet furnitureSet, CarpetBlock block) {
         var wool = furnitureSet.getOrThrow(BlockTypes.WOOL);
 
-        models.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, ApexModelTemplates.Textured.CARPET_TINTED
+        models.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, BlockModelGenerators.plainVariant(ApexModelTemplates.Textured.CARPET_TINTED
                 .updateTexture(mapping -> mapping
                         .put(TextureSlot.WOOL, TextureMapping.getBlockTexture(wool))
                         .put(ApexModelTemplates.SLOT_WOOL_TINTED, TextureMapping.getBlockTexture(wool).withSuffix("_tint"))
@@ -94,7 +94,7 @@ public final class RoyalFurnitureSetClientSetup {
                         .build()
                 )
                 .create(block, models.modelOutput)
-        ));
+        )));
 
         dyeableItemModel(block, ModelLocationUtils.getModelLocation(block), models);
     }

@@ -32,10 +32,9 @@ import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerWardrobeBlock;
 import dev.apexstudios.fantasyfurniture.set.BlockTypes;
 import dev.apexstudios.fantasyfurniture.set.FurnitureSet;
 import dev.apexstudios.fantasyfurniture.set.function.BlockFactory;
+import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
-import net.minecraft.client.data.models.blockstates.Variant;
-import net.minecraft.client.data.models.blockstates.VariantProperties;
 import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
@@ -51,11 +50,11 @@ public class DunmerFurnitureSet {
                     .blockFactory(BlockFactory.wrapping(DunmerOvenBlock::new))
                     .builder($$ -> $$
                             .model(() -> (context, models, furnitureSet, block) -> {
-                                models.blockStateOutput.accept(MultiVariantGenerator.multiVariant(block)
-                                        .with(PropertyDispatch.properties(block.getComponentOrThrow(BlockComponentTypes.MULTI_BLOCK).property(), OvenBlock.LIT).generate((index, lit) -> {
+                                models.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
+                                        .with(PropertyDispatch.initial(block.getComponentOrThrow(BlockComponentTypes.MULTI_BLOCK).property(), OvenBlock.LIT).generate((index, lit) -> {
                                             var halfName = index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right";
                                             var litPrefix = lit ? "_lit" : "";
-                                            return Variant.variant().with(VariantProperties.MODEL, ModelLocationUtils.getModelLocation(block, litPrefix + halfName));
+                                            return BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block, litPrefix + halfName));
                                         }))
                                         .with(ModelUtil.createHorizontalFacingDispatch(block))
                                 );
