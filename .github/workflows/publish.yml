@@ -12,8 +12,26 @@ permissions:
 jobs:
     determine-module-changes:
         name: Determine Module Changes
-        uses: ./.github/workflows/_module-changes.yml
-        secrets: inherit
+        runs-on: ubuntu-latest
+        outputs:
+            changes: ${{ steps.changes.outputs.changes }}
+        steps:
+            - name: Checkout Repository
+              uses: ApexStudios-Dev/.github/actions/checkout@master
+
+            - name: Determine module changes
+              uses: dorny/paths-filter@v3
+              id: changes
+              with:
+                  # base: HEAD # Uncomment for ACT testing
+                  filters: |
+                      main: [ 'src/**' ]
+                      nordic: [ 'nordic/**' ]
+                      venthyr: [ 'venthyr/**' ]
+                      bone: [ 'bone/**' ]
+                      dunmer: [ 'dunmer/**' ]
+                      necrolord: [ 'necrolord/**' ]
+                      royal: [ 'royal/**' ]
 
     publish:
         name: Publish

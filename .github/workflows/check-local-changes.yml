@@ -8,21 +8,10 @@ on:
             - ready_for_review
             - reopened
 
-permissions:
-    contents: read
-    pull-requests: read
-
 jobs:
-    determine-module-changes:
-        name: Determine Module Changes
-        uses: ./.github/workflows/_module-changes.yml
-        secrets: inherit
-
     check-local-changes:
         name: Check Local Changes
-        needs: determine-module-changes
         runs-on: apexstudios
-        if: needs.determine-module-changes.outputs.changes != '[]'
         steps:
             - name: Checkout Repository
               id: checkout
@@ -35,14 +24,14 @@ jobs:
               uses: ApexStudios-Dev/.github/actions/setup-gradle@master
 
             - name: Generate Data
-              run: ./gradlew :generateModulesData
+              run: ./gradlew :runData :runNordicData :runVenthyrData :runDunmerData :runNecrolordData :runBoneData :runRoyalData
               env:
                   VERSION: ${{ steps.checkout.outputs.version }}
-                  DATA_MODULES: ${{ join(fromJSON(needs.determine-module-changes.outputs.changes)) }}
 
             # This is needed otherwise the 'git status' below reports as 'gradlew' being changed
             # Tried running 'git update-index --chmod=+x ./gradlew' to have perms tracked but this did not work
             - name: Mark Gradle as not Executable
+              if: always()
               run: chmod -x ./gradlew
 
             - name: Check no local changes are present

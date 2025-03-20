@@ -69,6 +69,11 @@ public final class FurnitureStationMenu extends AbstractContainerMenu {
 
                 super.onTake(player, stack);
             }
+
+            @Override
+            public boolean mayPlace(ItemStack stack) {
+                return false;
+            }
         });
 
         addStandardInventorySlots(inventory, 8, 115);

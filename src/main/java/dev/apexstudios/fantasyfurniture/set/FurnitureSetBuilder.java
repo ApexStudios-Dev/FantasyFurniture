@@ -10,6 +10,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.ItemLike;
@@ -41,6 +43,7 @@ public final class FurnitureSetBuilder {
     TagKey<Block> mineableTag = BlockTags.MINEABLE_WITH_AXE;
     BlockType<?> coreBlockType = BlockTypes.PLANKS;
     @Nullable ItemLike woolItem = null;
+    Supplier<? extends ParticleOptions> flameParticle = () -> ParticleTypes.FLAME;
 
     FurnitureSetBuilder(Registree registree, String name) {
         this.registree = registree;
@@ -118,6 +121,11 @@ public final class FurnitureSetBuilder {
 
     public FurnitureSetBuilder wool(ItemLike woolItem) {
         this.woolItem = woolItem;
+        return this;
+    }
+
+    public FurnitureSetBuilder flame(Supplier<? extends ParticleOptions> flameParticle) {
+        this.flameParticle = flameParticle;
         return this;
     }
 

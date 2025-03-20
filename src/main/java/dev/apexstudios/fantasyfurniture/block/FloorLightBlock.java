@@ -7,6 +7,7 @@ import dev.apexstudios.apexcore.lib.component.block.types.FacingBlockComponent;
 import dev.apexstudios.apexcore.lib.component.block.types.MultiBlockComponent;
 import dev.apexstudios.apexcore.lib.util.shapes.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.base.FurnitureBlockComponentHolder;
+import dev.apexstudios.fantasyfurniture.set.FurnitureSet;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -36,16 +37,18 @@ public class FloorLightBlock extends FurnitureBlockComponentHolder {
 
     public static final Map<Direction, VoxelShape> FACING_SHAPES = ApexShapes.rotateHorizontal(SHAPE);
 
+    private final FurnitureSet furnitureSet;
     private final int particleCount;
 
-    public FloorLightBlock(Properties properties, int particleCount) {
+    public FloorLightBlock(FurnitureSet furnitureSet, Properties properties, int particleCount) {
         super(properties);
 
+        this.furnitureSet = furnitureSet;
         this.particleCount = particleCount;
     }
 
-    public FloorLightBlock(Properties properties) {
-        this(properties, 4);
+    public FloorLightBlock(FurnitureSet furnitureSet, Properties properties) {
+        this(furnitureSet, properties, 4);
     }
 
     @Override
@@ -87,7 +90,11 @@ public class FloorLightBlock extends FurnitureBlockComponentHolder {
         else
             z = even ? z + offset : z - offset;
 
+        playParticles(level, x, y, z);
+    }
+
+    protected void playParticles(Level level, double x, double y, double z) {
         level.addParticle(ParticleTypes.SMOKE, x, y, z, 0D, 0D, 0D);
-        level.addParticle(ParticleTypes.FLAME, x, y, z, 0D, 0D, 0D);
+        level.addParticle(furnitureSet.flameParticle(), x, y, z, 0D, 0D, 0D);
     }
 }

@@ -2,6 +2,7 @@ package dev.apexstudios.fantasyfurniture.dunmer.block;
 
 import dev.apexstudios.apexcore.lib.util.shapes.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.WallLightBlock;
+import dev.apexstudios.fantasyfurniture.dunmer.DunmerFurnitureSet;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -24,7 +25,7 @@ public final class DunmerWallLightBlock extends WallLightBlock {
     public static final Map<Direction, VoxelShape> FACING_SHAPES = ApexShapes.rotateHorizontal(SHAPE);
 
     public DunmerWallLightBlock(Properties properties) {
-        super(properties);
+        super(DunmerFurnitureSet.FURNITURE_SET, properties);
     }
 
     @Override

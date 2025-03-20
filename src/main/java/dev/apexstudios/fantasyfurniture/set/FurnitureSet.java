@@ -14,6 +14,7 @@ import java.util.function.Supplier;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.Sheets;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -49,6 +50,7 @@ public final class FurnitureSet {
     private final TagKey<Block> blockTag;
     private final TagKey<Item> itemTag;
     @Nullable private final ItemLike woolItem;
+    private final Supplier<? extends ParticleOptions> flameParticle;
 
     private FurnitureSet(FurnitureSetBuilder builder) {
         registree = builder.registree;
@@ -60,6 +62,7 @@ public final class FurnitureSet {
         mineableTag = builder.mineableTag;
         coreBlockType = builder.coreBlockType;
         woolItem = builder.woolItem;
+        flameParticle = builder.flameParticle;
 
         blockTag = TagKey.create(Registries.BLOCK, FantasyFurniture.identifier(name));
         itemTag = TagKey.create(Registries.ITEM, FantasyFurniture.identifier(name));
@@ -192,6 +195,10 @@ public final class FurnitureSet {
             return woolItem;
 
         return get(BlockTypes.WOOL).orElse(null);
+    }
+
+    public ParticleOptions flameParticle() {
+        return flameParticle.get();
     }
 
     public boolean is(ItemStack stack) {

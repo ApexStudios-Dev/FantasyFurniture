@@ -1,13 +1,13 @@
 package dev.apexstudios.fantasyfurniture.venthyr.block;
 
 import dev.apexstudios.fantasyfurniture.block.ChandelierBlock;
+import dev.apexstudios.fantasyfurniture.venthyr.VenthyrFurnitureSet;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.level.Level;
 
 public final class VenthyrChandelierBlock extends ChandelierBlock {
     public VenthyrChandelierBlock(Properties properties) {
-        super(properties, 8);
+        super(VenthyrFurnitureSet.FURNITURE_SET, properties, 8);
     }
 
     @Override
@@ -29,7 +29,6 @@ public final class VenthyrChandelierBlock extends ChandelierBlock {
             z = index < 5 ? z + offset : z - offset;
         }
 
-        level.addParticle(ParticleTypes.SMOKE, x, y, z, 0D, 0D, 0D);
-        level.addParticle(ParticleTypes.FLAME, x, y, z, 0D, 0D, 0D);
+        playParticles(level, x, y, z);
     }
 }

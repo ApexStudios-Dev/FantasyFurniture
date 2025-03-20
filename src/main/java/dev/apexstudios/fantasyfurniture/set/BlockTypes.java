@@ -282,7 +282,7 @@ public interface BlockTypes {
                         ModelUtil.registerBlockItemModel(block, models);
                     })
                     .translation("Bookshelf")
-                    .blockTags(ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
+                    .blockTags(ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED, BlockTags.ENCHANTMENT_POWER_PROVIDER)
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
     // endregion
@@ -471,7 +471,7 @@ public interface BlockTypes {
     // region: Floor Light
     BlockType.WithItem<FloorLightBlock, BlockItem> FLOOR_LIGHT = BlockType.withItem(
             "floor_light",
-            BlockFactory.wrapping(FloorLightBlock::new),
+            FloorLightBlock::new,
             builder -> builder
                     .blockProperties(properties -> properties.pushReaction(PushReaction.BLOCK).lightLevel(blockState -> 14))
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
@@ -488,7 +488,7 @@ public interface BlockTypes {
     // region: Chandelier
     BlockType.WithItem<ChandelierBlock, BlockItem> CHANDELIER = BlockType.withItem(
             "chandelier",
-            BlockFactory.wrapping(ChandelierBlock::new),
+            ChandelierBlock::new,
             builder -> builder
                     .blockProperties(properties -> properties.lightLevel(blockState -> 14))
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
@@ -558,7 +558,7 @@ public interface BlockTypes {
     // region: Wall Light
     BlockType.WithItem<WallLightBlock, BlockItem> WALL_LIGHT = BlockType.withItem(
             "wall_light",
-            BlockFactory.wrapping(WallLightBlock::new),
+            WallLightBlock::new,
             builder -> builder
                     .blockProperties(properties -> properties.pushReaction(PushReaction.DESTROY).lightLevel(blockState -> 14).noCollission().instabreak())
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
