@@ -50,7 +50,7 @@ public final class FurnitureStationMenu extends AbstractContainerMenu {
         addSlot(new Slot(resultContainer, 0, 150, 8) {
             @Override
             public void onTake(Player player, ItemStack stack) {
-                stack.onCraftedBy(player.level(), player, stack.getCount());
+                stack.onCraftedBy(player, stack.getCount());
 
                 inputContainer.removeItem(FurnitureStationSetup.SLOT_PLANKS, 1);
                 inputContainer.removeItem(FurnitureStationSetup.SLOT_WOOL, 1);
@@ -115,7 +115,7 @@ public final class FurnitureStationMenu extends AbstractContainerMenu {
             var hotbarEnd = hotbarStart + 8;
 
             if (index == result) {
-                item.onCraftedBy(stack2, player.level(), player);
+                item.onCraftedBy(stack2, player);
 
                 if (!moveItemStackTo(stack2, playerStart, hotbarEnd, true))
                     return ItemStack.EMPTY;
