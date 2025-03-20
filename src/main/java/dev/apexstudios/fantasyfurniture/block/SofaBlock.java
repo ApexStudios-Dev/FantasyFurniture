@@ -90,7 +90,7 @@ public class SofaBlock extends SeatBlock {
     }
 
     @Override
-    protected void registerComponents(ComponentRegistrar<BlockComponent> registrar) {
+    protected void registerComponents(ComponentRegistrar<BlockComponent, Block> registrar) {
         super.registerComponents(registrar);
 
         registrar.register(BlockComponentTypes.BOUNCE);

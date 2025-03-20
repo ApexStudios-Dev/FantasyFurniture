@@ -50,7 +50,7 @@ public final class RoyalFurnitureSetClientSetup {
         modBus.addListener(RegisterColorHandlersEvent.Block.class, event -> {
             var dyeableBlocks = RoyalFurnitureSet.FURNITURE_SET.blockTypes().stream()
                     .map(RoyalFurnitureSet.FURNITURE_SET::getOrThrow)
-                    .filter(block -> block instanceof ComponentHolder && ((ComponentHolder<BlockComponent>) block).hasComponent(BlockComponentTypes.DYEABLE))
+                    .filter(block -> block instanceof ComponentHolder && ((ComponentHolder<BlockComponent, Block>) block).hasComponent(BlockComponentTypes.DYEABLE))
                     .toArray(Block[]::new);
 
             event.register((blockState, level, pos, tintIndex) -> {

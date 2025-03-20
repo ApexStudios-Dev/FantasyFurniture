@@ -11,6 +11,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.Tags;
@@ -45,7 +46,7 @@ public final class OvenBlockEntity extends BaseBlockEntityComponentHolder {
     }
 
     @Override
-    protected void registerComponents(ComponentRegistrar<BlockEntityComponent> registrar) {
+    protected void registerComponents(ComponentRegistrar<BlockEntityComponent, BlockEntity> registrar) {
         BlockEntityComponentHelper.registerInventoryComponents(registrar, builder -> builder
                 .slot(SLOT_INPUT, slot -> slot.listener((index, inventory) -> {
                     if(level instanceof ServerLevel level) {

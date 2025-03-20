@@ -4,6 +4,7 @@ import dev.apexstudios.apexcore.lib.component.ComponentRegistrar;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
 import dev.apexstudios.fantasyfurniture.block.base.FurnitureBlockComponentHolder;
+import net.minecraft.world.level.block.Block;
 
 public final class RoyalWoolBlock extends FurnitureBlockComponentHolder {
     public RoyalWoolBlock(Properties properties) {
@@ -11,7 +12,7 @@ public final class RoyalWoolBlock extends FurnitureBlockComponentHolder {
     }
 
     @Override
-    protected void registerComponents(ComponentRegistrar<BlockComponent> registrar) {
+    protected void registerComponents(ComponentRegistrar<BlockComponent, Block> registrar) {
         registrar.register(BlockComponentTypes.DYEABLE);
     }
 }
