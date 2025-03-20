@@ -75,6 +75,8 @@
         "curseforge_id": "",
         "modrinth_id": "",
         "color": "0xFFE88E",
-        "artifact_id": "fantasyfurniture-decorations"
+        "artifact_id": "fantasyfurniture-decorations",
+        "jar_task": ":decorationsMainJar",
+        "publish_task": ":publishDecorationsReleasePublicationTo{0}"
     }
 }
