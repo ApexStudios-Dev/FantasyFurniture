@@ -1,11 +1,12 @@
 package dev.apexstudios.fantasyfurniture.dunmer.block;
 
-import dev.apexstudios.apexcore.lib.util.shapes.ApexShapes;
+import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.base.SeatBlock;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class DunmerStoolBlock extends SeatBlock {
@@ -19,7 +20,7 @@ public final class DunmerStoolBlock extends SeatBlock {
             box(2.5D, 2.5D, 4D, 3.5D, 3.5D, 12D)
     );
 
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = ApexShapes.rotateHorizontal(SHAPE);
+    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
 
     public DunmerStoolBlock(Properties properties) {
         super(properties);

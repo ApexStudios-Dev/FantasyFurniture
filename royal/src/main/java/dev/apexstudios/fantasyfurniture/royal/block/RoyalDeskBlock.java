@@ -3,13 +3,15 @@ package dev.apexstudios.fantasyfurniture.royal.block;
 import dev.apexstudios.apexcore.lib.component.ComponentRegistrar;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
-import dev.apexstudios.apexcore.lib.util.shapes.ApexShapes;
+import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.DeskBlock;
 import dev.apexstudios.fantasyfurniture.block.base.FurnitureBlockComponentHolder;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class RoyalDeskBlock extends DeskBlock {
@@ -49,8 +51,8 @@ public final class RoyalDeskBlock extends DeskBlock {
             box(-10D, 12D, 1D, -6D, 13D, 2D)
     );
 
-    public static final Map<Direction, VoxelShape> LEFT_FACING_SHAPES = ApexShapes.rotateHorizontal(SHAPE_LEFT);
-    public static final Map<Direction, VoxelShape> RIGHT_FACING_SHAPES = ApexShapes.rotateHorizontal(SHAPE_RIGHT);
+    public static final Map<Direction, VoxelShape> LEFT_FACING_SHAPES = Shapes.rotateHorizontal(SHAPE_LEFT);
+    public static final Map<Direction, VoxelShape> RIGHT_FACING_SHAPES = Shapes.rotateHorizontal(SHAPE_RIGHT);
 
     public RoyalDeskBlock(Properties properties, boolean left) {
         super(properties, left);
@@ -62,7 +64,7 @@ public final class RoyalDeskBlock extends DeskBlock {
     }
 
     @Override
-    protected void registerComponents(ComponentRegistrar<BlockComponent> registrar) {
+    protected void registerComponents(ComponentRegistrar<BlockComponent, Block> registrar) {
         super.registerComponents(registrar);
 
         registrar.register(BlockComponentTypes.DYEABLE);

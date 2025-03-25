@@ -4,11 +4,13 @@ import dev.apexstudios.apexcore.lib.component.ComponentRegistrar;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
 import dev.apexstudios.apexcore.lib.component.block.types.FacingBlockComponent;
 import dev.apexstudios.apexcore.lib.component.block.types.SeatBlockComponent;
-import dev.apexstudios.apexcore.lib.util.shapes.ApexShapes;
+import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.MustBeInvokedByOverriders;
 
@@ -27,7 +29,7 @@ public class SeatBlock extends FurnitureBlockComponentHolder {
             box(12.5D, 3.5D, 4.5D, 13.5D, 4.5D, 11.5D)
     );
 
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = ApexShapes.rotateHorizontal(SHAPE);
+    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
 
     public SeatBlock(Properties properties) {
         super(properties);
@@ -40,7 +42,7 @@ public class SeatBlock extends FurnitureBlockComponentHolder {
 
     @MustBeInvokedByOverriders
     @Override
-    protected void registerComponents(ComponentRegistrar<BlockComponent> registrar) {
+    protected void registerComponents(ComponentRegistrar<BlockComponent, Block> registrar) {
         super.registerComponents(registrar);
 
         FacingBlockComponent.registerHorizontal(registrar);

@@ -5,15 +5,18 @@ import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
 import dev.apexstudios.apexcore.lib.component.block.types.FacingBlockComponent;
 import dev.apexstudios.apexcore.lib.component.block.types.MultiBlockComponent;
-import dev.apexstudios.apexcore.lib.util.shapes.ApexShapes;
+import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.base.FurnitureBlockComponentHolder;
+import dev.apexstudios.fantasyfurniture.set.FurnitureSet;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class FloorLightBlock extends FurnitureBlockComponentHolder {
@@ -34,18 +37,20 @@ public class FloorLightBlock extends FurnitureBlockComponentHolder {
             box(7D, 16.75D, 9D, 9D, 20.75, 13D)
     );
 
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = ApexShapes.rotateHorizontal(SHAPE);
+    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
 
+    private final FurnitureSet furnitureSet;
     private final int particleCount;
 
-    public FloorLightBlock(Properties properties, int particleCount) {
+    public FloorLightBlock(FurnitureSet furnitureSet, Properties properties, int particleCount) {
         super(properties);
 
+        this.furnitureSet = furnitureSet;
         this.particleCount = particleCount;
     }
 
-    public FloorLightBlock(Properties properties) {
-        this(properties, 4);
+    public FloorLightBlock(FurnitureSet furnitureSet, Properties properties) {
+        this(furnitureSet, properties, 4);
     }
 
     @Override
@@ -54,7 +59,7 @@ public class FloorLightBlock extends FurnitureBlockComponentHolder {
     }
 
     @Override
-    protected void registerComponents(ComponentRegistrar<BlockComponent> registrar) {
+    protected void registerComponents(ComponentRegistrar<BlockComponent, Block> registrar) {
         super.registerComponents(registrar);
 
         FacingBlockComponent.registerHorizontal(registrar);
@@ -87,7 +92,11 @@ public class FloorLightBlock extends FurnitureBlockComponentHolder {
         else
             z = even ? z + offset : z - offset;
 
+        playParticles(level, x, y, z);
+    }
+
+    protected void playParticles(Level level, double x, double y, double z) {
         level.addParticle(ParticleTypes.SMOKE, x, y, z, 0D, 0D, 0D);
-        level.addParticle(ParticleTypes.FLAME, x, y, z, 0D, 0D, 0D);
+        level.addParticle(furnitureSet.flameParticle(), x, y, z, 0D, 0D, 0D);
     }
 }

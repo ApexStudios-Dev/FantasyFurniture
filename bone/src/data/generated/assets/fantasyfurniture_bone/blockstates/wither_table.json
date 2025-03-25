@@ -33,36 +33,28 @@
       "y": 90
     },
     "east=false,facing_component=north,north=false,south=false,west=false": {
-      "model": "fantasyfurniture_bone:block/wither_table",
-      "y": 0
+      "model": "fantasyfurniture_bone:block/wither_table"
     },
     "east=false,facing_component=north,north=false,south=false,west=true": {
-      "model": "fantasyfurniture_bone:block/wither_table_w",
-      "y": 0
+      "model": "fantasyfurniture_bone:block/wither_table_w"
     },
     "east=false,facing_component=north,north=false,south=true,west=false": {
-      "model": "fantasyfurniture_bone:block/wither_table_s",
-      "y": 0
+      "model": "fantasyfurniture_bone:block/wither_table_s"
     },
     "east=false,facing_component=north,north=false,south=true,west=true": {
-      "model": "fantasyfurniture_bone:block/wither_table_sw",
-      "y": 0
+      "model": "fantasyfurniture_bone:block/wither_table_sw"
     },
     "east=false,facing_component=north,north=true,south=false,west=false": {
-      "model": "fantasyfurniture_bone:block/wither_table_n",
-      "y": 0
+      "model": "fantasyfurniture_bone:block/wither_table_n"
     },
     "east=false,facing_component=north,north=true,south=false,west=true": {
-      "model": "fantasyfurniture_bone:block/wither_table_nw",
-      "y": 0
+      "model": "fantasyfurniture_bone:block/wither_table_nw"
     },
     "east=false,facing_component=north,north=true,south=true,west=false": {
-      "model": "fantasyfurniture_bone:block/wither_table_ns",
-      "y": 0
+      "model": "fantasyfurniture_bone:block/wither_table_ns"
     },
     "east=false,facing_component=north,north=true,south=true,west=true": {
-      "model": "fantasyfurniture_bone:block/wither_table_nsw",
-      "y": 0
+      "model": "fantasyfurniture_bone:block/wither_table_nsw"
     },
     "east=false,facing_component=south,north=false,south=false,west=false": {
       "model": "fantasyfurniture_bone:block/wither_table",
@@ -161,36 +153,28 @@
       "y": 90
     },
     "east=true,facing_component=north,north=false,south=false,west=false": {
-      "model": "fantasyfurniture_bone:block/wither_table_e",
-      "y": 0
+      "model": "fantasyfurniture_bone:block/wither_table_e"
     },
     "east=true,facing_component=north,north=false,south=false,west=true": {
-      "model": "fantasyfurniture_bone:block/wither_table_ew",
-      "y": 0
+      "model": "fantasyfurniture_bone:block/wither_table_ew"
     },
     "east=true,facing_component=north,north=false,south=true,west=false": {
-      "model": "fantasyfurniture_bone:block/wither_table_es",
-      "y": 0
+      "model": "fantasyfurniture_bone:block/wither_table_es"
     },
     "east=true,facing_component=north,north=false,south=true,west=true": {
-      "model": "fantasyfurniture_bone:block/wither_table_esw",
-      "y": 0
+      "model": "fantasyfurniture_bone:block/wither_table_esw"
     },
     "east=true,facing_component=north,north=true,south=false,west=false": {
-      "model": "fantasyfurniture_bone:block/wither_table_ne",
-      "y": 0
+      "model": "fantasyfurniture_bone:block/wither_table_ne"
     },
     "east=true,facing_component=north,north=true,south=false,west=true": {
-      "model": "fantasyfurniture_bone:block/wither_table_new",
-      "y": 0
+      "model": "fantasyfurniture_bone:block/wither_table_new"
     },
     "east=true,facing_component=north,north=true,south=true,west=false": {
-      "model": "fantasyfurniture_bone:block/wither_table_nes",
-      "y": 0
+      "model": "fantasyfurniture_bone:block/wither_table_nes"
     },
     "east=true,facing_component=north,north=true,south=true,west=true": {
-      "model": "fantasyfurniture_bone:block/wither_table_nesw",
-      "y": 0
+      "model": "fantasyfurniture_bone:block/wither_table_nesw"
     },
     "east=true,facing_component=south,north=false,south=false,west=false": {
       "model": "fantasyfurniture_bone:block/wither_table_w",

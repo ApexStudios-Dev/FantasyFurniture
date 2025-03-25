@@ -12,6 +12,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 public final class BookshelfBlockEntity extends BaseBlockEntityComponentHolder {
@@ -27,7 +28,7 @@ public final class BookshelfBlockEntity extends BaseBlockEntityComponentHolder {
     }
 
     @Override
-    protected void registerComponents(ComponentRegistrar<BlockEntityComponent> registrar) {
+    protected void registerComponents(ComponentRegistrar<BlockEntityComponent, BlockEntity> registrar) {
         BlockEntityComponentHelper.registerInventoryComponents(registrar, builder -> builder
                 .slots(ROWS * AbstractContainerMenu.SLOTS_PER_ROW, slot -> slot.validator((index, inventory, stack) -> stack.is(ItemTags.BOOKSHELF_BOOKS)))
         );

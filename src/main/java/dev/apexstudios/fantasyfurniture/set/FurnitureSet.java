@@ -14,6 +14,7 @@ import java.util.function.Supplier;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.Sheets;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -49,6 +50,7 @@ public final class FurnitureSet {
     private final TagKey<Block> blockTag;
     private final TagKey<Item> itemTag;
     @Nullable private final ItemLike woolItem;
+    private final Supplier<? extends ParticleOptions> flameParticle;
 
     private FurnitureSet(FurnitureSetBuilder builder) {
         registree = builder.registree;
@@ -60,6 +62,7 @@ public final class FurnitureSet {
         mineableTag = builder.mineableTag;
         coreBlockType = builder.coreBlockType;
         woolItem = builder.woolItem;
+        flameParticle = builder.flameParticle;
 
         blockTag = TagKey.create(Registries.BLOCK, FantasyFurniture.identifier(name));
         itemTag = TagKey.create(Registries.ITEM, FantasyFurniture.identifier(name));
@@ -96,9 +99,9 @@ public final class FurnitureSet {
             // we register the sign materials manually to match our desired texture path
             // and only register materials when the matching block types are registered
             if(isRegistered(BlockTypes.HANGING_SIGN) || isRegistered(BlockTypes.WALL_HANGING_SIGN))
-                Sheets.HANGING_SIGN_MATERIALS.put(woodType, Sheets.createHangingSignMaterial(registree.registryName(name)));
+                Sheets.HANGING_SIGN_MATERIALS.put(woodType, Sheets.HANGING_SIGN_MAPPER.apply(registree.registryName(name)));
             if(isRegistered(BlockTypes.SIGN) || isRegistered(BlockTypes.WALL_SIGN))
-                Sheets.SIGN_MATERIALS.put(woodType, Sheets.createSignMaterial(registree.registryName(name)));
+                Sheets.SIGN_MATERIALS.put(woodType, Sheets.SIGN_MAPPER.apply(registree.registryName(name)));
 
             ifRegistered(BlockTypes.TRAP_DOOR, block -> ItemBlockRenderTypes.setRenderLayer(block, RenderType.cutout()));
         }));
@@ -192,6 +195,10 @@ public final class FurnitureSet {
             return woolItem;
 
         return get(BlockTypes.WOOL).orElse(null);
+    }
+
+    public ParticleOptions flameParticle() {
+        return flameParticle.get();
     }
 
     public boolean is(ItemStack stack) {

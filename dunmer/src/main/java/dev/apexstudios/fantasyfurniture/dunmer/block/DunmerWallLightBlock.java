@@ -1,13 +1,15 @@
 package dev.apexstudios.fantasyfurniture.dunmer.block;
 
-import dev.apexstudios.apexcore.lib.util.shapes.ApexShapes;
+import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.WallLightBlock;
+import dev.apexstudios.fantasyfurniture.dunmer.DunmerFurnitureSet;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class DunmerWallLightBlock extends WallLightBlock {
@@ -21,10 +23,10 @@ public final class DunmerWallLightBlock extends WallLightBlock {
             box(6D, 12D, 15D, 10D, 16D, 16D)
     );
 
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = ApexShapes.rotateHorizontal(SHAPE);
+    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
 
     public DunmerWallLightBlock(Properties properties) {
-        super(properties);
+        super(DunmerFurnitureSet.FURNITURE_SET, properties);
     }
 
     @Override

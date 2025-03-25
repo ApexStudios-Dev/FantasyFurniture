@@ -11,7 +11,7 @@ plugins {
 
 group = "dev.apexstudios"
 
-apex.neoVersion("21.4.96-beta", "2025.02.16")
+apex.neoVersion("21.5.0-beta", "1.21.4", "2025.03.23")
 apex.extendCompilerErrors()
 
 val single = ApexSingleExtension.getOrCreate(project)
@@ -45,14 +45,14 @@ tasks.register("publishModulesToMaven") {
     dependsOn(publishTasks)
 }
 
-tasks.register("generateModulesData") {
-    val modules = (System.getenv("DATA_MODULES") ?: "").split(",").filter(String::isNotBlank)
-    // modules.forEach { println("module: $it") }
-    val dataTaskNames = modules.map { "run${if(it == "main") "" else it.capitalized()}Data" }
-    // dataTaskNames.forEach { println("taskName: $it") }
-    val dataTasks = dataTaskNames.mapNotNull(tasks::findByName)
-    // dataTasks.forEach { println("task: ${it.name}") }
-    dependsOn(dataTasks)
+tasks.register("publishModulesToPrivateMaven") {
+    val modules = mutableSetOf("main")
+    modules.addAll(furnitureSets)
+    val publishTaskNames = modules.map { "publish${if(it == "main") "" else it.capitalized()}ReleasePublicationToApexStudios-PrivateRepository" }
+    // publishTaskNames.forEach { println("taskName: $it") }
+    val publishTasks = publishTaskNames.mapNotNull(tasks::findByName)
+    // publishTasks.forEach { println("task: ${it.name}") }
+    dependsOn(publishTasks)
 }
 
 dependencies {

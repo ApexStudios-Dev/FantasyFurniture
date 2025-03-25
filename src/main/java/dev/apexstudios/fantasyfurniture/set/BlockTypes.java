@@ -1,5 +1,6 @@
 package dev.apexstudios.fantasyfurniture.set;
 
+import com.mojang.math.Quadrant;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
 import dev.apexstudios.apexcore.lib.component.block.DoorBlockComponentHolder;
 import dev.apexstudios.apexcore.lib.component.block.types.BedBlockComponent;
@@ -49,8 +50,6 @@ import net.minecraft.SharedConstants;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
-import net.minecraft.client.data.models.blockstates.Variant;
-import net.minecraft.client.data.models.blockstates.VariantProperties;
 import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;
@@ -282,7 +281,7 @@ public interface BlockTypes {
                         ModelUtil.registerBlockItemModel(block, models);
                     })
                     .translation("Bookshelf")
-                    .blockTags(ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
+                    .blockTags(ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED, BlockTags.ENCHANTMENT_POWER_PROVIDER)
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
     // endregion
@@ -471,7 +470,7 @@ public interface BlockTypes {
     // region: Floor Light
     BlockType.WithItem<FloorLightBlock, BlockItem> FLOOR_LIGHT = BlockType.withItem(
             "floor_light",
-            BlockFactory.wrapping(FloorLightBlock::new),
+            FloorLightBlock::new,
             builder -> builder
                     .blockProperties(properties -> properties.pushReaction(PushReaction.BLOCK).lightLevel(blockState -> 14))
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
@@ -488,7 +487,7 @@ public interface BlockTypes {
     // region: Chandelier
     BlockType.WithItem<ChandelierBlock, BlockItem> CHANDELIER = BlockType.withItem(
             "chandelier",
-            BlockFactory.wrapping(ChandelierBlock::new),
+            ChandelierBlock::new,
             builder -> builder
                     .blockProperties(properties -> properties.lightLevel(blockState -> 14))
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
@@ -558,7 +557,7 @@ public interface BlockTypes {
     // region: Wall Light
     BlockType.WithItem<WallLightBlock, BlockItem> WALL_LIGHT = BlockType.withItem(
             "wall_light",
-            BlockFactory.wrapping(WallLightBlock::new),
+            WallLightBlock::new,
             builder -> builder
                     .blockProperties(properties -> properties.pushReaction(PushReaction.DESTROY).lightLevel(blockState -> 14).noCollission().instabreak())
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
@@ -631,9 +630,9 @@ public interface BlockTypes {
 
                         models.blockStateOutput.accept(BlockModelGenerators.createStairs(
                                 block,
-                                ModelTemplates.STAIRS_INNER.create(block, textures, models.modelOutput),
-                                straightModel,
-                                ModelTemplates.STAIRS_OUTER.create(block, textures, models.modelOutput)
+                                BlockModelGenerators.plainVariant(ModelTemplates.STAIRS_INNER.create(block, textures, models.modelOutput)),
+                                BlockModelGenerators.plainVariant(straightModel),
+                                BlockModelGenerators.plainVariant(ModelTemplates.STAIRS_OUTER.create(block, textures, models.modelOutput))
                         ));
 
                         models.registerSimpleItemModel(block, straightModel);
@@ -662,9 +661,9 @@ public interface BlockTypes {
 
                         models.blockStateOutput.accept(BlockModelGenerators.createSlab(
                                 block,
-                                bottomModel,
-                                ModelTemplates.SLAB_TOP.create(block, textures, models.modelOutput),
-                                ModelLocationUtils.getModelLocation(furnitureSet.getCoreBlock())
+                                BlockModelGenerators.plainVariant(bottomModel),
+                                BlockModelGenerators.plainVariant(ModelTemplates.SLAB_TOP.create(block, textures, models.modelOutput)),
+                                BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(furnitureSet.getCoreBlock()))
                         ));
 
                         models.registerSimpleItemModel(block, bottomModel);
@@ -692,8 +691,8 @@ public interface BlockTypes {
 
                         models.blockStateOutput.accept(BlockModelGenerators.createFence(
                                 block,
-                                ModelTemplates.FENCE_POST.create(block, textures, models.modelOutput),
-                                ModelTemplates.FENCE_SIDE.create(block, textures, models.modelOutput)
+                                BlockModelGenerators.plainVariant(ModelTemplates.FENCE_POST.create(block, textures, models.modelOutput)),
+                                BlockModelGenerators.plainVariant(ModelTemplates.FENCE_SIDE.create(block, textures, models.modelOutput))
                         ));
 
                         models.registerSimpleItemModel(block, ModelTemplates.FENCE_INVENTORY.create(block, textures, models.modelOutput));
@@ -721,10 +720,10 @@ public interface BlockTypes {
 
                         models.blockStateOutput.accept(BlockModelGenerators.createFenceGate(
                                 block,
-                                ModelTemplates.FENCE_GATE_OPEN.create(block, textures, models.modelOutput),
-                                ModelTemplates.FENCE_GATE_CLOSED.create(block, textures, models.modelOutput),
-                                ModelTemplates.FENCE_GATE_WALL_OPEN.create(block, textures, models.modelOutput),
-                                ModelTemplates.FENCE_GATE_WALL_CLOSED.create(block, textures, models.modelOutput),
+                                BlockModelGenerators.plainVariant(ModelTemplates.FENCE_GATE_OPEN.create(block, textures, models.modelOutput)),
+                                BlockModelGenerators.plainVariant(ModelTemplates.FENCE_GATE_CLOSED.create(block, textures, models.modelOutput)),
+                                BlockModelGenerators.plainVariant(ModelTemplates.FENCE_GATE_WALL_OPEN.create(block, textures, models.modelOutput)),
+                                BlockModelGenerators.plainVariant(ModelTemplates.FENCE_GATE_WALL_CLOSED.create(block, textures, models.modelOutput)),
                                 true
                         ));
                     })
@@ -770,8 +769,8 @@ public interface BlockTypes {
 
                         models.blockStateOutput.accept(BlockModelGenerators.createPressurePlate(
                                 block,
-                                ModelTemplates.PRESSURE_PLATE_UP.create(block, textures, models.modelOutput),
-                                ModelTemplates.PRESSURE_PLATE_DOWN.create(block, textures, models.modelOutput)
+                                BlockModelGenerators.plainVariant(ModelTemplates.PRESSURE_PLATE_UP.create(block, textures, models.modelOutput)),
+                                BlockModelGenerators.plainVariant(ModelTemplates.PRESSURE_PLATE_DOWN.create(block, textures, models.modelOutput))
                         ));
                     })
                     .translation("Pressure Plate")
@@ -793,8 +792,8 @@ public interface BlockTypes {
 
                         models.blockStateOutput.accept(BlockModelGenerators.createButton(
                                 block,
-                                ModelTemplates.BUTTON.create(block, textures, models.modelOutput),
-                                ModelTemplates.BUTTON_PRESSED.create(block, textures, models.modelOutput)
+                                BlockModelGenerators.plainVariant(ModelTemplates.BUTTON.create(block, textures, models.modelOutput)),
+                                BlockModelGenerators.plainVariant(ModelTemplates.BUTTON_PRESSED.create(block, textures, models.modelOutput))
                         ));
 
                         models.registerSimpleItemModel(
@@ -856,8 +855,8 @@ public interface BlockTypes {
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> {
                         var model = ModelTemplates.PARTICLE_ONLY.create(block, TextureMapping.particle(furnitureSet.getCoreBlock()), models.modelOutput);
-                        models.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, model));
-                        models.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(wallSign(furnitureSet), model));
+                        models.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, BlockModelGenerators.plainVariant(model)));
+                        models.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(wallSign(furnitureSet), BlockModelGenerators.plainVariant(model)));
                         models.registerSimpleFlatItemModel(block.asItem());
                     })
                     .translation("Sign")
@@ -886,7 +885,7 @@ public interface BlockTypes {
 
     static void carpetModel(CarpetBlock block, FurnitureSet furnitureSet, BlockModelGenerators models) {
         models.blockStateOutput.accept(
-                BlockModelGenerators.createSimpleBlock(block, TexturedModel.CARPET.get(furnitureSet.getOrThrow(WOOL)).create(block, models.modelOutput))
+                BlockModelGenerators.createSimpleBlock(block, BlockModelGenerators.plainVariant(TexturedModel.CARPET.get(furnitureSet.getOrThrow(WOOL)).create(block, models.modelOutput)))
         );
     }
 
@@ -921,11 +920,11 @@ public interface BlockTypes {
     }
 
     static void doorModel(FurnitureDoorBlockComponentHolder block, BlockModelGenerators blockModels) {
-        var multiBlock = block.getComponentOrThrow(BlockComponentTypes.MULTI_BLOCK);
+        var multiBlockProperty = block.getComponentOrThrow(BlockComponentTypes.MULTI_BLOCK).property();
         var facingProperty = block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty();
 
-        blockModels.blockStateOutput.accept(MultiVariantGenerator.multiVariant(block)
-                .with(PropertyDispatch.properties(facingProperty, multiBlock.property(), DoorBlockComponentHolder.HINGE, DoorBlockComponentHolder.OPEN).generate((facing, index, hinge, open) -> {
+        blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
+                .with(PropertyDispatch.initial(facingProperty, multiBlockProperty, DoorBlockComponentHolder.HINGE, DoorBlockComponentHolder.OPEN).generate((facing, index, hinge, open) -> {
                     var indexName = index == MultiBlockComponent.ORIGIN_INDEX ? "bottom" : "top";
                     var openName = open ? "open" : "closed";
                     var modelPath = ModelLocationUtils.getModelLocation(block, '_' + hinge.getSerializedName() + '_' + indexName + '_' + openName);
@@ -934,13 +933,14 @@ public interface BlockTypes {
                         facing = hinge == DoorHingeSide.LEFT ? facing.getClockWise() : facing.getCounterClockWise();
 
                     var rot = switch (facing) {
-                        case NORTH -> VariantProperties.Rotation.R270;
-                        case SOUTH -> VariantProperties.Rotation.R90;
-                        case WEST -> VariantProperties.Rotation.R180;
-                        default -> VariantProperties.Rotation.R0;
+                        case NORTH -> Quadrant.R270;
+                        case SOUTH -> Quadrant.R90;
+                        case WEST -> Quadrant.R180;
+                        default -> Quadrant.R0;
                     };
 
-                    return Variant.variant().with(VariantProperties.MODEL, modelPath).with(VariantProperties.Y_ROT, rot);
+                    return BlockModelGenerators.plainVariant(modelPath)
+                            .with(variant -> variant.withYRot(rot));
                 }))
         );
     }
@@ -962,15 +962,15 @@ public interface BlockTypes {
     }
 
     static void shelfModel(ShelfBlock block, BlockModelGenerators models) {
-        ModelUtil.facingPropertyModelSuffix(block, models, ShelfConnection.PROPERTY, ShelfConnection::getModelSuffix, ShelfConnection.NONE);
+        ModelUtil.facingPropertyModelSuffix(block, models, ShelfConnection.PROPERTY, ShelfConnection::getModelSuffix);
     }
 
     static void sofaModel(SofaBlock block, BlockModelGenerators models) {
-        ModelUtil.facingPropertyModelSuffix(block, models, SofaConnection.PROPERTY, SofaConnection::getModelSuffix, SofaConnection.NONE);
+        ModelUtil.facingPropertyModelSuffix(block, models, SofaConnection.PROPERTY, SofaConnection::getModelSuffix);
     }
 
     static void counterModel(CounterBlock block, BlockModelGenerators models) {
-        ModelUtil.facingPropertyModelSuffix(block, models, CounterConnection.PROPERTY, CounterConnection::getModelSuffix, CounterConnection.NONE);
+        ModelUtil.facingPropertyModelSuffix(block, models, CounterConnection.PROPERTY, CounterConnection::getModelSuffix);
     }
 
     static void benchModel(BenchBlock block, BlockModelGenerators models) {
@@ -991,8 +991,8 @@ public interface BlockTypes {
     static void tableModel(TableBlock block, BlockModelGenerators blockModels) {
         var facingProperty = block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty();
 
-        blockModels.blockStateOutput.accept(MultiVariantGenerator.multiVariant(block)
-                .with(PropertyDispatch.properties(facingProperty, TableBlock.NORTH, TableBlock.EAST, TableBlock.SOUTH, TableBlock.WEST).generate((facing, north, east, south, west) -> {
+        blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
+                .with(PropertyDispatch.initial(facingProperty, TableBlock.NORTH, TableBlock.EAST, TableBlock.SOUTH, TableBlock.WEST).generate((facing, north, east, south, west) -> {
                     var connections = EnumSet.noneOf(Direction.class);
                     var facingForConnection = TableBlock.getFacingForConnection(facing);
 
@@ -1027,9 +1027,8 @@ public interface BlockTypes {
                         default -> null;
                     }).filter(Objects::nonNull).map(String::valueOf).collect(Collectors.joining(""));
 
-                    return Variant.variant()
-                            .with(VariantProperties.MODEL, ModelLocationUtils.getModelLocation(block, suffix.isBlank() ? "" : '_' + suffix))
-                            .with(VariantProperties.Y_ROT, ModelUtil.facingToModelRotation(facing));
+                    return BlockModelGenerators.variant(BlockModelGenerators.plainModel(ModelLocationUtils.getModelLocation(block, suffix.isBlank() ? "" : '_' + suffix)))
+                            .with(variant -> variant.withYRot(ModelUtil.facingToModelRotation(facing)));
                 }))
         );
     }

@@ -3,13 +3,15 @@ package dev.apexstudios.fantasyfurniture.block;
 import dev.apexstudios.apexcore.lib.component.ComponentRegistrar;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
-import dev.apexstudios.apexcore.lib.util.shapes.ApexShapes;
+import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.base.FurnitureBlockComponentHolder;
 import dev.apexstudios.fantasyfurniture.block.base.SeatBlock;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class CushionBlock extends SeatBlock {
@@ -28,7 +30,7 @@ public class CushionBlock extends SeatBlock {
             box(12.5D, 2.5D, 4.5D, 13.5D, 3.5D, 11.5D)
     );
 
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = ApexShapes.rotateHorizontal(SHAPE);
+    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
 
     public CushionBlock(Properties properties) {
         super(properties);
@@ -40,7 +42,7 @@ public class CushionBlock extends SeatBlock {
     }
 
     @Override
-    protected void registerComponents(ComponentRegistrar<BlockComponent> registrar) {
+    protected void registerComponents(ComponentRegistrar<BlockComponent, Block> registrar) {
         super.registerComponents(registrar);
 
         registrar.register(BlockComponentTypes.BOUNCE);

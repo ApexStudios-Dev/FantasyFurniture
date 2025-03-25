@@ -4,8 +4,9 @@ import dev.apexstudios.apexcore.lib.component.ComponentRegistrar;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
 import dev.apexstudios.apexcore.lib.component.block.types.FacingBlockComponent;
-import dev.apexstudios.apexcore.lib.util.shapes.ApexShapes;
+import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.base.FurnitureBlockComponentHolder;
+import dev.apexstudios.fantasyfurniture.set.FurnitureSet;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -13,7 +14,9 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
@@ -23,10 +26,14 @@ public class WallLightBlock extends FurnitureBlockComponentHolder {
             box(6D, 2D, 8D, 10D, 15D, 15D)
     );
 
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = ApexShapes.rotateHorizontal(SHAPE);
+    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
 
-    public WallLightBlock(Properties properties) {
+    private final FurnitureSet furnitureSet;
+
+    public WallLightBlock(FurnitureSet furnitureSet, Properties properties) {
         super(properties);
+
+        this.furnitureSet = furnitureSet;
     }
 
     @Override
@@ -35,7 +42,7 @@ public class WallLightBlock extends FurnitureBlockComponentHolder {
     }
 
     @Override
-    protected void registerComponents(ComponentRegistrar<BlockComponent> registrar) {
+    protected void registerComponents(ComponentRegistrar<BlockComponent, Block> registrar) {
         super.registerComponents(registrar);
 
         FacingBlockComponent.registerHorizontal(registrar);
@@ -52,8 +59,12 @@ public class WallLightBlock extends FurnitureBlockComponentHolder {
         var offsetZ = offset * facing.getStepZ();
         var offsetX = offset * facing.getStepX();
 
-        level.addParticle(ParticleTypes.SMOKE, x + offsetX, y + .35D, z + offsetZ, 0D, 0D, 0D);
-        level.addParticle(ParticleTypes.FLAME, x + offsetX, y + .35D, z + offsetZ, 0D, 0D, 0D);
+        playParticles(level, x + offsetX, y + .35D, z + offsetZ);
+    }
+
+    protected void playParticles(Level level, double x, double y, double z) {
+        level.addParticle(ParticleTypes.SMOKE, x, y, z, 0D, 0D, 0D);
+        level.addParticle(furnitureSet.flameParticle(), x, y, z, 0D, 0D, 0D);
     }
 
     @Nullable

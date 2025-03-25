@@ -3,15 +3,17 @@ package dev.apexstudios.fantasyfurniture.block;
 import dev.apexstudios.apexcore.lib.component.ComponentRegistrar;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
-import dev.apexstudios.apexcore.lib.util.shapes.ApexShapes;
+import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.base.FurnitureBlockComponentHolder;
 import dev.apexstudios.fantasyfurniture.block.base.InventoryBlock;
 import dev.apexstudios.fantasyfurniture.block.entity.DresserBlockEntity;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class DresserBlock extends InventoryBlock {
@@ -21,7 +23,7 @@ public class DresserBlock extends InventoryBlock {
             box(-16D, 13D, 0D, 16D, 16D, 2D)
     );
 
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = ApexShapes.rotateHorizontal(SHAPE);
+    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
 
     public DresserBlock(Properties properties) {
         super(properties);
@@ -33,7 +35,7 @@ public class DresserBlock extends InventoryBlock {
     }
 
     @Override
-    protected void registerComponents(ComponentRegistrar<BlockComponent> registrar) {
+    protected void registerComponents(ComponentRegistrar<BlockComponent, Block> registrar) {
         super.registerComponents(registrar);
 
         registrar.register(BlockComponentTypes.MULTI_BLOCK, builder -> builder

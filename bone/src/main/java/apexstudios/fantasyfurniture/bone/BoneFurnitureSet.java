@@ -26,6 +26,7 @@ import dev.apexstudios.fantasyfurniture.FantasyFurniture;
 import dev.apexstudios.fantasyfurniture.set.BlockTypes;
 import dev.apexstudios.fantasyfurniture.set.FurnitureSet;
 import dev.apexstudios.fantasyfurniture.set.function.BlockFactory;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
@@ -48,9 +49,10 @@ public final class BoneFurnitureSet {
 
     private static FurnitureSet furnitureSet(String name) {
         return FurnitureSet.createStoneLike(REGISTREE, name, builder -> builder
+                .flame(() -> ParticleTypes.SOUL_FIRE_FLAME)
                 .usesPrefix()
                 .baseBlock(() -> Blocks.BONE_BLOCK)
-                .with(BlockTypes.FLOOR_LIGHT.extend(BlockFactory.wrapping(BoneFloorLightBlock::new)))
+                .with(BlockTypes.FLOOR_LIGHT.extend(BoneFloorLightBlock::new))
                 .with(BlockTypes.DRESSER.extend(BlockFactory.wrapping(BoneDresserBlock::new)))
                 .with(BlockTypes.BOOKSHELF.extend(BlockFactory.wrapping(BoneBookshelfBlock::new)))
                 .with(BlockTypes.PAINTING_SMALL.extend(BlockFactory.wrapping(BonePaintingSmallBlock::new)))
@@ -67,12 +69,12 @@ public final class BoneFurnitureSet {
                 .with(BlockTypes.CHEST.extend(BlockFactory.wrapping(BoneChestBlock::new)))
                 .with(BlockTypes.DRAWER.extend(BlockFactory.wrapping(BoneDrawerBlock::new)))
                 .with(BlockTypes.CHANDELIER.copy($ -> $
-                        .blockFactory(BlockFactory.wrapping(BoneChandelierBlock::new))
+                        .blockFactory(BoneChandelierBlock::new)
                         .builder($$ -> $$.blockProperties(BlockBehaviour.Properties::noOcclusion))
                 ))
                 .with(BlockTypes.SHELF.extend(BlockFactory.wrapping(BoneShelfBlock::new)))
                 .with(BlockTypes.SOFA.extend(BlockFactory.wrapping(BoneSofaBlock::new)))
-                .with(BlockTypes.WALL_LIGHT.extend(BlockFactory.wrapping(BoneWallLightBlock::new)))
+                .with(BlockTypes.WALL_LIGHT.extend(BoneWallLightBlock::new))
                 .with(BlockTypes.BENCH.extend(BlockFactory.wrapping(BoneBenchBlock::new)))
                 .with(BlockTypes.TABLE.extend(BlockFactory.wrapping(BoneTableBlock::new)))
                 .woodType(woodType -> woodType

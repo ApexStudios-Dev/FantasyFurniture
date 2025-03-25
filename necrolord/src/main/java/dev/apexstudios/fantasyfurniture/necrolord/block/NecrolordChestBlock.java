@@ -1,12 +1,13 @@
 package dev.apexstudios.fantasyfurniture.necrolord.block;
 
-import dev.apexstudios.apexcore.lib.util.shapes.ApexShapes;
+import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.ChestBlock;
 import dev.apexstudios.fantasyfurniture.block.base.FurnitureBlockComponentHolder;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class NecrolordChestBlock extends ChestBlock {
@@ -30,7 +31,7 @@ public final class NecrolordChestBlock extends ChestBlock {
             box(-14D, 9D, 11D, -10D, 11D, 15D)
     );
 
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = ApexShapes.rotateHorizontal(SHAPE);
+    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
 
     public NecrolordChestBlock(Properties properties) {
         super(properties);

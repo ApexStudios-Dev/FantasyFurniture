@@ -33,36 +33,28 @@
       "y": 90
     },
     "east=false,facing_component=north,north=false,south=false,west=false": {
-      "model": "fantasyfurniture_venthyr:block/table_cloth",
-      "y": 0
+      "model": "fantasyfurniture_venthyr:block/table_cloth"
     },
     "east=false,facing_component=north,north=false,south=false,west=true": {
-      "model": "fantasyfurniture_venthyr:block/table_cloth_w",
-      "y": 0
+      "model": "fantasyfurniture_venthyr:block/table_cloth_w"
     },
     "east=false,facing_component=north,north=false,south=true,west=false": {
-      "model": "fantasyfurniture_venthyr:block/table_cloth_s",
-      "y": 0
+      "model": "fantasyfurniture_venthyr:block/table_cloth_s"
     },
     "east=false,facing_component=north,north=false,south=true,west=true": {
-      "model": "fantasyfurniture_venthyr:block/table_cloth_sw",
-      "y": 0
+      "model": "fantasyfurniture_venthyr:block/table_cloth_sw"
     },
     "east=false,facing_component=north,north=true,south=false,west=false": {
-      "model": "fantasyfurniture_venthyr:block/table_cloth_n",
-      "y": 0
+      "model": "fantasyfurniture_venthyr:block/table_cloth_n"
     },
     "east=false,facing_component=north,north=true,south=false,west=true": {
-      "model": "fantasyfurniture_venthyr:block/table_cloth_nw",
-      "y": 0
+      "model": "fantasyfurniture_venthyr:block/table_cloth_nw"
     },
     "east=false,facing_component=north,north=true,south=true,west=false": {
-      "model": "fantasyfurniture_venthyr:block/table_cloth_ns",
-      "y": 0
+      "model": "fantasyfurniture_venthyr:block/table_cloth_ns"
     },
     "east=false,facing_component=north,north=true,south=true,west=true": {
-      "model": "fantasyfurniture_venthyr:block/table_cloth_nsw",
-      "y": 0
+      "model": "fantasyfurniture_venthyr:block/table_cloth_nsw"
     },
     "east=false,facing_component=south,north=false,south=false,west=false": {
       "model": "fantasyfurniture_venthyr:block/table_cloth",
@@ -161,36 +153,28 @@
       "y": 90
     },
     "east=true,facing_component=north,north=false,south=false,west=false": {
-      "model": "fantasyfurniture_venthyr:block/table_cloth_e",
-      "y": 0
+      "model": "fantasyfurniture_venthyr:block/table_cloth_e"
     },
     "east=true,facing_component=north,north=false,south=false,west=true": {
-      "model": "fantasyfurniture_venthyr:block/table_cloth_ew",
-      "y": 0
+      "model": "fantasyfurniture_venthyr:block/table_cloth_ew"
     },
     "east=true,facing_component=north,north=false,south=true,west=false": {
-      "model": "fantasyfurniture_venthyr:block/table_cloth_es",
-      "y": 0
+      "model": "fantasyfurniture_venthyr:block/table_cloth_es"
     },
     "east=true,facing_component=north,north=false,south=true,west=true": {
-      "model": "fantasyfurniture_venthyr:block/table_cloth_esw",
-      "y": 0
+      "model": "fantasyfurniture_venthyr:block/table_cloth_esw"
     },
     "east=true,facing_component=north,north=true,south=false,west=false": {
-      "model": "fantasyfurniture_venthyr:block/table_cloth_ne",
-      "y": 0
+      "model": "fantasyfurniture_venthyr:block/table_cloth_ne"
     },
     "east=true,facing_component=north,north=true,south=false,west=true": {
-      "model": "fantasyfurniture_venthyr:block/table_cloth_new",
-      "y": 0
+      "model": "fantasyfurniture_venthyr:block/table_cloth_new"
     },
     "east=true,facing_component=north,north=true,south=true,west=false": {
-      "model": "fantasyfurniture_venthyr:block/table_cloth_nes",
-      "y": 0
+      "model": "fantasyfurniture_venthyr:block/table_cloth_nes"
     },
     "east=true,facing_component=north,north=true,south=true,west=true": {
-      "model": "fantasyfurniture_venthyr:block/table_cloth_nesw",
-      "y": 0
+      "model": "fantasyfurniture_venthyr:block/table_cloth_nesw"
     },
     "east=true,facing_component=south,north=false,south=false,west=false": {
       "model": "fantasyfurniture_venthyr:block/table_cloth_w",

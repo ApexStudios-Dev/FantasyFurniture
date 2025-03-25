@@ -60,6 +60,7 @@ public class NecrolordFurnitureSet {
             .with(BlockTypes.TABLE.extend(BlockFactory.wrapping(NecrolordTableBlock::new)))
             .with(BlockTypes.WALL_LIGHT.extend(BlockFactory.wrapping(NecrolordWallLightBlock::new)))
             .with(BlockTypes.WARDROBE.extend(BlockFactory.wrapping(NecrolordWardrobeBlock::new)))
+            .flame(FLAME_PARTICLE)
     );
 
     public NecrolordFurnitureSet(IEventBus modBus) {

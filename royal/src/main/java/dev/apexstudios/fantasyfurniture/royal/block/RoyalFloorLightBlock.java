@@ -1,13 +1,14 @@
 package dev.apexstudios.fantasyfurniture.royal.block;
 
-import dev.apexstudios.apexcore.lib.util.shapes.ApexShapes;
+import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.FloorLightBlock;
+import dev.apexstudios.fantasyfurniture.royal.RoyalFurnitureSet;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class RoyalFloorLightBlock extends FloorLightBlock {
@@ -22,10 +23,10 @@ public final class RoyalFloorLightBlock extends FloorLightBlock {
             box(10.5D, 24D, 6.5D, 13.5D, 25D, 9.5D)
     );
 
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = ApexShapes.rotateHorizontal(SHAPE);
+    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
 
     public RoyalFloorLightBlock(Properties properties) {
-        super(properties, 3);
+        super(RoyalFurnitureSet.FURNITURE_SET, properties, 3);
     }
 
     @Override
@@ -47,7 +48,6 @@ public final class RoyalFloorLightBlock extends FloorLightBlock {
             y += .1D;
         }
 
-        level.addParticle(ParticleTypes.SMOKE, x, y, z, 0D, 0D, 0D);
-        level.addParticle(ParticleTypes.FLAME, x, y, z, 0D, 0D, 0D);
+        playParticles(level, x, y, z);
     }
 }

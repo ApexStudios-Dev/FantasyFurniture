@@ -1,13 +1,14 @@
 package dev.apexstudios.fantasyfurniture.venthyr.block;
 
-import dev.apexstudios.apexcore.lib.util.shapes.ApexShapes;
+import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.FloorLightBlock;
+import dev.apexstudios.fantasyfurniture.venthyr.VenthyrFurnitureSet;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class VenthyrFloorLightBlock extends FloorLightBlock {
@@ -25,10 +26,10 @@ public final class VenthyrFloorLightBlock extends FloorLightBlock {
             box(10.25D, 24D, 3.5D, 12.5D, 28.75D, 5.75D)
     );
 
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = ApexShapes.rotateHorizontal(SHAPE);
+    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
 
     public VenthyrFloorLightBlock(Properties properties) {
-        super(properties);
+        super(VenthyrFurnitureSet.FURNITURE_SET, properties);
     }
 
     @Override
@@ -47,7 +48,6 @@ public final class VenthyrFloorLightBlock extends FloorLightBlock {
         x = even ? x + offset : x - offset;
         z = index < 2 ? z + offset : z - offset;
 
-        level.addParticle(ParticleTypes.SMOKE, x, y, z, 0D, 0D, 0D);
-        level.addParticle(ParticleTypes.FLAME, x, y, z, 0D, 0D, 0D);
+        playParticles(level, x, y, z);
     }
 }

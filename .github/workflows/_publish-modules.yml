@@ -1,114 +1,133 @@
 name: Publish Modules
 
 on:
-    workflow_call:
-        inputs:
-            modules:
-                type: string
-                required: true
-            release_type:
-                type: string
-                required: true
-            is_manual:
-              type: boolean
-              required: true
+  workflow_call:
+    inputs:
+      modules:
+        type: string
+        required: true
+      release_type:
+        type: string
+        required: true
+      is_manual:
+        type: boolean
+        required: true
 
 jobs:
-    parse-modules:
-        name: Parse Modules
-        runs-on: ubuntu-latest
-        if: ${{ inputs.modules != '' && inputs.modules != '[]' }}
-        outputs:
-            version: ${{ steps.checkout.outputs.version }}
-            modules: ${{ steps.modules.outputs.json }}
-            split: ${{ steps.split.outputs.split }}
-        steps:
-            - name: Checkout Repository
-              id: checkout
-              uses: ApexStudios-Dev/.github/actions/checkout@master
+  parse-modules:
+    name: Parse Modules
+    runs-on: ubuntu-latest
+    if: ${{ inputs.modules != '' && inputs.modules != '[]' }}
+    outputs:
+      json: ${{ steps.json.outputs.json }}
+      split: ${{ steps.split.outputs.split }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-            - name: Parse Modules
-              id: modules
-              uses: ApexStudios-Dev/.github/actions/parse-json@master
-              with:
-                  path: ./.github/workflows/modules.json
-
-            - name: Split Modules
-              id: split
-              if: inputs.is_manual
-              run: echo "split=$(echo '"${{ inputs.modules }}"' | jq -r -c '. | split(",") | map(select(length > 0))')" >> $GITHUB_OUTPUT
-
-    build:
-        name: Build
-        runs-on: apexstudios
-        needs: parse-modules
-        if: ${{ success() && inputs.modules != '' && inputs.modules != '[]' }}
-        outputs:
-            timestamp: ${{ steps.timestamp.outputs.output }}
-        steps:
-            - name: Checkout Repository
-              id: checkout
-              uses: ApexStudios-Dev/.github/actions/checkout@master
-
-            - name: Setup Java
-              uses: ApexStudios-Dev/.github/actions/setup-java@master
-
-            - name: Setup Gradle
-              uses: ApexStudios-Dev/.github/actions/setup-gradle@master
-
-            - name: Build with Gradle
-              run: ./gradlew :build
-              env:
-                  VERSION: ${{ steps.checkout.outputs.version }}
-
-            - name: Generate Timestamp
-              id: timestamp
-              run: echo "output=$(date --iso-8601=seconds)" >> $GITHUB_OUTPUT
-
-            - name: Upload Artifacts
-              uses: actions/upload-artifact@v4
-              with:
-                  name: artifacts
-                  path: ./build/libs/*.jar
-                  if-no-files-found: error
-
-    publish-maven:
-        name: Publish to Maven
-        needs: [ parse-modules, build ]
-        if: ${{ success() && inputs.modules != '' && inputs.modules != '[]' }}
-        runs-on: apexstudios
-        steps:
-            - name: Checkout Repository
-              id: checkout
-              uses: ApexStudios-Dev/.github/actions/checkout@master
-
-            - name: Setup Java
-              uses: ApexStudios-Dev/.github/actions/setup-java@master
-
-            - name: Setup Gradle
-              uses: ApexStudios-Dev/.github/actions/setup-gradle@master
-
-            - name: Build with Gradle
-#              if: ${{ !env.ACT }}
-              run: ./gradlew :publishModulesToMaven
-              env:
-                  VERSION: ${{ steps.checkout.outputs.version }}
-                  MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
-                  MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
-                  PUBLISH_MODULES: ${{ inputs.is_manual && inputs.modules || join(fromJSON(inputs.modules)) }}
-
-    publish-modules:
-        name: Publish Module - ${{ matrix.module }}
-        needs: [ parse-modules, build, publish-maven ]
-        if: ${{ success() && inputs.modules != '' && inputs.modules != '[]' }}
-        uses: ./.github/workflows/_publish-module.yml
-        secrets: inherit
-        strategy:
-            matrix:
-                module: ${{ inputs.is_manual && fromJSON(needs.parse-modules.outputs.split) || fromJSON(inputs.modules) }}
+      - name: Parse Modules
+        id: json
+        uses: ApexStudios-Dev/.github/actions/parse-json@master
         with:
-            version: ${{ needs.parse-modules.outputs.version }}
-            build_timestamp: ${{ needs.build.outputs.timestamp }}
-            release_type: ${{ inputs.release_type }}
-            module: ${{ matrix.module }}
-            modules_json: ${{ needs.parse-modules.outputs.modules }}
+          path: ./.github/workflows/modules.json
+
+      - name: Split Modules
+        id: split
+        if: inputs.is_manual
+        run: echo "split=$(echo '"${{ inputs.modules }}"' | jq -r -c '. | split(",") | map(select(length > 0))')" >> $GITHUB_OUTPUT
+
+  publish:
+    name: Publish ${{ matrix.module }}
+    needs: parse-modules
+    runs-on: apexstudios
+    if: ${{ success() && inputs.modules != '' && inputs.modules != '[]' }}
+    strategy:
+      max-parallel: 2 # we only have 2 local runners, dont overwhelm them
+      matrix:
+        module: ${{ inputs.is_manual && fromJSON(needs.parse-modules.outputs.split) || fromJSON(inputs.modules) }}
+    steps:
+      - name: Checkout Repository
+        uses: ApexStudios-Dev/.github/actions/checkout@master
+
+      - name: Generate Version
+        id: version
+        uses: paulhatch/semantic-version@v5.4.0
+        with:
+          change_path: ${{ matrix.module == 'main' && 'src' || matrix.module }}/**
+          version_format: '${major}.${minor}.${patch}'
+          bump_each_commit: true
+
+      - name: Extract Module Data
+        id: data
+        run: |
+          echo display_name=$(echo $MODULES_JSON | jq -r .${{ matrix.module }}.display_name) >> $GITHUB_OUTPUT
+          echo logo_url=$(echo $MODULES_JSON | jq -r .${{ matrix.module }}.logo_url) >> $GITHUB_OUTPUT
+          echo curseforge_id=$(echo $MODULES_JSON | jq -r .${{ matrix.module }}.curseforge_id) >> $GITHUB_OUTPUT
+          echo modrinth_id=$(echo $MODULES_JSON | jq -r .${{ matrix.module }}.modrinth_id) >> $GITHUB_OUTPUT
+          echo color="$(($(echo $MODULES_JSON | jq -r .${{ matrix.module }}.color)))" >> $GITHUB_OUTPUT
+          echo artifact_id=$(echo $MODULES_JSON | jq -r .${{ matrix.module }}.artifact_id) >> $GITHUB_OUTPUT
+          echo jar_task=$(echo $MODULES_JSON | jq -r .${{ matrix.module }}.jar_task) >> $GITHUB_OUTPUT
+          echo publish_task=$(echo $MODULES_JSON | jq -r .${{ matrix.module }}.publish_task) >> $GITHUB_OUTPUT
+        env:
+          MODULES_JSON: ${{ format('{0}', needs.parse-modules.outputs.json) }}
+
+      - name: Setup Java
+        uses: ApexStudios-Dev/.github/actions/setup-java@master
+
+      - name: Setup Gradle
+        uses: ApexStudios-Dev/.github/actions/setup-gradle@master
+
+      - name: Build with Gradle
+        run: "./gradlew ${{ steps.data.outputs.jar_task }} ${{ format(steps.data.outputs.publish_task, env.ACT && 'MavenLocal' || 'ApexStudios-ReleasesRepository') }}"
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+
+      - name: Validate artifact exists
+        run: if [ ! -f "./build/libs/${{ steps.data.outputs.artifact_id }}-${{ steps.version.outputs.version }}.jar" ]; then exit 1; fi
+
+      - name: Generate Timestamp
+        id: timestamp
+        run: echo "output=$(date --iso-8601=seconds)" >> $GITHUB_OUTPUT
+
+      - name: Publish to CurseForge
+        if: ${{ !env.ACT }}
+        id: publish-curseforge
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          curseforge-id: ${{ steps.data.outputs.curseforge_id }}
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+
+          files: ./build/libs/${{ steps.data.outputs.artifact_id }}-${{ steps.version.outputs.version }}.jar
+          name: ${{ steps.data.outputs.display_name }}-${{ steps.version.outputs.version }}
+          version: ${{ steps.version.outputs.version }}
+          version-type: ${{ inputs.release_type }}
+          changelog: ""
+          loaders: neoforge
+
+      - name: Publish to Modrinth
+        if: ${{ !env.ACT }}
+        id: publish-modrinth
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          modrinth-id: ${{ steps.data.outputs.modrinth_id }}
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+
+          files: ./build/libs/${{ steps.data.outputs.artifact_id }}-${{ steps.version.outputs.version }}.jar
+          name: ${{ steps.data.outputs.display_name }}-${{ steps.version.outputs.version }}
+          version: ${{ steps.version.outputs.version }}
+          version-type: ${{ inputs.release_type }}
+          changelog: ""
+          loaders: neoforge
+
+      - name: Send Announcement to Discord
+        if: success()
+        uses: ApexStudios-Dev/.github/actions/discord-version-notify@master
+        with:
+          webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          display_name: ${{ steps.data.outputs.display_name }}
+          version: ${{ steps.version.outputs.version }}
+          logo_url: ${{ steps.data.outputs.logo_url }}
+          color: ${{ steps.data.outputs.color }}
+          build_timestamp: ${{ steps.timestamp.outputs.output }}
+          curseforge_url: ${{ steps.publish-curseforge.outputs.curseforge-url }}
+          modrinth_url: ${{ steps.publish-modrinth.outputs.modrinth-url }}
