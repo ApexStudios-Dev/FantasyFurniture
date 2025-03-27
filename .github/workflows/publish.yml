@@ -40,5 +40,5 @@ jobs:
         secrets: inherit
         with:
             modules: ${{ needs.determine-module-changes.outputs.changes }}
-            release_type: alpha
+            release_type: release
             is_manual: false

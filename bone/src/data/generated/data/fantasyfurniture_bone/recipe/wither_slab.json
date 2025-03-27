@@ -1,4 +1,12 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:feature_flags_enabled",
+      "flags": [
+        "fantasyfurniture:experimental"
+      ]
+    }
+  ],
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {

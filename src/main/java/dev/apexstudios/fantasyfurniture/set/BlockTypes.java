@@ -63,6 +63,7 @@ import net.minecraft.world.entity.ai.village.poi.PoiTypes;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.HangingSignItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.SignItem;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
@@ -86,6 +87,7 @@ import net.minecraft.world.level.block.state.properties.DoorHingeSide;
 import net.minecraft.world.level.material.PushReaction;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.conditions.NeoForgeConditions;
 import net.neoforged.neoforge.common.crafting.DifferenceIngredient;
 import org.jetbrains.annotations.ApiStatus;
 
@@ -623,6 +625,7 @@ public interface BlockTypes {
             (furnitureSet, properties) -> new StairBlock(furnitureSet.getCoreBlock().defaultBlockState(), properties),
             builder -> builder
                     .baseBlock(() -> Blocks.OAK_STAIRS)
+                    .blockProperties(properties -> properties.requiredFeatures(FantasyFurniture.EXPERIMENTAL))
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> {
                         var textures = TextureMapping.cube(furnitureSet.getCoreBlock());
@@ -643,7 +646,7 @@ public interface BlockTypes {
                     .recipe((provider, furnitureSet, item) -> provider
                             .stairBuilder(item, Ingredient.of(furnitureSet.getCoreBlock()))
                             .unlockedBy("has_core_block", provider.has(furnitureSet.getCoreBlock()))
-                            .save(provider.output())
+                            .save(provider.output().withConditions(NeoForgeConditions.featureFlagsEnabled(FantasyFurniture.EXPERIMENTAL)))
                     )
     );
     // endregion
@@ -654,6 +657,7 @@ public interface BlockTypes {
             BlockFactory.wrapping(SlabBlock::new),
             builder -> builder
                     .baseBlock(() -> Blocks.OAK_SLAB)
+                    .blockProperties(properties -> properties.requiredFeatures(FantasyFurniture.EXPERIMENTAL))
                     .lootTable((blocks, furnitureSet, block) -> blocks.accept(block, blocks.createSlabItemTable(block)))
                     .model(() -> (context, models, furnitureSet, block) -> {
                         var textures = TextureMapping.cube(furnitureSet.getCoreBlock());
@@ -674,7 +678,7 @@ public interface BlockTypes {
                     .recipe((provider, furnitureSet, item) -> provider
                             .slabBuilder(RecipeCategory.BUILDING_BLOCKS, item, Ingredient.of(furnitureSet.getCoreBlock()))
                             .unlockedBy("has_core_block", provider.has(furnitureSet.getCoreBlock()))
-                            .save(provider.output())
+                            .save(provider.output().withConditions(NeoForgeConditions.featureFlagsEnabled(FantasyFurniture.EXPERIMENTAL)))
                     )
     );
     // endregion
@@ -685,6 +689,7 @@ public interface BlockTypes {
             BlockFactory.wrapping(FenceBlock::new),
             builder -> builder
                     .baseBlock(() -> Blocks.OAK_FENCE)
+                    .blockProperties(properties -> properties.requiredFeatures(FantasyFurniture.EXPERIMENTAL))
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> {
                         var textures = TextureMapping.cube(furnitureSet.getCoreBlock());
@@ -703,7 +708,7 @@ public interface BlockTypes {
                     .recipe((provider, furnitureSet, item) -> provider
                             .fenceBuilder(item, Ingredient.of(furnitureSet.getCoreBlock()))
                             .unlockedBy("has_core_block", provider.has(furnitureSet.getCoreBlock()))
-                            .save(provider.output())
+                            .save(provider.output().withConditions(NeoForgeConditions.featureFlagsEnabled(FantasyFurniture.EXPERIMENTAL)))
                     )
     );
     // endregion
@@ -714,6 +719,7 @@ public interface BlockTypes {
             (furnitureSet, properties) -> new FenceGateBlock(furnitureSet.woodType(), properties),
             builder -> builder
                     .baseBlock(() -> Blocks.OAK_FENCE_GATE)
+                    .blockProperties(properties -> properties.requiredFeatures(FantasyFurniture.EXPERIMENTAL))
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> {
                         var textures = TextureMapping.cube(furnitureSet.getCoreBlock());
@@ -733,7 +739,7 @@ public interface BlockTypes {
                     .recipe((provider, furnitureSet, item) -> provider
                             .fenceGateBuilder(item, Ingredient.of(furnitureSet.getCoreBlock()))
                             .unlockedBy("has_core_block", provider.has(furnitureSet.getCoreBlock()))
-                            .save(provider.output())
+                            .save(provider.output().withConditions(NeoForgeConditions.featureFlagsEnabled(FantasyFurniture.EXPERIMENTAL)))
                     )
     );
     // endregion
@@ -744,6 +750,7 @@ public interface BlockTypes {
             (furnitureSet, properties) -> new TrapDoorBlock(furnitureSet.blockSet(), properties),
             builder -> builder
                     .baseBlock(() -> Blocks.OAK_TRAPDOOR)
+                    .blockProperties(properties -> properties.requiredFeatures(FantasyFurniture.EXPERIMENTAL))
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> models.createOrientableTrapdoor(block))
                     .translation("Trapdoor")
@@ -752,7 +759,7 @@ public interface BlockTypes {
                     .recipe((provider, furnitureSet, item) -> provider
                             .trapdoorBuilder(item, Ingredient.of(furnitureSet.getCoreBlock()))
                             .unlockedBy("has_core_block", provider.has(furnitureSet.getCoreBlock()))
-                            .save(provider.output())
+                            .save(provider.output().withConditions(NeoForgeConditions.featureFlagsEnabled(FantasyFurniture.EXPERIMENTAL)))
                     )
     );
     // endregion
@@ -763,6 +770,7 @@ public interface BlockTypes {
             (furnitureSet, properties) -> new PressurePlateBlock(furnitureSet.blockSet(), properties),
             builder -> builder
                     .baseBlock(() -> Blocks.OAK_PRESSURE_PLATE)
+                    .blockProperties(properties -> properties.requiredFeatures(FantasyFurniture.EXPERIMENTAL))
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> {
                         var textures = TextureMapping.cube(furnitureSet.getCoreBlock());
@@ -776,6 +784,11 @@ public interface BlockTypes {
                     .translation("Pressure Plate")
                     .blockTags(BlockTags.WOODEN_PRESSURE_PLATES)
                     .itemTags(ItemTags.WOODEN_PRESSURE_PLATES)
+                    .recipe((provider, furnitureSet, block) -> provider
+                            .pressurePlateBuilder(RecipeCategory.REDSTONE, block, Ingredient.of(furnitureSet.getCoreBlock()))
+                            .unlockedBy(RecipeProvider.getHasName(furnitureSet.getCoreBlock()), provider.has(furnitureSet.getCoreBlock()))
+                            .save(provider.output().withConditions(NeoForgeConditions.featureFlagsEnabled(FantasyFurniture.EXPERIMENTAL)))
+                    )
     );
     // endregion
 
@@ -786,6 +799,7 @@ public interface BlockTypes {
             (furnitureSet, properties) -> new ButtonBlock(furnitureSet.blockSet(), SharedConstants.TICKS_PER_SECOND + 10, properties),
             builder -> builder
                     .baseBlock(() -> Blocks.OAK_BUTTON)
+                    .blockProperties(properties -> properties.requiredFeatures(FantasyFurniture.EXPERIMENTAL))
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> {
                         var textures = TextureMapping.cube(furnitureSet.getCoreBlock());
@@ -807,7 +821,7 @@ public interface BlockTypes {
                     .recipe((provider, furnitureSet, item) -> provider
                             .buttonBuilder(item, Ingredient.of(furnitureSet.getCoreBlock()))
                             .unlockedBy("has_core_block", provider.has(furnitureSet.getCoreBlock()))
-                            .save(provider.output())
+                            .save(provider.output().withConditions(NeoForgeConditions.featureFlagsEnabled(FantasyFurniture.EXPERIMENTAL)))
                     )
     );
     // endregion
@@ -820,13 +834,29 @@ public interface BlockTypes {
             builder -> builder
                     .baseBlock(() -> Blocks.OAK_HANGING_SIGN)
                     .itemProperties(properties -> properties.stacksTo(16))
+                    .blockProperties(properties -> properties.requiredFeatures(FantasyFurniture.EXPERIMENTAL))
                     .blockEntity(() -> BlockEntityType.HANGING_SIGN)
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> models.createHangingSign(furnitureSet.getCoreBlock(), block, wallHangingSign(furnitureSet)))
                     .translation("Hanging Sign")
                     .blockTags(BlockTags.CEILING_HANGING_SIGNS)
                     .itemTags(ItemTags.HANGING_SIGNS)
-                    .recipe((provider, furnitureSet, item) -> provider.hangingSign(item, furnitureSet.getCoreBlock()))
+                    .recipe((provider, furnitureSet, item) -> {
+                        // provider.hangingSign(item, furnitureSet.getCoreBlock());
+
+                        var material = furnitureSet.getCoreBlock();
+
+                        // match hangingSign()
+                        provider.shaped(RecipeCategory.DECORATIONS, item, 6)
+                                .group("hanging_sign")
+                                .define('#', material)
+                                .define('X', Items.CHAIN)
+                                .pattern("X X")
+                                .pattern("###")
+                                .pattern("###")
+                                .unlockedBy("has_stripped_logs", provider.has(material))
+                                .save(provider.output().withConditions(NeoForgeConditions.featureFlagsEnabled(FantasyFurniture.EXPERIMENTAL)));
+                    })
                     // .require(WALL_HANGING_SIGN)
     );
     // endregion
@@ -837,7 +867,7 @@ public interface BlockTypes {
             (furnitureSet, properties) -> new WallHangingSignBlock(furnitureSet.woodType(), properties),
             builder -> builder
                     .baseBlock(() -> Blocks.OAK_WALL_HANGING_SIGN)
-                    .blockProperties((furnitureSet, properties) -> properties.overrideLootTable(furnitureSet.getOrThrow(HANGING_SIGN).getLootTable()))
+                    .blockProperties((furnitureSet, properties) -> properties.overrideLootTable(furnitureSet.getOrThrow(HANGING_SIGN).getLootTable()).requiredFeatures(FantasyFurniture.EXPERIMENTAL))
                     .blockEntity(() -> BlockEntityType.HANGING_SIGN)
                     .blockTags(BlockTags.WALL_HANGING_SIGNS)
     );
@@ -851,6 +881,7 @@ public interface BlockTypes {
             builder -> builder
                     .baseBlock(() -> Blocks.OAK_SIGN)
                     .itemProperties(properties -> properties.stacksTo(16))
+                    .blockProperties(properties -> properties.requiredFeatures(FantasyFurniture.EXPERIMENTAL))
                     .blockEntity(() -> BlockEntityType.SIGN)
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> {
@@ -865,7 +896,7 @@ public interface BlockTypes {
                     .recipe((provider, furnitureSet, item) -> provider
                             .signBuilder(item, Ingredient.of(furnitureSet.getCoreBlock()))
                             .unlockedBy("has_core_block", provider.has(furnitureSet.getCoreBlock()))
-                            .save(provider.output())
+                            .save(provider.output().withConditions(NeoForgeConditions.featureFlagsEnabled(FantasyFurniture.EXPERIMENTAL)))
                     )
                     // .require(WALL_SIGN)
     );
@@ -877,7 +908,7 @@ public interface BlockTypes {
             (furnitureSet, properties) -> new WallSignBlock(furnitureSet.woodType(), properties),
             builder -> builder
                     .baseBlock(() -> Blocks.OAK_WALL_SIGN)
-                    .blockProperties((furnitureSet, properties) -> properties.overrideLootTable(furnitureSet.getOrThrow(SIGN).getLootTable()))
+                    .blockProperties((furnitureSet, properties) -> properties.overrideLootTable(furnitureSet.getOrThrow(SIGN).getLootTable()).requiredFeatures(FantasyFurniture.EXPERIMENTAL))
                     .blockEntity(() -> BlockEntityType.SIGN)
                     .blockTags(BlockTags.WALL_SIGNS)
     );
