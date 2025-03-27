@@ -12,6 +12,8 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.flag.FeatureFlag;
+import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModList;
@@ -26,6 +28,10 @@ public final class FantasyFurniture {
     public static final TagKey<Item> FURNITURE_PLANKS = REGISTREE.tag(Registries.ITEM, "furniture_planks");
     public static final TagKey<Item> FURNITURE_WOOL = REGISTREE.tag(Registries.ITEM, "furniture_wool");
     public static final TagKey<Item> FURNITURE_BRICKS = REGISTREE.tag(Registries.ITEM, "furniture_bricks");
+
+    public static final ResourceLocation EXPERIMENTAL_FLAG_ID = identifier("experimental");
+    public static final String EXPERIMENTAL_FLAG_KEY = EXPERIMENTAL_FLAG_ID.toLanguageKey("feature_flag");
+    public static final FeatureFlag EXPERIMENTAL = FeatureFlags.REGISTRY.getFlag(EXPERIMENTAL_FLAG_ID);
 
     private static final Map<String, CtmPack> CTM_PACKS = Map.of(
             "athena", new CtmPack("ctm-athena", "Athena CTM"),
@@ -45,18 +51,28 @@ public final class FantasyFurniture {
                 .playToClient(ClientboundSyncFurnitureStation.TYPE, ClientboundSyncFurnitureStation.STREAM_CODEC, ClientboundSyncFurnitureStation::handle)
         );
 
-        modBus.addListener(AddPackFindersEvent.class, event -> CTM_PACKS.entrySet().stream()
-                .filter(entry -> ModList.get().isLoaded(entry.getKey()))
-                .map(Map.Entry::getValue)
-                .forEach(pack -> event.addPackFinders(
-                        identifier("packs/" + pack.packId),
-                        PackType.CLIENT_RESOURCES,
-                        Component.literal(pack.packName),
-                        PackSource.BUILT_IN,
-                        false,
-                        Pack.Position.TOP
-                ))
-        );
+        modBus.addListener(AddPackFindersEvent.class, event -> {
+            event.addPackFinders(
+                    EXPERIMENTAL_FLAG_ID.withPrefix("packs/"),
+                    PackType.SERVER_DATA,
+                    Component.translatable(EXPERIMENTAL_FLAG_KEY),
+                    PackSource.FEATURE,
+                    false,
+                    Pack.Position.TOP
+            );
+
+            CTM_PACKS.entrySet().stream()
+                    .filter(entry -> ModList.get().isLoaded(entry.getKey()))
+                    .map(Map.Entry::getValue)
+                    .forEach(pack -> event.addPackFinders(
+                            identifier("packs/" + pack.packId),
+                            PackType.CLIENT_RESOURCES,
+                            Component.literal(pack.packName),
+                            PackSource.BUILT_IN,
+                            false,
+                            Pack.Position.TOP
+                    ));
+        });
     }
 
     public static ResourceLocation identifier(String identifier) {

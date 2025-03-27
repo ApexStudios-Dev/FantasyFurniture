@@ -1,0 +1,13 @@
+{
+  "features": {
+    "enabled": [
+      "fantasyfurniture:experimental"
+    ]
+  },
+  "pack": {
+    "description": {
+      "translate": "feature_flag.fantasyfurniture.experimental.desc"
+    },
+    "pack_format": 71
+  }
+}
