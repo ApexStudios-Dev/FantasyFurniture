@@ -1,37 +1,37 @@
 name: Publish (Manual)
 
 on:
-    workflow_dispatch:
-        inputs:
-            modules:
-                description: Modules to publish (CSV)
-                type: string
-                required: true
-                default: main,nordic
-                options:
-                    - main
-                    - nordic
-                    - venthyr
-                    - bone
-                    - dunmer
-                    - necrolord
-                    - royal
-            release_type:
-                description: Mod release type
-                type: string
-                required: false
-                default: release
-                options:
-                    - release
-                    - beta
-                    - alpha
+  workflow_dispatch:
+    inputs:
+      modules:
+        description: Modules to publish (CSV)
+        type: string
+        required: true
+        default: main,nordic
+        options:
+          - main
+          - nordic
+          - venthyr
+          - bone
+          - dunmer
+          - necrolord
+          - royal
+      release_type:
+        description: Mod release type
+        type: string
+        required: false
+        default: release
+        options:
+          - release
+          - beta
+          - alpha
 
 jobs:
-    publish:
-        name: Publish
-        uses: ./.github/workflows/_publish-modules.yml
-        secrets: inherit
-        with:
-            modules: ${{ inputs.modules }}
-            release_type: ${{ inputs.release_type }}
-            is_manual: true
+  publish:
+    name: Publish
+    uses: ./.github/workflows/_publish-modules.yml
+    secrets: inherit
+    with:
+      modules: ${{ inputs.modules }}
+      release_type: ${{ inputs.release_type }}
+      is_manual: true
