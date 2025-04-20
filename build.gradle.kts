@@ -35,26 +35,6 @@ furnitureSets.forEach {
     fixJarName(sourceSet(it, ApexExtension.DATA_NAME), "$it-data")
 }
 
-tasks.register("publishModulesToMaven") {
-    val modules = (System.getenv("PUBLISH_MODULES") ?: "").split(",").filter(String::isNotBlank)
-    // modules.forEach { println("module: $it") }
-    val publishTaskNames = modules.map { "publish${if(it == "main") "" else it.capitalized()}ReleasePublicationToApexStudios-ReleasesRepository" }
-    // publishTaskNames.forEach { println("taskName: $it") }
-    val publishTasks = publishTaskNames.mapNotNull(tasks::findByName)
-    // publishTasks.forEach { println("task: ${it.name}") }
-    dependsOn(publishTasks)
-}
-
-tasks.register("publishModulesToPrivateMaven") {
-    val modules = mutableSetOf("main")
-    modules.addAll(furnitureSets)
-    val publishTaskNames = modules.map { "publish${if(it == "main") "" else it.capitalized()}ReleasePublicationToApexStudios-PrivateRepository" }
-    // publishTaskNames.forEach { println("taskName: $it") }
-    val publishTasks = publishTaskNames.mapNotNull(tasks::findByName)
-    // publishTasks.forEach { println("task: ${it.name}") }
-    dependsOn(publishTasks)
-}
-
 dependencies {
     implementation(libs.apexcore)
     "dataImplementation"(libs.apexcore)

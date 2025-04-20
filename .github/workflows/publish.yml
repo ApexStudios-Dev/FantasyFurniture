@@ -1,29 +1,32 @@
 name: Publish
 
 on:
+  workflow_dispatch:
   push:
-    branches: [ "**/main" ]
-    paths: [ "**/src/**" ]
+    branches: [ '**/main' ]
+    paths: [ '**/src/**' ]
 
 permissions:
   contents: read
   pull-requests: read
 
 jobs:
-  determine-module-changes:
-    name: Determine Module Changes
+  determine-changes:
+    name: Determine changes
     runs-on: ubuntu-latest
     outputs:
-      changes: ${{ steps.changes.outputs.changes }}
+      main-changed: ${{ steps.changes.outputs.main }}
+      nordic-changed: ${{ steps.changes.outputs.nordic }}
+      venthyr-changed: ${{ steps.changes.outputs.venthyr }}
+      bone-changed: ${{ steps.changes.outputs.bone }}
+      dunmer-changed: ${{ steps.changes.outputs.dunmer }}
+      necrolord-changed: ${{ steps.changes.outputs.necrolord }}
+      royal-changed: ${{ steps.changes.outputs.royal }}
     steps:
-      - name: Checkout Repository
-        uses: ApexStudios-Dev/.github/actions/checkout@master
-
-      - name: Determine module changes
-        uses: dorny/paths-filter@v3
+      - name: Determine changes
         id: changes
+        uses: dorny/paths-filter@v3
         with:
-          # base: HEAD # Uncomment for ACT testing
           filters: |
             main: [ 'src/**' ]
             nordic: [ 'nordic/**' ]
@@ -33,12 +36,121 @@ jobs:
             necrolord: [ 'necrolord/**' ]
             royal: [ 'royal/**' ]
 
-  publish:
-    name: Publish
-    needs: determine-module-changes
-    uses: ./.github/workflows/_publish-modules.yml
+  publish-main:
+    uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
+    needs: determine-changes
+    if: ${{ needs.determine-changes.outputs.main-changed == 'true' }}
     secrets: inherit
     with:
-      modules: ${{ needs.determine-module-changes.outputs.changes }}
-      release_type: release
-      is_manual: false
+      java-version: 21
+      java-vendor: temurin
+      publish-task: ':publishReleasePublicationToApexStudios-ReleasesRepository'
+      curseforge-id: '579564'
+      modrinth-id: 'A0nfCqYw'
+      artifact-id: fantasyfurniture
+      display-name: Fantasy's Furniture
+      release-type: release
+      logo-url: 'https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture/banner.png'
+      color: 0x97C6E7
+
+  publish-nordic:
+    uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
+    needs: determine-changes
+    if: ${{ needs.determine-changes.outputs.nordic-changed == 'true' }}
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      publish-task: ':publishNordicReleasePublicationToApexStudios-ReleasesRepository'
+      curseforge-id: '579564'
+      modrinth-id: 'A0nfCqYw'
+      artifact-id: fantasyfurniture-nordic
+      display-name: Fantasy's Furniture - Nordic
+      release-type: release
+      logo-url: 'https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture_nordic/banner.png'
+      color: 0x97C6E7
+
+  publish-venthyr:
+    uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
+    needs: determine-changes
+    if: ${{ needs.determine-changes.outputs.venthyr-changed == 'true' }}
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      publish-task: ':publishVenthyrReleasePublicationToApexStudios-ReleasesRepository'
+      curseforge-id: '579564'
+      modrinth-id: 'A0nfCqYw'
+      artifact-id: fantasyfurniture-venthyr
+      display-name: Fantasy's Furniture - Venthyr
+      release-type: release
+      logo-url: 'https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture_venthyr/banner.png'
+      color: 0xEB8080
+
+  publish-bone:
+    uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
+    needs: determine-changes
+    if: ${{ needs.determine-changes.outputs.bone-changed == 'true' }}
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      publish-task: ':publishBoneReleasePublicationToApexStudios-ReleasesRepository'
+      curseforge-id: '579564'
+      modrinth-id: 'A0nfCqYw'
+      artifact-id: fantasyfurniture-bone
+      display-name: Fantasy's Furniture - Bone
+      release-type: release
+      logo-url: 'https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture_bone/banner.png'
+      color: 0xFFF9E4
+
+  publish-dunmer:
+    uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
+    needs: determine-changes
+    if: ${{ needs.determine-changes.outputs.dunmer-changed == 'true' }}
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      publish-task: ':publishDunmerReleasePublicationToApexStudios-ReleasesRepository'
+      curseforge-id: '579564'
+      modrinth-id: 'A0nfCqYw'
+      artifact-id: fantasyfurniture-dunmer
+      display-name: Fantasy's Furniture - Dunmer
+      release-type: release
+      logo-url: 'https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture_dunmer/banner.png'
+      color: 0x94DC8A
+
+  publish-necrolord:
+    uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
+    needs: determine-changes
+    if: ${{ needs.determine-changes.outputs.necrolord-changed == 'true' }}
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      publish-task: ':publishNecrolordReleasePublicationToApexStudios-ReleasesRepository'
+      curseforge-id: '579564'
+      modrinth-id: 'A0nfCqYw'
+      artifact-id: fantasyfurniture-necrolord
+      display-name: Fantasy's Furniture - Necrolord
+      release-type: release
+      logo-url: 'https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture_necrolord/banner.png'
+      color: 0xB297E7
+
+  publish-royal:
+    uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
+    needs: determine-changes
+    if: ${{ needs.determine-changes.outputs.royal-changed == 'true' }}
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      publish-task: ':publishRoyalReleasePublicationToApexStudios-ReleasesRepository'
+      curseforge-id: '579564'
+      modrinth-id: 'A0nfCqYw'
+      artifact-id: fantasyfurniture-royal
+      display-name: Fantasy's Furniture - Royal
+      release-type: release
+      logo-url: 'https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture_royal/banner.png'
+      color: 0xFFE88E

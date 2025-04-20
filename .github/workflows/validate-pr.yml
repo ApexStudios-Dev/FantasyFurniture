@@ -1,0 +1,272 @@
+name: Test PR
+
+on:
+  pull_request_target:
+    types:
+      - synchronize
+      - opened
+      - ready_for_review
+      - reopened
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  generate-vars:
+    name: Generate Vars
+    uses: ApexStudios-Dev/.github/.github/workflows/_generate-vars.yml@master
+    secrets: inherit
+
+  determine-changes:
+    name: Determine changes
+    runs-on: ubuntu-latest
+    outputs:
+      nordic-changed: ${{ steps.changes.outputs.nordic }}
+      venthyr-changed: ${{ steps.changes.outputs.venthyr }}
+      bone-changed: ${{ steps.changes.outputs.bone }}
+      dunmer-changed: ${{ steps.changes.outputs.dunmer }}
+      necrolord-changed: ${{ steps.changes.outputs.necrolord }}
+      royal-changed: ${{ steps.changes.outputs.royal }}
+    steps:
+      - name: Determine changes
+        id: changes
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            nordic: [ 'nordic/**' ]
+            venthyr: [ 'venthyr/**' ]
+            bone: [ 'bone/**' ]
+            dunmer: [ 'dunmer/**' ]
+            necrolord: [ 'necrolord/**' ]
+            royal: [ 'royal/**' ]
+
+  build:
+    name: Build
+    needs: generate-vars
+    if: success()
+    uses: ApexStudios-Dev/.github/.github/workflows/_build.yml@master
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      version: ${{ needs.generate-vars.outputs.version }}
+
+  check-local-changes-main:
+    name: Check local changes (Main)
+    needs: [ generate-vars, determine-changes, build ]
+    if: success()
+    uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      version: ${{ needs.generate-vars.outputs.version }}
+      data-task: ':runData'
+
+  check-local-changes-nordic:
+    name: Check local changes (Nordic)
+    needs: [ generate-vars, determine-changes, build ]
+    if: ${{ success() && needs.determine-changes.outputs.nordic-changed == 'true' }}
+    uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      version: ${{ needs.generate-vars.outputs.version }}
+      data-task: ':runNordicData'
+
+  check-local-changes-venthyr:
+    name: Check local changes (Venthyr)
+    needs: [ generate-vars, determine-changes, build ]
+    if: ${{ success() && needs.determine-changes.outputs.venthyr-changed == 'true' }}
+    uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      version: ${{ needs.generate-vars.outputs.version }}
+      data-task: ':runVenthyrData'
+
+  check-local-changes-bone:
+    name: Check local changes (Bone)
+    needs: [ generate-vars, determine-changes, build ]
+    if: ${{ success() && needs.determine-changes.outputs.bone-changed == 'true' }}
+    uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      version: ${{ needs.generate-vars.outputs.version }}
+      data-task: ':runBoneData'
+
+  check-local-changes-dunmer:
+    name: Check local changes (Dunmer)
+    needs: [ generate-vars, determine-changes, build ]
+    if: ${{ success() && needs.determine-changes.outputs.dunmer-changed == 'true' }}
+    uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      version: ${{ needs.generate-vars.outputs.version }}
+      data-task: ':runDunmerData'
+
+  check-local-changes-necrolord:
+    name: Check local changes (Necrolord)
+    needs: [ generate-vars, determine-changes, build ]
+    if: ${{ success() && needs.determine-changes.outputs.necrolord-changed == 'true' }}
+    uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      version: ${{ needs.generate-vars.outputs.version }}
+      data-task: ':runNecrolordData'
+
+  check-local-changes-royal:
+    name: Check local changes (Royal)
+    needs: [ generate-vars, determine-changes, build ]
+    if: ${{ success() && needs.determine-changes.outputs.royal-changed == 'true' }}
+    uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      version: ${{ needs.generate-vars.outputs.version }}
+      data-task: ':runRoyalData'
+
+  publish-maven-main:
+    name: Publish Maven (Main)
+    needs: [ generate-vars, determine-changes, build, check-local-changes-main ]
+    if: success()
+    uses: ApexStudios-Dev/.github/.github/workflows/_publish-maven.yml@master
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      version: ${{ needs.generate-vars.outputs.version }}
+      publish-task: ':publishReleasePublicationToApexStudios-PrivateRepository'
+
+  publish-maven-nordic:
+    name: Publish Maven (Nordic)
+    needs: [ generate-vars, determine-changes, build, check-local-changes-nordic ]
+    if: ${{ success() && needs.determine-changes.outputs.nordic-changed == 'true' }}
+    uses: ApexStudios-Dev/.github/.github/workflows/_publish-maven.yml@master
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      version: ${{ needs.generate-vars.outputs.version }}
+      publish-task: ':publishNordicReleasePublicationToApexStudios-PrivateRepository'
+
+  publish-maven-venthyr:
+    name: Publish Maven (Venthyr)
+    needs: [ generate-vars, determine-changes, build, check-local-changes-venthyr ]
+    if: ${{ success() && needs.determine-changes.outputs.venthyr-changed == 'true' }}
+    uses: ApexStudios-Dev/.github/.github/workflows/_publish-maven.yml@master
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      version: ${{ needs.generate-vars.outputs.version }}
+      publish-task: ':publishVenthyrReleasePublicationToApexStudios-PrivateRepository'
+
+  publish-maven-bone:
+    name: Publish Maven (Bone)
+    needs: [ generate-vars, determine-changes, build, check-local-changes-bone ]
+    if: ${{ success() && needs.determine-changes.outputs.bone-changed == 'true' }}
+    uses: ApexStudios-Dev/.github/.github/workflows/_publish-maven.yml@master
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      version: ${{ needs.generate-vars.outputs.version }}
+      publish-task: ':publishBoneReleasePublicationToApexStudios-PrivateRepository'
+
+  publish-maven-dunmer:
+    name: Publish Maven (Dunmer)
+    needs: [ generate-vars, determine-changes, build, check-local-changes-dunmer ]
+    if: ${{ success() && needs.determine-changes.outputs.dunmer-changed == 'true' }}
+    uses: ApexStudios-Dev/.github/.github/workflows/_publish-maven.yml@master
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      version: ${{ needs.generate-vars.outputs.version }}
+      publish-task: ':publishDunmerReleasePublicationToApexStudios-PrivateRepository'
+
+  publish-maven-necrolord:
+    name: Publish Maven (Necrolord)
+    needs: [ generate-vars, determine-changes, build, check-local-changes-necrolord ]
+    if: ${{ success() && needs.determine-changes.outputs.necrolord-changed == 'true' }}
+    uses: ApexStudios-Dev/.github/.github/workflows/_publish-maven.yml@master
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      version: ${{ needs.generate-vars.outputs.version }}
+      publish-task: ':publishNecrolordReleasePublicationToApexStudios-PrivateRepository'
+
+  publish-maven-royal:
+    name: Publish Maven (Royal)
+    needs: [ generate-vars, determine-changes, build, check-local-changes-royal ]
+    if: ${{ success() && needs.determine-changes.outputs.royal-changed == 'true' }}
+    uses: ApexStudios-Dev/.github/.github/workflows/_publish-maven.yml@master
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      version: ${{ needs.generate-vars.outputs.version }}
+      publish-task: ':publishRoyalReleasePublicationToApexStudios-PrivateRepository'
+
+  test:
+    name: Test Production
+    runs-on: apexstudios
+    needs: [ generate-vars, determine-changes, publish-maven-main, publish-maven-nordic, publish-maven-venthyr, publish-maven-bone, publish-maven-dunmer, publish-maven-necrolord, publish-maven-royal ]
+    if: always()
+    steps:
+      - name: Prepare Environment
+        run: |
+          mkdir mods
+          wget -O "mods/apexcore-$APEXCORE_VERSION.jar" "https://maven.apexstudios.dev/private/dev/apexstudios/apexcore/$APEXCORE_VERSION/apexcore-$APEXCORE_VERSION.jar"
+          wget -O "mods/fantasyfurniture-${{ needs.generate-vars.outputs.version }}.jar" "https://maven.apexstudios.dev/private/dev/apexstudios/fantasyfurniture/${{ needs.generate-vars.outputs.version }}/fantasyfurniture-${{ needs.generate-vars.outputs.version }}.jar"
+
+          if [[ "$NORDIC_CHANGED" == "true" ]]; then
+            wget -O "mods/fantasyfurniture-nordic-${{ needs.generate-vars.outputs.version }}.jar" "https://maven.apexstudios.dev/private/dev/apexstudios/fantasyfurniture-nordic/${{ needs.generate-vars.outputs.version }}/fantasyfurniture-nordic-${{ needs.generate-vars.outputs.version }}.jar"
+          fi
+
+          if [[ "$VENTHYR_CHANGED" == "true" ]]; then
+            wget -O "mods/fantasyfurniture-venthyr-${{ needs.generate-vars.outputs.version }}.jar" "https://maven.apexstudios.dev/private/dev/apexstudios/fantasyfurniture-venthyr/${{ needs.generate-vars.outputs.version }}/fantasyfurniture-venthyr-${{ needs.generate-vars.outputs.version }}.jar"
+          fi
+
+          if [[ "$BONE_CHANGED" == "true" ]]; then
+            wget -O "mods/fantasyfurniture-bone-${{ needs.generate-vars.outputs.version }}.jar" "https://maven.apexstudios.dev/private/dev/apexstudios/fantasyfurniture-bone/${{ needs.generate-vars.outputs.version }}/fantasyfurniture-bone-${{ needs.generate-vars.outputs.version }}.jar"
+          fi
+
+          if [[ "$DUNMER_CHANGED" == "true" ]]; then
+            wget -O "mods/fantasyfurniture-dunmer-${{ needs.generate-vars.outputs.version }}.jar" "https://maven.apexstudios.dev/private/dev/apexstudios/fantasyfurniture-dunmer/${{ needs.generate-vars.outputs.version }}/fantasyfurniture-dunmer-${{ needs.generate-vars.outputs.version }}.jar"
+          fi
+
+          if [[ "$NECROLORD_CHANGED" == "true" ]]; then
+            wget -O "mods/fantasyfurniture-necrolord-${{ needs.generate-vars.outputs.version }}.jar" "https://maven.apexstudios.dev/private/dev/apexstudios/fantasyfurniture-necrolord/${{ needs.generate-vars.outputs.version }}/fantasyfurniture-necrolord-${{ needs.generate-vars.outputs.version }}.jar"
+          fi
+
+          if [[ "$ROYAL_CHANGED" == "true" ]]; then
+            wget -O "mods/fantasyfurniture-royal-${{ needs.generate-vars.outputs.version }}.jar" "https://maven.apexstudios.dev/private/dev/apexstudios/fantasyfurniture-royal/${{ needs.generate-vars.outputs.version }}/fantasyfurniture-royal-${{ needs.generate-vars.outputs.version }}.jar"
+          fi
+        env:
+          APEXCORE_VERSION: 21.5.3
+          NORDIC_CHANGED: ${{ needs.determine-changes.outputs.nordic-changed }}
+          VENTHYR_CHANGED: ${{ needs.determine-changes.outputs.venthyr-changed }}
+          BONE_CHANGED: ${{ needs.determine-changes.outputs.bone-changed }}
+          DUNMER_CHANGED: ${{ needs.determine-changes.outputs.dunmer-changed }}
+          NECROLORD_CHANGED: ${{ needs.determine-changes.outputs.necrolord-changed }}
+          ROYAL_CHANGED: ${{ needs.determine-changes.outputs.royal-changed }}
+
+      - name: Test Production Server
+        uses: ApexStudios-Dev/.github/actions/test-production-server@master
+        with:
+          java-version: 21
+          java-vendor: temurin
+          neoforge-version: 21.5.34-beta
