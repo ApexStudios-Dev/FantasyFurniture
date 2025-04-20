@@ -146,7 +146,7 @@ jobs:
       java-version: 21
       java-vendor: temurin
       version: ${{ needs.generate-vars.outputs.version }}
-      publish-task: ':publishReleasePublicationTo-PrivateRepository'
+      publish-task: ':publishReleasePublicationToApexStudios-PrivateRepository'
 
   publish-maven-nordic:
     name: Publish Maven (Nordic)
@@ -158,7 +158,7 @@ jobs:
       java-version: 21
       java-vendor: temurin
       version: ${{ needs.generate-vars.outputs.version }}
-      publish-task: ':publishNordicReleasePublicationTo-PrivateRepository'
+      publish-task: ':publishNordicReleasePublicationToApexStudios-PrivateRepository'
 
   publish-maven-venthyr:
     name: Publish Maven (Venthyr)
@@ -170,7 +170,7 @@ jobs:
       java-version: 21
       java-vendor: temurin
       version: ${{ needs.generate-vars.outputs.version }}
-      publish-task: ':publishVenthyrReleasePublicationTo-PrivateRepository'
+      publish-task: ':publishVenthyrReleasePublicationToApexStudios-PrivateRepository'
 
   publish-maven-bone:
     name: Publish Maven (Bone)
@@ -182,7 +182,7 @@ jobs:
       java-version: 21
       java-vendor: temurin
       version: ${{ needs.generate-vars.outputs.version }}
-      publish-task: ':publishBoneReleasePublicationTo-PrivateRepository'
+      publish-task: ':publishBoneReleasePublicationToApexStudios-PrivateRepository'
 
   publish-maven-dunmer:
     name: Publish Maven (Dunmer)
@@ -194,7 +194,7 @@ jobs:
       java-version: 21
       java-vendor: temurin
       version: ${{ needs.generate-vars.outputs.version }}
-      publish-task: ':publishDunmerReleasePublicationTo-PrivateRepository'
+      publish-task: ':publishDunmerReleasePublicationToApexStudios-PrivateRepository'
 
   publish-maven-necrolord:
     name: Publish Maven (Necrolord)
@@ -206,7 +206,7 @@ jobs:
       java-version: 21
       java-vendor: temurin
       version: ${{ needs.generate-vars.outputs.version }}
-      publish-task: ':publishNecrolordReleasePublicationTo-PrivateRepository'
+      publish-task: ':publishNecrolordReleasePublicationToApexStudios-PrivateRepository'
 
   publish-maven-royal:
     name: Publish Maven (Royal)
@@ -218,7 +218,7 @@ jobs:
       java-version: 21
       java-vendor: temurin
       version: ${{ needs.generate-vars.outputs.version }}
-      publish-task: ':publishRoyalReleasePublicationTo-PrivateRepository'
+      publish-task: ':publishRoyalReleasePublicationToApexStudios-PrivateRepository'
 
   test:
     name: Test Production
