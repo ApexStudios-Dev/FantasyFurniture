@@ -22,7 +22,6 @@ jobs:
     name: Generate Tasks
     runs-on: ubuntu-latest
     outputs:
-      main-changed: ${{ steps.changes.outputs.main }}
       nordic-changed: ${{ steps.changes.outputs.nordic }}
       venthyr-changed: ${{ steps.changes.outputs.venthyr }}
       bone-changed: ${{ steps.changes.outputs.bone }}
@@ -35,37 +34,12 @@ jobs:
         uses: dorny/paths-filter@v3
         with:
           filters: |
-            main: [ 'src/**' ]
             nordic: [ 'nordic/**' ]
             venthyr: [ 'venthyr/**' ]
             bone: [ 'bone/**' ]
             dunmer: [ 'dunmer/**' ]
             necrolord: [ 'necrolord/**' ]
             royal: [ 'royal/**' ]
-
-  print:
-    name: Print
-    runs-on: ubuntu-latest
-    needs: generate-tasks
-    if: success()
-    steps:
-      - name: Print
-        run: |
-          echo Main: $MAIN_CHANGED
-          echo Nordic: $NORDIC_CHANGED
-          echo Venthyr: $VENTHYR_CHANGED
-          echo Bone: $BONE_CHANGED
-          echo Dunmer: $DUNMER_CHANGED
-          echo Necrolord: $NECROLORD_CHANGED
-          echo Royal: $ROYAL_CHANGED
-        env:
-          MAIN_CHANGED: ${{ needs.generate-tasks.outputs.main-changed }}
-          NORDIC_CHANGED: ${{ needs.generate-tasks.outputs.nordic-changed }}
-          VENTHYR_CHANGED: ${{ needs.generate-tasks.outputs.venthyr-changed }}
-          BONE_CHANGED: ${{ needs.generate-tasks.outputs.bone-changed }}
-          DUNMER_CHANGED: ${{ needs.generate-tasks.outputs.dunmer-changed }}
-          NECROLORD_CHANGED: ${{ needs.generate-tasks.outputs.necrolord-changed }}
-          ROYAL_CHANGED: ${{ needs.generate-tasks.outputs.royal-changed }}
 
   build:
     name: Build
@@ -81,7 +55,7 @@ jobs:
   check-local-changes-main:
     name: Check local changes (Main)
     needs: [ generate-vars, generate-tasks, build ]
-    if: ${{ success() && needs.generate-tasks.outputs.main-changed == 'true' }}
+    if: success()
     uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
     secrets: inherit
     with:
