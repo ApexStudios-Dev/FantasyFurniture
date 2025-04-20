@@ -56,7 +56,7 @@ jobs:
       artifact-id: fantasyfurniture
       display-name: Fantasy's Furniture
       release-type: release
-      logo-url: 'https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture/logo.png'
+      logo-url: 'https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture/banner.png'
       color: 0x97C6E7
 
   publish-nordic:
