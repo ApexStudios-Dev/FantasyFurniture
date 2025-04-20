@@ -23,6 +23,9 @@ jobs:
       necrolord-changed: ${{ steps.changes.outputs.necrolord }}
       royal-changed: ${{ steps.changes.outputs.royal }}
     steps:
+      - name: Checkout Repository
+        uses: ApexStudios-Dev/.github/actions/checkout@master
+
       - name: Determine changes
         id: changes
         uses: dorny/paths-filter@v3
