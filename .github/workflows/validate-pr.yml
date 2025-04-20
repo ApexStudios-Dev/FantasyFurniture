@@ -224,6 +224,7 @@ jobs:
     name: Test Production
     runs-on: apexstudios
     needs: [ generate-vars, generate-tasks, publish-maven-main, publish-maven-nordic, publish-maven-venthyr, publish-maven-bone, publish-maven-dunmer, publish-maven-necrolord, publish-maven-royal ]
+    if: always()
     steps:
       - name: Prepare Environment
         run: |
