@@ -18,8 +18,8 @@ jobs:
     uses: ApexStudios-Dev/.github/.github/workflows/_generate-vars.yml@master
     secrets: inherit
 
-  generate-tasks:
-    name: Generate Tasks
+  determine-changes:
+    name: Determine changes
     runs-on: ubuntu-latest
     outputs:
       nordic-changed: ${{ steps.changes.outputs.nordic }}
@@ -54,7 +54,7 @@ jobs:
 
   check-local-changes-main:
     name: Check local changes (Main)
-    needs: [ generate-vars, generate-tasks, build ]
+    needs: [ generate-vars, determine-changes, build ]
     if: success()
     uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
     secrets: inherit
@@ -66,8 +66,8 @@ jobs:
 
   check-local-changes-nordic:
     name: Check local changes (Nordic)
-    needs: [ generate-vars, generate-tasks, build ]
-    if: ${{ success() && needs.generate-tasks.outputs.nordic-changed == 'true' }}
+    needs: [ generate-vars, determine-changes, build ]
+    if: ${{ success() && needs.determine-changes.outputs.nordic-changed == 'true' }}
     uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
     secrets: inherit
     with:
@@ -78,8 +78,8 @@ jobs:
 
   check-local-changes-venthyr:
     name: Check local changes (Venthyr)
-    needs: [ generate-vars, generate-tasks, build ]
-    if: ${{ success() && needs.generate-tasks.outputs.venthyr-changed == 'true' }}
+    needs: [ generate-vars, determine-changes, build ]
+    if: ${{ success() && needs.determine-changes.outputs.venthyr-changed == 'true' }}
     uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
     secrets: inherit
     with:
@@ -90,8 +90,8 @@ jobs:
 
   check-local-changes-bone:
     name: Check local changes (Bone)
-    needs: [ generate-vars, generate-tasks, build ]
-    if: ${{ success() && needs.generate-tasks.outputs.bone-changed == 'true' }}
+    needs: [ generate-vars, determine-changes, build ]
+    if: ${{ success() && needs.determine-changes.outputs.bone-changed == 'true' }}
     uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
     secrets: inherit
     with:
@@ -102,8 +102,8 @@ jobs:
 
   check-local-changes-dunmer:
     name: Check local changes (Dunmer)
-    needs: [ generate-vars, generate-tasks, build ]
-    if: ${{ success() && needs.generate-tasks.outputs.dunmer-changed == 'true' }}
+    needs: [ generate-vars, determine-changes, build ]
+    if: ${{ success() && needs.determine-changes.outputs.dunmer-changed == 'true' }}
     uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
     secrets: inherit
     with:
@@ -114,8 +114,8 @@ jobs:
 
   check-local-changes-necrolord:
     name: Check local changes (Necrolord)
-    needs: [ generate-vars, generate-tasks, build ]
-    if: ${{ success() && needs.generate-tasks.outputs.necrolord-changed == 'true' }}
+    needs: [ generate-vars, determine-changes, build ]
+    if: ${{ success() && needs.determine-changes.outputs.necrolord-changed == 'true' }}
     uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
     secrets: inherit
     with:
@@ -126,8 +126,8 @@ jobs:
 
   check-local-changes-royal:
     name: Check local changes (Royal)
-    needs: [ generate-vars, generate-tasks, build ]
-    if: ${{ success() && needs.generate-tasks.outputs.royal-changed == 'true' }}
+    needs: [ generate-vars, determine-changes, build ]
+    if: ${{ success() && needs.determine-changes.outputs.royal-changed == 'true' }}
     uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
     secrets: inherit
     with:
@@ -138,7 +138,7 @@ jobs:
 
   publish-maven-main:
     name: Publish Maven (Main)
-    needs: [ generate-vars, generate-tasks, build, check-local-changes-main ]
+    needs: [ generate-vars, determine-changes, build, check-local-changes-main ]
     if: success()
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-maven.yml@master
     secrets: inherit
@@ -150,8 +150,8 @@ jobs:
 
   publish-maven-nordic:
     name: Publish Maven (Nordic)
-    needs: [ generate-vars, generate-tasks, build, check-local-changes-nordic ]
-    if: ${{ success() && needs.generate-tasks.outputs.nordic-changed == 'true' }}
+    needs: [ generate-vars, determine-changes, build, check-local-changes-nordic ]
+    if: ${{ success() && needs.determine-changes.outputs.nordic-changed == 'true' }}
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-maven.yml@master
     secrets: inherit
     with:
@@ -162,8 +162,8 @@ jobs:
 
   publish-maven-venthyr:
     name: Publish Maven (Venthyr)
-    needs: [ generate-vars, generate-tasks, build, check-local-changes-venthyr ]
-    if: ${{ success() && needs.generate-tasks.outputs.venthyr-changed == 'true' }}
+    needs: [ generate-vars, determine-changes, build, check-local-changes-venthyr ]
+    if: ${{ success() && needs.determine-changes.outputs.venthyr-changed == 'true' }}
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-maven.yml@master
     secrets: inherit
     with:
@@ -174,8 +174,8 @@ jobs:
 
   publish-maven-bone:
     name: Publish Maven (Bone)
-    needs: [ generate-vars, generate-tasks, build, check-local-changes-bone ]
-    if: ${{ success() && needs.generate-tasks.outputs.bone-changed == 'true' }}
+    needs: [ generate-vars, determine-changes, build, check-local-changes-bone ]
+    if: ${{ success() && needs.determine-changes.outputs.bone-changed == 'true' }}
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-maven.yml@master
     secrets: inherit
     with:
@@ -186,8 +186,8 @@ jobs:
 
   publish-maven-dunmer:
     name: Publish Maven (Dunmer)
-    needs: [ generate-vars, generate-tasks, build, check-local-changes-dunmer ]
-    if: ${{ success() && needs.generate-tasks.outputs.dunmer-changed == 'true' }}
+    needs: [ generate-vars, determine-changes, build, check-local-changes-dunmer ]
+    if: ${{ success() && needs.determine-changes.outputs.dunmer-changed == 'true' }}
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-maven.yml@master
     secrets: inherit
     with:
@@ -198,8 +198,8 @@ jobs:
 
   publish-maven-necrolord:
     name: Publish Maven (Necrolord)
-    needs: [ generate-vars, generate-tasks, build, check-local-changes-necrolord ]
-    if: ${{ success() && needs.generate-tasks.outputs.necrolord-changed == 'true' }}
+    needs: [ generate-vars, determine-changes, build, check-local-changes-necrolord ]
+    if: ${{ success() && needs.determine-changes.outputs.necrolord-changed == 'true' }}
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-maven.yml@master
     secrets: inherit
     with:
@@ -210,8 +210,8 @@ jobs:
 
   publish-maven-royal:
     name: Publish Maven (Royal)
-    needs: [ generate-vars, generate-tasks, build, check-local-changes-royal ]
-    if: ${{ success() && needs.generate-tasks.outputs.royal-changed == 'true' }}
+    needs: [ generate-vars, determine-changes, build, check-local-changes-royal ]
+    if: ${{ success() && needs.determine-changes.outputs.royal-changed == 'true' }}
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-maven.yml@master
     secrets: inherit
     with:
@@ -223,7 +223,7 @@ jobs:
   test:
     name: Test Production
     runs-on: apexstudios
-    needs: [ generate-vars, generate-tasks, publish-maven-main, publish-maven-nordic, publish-maven-venthyr, publish-maven-bone, publish-maven-dunmer, publish-maven-necrolord, publish-maven-royal ]
+    needs: [ generate-vars, determine-changes, publish-maven-main, publish-maven-nordic, publish-maven-venthyr, publish-maven-bone, publish-maven-dunmer, publish-maven-necrolord, publish-maven-royal ]
     if: always()
     steps:
       - name: Prepare Environment
@@ -257,12 +257,12 @@ jobs:
           fi
         env:
           APEXCORE_VERSION: 21.5.3
-          NORDIC_CHANGED: ${{ needs.generate-tasks.outputs.nordic-changed }}
-          VENTHYR_CHANGED: ${{ needs.generate-tasks.outputs.venthyr-changed }}
-          BONE_CHANGED: ${{ needs.generate-tasks.outputs.bone-changed }}
-          DUNMER_CHANGED: ${{ needs.generate-tasks.outputs.dunmer-changed }}
-          NECROLORD_CHANGED: ${{ needs.generate-tasks.outputs.necrolord-changed }}
-          ROYAL_CHANGED: ${{ needs.generate-tasks.outputs.royal-changed }}
+          NORDIC_CHANGED: ${{ needs.determine-changes.outputs.nordic-changed }}
+          VENTHYR_CHANGED: ${{ needs.determine-changes.outputs.venthyr-changed }}
+          BONE_CHANGED: ${{ needs.determine-changes.outputs.bone-changed }}
+          DUNMER_CHANGED: ${{ needs.determine-changes.outputs.dunmer-changed }}
+          NECROLORD_CHANGED: ${{ needs.determine-changes.outputs.necrolord-changed }}
+          ROYAL_CHANGED: ${{ needs.determine-changes.outputs.royal-changed }}
 
       - name: Test Production Server
         uses: ApexStudios-Dev/.github/actions/test-production-server@master
