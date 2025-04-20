@@ -336,7 +336,7 @@ public interface BlockTypes {
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> {
                         doorModel(block, models);
-                        ModelUtil.registerBlockItemModel(block, models);
+                        models.registerSimpleFlatItemModel(block.asItem());
                     })
                     .translation("Door Single")
                     .blockTags(BlockTags.WOODEN_DOORS, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
@@ -355,7 +355,7 @@ public interface BlockTypes {
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
                     .model(() -> (context, models, furnitureSet, block) -> {
                         doorModel(block, models);
-                        ModelUtil.registerBlockItemModel(block, models);
+                        models.registerSimpleFlatItemModel(block.asItem());
                     })
                     .translation("Door Double")
                     .blockTags(BlockTags.WOODEN_DOORS, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
