@@ -146,7 +146,7 @@ public final class RoyalFurnitureSetClientSetup {
 
     static void doorModel(ProviderListenerContext context, BlockModelGenerators models, FurnitureSet furnitureSet, FurnitureDoorBlockComponentHolder block) {
         BlockTypes.doorModel(block, models);
-        dyeableItemModel(block, ModelLocationUtils.getModelLocation(block.asItem()), models);
+        dyeableItemModel(block, models.createFlatItemModel(block.asItem()), models);
     }
 
     static void drawerModel(ProviderListenerContext context, BlockModelGenerators models, FurnitureSet furnitureSet, DrawerBlock block) {
