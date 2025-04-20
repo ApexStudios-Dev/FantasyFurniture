@@ -1,12 +1,6 @@
 name: Publish
 
 on:
-  pull_request:
-    types:
-      - synchronize
-      - opened
-      - ready_for_review
-      - reopened
   workflow_dispatch:
   push:
     branches: [ '**/main' ]
@@ -45,14 +39,14 @@ jobs:
   publish-main:
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
     needs: determine-changes
-#    if: ${{ needs.determine-changes.outputs.main-changed == 'true' }}
+    if: ${{ needs.determine-changes.outputs.main-changed == 'true' }}
     secrets: inherit
     with:
       java-version: 21
       java-vendor: temurin
       publish-task: ':publishReleasePublicationToApexStudios-ReleasesRepository'
-      curseforge-id: '835372' # '579564'
-      modrinth-id: 'EjjiYArZ' # 'A0nfCqYw'
+      curseforge-id: '579564'
+      modrinth-id: 'A0nfCqYw'
       artifact-id: fantasyfurniture
       display-name: Fantasy's Furniture
       release-type: release
@@ -62,14 +56,14 @@ jobs:
   publish-nordic:
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
     needs: determine-changes
-#    if: ${{ needs.determine-changes.outputs.nordic-changed == 'true' }}
+    if: ${{ needs.determine-changes.outputs.nordic-changed == 'true' }}
     secrets: inherit
     with:
       java-version: 21
       java-vendor: temurin
       publish-task: ':publishNordicReleasePublicationToApexStudios-ReleasesRepository'
-      curseforge-id: '835372' # '579564'
-      modrinth-id: 'EjjiYArZ' # 'A0nfCqYw'
+      curseforge-id: '579564'
+      modrinth-id: 'A0nfCqYw'
       artifact-id: fantasyfurniture-nordic
       display-name: Fantasy's Furniture - Nordic
       release-type: release
@@ -79,14 +73,14 @@ jobs:
   publish-venthyr:
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
     needs: determine-changes
-#    if: ${{ needs.determine-changes.outputs.venthyr-changed == 'true' }}
+    if: ${{ needs.determine-changes.outputs.venthyr-changed == 'true' }}
     secrets: inherit
     with:
       java-version: 21
       java-vendor: temurin
       publish-task: ':publishVenthyrReleasePublicationToApexStudios-ReleasesRepository'
-      curseforge-id: '835372' # '579564'
-      modrinth-id: 'EjjiYArZ' # 'A0nfCqYw'
+      curseforge-id: '579564'
+      modrinth-id: 'A0nfCqYw'
       artifact-id: fantasyfurniture-venthyr
       display-name: Fantasy's Furniture - Venthyr
       release-type: release
@@ -96,14 +90,14 @@ jobs:
   publish-bone:
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
     needs: determine-changes
-#    if: ${{ needs.determine-changes.outputs.bone-changed == 'true' }}
+    if: ${{ needs.determine-changes.outputs.bone-changed == 'true' }}
     secrets: inherit
     with:
       java-version: 21
       java-vendor: temurin
       publish-task: ':publishBoneReleasePublicationToApexStudios-ReleasesRepository'
-      curseforge-id: '835372' # '579564'
-      modrinth-id: 'EjjiYArZ' # 'A0nfCqYw'
+      curseforge-id: '579564'
+      modrinth-id: 'A0nfCqYw'
       artifact-id: fantasyfurniture-bone
       display-name: Fantasy's Furniture - Bone
       release-type: release
@@ -113,14 +107,14 @@ jobs:
   publish-dunmer:
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
     needs: determine-changes
-#    if: ${{ needs.determine-changes.outputs.dunmer-changed == 'true' }}
+    if: ${{ needs.determine-changes.outputs.dunmer-changed == 'true' }}
     secrets: inherit
     with:
       java-version: 21
       java-vendor: temurin
       publish-task: ':publishDunmerReleasePublicationToApexStudios-ReleasesRepository'
-      curseforge-id: '835372' # '579564'
-      modrinth-id: 'EjjiYArZ' # 'A0nfCqYw'
+      curseforge-id: '579564'
+      modrinth-id: 'A0nfCqYw'
       artifact-id: fantasyfurniture-dunmer
       display-name: Fantasy's Furniture - Dunmer
       release-type: release
@@ -130,14 +124,14 @@ jobs:
   publish-necrolord:
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
     needs: determine-changes
-#    if: ${{ needs.determine-changes.outputs.necrolord-changed == 'true' }}
+    if: ${{ needs.determine-changes.outputs.necrolord-changed == 'true' }}
     secrets: inherit
     with:
       java-version: 21
       java-vendor: temurin
       publish-task: ':publishNecrolordReleasePublicationToApexStudios-ReleasesRepository'
-      curseforge-id: '835372' # '579564'
-      modrinth-id: 'EjjiYArZ' # 'A0nfCqYw'
+      curseforge-id: '579564'
+      modrinth-id: 'A0nfCqYw'
       artifact-id: fantasyfurniture-necrolord
       display-name: Fantasy's Furniture - Necrolord
       release-type: release
@@ -147,14 +141,14 @@ jobs:
   publish-royal:
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
     needs: determine-changes
-#    if: ${{ needs.determine-changes.outputs.royal-changed == 'true' }}
+    if: ${{ needs.determine-changes.outputs.royal-changed == 'true' }}
     secrets: inherit
     with:
       java-version: 21
       java-vendor: temurin
       publish-task: ':publishRoyalReleasePublicationToApexStudios-ReleasesRepository'
-      curseforge-id: '835372' # '579564'
-      modrinth-id: 'EjjiYArZ' # 'A0nfCqYw'
+      curseforge-id: '579564'
+      modrinth-id: 'A0nfCqYw'
       artifact-id: fantasyfurniture-royal
       display-name: Fantasy's Furniture - Royal
       release-type: release
