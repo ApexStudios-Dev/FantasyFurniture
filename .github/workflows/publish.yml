@@ -45,7 +45,7 @@ jobs:
   publish-main:
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
     needs: determine-changes
-    if: ${{ needs.determine-changes.outputs.main-changed == 'true' }}
+#    if: ${{ needs.determine-changes.outputs.main-changed == 'true' }}
     secrets: inherit
     with:
       java-version: 21
@@ -62,7 +62,7 @@ jobs:
   publish-nordic:
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
     needs: determine-changes
-    if: ${{ needs.determine-changes.outputs.nordic-changed == 'true' }}
+#    if: ${{ needs.determine-changes.outputs.nordic-changed == 'true' }}
     secrets: inherit
     with:
       java-version: 21
@@ -79,7 +79,7 @@ jobs:
   publish-venthyr:
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
     needs: determine-changes
-    if: ${{ needs.determine-changes.outputs.venthyr-changed == 'true' }}
+#    if: ${{ needs.determine-changes.outputs.venthyr-changed == 'true' }}
     secrets: inherit
     with:
       java-version: 21
@@ -96,7 +96,7 @@ jobs:
   publish-bone:
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
     needs: determine-changes
-    if: ${{ needs.determine-changes.outputs.bone-changed == 'true' }}
+#    if: ${{ needs.determine-changes.outputs.bone-changed == 'true' }}
     secrets: inherit
     with:
       java-version: 21
@@ -113,7 +113,7 @@ jobs:
   publish-dunmer:
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
     needs: determine-changes
-    if: ${{ needs.determine-changes.outputs.dunmer-changed == 'true' }}
+#    if: ${{ needs.determine-changes.outputs.dunmer-changed == 'true' }}
     secrets: inherit
     with:
       java-version: 21
@@ -130,7 +130,7 @@ jobs:
   publish-necrolord:
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
     needs: determine-changes
-    if: ${{ needs.determine-changes.outputs.necrolord-changed == 'true' }}
+#    if: ${{ needs.determine-changes.outputs.necrolord-changed == 'true' }}
     secrets: inherit
     with:
       java-version: 21
@@ -147,7 +147,7 @@ jobs:
   publish-royal:
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
     needs: determine-changes
-    if: ${{ needs.determine-changes.outputs.royal-changed == 'true' }}
+#    if: ${{ needs.determine-changes.outputs.royal-changed == 'true' }}
     secrets: inherit
     with:
       java-version: 21
