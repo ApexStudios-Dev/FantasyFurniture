@@ -22,72 +22,26 @@ jobs:
     name: Generate Tasks
     runs-on: ubuntu-latest
     outputs:
+      main-changed: ${{ steps.changes.outputs.main }}
       nordic-changed: ${{ steps.changes.outputs.nordic }}
       venthyr-changed: ${{ steps.changes.outputs.venthyr }}
       bone-changed: ${{ steps.changes.outputs.bone }}
       dunmer-changed: ${{ steps.changes.outputs.dunmer }}
       necrolord-changed: ${{ steps.changes.outputs.necrolord }}
       royal-changed: ${{ steps.changes.outputs.royal }}
-      publish: ${{ steps.tasks.outputs.publish }}
-      data: ${{ steps.tasks.outputs.data }}
     steps:
       - name: Determine changes
         id: changes
         uses: dorny/paths-filter@v3
         with:
           filters: |
+            main: [ 'src/**' ]
             nordic: [ 'nordic/**' ]
             venthyr: [ 'venthyr/**' ]
             bone: [ 'bone/**' ]
             dunmer: [ 'dunmer/**' ]
             necrolord: [ 'necrolord/**' ]
             royal: [ 'royal/**' ]
-
-      - name: Output tasks
-        id: tasks
-        run: |
-          publishTask=":publishReleasePublicationToApexStudios-PrivateRepository"
-          dataTask=":runData"
-          
-          if [[ "$NORDIC_CHANGED" == "true" ]]; then
-            publishTask+=" :publishNordicReleasePublicationToApexStudios-PrivateRepository"
-            dataTask+=" :runNordicData"
-          fi
-          
-          if [[ "$VENTHYR_CHANGED" == "true" ]]; then
-            publishTask+=" :publishVenthyrReleasePublicationToApexStudios-PrivateRepository"
-            dataTask+=" :runVenthyrData"
-          fi
-          
-          if [[ "$BONE_CHANGED" == "true" ]]; then
-            publishTask+=" :publishBoneReleasePublicationToApexStudios-PrivateRepository"
-            dataTask+=" :runBoneData"
-          fi
-          
-          if [[ "$DUNMER_CHANGED" == "true" ]]; then
-            publishTask+=" :publishDunmerReleasePublicationToApexStudios-PrivateRepository"
-            dataTask+=" :runDunmerData"
-          fi
-          
-          if [[ "$NECROLORD_CHANGED" == "true" ]]; then
-            publishTask+=" :publishNecrolordReleasePublicationToApexStudios-PrivateRepository"
-            dataTask+=" :runNecrolordData"
-          fi
-          
-          if [[ "$ROYAL_CHANGED" == "true" ]]; then
-            publishTask+=" :publishRoyalReleasePublicationToApexStudios-PrivateRepository"
-            dataTask+=" :runRoyalData"
-          fi
-          
-          echo publish="$publishTask" >> "$GITHUB_OUTPUT"
-          echo data="$dataTask" >> "$GITHUB_OUTPUT"
-        env:
-          NORDIC_CHANGED: ${{ steps.changes.outputs.nordic }}
-          VENTHYR_CHANGED: ${{ steps.changes.outputs.venthyr }}
-          BONE_CHANGED: ${{ steps.changes.outputs.bone }}
-          DUNMER_CHANGED: ${{ steps.changes.outputs.dunmer }}
-          NECROLORD_CHANGED: ${{ steps.changes.outputs.necrolord }}
-          ROYAL_CHANGED: ${{ steps.changes.outputs.royal }}
 
   build:
     name: Build
@@ -100,21 +54,93 @@ jobs:
       java-vendor: temurin
       version: ${{ needs.generate-vars.outputs.version }}
 
-  check-local-changes:
-    name: Check local changes
-    needs: [ generate-vars, generate-tasks ]
-    if: success()
+  check-local-changes-main:
+    name: Check local changes (Main)
+    needs: [ generate-vars, generate-tasks, build ]
+    if: ${{ success() && needs.generate-tasks.outputs.main-changed }}
     uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
     secrets: inherit
     with:
       java-version: 21
       java-vendor: temurin
       version: ${{ needs.generate-vars.outputs.version }}
-      data-task: ${{ needs.generate-tasks.outputs.data }}
+      data-task: ':runData'
 
-  publish-maven:
-    name: Publish Maven
-    needs: [ generate-vars, generate-tasks, build, check-local-changes ]
+  check-local-changes-nordic:
+    name: Check local changes (Nordic)
+    needs: [ generate-vars, generate-tasks, build ]
+    if: ${{ success() && needs.generate-tasks.outputs.nordic-changed }}
+    uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      version: ${{ needs.generate-vars.outputs.version }}
+      data-task: ':runNordicData'
+
+  check-local-changes-venthyr:
+    name: Check local changes (Venthyr)
+    needs: [ generate-vars, generate-tasks, build ]
+    if: ${{ success() && needs.generate-tasks.outputs.venthyr-changed }}
+    uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      version: ${{ needs.generate-vars.outputs.version }}
+      data-task: ':runVenthyrData'
+
+  check-local-changes-bone:
+    name: Check local changes (Bone)
+    needs: [ generate-vars, generate-tasks, build ]
+    if: ${{ success() && needs.generate-tasks.outputs.bone-changed }}
+    uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      version: ${{ needs.generate-vars.outputs.version }}
+      data-task: ':runBoneData'
+
+  check-local-changes-dunmer:
+    name: Check local changes (Dunmer)
+    needs: [ generate-vars, generate-tasks, build ]
+    if: ${{ success() && needs.generate-tasks.outputs.dunmer-changed }}
+    uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      version: ${{ needs.generate-vars.outputs.version }}
+      data-task: ':runDunmerData'
+
+  check-local-changes-necrolord:
+    name: Check local changes (Necrolord)
+    needs: [ generate-vars, generate-tasks, build ]
+    if: ${{ success() && needs.generate-tasks.outputs.necrolord-changed }}
+    uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      version: ${{ needs.generate-vars.outputs.version }}
+      data-task: ':runNecrolordData'
+
+  check-local-changes-royal:
+    name: Check local changes (Royal)
+    needs: [ generate-vars, generate-tasks, build ]
+    if: ${{ success() && needs.generate-tasks.outputs.royal-changed }}
+    uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      version: ${{ needs.generate-vars.outputs.version }}
+      data-task: ':runRoyalData'
+
+  publish-maven-main:
+    name: Publish Maven (Main)
+    needs: [ generate-vars, generate-tasks, build, check-local-changes-main ]
     if: success()
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-maven.yml@master
     secrets: inherit
@@ -122,12 +148,84 @@ jobs:
       java-version: 21
       java-vendor: temurin
       version: ${{ needs.generate-vars.outputs.version }}
-      publish-task: ${{ needs.generate-tasks.outputs.publish }}
+      publish-task: ':publishReleasePublicationTo-PrivateRepository'
+
+  publish-maven-nordic:
+    name: Publish Maven (Nordic)
+    needs: [ generate-vars, generate-tasks, build, check-local-changes-nordic ]
+    if: ${{ success() && needs.generate-tasks.outputs.nordic-changed }}
+    uses: ApexStudios-Dev/.github/.github/workflows/_publish-maven.yml@master
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      version: ${{ needs.generate-vars.outputs.version }}
+      publish-task: ':publishNordicReleasePublicationTo-PrivateRepository'
+
+  publish-maven-venthyr:
+    name: Publish Maven (Venthyr)
+    needs: [ generate-vars, generate-tasks, build, check-local-changes-venthyr ]
+    if: ${{ success() && needs.generate-tasks.outputs.venthyr-changed }}
+    uses: ApexStudios-Dev/.github/.github/workflows/_publish-maven.yml@master
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      version: ${{ needs.generate-vars.outputs.version }}
+      publish-task: ':publishVenthyrReleasePublicationTo-PrivateRepository'
+
+  publish-maven-bone:
+    name: Publish Maven (Bone)
+    needs: [ generate-vars, generate-tasks, build, check-local-changes-bone ]
+    if: ${{ success() && needs.generate-tasks.outputs.bone-changed }}
+    uses: ApexStudios-Dev/.github/.github/workflows/_publish-maven.yml@master
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      version: ${{ needs.generate-vars.outputs.version }}
+      publish-task: ':publishBoneReleasePublicationTo-PrivateRepository'
+
+  publish-maven-dunmer:
+    name: Publish Maven (Dunmer)
+    needs: [ generate-vars, generate-tasks, build, check-local-changes-dunmer ]
+    if: ${{ success() && needs.generate-tasks.outputs.dunmer-changed }}
+    uses: ApexStudios-Dev/.github/.github/workflows/_publish-maven.yml@master
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      version: ${{ needs.generate-vars.outputs.version }}
+      publish-task: ':publishDunmerReleasePublicationTo-PrivateRepository'
+
+  publish-maven-necrolord:
+    name: Publish Maven (Necrolord)
+    needs: [ generate-vars, generate-tasks, build, check-local-changes-necrolord ]
+    if: ${{ success() && needs.generate-tasks.outputs.necrolord-changed }}
+    uses: ApexStudios-Dev/.github/.github/workflows/_publish-maven.yml@master
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      version: ${{ needs.generate-vars.outputs.version }}
+      publish-task: ':publishNecrolordReleasePublicationTo-PrivateRepository'
+
+  publish-maven-royal:
+    name: Publish Maven (Royal)
+    needs: [ generate-vars, generate-tasks, build, check-local-changes-royal ]
+    if: ${{ success() && needs.generate-tasks.outputs.royal-changed }}
+    uses: ApexStudios-Dev/.github/.github/workflows/_publish-maven.yml@master
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      version: ${{ needs.generate-vars.outputs.version }}
+      publish-task: ':publishRoyalReleasePublicationTo-PrivateRepository'
 
   test:
     name: Test Production
     runs-on: apexstudios
-    needs: [ generate-vars, generate-tasks, publish-maven ]
+    needs: [ generate-vars, generate-tasks, publish-maven-main, publish-maven-nordic, publish-maven-venthyr, publish-maven-bone, publish-maven-dunmer, publish-maven-necrolord, publish-maven-royal ]
     if: success()
     steps:
       - name: Prepare Environment
