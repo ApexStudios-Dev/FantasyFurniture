@@ -2,6 +2,42 @@ name: Publish
 
 on:
   workflow_dispatch:
+    inputs:
+      main:
+        type: boolean
+        description: Publish 'main' module
+        required: false
+        default: true
+      nordic:
+        type: boolean
+        description: Publish 'nordic' module
+        required: false
+        default: true
+      venthyr:
+        type: boolean
+        description: Publish 'venthyr' module
+        required: false
+        default: true
+      bone:
+        type: boolean
+        description: Publish 'bone' module
+        required: false
+        default: true
+      dunmer:
+        type: boolean
+        description: Publish 'dunmer' module
+        required: false
+        default: true
+      necrolord:
+        type: boolean
+        description: Publish 'necrolord' module
+        required: false
+        default: true
+      royal:
+        type: boolean
+        description: Publish 'royal' module
+        required: false
+        default: true
   push:
     branches: [ '**/main' ]
     paths: [ '**/src/**' ]
@@ -42,7 +78,7 @@ jobs:
   publish-main:
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
     needs: determine-changes
-    if: ${{ needs.determine-changes.outputs.main-changed == 'true' }}
+    if: ${{ inputs.main || needs.determine-changes.outputs.main-changed == 'true' }}
     secrets: inherit
     with:
       java-version: 21
@@ -59,7 +95,7 @@ jobs:
   publish-nordic:
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
     needs: determine-changes
-    if: ${{ needs.determine-changes.outputs.nordic-changed == 'true' }}
+    if: ${{ inputs.nordic || needs.determine-changes.outputs.nordic-changed == 'true' }}
     secrets: inherit
     with:
       java-version: 21
@@ -76,7 +112,7 @@ jobs:
   publish-venthyr:
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
     needs: determine-changes
-    if: ${{ needs.determine-changes.outputs.venthyr-changed == 'true' }}
+    if: ${{ inputs.venthyr || needs.determine-changes.outputs.venthyr-changed == 'true' }}
     secrets: inherit
     with:
       java-version: 21
@@ -93,7 +129,7 @@ jobs:
   publish-bone:
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
     needs: determine-changes
-    if: ${{ needs.determine-changes.outputs.bone-changed == 'true' }}
+    if: ${{ inputs.bone || needs.determine-changes.outputs.bone-changed == 'true' }}
     secrets: inherit
     with:
       java-version: 21
@@ -110,7 +146,7 @@ jobs:
   publish-dunmer:
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
     needs: determine-changes
-    if: ${{ needs.determine-changes.outputs.dunmer-changed == 'true' }}
+    if: ${{ inputs.dunmer || needs.determine-changes.outputs.dunmer-changed == 'true' }}
     secrets: inherit
     with:
       java-version: 21
@@ -127,7 +163,7 @@ jobs:
   publish-necrolord:
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
     needs: determine-changes
-    if: ${{ needs.determine-changes.outputs.necrolord-changed == 'true' }}
+    if: ${{ inputs.necrolord || needs.determine-changes.outputs.necrolord-changed == 'true' }}
     secrets: inherit
     with:
       java-version: 21
@@ -144,7 +180,7 @@ jobs:
   publish-royal:
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
     needs: determine-changes
-    if: ${{ needs.determine-changes.outputs.royal-changed == 'true' }}
+    if: ${{ inputs.royal || needs.determine-changes.outputs.royal-changed == 'true' }}
     secrets: inherit
     with:
       java-version: 21
