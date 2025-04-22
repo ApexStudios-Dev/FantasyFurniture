@@ -65,8 +65,8 @@ jobs:
       java-version: 21
       java-vendor: temurin
       publish-task: ':publishNordicReleasePublicationToApexStudios-ReleasesRepository'
-      curseforge-id: '579564'
-      modrinth-id: 'A0nfCqYw'
+      curseforge-id: '1191799'
+      modrinth-id: 'DIHzMa8h'
       artifact-id: fantasyfurniture-nordic
       display-name: Fantasy's Furniture - Nordic
       release-type: release
@@ -82,8 +82,8 @@ jobs:
       java-version: 21
       java-vendor: temurin
       publish-task: ':publishVenthyrReleasePublicationToApexStudios-ReleasesRepository'
-      curseforge-id: '579564'
-      modrinth-id: 'A0nfCqYw'
+      curseforge-id: '1206300'
+      modrinth-id: 'FjHW4JvP'
       artifact-id: fantasyfurniture-venthyr
       display-name: Fantasy's Furniture - Venthyr
       release-type: release
@@ -99,8 +99,8 @@ jobs:
       java-version: 21
       java-vendor: temurin
       publish-task: ':publishBoneReleasePublicationToApexStudios-ReleasesRepository'
-      curseforge-id: '579564'
-      modrinth-id: 'A0nfCqYw'
+      curseforge-id: '1209697'
+      modrinth-id: 'oJ4TI49S'
       artifact-id: fantasyfurniture-bone
       display-name: Fantasy's Furniture - Bone
       release-type: release
@@ -116,8 +116,8 @@ jobs:
       java-version: 21
       java-vendor: temurin
       publish-task: ':publishDunmerReleasePublicationToApexStudios-ReleasesRepository'
-      curseforge-id: '579564'
-      modrinth-id: 'A0nfCqYw'
+      curseforge-id: '1209702'
+      modrinth-id: 'Bs7e2IyQ'
       artifact-id: fantasyfurniture-dunmer
       display-name: Fantasy's Furniture - Dunmer
       release-type: release
@@ -133,8 +133,8 @@ jobs:
       java-version: 21
       java-vendor: temurin
       publish-task: ':publishNecrolordReleasePublicationToApexStudios-ReleasesRepository'
-      curseforge-id: '579564'
-      modrinth-id: 'A0nfCqYw'
+      curseforge-id: '1209752'
+      modrinth-id: 'V9TnGtTg'
       artifact-id: fantasyfurniture-necrolord
       display-name: Fantasy's Furniture - Necrolord
       release-type: release
@@ -150,8 +150,8 @@ jobs:
       java-version: 21
       java-vendor: temurin
       publish-task: ':publishRoyalReleasePublicationToApexStudios-ReleasesRepository'
-      curseforge-id: '579564'
-      modrinth-id: 'A0nfCqYw'
+      curseforge-id: '1209706'
+      modrinth-id: 'OIAm13ki'
       artifact-id: fantasyfurniture-royal
       display-name: Fantasy's Furniture - Royal
       release-type: release
