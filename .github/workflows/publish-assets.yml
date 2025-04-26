@@ -1,0 +1,115 @@
+name: Publish Assets
+
+on:
+  workflow_dispatch:
+
+jobs:
+  generate-vars:
+    name: Generate Vars
+    uses: ApexStudios-Dev/.github/.github/workflows/_generate-vars.yml@master
+    secrets: inherit
+
+  publish-assets-main:
+    name: Publish Assets (Main)
+    runs-on: ubuntu-latest
+    needs: generate-vars
+    if: success()
+    steps:
+      - name: Publish assets
+        uses: ApexStudios-Dev/.github/actions/publish-assets@master
+        with:
+          mod-name: Fantasy's Furniture
+          mod-id: fantasyfurniture
+          mod-version: ${{ needs.generate-vars.outputs.version }}
+          mod-src-dir: src
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+  publish-assets-nordic:
+    name: Publish Assets (Nordic)
+    runs-on: ubuntu-latest
+    needs: [ generate-vars,publish-assets-main ]
+    if: success()
+    steps:
+      - name: Publish assets
+        uses: ApexStudios-Dev/.github/actions/publish-assets@master
+        with:
+          mod-name: Fantasy's Furniture - Nordic
+          mod-id: fantasyfurniture_nordic
+          mod-version: ${{ needs.generate-vars.outputs.version }}
+          mod-src-dir: nordic/src
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+  publish-assets-venthyr:
+    name: Publish Assets (Venthyr)
+    runs-on: ubuntu-latest
+    needs: [ generate-vars,publish-assets-nordic ]
+    if: success()
+    steps:
+      - name: Publish assets
+        uses: ApexStudios-Dev/.github/actions/publish-assets@master
+        with:
+          mod-name: Fantasy's Furniture - Venthyr
+          mod-id: fantasyfurniture_venthyr
+          mod-version: ${{ needs.generate-vars.outputs.version }}
+          mod-src-dir: venthyr/src
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+  publish-assets-bone:
+    name: Publish Assets (Bone)
+    runs-on: ubuntu-latest
+    needs: [ generate-vars,publish-assets-venthyr ]
+    if: success()
+    steps:
+      - name: Publish assets
+        uses: ApexStudios-Dev/.github/actions/publish-assets@master
+        with:
+          mod-name: Fantasy's Furniture - Bone
+          mod-id: fantasyfurniture_bone
+          mod-version: ${{ needs.generate-vars.outputs.version }}
+          mod-src-dir: bone/src
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+  publish-assets-dunmer:
+    name: Publish Assets (Dunmer)
+    runs-on: ubuntu-latest
+    needs: [ generate-vars, publish-assets-bone ]
+    if: success()
+    steps:
+      - name: Publish assets
+        uses: ApexStudios-Dev/.github/actions/publish-assets@master
+        with:
+          mod-name: Fantasy's Furniture - Dunmer
+          mod-id: fantasyfurniture_dunmer
+          mod-version: ${{ needs.generate-vars.outputs.version }}
+          mod-src-dir: dunmer/src
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+  publish-assets-necrolord:
+    name: Publish Assets (Necrolord)
+    runs-on: ubuntu-latest
+    needs: [ generate-vars,publish-assets-dunmer ]
+    if: success()
+    steps:
+      - name: Publish assets
+        uses: ApexStudios-Dev/.github/actions/publish-assets@master
+        with:
+          mod-name: Fantasy's Furniture - Necrolord
+          mod-id: fantasyfurniture_necrolord
+          mod-version: ${{ needs.generate-vars.outputs.version }}
+          mod-src-dir: necrolord/src
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+  publish-assets-royal:
+    name: Publish Assets (Royal)
+    runs-on: ubuntu-latest
+    needs: [ generate-vars,publish-assets-necrolord ]
+    if: success()
+    steps:
+      - name: Publish assets
+        uses: ApexStudios-Dev/.github/actions/publish-assets@master
+        with:
+          mod-name: Fantasy's Furniture - Royal
+          mod-id: fantasyfurniture_royal
+          mod-version: ${{ needs.generate-vars.outputs.version }}
+          mod-src-dir: royal/src
+          github-token: ${{ secrets.GITHUB_TOKEN }}

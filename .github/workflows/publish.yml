@@ -91,6 +91,7 @@ jobs:
       release-type: release
       logo-url: 'https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture/banner.png'
       color: 0x97C6E7
+      src-dir: src
 
   publish-nordic:
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
@@ -108,6 +109,7 @@ jobs:
       release-type: release
       logo-url: 'https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture_nordic/banner.png'
       color: 0x97C6E7
+      src-dir: nordic/src
 
   publish-venthyr:
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
@@ -125,6 +127,7 @@ jobs:
       release-type: release
       logo-url: 'https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture_venthyr/banner.png'
       color: 0xEB8080
+      src-dir: venthyr/src
 
   publish-bone:
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
@@ -142,6 +145,7 @@ jobs:
       release-type: release
       logo-url: 'https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture_bone/banner.png'
       color: 0xFFF9E4
+      src-dir: bone/src
 
   publish-dunmer:
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
@@ -159,6 +163,7 @@ jobs:
       release-type: release
       logo-url: 'https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture_dunmer/banner.png'
       color: 0x94DC8A
+      src-dir: dunmer/src
 
   publish-necrolord:
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
@@ -176,6 +181,7 @@ jobs:
       release-type: release
       logo-url: 'https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture_necrolord/banner.png'
       color: 0xB297E7
+      src-dir: necrolord/src
 
   publish-royal:
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
@@ -193,3 +199,4 @@ jobs:
       release-type: release
       logo-url: 'https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture_royal/banner.png'
       color: 0xFFE88E
+      src-dir: royal/src
