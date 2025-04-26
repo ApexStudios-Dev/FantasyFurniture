@@ -22,7 +22,6 @@ jobs:
           mod-id: fantasyfurniture
           mod-version: ${{ needs.generate-vars.outputs.version }}
           mod-src-dir: src
-          github-token: ${{ secrets.GITHUB_TOKEN }}
 
   publish-assets-nordic:
     name: Publish Assets (Nordic)
@@ -37,7 +36,6 @@ jobs:
           mod-id: fantasyfurniture_nordic
           mod-version: ${{ needs.generate-vars.outputs.version }}
           mod-src-dir: nordic/src
-          github-token: ${{ secrets.GITHUB_TOKEN }}
 
   publish-assets-venthyr:
     name: Publish Assets (Venthyr)
@@ -52,7 +50,6 @@ jobs:
           mod-id: fantasyfurniture_venthyr
           mod-version: ${{ needs.generate-vars.outputs.version }}
           mod-src-dir: venthyr/src
-          github-token: ${{ secrets.GITHUB_TOKEN }}
 
   publish-assets-bone:
     name: Publish Assets (Bone)
@@ -67,7 +64,6 @@ jobs:
           mod-id: fantasyfurniture_bone
           mod-version: ${{ needs.generate-vars.outputs.version }}
           mod-src-dir: bone/src
-          github-token: ${{ secrets.GITHUB_TOKEN }}
 
   publish-assets-dunmer:
     name: Publish Assets (Dunmer)
@@ -82,7 +78,6 @@ jobs:
           mod-id: fantasyfurniture_dunmer
           mod-version: ${{ needs.generate-vars.outputs.version }}
           mod-src-dir: dunmer/src
-          github-token: ${{ secrets.GITHUB_TOKEN }}
 
   publish-assets-necrolord:
     name: Publish Assets (Necrolord)
@@ -97,7 +92,6 @@ jobs:
           mod-id: fantasyfurniture_necrolord
           mod-version: ${{ needs.generate-vars.outputs.version }}
           mod-src-dir: necrolord/src
-          github-token: ${{ secrets.GITHUB_TOKEN }}
 
   publish-assets-royal:
     name: Publish Assets (Royal)
@@ -112,4 +106,3 @@ jobs:
           mod-id: fantasyfurniture_royal
           mod-version: ${{ needs.generate-vars.outputs.version }}
           mod-src-dir: royal/src
-          github-token: ${{ secrets.GITHUB_TOKEN }}
