@@ -1,6 +1,8 @@
 package dev.apexstudios.fantasyfurniture.oven;
 
 import com.google.common.collect.Lists;
+import dev.apexstudios.apexcore.lib.component.block.BlockComponentHelper;
+import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
 import dev.apexstudios.apexcore.lib.component.block.entity.BlockEntityComponentTypes;
 import dev.apexstudios.fantasyfurniture.block.OvenBlock;
 import it.unimi.dsi.fastutil.objects.Reference2IntOpenHashMap;
@@ -107,7 +109,22 @@ public final class OvenData implements ContainerData, RecipeCraftingHolder {
 
         if (wasLit != isLit()) {
             changed = true;
-            level.setBlock(pos, blockState.setValue(OvenBlock.LIT, isLit()), Block.UPDATE_ALL);
+            var newBlockState = blockState.setValue(OvenBlock.LIT, isLit());
+            level.setBlock(pos, newBlockState, Block.UPDATE_ALL);
+
+            BlockComponentHelper.runForComponent(newBlockState, BlockComponentTypes.MULTI_BLOCK, component -> {
+                var index = component.indexOf(newBlockState);
+                var origin = component.getOrigin(pos, newBlockState);
+
+                for(var i = 0; i < component.size(); i++) {
+                    if(i == index)
+                        continue;
+
+                    var otherBlockState = component.withIndex(newBlockState, i);
+                    var otherPos = component.getPos(origin, otherBlockState);
+                    level.setBlock(otherPos, otherBlockState, Block.UPDATE_ALL);
+                }
+            });
         }
 
         if (changed)
