@@ -1,10 +1,8 @@
 package dev.apexstudios.fantasyfurniture.royal.block;
 
-import dev.apexstudios.apexcore.lib.component.ComponentRegistrar;
-import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
+import dev.apexstudios.apexcore.lib.component.block.BlockComponentRegistrar;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
 import dev.apexstudios.fantasyfurniture.block.OvenBlock;
-import net.minecraft.world.level.block.Block;
 
 public class RoyalOvenBlock extends OvenBlock {
     public RoyalOvenBlock(Properties properties) {
@@ -12,7 +10,7 @@ public class RoyalOvenBlock extends OvenBlock {
     }
 
     @Override
-    protected void registerComponents(ComponentRegistrar<BlockComponent, Block> registrar) {
+    protected void registerComponents(BlockComponentRegistrar registrar) {
         super.registerComponents(registrar);
 
         registrar.register(BlockComponentTypes.DYEABLE);

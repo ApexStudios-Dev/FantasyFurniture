@@ -1,14 +1,12 @@
 package dev.apexstudios.fantasyfurniture.block.base;
 
-import dev.apexstudios.apexcore.lib.component.ComponentRegistrar;
-import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
+import dev.apexstudios.apexcore.lib.component.block.BlockComponentRegistrar;
+import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
 import dev.apexstudios.apexcore.lib.component.block.types.FacingBlockComponent;
-import dev.apexstudios.apexcore.lib.component.block.types.SeatBlockComponent;
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -42,10 +40,10 @@ public class SeatBlock extends FurnitureBlockComponentHolder {
 
     @MustBeInvokedByOverriders
     @Override
-    protected void registerComponents(ComponentRegistrar<BlockComponent, Block> registrar) {
+    protected void registerComponents(BlockComponentRegistrar registrar) {
         super.registerComponents(registrar);
 
         FacingBlockComponent.registerHorizontal(registrar);
-        registrar.register(SeatBlockComponent.COMPONENT_TYPE);
+        registrar.register(BlockComponentTypes.SEAT);
     }
 }

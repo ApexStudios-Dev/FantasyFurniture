@@ -1,9 +1,8 @@
 package dev.apexstudios.fantasyfurniture.oven;
 
-import dev.apexstudios.apexcore.lib.component.ComponentRegistrar;
 import dev.apexstudios.apexcore.lib.component.block.entity.BaseBlockEntityComponentHolder;
-import dev.apexstudios.apexcore.lib.component.block.entity.BlockEntityComponent;
 import dev.apexstudios.apexcore.lib.component.block.entity.BlockEntityComponentHelper;
+import dev.apexstudios.apexcore.lib.component.block.entity.BlockEntityComponentRegistrar;
 import dev.apexstudios.fantasyfurniture.FurnitureBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -11,7 +10,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.Tags;
@@ -46,7 +44,7 @@ public final class OvenBlockEntity extends BaseBlockEntityComponentHolder {
     }
 
     @Override
-    protected void registerComponents(ComponentRegistrar<BlockEntityComponent, BlockEntity> registrar) {
+    protected void registerComponents(BlockEntityComponentRegistrar registrar) {
         BlockEntityComponentHelper.registerInventoryComponents(registrar, builder -> builder
                 .slot(SLOT_INPUT, slot -> slot.listener((index, inventory) -> {
                     if(level instanceof ServerLevel level) {

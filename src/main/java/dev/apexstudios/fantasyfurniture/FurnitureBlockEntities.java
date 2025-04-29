@@ -1,7 +1,6 @@
 package dev.apexstudios.fantasyfurniture;
 
-import dev.apexstudios.apexcore.lib.component.ComponentHolder;
-import dev.apexstudios.apexcore.lib.component.block.entity.BlockEntityComponent;
+import dev.apexstudios.apexcore.lib.component.block.entity.BlockEntityComponentHolder;
 import dev.apexstudios.apexcore.lib.component.block.entity.types.InventoryBlockEntityComponent;
 import dev.apexstudios.apexcore.lib.registree.holder.DeferredBlockEntity;
 import dev.apexstudios.fantasyfurniture.block.entity.BookshelfBlockEntity;
@@ -35,7 +34,7 @@ public interface FurnitureBlockEntities {
     }
 
     @SafeVarargs
-    private static <TBlockEntity extends BlockEntity & ComponentHolder<BlockEntityComponent, BlockEntity>> void capabilities(RegisterCapabilitiesEvent event, DeferredBlockEntity<? extends TBlockEntity>... holders) {
+    private static <TBlockEntity extends BlockEntity & BlockEntityComponentHolder> void capabilities(RegisterCapabilitiesEvent event, DeferredBlockEntity<? extends TBlockEntity>... holders) {
         for(var holder : holders) {
             InventoryBlockEntityComponent.registerCapability(holder.value(), event);
         }

@@ -1,9 +1,8 @@
 package dev.apexstudios.fantasyfurniture.block.entity;
 
-import dev.apexstudios.apexcore.lib.component.ComponentRegistrar;
 import dev.apexstudios.apexcore.lib.component.block.entity.BaseBlockEntityComponentHolder;
-import dev.apexstudios.apexcore.lib.component.block.entity.BlockEntityComponent;
 import dev.apexstudios.apexcore.lib.component.block.entity.BlockEntityComponentHelper;
+import dev.apexstudios.apexcore.lib.component.block.entity.BlockEntityComponentRegistrar;
 import dev.apexstudios.apexcore.lib.component.block.entity.BlockEntityComponentTypes;
 import dev.apexstudios.apexcore.lib.menu.SimpleMenu;
 import dev.apexstudios.fantasyfurniture.FurnitureBlockEntities;
@@ -11,7 +10,6 @@ import dev.apexstudios.fantasyfurniture.FurnitureMenus;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 public final class CounterBlockEntity extends BaseBlockEntityComponentHolder {
@@ -27,7 +25,7 @@ public final class CounterBlockEntity extends BaseBlockEntityComponentHolder {
     }
 
     @Override
-    protected void registerComponents(ComponentRegistrar<BlockEntityComponent, BlockEntity> registrar) {
+    protected void registerComponents(BlockEntityComponentRegistrar registrar) {
         BlockEntityComponentHelper.registerInventoryComponents(registrar, builder -> builder.slots(ROWS * AbstractContainerMenu.SLOTS_PER_ROW));
     }
 }

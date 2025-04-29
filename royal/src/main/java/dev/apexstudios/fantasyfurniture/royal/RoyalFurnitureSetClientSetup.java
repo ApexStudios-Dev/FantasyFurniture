@@ -2,8 +2,8 @@ package dev.apexstudios.fantasyfurniture.royal;
 
 import dev.apexstudios.apexcore.core.client.DyeColorItemTintSource;
 import dev.apexstudios.apexcore.lib.component.ComponentHolder;
-import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponentHelper;
+import dev.apexstudios.apexcore.lib.component.block.BlockComponentHolder;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
 import dev.apexstudios.apexcore.lib.data.provider.context.ProviderListenerContext;
 import dev.apexstudios.apexcore.lib.data.provider.model.ApexModelTemplates;
@@ -50,7 +50,10 @@ public final class RoyalFurnitureSetClientSetup {
         modBus.addListener(RegisterColorHandlersEvent.Block.class, event -> {
             var dyeableBlocks = RoyalFurnitureSet.FURNITURE_SET.blockTypes().stream()
                     .map(RoyalFurnitureSet.FURNITURE_SET::getOrThrow)
-                    .filter(block -> block instanceof ComponentHolder && ((ComponentHolder<BlockComponent, Block>) block).hasComponent(BlockComponentTypes.DYEABLE))
+                    .filter(BlockComponentHolder.class::isInstance)
+                    .map(BlockComponentHolder.class::cast)
+                    .filter(block -> block.hasComponent(BlockComponentTypes.DYEABLE))
+                    .map(ComponentHolder::unwrap)
                     .toArray(Block[]::new);
 
             event.register((blockState, level, pos, tintIndex) -> {

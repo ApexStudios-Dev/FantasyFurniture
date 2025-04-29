@@ -1,8 +1,7 @@
 package dev.apexstudios.fantasyfurniture.station;
 
-import dev.apexstudios.apexcore.lib.component.ComponentRegistrar;
 import dev.apexstudios.apexcore.lib.component.block.BaseBlockComponentHolder;
-import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
+import dev.apexstudios.apexcore.lib.component.block.BlockComponentRegistrar;
 import dev.apexstudios.apexcore.lib.component.block.types.FacingBlockComponent;
 import dev.apexstudios.apexcore.lib.component.block.types.FluidLoggedBlockComponent;
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
@@ -12,7 +11,6 @@ import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -37,7 +35,7 @@ public final class FurnitureStationBlock extends BaseBlockComponentHolder {
     }
 
     @Override
-    protected void registerComponents(ComponentRegistrar<BlockComponent, Block> registrar) {
+    protected void registerComponents(BlockComponentRegistrar registrar) {
         FluidLoggedBlockComponent.registerWater(registrar);
         FacingBlockComponent.registerHorizontal(registrar);
     }

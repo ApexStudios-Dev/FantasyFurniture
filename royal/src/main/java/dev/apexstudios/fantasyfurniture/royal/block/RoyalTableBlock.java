@@ -1,12 +1,10 @@
 package dev.apexstudios.fantasyfurniture.royal.block;
 
-import dev.apexstudios.apexcore.lib.component.ComponentRegistrar;
-import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
+import dev.apexstudios.apexcore.lib.component.block.BlockComponentRegistrar;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.TableBlock;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -25,7 +23,7 @@ public final class RoyalTableBlock extends TableBlock {
     }
 
     @Override
-    protected void registerComponents(ComponentRegistrar<BlockComponent, Block> registrar) {
+    protected void registerComponents(BlockComponentRegistrar registrar) {
         super.registerComponents(registrar);
 
         registrar.register(BlockComponentTypes.DYEABLE);
