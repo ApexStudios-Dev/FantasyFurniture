@@ -2,9 +2,11 @@ package dev.apexstudios.fantasyfurniture;
 
 import dev.apexstudios.apexcore.lib.registree.Registree;
 import dev.apexstudios.fantasyfurniture.set.BlockTypes;
+import dev.apexstudios.fantasyfurniture.set.FurnitureSetCommand;
 import dev.apexstudios.fantasyfurniture.station.ClientboundSyncFurnitureStation;
 import dev.apexstudios.fantasyfurniture.station.FurnitureStationSetup;
 import java.util.Map;
+import net.minecraft.SharedConstants;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -18,7 +20,9 @@ import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 
 @Mod(FantasyFurniture.ID)
@@ -73,6 +77,9 @@ public final class FantasyFurniture {
                             Pack.Position.TOP
                     ));
         });
+
+        if(SharedConstants.IS_RUNNING_IN_IDE)
+            NeoForge.EVENT_BUS.addListener(RegisterCommandsEvent.class, event -> event.getDispatcher().register(FurnitureSetCommand.register()));
     }
 
     public static ResourceLocation identifier(String identifier) {

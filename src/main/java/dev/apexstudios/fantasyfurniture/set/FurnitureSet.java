@@ -1,11 +1,13 @@
 package dev.apexstudios.fantasyfurniture.set;
 
+import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import dev.apexstudios.apexcore.lib.data.ProviderTypes;
 import dev.apexstudios.apexcore.lib.data.ResourceGenerator;
 import dev.apexstudios.apexcore.lib.registree.Registree;
 import dev.apexstudios.fantasyfurniture.FantasyFurniture;
 import java.util.Collections;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -38,6 +40,8 @@ import org.apache.commons.lang3.function.Consumers;
 import org.jetbrains.annotations.Nullable;
 
 public final class FurnitureSet {
+    private static final Map<ResourceLocation, FurnitureSet> REGISTRY = Maps.newHashMap();
+
     final Registree registree;
     private final String name;
     private final Set<BlockType<?>> blockTypes;
@@ -76,6 +80,11 @@ public final class FurnitureSet {
                     output.accept(block);
             });
         });
+
+        var registryName = registree.registryName(name);
+
+        if(REGISTRY.putIfAbsent(registryName, this) != null)
+            throw new IllegalStateException("Duplicate FurnitureSet: " + registryName);
     }
 
     String registrationName(String registrationName) {
@@ -272,6 +281,15 @@ public final class FurnitureSet {
 
     public static FurnitureSet createStoneLike(Registree registree, String name) {
         return createStoneLike(registree, name, Consumers.nop());
+    }
+
+    @Nullable
+    public static FurnitureSet get(ResourceLocation registryName) {
+        return REGISTRY.get(registryName);
+    }
+
+    public static Set<ResourceLocation> getIds() {
+        return Collections.unmodifiableSet(REGISTRY.keySet());
     }
 
     private static Set<BlockType<?>> blockTypes(FurnitureSetBuilder builder) {
