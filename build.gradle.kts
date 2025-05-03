@@ -23,7 +23,8 @@ val furnitureSets = setOf(
     "bone",
     "dunmer",
     "necrolord",
-    "royal"
+    "royal",
+    "decorations"
 )
 
 ModuleBuilder.modules(project) { furnitureSets.forEach {

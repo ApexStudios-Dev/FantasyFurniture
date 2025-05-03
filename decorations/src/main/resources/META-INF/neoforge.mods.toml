@@ -1,0 +1,47 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="AllRightsReserved"
+issueTrackerURL="https://github.com/ApexStudios-Dev/Issues/issues"
+
+[[mods]]
+    modId="fantasyfurniture_decorations"
+    version="${file.jarVersion}"
+    displayName="Fantasy's Furniture - Decorations"
+    credits="Apex - Programming"
+    authors="ApexStudios"
+    description="Decorations Furniture module for Fantasy's Furniture"
+    logoFile="logo.png"
+    displayURL="https://modrinth.com/project/fantasys-furniture-decorations"
+
+[[dependencies.fantasyfurniture_decorations]]
+    modId="minecraft"
+    type="required"
+    versionRange="[1.21.5,1.21.6)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.fantasyfurniture_decorations]]
+    modId="neoforge"
+    type="required"
+    versionRange="[21.5.0-beta,21.6)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.fantasyfurniture_decorations]]
+    modId="apexcore"
+    type="required"
+    versionRange="[21.5,21.6)"
+    [dependencies.fantasyfurniture_decorations.mc-publish]
+        modrinth="xl3myxch"
+        curseforge="550778"
+[[dependencies.fantasyfurniture_decorations]]
+    modId="fantasyfurniture"
+    type="required"
+    versionRange="[21.5,21.6)"
+    [dependencies.fantasyfurniture_decorations.mc-publish]
+        modrinth="A0nfCqYw"
+        curseforge="579564"
+
+#[[accessTransformers]]
+#    file="META-INF/accesstransformer.cfg"
+#[[mixins]]
+#    config="META-INF/fantasyfurniture_decorations.mixins.json"

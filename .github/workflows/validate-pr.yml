@@ -28,6 +28,7 @@ jobs:
       dunmer-changed: ${{ steps.changes.outputs.dunmer }}
       necrolord-changed: ${{ steps.changes.outputs.necrolord }}
       royal-changed: ${{ steps.changes.outputs.royal }}
+      decorations-changed: ${{ steps.changes.outputs.decorations }}
     steps:
       - name: Determine changes
         id: changes
@@ -40,6 +41,7 @@ jobs:
             dunmer: [ 'dunmer/**' ]
             necrolord: [ 'necrolord/**' ]
             royal: [ 'royal/**' ]
+            decorations: [ 'decorations/**' ]
 
   build:
     name: Build
@@ -136,6 +138,18 @@ jobs:
       version: ${{ needs.generate-vars.outputs.version }}
       data-task: ':runRoyalData'
 
+  check-local-changes-decorations:
+    name: Check local changes (Decorations)
+    needs: [ generate-vars, determine-changes, build ]
+    if: ${{ success() && needs.determine-changes.outputs.decorations-changed == 'true' }}
+    uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      version: ${{ needs.generate-vars.outputs.version }}
+      data-task: ':runDecorationsData'
+
   publish-maven-main:
     name: Publish Maven (Main)
     needs: [ generate-vars, determine-changes, build, check-local-changes-main ]
@@ -220,6 +234,18 @@ jobs:
       version: ${{ needs.generate-vars.outputs.version }}
       publish-task: ':publishRoyalReleasePublicationToApexStudios-PrivateRepository'
 
+  publish-maven-decorations:
+    name: Publish Maven (Decorations)
+    needs: [ generate-vars, determine-changes, build, check-local-changes-decorations ]
+    if: ${{ success() && needs.determine-changes.outputs.decorations-changed == 'true' }}
+    uses: ApexStudios-Dev/.github/.github/workflows/_publish-maven.yml@master
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      version: ${{ needs.generate-vars.outputs.version }}
+      publish-task: ':publishDecorationsReleasePublicationToApexStudios-PrivateRepository'
+
   test:
     name: Test Production
     runs-on: ubuntu-latest
@@ -255,6 +281,10 @@ jobs:
           if [[ "$ROYAL_CHANGED" == "true" ]]; then
             wget -O "mods/fantasyfurniture-royal-${{ needs.generate-vars.outputs.version }}.jar" "https://maven.apexstudios.dev/private/dev/apexstudios/fantasyfurniture-royal/${{ needs.generate-vars.outputs.version }}/fantasyfurniture-royal-${{ needs.generate-vars.outputs.version }}.jar"
           fi
+          
+          if [[ "$DECORATIONS_CHANGED" == "true" ]]; then
+            wget -O "mods/fantasyfurniture-decorations-${{ needs.generate-vars.outputs.version }}.jar" "https://maven.apexstudios.dev/private/dev/apexstudios/fantasyfurniture-decorations/${{ needs.generate-vars.outputs.version }}/fantasyfurniture-decorations-${{ needs.generate-vars.outputs.version }}.jar"
+          fi
         env:
           APEXCORE_VERSION: 21.5.3
           NORDIC_CHANGED: ${{ needs.determine-changes.outputs.nordic-changed }}
@@ -263,6 +293,7 @@ jobs:
           DUNMER_CHANGED: ${{ needs.determine-changes.outputs.dunmer-changed }}
           NECROLORD_CHANGED: ${{ needs.determine-changes.outputs.necrolord-changed }}
           ROYAL_CHANGED: ${{ needs.determine-changes.outputs.royal-changed }}
+          DECORATIONS_CHANGED: ${{ needs.determine-changes.outputs.decorations-changed }}
 
       - name: Test Production Server
         uses: ApexStudios-Dev/.github/actions/test-production-server@master
