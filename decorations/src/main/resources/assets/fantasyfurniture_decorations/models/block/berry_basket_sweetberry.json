@@ -2,7 +2,7 @@
 	"texture_size": [64, 64],
 	"textures": {
 		"particle": "fantasyfurniture_decorations:block/berry_basket_particle",
-		"berry_basket": "fantasyfurniture_decorations:block/berry_basket_strawberry"
+		"berry_basket": "fantasyfurniture_decorations:block/berry_basket_sweetberry"
 	},
 	"elements": [
 		{
