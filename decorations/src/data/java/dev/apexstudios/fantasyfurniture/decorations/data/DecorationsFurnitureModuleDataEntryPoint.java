@@ -25,6 +25,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                         .addItem(DecorItems.BERRY_BASKET_STRAWBERRY, "Strawberry Basket")
                         .addItem(DecorItems.BERRY_BASKET_SWEETBERRY, "Sweetberry Basket")
                         .addItem(DecorItems.BERRY_BASKET_BLUEBERRY, "Blueberry Basket")
+                        .addItem(DecorItems.BOLTS_OF_CLOTH, "Bolts of Cloth")
                 )
                 .providing(ProviderTypes.LOOT_TABLE, (context, provider) -> provider
                         .block(blocks -> DecorationsFurnitureModule.REGISTREE
@@ -39,6 +40,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     ModelUtil.horizontalFacingBlock(DecoBlocks.BERRY_BASKET_STRAWBERRY.value(), blockModels);
                     ModelUtil.horizontalFacingBlock(DecoBlocks.BERRY_BASKET_SWEETBERRY.value(), blockModels);
                     ModelUtil.horizontalFacingBlock(DecoBlocks.BERRY_BASKET_BLUEBERRY.value(), blockModels);
+                    ModelUtil.horizontalFacingBlock(DecoBlocks.BOLTS_OF_CLOTH.value(), blockModels);
                 })
                 .providing(ProviderTypes.RECIPES, (context, provider) -> {
                     var dyes = provider.tag(Tags.Items.DYES);
