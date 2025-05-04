@@ -2,6 +2,7 @@ package dev.apexstudios.fantasyfurniture.decorations;
 
 import dev.apexstudios.apexcore.lib.registree.holder.DeferredBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.BerryBasketBlock;
+import dev.apexstudios.fantasyfurniture.decorations.block.BoltsOfCloth;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
@@ -16,6 +17,7 @@ public interface DecoBlocks {
     DeferredBlock<BerryBasketBlock> BERRY_BASKET_STRAWBERRY = register("berry_basket_strawberry", BerryBasketBlock::new, BlockBehaviour.Properties::noOcclusion);
     DeferredBlock<BerryBasketBlock> BERRY_BASKET_SWEETBERRY = register("berry_basket_sweetberry", BerryBasketBlock::new, BlockBehaviour.Properties::noOcclusion);
     DeferredBlock<BerryBasketBlock> BERRY_BASKET_BLUEBERRY = register("berry_basket_blueberry", BerryBasketBlock::new, BlockBehaviour.Properties::noOcclusion);
+    DeferredBlock<BoltsOfCloth> BOLTS_OF_CLOTH = register("bolts_of_cloth", BoltsOfCloth::new, BlockBehaviour.Properties::noOcclusion);
 
     static void register() {
 

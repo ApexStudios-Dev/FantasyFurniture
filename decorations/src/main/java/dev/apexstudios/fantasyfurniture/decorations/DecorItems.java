@@ -9,6 +9,7 @@ public interface DecorItems {
     DeferredItem<BlockItem> BERRY_BASKET_STRAWBERRY = register(DecoBlocks.BERRY_BASKET_STRAWBERRY);
     DeferredItem<BlockItem> BERRY_BASKET_SWEETBERRY = register(DecoBlocks.BERRY_BASKET_SWEETBERRY);
     DeferredItem<BlockItem> BERRY_BASKET_BLUEBERRY = register(DecoBlocks.BERRY_BASKET_BLUEBERRY);
+    DeferredItem<BlockItem> BOLTS_OF_CLOTH = register(DecoBlocks.BOLTS_OF_CLOTH);
 
     static void register() {
 

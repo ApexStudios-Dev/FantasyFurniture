@@ -8,16 +8,16 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public final class BerryBasketBlock extends SimpleFacingBlock {
+public final class BoltsOfCloth extends SimpleFacingBlock {
     public static final VoxelShape SHAPE = ApexShapes.join(
-            box(2D, 0D, 3.5D, 14D, 5D, 12.5D),
-            box(1.5D, 5D, 3D, 14.5D, 6D, 13D),
-            box(7D, 6D, 3.25D, 9D, 11.75D, 12.75D)
+            box(1D, 0D, 2.5D, 15D, 5D, 7.5D),
+            box(1D, 0D, 8.5D, 15D, 5D, 13.5D),
+            box(1D, 5D, 5.5D, 15D, 10D, 10.5D)
     );
 
     public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
 
-    public BerryBasketBlock(Properties properties) {
+    public BoltsOfCloth(Properties properties) {
         super(properties);
     }
 
