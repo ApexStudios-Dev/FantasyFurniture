@@ -1,0 +1,19 @@
+{
+  "neoforge:definition_type": "contex:definition",
+  "contex_meta": [
+    {
+      "type": "contex:carpet_full",
+      "textures": [
+        {
+          "ct_texture": "fantasyfurniture_bone_wither:block/ctm/wool_simple",
+          "main_texture": "fantasyfurniture_bone_wither:block/wool"
+        }
+      ]
+    }
+  ],
+  "variants": {
+    "": {
+      "model": "fantasyfurniture_bone_wither:block/carpet"
+    }
+  }
+}

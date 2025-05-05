@@ -1,8 +1,8 @@
 package dev.apexstudios.fantasyfurniture;
 
 import dev.apexstudios.apexcore.lib.registree.Registree;
+import dev.apexstudios.fantasyfurniture.ctm.CtmPacks;
 import dev.apexstudios.fantasyfurniture.station.FurnitureStationSetup;
-import java.util.Map;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -14,7 +14,6 @@ import net.minecraft.world.flag.FeatureFlag;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
 
@@ -30,40 +29,21 @@ public final class FantasyFurniture {
     public static final String EXPERIMENTAL_FLAG_KEY = EXPERIMENTAL_FLAG_ID.toLanguageKey("feature_flag");
     public static final FeatureFlag EXPERIMENTAL = FeatureFlags.REGISTRY.getFlag(EXPERIMENTAL_FLAG_ID);
 
-    private static final Map<String, CtmPack> CTM_PACKS = Map.of(
-            "athena", new CtmPack("ctm-athena", "Athena CTM"),
-            "fusion", new CtmPack("ctm-fusion", "Fusion CTM"),
-            "ctm", new CtmPack("ctm", "CTM")
-    );
-
     public FantasyFurniture(IEventBus modBus) {
         REGISTREE.registerEvents(modBus);
         FurnitureStationSetup.register(modBus);
         FurnitureBlockEntities.register(modBus);
         FurnitureMenus.register(modBus);
+        CtmPacks.register(modBus);
 
-        modBus.addListener(AddPackFindersEvent.class, event -> {
-            event.addPackFinders(
-                    EXPERIMENTAL_FLAG_ID.withPrefix("packs/"),
-                    PackType.SERVER_DATA,
-                    Component.translatable(EXPERIMENTAL_FLAG_KEY),
-                    PackSource.FEATURE,
-                    false,
-                    Pack.Position.TOP
-            );
-
-            CTM_PACKS.entrySet().stream()
-                    .filter(entry -> ModList.get().isLoaded(entry.getKey()))
-                    .map(Map.Entry::getValue)
-                    .forEach(pack -> event.addPackFinders(
-                            identifier("packs/" + pack.packId),
-                            PackType.CLIENT_RESOURCES,
-                            Component.literal(pack.packName),
-                            PackSource.BUILT_IN,
-                            false,
-                            Pack.Position.TOP
-                    ));
-        });
+        modBus.addListener(AddPackFindersEvent.class, event -> event.addPackFinders(
+                EXPERIMENTAL_FLAG_ID.withPrefix("packs/"),
+                PackType.SERVER_DATA,
+                Component.translatable(EXPERIMENTAL_FLAG_KEY),
+                PackSource.FEATURE,
+                false,
+                Pack.Position.TOP
+        ));
     }
 
     public static ResourceLocation identifier(String identifier) {

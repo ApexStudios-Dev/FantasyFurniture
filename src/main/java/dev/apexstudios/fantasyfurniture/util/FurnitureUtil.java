@@ -41,6 +41,7 @@ import dev.apexstudios.fantasyfurniture.block.WardrobeBlock;
 import dev.apexstudios.fantasyfurniture.block.property.CounterConnection;
 import dev.apexstudios.fantasyfurniture.block.property.ShelfConnection;
 import dev.apexstudios.fantasyfurniture.block.property.SofaConnection;
+import dev.apexstudios.fantasyfurniture.ctm.CtmPacks;
 import java.util.Collections;
 import java.util.Map;
 import java.util.function.BiFunction;
@@ -396,6 +397,8 @@ public interface FurnitureUtil {
     }
 
     static void registerEvents(IEventBus modBus, Registree registree, WoodType woodType) {
+        CtmPacks.register(registree);
+
         modBus.addListener(BlockEntityTypeAddBlocksEvent.class, event -> {
             appendValidBlocks(FurnitureBlockEntities.INVENTORY.value(), Names.blocks(
                     registree, Names.DRESSER, Names.LOCKBOX, Names.DRAWER, Names.DESK_LEFT, Names.DESK_RIGHT,

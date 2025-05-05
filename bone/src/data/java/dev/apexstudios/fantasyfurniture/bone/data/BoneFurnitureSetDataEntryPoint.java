@@ -5,6 +5,7 @@ import dev.apexstudios.apexcore.lib.data.pack.FeaturePackGenerator;
 import dev.apexstudios.apexcore.lib.util.TagPair;
 import dev.apexstudios.fantasyfurniture.FantasyFurniture;
 import dev.apexstudios.fantasyfurniture.bone.BoneFurnitureSet;
+import dev.apexstudios.fantasyfurniture.ctm.CtmPacks;
 import dev.apexstudios.fantasyfurniture.util.FurnitureClientDataUtil;
 import dev.apexstudios.fantasyfurniture.util.FurnitureDataUtil;
 import dev.apexstudios.fantasyfurniture.util.FurnitureUtil;
@@ -52,6 +53,7 @@ public final class BoneFurnitureSetDataEntryPoint {
 
         FurnitureDataUtil.registerDataGen(context, dataPack);
         FurnitureClientDataUtil.registerDataGen(context, assetPack);
+        CtmPacks.registerDataGen(furnitureSet.registree, assetPack, false);
     }
 
     private static FeaturePackGenerator createPack(ResourceGenerator generator, PackType packType, BoneFurnitureSet furnitureSet, String englishName) {

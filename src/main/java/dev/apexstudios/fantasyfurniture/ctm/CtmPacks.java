@@ -1,0 +1,66 @@
+package dev.apexstudios.fantasyfurniture.ctm;
+
+import com.google.common.collect.Lists;
+import dev.apexstudios.apexcore.lib.data.ResourceGenerator;
+import dev.apexstudios.apexcore.lib.data.pack.PackGenerator;
+import dev.apexstudios.apexcore.lib.registree.Registree;
+import dev.apexstudios.fantasyfurniture.FantasyFurniture;
+import dev.apexstudios.fantasyfurniture.util.FurnitureUtil;
+import java.util.List;
+import net.minecraft.Util;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.repository.Pack;
+import net.minecraft.server.packs.repository.PackSource;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.event.AddPackFindersEvent;
+
+public final class CtmPacks {
+    private static final List<CtmPack> PACKS = List.of(
+            // TODO: Re-enable once Athena updates, generated output needs testing
+            /*CtmPack.builder(AthenaProvider.ID)
+                    .displayName("Athena")
+                    .providing(AthenaProvider.PROVIDER_TYPE, AthenaProvider::with)
+                    .build(),*/
+
+            CtmPack.builder(FusionProvider.ID)
+                    .displayName("Fusion")
+                    .providing(FusionProvider.PROVIDER_TYPE, FusionProvider::with)
+                    .build(),
+
+            CtmPack.builder(ConTexProvider.ID)
+                    .displayName("XFactHD")
+                    .packId("ctm-xfact")
+                    .providing(ConTexProvider.PROVIDER_TYPE, ConTexProvider::with)
+                    .build()
+    );
+
+    static final List<Registree> REFERENCES = Lists.newArrayList();
+
+    public static void register(Registree registree) {
+        REFERENCES.add(registree);
+    }
+
+    public static void register(IEventBus modBus) {
+        modBus.addListener(AddPackFindersEvent.class, event -> PACKS.stream().filter(CtmPack::isEnabled).forEach(pack -> event.addPackFinders(
+                FantasyFurniture.identifier("packs/" + pack.packId()),
+                PackType.CLIENT_RESOURCES,
+                Component.literal(pack.displayName()),
+                PackSource.BUILT_IN,
+                false,
+                Pack.Position.TOP
+        )));
+    }
+
+    public static void registerMainDataGen(ResourceGenerator generator) {
+        PACKS.forEach(pack -> Util.make(generator
+                .pack(pack.packId())
+                .description(pack.description())
+                .packType(PackType.CLIENT_RESOURCES), pack::provide
+        ));
+    }
+
+    public static void registerDataGen(Registree registree, PackGenerator<?> pack, boolean dyeable) {
+        pack.providing(TextureProvider.PROVIDER_TYPE, (context, provider) -> FurnitureUtil.Names.block(registree, FurnitureUtil.Names.WOOL, block -> provider.with(block, dyeable)));
+    }
+}

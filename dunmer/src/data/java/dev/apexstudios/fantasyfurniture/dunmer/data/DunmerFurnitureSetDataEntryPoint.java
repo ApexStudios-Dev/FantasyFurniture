@@ -6,6 +6,7 @@ import dev.apexstudios.apexcore.lib.data.provider.context.ProviderListenerContex
 import dev.apexstudios.apexcore.lib.data.provider.model.ModelProvider;
 import dev.apexstudios.apexcore.lib.util.TagPair;
 import dev.apexstudios.fantasyfurniture.block.OvenBlock;
+import dev.apexstudios.fantasyfurniture.ctm.CtmPacks;
 import dev.apexstudios.fantasyfurniture.dunmer.DunmerFurnitureSet;
 import dev.apexstudios.fantasyfurniture.util.FurnitureClientDataUtil;
 import dev.apexstudios.fantasyfurniture.util.FurnitureDataUtil;
@@ -52,6 +53,7 @@ public final class DunmerFurnitureSetDataEntryPoint {
 
             FurnitureDataUtil.registerDataGen(context, pack);
             FurnitureClientDataUtil.registerDataGen(context, pack);
+            CtmPacks.registerDataGen(DunmerFurnitureSet.REGISTREE, pack, false);
 
             pack.providing(ProviderTypes.MODELS, this::generateModels);
         });
