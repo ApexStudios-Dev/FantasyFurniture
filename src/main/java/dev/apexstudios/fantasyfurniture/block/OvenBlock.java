@@ -1,7 +1,7 @@
 package dev.apexstudios.fantasyfurniture.block;
 
 import dev.apexstudios.fantasyfurniture.FurnitureBlockEntities;
-import dev.apexstudios.fantasyfurniture.block.base.InventoryBlock;
+import dev.apexstudios.fantasyfurniture.block.base.FurnitureInventoryBlock;
 import dev.apexstudios.fantasyfurniture.oven.OvenBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import org.jetbrains.annotations.Nullable;
 
-public class OvenBlock extends InventoryBlock {
+public class OvenBlock extends FurnitureInventoryBlock {
     public static final BooleanProperty LIT = SmokerBlock.LIT;
 
     public OvenBlock(Properties properties) {
@@ -40,6 +40,7 @@ public class OvenBlock extends InventoryBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
         builder.add(LIT);
     }
 }

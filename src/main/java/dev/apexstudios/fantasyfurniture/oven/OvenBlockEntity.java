@@ -1,22 +1,20 @@
 package dev.apexstudios.fantasyfurniture.oven;
 
-import dev.apexstudios.apexcore.lib.component.ComponentRegistrar;
-import dev.apexstudios.apexcore.lib.component.block.entity.BaseBlockEntityComponentHolder;
-import dev.apexstudios.apexcore.lib.component.block.entity.BlockEntityComponent;
-import dev.apexstudios.apexcore.lib.component.block.entity.BlockEntityComponentHelper;
+import dev.apexstudios.apexcore.lib.block.entity.InventoryBlockEntity;
 import dev.apexstudios.fantasyfurniture.FurnitureBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.Tags;
 
-public final class OvenBlockEntity extends BaseBlockEntityComponentHolder {
+public final class OvenBlockEntity extends InventoryBlockEntity {
     public static final int SLOT_INPUT = 0;
     public static final int SLOT_FUEL = 1;
     public static final int SLOT_OUTPUT = 2;
@@ -25,7 +23,7 @@ public final class OvenBlockEntity extends BaseBlockEntityComponentHolder {
     final OvenData data = new OvenData();
 
     public OvenBlockEntity(BlockPos pos, BlockState blockState) {
-        super(FurnitureBlockEntities.OVEN.value(), pos, blockState);
+        super(FurnitureBlockEntities.OVEN.value(), pos, blockState, SLOTS);
     }
 
     @Override
@@ -41,26 +39,30 @@ public final class OvenBlockEntity extends BaseBlockEntityComponentHolder {
     }
 
     @Override
-    protected AbstractContainerMenu createMenu(int windowId, Player player) {
-        return new OvenMenu(windowId, player.getInventory(), this);
+    public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player player) {
+        return new OvenMenu(windowId, playerInventory, this);
     }
 
     @Override
-    protected void registerComponents(ComponentRegistrar<BlockEntityComponent, BlockEntity> registrar) {
-        BlockEntityComponentHelper.registerInventoryComponents(registrar, builder -> builder
-                .slot(SLOT_INPUT, slot -> slot.listener((index, inventory) -> {
-                    if(level instanceof ServerLevel level) {
-                        data.cookingTotalTime = data.getTotalCookTime(level, inventory);
-                        data.cookingTimer = 0;
-                        setChanged();
-                    }
-                }))
-                .slot(SLOT_FUEL, slot -> slot.validator((index, inventory, stack) ->
-                        (level != null && stack.getBurnTime(null, level.fuelValues()) > 0) ||
-                                (stack.is(Tags.Items.BUCKETS_EMPTY) && !inventory.getStackInSlot(index).is(Tags.Items.BUCKETS_EMPTY))
-                ))
-                .slot(SLOT_OUTPUT, slot -> slot.validator((index, inventory, stack) -> false))
-        );
+    protected boolean canInsert(int slot, ItemStack stack) {
+        if(slot == SLOT_FUEL) {
+            if(stack.is(Tags.Items.BUCKETS_EMPTY) && !inventory.getStackInSlot(SLOT_FUEL).is(Tags.Items.BUCKETS_EMPTY))
+                return true;
+            if(level != null && stack.getBurnTime(null, level.fuelValues()) > 0)
+                return true;
+            return false;
+        } else if(slot == SLOT_OUTPUT)
+            return false;
+
+        return super.canInsert(slot, stack);
+    }
+
+    @Override
+    protected void onSlotChanged(int slot) {
+        if(level instanceof ServerLevel level) {
+            data.cookingTotalTime = data.getTotalCookTime(level, inventory);
+            data.cookingTimer = 0;
+        }
     }
 
     public void serverTick(ServerLevel level, BlockPos pos, BlockState blockState) {
