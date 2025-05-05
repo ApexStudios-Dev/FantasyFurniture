@@ -83,6 +83,6 @@ public final class DunmerSofaBlock extends SofaBlock {
             case BOTH -> BOTH_FACING_SHAPES;
             case CORNER_INNER, CORNER_OUTER -> CORNER_FACING_SHAPES;
             case NONE -> FACING_SHAPES;
-        }, blockState, pos);
+        }, blockState, facingProperty(), pos);
     }
 }

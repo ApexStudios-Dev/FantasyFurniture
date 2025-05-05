@@ -1,5 +1,6 @@
 package dev.apexstudios.fantasyfurniture.block;
 
+import dev.apexstudios.apexcore.lib.block.MultiBlock;
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.base.FurnitureInventoryBlock;
 import java.util.Map;
@@ -9,7 +10,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class WardrobeBlock extends FurnitureInventoryBlock {
+public class WardrobeBlock extends FurnitureInventoryBlock implements MultiBlock {
     public static final VoxelShape SHAPE = ApexShapes.join(
             box(-14.75D, 0D, .25D, -12.25D, 31D, 2.75D),
             box(-14.75D, 0D, 13.25D, -12.25D, 31D, 15.75D),
@@ -21,6 +22,15 @@ public class WardrobeBlock extends FurnitureInventoryBlock {
 
     public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
 
+    public static final Pattern PATTERN = MultiBlock.of(builder -> builder
+            .with(0, 0, 1)
+            .with(0, 1, 1)
+            .with(0, 1, 0)
+            .with(0, 2, 1)
+            .with(0, 2, 0)
+            .rotateHorizontalFromInterface()
+    );
+
     public WardrobeBlock(Properties properties) {
         super(properties);
     }
@@ -28,5 +38,10 @@ public class WardrobeBlock extends FurnitureInventoryBlock {
     @Override
     protected VoxelShape getFurnitureShape(BlockState blockState, BlockPos pos) {
         return getShape(FACING_SHAPES, blockState, facingProperty(), pos);
+    }
+
+    @Override
+    public Pattern multiBlockPattern() {
+        return PATTERN;
     }
 }

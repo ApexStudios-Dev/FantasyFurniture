@@ -57,6 +57,6 @@ public final class NecrolordShelfBlock extends ShelfBlock {
             case RIGHT -> RIGHT_FACING_SHAPES;
             case BOTH -> BOTH_FACING_SHAPES;
             case NONE -> FACING_SHAPES;
-        }, blockState, pos);
+        }, blockState, facingProperty(), pos);
     }
 }

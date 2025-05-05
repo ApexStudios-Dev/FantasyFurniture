@@ -43,6 +43,6 @@ public final class BoneShelfBlock extends ShelfBlock {
             case RIGHT -> RIGHT_FACING_SHAPES;
             case BOTH -> BOTH_FACING_SHAPES;
             case NONE -> TOP_FACING_SHAPES;
-        }, blockState, pos);
+        }, blockState, facingProperty(), pos);
     }
 }

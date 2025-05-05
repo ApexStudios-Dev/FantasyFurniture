@@ -24,6 +24,6 @@ public final class DunmerPaintingWideBlock extends PaintingWideBlock {
 
     @Override
     protected VoxelShape getFurnitureShape(BlockState blockState, BlockPos pos) {
-        return getShape(FACING_SHAPES, blockState, pos);
+        return getShape(FACING_SHAPES, blockState, facingProperty(), pos);
     }
 }

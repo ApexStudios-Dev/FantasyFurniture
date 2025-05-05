@@ -1,10 +1,6 @@
 package dev.apexstudios.fantasyfurniture.royal;
 
 import dev.apexstudios.apexcore.core.client.DyeColorItemTintSource;
-import dev.apexstudios.apexcore.lib.component.ComponentHolder;
-import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
-import dev.apexstudios.apexcore.lib.component.block.BlockComponentHelper;
-import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
 import dev.apexstudios.apexcore.lib.data.provider.context.ProviderListenerContext;
 import dev.apexstudios.apexcore.lib.data.provider.model.ApexModelTemplates;
 import dev.apexstudios.apexcore.lib.data.provider.model.ModelUtil;
@@ -25,9 +21,8 @@ import dev.apexstudios.fantasyfurniture.block.ShelfBlock;
 import dev.apexstudios.fantasyfurniture.block.SofaBlock;
 import dev.apexstudios.fantasyfurniture.block.TableBlock;
 import dev.apexstudios.fantasyfurniture.block.WardrobeBlock;
-import dev.apexstudios.fantasyfurniture.block.base.FurnitureDoorBlockComponentHolder;
-import dev.apexstudios.fantasyfurniture.block.base.SeatBlock;
-import dev.apexstudios.fantasyfurniture.royal.block.RoyalCarpetBlock;
+import dev.apexstudios.fantasyfurniture.block.base.FurnitureDoorBlock;
+import dev.apexstudios.fantasyfurniture.block.base.FurnitureSeatBlock;
 import dev.apexstudios.fantasyfurniture.set.BlockTypes;
 import dev.apexstudios.fantasyfurniture.set.FurnitureSet;
 import net.minecraft.client.data.models.BlockModelGenerators;
@@ -35,19 +30,18 @@ import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.CommonColors;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CarpetBlock;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 
 @Mod(value = RoyalFurnitureSet.ID, dist = Dist.CLIENT)
 public final class RoyalFurnitureSetClientSetup {
     public RoyalFurnitureSetClientSetup(IEventBus modBus) {
-        modBus.addListener(RegisterColorHandlersEvent.Block.class, event -> {
+        // TODO
+        /*modBus.addListener(RegisterColorHandlersEvent.Block.class, event -> {
             var dyeableBlocks = RoyalFurnitureSet.FURNITURE_SET.blockTypes().stream()
                     .map(RoyalFurnitureSet.FURNITURE_SET::getOrThrow)
                     .filter(block -> block instanceof ComponentHolder && ((ComponentHolder<BlockComponent, Block>) block).hasComponent(BlockComponentTypes.DYEABLE))
@@ -66,7 +60,7 @@ public final class RoyalFurnitureSetClientSetup {
                     (blockState, level, pos, tintIndex) -> tintIndex == 0 ? blockState.getValue(RoyalCarpetBlock.COLOR).getTextureDiffuseColor() : CommonColors.WHITE,
                     RoyalFurnitureSet.FURNITURE_SET.getOrThrow(BlockTypes.CARPET)
             );
-        });
+        });*/
     }
 
     static void woolModel(ProviderListenerContext context, BlockModelGenerators models, FurnitureSet furnitureSet, Block block) {
@@ -135,7 +129,7 @@ public final class RoyalFurnitureSetClientSetup {
     }
 
     static void cushionModel(ProviderListenerContext context, BlockModelGenerators models, FurnitureSet furnitureSet, CushionBlock block) {
-        ModelUtil.horizontalFacingBlock(block, models);
+        models.blockStateOutput.accept(ModelUtil.facingBlock(block));
         dyeableItemModel(block, ModelLocationUtils.getModelLocation(block), models);
     }
 
@@ -144,7 +138,7 @@ public final class RoyalFurnitureSetClientSetup {
         dyeableItemModel(block, ModelLocationUtils.getModelLocation(block.asItem()), models);
     }
 
-    static void doorModel(ProviderListenerContext context, BlockModelGenerators models, FurnitureSet furnitureSet, FurnitureDoorBlockComponentHolder block) {
+    static void doorModel(ProviderListenerContext context, BlockModelGenerators models, FurnitureSet furnitureSet, FurnitureDoorBlock block) {
         BlockTypes.doorModel(block, models);
         dyeableItemModel(block, models.createFlatItemModel(block.asItem()), models);
     }
@@ -165,7 +159,8 @@ public final class RoyalFurnitureSetClientSetup {
     }
 
     static void ovenModel(ProviderListenerContext context, BlockModelGenerators models, FurnitureSet furnitureSet, OvenBlock block) {
-        models.blockStateOutput.accept(ModelUtil.facingBlock(block));
+        // TODO
+        // models.blockStateOutput.accept(ModelUtil.facingBlock(block));
         dyeableItemModel(block, ModelLocationUtils.getModelLocation(block), models);
     }
 
@@ -179,8 +174,8 @@ public final class RoyalFurnitureSetClientSetup {
         dyeableItemModel(block, ModelLocationUtils.getModelLocation(block, "_single"), models);
     }
 
-    static void stoolModel(ProviderListenerContext context, BlockModelGenerators models, FurnitureSet furnitureSet, SeatBlock block) {
-        ModelUtil.horizontalFacingBlock(block, models);
+    static void stoolModel(ProviderListenerContext context, BlockModelGenerators models, FurnitureSet furnitureSet, FurnitureSeatBlock block) {
+        models.blockStateOutput.accept(ModelUtil.facingBlock(block));
         dyeableItemModel(block, ModelLocationUtils.getModelLocation(block), models);
     }
 

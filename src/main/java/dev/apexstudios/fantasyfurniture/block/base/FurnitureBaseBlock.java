@@ -1,13 +1,10 @@
 package dev.apexstudios.fantasyfurniture.block.base;
 
 import com.google.common.collect.Maps;
-import dev.apexstudios.apexcore.lib.component.ComponentRegistrar;
-import dev.apexstudios.apexcore.lib.component.block.BaseBlockComponentHolder;
-import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
-import dev.apexstudios.apexcore.lib.component.block.BlockComponentHelper;
-import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
-import dev.apexstudios.apexcore.lib.component.block.types.FluidLoggedBlockComponent;
-import dev.apexstudios.apexcore.lib.component.block.types.MultiBlockComponent;
+import dev.apexstudios.apexcore.lib.block.BaseBlock;
+import dev.apexstudios.apexcore.lib.block.FacingBlock;
+import dev.apexstudios.apexcore.lib.block.FluidLoggedBlock;
+import dev.apexstudios.apexcore.lib.block.MultiBlock;
 import java.util.Map;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.BlockPos;
@@ -17,18 +14,17 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.MustBeInvokedByOverriders;
 
-public class FurnitureBlockComponentHolder extends BaseBlockComponentHolder {
+public abstract class FurnitureBaseBlock extends BaseBlock implements FacingBlock, FluidLoggedBlock {
     private final Map<BlockState, VoxelShape> shapes = Maps.newHashMap();
 
-    protected FurnitureBlockComponentHolder(Properties properties) {
+    protected FurnitureBaseBlock(Properties properties) {
         super(properties);
     }
 
@@ -52,25 +48,16 @@ public class FurnitureBlockComponentHolder extends BaseBlockComponentHolder {
         return super.useWithoutItem(blockState, level, pos, player, result);
     }
 
-    @MustBeInvokedByOverriders
-    @Override
-    protected void registerComponents(ComponentRegistrar<BlockComponent, Block> registrar) {
-        super.registerComponents(registrar);
-
-        FluidLoggedBlockComponent.registerWater(registrar);
-    }
-
-    public static VoxelShape getShape(Map<Direction, VoxelShape> shapes, BlockState blockState, BlockPos pos) {
-        var facing = BlockComponentHelper.getComponentOrThrow(blockState, BlockComponentTypes.FACING).get(blockState);
-        return getShape(shapes.get(facing), blockState, pos);
+    public static VoxelShape getShape(Map<Direction, VoxelShape> shapes, BlockState blockState, Property<Direction> facingProperty, BlockPos pos) {
+        var facing = blockState.getValue(facingProperty);
+        var shape = shapes.get(facing);
+        return getShape(shape, blockState, pos);
     }
 
     public static VoxelShape getShape(VoxelShape shape, BlockState blockState, BlockPos pos) {
-        var multiBlock = BlockComponentHelper.getComponent(blockState, BlockComponentTypes.MULTI_BLOCK);
+        if(blockState.getBlock() instanceof MultiBlock multiBlock)
+            return multiBlock.fixVoxelShape(shape, blockState, pos);
 
-        if(multiBlock == null)
-            return shape;
-
-        return MultiBlockComponent.fixVoxelShape(shape, multiBlock, blockState, pos);
+        return shape;
     }
 }

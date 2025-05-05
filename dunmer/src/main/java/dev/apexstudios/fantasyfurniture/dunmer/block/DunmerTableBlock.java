@@ -1,6 +1,5 @@
 package dev.apexstudios.fantasyfurniture.dunmer.block;
 
-import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.TableBlock;
 import net.minecraft.core.BlockPos;
@@ -16,7 +15,7 @@ public final class DunmerTableBlock extends TableBlock {
 
     @Override
     protected VoxelShape getFurnitureShape(BlockState blockState, BlockPos pos) {
-        var facing = getComponentOrThrow(BlockComponentTypes.FACING).get(blockState);
-        return ApexShapes.rotateHorizontal(getShape(blockState, SHAPE_TABLE_TOP, SHAPE_TABLE_LEG), facing);
+        var facing = blockState.getValue(facingProperty());
+        return ApexShapes.rotateHorizontal(getShape(blockState, SHAPE_TABLE_TOP, SHAPE_TABLE_LEG, facingProperty()), facing);
     }
 }

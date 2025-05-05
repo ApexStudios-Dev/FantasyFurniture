@@ -2,6 +2,7 @@ package dev.apexstudios.fantasyfurniture.dunmer.block;
 
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.OvenBlock;
+import dev.apexstudios.fantasyfurniture.block.base.FurnitureBaseBlock;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -28,6 +29,6 @@ public final class DunmerOvenBlock extends OvenBlock {
 
     @Override
     protected VoxelShape getFurnitureShape(BlockState blockState, BlockPos pos) {
-        return getShape(FACING_SHAPES, blockState, facingProperty(), pos);
+        return FurnitureBaseBlock.getShape(FACING_SHAPES, blockState, FACING, pos);
     }
 }

@@ -1,6 +1,7 @@
-package dev.apexstudios.fantasyfurniture.block;
+package dev.apexstudios.fantasyfurniture.block.base;
 
 import com.google.common.collect.Maps;
+import dev.apexstudios.fantasyfurniture.set.FurnitureSet;
 import java.util.Map;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.BlockPos;
@@ -9,24 +10,28 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.SmokerBlock;
+import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class OvenBlock extends SmokerBlock {
+public class FurnitureDoorBlock extends DoorBlock {
+    public static final VoxelShape SHAPE = box(0D, 0D, 0D, 3D, 32D, 16D);
+
     private final Map<BlockState, VoxelShape> shapes = Maps.newHashMap();
 
-    public OvenBlock(Properties properties) {
-        super(properties);
+    public FurnitureDoorBlock(BlockSetType type, Properties properties) {
+        super(type, properties);
+    }
 
-        registerDefaultState(defaultBlockState().setValue(LIT, false));
+    public FurnitureDoorBlock(FurnitureSet furnitureSet, Properties properties) {
+        this(furnitureSet.blockSet(), properties);
     }
 
     protected VoxelShape getFurnitureShape(BlockState blockState, BlockPos pos) {
-        return Shapes.block();
+        return FurnitureBaseBlock.getShape(SHAPE, blockState, pos);
     }
 
     @Override

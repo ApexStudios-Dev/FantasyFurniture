@@ -5,7 +5,6 @@ import dev.apexstudios.fantasyfurniture.royal.block.RoyalBedDoubleBlock;
 import dev.apexstudios.fantasyfurniture.royal.block.RoyalBedSingleBlock;
 import dev.apexstudios.fantasyfurniture.royal.block.RoyalBenchBlock;
 import dev.apexstudios.fantasyfurniture.royal.block.RoyalBookshelfBlock;
-import dev.apexstudios.fantasyfurniture.royal.block.RoyalCarpetBlock;
 import dev.apexstudios.fantasyfurniture.royal.block.RoyalChairBlock;
 import dev.apexstudios.fantasyfurniture.royal.block.RoyalChandelierBlock;
 import dev.apexstudios.fantasyfurniture.royal.block.RoyalChestBlock;
@@ -26,7 +25,6 @@ import dev.apexstudios.fantasyfurniture.royal.block.RoyalStoolBlock;
 import dev.apexstudios.fantasyfurniture.royal.block.RoyalTableBlock;
 import dev.apexstudios.fantasyfurniture.royal.block.RoyalWallLightBlock;
 import dev.apexstudios.fantasyfurniture.royal.block.RoyalWardrobeBlock;
-import dev.apexstudios.fantasyfurniture.royal.block.RoyalWoolBlock;
 import dev.apexstudios.fantasyfurniture.set.BlockTypeBuilder;
 import dev.apexstudios.fantasyfurniture.set.BlockTypes;
 import dev.apexstudios.fantasyfurniture.set.FurnitureSet;
@@ -37,6 +35,7 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.CarpetBlock;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.Tags;
@@ -48,11 +47,11 @@ public class RoyalFurnitureSet {
     public static final FurnitureSet FURNITURE_SET = FurnitureSet.createStoneLike(REGISTREE, "royal", $ -> $
             .remove(BlockTypes.FENCE_GATE)
             .with(BlockTypes.WOOL.copy($$ -> $$
-                    .blockFactory(BlockFactory.wrapping(RoyalWoolBlock::new))
+                    .blockFactory(BlockFactory.wrapping(Block::new))
                     .builder($$$ -> dyedSetup($$$, () -> RoyalFurnitureSetClientSetup::woolModel))
             ))
             .with(BlockTypes.CARPET.copy($$ -> $$
-                    .blockFactory(BlockFactory.wrapping(RoyalCarpetBlock::new))
+                    .blockFactory(BlockFactory.wrapping(CarpetBlock::new))
                     .builder($$$ -> dyedSetup($$$, () -> RoyalFurnitureSetClientSetup::carpetModel))
             ))
             .with(BlockTypes.BED_DOUBLE.copy($$ -> $$
