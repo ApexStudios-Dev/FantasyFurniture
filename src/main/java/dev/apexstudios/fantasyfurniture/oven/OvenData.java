@@ -3,7 +3,6 @@ package dev.apexstudios.fantasyfurniture.oven;
 import com.google.common.collect.Lists;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponentHelper;
 import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
-import dev.apexstudios.apexcore.lib.component.block.entity.BlockEntityComponentTypes;
 import dev.apexstudios.fantasyfurniture.block.OvenBlock;
 import it.unimi.dsi.fastutil.objects.Reference2IntOpenHashMap;
 import java.util.Collections;
@@ -52,7 +51,7 @@ public final class OvenData implements ContainerData, RecipeCraftingHolder {
     private final RecipeManager.CachedCheck<SingleRecipeInput, SmokingRecipe> quickCheck = RecipeManager.createCheck(RecipeType.SMOKING);
 
     void serverTick(ServerLevel level, BlockPos pos, BlockState blockState, OvenBlockEntity oven) {
-        var inventory = oven.getComponentOrThrow(BlockEntityComponentTypes.INVENTORY).getItemHandler();
+        var inventory = oven.getItemHandler();
         var wasLit = isLit();
         var changed = false;
 
@@ -252,13 +251,12 @@ public final class OvenData implements ContainerData, RecipeCraftingHolder {
 
     public void awardUsedRecipesAndPopExperience(ServerPlayer player, OvenBlockEntity oven) {
         var recipes = getRecipesToAwardAndPopExperience(player.serverLevel(), player.position());
-        var inventory = oven.getComponentOrThrow(BlockEntityComponentTypes.INVENTORY).getItems();
 
         player.awardRecipes(recipes);
 
         recipes.forEach(recipe -> {
             if (recipe != null)
-                player.triggerRecipeCrafted(recipe, inventory);
+                player.triggerRecipeCrafted(recipe, oven.getItems());
         });
 
         recipesUsed.clear();

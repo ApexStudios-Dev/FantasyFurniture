@@ -2,7 +2,6 @@ package dev.apexstudios.fantasyfurniture.dunmer.block;
 
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.CounterBlock;
-import dev.apexstudios.fantasyfurniture.block.base.FurnitureBlockComponentHolder;
 import dev.apexstudios.fantasyfurniture.block.property.CounterConnection;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
@@ -41,9 +40,9 @@ public final class DunmerCounterBlock extends CounterBlock {
 
     @Override
     protected VoxelShape getFurnitureShape(BlockState blockState, BlockPos pos) {
-        return FurnitureBlockComponentHolder.getShape(switch (blockState.getValue(CounterConnection.PROPERTY)) {
+        return getShape(switch (blockState.getValue(CounterConnection.PROPERTY)) {
             case CORNER_INNER, CORNER_OUTER -> CORNER_FACING_SHAPES;
             case NONE -> FACING_SHAPES;
-        }, blockState, pos);
+        }, blockState, facingProperty(), pos);
     }
 }

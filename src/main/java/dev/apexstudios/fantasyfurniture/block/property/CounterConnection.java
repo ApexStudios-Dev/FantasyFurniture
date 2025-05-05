@@ -8,6 +8,7 @@ import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.properties.Property;
 
 public enum CounterConnection implements StringRepresentable {
     NONE("single"),
@@ -36,6 +37,10 @@ public enum CounterConnection implements StringRepresentable {
             return "_corner";
 
         return '_' + serializedName;
+    }
+
+    public static BlockState setConnection(BlockGetter level, BlockPos pos, BlockState blockState, Property<Direction> facingProperty) {
+        return setConnection(level, pos, blockState, state -> state.getValue(facingProperty), (state, facing) -> state.setValue(facingProperty, facing));
     }
 
     public static BlockState setConnection(BlockGetter level, BlockPos pos, BlockState blockState, Function<BlockState, Direction> getFacing, BiFunction<BlockState, Direction, BlockState> setFacing) {
