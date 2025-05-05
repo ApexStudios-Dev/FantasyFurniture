@@ -187,7 +187,7 @@ public interface BlockTypes {
             builder -> builder
                     .baseBlock(() -> Blocks.CHEST)
                     .blockProperties(properties -> properties.pushReaction(PushReaction.BLOCK))
-                    .blockEntity(FurnitureBlockEntities.DRESSER)
+                    .blockEntity(FurnitureBlockEntities.INVENTORY)
                     .lootTable((blocks, furnitureSet, block) -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)))
                     .model(() -> (context, models, furnitureSet, block) -> {
                         dresserModel(block, models);
@@ -229,9 +229,9 @@ public interface BlockTypes {
             BlockFactory.wrapping(LockBoxBlock::new),
             builder -> builder
                     .baseBlock(() -> Blocks.CHEST)
-                    .blockEntity(FurnitureBlockEntities.LOCKBOX)
+                    .blockEntity(FurnitureBlockEntities.INVENTORY)
                     .lootTable((blocks, furnitureSet, block) -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)))
-                    .model(() -> (context, models, furnitureSet, block) -> ModelUtil.horizontalFacingBlock(block, models))
+                    .model(() -> (context, models, furnitureSet, block) -> models.blockStateOutput.accept(ModelUtil.facingBlock(block)))
                     .translation("Lockbox")
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
@@ -244,9 +244,9 @@ public interface BlockTypes {
             builder -> builder
                     .baseBlock(() -> Blocks.CHEST)
                     .blockProperties(properties -> properties.pushReaction(PushReaction.BLOCK))
-                    .blockEntity(FurnitureBlockEntities.DRAWER)
+                    .blockEntity(FurnitureBlockEntities.INVENTORY)
                     .lootTable((blocks, furnitureSet, block) -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)))
-                    .model(() -> (context, models, furnitureSet, block) -> ModelUtil.horizontalFacingBlock(block, models))
+                    .model(() -> (context, models, furnitureSet, block) -> models.blockStateOutput.accept(ModelUtil.facingBlock(block)))
                     .translation("Drawer")
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
@@ -371,7 +371,7 @@ public interface BlockTypes {
             builder -> builder
                     .baseBlock(() -> Blocks.CHEST)
                     .blockProperties(properties -> properties.pushReaction(PushReaction.BLOCK))
-                    .blockEntity(FurnitureBlockEntities.DESK)
+                    .blockEntity(FurnitureBlockEntities.INVENTORY)
                     .lootTable((blocks, furnitureSet, block) -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)))
                     .model(() -> (context, models, furnitureSet, block) -> {
                         deskModel(block, models);
@@ -390,7 +390,7 @@ public interface BlockTypes {
             builder -> builder
                     .baseBlock(() -> Blocks.CHEST)
                     .blockProperties(properties -> properties.pushReaction(PushReaction.BLOCK))
-                    .blockEntity(FurnitureBlockEntities.DESK)
+                    .blockEntity(FurnitureBlockEntities.INVENTORY)
                     .lootTable((blocks, furnitureSet, block) -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)))
                     .model(() -> (context, models, furnitureSet, block) -> {
                         deskModel(block, models);
@@ -440,7 +440,7 @@ public interface BlockTypes {
                     .blockProperties(BlockBehaviour.Properties::noOcclusion)
                     .blockEntity(FurnitureBlockEntities.OVEN)
                     .lootTable((blocks, furnitureSet, block) -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)))
-                    .model(() -> (context, models, furnitureSet, block) -> ModelUtil.horizontalFacingBlock(block, models))
+                    .model(() -> (context, models, furnitureSet, block) -> models.blockStateOutput.accept(ModelUtil.facingBlock(block)))
                     .translation("Oven")
                     .noMineableTag() // forcefully use the pickaxe tag
                     .blockTags(BlockTags.MINEABLE_WITH_PICKAXE, Tags.Blocks.PLAYER_WORKSTATIONS_FURNACES)
@@ -457,7 +457,7 @@ public interface BlockTypes {
             builder -> builder
                     .baseBlock(() -> Blocks.CHEST)
                     .blockProperties(properties -> properties.pushReaction(PushReaction.BLOCK))
-                    .blockEntity(FurnitureBlockEntities.CHEST)
+                    .blockEntity(FurnitureBlockEntities.INVENTORY)
                     .lootTable((blocks, furnitureSet, block) -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)))
                     .model(() -> (context, models, furnitureSet, block) -> {
                         chestModel(block, models);
@@ -544,7 +544,7 @@ public interface BlockTypes {
             "counter",
             BlockFactory.wrapping(CounterBlock::new),
             builder -> builder
-                    .blockEntity(FurnitureBlockEntities.COUNTER)
+                    .blockEntity(FurnitureBlockEntities.INVENTORY)
                     .lootTable((blocks, furnitureSet, block) -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)))
                     .model(() -> (context, models, furnitureSet, block) -> {
                         counterModel(block, models);
@@ -594,7 +594,7 @@ public interface BlockTypes {
             builder -> builder
                     .baseBlock(() -> Blocks.CHEST)
                     .blockProperties(properties -> properties.pushReaction(PushReaction.BLOCK))
-                    .blockEntity(FurnitureBlockEntities.WARDROBE)
+                    .blockEntity(FurnitureBlockEntities.INVENTORY)
                     .lootTable((blocks, furnitureSet, block) -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)))
                     .model(() -> (context, models, furnitureSet, block) -> {
                         wardrobeModel(block, models);
@@ -921,7 +921,8 @@ public interface BlockTypes {
     }
 
     static void dresserModel(DresserBlock block, BlockModelGenerators models) {
-        ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right");
+        // TODO
+        // ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right");
     }
 
     static void chairModel(ChairBlock block, BlockModelGenerators models) {
@@ -929,12 +930,13 @@ public interface BlockTypes {
     }
 
     static void bookshelfModel(BookshelfBlock block, BlockModelGenerators models) {
-        ModelUtil.multiBlockModelSuffix(block, models, index -> switch (index) {
+        // TODO
+        /*ModelUtil.multiBlockModelSuffix(block, models, index -> switch (index) {
             case 1 -> "_bottom_right";
             case 2 -> "_top_right";
             case 3 -> "_top_left";
             default -> "_bottom_left";
-        });
+        });*/
     }
 
     static void bedSingleModel(BedSingleBlock block, BlockModelGenerators models) {
@@ -977,7 +979,8 @@ public interface BlockTypes {
     }
 
     static void deskModel(DeskBlock block, BlockModelGenerators models) {
-        ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right");
+        // TODO
+        // ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right");
     }
 
     static void paintingWideModel(PaintingWideBlock block, BlockModelGenerators models) {
@@ -985,7 +988,8 @@ public interface BlockTypes {
     }
 
     static void chestModel(ChestBlock block, BlockModelGenerators models) {
-        ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right");
+        // TODO
+        // ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right");
     }
 
     static void floorLightModel(FloorLightBlock block, BlockModelGenerators models) {
@@ -1001,7 +1005,13 @@ public interface BlockTypes {
     }
 
     static void counterModel(CounterBlock block, BlockModelGenerators models) {
-        ModelUtil.facingPropertyModelSuffix(block, models, CounterConnection.PROPERTY, CounterConnection::getModelSuffix);
+        models.blockStateOutput.accept(MultiVariantGenerator
+                .dispatch(block)
+                .with(PropertyDispatch.initial(CounterConnection.PROPERTY)
+                        .generate(value -> BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block, value.getModelSuffix())))
+                )
+                .with(ModelUtil.createHorizontalFacingDispatch(block))
+        );
     }
 
     static void benchModel(BenchBlock block, BlockModelGenerators models) {
@@ -1009,14 +1019,15 @@ public interface BlockTypes {
     }
 
     static void wardrobeModel(WardrobeBlock block, BlockModelGenerators models) {
-        ModelUtil.multiBlockModelSuffix(block, models, index -> switch (index) {
+        // TODO
+        /*ModelUtil.multiBlockModelSuffix(block, models, index -> switch (index) {
             case 1 -> "_bottom_right";
             case 2 -> "_middle_right";
             case 3 -> "_middle_left";
             case 4 -> "_top_right";
             case 5 -> "_top_left";
             default -> "_bottom_left";
-        });
+        });*/
     }
 
     static void tableModel(TableBlock block, BlockModelGenerators blockModels) {

@@ -1,30 +1,32 @@
 package dev.apexstudios.fantasyfurniture.block.base;
 
 import com.google.common.collect.Maps;
-import dev.apexstudios.apexcore.lib.component.ComponentRegistrar;
-import dev.apexstudios.apexcore.lib.component.block.BaseEntityBlockComponentHolder;
-import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
-import dev.apexstudios.apexcore.lib.component.block.types.FluidLoggedBlockComponent;
+import dev.apexstudios.apexcore.lib.block.BaseBlock;
+import dev.apexstudios.apexcore.lib.block.FacingBlock;
+import dev.apexstudios.apexcore.lib.block.FluidLoggedBlock;
+import dev.apexstudios.apexcore.lib.block.InventoryBlock;
+import dev.apexstudios.fantasyfurniture.block.entity.FurnitureInventoryBlockEntity;
 import java.util.Map;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.MustBeInvokedByOverriders;
 
-public abstract class FurnitureEntityBlockComponentHolder extends BaseEntityBlockComponentHolder {
+public class FurnitureInventoryBlock extends BaseBlock implements FacingBlock, FluidLoggedBlock, InventoryBlock {
     private final Map<BlockState, VoxelShape> shapes = Maps.newHashMap();
 
-    protected FurnitureEntityBlockComponentHolder(Properties properties) {
+    public FurnitureInventoryBlock(Properties properties) {
         super(properties);
     }
 
@@ -48,11 +50,24 @@ public abstract class FurnitureEntityBlockComponentHolder extends BaseEntityBloc
         return super.useWithoutItem(blockState, level, pos, player, result);
     }
 
-    @MustBeInvokedByOverriders
     @Override
-    protected void registerComponents(ComponentRegistrar<BlockComponent, Block> registrar) {
-        super.registerComponents(registrar);
-
-        FluidLoggedBlockComponent.registerWater(registrar);
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState blockState) {
+        return new FurnitureInventoryBlockEntity(pos, blockState);
     }
+
+    public static VoxelShape getShape(Map<Direction, VoxelShape> shapes, BlockState blockState, Property<Direction> facingProperty, BlockPos pos) {
+        var facing = blockState.getValue(facingProperty);
+        // return getShape(shapes.get(facing), blockState, pos);
+        return shapes.get(facing);
+    }
+
+    // TODO
+    /*public static VoxelShape getShape(VoxelShape shape, BlockState blockState, BlockPos pos) {
+        var multiBlock = BlockComponentHelper.getComponent(blockState, BlockComponentTypes.MULTI_BLOCK);
+
+        if(multiBlock == null)
+            return shape;
+
+        return MultiBlockComponent.fixVoxelShape(shape, multiBlock, blockState, pos);
+    }*/
 }

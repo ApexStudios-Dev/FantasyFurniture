@@ -150,7 +150,7 @@ public final class RoyalFurnitureSetClientSetup {
     }
 
     static void drawerModel(ProviderListenerContext context, BlockModelGenerators models, FurnitureSet furnitureSet, DrawerBlock block) {
-        ModelUtil.horizontalFacingBlock(block, models);
+        models.blockStateOutput.accept(ModelUtil.facingBlock(block));
         dyeableItemModel(block, ModelLocationUtils.getModelLocation(block), models);
     }
 
@@ -160,12 +160,12 @@ public final class RoyalFurnitureSetClientSetup {
     }
 
     static void lockboxModel(ProviderListenerContext context, BlockModelGenerators models, FurnitureSet furnitureSet, LockBoxBlock block) {
-        ModelUtil.horizontalFacingBlock(block, models);
+        models.blockStateOutput.accept(ModelUtil.facingBlock(block));
         dyeableItemModel(block, ModelLocationUtils.getModelLocation(block), models);
     }
 
     static void ovenModel(ProviderListenerContext context, BlockModelGenerators models, FurnitureSet furnitureSet, OvenBlock block) {
-        ModelUtil.horizontalFacingBlock(block, models);
+        models.blockStateOutput.accept(ModelUtil.facingBlock(block));
         dyeableItemModel(block, ModelLocationUtils.getModelLocation(block), models);
     }
 

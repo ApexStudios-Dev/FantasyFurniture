@@ -1,6 +1,5 @@
 package dev.apexstudios.fantasyfurniture.oven;
 
-import dev.apexstudios.apexcore.lib.component.block.entity.BlockEntityComponentTypes;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
@@ -9,7 +8,7 @@ import net.neoforged.neoforge.items.IItemHandlerModifiable;
 
 public record OvenMenuContainer(OvenBlockEntity oven) implements Container {
     private IItemHandlerModifiable getItemHandler() {
-        return oven.getComponentOrThrow(BlockEntityComponentTypes.INVENTORY).getItemHandler();
+        return oven.getItemHandler();
     }
 
     public void awardUsedRecipesAndPopExperience(ServerPlayer player) {

@@ -2,7 +2,6 @@ package dev.apexstudios.fantasyfurniture.necrolord.block;
 
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.DeskBlock;
-import dev.apexstudios.fantasyfurniture.block.base.FurnitureBlockComponentHolder;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -58,6 +57,6 @@ public final class NecrolordDeskBlock extends DeskBlock {
 
     @Override
     protected VoxelShape getFurnitureShape(BlockState blockState, BlockPos pos) {
-        return FurnitureBlockComponentHolder.getShape(left ? LEFT_FACING_SHAPES : RIGHT_FACING_SHAPES, blockState, pos);
+        return getShape(left ? LEFT_FACING_SHAPES : RIGHT_FACING_SHAPES, blockState, facingProperty(), pos);
     }
 }

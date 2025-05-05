@@ -1,11 +1,7 @@
 package dev.apexstudios.fantasyfurniture.dunmer;
 
-import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
-import dev.apexstudios.apexcore.lib.component.block.types.MultiBlockComponent;
-import dev.apexstudios.apexcore.lib.data.provider.model.ModelUtil;
 import dev.apexstudios.apexcore.lib.registree.Registree;
 import dev.apexstudios.apexcore.lib.util.ApexTags;
-import dev.apexstudios.fantasyfurniture.block.OvenBlock;
 import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerBedDoubleBlock;
 import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerBedSingleBlock;
 import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerBenchBlock;
@@ -32,10 +28,6 @@ import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerWardrobeBlock;
 import dev.apexstudios.fantasyfurniture.set.BlockTypes;
 import dev.apexstudios.fantasyfurniture.set.FurnitureSet;
 import dev.apexstudios.fantasyfurniture.set.function.BlockFactory;
-import net.minecraft.client.data.models.BlockModelGenerators;
-import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
-import net.minecraft.client.data.models.blockstates.PropertyDispatch;
-import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.Tags;
@@ -50,7 +42,8 @@ public class DunmerFurnitureSet {
                     .blockFactory(BlockFactory.wrapping(DunmerOvenBlock::new))
                     .builder($$ -> $$
                             .model(() -> (context, models, furnitureSet, block) -> {
-                                models.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
+                                // TODO
+                                /*models.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
                                         .with(PropertyDispatch.initial(block.getComponentOrThrow(BlockComponentTypes.MULTI_BLOCK).property(), OvenBlock.LIT).generate((index, lit) -> {
                                             var halfName = index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right";
                                             var litPrefix = lit ? "_lit" : "";
@@ -59,7 +52,7 @@ public class DunmerFurnitureSet {
                                         .with(ModelUtil.createHorizontalFacingDispatch(block))
                                 );
 
-                                ModelUtil.registerBlockItemModel(block, models);
+                                ModelUtil.registerBlockItemModel(block, models);*/
                             })
                             .blockTags(ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
                     )
