@@ -1,5 +1,6 @@
 package dev.apexstudios.fantasyfurniture.block;
 
+import dev.apexstudios.apexcore.lib.block.MultiBlock;
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.base.FurnitureInventoryBlock;
 import dev.apexstudios.fantasyfurniture.block.entity.BookshelfBlockEntity;
@@ -30,6 +31,9 @@ public class BookshelfBlock extends FurnitureInventoryBlock {
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState blockState) {
+        if(this instanceof MultiBlock multiBlock && !multiBlock.isMultiBlockOrigin(blockState))
+            return null;
+
         return new BookshelfBlockEntity(pos, blockState);
     }
 }

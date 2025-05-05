@@ -1,11 +1,7 @@
 package dev.apexstudios.fantasyfurniture.block;
 
-import dev.apexstudios.apexcore.lib.component.ComponentRegistrar;
-import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
-import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
-import dev.apexstudios.apexcore.lib.component.block.types.FacingBlockComponent;
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
-import dev.apexstudios.fantasyfurniture.block.base.FurnitureBlockComponentHolder;
+import dev.apexstudios.fantasyfurniture.block.base.FurnitureBaseBlock;
 import dev.apexstudios.fantasyfurniture.block.property.ShelfConnection;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
@@ -20,7 +16,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class ShelfBlock extends FurnitureBlockComponentHolder {
+public class ShelfBlock extends FurnitureBaseBlock {
     public static final VoxelShape LEFT_SHAPE = ApexShapes.join(
             box(13.5D, 9D, 2D, 15.5D, 14D, 13D),
             box(0D, 14D, 0D, 16D, 16D, 16D),
@@ -61,19 +57,13 @@ public class ShelfBlock extends FurnitureBlockComponentHolder {
             case RIGHT -> RIGHT_FACING_SHAPES;
             case BOTH -> BOTH_FACING_SHAPES;
             case NONE -> FACING_SHAPES;
-        }, blockState, pos);
+        }, blockState, facingProperty(), pos);
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
         builder.add(ShelfConnection.PROPERTY);
-    }
-
-    @Override
-    protected void registerComponents(ComponentRegistrar<BlockComponent, Block> registrar) {
-        super.registerComponents(registrar);
-
-        FacingBlockComponent.registerHorizontal(registrar);
     }
 
     @Override
@@ -85,18 +75,15 @@ public class ShelfBlock extends FurnitureBlockComponentHolder {
 
         var level = context.getLevel();
         var pos = context.getClickedPos();
-        var facingComponent = getComponentOrThrow(BlockComponentTypes.FACING);
-        return ShelfConnection.setConnection(level, pos, blockState, facingComponent::get);
+        return ShelfConnection.setConnection(level, pos, blockState, facingProperty());
     }
 
     @Override
     public BlockState updateShape(BlockState blockState, LevelReader level, ScheduledTickAccess tickAccess, BlockPos pos, Direction facing, BlockPos neighborPos, BlockState neighborBlockState, RandomSource random) {
         var result = blockState;
 
-        if(facing.getAxis().isHorizontal()) {
-            var facingComponent = getComponentOrThrow(BlockComponentTypes.FACING);
-            result = ShelfConnection.setConnection(level, pos, result, facingComponent::get);
-        }
+        if(facing.getAxis().isHorizontal())
+            result = ShelfConnection.setConnection(level, pos, result, facingProperty());
 
         return super.updateShape(result, level, tickAccess, pos, facing, neighborPos, neighborBlockState, random);
     }

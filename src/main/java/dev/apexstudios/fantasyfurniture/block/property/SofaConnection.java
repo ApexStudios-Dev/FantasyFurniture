@@ -1,13 +1,12 @@
 package dev.apexstudios.fantasyfurniture.block.property;
 
-import java.util.function.BiFunction;
-import java.util.function.Function;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.properties.Property;
 
 public enum SofaConnection implements StringRepresentable {
     LEFT("left"),
@@ -41,53 +40,53 @@ public enum SofaConnection implements StringRepresentable {
         return '_' + serializedName;
     }
 
-    public static BlockState setConnection(BlockGetter level, BlockPos pos, BlockState blockState, Function<BlockState, Direction> getFacing, BiFunction<BlockState, Direction, BlockState> setFacing) {
-        var connection = determine(level, pos, blockState, getFacing);
+    public static BlockState setConnection(BlockGetter level, BlockPos pos, BlockState blockState, Property<Direction> facingProperty) {
+        var connection = determine(level, pos, blockState, facingProperty);
 
         if(connection == CORNER_OUTER) {
-            var facing = getFacing.apply(blockState);
-            blockState = setFacing.apply(blockState, facing.getClockWise());
+            var facing = blockState.getValue(facingProperty);
+            blockState = blockState.setValue(facingProperty, facing.getClockWise());
         }
 
         return blockState.setValue(PROPERTY, connection);
     }
 
-    private static SofaConnection determine(BlockGetter level, BlockPos pos, BlockState blockState, Function<BlockState, Direction> getFacing) {
-        var hasLeft = canConnect(level, pos, blockState, getFacing, true);
-        var hasRight = canConnect(level, pos, blockState, getFacing, false);
+    private static SofaConnection determine(BlockGetter level, BlockPos pos, BlockState blockState, Property<Direction> facingProperty) {
+        var hasLeft = canConnect(level, pos, blockState, facingProperty, true);
+        var hasRight = canConnect(level, pos, blockState, facingProperty, false);
 
         if(hasLeft && hasRight)
             return BOTH;
         if(hasLeft)
-            return asCorner(level, pos, blockState, getFacing, LEFT);
+            return asCorner(level, pos, blockState, facingProperty, LEFT);
         if(hasRight)
-            return asCorner(level, pos, blockState, getFacing, RIGHT);
+            return asCorner(level, pos, blockState, facingProperty, RIGHT);
 
         return NONE;
     }
 
-    private static boolean canConnect(BlockGetter level, BlockPos pos, BlockState blockState, Function<BlockState, Direction> getFacing, boolean left) {
-        var facing = getFacing.apply(blockState);
+    private static boolean canConnect(BlockGetter level, BlockPos pos, BlockState blockState, Property<Direction> facingProperty, boolean left) {
+        var facing = blockState.getValue(facingProperty);
         var offset = left ? facing.getCounterClockWise() : facing.getClockWise();
         var otherPos = pos.relative(offset);
         var otherBlockState = level.getBlockState(otherPos);
 
         if(!otherBlockState.is(blockState.getBlock()))
             return false;
-        if(getFacing.apply(otherBlockState) == facing)
+        if(otherBlockState.getValue(facingProperty) == facing)
             return true;
         return otherBlockState.getValue(PROPERTY).isCorner();
     }
 
-    private static SofaConnection asCorner(BlockGetter level, BlockPos pos, BlockState blockState, Function<BlockState, Direction> getFacing, SofaConnection connection) {
-        var facing = getFacing.apply(blockState);
+    private static SofaConnection asCorner(BlockGetter level, BlockPos pos, BlockState blockState, Property<Direction> facingProperty, SofaConnection connection) {
+        var facing = blockState.getValue(facingProperty);
         var frontPos = pos.relative(facing);
         var frontBlockState = level.getBlockState(frontPos);
 
         if(!frontBlockState.is(blockState.getBlock()))
             return connection;
 
-        var frontFacing = getFacing.apply(frontBlockState);
+        var frontFacing = frontBlockState.getValue(facingProperty);
 
         if(frontFacing == facing.getCounterClockWise())
             return CORNER_INNER;

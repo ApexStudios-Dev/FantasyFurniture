@@ -1,25 +1,18 @@
 package dev.apexstudios.fantasyfurniture.block;
 
-import dev.apexstudios.apexcore.lib.component.ComponentRegistrar;
-import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
-import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
-import dev.apexstudios.apexcore.lib.component.block.types.FacingBlockComponent;
-import dev.apexstudios.apexcore.lib.component.block.types.MultiBlockComponent;
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
-import dev.apexstudios.fantasyfurniture.block.base.FurnitureBlockComponentHolder;
+import dev.apexstudios.fantasyfurniture.block.base.FurnitureBaseBlock;
 import dev.apexstudios.fantasyfurniture.set.FurnitureSet;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class FloorLightBlock extends FurnitureBlockComponentHolder {
+public class FloorLightBlock extends FurnitureBaseBlock {
     public static final VoxelShape SHAPE = ApexShapes.join(
             box(6D, 0D, 6D, 10D, 2D, 10D),
             box(7D, 2D, 7D, 9D, 20D, 9D),
@@ -55,22 +48,11 @@ public class FloorLightBlock extends FurnitureBlockComponentHolder {
 
     @Override
     protected VoxelShape getFurnitureShape(BlockState blockState, BlockPos pos) {
-        return getShape(FACING_SHAPES, blockState, pos);
+        return getShape(FACING_SHAPES, blockState, facingProperty(), pos);
     }
 
-    @Override
-    protected void registerComponents(ComponentRegistrar<BlockComponent, Block> registrar) {
-        super.registerComponents(registrar);
-
-        FacingBlockComponent.registerHorizontal(registrar);
-
-        registrar.register(BlockComponentTypes.MULTI_BLOCK, builder -> builder
-                .with(0, 1, 0)
-                .rotatingFromComponent()
-        );
-    }
-
-    @Override
+    // TODO
+   /* @Override
     public void animateTick(BlockState blockState, Level level, BlockPos pos, RandomSource random) {
         if(getComponentOrThrow(BlockComponentTypes.MULTI_BLOCK).indexOf(blockState) == MultiBlockComponent.ORIGIN_INDEX)
             return;
@@ -78,7 +60,7 @@ public class FloorLightBlock extends FurnitureBlockComponentHolder {
         for(var i = 0; i < particleCount; i++) {
             addParticle(level, pos, i);
         }
-    }
+    }*/
 
     protected void addParticle(Level level, BlockPos pos, int index) {
         var x = pos.getX() + .5D;

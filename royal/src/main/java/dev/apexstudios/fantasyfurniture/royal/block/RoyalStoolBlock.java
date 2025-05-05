@@ -1,19 +1,15 @@
 package dev.apexstudios.fantasyfurniture.royal.block;
 
-import dev.apexstudios.apexcore.lib.component.ComponentRegistrar;
-import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
-import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
-import dev.apexstudios.fantasyfurniture.block.base.SeatBlock;
+import dev.apexstudios.fantasyfurniture.block.base.FurnitureSeatBlock;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public final class RoyalStoolBlock extends SeatBlock {
+public final class RoyalStoolBlock extends FurnitureSeatBlock {
     public static final VoxelShape SHAPE = ApexShapes.join(
             box(1D, 0D, 1D, 5D, 4D, 5D),
             box(1D, 0D, 11D, 5D, 4D, 15D),
@@ -30,13 +26,6 @@ public final class RoyalStoolBlock extends SeatBlock {
 
     @Override
     protected VoxelShape getFurnitureShape(BlockState blockState, BlockPos pos) {
-        return getShape(FACING_SHAPES, blockState, pos);
-    }
-
-    @Override
-    protected void registerComponents(ComponentRegistrar<BlockComponent, Block> registrar) {
-        super.registerComponents(registrar);
-
-        registrar.register(BlockComponentTypes.DYEABLE);
+        return getShape(FACING_SHAPES, blockState, facingProperty(), pos);
     }
 }

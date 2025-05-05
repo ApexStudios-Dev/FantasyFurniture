@@ -1,7 +1,7 @@
 package dev.apexstudios.fantasyfurniture.venthyr.block;
 
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
-import dev.apexstudios.fantasyfurniture.block.base.SeatBlock;
+import dev.apexstudios.fantasyfurniture.block.base.FurnitureSeatBlock;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public final class VenthyrStoolBlock extends SeatBlock {
+public final class VenthyrStoolBlock extends FurnitureSeatBlock {
     public static final VoxelShape SHAPE = ApexShapes.join(
             box(2D, 0D, 2D, 5D, 4D, 5D),
             box(2D, 0D, 11D, 5D, 4D, 14D),
@@ -26,6 +26,6 @@ public final class VenthyrStoolBlock extends SeatBlock {
 
     @Override
     protected VoxelShape getFurnitureShape(BlockState blockState, BlockPos pos) {
-        return getShape(FACING_SHAPES, blockState, pos);
+        return getShape(FACING_SHAPES, blockState, facingProperty(), pos);
     }
 }

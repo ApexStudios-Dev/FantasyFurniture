@@ -2,7 +2,6 @@ package dev.apexstudios.fantasyfurniture.data;
 
 import dev.apexstudios.apexcore.lib.data.ProviderTypes;
 import dev.apexstudios.apexcore.lib.data.ResourceGenerator;
-import dev.apexstudios.apexcore.lib.data.provider.model.ModelUtil;
 import dev.apexstudios.fantasyfurniture.FantasyFurniture;
 import dev.apexstudios.fantasyfurniture.station.FurnitureStationSetup;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -43,7 +42,8 @@ public final class FantasyFurnitureDataEntryPoint {
                     )
                     .providing(ProviderTypes.MODELS, (context, provider) -> {
                         provider.fromRegistree(FantasyFurniture.REGISTREE);
-                        ModelUtil.horizontalFacingBlock(FurnitureStationSetup.BLOCK.value(), provider.blockModels());
+                        // TODO
+                        // ModelUtil.horizontalFacingBlock(FurnitureStationSetup.BLOCK.value(), provider.blockModels());
                     })
                     .providing(ProviderTypes.BLOCK_TAGS, (context, provider) -> provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(FurnitureStationSetup.BLOCK))
                     .providing(ProviderTypes.RECIPES, (context, provider) -> provider

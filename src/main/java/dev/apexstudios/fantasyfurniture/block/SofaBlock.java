@@ -1,10 +1,7 @@
 package dev.apexstudios.fantasyfurniture.block;
 
-import dev.apexstudios.apexcore.lib.component.ComponentRegistrar;
-import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
-import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
-import dev.apexstudios.fantasyfurniture.block.base.SeatBlock;
+import dev.apexstudios.fantasyfurniture.block.base.FurnitureSeatBlock;
 import dev.apexstudios.fantasyfurniture.block.property.SofaConnection;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
@@ -19,7 +16,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class SofaBlock extends SeatBlock {
+public class SofaBlock extends FurnitureSeatBlock {
     public static final VoxelShape LEFT_SHAPE = ApexShapes.join(
             box(0D, 3D, 0D, 16D, 6D, 16D),
             box(0D, 6D, 13D, 16D, 16D, 16D),
@@ -86,18 +83,12 @@ public class SofaBlock extends SeatBlock {
             case BOTH -> BOTH_FACING_SHAPES;
             case CORNER_INNER, CORNER_OUTER -> CORNER_FACING_SHAPES;
             case NONE -> FACING_SHAPES;
-        }, blockState, pos);
-    }
-
-    @Override
-    protected void registerComponents(ComponentRegistrar<BlockComponent, Block> registrar) {
-        super.registerComponents(registrar);
-
-        registrar.register(BlockComponentTypes.BOUNCE);
+        }, blockState, facingProperty(), pos);
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
         builder.add(SofaConnection.PROPERTY);
     }
 
@@ -110,19 +101,16 @@ public class SofaBlock extends SeatBlock {
 
         var level = context.getLevel();
         var pos = context.getClickedPos();
-        var facingComponent = getComponentOrThrow(BlockComponentTypes.FACING);
 
-        return SofaConnection.setConnection(level, pos, blockState, facingComponent::get, facingComponent::set);
+        return SofaConnection.setConnection(level, pos, blockState, facingProperty());
     }
 
     @Override
     public BlockState updateShape(BlockState blockState, LevelReader level, ScheduledTickAccess tickAccess, BlockPos pos, Direction facing, BlockPos neighborPos, BlockState neighborBlockState, RandomSource random) {
         var result = blockState;
 
-        if(facing.getAxis().isHorizontal()) {
-            var facingComponent = getComponentOrThrow(BlockComponentTypes.FACING);
-            result = SofaConnection.setConnection(level, pos, blockState, facingComponent::get, facingComponent::set);
-        }
+        if(facing.getAxis().isHorizontal())
+            result = SofaConnection.setConnection(level, pos, blockState, facingProperty());
 
         return super.updateShape(result, level, tickAccess, pos, facing, neighborPos, neighborBlockState, random);
     }

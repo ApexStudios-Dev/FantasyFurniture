@@ -1,10 +1,5 @@
 package dev.apexstudios.fantasyfurniture.set;
 
-import com.mojang.math.Quadrant;
-import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
-import dev.apexstudios.apexcore.lib.component.block.DoorBlockComponentHolder;
-import dev.apexstudios.apexcore.lib.component.block.types.BedBlockComponent;
-import dev.apexstudios.apexcore.lib.component.block.types.MultiBlockComponent;
 import dev.apexstudios.apexcore.lib.data.provider.RecipeProvider;
 import dev.apexstudios.apexcore.lib.data.provider.model.ModelUtil;
 import dev.apexstudios.apexcore.lib.placement.PlacementRenderEvent;
@@ -34,18 +29,13 @@ import dev.apexstudios.fantasyfurniture.block.SofaBlock;
 import dev.apexstudios.fantasyfurniture.block.TableBlock;
 import dev.apexstudios.fantasyfurniture.block.WallLightBlock;
 import dev.apexstudios.fantasyfurniture.block.WardrobeBlock;
-import dev.apexstudios.fantasyfurniture.block.base.FurnitureDoorBlockComponentHolder;
-import dev.apexstudios.fantasyfurniture.block.base.SeatBlock;
+import dev.apexstudios.fantasyfurniture.block.base.FurnitureDoorBlock;
+import dev.apexstudios.fantasyfurniture.block.base.FurnitureSeatBlock;
 import dev.apexstudios.fantasyfurniture.block.property.CounterConnection;
-import dev.apexstudios.fantasyfurniture.block.property.ShelfConnection;
 import dev.apexstudios.fantasyfurniture.block.property.SofaConnection;
 import dev.apexstudios.fantasyfurniture.set.function.BlockFactory;
 import dev.apexstudios.fantasyfurniture.station.FurnitureStationRecipeBuilder;
 import dev.apexstudios.fantasyfurniture.station.FurnitureStationSetup;
-import java.util.Comparator;
-import java.util.EnumSet;
-import java.util.Objects;
-import java.util.stream.Collectors;
 import net.minecraft.SharedConstants;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
@@ -54,7 +44,6 @@ import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TexturedModel;
-import net.minecraft.core.Direction;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.SingleItemRecipeBuilder;
 import net.minecraft.tags.BlockTags;
@@ -83,7 +72,6 @@ import net.minecraft.world.level.block.WallHangingSignBlock;
 import net.minecraft.world.level.block.WallSignBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.state.properties.DoorHingeSide;
 import net.minecraft.world.level.material.PushReaction;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.Tags;
@@ -200,12 +188,12 @@ public interface BlockTypes {
     // endregion
 
     // region: Stool
-    BlockType.WithItem<SeatBlock, BlockItem> STOOL = BlockType.withItem(
+    BlockType.WithItem<FurnitureSeatBlock, BlockItem> STOOL = BlockType.withItem(
             "stool",
-            BlockFactory.wrapping(SeatBlock::new),
+            BlockFactory.wrapping(FurnitureSeatBlock::new),
             builder -> builder
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
-                    .model(() -> (context, models, furnitureSet, block) -> ModelUtil.horizontalFacingBlock(block, models))
+                    .model(() -> (context, models, furnitureSet, block) -> models.blockStateOutput.accept(ModelUtil.facingBlock(block)))
                     .translation("Stool")
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
@@ -217,7 +205,7 @@ public interface BlockTypes {
             BlockFactory.wrapping(CushionBlock::new),
             builder -> builder
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
-                    .model(() -> (context, models, furnitureSet, block) -> ModelUtil.horizontalFacingBlock(block, models))
+                    .model(() -> (context, models, furnitureSet, block) -> models.blockStateOutput.accept(ModelUtil.facingBlock(block)))
                     .translation("Cushion")
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
@@ -303,7 +291,8 @@ public interface BlockTypes {
                     .blockTags(BlockTags.BEDS, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
                     .itemTags(ItemTags.BEDS)
                     .recipe(BlockTypes::furnitureStationRecipe)
-                    .onRegister(block -> BedBlockComponent.registerPoi(block), true)
+                    // TODO
+                    // .onRegister(block -> BedBlockComponent.registerPoi(block), true)
     );
     // endregion
 
@@ -322,14 +311,15 @@ public interface BlockTypes {
                     .blockTags(BlockTags.BEDS, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
                     .itemTags(ItemTags.BEDS)
                     .recipe(BlockTypes::furnitureStationRecipe)
-                    .onRegister(block -> BedBlockComponent.registerPoi(block), true)
+                    // TODO
+                    // .onRegister(block -> BedBlockComponent.registerPoi(block), true)
     );
     // endregion
 
     // region: Door Single
-    BlockType.WithItem<FurnitureDoorBlockComponentHolder, BlockItem> DOOR_SINGLE = BlockType.withItem(
+    BlockType.WithItem<FurnitureDoorBlock, BlockItem> DOOR_SINGLE = BlockType.withItem(
             "door_single",
-            FurnitureDoorBlockComponentHolder::new,
+            FurnitureDoorBlock::new,
             builder -> builder
                     .baseBlock(() -> Blocks.OAK_DOOR)
                     .blockProperties(properties -> properties.pushReaction(PushReaction.BLOCK))
@@ -346,9 +336,9 @@ public interface BlockTypes {
     // endregion
 
     // region: Door Double
-    BlockType.WithItem<FurnitureDoorBlockComponentHolder, BlockItem> DOOR_DOUBLE = BlockType.withItem(
+    BlockType.WithItem<FurnitureDoorBlock, BlockItem> DOOR_DOUBLE = BlockType.withItem(
             "door_double",
-            FurnitureDoorBlockComponentHolder::new,
+            FurnitureDoorBlock::new,
             builder -> builder
                     .baseBlock(() -> Blocks.OAK_DOOR)
                     .blockProperties(properties -> properties.pushReaction(PushReaction.BLOCK))
@@ -425,7 +415,8 @@ public interface BlockTypes {
             BlockFactory.wrapping(PaintingSmallBlock::new),
             builder -> builder
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
-                    .model(() -> (context, models, furnitureSet, block) -> ModelUtil.horizontalFacingBlock(block, models))
+                    // TODO
+                    // .model(() -> (context, models, furnitureSet, block) -> ModelUtil.horizontalFacingBlock(block, models))
                     .translation("Painting Small")
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
@@ -438,9 +429,10 @@ public interface BlockTypes {
             builder -> builder
                     .baseBlock(() -> Blocks.SMOKER)
                     .blockProperties(BlockBehaviour.Properties::noOcclusion)
-                    .blockEntity(FurnitureBlockEntities.OVEN)
+                    .blockEntity(() -> BlockEntityType.SMOKER)
                     .lootTable((blocks, furnitureSet, block) -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)))
-                    .model(() -> (context, models, furnitureSet, block) -> models.blockStateOutput.accept(ModelUtil.facingBlock(block)))
+                    // TODO
+                    // .model(() -> (context, models, furnitureSet, block) -> models.blockStateOutput.accept(ModelUtil.facingBlock(block)))
                     .translation("Oven")
                     .noMineableTag() // forcefully use the pickaxe tag
                     .blockTags(BlockTags.MINEABLE_WITH_PICKAXE, Tags.Blocks.PLAYER_WORKSTATIONS_FURNACES)
@@ -493,7 +485,8 @@ public interface BlockTypes {
             builder -> builder
                     .blockProperties(properties -> properties.lightLevel(blockState -> 14))
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
-                    .model(() -> (context, models, furnitureSet, block) -> ModelUtil.horizontalFacingBlock(block, models))
+                    // TODO
+                    // .model(() -> (context, models, furnitureSet, block) -> ModelUtil.horizontalFacingBlock(block, models))
                     .translation("Chandelier")
                     .recipe(BlockTypes::furnitureStationRecipe)
     );
@@ -531,10 +524,8 @@ public interface BlockTypes {
                     .onRegister(block -> NeoForge.EVENT_BUS.addListener(PlacementRenderEvent.DefaultBlockState.class, event -> {
                         var blockState = event.defaultBlockState();
 
-                        if(blockState.is(block)) {
-                            var facingComponent = block.getComponentOrThrow(BlockComponentTypes.FACING);
-                            event.setDefaultBlockState(SofaConnection.setConnection(event.level(), event.pos(), blockState, facingComponent::get, facingComponent::set));
-                        }
+                        if(blockState.is(block))
+                            event.setDefaultBlockState(SofaConnection.setConnection(event.level(), event.pos(), blockState, block.facingProperty()));
                     }))
     );
     // endregion
@@ -563,7 +554,8 @@ public interface BlockTypes {
             builder -> builder
                     .blockProperties(properties -> properties.pushReaction(PushReaction.DESTROY).lightLevel(blockState -> 14).noCollission().instabreak())
                     .lootTable((blocks, furnitureSet, block) -> blocks.dropSelf(block))
-                    .model(() -> (context, models, furnitureSet, block) -> ModelUtil.horizontalFacingBlock(block, models))
+                    // TODO
+                    // .model(() -> (context, models, furnitureSet, block) -> ModelUtil.horizontalFacingBlock(block, models))
                     .translation("Wall Light")
                     .blockTags(ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST)
                     .recipe(BlockTypes::furnitureStationRecipe)
@@ -926,7 +918,8 @@ public interface BlockTypes {
     }
 
     static void chairModel(ChairBlock block, BlockModelGenerators models) {
-        ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_bottom" : "_top");
+        // TODO
+        // ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_bottom" : "_top");
     }
 
     static void bookshelfModel(BookshelfBlock block, BlockModelGenerators models) {
@@ -940,20 +933,23 @@ public interface BlockTypes {
     }
 
     static void bedSingleModel(BedSingleBlock block, BlockModelGenerators models) {
-        ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_bottom" : "_top");
+        // TODO
+        // ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_bottom" : "_top");
     }
 
     static void bedDoubleModel(BedDoubleBlock block, BlockModelGenerators models) {
-        ModelUtil.multiBlockModelSuffix(block, models, index -> switch (index) {
+        // TODO
+        /*ModelUtil.multiBlockModelSuffix(block, models, index -> switch (index) {
             case 1 -> "_top_left";
             case 2 -> "_top_right";
             case 3 -> "_bottom_right";
             default -> "_bottom_left";
-        });
+        });*/
     }
 
-    static void doorModel(FurnitureDoorBlockComponentHolder block, BlockModelGenerators blockModels) {
-        var multiBlockProperty = block.getComponentOrThrow(BlockComponentTypes.MULTI_BLOCK).property();
+    static void doorModel(FurnitureDoorBlock block, BlockModelGenerators blockModels) {
+        // TODO
+        /*var multiBlockProperty = block.getComponentOrThrow(BlockComponentTypes.MULTI_BLOCK).property();
         var facingProperty = block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty();
 
         blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
@@ -975,7 +971,7 @@ public interface BlockTypes {
                     return BlockModelGenerators.plainVariant(modelPath)
                             .with(variant -> variant.withYRot(rot));
                 }))
-        );
+        );*/
     }
 
     static void deskModel(DeskBlock block, BlockModelGenerators models) {
@@ -984,7 +980,8 @@ public interface BlockTypes {
     }
 
     static void paintingWideModel(PaintingWideBlock block, BlockModelGenerators models) {
-        ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right");
+        // TODO
+        // ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right");
     }
 
     static void chestModel(ChestBlock block, BlockModelGenerators models) {
@@ -993,15 +990,18 @@ public interface BlockTypes {
     }
 
     static void floorLightModel(FloorLightBlock block, BlockModelGenerators models) {
-        ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_bottom" : "_top");
+        // TODO
+        // ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_bottom" : "_top");
     }
 
     static void shelfModel(ShelfBlock block, BlockModelGenerators models) {
-        ModelUtil.facingPropertyModelSuffix(block, models, ShelfConnection.PROPERTY, ShelfConnection::getModelSuffix);
+        // TODO
+        // ModelUtil.facingPropertyModelSuffix(block, models, ShelfConnection.PROPERTY, ShelfConnection::getModelSuffix);
     }
 
     static void sofaModel(SofaBlock block, BlockModelGenerators models) {
-        ModelUtil.facingPropertyModelSuffix(block, models, SofaConnection.PROPERTY, SofaConnection::getModelSuffix);
+        // TODO
+        // ModelUtil.facingPropertyModelSuffix(block, models, SofaConnection.PROPERTY, SofaConnection::getModelSuffix);
     }
 
     static void counterModel(CounterBlock block, BlockModelGenerators models) {
@@ -1015,7 +1015,8 @@ public interface BlockTypes {
     }
 
     static void benchModel(BenchBlock block, BlockModelGenerators models) {
-        ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right");
+        // TODO
+        // ModelUtil.multiBlockModelSuffix(block, models, index -> index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right");
     }
 
     static void wardrobeModel(WardrobeBlock block, BlockModelGenerators models) {
@@ -1031,7 +1032,8 @@ public interface BlockTypes {
     }
 
     static void tableModel(TableBlock block, BlockModelGenerators blockModels) {
-        var facingProperty = block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty();
+        // TODO
+        /*var facingProperty = block.getComponentOrThrow(BlockComponentTypes.FACING).getProperty();
 
         blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
                 .with(PropertyDispatch.initial(facingProperty, TableBlock.NORTH, TableBlock.EAST, TableBlock.SOUTH, TableBlock.WEST).generate((facing, north, east, south, west) -> {
@@ -1072,7 +1074,7 @@ public interface BlockTypes {
                     return BlockModelGenerators.variant(BlockModelGenerators.plainModel(ModelLocationUtils.getModelLocation(block, suffix.isBlank() ? "" : '_' + suffix)))
                             .with(variant -> variant.withYRot(ModelUtil.facingToModelRotation(facing)));
                 }))
-        );
+        );*/
     }
 
     static <TItem extends Item> void furnitureStationRecipe(RecipeProvider provider, FurnitureSet furnitureSet, TItem item) {

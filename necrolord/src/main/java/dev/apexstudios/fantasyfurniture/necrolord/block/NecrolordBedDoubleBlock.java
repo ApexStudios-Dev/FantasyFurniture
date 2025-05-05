@@ -2,10 +2,13 @@ package dev.apexstudios.fantasyfurniture.necrolord.block;
 
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.BedDoubleBlock;
+import dev.apexstudios.fantasyfurniture.block.base.FurnitureBaseBlock;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -35,7 +38,7 @@ public final class NecrolordBedDoubleBlock extends BedDoubleBlock {
     }
 
     @Override
-    protected VoxelShape getFurnitureShape(BlockState blockState, BlockPos pos) {
-        return getShape(FACING_SHAPES, blockState, pos);
+    protected VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return FurnitureBaseBlock.getShape(FACING_SHAPES, blockState, FACING, pos);
     }
 }

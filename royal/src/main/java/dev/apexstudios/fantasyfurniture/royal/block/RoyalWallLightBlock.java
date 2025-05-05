@@ -1,13 +1,10 @@
 package dev.apexstudios.fantasyfurniture.royal.block;
 
-import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
 import dev.apexstudios.fantasyfurniture.block.WallLightBlock;
 import dev.apexstudios.fantasyfurniture.royal.RoyalFurnitureSet;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -22,10 +19,11 @@ public final class RoyalWallLightBlock extends WallLightBlock {
 
     @Override
     protected VoxelShape getFurnitureShape(BlockState blockState, BlockPos pos) {
-        return getShape(FACING_SHAPES, blockState, pos);
+        return getShape(FACING_SHAPES, blockState, facingProperty(), pos);
     }
 
-    @Override
+    // TODO
+    /*@Override
     public void animateTick(BlockState blockState, Level level, BlockPos pos, RandomSource random) {
         var x = pos.getX() + .5D;
         var y = pos.getY() + .5D + .25D;
@@ -42,5 +40,5 @@ public final class RoyalWallLightBlock extends WallLightBlock {
 
         playParticles(level, x + xOffset, y, z + zOffset);
         playParticles(level, x - xOffset, y, z - zOffset);
-    }
+    }*/
 }

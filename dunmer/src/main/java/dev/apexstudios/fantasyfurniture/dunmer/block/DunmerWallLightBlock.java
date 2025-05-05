@@ -6,8 +6,6 @@ import dev.apexstudios.fantasyfurniture.dunmer.DunmerFurnitureSet;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -31,10 +29,11 @@ public final class DunmerWallLightBlock extends WallLightBlock {
 
     @Override
     protected VoxelShape getFurnitureShape(BlockState blockState, BlockPos pos) {
-        return getShape(FACING_SHAPES, blockState, pos);
+        return getShape(FACING_SHAPES, blockState, facingProperty(), pos);
     }
 
-    @Override
+    // TODO
+    /*@Override
     public void animateTick(BlockState blockState, Level level, BlockPos pos, RandomSource random) {
-    }
+    }*/
 }
