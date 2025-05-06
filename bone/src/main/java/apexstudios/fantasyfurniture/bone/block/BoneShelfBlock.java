@@ -2,11 +2,8 @@ package apexstudios.fantasyfurniture.bone.block;
 
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.ShelfBlock;
-import dev.apexstudios.fantasyfurniture.block.property.ShelfConnection;
 import java.util.Map;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -34,15 +31,5 @@ public final class BoneShelfBlock extends ShelfBlock {
 
     public BoneShelfBlock(Properties properties) {
         super(properties);
-    }
-
-    @Override
-    protected VoxelShape getFurnitureShape(BlockState blockState, BlockPos pos) {
-        return getShape(switch (blockState.getValue(ShelfConnection.PROPERTY)) {
-            case LEFT -> LEFT_FACING_SHAPES;
-            case RIGHT -> RIGHT_FACING_SHAPES;
-            case BOTH -> BOTH_FACING_SHAPES;
-            case NONE -> TOP_FACING_SHAPES;
-        }, blockState, facingProperty(), pos);
     }
 }

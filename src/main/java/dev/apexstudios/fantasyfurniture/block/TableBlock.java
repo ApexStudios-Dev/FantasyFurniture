@@ -1,7 +1,7 @@
 package dev.apexstudios.fantasyfurniture.block;
 
+import dev.apexstudios.apexcore.lib.block.SimpleHorizontalDirectionalBlock;
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
-import dev.apexstudios.fantasyfurniture.block.base.FurnitureBaseBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -15,14 +15,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-public class TableBlock extends FurnitureBaseBlock {
-    public static final VoxelShape SHAPE_TABLE_TOP = box(0D, 13D, 0D, 16D, 16D, 16D);
-    public static final VoxelShape SHAPE_TABLE_LEG = box(13D, 0D, 1D, 15D, 13D, 3D);
-
+public class TableBlock extends SimpleHorizontalDirectionalBlock {
     public static final BooleanProperty NORTH = BlockStateProperties.NORTH;
     public static final BooleanProperty EAST = BlockStateProperties.EAST;
     public static final BooleanProperty SOUTH = BlockStateProperties.SOUTH;
@@ -40,12 +36,6 @@ public class TableBlock extends FurnitureBaseBlock {
     }
 
     @Override
-    protected VoxelShape getFurnitureShape(BlockState blockState, BlockPos pos) {
-        var facing = blockState.getValue(facingProperty());
-        return ApexShapes.rotateHorizontal(getShape(blockState, SHAPE_TABLE_TOP, SHAPE_TABLE_LEG, facingProperty()), facing);
-    }
-
-    @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(NORTH, EAST, SOUTH, WEST);
@@ -57,39 +47,38 @@ public class TableBlock extends FurnitureBaseBlock {
         var blockState = super.getStateForPlacement(context);
 
         if(blockState != null)
-            return get(context.getLevel(), context.getClickedPos(), blockState, facingProperty());
+            return get(context.getLevel(), context.getClickedPos(), blockState);
 
         return null;
     }
 
     @Override
     public BlockState updateShape(BlockState blockState, LevelReader level, ScheduledTickAccess tickAccess, BlockPos pos, Direction facing, BlockPos neighborPos, BlockState neighborBlockState, RandomSource random) {
-        var result = get(level, pos, blockState, facing, facingProperty());
-        return super.updateShape(result, level, tickAccess, pos, facing, neighborPos, neighborBlockState, random);
+        return get(level, pos, blockState, facing);
     }
 
-    public static BlockState get(BlockGetter level, BlockPos pos, BlockState blockState, Property<Direction> facingProperty) {
+    public static BlockState get(BlockGetter level, BlockPos pos, BlockState blockState) {
         var result = blockState;
 
         for(var direction : Direction.Plane.HORIZONTAL) {
-            result = get(level, pos, result, direction, facingProperty);
+            result = get(level, pos, result, direction);
         }
 
         return result;
     }
 
-    public static BlockState get(BlockGetter level, BlockPos pos, BlockState blockState, Direction side, Property<Direction> facingProperty) {
+    public static BlockState get(BlockGetter level, BlockPos pos, BlockState blockState, Direction side) {
         if(!side.getAxis().isHorizontal())
             return blockState;
 
         var result = blockState;
 
-        var facing = blockState.getValue(facingProperty);
+        var facing = blockState.getValue(FACING);
         var frontPos = pos.relative(facing);
         var frontBlockState = level.getBlockState(frontPos);
         var frontProperty = property(facing);
 
-        result = result.setValue(frontProperty, canConnect(blockState, frontBlockState, facingProperty));
+        result = result.setValue(frontProperty, canConnect(blockState, frontBlockState));
 
         if(side == facing)
             return result;
@@ -98,7 +87,7 @@ public class TableBlock extends FurnitureBaseBlock {
         var sideBlockState = level.getBlockState(sidePos);
         var sideProperty = property(side);
 
-        result = result.setValue(sideProperty, canConnect(blockState, sideBlockState, facingProperty));
+        result = result.setValue(sideProperty, canConnect(blockState, sideBlockState));
 
         return result;
     }
@@ -113,21 +102,21 @@ public class TableBlock extends FurnitureBaseBlock {
         };
     }
 
-    public static boolean canConnect(BlockState source, BlockState target, Property<Direction> facingProperty) {
+    public static boolean canConnect(BlockState source, BlockState target) {
         if(!target.is(source.getBlock()))
             return false;
 
-        return source.getValue(facingProperty) == target.getValue(facingProperty);
+        return source.getValue(FACING) == target.getValue(FACING);
     }
 
     public static Direction getFacingForConnection(Direction facing) {
         return facing.getAxis() == Direction.Axis.X ? facing.getOpposite() : facing;
     }
 
-    public static VoxelShape getShape(BlockState blockState, VoxelShape top, VoxelShape leg, Property<Direction> facingProperty) {
+    public static VoxelShape getShape(BlockState blockState, VoxelShape top, VoxelShape leg) {
         var result = top;
 
-        var facing = blockState.getValue(facingProperty);
+        var facing = blockState.getValue(FACING);
         var north = blockState.getValue(NORTH);
         var east = blockState.getValue(EAST);
         var south = blockState.getValue(SOUTH);

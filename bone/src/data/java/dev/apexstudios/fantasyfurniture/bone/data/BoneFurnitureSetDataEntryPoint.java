@@ -1,16 +1,18 @@
 package dev.apexstudios.fantasyfurniture.bone.data;
 
-import apexstudios.fantasyfurniture.bone.BoneFurnitureSet;
 import dev.apexstudios.apexcore.lib.data.ResourceGenerator;
+import dev.apexstudios.fantasyfurniture.FantasyFurniture;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 
-@Mod(BoneFurnitureSet.ID)
+@Mod(FantasyFurniture.ID + "_bone")
 public final class BoneFurnitureSetDataEntryPoint {
     public BoneFurnitureSetDataEntryPoint(IEventBus modBus) {
         ResourceGenerator.of(modBus, generator -> {
-            BoneFurnitureSet.SKELETON.registerDataGen(generator);
-            BoneFurnitureSet.WITHER.registerDataGen(generator);
+            var pack = generator.pack();
+
+            SkeletonFurnitureSetDataEntryPoint.register(pack);
+            WitherFurnitureSetDataEntryPoint.register(pack);
         });
     }
 }

@@ -1,77 +1,9 @@
 package dev.apexstudios.fantasyfurniture.block;
 
-import dev.apexstudios.apexcore.lib.util.ApexShapes;
-import dev.apexstudios.fantasyfurniture.block.base.FurnitureBaseBlock;
-import dev.apexstudios.fantasyfurniture.set.FurnitureSet;
-import java.util.Map;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.shapes.Shapes;
-import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.block.Block;
 
-public class WallLightBlock extends FurnitureBaseBlock {
-    public static final VoxelShape SHAPE = ApexShapes.join(
-            box(6D, 5D, 15D, 10D, 11D, 16D),
-            box(6D, 2D, 8D, 10D, 15D, 15D)
-    );
-
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
-
-    private final FurnitureSet furnitureSet;
-
-    public WallLightBlock(FurnitureSet furnitureSet, Properties properties) {
+public class WallLightBlock extends Block {
+    public WallLightBlock(Properties properties) {
         super(properties);
-
-        this.furnitureSet = furnitureSet;
     }
-
-    @Override
-    protected VoxelShape getFurnitureShape(BlockState blockState, BlockPos pos) {
-        return getShape(FACING_SHAPES, blockState, facingProperty(), pos);
-    }
-
-    @Override
-    public void animateTick(BlockState blockState, Level level, BlockPos pos, RandomSource random) {
-        // TODO
-        /*var x = pos.getX() + .5D;
-        var y = pos.getY() + .7D;
-        var z = pos.getZ() + .5D;
-
-        var facing = getComponentOrThrow(BlockComponentTypes.FACING).get(blockState).getOpposite();
-        var offset = .1D;
-        var offsetZ = offset * facing.getStepZ();
-        var offsetX = offset * facing.getStepX();
-
-        playParticles(level, x + offsetX, y + .35D, z + offsetZ);*/
-    }
-
-    protected void playParticles(Level level, double x, double y, double z) {
-        level.addParticle(ParticleTypes.SMOKE, x, y, z, 0D, 0D, 0D);
-        level.addParticle(furnitureSet.flameParticle(), x, y, z, 0D, 0D, 0D);
-    }
-
-    // TODO
-    /*@Nullable
-    @Override
-    public BlockState getStateForPlacement(BlockPlaceContext context) {
-        var blockState = super.getStateForPlacement(context);
-
-        if(blockState == null)
-            return null;
-
-        var facingComponent = getComponentOrThrow(BlockComponentTypes.FACING);
-
-        for(var facing : context.getNearestLookingDirections()) {
-            if(facing.getAxis().isHorizontal()) {
-                blockState = facingComponent.set(blockState, facing.getOpposite());
-                return blockState;
-            }
-        }
-
-        return null;
-    }*/
 }

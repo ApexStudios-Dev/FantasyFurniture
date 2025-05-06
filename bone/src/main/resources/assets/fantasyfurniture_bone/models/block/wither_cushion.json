@@ -1,7 +1,0 @@
-{
-	"parent": "fantasyfurniture_bone:block/templates/cushion",
-	"textures": {
-		"cushion": "fantasyfurniture_bone:block/wither_cushion",
-		"particle": "fantasyfurniture_bone:block/wither_particle"
-	}
-}

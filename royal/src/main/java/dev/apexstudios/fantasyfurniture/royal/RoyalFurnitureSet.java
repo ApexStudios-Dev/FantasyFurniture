@@ -1,6 +1,9 @@
 package dev.apexstudios.fantasyfurniture.royal;
 
 import dev.apexstudios.apexcore.lib.registree.Registree;
+import dev.apexstudios.apexcore.lib.registree.holder.DeferredBlock;
+import dev.apexstudios.apexcore.lib.util.WoodTypeBuilder;
+import dev.apexstudios.fantasyfurniture.FurnitureUtil;
 import dev.apexstudios.fantasyfurniture.royal.block.RoyalBedDoubleBlock;
 import dev.apexstudios.fantasyfurniture.royal.block.RoyalBedSingleBlock;
 import dev.apexstudios.fantasyfurniture.royal.block.RoyalBenchBlock;
@@ -25,136 +28,78 @@ import dev.apexstudios.fantasyfurniture.royal.block.RoyalStoolBlock;
 import dev.apexstudios.fantasyfurniture.royal.block.RoyalTableBlock;
 import dev.apexstudios.fantasyfurniture.royal.block.RoyalWallLightBlock;
 import dev.apexstudios.fantasyfurniture.royal.block.RoyalWardrobeBlock;
-import dev.apexstudios.fantasyfurniture.set.BlockTypeBuilder;
-import dev.apexstudios.fantasyfurniture.set.BlockTypes;
-import dev.apexstudios.fantasyfurniture.set.FurnitureSet;
-import dev.apexstudios.fantasyfurniture.set.function.BlockFactory;
-import dev.apexstudios.fantasyfurniture.set.function.ModelProviderListener;
-import java.util.function.Supplier;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.Item;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CarpetBlock;
+import net.minecraft.world.level.block.CeilingHangingSignBlock;
+import net.minecraft.world.level.block.FenceBlock;
+import net.minecraft.world.level.block.FenceGateBlock;
+import net.minecraft.world.level.block.PressurePlateBlock;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.StandingSignBlock;
+import net.minecraft.world.level.block.TrapDoorBlock;
+import net.minecraft.world.level.block.WallHangingSignBlock;
+import net.minecraft.world.level.block.WallSignBlock;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
+import net.minecraft.world.level.block.state.properties.WoodType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.neoforge.common.Tags;
 
 @Mod(RoyalFurnitureSet.ID)
 public class RoyalFurnitureSet {
     public static final String ID = "fantasyfurniture_royal";
     public static final Registree REGISTREE = new Registree(ID);
-    public static final FurnitureSet FURNITURE_SET = FurnitureSet.createStoneLike(REGISTREE, "royal", $ -> $
-            .remove(BlockTypes.FENCE_GATE)
-            .with(BlockTypes.WOOL.copy($$ -> $$
-                    .blockFactory(BlockFactory.wrapping(Block::new))
-                    .builder($$$ -> dyedSetup($$$, () -> RoyalFurnitureSetClientSetup::woolModel))
-            ))
-            .with(BlockTypes.CARPET.copy($$ -> $$
-                    .blockFactory(BlockFactory.wrapping(CarpetBlock::new))
-                    .builder($$$ -> dyedSetup($$$, () -> RoyalFurnitureSetClientSetup::carpetModel))
-            ))
-            .with(BlockTypes.BED_DOUBLE.copy($$ -> $$
-                    .blockFactory(BlockFactory.wrapping(RoyalBedDoubleBlock::new))
-                    .builder($$$ -> dyedSetup($$$, () -> RoyalFurnitureSetClientSetup::bedDoubleModel))
-            ))
-            .with(BlockTypes.BED_SINGLE.copy($$ -> $$
-                    .blockFactory(BlockFactory.wrapping(RoyalBedSingleBlock::new))
-                    .builder($$$ -> dyedSetup($$$, () -> RoyalFurnitureSetClientSetup::bedSingleModel))
-            ))
-            .with(BlockTypes.BENCH.copy($$ -> $$
-                    .blockFactory(BlockFactory.wrapping(RoyalBenchBlock::new))
-                    .builder($$$ -> dyedSetup($$$, () -> RoyalFurnitureSetClientSetup::benchModel))
-            ))
-            .with(BlockTypes.BOOKSHELF.copy($$ -> $$
-                    .blockFactory(BlockFactory.wrapping(RoyalBookshelfBlock::new))
-                    .builder($$$ -> dyedSetup($$$, () -> RoyalFurnitureSetClientSetup::bookshelfModel))
-            ))
-            .with(BlockTypes.CHAIR.copy($$ -> $$
-                    .blockFactory(BlockFactory.wrapping(RoyalChairBlock::new))
-                    .builder($$$ -> dyedSetup($$$, () -> RoyalFurnitureSetClientSetup::chairModel))
-            ))
-            .with(BlockTypes.CHANDELIER.extend(BlockFactory.wrapping(RoyalChandelierBlock::new)))
-            .with(BlockTypes.CHEST.copy($$ -> $$
-                    .blockFactory(BlockFactory.wrapping(RoyalChestBlock::new))
-                    .builder($$$ -> dyedSetup($$$, () -> RoyalFurnitureSetClientSetup::chestModel))
-            ))
-            .with(BlockTypes.COUNTER.copy($$ -> $$
-                    .blockFactory(BlockFactory.wrapping(RoyalCounterBlock::new))
-                    .builder($$$ -> dyedSetup($$$, () -> RoyalFurnitureSetClientSetup::counterModel))
-            ))
-            .with(BlockTypes.CUSHION.copy($$ -> $$
-                    .blockFactory(BlockFactory.wrapping(RoyalCushionBlock::new))
-                    .builder($$$ -> dyedSetup($$$, () -> RoyalFurnitureSetClientSetup::cushionModel))
-            ))
-            .with(BlockTypes.DESK_LEFT.copy($$ -> $$
-                    .blockFactory((furnitureSet, properties) -> new RoyalDeskBlock(properties, true))
-                    .builder($$$ -> dyedSetup($$$, () -> RoyalFurnitureSetClientSetup::deskModel))
-            ))
-            .with(BlockTypes.DESK_RIGHT.copy($$ -> $$
-                    .blockFactory((furnitureSet, properties) -> new RoyalDeskBlock(properties, false))
-                    .builder($$$ -> dyedSetup($$$, () -> RoyalFurnitureSetClientSetup::deskModel))
-            ))
-            .with(BlockTypes.DOOR_SINGLE.copy($$ -> $$
-                    .blockFactory(BlockFactory.wrapping(RoyalDoorBlock::new))
-                    .builder($$$ -> dyedSetup($$$, () -> RoyalFurnitureSetClientSetup::doorModel))
-            ))
-            .with(BlockTypes.DOOR_DOUBLE.copy($$ -> $$
-                    .blockFactory(BlockFactory.wrapping(RoyalDoorBlock::new))
-                    .builder($$$ -> dyedSetup($$$, () -> RoyalFurnitureSetClientSetup::doorModel))
-            ))
-            .with(BlockTypes.DRAWER.copy($$ -> $$
-                    .blockFactory(BlockFactory.wrapping(RoyalDrawerBlock::new))
-                    .builder($$$ -> dyedSetup($$$, () -> RoyalFurnitureSetClientSetup::drawerModel))
-            ))
-            .with(BlockTypes.DRESSER.copy($$ -> $$
-                    .blockFactory(BlockFactory.wrapping(RoyalDresserBlock::new))
-                    .builder($$$ -> dyedSetup($$$, () -> RoyalFurnitureSetClientSetup::dresserModel))
-            ))
-            .with(BlockTypes.FLOOR_LIGHT.extend(BlockFactory.wrapping(RoyalFloorLightBlock::new)))
-            .with(BlockTypes.LOCKBOX.copy($$ -> $$
-                    .blockFactory(BlockFactory.wrapping(RoyalLockBoxBlock::new))
-                    .builder($$$ -> dyedSetup($$$, () -> RoyalFurnitureSetClientSetup::lockboxModel))
-            ))
-            .with(BlockTypes.OVEN.copy($$ -> $$
-                    .blockFactory(BlockFactory.wrapping(RoyalOvenBlock::new))
-                    .builder($$$ -> dyedSetup($$$, () -> RoyalFurnitureSetClientSetup::ovenModel))
-            ))
-            .with(BlockTypes.PAINTING_WIDE.extend(BlockFactory.wrapping(RoyalPaintingWideBlock::new)))
-            .with(BlockTypes.PAINTING_SMALL.extend(BlockFactory.wrapping(RoyalPaintingSmallBlock::new)))
-            .with(BlockTypes.SHELF.copy($$ -> $$
-                    .blockFactory(BlockFactory.wrapping(RoyalShelfBlock::new))
-                    .builder($$$ -> dyedSetup($$$, () -> RoyalFurnitureSetClientSetup::shelfModel))
-            ))
-            .with(BlockTypes.SOFA.copy($$ -> $$
-                    .blockFactory(BlockFactory.wrapping(RoyalSofaBlock::new))
-                    .builder($$$ -> dyedSetup($$$, () -> RoyalFurnitureSetClientSetup::sofaModel))
-            ))
-            .with(BlockTypes.STOOL.copy($$ -> $$
-                    .blockFactory(BlockFactory.wrapping(RoyalStoolBlock::new))
-                    .builder($$$ -> dyedSetup($$$, () -> RoyalFurnitureSetClientSetup::stoolModel))
-            ))
-            .with(BlockTypes.TABLE.copy($$ -> $$
-                    .blockFactory(BlockFactory.wrapping(RoyalTableBlock::new))
-                    .builder($$$ -> dyedSetup($$$, () -> RoyalFurnitureSetClientSetup::tableModel))
-            ))
-            .with(BlockTypes.WALL_LIGHT.extend(BlockFactory.wrapping(RoyalWallLightBlock::new)))
-            .with(BlockTypes.WARDROBE.copy($$ -> $$
-                    .blockFactory(BlockFactory.wrapping(RoyalWardrobeBlock::new))
-                    .builder($$$ -> dyedSetup($$$, () -> RoyalFurnitureSetClientSetup::wardrobeModel))
-            ))
-    );
+
+    public static final WoodType WOOD_TYPE = WoodTypeBuilder.builder()
+            .copy(WoodType.OAK)
+            .blockSetType(blockSet -> blockSet
+                    .copy(BlockSetType.STONE)
+            )
+            .build(ID + ":wood_type");
+
+    public static final DeferredBlock<Block> BRICKS = FurnitureUtil.bricks(REGISTREE, Block::new);
+    public static final DeferredBlock<Block> WOOL = FurnitureUtil.wool(REGISTREE, Block::new);
+    public static final DeferredBlock<CarpetBlock> CARPET = FurnitureUtil.carpet(REGISTREE, CarpetBlock::new);
+    public static final DeferredBlock<RoyalDresserBlock> DRESSER = FurnitureUtil.dresser(REGISTREE, RoyalDresserBlock::new);
+    public static final DeferredBlock<RoyalStoolBlock> STOOL = FurnitureUtil.stool(REGISTREE, RoyalStoolBlock::new);
+    public static final DeferredBlock<RoyalCushionBlock> CUSION = FurnitureUtil.cushion(REGISTREE, RoyalCushionBlock::new);
+    public static final DeferredBlock<RoyalLockBoxBlock> LOCKBOX = FurnitureUtil.lockbox(REGISTREE, RoyalLockBoxBlock::new);
+    public static final DeferredBlock<RoyalDrawerBlock> DRAWER = FurnitureUtil.drawer(REGISTREE, RoyalDrawerBlock::new);
+    public static final DeferredBlock<RoyalChairBlock> CHAIR = FurnitureUtil.chair(REGISTREE, RoyalChairBlock::new);
+    public static final DeferredBlock<RoyalBookshelfBlock> BOOKSHELF = FurnitureUtil.bookshelf(REGISTREE, RoyalBookshelfBlock::new);
+    public static final DeferredBlock<RoyalBedSingleBlock> BED_SINGLE = FurnitureUtil.bedSingle(REGISTREE, RoyalBedSingleBlock::new);
+    public static final DeferredBlock<RoyalBedDoubleBlock> BED_DOUBLE = FurnitureUtil.bedDouble(REGISTREE, RoyalBedDoubleBlock::new);
+    public static final DeferredBlock<RoyalDoorBlock> DOOR_SINGLE = FurnitureUtil.doorSingle(REGISTREE, WOOD_TYPE.setType(), RoyalDoorBlock::new);
+    public static final DeferredBlock<RoyalDoorBlock> DOOR_DOUBLE = FurnitureUtil.doorDouble(REGISTREE, WOOD_TYPE.setType(), RoyalDoorBlock::new);
+    public static final DeferredBlock<RoyalDeskBlock> DESK_LEFT = FurnitureUtil.desk(REGISTREE, true, RoyalDeskBlock::new);
+    public static final DeferredBlock<RoyalDeskBlock> DESK_RIGHT = FurnitureUtil.desk(REGISTREE, false, RoyalDeskBlock::new);
+    public static final DeferredBlock<RoyalPaintingWideBlock> PAINTING_WIDE = FurnitureUtil.paintingWide(REGISTREE, RoyalPaintingWideBlock::new);
+    public static final DeferredBlock<RoyalPaintingSmallBlock> PAINTING_SMALL = FurnitureUtil.paintingSmall(REGISTREE, RoyalPaintingSmallBlock::new);
+    public static final DeferredBlock<RoyalOvenBlock> OVEN = FurnitureUtil.oven(REGISTREE, RoyalOvenBlock::new);
+    public static final DeferredBlock<RoyalChestBlock> CHEST = FurnitureUtil.chest(REGISTREE, RoyalChestBlock::new);
+    public static final DeferredBlock<RoyalFloorLightBlock> FLOOR_LIGHT = FurnitureUtil.floorLight(REGISTREE, RoyalFloorLightBlock::new);
+    public static final DeferredBlock<RoyalChandelierBlock> CHANDELIER = FurnitureUtil.chandelier(REGISTREE, RoyalChandelierBlock::new);
+    public static final DeferredBlock<RoyalShelfBlock> SHELF = FurnitureUtil.shelf(REGISTREE, RoyalShelfBlock::new);
+    public static final DeferredBlock<RoyalSofaBlock> SOFA = FurnitureUtil.sofa(REGISTREE, RoyalSofaBlock::new);
+    public static final DeferredBlock<RoyalCounterBlock> COUNTER = FurnitureUtil.counter(REGISTREE, RoyalCounterBlock::new);
+    public static final DeferredBlock<RoyalWallLightBlock> WALL_LIGHT = FurnitureUtil.wallLight(REGISTREE, RoyalWallLightBlock::new);
+    public static final DeferredBlock<RoyalBenchBlock> BENCH = FurnitureUtil.bench(REGISTREE, RoyalBenchBlock::new);
+    public static final DeferredBlock<RoyalWardrobeBlock> WARDROBE = FurnitureUtil.wardrobe(REGISTREE, RoyalWardrobeBlock::new);
+    public static final DeferredBlock<RoyalTableBlock> TABLE = FurnitureUtil.table(REGISTREE, RoyalTableBlock::new);
+    public static final DeferredBlock<StairBlock> STAIRS = FurnitureUtil.stairs(REGISTREE, BRICKS);
+    public static final DeferredBlock<SlabBlock> SLAB = FurnitureUtil.slab(REGISTREE);
+    public static final DeferredBlock<FenceBlock> FENCE = FurnitureUtil.fence(REGISTREE);
+    public static final DeferredBlock<FenceGateBlock> FENCE_GATE = FurnitureUtil.fenceGate(REGISTREE, WOOD_TYPE);
+    public static final DeferredBlock<TrapDoorBlock> TRAPDOOR = FurnitureUtil.trapdoor(REGISTREE, WOOD_TYPE.setType());
+    public static final DeferredBlock<PressurePlateBlock> PRESSURE_PLATE = FurnitureUtil.pressurePlate(REGISTREE, WOOD_TYPE.setType());
+    public static final FurnitureUtil.SignPair<CeilingHangingSignBlock, WallHangingSignBlock> HANGING_SIGN = FurnitureUtil.hangingSign(REGISTREE, WOOD_TYPE);
+    public static final FurnitureUtil.SignPair<StandingSignBlock, WallSignBlock> SIGN = FurnitureUtil.sign(REGISTREE, WOOD_TYPE);
+
+    public static final ResourceKey<CreativeModeTab> CREATIVE_MODE_TAB = FurnitureUtil.creativeModeTab(REGISTREE, BED_SINGLE);
 
     public RoyalFurnitureSet(IEventBus modBus) {
-        FURNITURE_SET.register(modBus);
-        REGISTREE.registerEvents(modBus);
-    }
-
-    private static <TBlock extends Block, TItem extends Item> BlockTypeBuilder.WithItem<TBlock, TItem> dyedSetup(BlockTypeBuilder.WithItem<TBlock, TItem> builder, Supplier<ModelProviderListener<TBlock>> model) {
-        return builder
-                .model(model)
-                .blockTags(Tags.Blocks.DYED)
-                .itemTags(Tags.Items.DYED)
-                .itemProperties(properties -> properties.component(DataComponents.BASE_COLOR, DyeColor.WHITE));
+        FurnitureUtil.registerEvents(modBus, REGISTREE, WOOD_TYPE);
     }
 }

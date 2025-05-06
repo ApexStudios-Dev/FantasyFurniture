@@ -1,6 +1,6 @@
 {
   "values": [
-    "fantasyfurniture_bone:skeleton_hanging_sign",
-    "fantasyfurniture_bone:wither_hanging_sign"
+    "fantasyfurniture_bone_skeleton:hanging_sign",
+    "fantasyfurniture_bone_wither:hanging_sign"
   ]
 }

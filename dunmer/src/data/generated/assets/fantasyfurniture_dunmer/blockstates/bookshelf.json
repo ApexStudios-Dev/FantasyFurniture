@@ -1,63 +1,18 @@
 {
   "variants": {
-    "facing_component=east,multi_block_index=0": {
-      "model": "fantasyfurniture_dunmer:block/bookshelf_bottom_left",
+    "facing=east": {
+      "model": "fantasyfurniture_dunmer:block/bookshelf",
       "y": 90
     },
-    "facing_component=east,multi_block_index=1": {
-      "model": "fantasyfurniture_dunmer:block/bookshelf_bottom_right",
-      "y": 90
+    "facing=north": {
+      "model": "fantasyfurniture_dunmer:block/bookshelf"
     },
-    "facing_component=east,multi_block_index=2": {
-      "model": "fantasyfurniture_dunmer:block/bookshelf_top_right",
-      "y": 90
-    },
-    "facing_component=east,multi_block_index=3": {
-      "model": "fantasyfurniture_dunmer:block/bookshelf_top_left",
-      "y": 90
-    },
-    "facing_component=north,multi_block_index=0": {
-      "model": "fantasyfurniture_dunmer:block/bookshelf_bottom_left"
-    },
-    "facing_component=north,multi_block_index=1": {
-      "model": "fantasyfurniture_dunmer:block/bookshelf_bottom_right"
-    },
-    "facing_component=north,multi_block_index=2": {
-      "model": "fantasyfurniture_dunmer:block/bookshelf_top_right"
-    },
-    "facing_component=north,multi_block_index=3": {
-      "model": "fantasyfurniture_dunmer:block/bookshelf_top_left"
-    },
-    "facing_component=south,multi_block_index=0": {
-      "model": "fantasyfurniture_dunmer:block/bookshelf_bottom_left",
+    "facing=south": {
+      "model": "fantasyfurniture_dunmer:block/bookshelf",
       "y": 180
     },
-    "facing_component=south,multi_block_index=1": {
-      "model": "fantasyfurniture_dunmer:block/bookshelf_bottom_right",
-      "y": 180
-    },
-    "facing_component=south,multi_block_index=2": {
-      "model": "fantasyfurniture_dunmer:block/bookshelf_top_right",
-      "y": 180
-    },
-    "facing_component=south,multi_block_index=3": {
-      "model": "fantasyfurniture_dunmer:block/bookshelf_top_left",
-      "y": 180
-    },
-    "facing_component=west,multi_block_index=0": {
-      "model": "fantasyfurniture_dunmer:block/bookshelf_bottom_left",
-      "y": 270
-    },
-    "facing_component=west,multi_block_index=1": {
-      "model": "fantasyfurniture_dunmer:block/bookshelf_bottom_right",
-      "y": 270
-    },
-    "facing_component=west,multi_block_index=2": {
-      "model": "fantasyfurniture_dunmer:block/bookshelf_top_right",
-      "y": 270
-    },
-    "facing_component=west,multi_block_index=3": {
-      "model": "fantasyfurniture_dunmer:block/bookshelf_top_left",
+    "facing=west": {
+      "model": "fantasyfurniture_dunmer:block/bookshelf",
       "y": 270
     }
   }

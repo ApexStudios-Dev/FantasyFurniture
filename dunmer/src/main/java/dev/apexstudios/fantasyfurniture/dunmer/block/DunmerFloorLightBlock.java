@@ -2,12 +2,8 @@ package dev.apexstudios.fantasyfurniture.dunmer.block;
 
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.FloorLightBlock;
-import dev.apexstudios.fantasyfurniture.dunmer.DunmerFurnitureSet;
 import java.util.Map;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -22,16 +18,6 @@ public final class DunmerFloorLightBlock extends FloorLightBlock {
     public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
 
     public DunmerFloorLightBlock(Properties properties) {
-        super(DunmerFurnitureSet.FURNITURE_SET, properties, 1);
-    }
-
-    @Override
-    protected VoxelShape getFurnitureShape(BlockState blockState, BlockPos pos) {
-        return getShape(FACING_SHAPES, blockState, facingProperty(), pos);
-    }
-
-    @Override
-    protected void addParticle(Level level, BlockPos pos, int index) {
-        playParticles(level, pos.getX() + .5D, pos.getY() + .95D, pos.getZ() + .5D);
+        super(properties);
     }
 }

@@ -1,9 +1,6 @@
 package dev.apexstudios.fantasyfurniture.block;
 
-import dev.apexstudios.apexcore.lib.util.ApexShapes;
-import dev.apexstudios.fantasyfurniture.block.base.FurnitureInventoryBlock;
 import dev.apexstudios.fantasyfurniture.block.property.CounterConnection;
-import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -13,37 +10,12 @@ import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.phys.shapes.Shapes;
-import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class CounterBlock extends FurnitureInventoryBlock {
-    public static final VoxelShape CORNER_SHAPE = ApexShapes.join(
-            box(0D, 0D, 0D, 13D, 13D, 4D),
-            box(0D, 0D, 3D, 16D, 13D, 16D),
-            box(0D, 13D, 0D, 16D, 16D, 16D)
-    );
-
-    public static final VoxelShape SHAPE = ApexShapes.join(
-            box(0D, 0D, 3D, 16D, 13D, 16D),
-            box(0D, 13D, 0D, 16D, 16D, 16D),
-            box(1D, 1D, 2D, 15D, 12D, 3D)
-    );
-
-    public static final Map<Direction, VoxelShape> CORNER_FACING_SHAPES = Shapes.rotateHorizontal(CORNER_SHAPE);
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
-
+public class CounterBlock extends InventoryBlock {
     public CounterBlock(Properties properties) {
         super(properties);
 
         registerDefaultState(defaultBlockState().setValue(CounterConnection.PROPERTY, CounterConnection.NONE));
-    }
-
-    @Override
-    protected VoxelShape getFurnitureShape(BlockState blockState, BlockPos pos) {
-        return getShape(switch (blockState.getValue(CounterConnection.PROPERTY)) {
-            case CORNER_INNER, CORNER_OUTER -> CORNER_FACING_SHAPES;
-            case NONE -> FACING_SHAPES;
-        }, blockState, facingProperty(), pos);
     }
 
     @Override
@@ -61,7 +33,7 @@ public class CounterBlock extends FurnitureInventoryBlock {
 
         var level = context.getLevel();
         var pos = context.getClickedPos();
-        return CounterConnection.setConnection(level, pos, blockState, facingProperty());
+        return CounterConnection.setConnection(level, pos, blockState);
     }
 
     @Override
@@ -69,7 +41,7 @@ public class CounterBlock extends FurnitureInventoryBlock {
         var result = blockState;
 
         if(facing.getAxis().isHorizontal())
-            result = CounterConnection.setConnection(level, pos, result, facingProperty());
+            result = CounterConnection.setConnection(level, pos, result);
 
         return super.updateShape(result, level, tickAccess, pos, facing, neighborPos, neighborBlockState, random);
     }

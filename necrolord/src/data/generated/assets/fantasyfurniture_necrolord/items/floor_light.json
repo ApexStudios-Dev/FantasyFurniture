@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "fantasyfurniture_necrolord:item/floor_light"
+    "model": "fantasyfurniture_necrolord:block/floor_light"
   }
 }

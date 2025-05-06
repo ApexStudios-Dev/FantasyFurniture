@@ -1,12 +1,11 @@
 package dev.apexstudios.fantasyfurniture.block.property;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraft.world.level.block.state.properties.Property;
 
 public enum ShelfConnection implements StringRepresentable {
     LEFT("left"),
@@ -31,13 +30,13 @@ public enum ShelfConnection implements StringRepresentable {
         return '_' + serializedName;
     }
 
-    public static BlockState setConnection(BlockGetter level, BlockPos pos, BlockState blockState, Property<Direction> facingProperty) {
-        return blockState.setValue(PROPERTY, determine(level, pos, blockState, facingProperty));
+    public static BlockState setConnection(BlockGetter level, BlockPos pos, BlockState blockState) {
+        return blockState.setValue(PROPERTY, determine(level, pos, blockState));
     }
 
-    private static ShelfConnection determine(BlockGetter level, BlockPos pos, BlockState blockState, Property<Direction> facingProperty) {
-        var hasLeft = canConnect(level, pos, blockState, facingProperty, true);
-        var hasRight = canConnect(level, pos, blockState, facingProperty, false);
+    private static ShelfConnection determine(BlockGetter level, BlockPos pos, BlockState blockState) {
+        var hasLeft = canConnect(level, pos, blockState, true);
+        var hasRight = canConnect(level, pos, blockState, false);
 
         if(hasLeft && hasRight)
             return BOTH;
@@ -49,8 +48,8 @@ public enum ShelfConnection implements StringRepresentable {
         return NONE;
     }
 
-    private static boolean canConnect(BlockGetter level, BlockPos pos, BlockState blockState, Property<Direction> facingProperty, boolean left) {
-        var facing = blockState.getValue(facingProperty);
+    private static boolean canConnect(BlockGetter level, BlockPos pos, BlockState blockState, boolean left) {
+        var facing = blockState.getValue(HorizontalDirectionalBlock.FACING);
         var offset = left ? facing.getCounterClockWise() : facing.getClockWise();
         var otherPos = pos.relative(offset);
         var otherBlockState = level.getBlockState(otherPos);
@@ -59,6 +58,6 @@ public enum ShelfConnection implements StringRepresentable {
             return false;
 
         // TODO: should this be otherBlockState
-        return blockState.getValue(facingProperty) == facing;
+        return blockState.getValue(HorizontalDirectionalBlock.FACING) == facing;
     }
 }

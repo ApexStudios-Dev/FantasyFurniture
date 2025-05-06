@@ -4,7 +4,6 @@
   "block.fantasyfurniture_necrolord.bench": "Necrolord Bench",
   "block.fantasyfurniture_necrolord.bookshelf": "Necrolord Bookshelf",
   "block.fantasyfurniture_necrolord.bricks": "Necrolord Bricks",
-  "block.fantasyfurniture_necrolord.button": "Necrolord Button",
   "block.fantasyfurniture_necrolord.carpet": "Necrolord Carpet",
   "block.fantasyfurniture_necrolord.chair": "Necrolord Chair",
   "block.fantasyfurniture_necrolord.chandelier": "Necrolord Chandelier",
@@ -34,10 +33,10 @@
   "block.fantasyfurniture_necrolord.stool": "Necrolord Stool",
   "block.fantasyfurniture_necrolord.table": "Necrolord Table",
   "block.fantasyfurniture_necrolord.trapdoor": "Necrolord Trapdoor",
+  "block.fantasyfurniture_necrolord.wall_hanging_sign": "Necrolord Wall Hanging Sign",
   "block.fantasyfurniture_necrolord.wall_light": "Necrolord Wall Light",
+  "block.fantasyfurniture_necrolord.wall_sign": "Necrolord Wall Sign",
   "block.fantasyfurniture_necrolord.wardrobe": "Necrolord Wardrobe",
   "block.fantasyfurniture_necrolord.wool": "Necrolord Wool",
-  "itemGroup.fantasyfurniture_necrolord.necrolord": "Necrolord",
-  "tag.block.fantasyfurniture.necrolord": "Necrolord (Blocks)",
-  "tag.item.fantasyfurniture.necrolord": "Necrolord (Items)"
+  "itemGroup.fantasyfurniture_necrolord.furniture_set": "Fantasy's Furniture - Necrolord"
 }

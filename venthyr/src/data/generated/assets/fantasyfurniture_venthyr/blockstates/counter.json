@@ -1,48 +1,18 @@
 {
   "variants": {
-    "connection=corner_inner,facing_component=east": {
-      "model": "fantasyfurniture_venthyr:block/counter_corner",
+    "facing=east": {
+      "model": "fantasyfurniture_venthyr:block/counter",
       "y": 90
     },
-    "connection=corner_inner,facing_component=north": {
-      "model": "fantasyfurniture_venthyr:block/counter_corner"
+    "facing=north": {
+      "model": "fantasyfurniture_venthyr:block/counter"
     },
-    "connection=corner_inner,facing_component=south": {
-      "model": "fantasyfurniture_venthyr:block/counter_corner",
+    "facing=south": {
+      "model": "fantasyfurniture_venthyr:block/counter",
       "y": 180
     },
-    "connection=corner_inner,facing_component=west": {
-      "model": "fantasyfurniture_venthyr:block/counter_corner",
-      "y": 270
-    },
-    "connection=corner_outer,facing_component=east": {
-      "model": "fantasyfurniture_venthyr:block/counter_corner",
-      "y": 90
-    },
-    "connection=corner_outer,facing_component=north": {
-      "model": "fantasyfurniture_venthyr:block/counter_corner"
-    },
-    "connection=corner_outer,facing_component=south": {
-      "model": "fantasyfurniture_venthyr:block/counter_corner",
-      "y": 180
-    },
-    "connection=corner_outer,facing_component=west": {
-      "model": "fantasyfurniture_venthyr:block/counter_corner",
-      "y": 270
-    },
-    "connection=single,facing_component=east": {
-      "model": "fantasyfurniture_venthyr:block/counter_single",
-      "y": 90
-    },
-    "connection=single,facing_component=north": {
-      "model": "fantasyfurniture_venthyr:block/counter_single"
-    },
-    "connection=single,facing_component=south": {
-      "model": "fantasyfurniture_venthyr:block/counter_single",
-      "y": 180
-    },
-    "connection=single,facing_component=west": {
-      "model": "fantasyfurniture_venthyr:block/counter_single",
+    "facing=west": {
+      "model": "fantasyfurniture_venthyr:block/counter",
       "y": 270
     }
   }

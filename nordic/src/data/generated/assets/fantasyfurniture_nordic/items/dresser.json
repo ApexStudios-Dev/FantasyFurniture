@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "fantasyfurniture_nordic:item/dresser"
+    "model": "fantasyfurniture_nordic:block/dresser"
   }
 }

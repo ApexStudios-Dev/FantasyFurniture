@@ -40,3 +40,75 @@ issueTrackerURL="https://github.com/ApexStudios-Dev/Issues/issues"
     [dependencies.fantasyfurniture_bone.mc-publish]
         modrinth="A0nfCqYw"
         curseforge="579564"
+
+[[mods]]
+    modId="fantasyfurniture_bone_skeleton"
+    version="${file.jarVersion}"
+    displayName="Fantasy's Furniture - Skeleton Bone"
+    credits="Apex - Programming"
+    authors="ApexStudios"
+    description="Bone Furniture set for Fantasy's Furniture"
+    logoFile= "logo_skeleton.png"
+    displayURL="https://modrinth.com/project/fantasys-furniture-bone"
+
+[[dependencies.fantasyfurniture_bone_skeleton]]
+    modId="minecraft"
+    type="required"
+    versionRange="[1.21.5,1.21.6)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.fantasyfurniture_bone_skeleton]]
+    modId="neoforge"
+    type="required"
+    versionRange="[21.5.0-beta,21.6)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.fantasyfurniture_bone_skeleton]]
+    modId="fantasyfurniture_bone"
+    type="required"
+    versionRange="[21.5,21.6)"
+
+[[dependencies.fantasyfurniture_bone_skeleton]]
+    modId="apexcore"
+    type="required"
+    versionRange="[21.5,21.6)"
+[[dependencies.fantasyfurniture_bone_skeleton]]
+    modId="fantasyfurniture"
+    type="required"
+    versionRange="[21.5,21.6)"
+
+[[mods]]
+    modId="fantasyfurniture_bone_wither"
+    version="${file.jarVersion}"
+    displayName="Fantasy's Furniture - Wither Bone"
+    credits="Apex - Programming"
+    authors="ApexStudios"
+    description="Wither Bone Furniture set for Fantasy's Furniture"
+    logoFile= "logo_wither.png"
+    displayURL="https://modrinth.com/project/fantasys-furniture-bone"
+
+[[dependencies.fantasyfurniture_bone_wither]]
+    modId="minecraft"
+    type="required"
+    versionRange="[1.21.5,1.21.6)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.fantasyfurniture_bone_wither]]
+    modId="neoforge"
+    type="required"
+    versionRange="[21.5.0-beta,21.6)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.fantasyfurniture_bone_wither]]
+    modId="apexcore"
+    type="required"
+    versionRange="[21.5,21.6)"
+[[dependencies.fantasyfurniture_bone_wither]]
+    modId="fantasyfurniture"
+    type="required"
+    versionRange="[21.5,21.6)"
+[[dependencies.fantasyfurniture_bone_wither]]
+    modId="fantasyfurniture_bone"
+    type="required"
+    versionRange="[21.5,21.6)"

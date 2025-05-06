@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "fantasyfurniture_royal:bricks"
+            "items": "#minecraft:stone_crafting_materials"
           }
         ]
       },

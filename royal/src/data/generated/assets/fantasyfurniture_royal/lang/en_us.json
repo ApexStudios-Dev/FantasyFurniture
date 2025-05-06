@@ -4,7 +4,6 @@
   "block.fantasyfurniture_royal.bench": "Royal Bench",
   "block.fantasyfurniture_royal.bookshelf": "Royal Bookshelf",
   "block.fantasyfurniture_royal.bricks": "Royal Bricks",
-  "block.fantasyfurniture_royal.button": "Royal Button",
   "block.fantasyfurniture_royal.carpet": "Royal Carpet",
   "block.fantasyfurniture_royal.chair": "Royal Chair",
   "block.fantasyfurniture_royal.chandelier": "Royal Chandelier",
@@ -18,6 +17,7 @@
   "block.fantasyfurniture_royal.drawer": "Royal Drawer",
   "block.fantasyfurniture_royal.dresser": "Royal Dresser",
   "block.fantasyfurniture_royal.fence": "Royal Fence",
+  "block.fantasyfurniture_royal.fence_gate": "Royal Fence Gate",
   "block.fantasyfurniture_royal.floor_light": "Royal Floor Light",
   "block.fantasyfurniture_royal.hanging_sign": "Royal Hanging Sign",
   "block.fantasyfurniture_royal.lockbox": "Royal Lockbox",
@@ -33,10 +33,10 @@
   "block.fantasyfurniture_royal.stool": "Royal Stool",
   "block.fantasyfurniture_royal.table": "Royal Table",
   "block.fantasyfurniture_royal.trapdoor": "Royal Trapdoor",
+  "block.fantasyfurniture_royal.wall_hanging_sign": "Royal Wall Hanging Sign",
   "block.fantasyfurniture_royal.wall_light": "Royal Wall Light",
+  "block.fantasyfurniture_royal.wall_sign": "Royal Wall Sign",
   "block.fantasyfurniture_royal.wardrobe": "Royal Wardrobe",
   "block.fantasyfurniture_royal.wool": "Royal Wool",
-  "itemGroup.fantasyfurniture_royal.royal": "Royal",
-  "tag.block.fantasyfurniture.royal": "Royal (Blocks)",
-  "tag.item.fantasyfurniture.royal": "Royal (Items)"
+  "itemGroup.fantasyfurniture_royal.furniture_set": "Fantasy's Furniture - Royal"
 }

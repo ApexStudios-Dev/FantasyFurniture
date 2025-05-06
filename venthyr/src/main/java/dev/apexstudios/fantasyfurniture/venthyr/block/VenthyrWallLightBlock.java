@@ -2,11 +2,8 @@ package dev.apexstudios.fantasyfurniture.venthyr.block;
 
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.WallLightBlock;
-import dev.apexstudios.fantasyfurniture.venthyr.VenthyrFurnitureSet;
 import java.util.Map;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -22,30 +19,6 @@ public final class VenthyrWallLightBlock extends WallLightBlock {
     public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
 
     public VenthyrWallLightBlock(Properties properties) {
-        super(VenthyrFurnitureSet.FURNITURE_SET, properties);
+        super(properties);
     }
-
-    @Override
-    protected VoxelShape getFurnitureShape(BlockState blockState, BlockPos pos) {
-        return getShape(FACING_SHAPES, blockState, facingProperty(), pos);
-    }
-
-    // TODO
-    /*@Override
-    public void animateTick(BlockState blockState, Level level, BlockPos pos, RandomSource random) {
-        var x = pos.getX() + .5D;
-        var y = pos.getY() + .5D + .35D;
-        var z = pos.getZ() + .5D;
-
-        var facing = getComponentOrThrow(BlockComponentTypes.FACING).get(blockState).getOpposite();
-        var face = facing.getClockWise();
-
-        var xOffset = .15D * face.getStepX();
-        var zOffset = .15D * face.getStepZ();
-
-        x += .25D * facing.getStepX();
-        z += .25D * facing.getStepZ();
-
-        playParticles(level, x + xOffset, y, z + zOffset);
-    }*/
 }

@@ -1,7 +1,6 @@
 package dev.apexstudios.fantasyfurniture;
 
 import dev.apexstudios.apexcore.lib.registree.Registree;
-import dev.apexstudios.fantasyfurniture.set.BlockTypes;
 import dev.apexstudios.fantasyfurniture.station.FurnitureStationSetup;
 import java.util.Map;
 import net.minecraft.core.registries.Registries;
@@ -42,7 +41,6 @@ public final class FantasyFurniture {
         FurnitureStationSetup.register(modBus);
         FurnitureBlockEntities.register(modBus);
         FurnitureMenus.register(modBus);
-        BlockTypes.register();
 
         modBus.addListener(AddPackFindersEvent.class, event -> {
             event.addPackFinders(

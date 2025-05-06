@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "fantasyfurniture_necrolord:item/bed_double"
+    "model": "fantasyfurniture_necrolord:block/bed_double"
   }
 }

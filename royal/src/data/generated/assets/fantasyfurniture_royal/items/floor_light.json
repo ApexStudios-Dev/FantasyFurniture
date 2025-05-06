@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "fantasyfurniture_royal:item/floor_light"
+    "model": "fantasyfurniture_royal:block/floor_light"
   }
 }

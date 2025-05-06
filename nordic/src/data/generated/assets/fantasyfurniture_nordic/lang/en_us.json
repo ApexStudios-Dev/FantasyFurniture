@@ -3,7 +3,6 @@
   "block.fantasyfurniture_nordic.bed_single": "Nordic Bed Single",
   "block.fantasyfurniture_nordic.bench": "Nordic Bench",
   "block.fantasyfurniture_nordic.bookshelf": "Nordic Bookshelf",
-  "block.fantasyfurniture_nordic.button": "Nordic Button",
   "block.fantasyfurniture_nordic.carpet": "Nordic Carpet",
   "block.fantasyfurniture_nordic.chair": "Nordic Chair",
   "block.fantasyfurniture_nordic.chandelier": "Nordic Chandelier",
@@ -34,10 +33,10 @@
   "block.fantasyfurniture_nordic.stool": "Nordic Stool",
   "block.fantasyfurniture_nordic.table": "Nordic Table",
   "block.fantasyfurniture_nordic.trapdoor": "Nordic Trapdoor",
+  "block.fantasyfurniture_nordic.wall_hanging_sign": "Nordic Wall Hanging Sign",
   "block.fantasyfurniture_nordic.wall_light": "Nordic Wall Light",
+  "block.fantasyfurniture_nordic.wall_sign": "Nordic Wall Sign",
   "block.fantasyfurniture_nordic.wardrobe": "Nordic Wardrobe",
   "block.fantasyfurniture_nordic.wool": "Nordic Wool",
-  "itemGroup.fantasyfurniture_nordic.nordic": "Nordic",
-  "tag.block.fantasyfurniture.nordic": "Nordic (Blocks)",
-  "tag.item.fantasyfurniture.nordic": "Nordic (Items)"
+  "itemGroup.fantasyfurniture_nordic.furniture_set": "Fantasy's Furniture - Nordic"
 }

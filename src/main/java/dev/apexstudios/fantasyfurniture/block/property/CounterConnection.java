@@ -1,12 +1,11 @@
 package dev.apexstudios.fantasyfurniture.block.property;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraft.world.level.block.state.properties.Property;
 
 public enum CounterConnection implements StringRepresentable {
     NONE("single"),
@@ -37,49 +36,49 @@ public enum CounterConnection implements StringRepresentable {
         return '_' + serializedName;
     }
 
-    public static BlockState setConnection(BlockGetter level, BlockPos pos, BlockState blockState, Property<Direction> facingProperty) {
-        var connection = determine(level, pos, blockState, facingProperty);
+    public static BlockState setConnection(BlockGetter level, BlockPos pos, BlockState blockState) {
+        var connection = determine(level, pos, blockState);
 
         if(connection == CORNER_INNER) {
-            var facing = blockState.getValue(facingProperty);
-            blockState = blockState.setValue(facingProperty, facing.getCounterClockWise());
+            var facing = blockState.getValue(HorizontalDirectionalBlock.FACING);
+            blockState = blockState.setValue(HorizontalDirectionalBlock.FACING, facing.getCounterClockWise());
         }
 
         return blockState.setValue(PROPERTY, connection);
     }
 
-    private static CounterConnection determine(BlockGetter level, BlockPos pos, BlockState blockState, Property<Direction> facingProperty) {
-        var hasLeft = canConnect(level, pos, blockState, facingProperty, true);
-        var hasRight = canConnect(level, pos, blockState, facingProperty, false);
+    private static CounterConnection determine(BlockGetter level, BlockPos pos, BlockState blockState) {
+        var hasLeft = canConnect(level, pos, blockState, true);
+        var hasRight = canConnect(level, pos, blockState, false);
 
         if(hasLeft || hasRight)
-            return asCorner(level, pos, blockState, facingProperty);
+            return asCorner(level, pos, blockState);
 
         return NONE;
     }
 
-    private static boolean canConnect(BlockGetter level, BlockPos pos, BlockState blockState, Property<Direction> facingProperty, boolean left) {
-        var facing = blockState.getValue(facingProperty);
+    private static boolean canConnect(BlockGetter level, BlockPos pos, BlockState blockState, boolean left) {
+        var facing = blockState.getValue(HorizontalDirectionalBlock.FACING);
         var offset = left ? facing.getCounterClockWise() : facing.getClockWise();
         var otherPos = pos.relative(offset);
         var otherBlockState = level.getBlockState(otherPos);
 
         if(!otherBlockState.is(blockState.getBlock()))
             return false;
-        if(otherBlockState.getValue(facingProperty) == facing)
+        if(otherBlockState.getValue(HorizontalDirectionalBlock.FACING) == facing)
             return true;
         return otherBlockState.getValue(PROPERTY).isCorner();
     }
 
-    private static CounterConnection asCorner(BlockGetter level, BlockPos pos, BlockState blockState, Property<Direction> facingProperty) {
-        var facing = blockState.getValue(facingProperty);
+    private static CounterConnection asCorner(BlockGetter level, BlockPos pos, BlockState blockState) {
+        var facing = blockState.getValue(HorizontalDirectionalBlock.FACING);
         var frontPos = pos.relative(facing);
         var frontBlockState = level.getBlockState(frontPos);
 
         if(!frontBlockState.is(blockState.getBlock()))
             return NONE;
 
-        var frontFacing = frontBlockState.getValue(facingProperty);
+        var frontFacing = frontBlockState.getValue(HorizontalDirectionalBlock.FACING);
 
         if(frontFacing == facing.getCounterClockWise())
             return CORNER_INNER;

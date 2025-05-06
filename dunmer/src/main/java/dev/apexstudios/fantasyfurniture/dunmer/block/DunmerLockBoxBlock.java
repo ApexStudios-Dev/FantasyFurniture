@@ -2,9 +2,7 @@ package dev.apexstudios.fantasyfurniture.dunmer.block;
 
 import dev.apexstudios.fantasyfurniture.block.LockBoxBlock;
 import java.util.Map;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -15,10 +13,5 @@ public final class DunmerLockBoxBlock extends LockBoxBlock {
 
     public DunmerLockBoxBlock(Properties properties) {
         super(properties);
-    }
-
-    @Override
-    protected VoxelShape getFurnitureShape(BlockState blockState, BlockPos pos) {
-        return getShape(FACING_SHAPES, blockState, facingProperty(), pos);
     }
 }

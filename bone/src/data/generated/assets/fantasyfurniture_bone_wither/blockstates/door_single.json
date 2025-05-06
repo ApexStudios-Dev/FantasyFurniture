@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "fantasyfurniture_bone_wither:block/door_single",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "fantasyfurniture_bone_wither:block/door_single"
+    },
+    "facing=south": {
+      "model": "fantasyfurniture_bone_wither:block/door_single",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "fantasyfurniture_bone_wither:block/door_single",
+      "y": 270
+    }
+  }
+}

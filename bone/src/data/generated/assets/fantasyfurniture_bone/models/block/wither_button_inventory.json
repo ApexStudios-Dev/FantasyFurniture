@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/button_inventory",
-  "textures": {
-    "texture": "fantasyfurniture_bone:block/wither_bricks"
-  }
-}
