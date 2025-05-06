@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "fantasyfurniture_dunmer:item/painting_wide"
+    "model": "fantasyfurniture_dunmer:block/painting_wide"
   }
 }

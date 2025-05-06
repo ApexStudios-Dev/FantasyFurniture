@@ -1,12 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "fantasyfurniture_royal:block/lockbox",
-    "tints": [
-      {
-        "type": "apexcore:dye_color",
-        "default": "white"
-      }
-    ]
+    "model": "fantasyfurniture_royal:block/lockbox"
   }
 }

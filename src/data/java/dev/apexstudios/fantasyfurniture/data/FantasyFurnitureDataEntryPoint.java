@@ -27,10 +27,10 @@ public final class FantasyFurnitureDataEntryPoint {
 
                         provider.tag(FurnitureStationSetup.BINDING_AGENT).withElement(Items.CLAY_BALL);
                     })
-                    .providing(ProviderTypes.LOOT_TABLE, (context, provider) -> {
-                        provider.fromRegistree(FantasyFurniture.REGISTREE);
-                        provider.block(blocks -> blocks.dropSelf(FurnitureStationSetup.BLOCK.value()));
-                    })
+                    .providing(ProviderTypes.LOOT_TABLE, (context, provider) -> provider
+                            .fromRegistree(FantasyFurniture.REGISTREE)
+                            .block(blocks -> blocks.dropSelf(FurnitureStationSetup.BLOCK.value()))
+                    )
                     .providing(ProviderTypes.LANGUAGE, (context, provider) -> provider
                             .addBlock(FurnitureStationSetup.BLOCK, "Furniture Station")
                             .add(FantasyFurniture.FURNITURE_PLANKS, "Planks (Furniture Input)")
@@ -42,10 +42,12 @@ public final class FantasyFurnitureDataEntryPoint {
                     )
                     .providing(ProviderTypes.MODELS, (context, provider) -> {
                         provider.fromRegistree(FantasyFurniture.REGISTREE);
-                        // TODO
-                        // ModelUtil.horizontalFacingBlock(FurnitureStationSetup.BLOCK.value(), provider.blockModels());
+                        provider.blockModels().createNonTemplateHorizontalBlock(FurnitureStationSetup.BLOCK.value());
                     })
-                    .providing(ProviderTypes.BLOCK_TAGS, (context, provider) -> provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(FurnitureStationSetup.BLOCK))
+                    .providing(ProviderTypes.BLOCK_TAGS, (context, provider) -> provider
+                            .tag(BlockTags.MINEABLE_WITH_AXE)
+                            .withElement(FurnitureStationSetup.BLOCK)
+                    )
                     .providing(ProviderTypes.RECIPES, (context, provider) -> provider
                             .shapeless(RecipeCategory.MISC, FurnitureStationSetup.BLOCK)
                             .requires(Tags.Items.PLAYER_WORKSTATIONS_CRAFTING_TABLES)

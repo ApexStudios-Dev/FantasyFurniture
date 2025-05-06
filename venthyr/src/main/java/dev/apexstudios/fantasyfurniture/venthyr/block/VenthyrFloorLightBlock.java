@@ -2,12 +2,8 @@ package dev.apexstudios.fantasyfurniture.venthyr.block;
 
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.FloorLightBlock;
-import dev.apexstudios.fantasyfurniture.venthyr.VenthyrFurnitureSet;
 import java.util.Map;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -29,25 +25,6 @@ public final class VenthyrFloorLightBlock extends FloorLightBlock {
     public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
 
     public VenthyrFloorLightBlock(Properties properties) {
-        super(VenthyrFurnitureSet.FURNITURE_SET, properties);
-    }
-
-    @Override
-    protected VoxelShape getFurnitureShape(BlockState blockState, BlockPos pos) {
-        return getShape(FACING_SHAPES, blockState, facingProperty(), pos);
-    }
-
-    @Override
-    protected void addParticle(Level level, BlockPos pos, int index) {
-        var x = pos.getX() + .5D;
-        var y = pos.getY() + .95D;
-        var z = pos.getZ() + .5D;
-        var offset = .2D;
-        var even = index % 2 == 0;
-
-        x = even ? x + offset : x - offset;
-        z = index < 2 ? z + offset : z - offset;
-
-        playParticles(level, x, y, z);
+        super(properties);
     }
 }

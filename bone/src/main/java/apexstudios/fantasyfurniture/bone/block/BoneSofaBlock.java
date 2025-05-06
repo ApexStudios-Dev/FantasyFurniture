@@ -2,11 +2,8 @@ package apexstudios.fantasyfurniture.bone.block;
 
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.SofaBlock;
-import dev.apexstudios.fantasyfurniture.block.property.SofaConnection;
 import java.util.Map;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -87,16 +84,5 @@ public final class BoneSofaBlock extends SofaBlock {
 
     public BoneSofaBlock(Properties properties) {
         super(properties);
-    }
-
-    @Override
-    protected VoxelShape getFurnitureShape(BlockState blockState, BlockPos pos) {
-        return getShape(switch (blockState.getValue(SofaConnection.PROPERTY)) {
-            case LEFT -> LEFT_FACING_SHAPES;
-            case RIGHT -> RIGHT_FACING_SHAPES;
-            case BOTH -> BOTH_FACING_SHAPES;
-            case CORNER_INNER, CORNER_OUTER -> CORNER_FACING_SHAPES;
-            case NONE -> FACING_SHAPES;
-        }, blockState, facingProperty(), pos);
     }
 }

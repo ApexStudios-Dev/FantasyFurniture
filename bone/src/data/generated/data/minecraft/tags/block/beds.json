@@ -1,8 +1,8 @@
 {
   "values": [
-    "fantasyfurniture_bone:skeleton_bed_double",
-    "fantasyfurniture_bone:skeleton_bed_single",
-    "fantasyfurniture_bone:wither_bed_double",
-    "fantasyfurniture_bone:wither_bed_single"
+    "fantasyfurniture_bone_skeleton:bed_double",
+    "fantasyfurniture_bone_wither:bed_double",
+    "fantasyfurniture_bone_skeleton:bed_single",
+    "fantasyfurniture_bone_wither:bed_single"
   ]
 }

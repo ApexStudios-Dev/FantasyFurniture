@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "items": "fantasyfurniture_necrolord:wool"
+            "items": "#minecraft:wool"
           }
         ]
       },

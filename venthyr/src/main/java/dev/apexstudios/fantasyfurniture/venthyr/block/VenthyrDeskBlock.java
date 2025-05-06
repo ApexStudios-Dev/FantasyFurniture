@@ -3,9 +3,7 @@ package dev.apexstudios.fantasyfurniture.venthyr.block;
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.DeskBlock;
 import java.util.Map;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -45,10 +43,5 @@ public final class VenthyrDeskBlock extends DeskBlock {
 
     public VenthyrDeskBlock(Properties properties, boolean left) {
         super(properties, left);
-    }
-
-    @Override
-    protected VoxelShape getFurnitureShape(BlockState blockState, BlockPos pos) {
-        return getShape(left ? LEFT_FACING_SHAPES : RIGHT_FACING_SHAPES, blockState, facingProperty(), pos);
     }
 }

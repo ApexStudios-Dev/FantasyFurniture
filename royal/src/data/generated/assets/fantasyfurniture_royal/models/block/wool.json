@@ -1,8 +1,6 @@
 {
-  "parent": "apexcore:block/cube_all_tinted",
-  "render_type": "minecraft:cutout",
+  "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "fantasyfurniture_royal:block/wool",
-    "all_tinted": "fantasyfurniture_royal:block/wool_tint"
+    "all": "fantasyfurniture_royal:block/wool"
   }
 }
