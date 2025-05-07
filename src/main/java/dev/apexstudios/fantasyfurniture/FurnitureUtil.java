@@ -4,7 +4,9 @@ import com.google.common.base.Predicates;
 import com.google.common.collect.Lists;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import dev.apexstudios.apexcore.lib.data.ProviderTypes;
+import dev.apexstudios.apexcore.lib.data.pack.FeaturePackGenerator;
 import dev.apexstudios.apexcore.lib.data.pack.ModPackGenerator;
+import dev.apexstudios.apexcore.lib.data.pack.PackGenerator;
 import dev.apexstudios.apexcore.lib.data.provider.LanguageProvider;
 import dev.apexstudios.apexcore.lib.data.provider.RecipeProvider;
 import dev.apexstudios.apexcore.lib.data.provider.loot.LootTableProvider;
@@ -439,9 +441,18 @@ public interface FurnitureUtil {
     }
 
     static void registerDataGen(DataGenContext context, ModPackGenerator generator) {
-        generator.providing(ProviderTypes.LOOT_TABLE, ($, provider) -> registerLootTables(context, provider))
-                .providing(ProviderTypes.MODELS, ($, provider) -> registerModels(context, provider))
-                .providing(ProviderTypes.LANGUAGE, ($, provider) -> registerLanguage(context, provider))
+        registerDataGen0(context, generator, generator);
+    }
+
+    static void registerDataGen(DataGenContext context, FeaturePackGenerator assetPack, FeaturePackGenerator dataPack) {
+        registerDataGen0(context, assetPack, dataPack);
+    }
+
+    private static void registerDataGen0(DataGenContext context, PackGenerator<?> assetPack, PackGenerator<?> dataPack) {
+        assetPack.providing(ProviderTypes.MODELS, ($, provider) -> registerModels(context, provider))
+                .providing(ProviderTypes.LANGUAGE, ($, provider) -> registerLanguage(context, provider));
+
+        dataPack.providing(ProviderTypes.LOOT_TABLE, ($, provider) -> registerLootTables(context, provider))
                 .providing(ProviderTypes.BLOCK_TAGS, ($, provider) -> registerBlockTags(context, provider))
                 .providing(ProviderTypes.ITEM_TAGS, ($, provider) -> registerItemTags(context, provider))
                 .providing(ProviderTypes.RECIPES, ($, provider) -> registerRecipes(context, provider, $.enabledFeatures()));
@@ -802,7 +813,7 @@ public interface FurnitureUtil {
 
         String CREATIVE_MODE_TAB = "furniture_set";
 
-        public static <TRegistry> boolean ifPresent(Registree registree, ResourceKey<? extends Registry<TRegistry>> registryType, String name, Consumer<? super TRegistry> action) {
+        static <TRegistry> boolean ifPresent(Registree registree, ResourceKey<? extends Registry<TRegistry>> registryType, String name, Consumer<? super TRegistry> action) {
             var value = registree.getValue(registryType, name);
 
             if(value != null) {
@@ -814,23 +825,23 @@ public interface FurnitureUtil {
         }
 
         @CanIgnoreReturnValue
-        public static boolean block(Registree registree, String name, Consumer<? super Block> action) {
+        static boolean block(Registree registree, String name, Consumer<? super Block> action) {
             return ifPresent(registree, Registries.BLOCK, name, action);
         }
 
         @CanIgnoreReturnValue
-        public static boolean item(Registree registree, String name, Consumer<? super Item> action) {
+        static boolean item(Registree registree, String name, Consumer<? super Item> action) {
             if(block(registree, name, block -> action.accept(block.asItem())))
                 return true;
 
             return ifPresent(registree, Registries.ITEM, name, action);
         }
 
-        public static void creativeModeTab(Registree registree, Consumer<ResourceKey<CreativeModeTab>> action) {
+        static void creativeModeTab(Registree registree, Consumer<ResourceKey<CreativeModeTab>> action) {
             registree.get(Registries.CREATIVE_MODE_TAB, CREATIVE_MODE_TAB).ifPresent(holder -> action.accept(holder.getKey()));
         }
 
-        public static Block[] blocks(Registree registree, String... names) {
+        static Block[] blocks(Registree registree, String... names) {
             var blocks = Lists.<Block>newArrayList();
 
             for(var name : names) {
