@@ -1,6 +1,7 @@
 {
   "type": "fantasyfurniture:furniture_station",
   "binding_agent": "#fantasyfurniture:binding_agent",
+  "group": "royal",
   "planks": "fantasyfurniture_royal:bricks",
   "result": {
     "count": 1,

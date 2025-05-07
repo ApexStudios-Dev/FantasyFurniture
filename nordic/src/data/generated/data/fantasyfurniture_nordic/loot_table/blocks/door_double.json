@@ -10,6 +10,15 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "fantasyfurniture_nordic:door_double",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "half": "lower"
+              }
+            }
+          ],
           "name": "fantasyfurniture_nordic:door_double"
         }
       ],
