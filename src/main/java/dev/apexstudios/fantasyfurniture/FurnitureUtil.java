@@ -473,10 +473,10 @@ public interface FurnitureUtil {
             Names.block(context.registree, Names.DRAWER, block -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)));
             Names.block(context.registree, Names.CHAIR, blocks::dropSelf);
             Names.block(context.registree, Names.BOOKSHELF, block -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)));
-            Names.block(context.registree, Names.BED_SINGLE, blocks::dropSelf);
-            Names.block(context.registree, Names.BED_DOUBLE, blocks::dropSelf);
-            Names.block(context.registree, Names.DOOR_SINGLE, blocks::dropSelf);
-            Names.block(context.registree, Names.DOOR_DOUBLE, blocks::dropSelf);
+            Names.block(context.registree, Names.BED_SINGLE, block -> blocks.accept(block, blocks.createSinglePropConditionTable(block, BedBlock.PART, BedPart.HEAD)));
+            Names.block(context.registree, Names.BED_DOUBLE, block -> blocks.accept(block, blocks.createSinglePropConditionTable(block, BedBlock.PART, BedPart.HEAD)));
+            Names.block(context.registree, Names.DOOR_SINGLE, block -> blocks.accept(block, blocks.createDoorTable(block)));
+            Names.block(context.registree, Names.DOOR_DOUBLE, block -> blocks.accept(block, blocks.createDoorTable(block)));
             Names.block(context.registree, Names.DESK_LEFT, block -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)));
             Names.block(context.registree, Names.DESK_RIGHT, block -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)));
             Names.block(context.registree, Names.PAINTING_WIDE, blocks::dropSelf);
@@ -493,7 +493,7 @@ public interface FurnitureUtil {
             Names.block(context.registree, Names.WARDROBE, block -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)));
             Names.block(context.registree, Names.TABLE, blocks::dropSelf);
             Names.block(context.registree, Names.STAIRS, blocks::dropSelf);
-            Names.block(context.registree, Names.SLAB, blocks::dropSelf);
+            Names.block(context.registree, Names.SLAB, block -> blocks.accept(block, blocks.createSlabItemTable(block)));
             Names.block(context.registree, Names.FENCE, blocks::dropSelf);
             Names.block(context.registree, Names.FENCE_GATE, blocks::dropSelf);
             Names.block(context.registree, Names.TRAPDOOR, blocks::dropSelf);
@@ -684,9 +684,9 @@ public interface FurnitureUtil {
     }
 
     static void registerRecipes(DataGenContext context, RecipeProvider provider, FeatureFlagSet enabledFeatures) {
-        Names.block(context.registree, Names.PLANKS, block -> conversionRecipe(ItemTags.PLANKS, FantasyFurniture.FURNITURE_PLANKS, "has_planks", block, provider, enabledFeatures));
-        Names.block(context.registree, Names.BRICKS, block -> conversionRecipe(ItemTags.STONE_CRAFTING_MATERIALS, FantasyFurniture.FURNITURE_BRICKS, "has_bricks", block, provider, enabledFeatures));
-        Names.block(context.registree, Names.WOOL, block -> conversionRecipe(ItemTags.WOOL, FantasyFurniture.FURNITURE_WOOL, "has_wool", block, provider, enabledFeatures));
+        Names.block(context.registree, Names.PLANKS, block -> conversionRecipe(ItemTags.PLANKS, FantasyFurniture.FURNITURE_PLANKS, "has_" + Names.PLANKS, block, provider, enabledFeatures));
+        Names.block(context.registree, Names.BRICKS, block -> conversionRecipe(ItemTags.STONE_CRAFTING_MATERIALS, FantasyFurniture.FURNITURE_BRICKS, "has_" + Names.BRICKS, block, provider, enabledFeatures));
+        Names.block(context.registree, Names.WOOL, block -> conversionRecipe(ItemTags.WOOL, FantasyFurniture.FURNITURE_WOOL, "has_" + Names.WOOL, block, provider, enabledFeatures));
         Names.block(context.registree, Names.CARPET, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
         Names.block(context.registree, Names.DRESSER, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
         Names.block(context.registree, Names.STOOL, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
@@ -741,6 +741,7 @@ public interface FurnitureUtil {
 
         FurnitureStationRecipeBuilder
                 .builder(RecipeCategory.MISC, Ingredient.of(context.family.getBaseBlock()), woolIngredient, provider.tag(FurnitureStationSetup.BINDING_AGENT), result)
+                .group(context.family.getRecipeGroupPrefix().orElse(null))
                 .unlockedBy(context.family.getRecipeUnlockedBy().orElseGet(() -> RecipeProvider.getHasName(context.family.getBaseBlock())), provider.has(context.family.getBaseBlock()))
                 .save(output, RecipeProvider.recipeKeyWithPrefix(result, "furniture_station/"));
     }
