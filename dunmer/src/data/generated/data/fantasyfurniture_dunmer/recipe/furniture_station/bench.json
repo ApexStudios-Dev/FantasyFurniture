@@ -1,6 +1,7 @@
 {
   "type": "fantasyfurniture:furniture_station",
   "binding_agent": "#fantasyfurniture:binding_agent",
+  "group": "dunmer",
   "planks": "fantasyfurniture_dunmer:planks",
   "result": {
     "count": 1,

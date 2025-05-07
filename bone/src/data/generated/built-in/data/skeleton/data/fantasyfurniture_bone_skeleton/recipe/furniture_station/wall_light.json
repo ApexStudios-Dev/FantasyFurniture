@@ -1,6 +1,7 @@
 {
   "type": "fantasyfurniture:furniture_station",
   "binding_agent": "#fantasyfurniture:binding_agent",
+  "group": "skeleton",
   "planks": "fantasyfurniture_bone_skeleton:bricks",
   "result": {
     "count": 1,
