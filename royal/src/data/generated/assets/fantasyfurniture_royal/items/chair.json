@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "fantasyfurniture_royal:block/chair"
+    "model": "fantasyfurniture_royal:item/chair"
   }
 }

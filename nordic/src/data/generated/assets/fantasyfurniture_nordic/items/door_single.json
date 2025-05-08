@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "fantasyfurniture_nordic:block/door_single"
+    "model": "fantasyfurniture_nordic:item/door_single"
   }
 }
