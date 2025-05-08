@@ -410,7 +410,7 @@ public interface FurnitureUtil {
         modBus.addListener(FMLCommonSetupEvent.class, event -> event.enqueueWork(() -> {
             registerPoi(registree, PoiTypes.HOME, Names.BED_SINGLE, blockState -> blockState.getValue(BedBlock.PART) == BedPart.HEAD);
             registerPoi(registree, PoiTypes.HOME, Names.BED_DOUBLE, blockState -> blockState.getValue(BedBlock.PART) == BedPart.HEAD);
-            registerPoi(registree, PoiTypes.BUTCHER, Names.BED_DOUBLE, Predicates.alwaysTrue());
+            registerPoi(registree, PoiTypes.BUTCHER, Names.OVEN, Predicates.alwaysTrue());
         }));
 
         // Vanilla seems to be registering these for us
