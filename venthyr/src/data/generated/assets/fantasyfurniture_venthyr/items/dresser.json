@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "fantasyfurniture_venthyr:block/dresser"
+    "model": "fantasyfurniture_venthyr:item/dresser"
   }
 }

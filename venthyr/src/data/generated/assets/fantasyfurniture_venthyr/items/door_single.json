@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "fantasyfurniture_venthyr:block/door_single"
+    "model": "fantasyfurniture_venthyr:item/door_single"
   }
 }

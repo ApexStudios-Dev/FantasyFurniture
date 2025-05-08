@@ -3,6 +3,7 @@ package dev.apexstudios.fantasyfurniture;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Lists;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import com.mojang.math.Quadrant;
 import dev.apexstudios.apexcore.lib.data.ProviderTypes;
 import dev.apexstudios.apexcore.lib.data.pack.FeaturePackGenerator;
 import dev.apexstudios.apexcore.lib.data.pack.ModPackGenerator;
@@ -12,6 +13,8 @@ import dev.apexstudios.apexcore.lib.data.provider.RecipeProvider;
 import dev.apexstudios.apexcore.lib.data.provider.loot.LootTableProvider;
 import dev.apexstudios.apexcore.lib.data.provider.model.ModelProvider;
 import dev.apexstudios.apexcore.lib.data.provider.tag.IntrusiveTagProvider;
+import dev.apexstudios.apexcore.lib.multiblock.ClientMultiBlockExtensions;
+import dev.apexstudios.apexcore.lib.multiblock.MultiBlock;
 import dev.apexstudios.apexcore.lib.placement.PlacementRenderEvent;
 import dev.apexstudios.apexcore.lib.registree.Registree;
 import dev.apexstudios.apexcore.lib.registree.holder.DeferredBlock;
@@ -42,16 +45,27 @@ import dev.apexstudios.fantasyfurniture.block.StoolBlock;
 import dev.apexstudios.fantasyfurniture.block.TableBlock;
 import dev.apexstudios.fantasyfurniture.block.WallLightBlock;
 import dev.apexstudios.fantasyfurniture.block.WardrobeBlock;
+import dev.apexstudios.fantasyfurniture.block.property.CounterConnection;
+import dev.apexstudios.fantasyfurniture.block.property.ShelfConnection;
 import dev.apexstudios.fantasyfurniture.block.property.SofaConnection;
 import dev.apexstudios.fantasyfurniture.station.FurnitureStationRecipeBuilder;
 import dev.apexstudios.fantasyfurniture.station.FurnitureStationSetup;
+import it.unimi.dsi.fastutil.ints.Int2ObjectFunction;
+import java.util.Comparator;
+import java.util.EnumSet;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.client.data.models.MultiVariant;
+import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
+import net.minecraft.client.data.models.blockstates.PropertyDispatch;
+import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.TexturedModel;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
@@ -59,6 +73,7 @@ import net.minecraft.data.BlockFamily;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.SingleItemRecipeBuilder;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
@@ -79,7 +94,9 @@ import net.minecraft.world.level.block.CarpetBlock;
 import net.minecraft.world.level.block.CeilingHangingSignBlock;
 import net.minecraft.world.level.block.FenceBlock;
 import net.minecraft.world.level.block.FenceGateBlock;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.PressurePlateBlock;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.SignBlock;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
@@ -96,6 +113,7 @@ import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.PushReaction;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.conditions.NeoForgeConditions;
@@ -413,6 +431,10 @@ public interface FurnitureUtil {
             registerPoi(registree, PoiTypes.BUTCHER, Names.OVEN, Predicates.alwaysTrue());
         }));
 
+        modBus.addListener(RegisterClientExtensionsEvent.class, event -> {
+            Names.block(registree, Names.BED_DOUBLE, block -> event.registerBlock(ClientMultiBlockExtensions.INSTANCE, block));
+        });
+
         // Vanilla seems to be registering these for us
         /*modBus.addListener(FMLClientSetupEvent.class, event -> event.enqueueWork(() -> {
             Names.block(registree, Names.HANGING_SIGN, block -> registerMaterial(woodType, Sheets.HANGING_SIGN_MATERIALS, Sheets.HANGING_SIGN_MAPPER, true));
@@ -520,43 +542,163 @@ public interface FurnitureUtil {
             blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, variant));
         });
 
-        Names.block(context.registree, Names.DRESSER, blockModels::createNonTemplateHorizontalBlock); // TODO
-        Names.block(context.registree, Names.STOOL, blockModels::createNonTemplateHorizontalBlock); // TODO
-        Names.block(context.registree, Names.CUSHION, blockModels::createNonTemplateHorizontalBlock); // TODO
-        Names.block(context.registree, Names.LOCKBOX, blockModels::createNonTemplateHorizontalBlock); // TODO
-        Names.block(context.registree, Names.DRAWER, blockModels::createNonTemplateHorizontalBlock); // TODO
-        Names.block(context.registree, Names.CHAIR, blockModels::createNonTemplateHorizontalBlock); // TODO
-        Names.block(context.registree, Names.BOOKSHELF, blockModels::createNonTemplateHorizontalBlock); // TODO
-        Names.block(context.registree, Names.BED_SINGLE, blockModels::createNonTemplateHorizontalBlock); // TODO
-        Names.block(context.registree, Names.BED_DOUBLE, blockModels::createNonTemplateHorizontalBlock); // TODO
-        Names.block(context.registree, Names.DOOR_SINGLE, blockModels::createNonTemplateHorizontalBlock); // TODO
-        Names.block(context.registree, Names.DOOR_DOUBLE, blockModels::createNonTemplateHorizontalBlock); // TODO
-        Names.block(context.registree, Names.DESK_LEFT, blockModels::createNonTemplateHorizontalBlock); // TODO
-        Names.block(context.registree, Names.DESK_RIGHT, blockModels::createNonTemplateHorizontalBlock); // TODO
-        Names.block(context.registree, Names.PAINTING_WIDE, blockModels::createNonTemplateHorizontalBlock); // TODO
-        Names.block(context.registree, Names.PAINTING_SMALL, blockModels::createNonTemplateHorizontalBlock); // TODO
-        Names.block(context.registree, Names.OVEN, blockModels::createNonTemplateHorizontalBlock); // TODO
-        Names.block(context.registree, Names.CHEST, blockModels::createNonTemplateHorizontalBlock); // TODO
-        Names.block(context.registree, Names.FLOOR_LIGHT, blockModels::createNonTemplateHorizontalBlock); // TODO
-        Names.block(context.registree, Names.CHANDELIER, blockModels::createNonTemplateHorizontalBlock); // TODO
-        Names.block(context.registree, Names.SHELF, blockModels::createNonTemplateHorizontalBlock); // TODO
-        Names.block(context.registree, Names.SOFA, blockModels::createNonTemplateHorizontalBlock); // TODO
-        Names.block(context.registree, Names.COUNTER, blockModels::createNonTemplateHorizontalBlock); // TODO
+        Names.block(context.registree, Names.DRESSER, block -> {
+            blockModels.createNonTemplateHorizontalBlock(block);
+            registerSimpleBlockItemModel(block, blockModels);
+        }); // TODO
+
+        Names.block(context.registree, Names.STOOL, blockModels::createNonTemplateHorizontalBlock);
+        Names.block(context.registree, Names.CUSHION, blockModels::createNonTemplateHorizontalBlock);
+        Names.block(context.registree, Names.LOCKBOX, blockModels::createNonTemplateHorizontalBlock);
+        Names.block(context.registree, Names.DRAWER, blockModels::createNonTemplateHorizontalBlock);
+
+        Names.block(context.registree, Names.CHAIR, block -> {
+            blockModels.createNonTemplateHorizontalBlock(block);
+            registerSimpleBlockItemModel(block, blockModels);
+        }); // TODO
+
+        Names.block(context.registree, Names.BOOKSHELF, block -> {
+            blockModels.createNonTemplateHorizontalBlock(block);
+            registerSimpleBlockItemModel(block, blockModels);
+        }); // TODO
+
+        Names.block(context.registree, Names.BED_SINGLE, block -> {
+            blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
+                    .with(PropertyDispatch.initial(BedBlock.PART)
+                            .select(BedPart.HEAD, BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block, "_top")))
+                            .select(BedPart.FOOT, BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block, "_bottom")))
+                    )
+                    .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING_ALT)
+            );
+
+            registerSimpleBlockItemModel(block, blockModels);
+        });
+
+        Names.block(context.registree, Names.BED_DOUBLE, block -> {
+            blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
+                    .with(createMultiBlockPropertyDispatch(block, index -> ModelLocationUtils
+                            .getModelLocation(block, switch (index) {
+                                case 1 -> "_top_left";
+                                case 2 -> "_top_right";
+                                case 3 -> "_bottom_right";
+                                default -> "_bottom_left";
+                            })
+                    )).with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING_ALT)
+            );
+
+            registerSimpleBlockItemModel(block, blockModels);
+        });
+
+        Names.block(context.registree, Names.DOOR_SINGLE, block -> createDoorModel(block, blockModels));
+        Names.block(context.registree, Names.DOOR_DOUBLE, block -> createDoorModel(block, blockModels));
+
+        Names.block(context.registree, Names.DESK_LEFT, block -> {
+            blockModels.createNonTemplateHorizontalBlock(block);
+            registerSimpleBlockItemModel(block, blockModels);
+        }); // TODO
+
+        Names.block(context.registree, Names.DESK_RIGHT, block -> {
+            blockModels.createNonTemplateHorizontalBlock(block);
+            registerSimpleBlockItemModel(block, blockModels);
+        }); // TODO
+
+        Names.block(context.registree, Names.PAINTING_WIDE, block -> {
+            blockModels.createNonTemplateHorizontalBlock(block);
+            registerSimpleBlockItemModel(block, blockModels);
+        }); // TODO
+
+        Names.block(context.registree, Names.PAINTING_SMALL, blockModels::createNonTemplateHorizontalBlock);
+        Names.block(context.registree, Names.OVEN, blockModels::createNonTemplateHorizontalBlock);
+
+        Names.block(context.registree, Names.CHEST, block -> {
+            blockModels.createNonTemplateHorizontalBlock(block);
+            registerSimpleBlockItemModel(block, blockModels);
+        }); // TODO
+
+        Names.block(context.registree, Names.FLOOR_LIGHT, block -> {
+            blockModels.createNonTemplateHorizontalBlock(block);
+            registerSimpleBlockItemModel(block, blockModels);
+        }); // TODO
+
+        Names.block(context.registree, Names.CHANDELIER, blockModels::createNonTemplateModelBlock);
+
+        Names.block(context.registree, Names.SHELF, block -> {
+            blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
+                    .with(PropertyDispatch.initial(ShelfConnection.PROPERTY).generate(connection -> BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block, connection.getModelSuffix()))))
+                    .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
+            );
+
+            blockModels.registerSimpleItemModel(block, ModelLocationUtils.getModelLocation(block, ShelfConnection.NONE.getModelSuffix()));
+        });
+
+        Names.block(context.registree, Names.SOFA, block -> {
+            blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
+                    .with(PropertyDispatch.initial(SofaConnection.PROPERTY).generate(connection -> BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block, connection.getModelSuffix()))))
+                    .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
+            );
+
+            blockModels.registerSimpleItemModel(block, ModelLocationUtils.getModelLocation(block, SofaConnection.NONE.getModelSuffix()));
+        });
+
+        Names.block(context.registree, Names.COUNTER, block -> {
+            blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
+                    .with(PropertyDispatch.initial(CounterConnection.PROPERTY).generate(connection -> BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block, connection.getModelSuffix()))))
+                    .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
+            );
+
+            blockModels.registerSimpleItemModel(block, ModelLocationUtils.getModelLocation(block, CounterConnection.NONE.getModelSuffix()));
+        });
+
         Names.block(context.registree, Names.WALL_LIGHT, blockModels::createNonTemplateModelBlock); // TODO
-        Names.block(context.registree, Names.BENCH, blockModels::createNonTemplateHorizontalBlock); // TODO
-        Names.block(context.registree, Names.WARDROBE, blockModels::createNonTemplateHorizontalBlock); // TODO
-        Names.block(context.registree, Names.TABLE, blockModels::createNonTemplateHorizontalBlock); // TODO
-        /*Names.block(context.registree, Names.STAIRS, blockModels::createNonTemplateHorizontalBlock); // TODO
-        Names.block(context.registree, Names.SLAB, blockModels::createNonTemplateModelBlock); // TODO
-        Names.block(context.registree, Names.FENCE, blockModels::createNonTemplateModelBlock); // TODO
-        Names.block(context.registree, Names.FENCE_GATE, blockModels::createNonTemplateHorizontalBlock); // TODO
-        Names.block(context.registree, Names.TRAPDOOR, blockModels::createNonTemplateHorizontalBlock); // TODO
-        Names.block(context.registree, Names.PRESSURE_PLATE, blockModels::createNonTemplateModelBlock); // TODO
-        Names.block(context.registree, Names.BUTTON, blockModels::createNonTemplateHorizontalBlock); // TODO
-        Names.block(context.registree, Names.HANGING_SIGN, blockModels::createNonTemplateModelBlock); // TODO
-        Names.block(context.registree, Names.WALL_HANGING_SIGN, blockModels::createNonTemplateHorizontalBlock); // TODO
-        Names.block(context.registree, Names.SIGN, blockModels::createNonTemplateHorizontalBlock); // TODO
-        Names.block(context.registree, Names.WALL_SIGN, blockModels::createNonTemplateHorizontalBlock); // TODO*/
+
+        Names.block(context.registree, Names.BENCH, block -> {
+            blockModels.createNonTemplateHorizontalBlock(block);
+            registerSimpleBlockItemModel(block, blockModels);
+        }); // TODO
+
+        Names.block(context.registree, Names.WARDROBE, block -> {
+            blockModels.createNonTemplateHorizontalBlock(block);
+            registerSimpleBlockItemModel(block, blockModels);
+        }); // TODO
+
+        Names.block(context.registree, Names.TABLE, block -> blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
+                .with(PropertyDispatch.initial(HorizontalDirectionalBlock.FACING, TableBlock.NORTH, TableBlock.EAST, TableBlock.SOUTH, TableBlock.WEST).generate((facing, north, east, south, west) -> {
+                    var connections = EnumSet.noneOf(Direction.class);
+                    var facingForConnection = TableBlock.getFacingForConnection(facing);
+                    var rotation = switch (facingForConnection) {
+                        case EAST -> Rotation.CLOCKWISE_90;
+                        case SOUTH -> Rotation.CLOCKWISE_180;
+                        case WEST -> Rotation.COUNTERCLOCKWISE_90;
+                        default -> Rotation.NONE;
+                    };
+
+                    if(north)
+                        connections.add(Direction.NORTH);
+                    if(east)
+                        connections.add(Direction.EAST);
+                    if(south)
+                        connections.add(Direction.SOUTH);
+                    if(west)
+                        connections.add(Direction.WEST);
+
+                    var connectionId = connections.stream().map(rotation::rotate).sorted(Comparator.comparingInt(connection -> switch (connection) {
+                        case NORTH -> 0;
+                        case EAST -> 1;
+                        case SOUTH -> 2;
+                        case WEST -> 3;
+                        default -> -1;
+                    })).map(Direction::getSerializedName).map(String::toLowerCase).map(str -> str.substring(0, 1)).collect(Collectors.joining());
+
+                    var suffix = connectionId.isBlank() ? "" : '_' + connectionId;
+                    return BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block, suffix))
+                            .with(variant -> variant.withYRot(switch (rotation) {
+                                case CLOCKWISE_90 -> Quadrant.R90;
+                                case CLOCKWISE_180 -> Quadrant.R180;
+                                case COUNTERCLOCKWISE_90 -> Quadrant.R270;
+                                default -> Quadrant.R0;
+                            }));
+                }))
+        ));
 
         Names.block(context.registree, Names.HANGING_SIGN, block -> {
             var hangingSign = context.registree.getValueOrThrow(Registries.BLOCK, Names.WALL_HANGING_SIGN);
@@ -564,6 +706,29 @@ public interface FurnitureUtil {
         });
 
         blockModels.familyWithExistingFullBlock(context.family.getBaseBlock()).generateFor(context.family);
+    }
+
+    static void createDoorModel(Block block, BlockModelGenerators blockModels) {
+        var leftBottomClosed = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block, "_left_bottom_closed"));
+        var leftBottomOpen = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block, "_left_bottom_open"));
+        var rightBottomClosed = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block, "_right_bottom_closed"));
+        var rightBottomOpen = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block, "_right_bottom_open"));
+        var leftTopClosed = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block, "_left_top_closed"));
+        var leftTopOpen = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block, "_left_top_open"));
+        var rightTopClosed = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block, "_right_top_closed"));
+        var rightTopOpen = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block, "_right_top_open"));
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createDoor(block, leftBottomClosed, leftBottomOpen, rightBottomClosed, rightBottomOpen, leftTopClosed, leftTopOpen, rightTopClosed, rightTopOpen));
+        blockModels.registerSimpleFlatItemModel(block.asItem());
+    }
+
+    static void registerSimpleBlockItemModel(Block block, BlockModelGenerators blockModels) {
+        blockModels.registerSimpleItemModel(block, ModelLocationUtils.getModelLocation(block.asItem()));
+    }
+
+    static PropertyDispatch<MultiVariant> createMultiBlockPropertyDispatch(Block block, Int2ObjectFunction<ResourceLocation> modelLookup) {
+        var multiBlock = (MultiBlock) block;
+        var property = multiBlock.getMultiBlockProperty();
+        return PropertyDispatch.initial(property).generate(index -> BlockModelGenerators.plainVariant(modelLookup.apply(index)));
     }
 
     static void registerLanguage(DataGenContext context, LanguageProvider provider) {

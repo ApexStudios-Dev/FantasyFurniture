@@ -1,8 +1,8 @@
 package dev.apexstudios.fantasyfurniture.block;
 
-import dev.apexstudios.apexcore.lib.block.SimpleHorizontalDirectionalBlock;
+import net.minecraft.world.level.block.Block;
 
-public class ChandelierBlock extends SimpleHorizontalDirectionalBlock {
+public class ChandelierBlock extends Block {
     public ChandelierBlock(Properties properties) {
         super(properties);
     }

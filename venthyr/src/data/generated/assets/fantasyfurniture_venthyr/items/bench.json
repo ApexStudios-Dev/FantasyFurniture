@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "fantasyfurniture_venthyr:block/bench"
+    "model": "fantasyfurniture_venthyr:item/bench"
   }
 }

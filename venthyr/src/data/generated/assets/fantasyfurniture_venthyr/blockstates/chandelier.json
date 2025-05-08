@@ -1,19 +1,7 @@
 {
   "variants": {
-    "facing=east": {
-      "model": "fantasyfurniture_venthyr:block/chandelier",
-      "y": 90
-    },
-    "facing=north": {
+    "": {
       "model": "fantasyfurniture_venthyr:block/chandelier"
-    },
-    "facing=south": {
-      "model": "fantasyfurniture_venthyr:block/chandelier",
-      "y": 180
-    },
-    "facing=west": {
-      "model": "fantasyfurniture_venthyr:block/chandelier",
-      "y": 270
     }
   }
 }
