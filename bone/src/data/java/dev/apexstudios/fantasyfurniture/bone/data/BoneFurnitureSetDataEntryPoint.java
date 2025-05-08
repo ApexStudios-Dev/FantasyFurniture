@@ -5,7 +5,9 @@ import dev.apexstudios.apexcore.lib.data.ResourceGenerator;
 import dev.apexstudios.apexcore.lib.data.pack.FeaturePackGenerator;
 import dev.apexstudios.apexcore.lib.util.TagPair;
 import dev.apexstudios.fantasyfurniture.FantasyFurniture;
-import dev.apexstudios.fantasyfurniture.FurnitureUtil;
+import dev.apexstudios.fantasyfurniture.util.FurnitureClientDataUtil;
+import dev.apexstudios.fantasyfurniture.util.FurnitureDataUtil;
+import dev.apexstudios.fantasyfurniture.util.FurnitureUtil;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.tags.BlockTags;
@@ -24,31 +26,32 @@ public final class BoneFurnitureSetDataEntryPoint {
         var assetPack = createPack(generator, PackType.CLIENT_RESOURCES, furnitureSet, englishName);
         var dataPack = createPack(generator, PackType.SERVER_DATA, furnitureSet, englishName);
 
-        FurnitureUtil.registerDataGen(
-                new FurnitureUtil.DataGenContext(
-                        furnitureSet.registree,
-                        "Bone " + englishName,
-                        new BlockFamily.Builder(furnitureSet.bricks.value())
-                                .recipeGroupPrefix(furnitureSet.id)
-                                .recipeUnlockedBy("has_" + FurnitureUtil.Names.BRICKS)
-                                .stairs(furnitureSet.stairs.value())
-                                .slab(furnitureSet.slab.value())
-                                .fence(furnitureSet.fence.value())
-                                .fenceGate(furnitureSet.fenceGate.value())
-                                .trapdoor(furnitureSet.trapdoor.value())
-                                .pressurePlate(furnitureSet.pressurePlate.value())
-                                .sign(furnitureSet.sign.sign().value(), furnitureSet.sign.wall().value())
-                        .getFamily(),
-                        BlockTags.MINEABLE_WITH_PICKAXE,
-                        new TagPair(BlockTags.DOORS, ItemTags.DOORS),
-                        BlockTags.STAIRS,
-                        new TagPair(BlockTags.BUTTONS, ItemTags.BUTTONS),
-                        new TagPair(BlockTags.PRESSURE_PLATES, null),
-                        new TagPair(BlockTags.TRAPDOORS, ItemTags.TRAPDOORS),
-                        new TagPair(BlockTags.FENCES, ItemTags.FENCES),
-                        new TagPair(BlockTags.SLABS, ItemTags.SLABS)
-                ), assetPack, dataPack
+        var context = new FurnitureDataUtil.DataGenContext(
+                furnitureSet.registree,
+                "Bone " + englishName,
+                new BlockFamily.Builder(furnitureSet.bricks.value())
+                        .recipeGroupPrefix(furnitureSet.id)
+                        .recipeUnlockedBy("has_" + FurnitureUtil.Names.BRICKS)
+                        .stairs(furnitureSet.stairs.value())
+                        .slab(furnitureSet.slab.value())
+                        .fence(furnitureSet.fence.value())
+                        .fenceGate(furnitureSet.fenceGate.value())
+                        .trapdoor(furnitureSet.trapdoor.value())
+                        .pressurePlate(furnitureSet.pressurePlate.value())
+                        .sign(furnitureSet.sign.sign().value(), furnitureSet.sign.wall().value())
+                .getFamily(),
+                BlockTags.MINEABLE_WITH_PICKAXE,
+                new TagPair(BlockTags.DOORS, ItemTags.DOORS),
+                BlockTags.STAIRS,
+                new TagPair(BlockTags.BUTTONS, ItemTags.BUTTONS),
+                new TagPair(BlockTags.PRESSURE_PLATES, null),
+                new TagPair(BlockTags.TRAPDOORS, ItemTags.TRAPDOORS),
+                new TagPair(BlockTags.FENCES, ItemTags.FENCES),
+                new TagPair(BlockTags.SLABS, ItemTags.SLABS)
         );
+
+        FurnitureDataUtil.registerDataGen(context, dataPack);
+        FurnitureClientDataUtil.registerDataGen(context, assetPack);
     }
 
     private static FeaturePackGenerator createPack(ResourceGenerator generator, PackType packType, BoneFurnitureSet furnitureSet, String englishName) {
