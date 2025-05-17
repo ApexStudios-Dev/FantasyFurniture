@@ -1,18 +1,33 @@
 {
   "variants": {
-    "facing=east": {
-      "model": "fantasyfurniture_necrolord:block/chair",
+    "facing=east,multi_block_index=0": {
+      "model": "fantasyfurniture_necrolord:block/chair_bottom",
       "y": 90
     },
-    "facing=north": {
-      "model": "fantasyfurniture_necrolord:block/chair"
+    "facing=east,multi_block_index=1": {
+      "model": "fantasyfurniture_necrolord:block/chair_top",
+      "y": 90
     },
-    "facing=south": {
-      "model": "fantasyfurniture_necrolord:block/chair",
+    "facing=north,multi_block_index=0": {
+      "model": "fantasyfurniture_necrolord:block/chair_bottom"
+    },
+    "facing=north,multi_block_index=1": {
+      "model": "fantasyfurniture_necrolord:block/chair_top"
+    },
+    "facing=south,multi_block_index=0": {
+      "model": "fantasyfurniture_necrolord:block/chair_bottom",
       "y": 180
     },
-    "facing=west": {
-      "model": "fantasyfurniture_necrolord:block/chair",
+    "facing=south,multi_block_index=1": {
+      "model": "fantasyfurniture_necrolord:block/chair_top",
+      "y": 180
+    },
+    "facing=west,multi_block_index=0": {
+      "model": "fantasyfurniture_necrolord:block/chair_bottom",
+      "y": 270
+    },
+    "facing=west,multi_block_index=1": {
+      "model": "fantasyfurniture_necrolord:block/chair_top",
       "y": 270
     }
   }

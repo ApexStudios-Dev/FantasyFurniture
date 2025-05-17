@@ -211,8 +211,8 @@ public interface FurnitureUtil {
         return block;
     }
 
-    static <TBlock extends DeskBlock> DeferredBlock<TBlock> desk(Registree registree, boolean left, BiFunction<BlockBehaviour.Properties, Boolean, TBlock> factory) {
-        var block = registree.registerBlock(left ? Names.DESK_LEFT : Names.DESK_RIGHT, properties -> factory.apply(properties, left), DESK_PROPERTIES);
+    static <TBlock extends DeskBlock> DeferredBlock<TBlock> desk(Registree registree, boolean left, Function<BlockBehaviour.Properties, TBlock> factory) {
+        var block = registree.registerBlock(left ? Names.DESK_LEFT : Names.DESK_RIGHT, factory, DESK_PROPERTIES);
         registree.registerSimpleBlockItem(block);
         return block;
     }
@@ -391,9 +391,9 @@ public interface FurnitureUtil {
             registerPoi(registree, PoiTypes.BUTCHER, Names.OVEN, Predicates.alwaysTrue());
         }));
 
-        modBus.addListener(RegisterClientExtensionsEvent.class, event -> {
-            Names.block(registree, Names.BED_DOUBLE, block -> event.registerBlock(ClientMultiBlockExtensions.INSTANCE, block));
-        });
+        modBus.addListener(RegisterClientExtensionsEvent.class, event -> event.registerBlock(
+                ClientMultiBlockExtensions.INSTANCE, Names.blocks(registree, Names.BED_DOUBLE, Names.DRESSER))
+        );
 
         // Vanilla seems to be registering these for us
         /*modBus.addListener(FMLClientSetupEvent.class, event -> event.enqueueWork(() -> {

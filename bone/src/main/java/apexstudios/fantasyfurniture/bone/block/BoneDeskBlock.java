@@ -45,7 +45,7 @@ public final class BoneDeskBlock extends DeskBlock {
     public static final Map<Direction, VoxelShape> LEFT_FACING_SHAPES = Shapes.rotateHorizontal(SHAPE_LEFT);
     public static final Map<Direction, VoxelShape> RIGHT_FACING_SHAPES = Shapes.rotateHorizontal(SHAPE_RIGHT);
 
-    public BoneDeskBlock(Properties properties, boolean left) {
-        super(properties, left);
+    public BoneDeskBlock(Properties properties) {
+        super(properties);
     }
 }

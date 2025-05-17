@@ -49,7 +49,7 @@ public final class NecrolordDeskBlock extends DeskBlock {
     public static final Map<Direction, VoxelShape> LEFT_FACING_SHAPES = Shapes.rotateHorizontal(SHAPE_LEFT);
     public static final Map<Direction, VoxelShape> RIGHT_FACING_SHAPES = Shapes.rotateHorizontal(SHAPE_RIGHT);
 
-    public NecrolordDeskBlock(Properties properties, boolean left) {
-        super(properties, left);
+    public NecrolordDeskBlock(Properties properties) {
+        super(properties);
     }
 }
