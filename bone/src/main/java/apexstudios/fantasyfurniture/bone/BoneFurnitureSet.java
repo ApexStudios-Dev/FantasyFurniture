@@ -31,6 +31,7 @@ import dev.apexstudios.fantasyfurniture.block.OvenBlock;
 import dev.apexstudios.fantasyfurniture.util.FurnitureUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
@@ -107,7 +108,7 @@ public sealed class BoneFurnitureSet permits SkeletonFurnitureSet, WitherFurnitu
                 .blockSetType(blockSet -> blockSet
                         .copy(BlockSetType.STONE)
                 )
-                .build(modId + ":wood_type");
+                .build(modId + ResourceLocation.NAMESPACE_SEPARATOR + id);
 
         bricks = FurnitureUtil.bricks(registree, Block::new);
         wool = FurnitureUtil.wool(registree, Block::new);

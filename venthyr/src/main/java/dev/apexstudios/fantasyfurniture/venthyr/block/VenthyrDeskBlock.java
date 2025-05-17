@@ -41,7 +41,7 @@ public final class VenthyrDeskBlock extends DeskBlock {
     public static final Map<Direction, VoxelShape> LEFT_FACING_SHAPES = Shapes.rotateHorizontal(SHAPE_LEFT);
     public static final Map<Direction, VoxelShape> RIGHT_FACING_SHAPES = Shapes.rotateHorizontal(SHAPE_RIGHT);
 
-    public VenthyrDeskBlock(Properties properties, boolean left) {
-        super(properties, left);
+    public VenthyrDeskBlock(Properties properties) {
+        super(properties);
     }
 }

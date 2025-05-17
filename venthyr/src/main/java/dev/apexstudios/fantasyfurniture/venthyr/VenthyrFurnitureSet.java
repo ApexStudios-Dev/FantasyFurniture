@@ -53,7 +53,7 @@ public class VenthyrFurnitureSet {
 
     public static final WoodType WOOD_TYPE = WoodTypeBuilder.builder()
             .copy(WoodType.OAK)
-            .build(ID + ":wood_type");
+            .build(ID + ":venthyr");
 
     public static final DeferredBlock<Block> PLANKS = FurnitureUtil.planks(REGISTREE, Block::new);
     public static final DeferredBlock<Block> WOOL = FurnitureUtil.wool(REGISTREE, Block::new);

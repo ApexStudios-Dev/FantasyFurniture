@@ -47,7 +47,7 @@ public final class RoyalDeskBlock extends DeskBlock {
     public static final Map<Direction, VoxelShape> LEFT_FACING_SHAPES = Shapes.rotateHorizontal(SHAPE_LEFT);
     public static final Map<Direction, VoxelShape> RIGHT_FACING_SHAPES = Shapes.rotateHorizontal(SHAPE_RIGHT);
 
-    public RoyalDeskBlock(Properties properties, boolean left) {
-        super(properties, left);
+    public RoyalDeskBlock(Properties properties) {
+        super(properties);
     }
 }

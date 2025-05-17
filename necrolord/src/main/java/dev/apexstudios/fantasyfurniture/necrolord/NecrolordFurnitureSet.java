@@ -59,7 +59,7 @@ public class NecrolordFurnitureSet {
             .blockSetType(blockSet -> blockSet
                     .copy(BlockSetType.STONE)
             )
-            .build(ID + ":wood_type");
+            .build(ID + ":necrolord");
 
     public static final DeferredBlock<Block> BRICKS = FurnitureUtil.bricks(REGISTREE, Block::new);
     public static final DeferredBlock<Block> WOOL = FurnitureUtil.wool(REGISTREE, Block::new);

@@ -1,11 +1,15 @@
 package dev.apexstudios.fantasyfurniture.block;
 
-public class DeskBlock extends InventoryBlock {
-    protected final boolean left;
+import dev.apexstudios.apexcore.lib.multiblock.MultiBlockProperties;
+import dev.apexstudios.apexcore.lib.multiblock.MultiBlockProperty;
 
-    public DeskBlock(Properties properties, boolean left) {
+public class DeskBlock extends InventoryMultiBlock {
+    public DeskBlock(Properties properties) {
         super(properties);
+    }
 
-        this.left = left;
+    @Override
+    public MultiBlockProperty getMultiBlockProperty() {
+        return MultiBlockProperties.MB_1x1x2;
     }
 }
