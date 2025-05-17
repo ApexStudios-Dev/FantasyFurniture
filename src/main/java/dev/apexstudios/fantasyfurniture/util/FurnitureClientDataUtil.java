@@ -194,7 +194,10 @@ public interface FurnitureClientDataUtil {
             blockModels.registerSimpleItemModel(block, ModelLocationUtils.getModelLocation(block, CounterConnection.NONE.getModelSuffix()));
         });
 
-        FurnitureUtil.Names.block(context.registree(), FurnitureUtil.Names.WALL_LIGHT, blockModels::createNonTemplateModelBlock); // TODO
+        FurnitureUtil.Names.block(context.registree(), FurnitureUtil.Names.WALL_LIGHT, block -> blockModels.blockStateOutput.accept(MultiVariantGenerator
+                .dispatch(block, BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block)))
+                .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
+        ));
 
         FurnitureUtil.Names.block(context.registree(), FurnitureUtil.Names.BENCH, block -> {
             blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
