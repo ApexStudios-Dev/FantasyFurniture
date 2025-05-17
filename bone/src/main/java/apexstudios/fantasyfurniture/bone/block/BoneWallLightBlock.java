@@ -3,6 +3,7 @@ package apexstudios.fantasyfurniture.bone.block;
 import dev.apexstudios.fantasyfurniture.block.WallLightBlock;
 import java.util.Map;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -12,6 +13,6 @@ public final class BoneWallLightBlock extends WallLightBlock {
     public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
 
     public BoneWallLightBlock(Properties properties) {
-        super(properties);
+        super(ParticleTypes.FLAME, properties);
     }
 }
