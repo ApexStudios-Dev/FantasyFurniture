@@ -73,6 +73,7 @@ import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.world.level.block.WallHangingSignBlock;
 import net.minecraft.world.level.block.WallSignBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.SmokerBlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BedPart;
@@ -82,9 +83,13 @@ import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent;
+import net.neoforged.neoforge.items.wrapper.InvWrapper;
+import net.neoforged.neoforge.items.wrapper.SidedInvWrapper;
 import net.neoforged.neoforge.mixins.BlockEntityTypeAccessor;
 
 public interface FurnitureUtil {
@@ -400,6 +405,30 @@ public interface FurnitureUtil {
 
         modBus.addListener(RegisterClientExtensionsEvent.class, event -> event.registerBlock(
                 ClientMultiBlockExtensions.INSTANCE, Names.blocks(registree, Names.BED_DOUBLE, Names.DRESSER))
+        );
+
+        modBus.addListener(RegisterCapabilitiesEvent.class, event -> Names.block(
+                registree,
+                Names.OVEN,
+                block -> {
+                    event.registerBlockEntity(
+                            Capabilities.ItemHandler.BLOCK,
+                            BlockEntityType.SMOKER,
+                            (blockEntity, side) -> side == null ? new InvWrapper(blockEntity) : new SidedInvWrapper(blockEntity, side)
+                    );
+
+                    if(!(block instanceof MultiBlock))
+                        return;
+
+                    event.registerBlock(Capabilities.ItemHandler.BLOCK, (level, pos, blockState, blockEntity, side) -> {
+                        if(blockEntity == null)
+                            blockEntity = MultiBlock.getBlockEntity(level, pos, blockState);
+                        if(!(blockEntity instanceof SmokerBlockEntity smoker))
+                            return null;
+
+                        return side == null ? new InvWrapper(smoker) : new SidedInvWrapper(smoker, side);
+                    }, block);
+                })
         );
 
         // Vanilla seems to be registering these for us
