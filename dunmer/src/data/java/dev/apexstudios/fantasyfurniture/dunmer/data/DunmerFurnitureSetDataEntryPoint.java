@@ -1,11 +1,19 @@
 package dev.apexstudios.fantasyfurniture.dunmer.data;
 
+import dev.apexstudios.apexcore.lib.data.ProviderTypes;
 import dev.apexstudios.apexcore.lib.data.ResourceGenerator;
+import dev.apexstudios.apexcore.lib.data.provider.context.ProviderListenerContext;
+import dev.apexstudios.apexcore.lib.data.provider.model.ModelProvider;
 import dev.apexstudios.apexcore.lib.util.TagPair;
+import dev.apexstudios.fantasyfurniture.block.OvenBlock;
 import dev.apexstudios.fantasyfurniture.dunmer.DunmerFurnitureSet;
 import dev.apexstudios.fantasyfurniture.util.FurnitureClientDataUtil;
 import dev.apexstudios.fantasyfurniture.util.FurnitureDataUtil;
 import dev.apexstudios.fantasyfurniture.util.FurnitureUtil;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
+import net.minecraft.client.data.models.blockstates.PropertyDispatch;
+import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
@@ -38,11 +46,34 @@ public final class DunmerFurnitureSetDataEntryPoint {
                     new TagPair(BlockTags.WOODEN_PRESSURE_PLATES, ItemTags.WOODEN_PRESSURE_PLATES),
                     new TagPair(BlockTags.WOODEN_TRAPDOORS, ItemTags.WOODEN_TRAPDOORS),
                     new TagPair(BlockTags.WOODEN_FENCES, ItemTags.WOODEN_FENCES),
-                    new TagPair(BlockTags.WOODEN_SLABS, ItemTags.WOODEN_SLABS)
+                    new TagPair(BlockTags.WOODEN_SLABS, ItemTags.WOODEN_SLABS),
+                    exclusions -> exclusions.put(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.OVEN)
             );
 
             FurnitureDataUtil.registerDataGen(context, pack);
             FurnitureClientDataUtil.registerDataGen(context, pack);
+
+            pack.providing(ProviderTypes.MODELS, this::generateModels);
         });
+    }
+
+    private void generateModels(ProviderListenerContext context, ModelProvider provider) {
+        var blockModels = provider.blockModels();
+
+        var block = DunmerFurnitureSet.OVEN.value();
+
+        blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
+                .with(PropertyDispatch.initial(block.getMultiBlockProperty(), OvenBlock.LIT).generate((index, lit) -> {
+                    var suffix = index == 0 ? "_left" : "_right";
+
+                    if(lit)
+                        suffix = "_lit" + suffix;
+
+                    return BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block, suffix));
+                }))
+                .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
+        );
+
+        FurnitureClientDataUtil.registerSimpleBlockItemModel(block, blockModels);
     }
 }

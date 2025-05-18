@@ -2,9 +2,6 @@ package dev.apexstudios.fantasyfurniture.royal.block;
 
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.DrawerBlock;
-import java.util.Map;
-import net.minecraft.core.Direction;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class RoyalDrawerBlock extends DrawerBlock {
@@ -22,9 +19,7 @@ public final class RoyalDrawerBlock extends DrawerBlock {
             box(2D, 7D, 3D, 14D, 14D, 13D)
     );
 
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
-
     public RoyalDrawerBlock(Properties properties) {
-        super(properties);
+        super(properties, SHAPE);
     }
 }

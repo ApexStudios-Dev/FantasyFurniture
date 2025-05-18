@@ -2,9 +2,6 @@ package apexstudios.fantasyfurniture.bone.block;
 
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.BookshelfBlock;
-import java.util.Map;
-import net.minecraft.core.Direction;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class BoneBookshelfBlock extends BookshelfBlock {
@@ -22,9 +19,7 @@ public final class BoneBookshelfBlock extends BookshelfBlock {
             box(-14D, 2D, 2D, -12D, 3D, 4D)
     );
 
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
-
     public BoneBookshelfBlock(Properties properties) {
-        super(properties);
+        super(properties, SHAPE);
     }
 }

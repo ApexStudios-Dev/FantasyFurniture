@@ -2,9 +2,6 @@ package dev.apexstudios.fantasyfurniture.royal.block;
 
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.BookshelfBlock;
-import java.util.Map;
-import net.minecraft.core.Direction;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class RoyalBookshelfBlock extends BookshelfBlock {
@@ -23,9 +20,7 @@ public final class RoyalBookshelfBlock extends BookshelfBlock {
             box(-13D, 17D, 2D, 13D, 19D, 4D)
     );
 
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
-
     public RoyalBookshelfBlock(Properties properties) {
-        super(properties);
+        super(properties, SHAPE);
     }
 }

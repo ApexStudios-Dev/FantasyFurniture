@@ -2,9 +2,6 @@ package apexstudios.fantasyfurniture.bone.block;
 
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.BedSingleBlock;
-import java.util.Map;
-import net.minecraft.core.Direction;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class BoneBedSingleBlock extends BedSingleBlock {
@@ -26,9 +23,7 @@ public final class BoneBedSingleBlock extends BedSingleBlock {
             box(1D, 4D, 3D, 15D, 8D, 29D)
     );
 
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
-
     public BoneBedSingleBlock(Properties properties) {
-        super(properties);
+        super(properties, SHAPE);
     }
 }

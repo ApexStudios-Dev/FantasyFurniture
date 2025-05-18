@@ -2,9 +2,6 @@ package dev.apexstudios.fantasyfurniture.nordic.block;
 
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.ChairBlock;
-import java.util.Map;
-import net.minecraft.core.Direction;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class NordicChairBlock extends ChairBlock {
@@ -23,9 +20,7 @@ public final class NordicChairBlock extends ChairBlock {
             box(12D, 4D, 2.5D, 14D, 7D, 4.5D)
     );
 
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
-
     public NordicChairBlock(Properties properties) {
-        super(properties);
+        super(properties, SHAPE);
     }
 }

@@ -2,9 +2,6 @@ package dev.apexstudios.fantasyfurniture.dunmer.block;
 
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.BedDoubleBlock;
-import java.util.Map;
-import net.minecraft.core.Direction;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class DunmerBedDoubleBlock extends BedDoubleBlock {
@@ -20,9 +17,7 @@ public final class DunmerBedDoubleBlock extends BedDoubleBlock {
             box(14D, 0D, 30D, 16D, 13D, 32D)
     );
 
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
-
     public DunmerBedDoubleBlock(Properties properties) {
-        super(properties);
+        super(properties, SHAPE);
     }
 }

@@ -2,9 +2,6 @@ package dev.apexstudios.fantasyfurniture.royal.block;
 
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.BenchBlock;
-import java.util.Map;
-import net.minecraft.core.Direction;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class RoyalBenchBlock extends BenchBlock {
@@ -16,9 +13,7 @@ public final class RoyalBenchBlock extends BenchBlock {
             box(-14.5D, 4D, 1.5D, 14.5D, 6D, 14.5D)
     );
 
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
-
     public RoyalBenchBlock(Properties properties) {
-        super(properties);
+        super(properties, SHAPE);
     }
 }

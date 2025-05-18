@@ -2,8 +2,9 @@ package dev.apexstudios.fantasyfurniture.util;
 
 import com.google.common.base.Predicates;
 import com.google.common.collect.Lists;
-import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import com.google.common.collect.Sets;
 import dev.apexstudios.apexcore.lib.multiblock.ClientMultiBlockExtensions;
+import dev.apexstudios.apexcore.lib.multiblock.MultiBlock;
 import dev.apexstudios.apexcore.lib.placement.PlacementRenderEvent;
 import dev.apexstudios.apexcore.lib.registree.Registree;
 import dev.apexstudios.apexcore.lib.registree.holder.DeferredBlock;
@@ -35,13 +36,16 @@ import dev.apexstudios.fantasyfurniture.block.TableBlock;
 import dev.apexstudios.fantasyfurniture.block.WallLightBlock;
 import dev.apexstudios.fantasyfurniture.block.WardrobeBlock;
 import dev.apexstudios.fantasyfurniture.block.property.SofaConnection;
+import java.util.Collections;
+import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.ai.village.poi.PoiType;
@@ -59,6 +63,7 @@ import net.minecraft.world.level.block.CarpetBlock;
 import net.minecraft.world.level.block.CeilingHangingSignBlock;
 import net.minecraft.world.level.block.FenceBlock;
 import net.minecraft.world.level.block.FenceGateBlock;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.PressurePlateBlock;
 import net.minecraft.world.level.block.SignBlock;
 import net.minecraft.world.level.block.SlabBlock;
@@ -74,11 +79,13 @@ import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent;
+import net.neoforged.neoforge.mixins.BlockEntityTypeAccessor;
 
 public interface FurnitureUtil {
     Supplier<BlockBehaviour.Properties> PLANK_PROPERTIES = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.OAK_PLANKS);
@@ -374,15 +381,15 @@ public interface FurnitureUtil {
 
     static void registerEvents(IEventBus modBus, Registree registree, WoodType woodType) {
         modBus.addListener(BlockEntityTypeAddBlocksEvent.class, event -> {
-            event.modify(FurnitureBlockEntities.INVENTORY.value(), Names.blocks(
+            appendValidBlocks(FurnitureBlockEntities.INVENTORY.value(), Names.blocks(
                     registree, Names.DRESSER, Names.LOCKBOX, Names.DRAWER, Names.DESK_LEFT, Names.DESK_RIGHT,
                     Names.CHEST, Names.COUNTER, Names.WARDROBE
             ));
 
-            event.modify(FurnitureBlockEntities.BOOKSHELF.value(), Names.blocks(registree, Names.BOOKSHELF));
-            event.modify(BlockEntityType.SMOKER, Names.blocks(registree, Names.OVEN));
-            event.modify(BlockEntityType.HANGING_SIGN, Names.blocks(registree, Names.HANGING_SIGN, Names.WALL_HANGING_SIGN));
-            event.modify(BlockEntityType.SIGN, Names.blocks(registree, Names.SIGN, Names.WALL_SIGN));
+            appendValidBlocks(FurnitureBlockEntities.BOOKSHELF.value(), Names.blocks(registree, Names.BOOKSHELF));
+            appendValidBlocks(BlockEntityType.SMOKER, Names.blocks(registree, Names.OVEN));
+            appendValidBlocks(BlockEntityType.HANGING_SIGN, Names.blocks(registree, Names.HANGING_SIGN, Names.WALL_HANGING_SIGN));
+            appendValidBlocks(BlockEntityType.SIGN, Names.blocks(registree, Names.SIGN, Names.WALL_SIGN));
         });
 
         modBus.addListener(FMLCommonSetupEvent.class, event -> event.enqueueWork(() -> {
@@ -413,6 +420,15 @@ public interface FurnitureUtil {
         registree.registerEvents(modBus);
     }
 
+    static VoxelShape getShape(VoxelShape shape, BlockState blockState, BlockPos worldPos) {
+        return MultiBlock.fixShape(shape, blockState, worldPos);
+    }
+
+    static VoxelShape getShape(Map<Direction, VoxelShape> shapes, BlockState blockState, BlockPos worldPos) {
+        var facing = blockState.getValueOrElse(HorizontalDirectionalBlock.FACING, Direction.NORTH);
+        return getShape(shapes.get(facing), blockState, worldPos);
+    }
+
     /*private static void registerMaterial(WoodType woodType, Map<WoodType, Material> materials, MaterialMapper materialMapper, boolean hanging) {
         if(materials.putIfAbsent(woodType, materialMapper.apply(ResourceLocation.parse(woodType.name()))) != null)
             throw new IllegalStateException("Duplicate wood type material registration: " + woodType.name() + " (" + (hanging ? "hanging" : "standing") + ')');
@@ -420,6 +436,22 @@ public interface FurnitureUtil {
 
     private static void registerPoi(Registree registree, ResourceKey<PoiType> poiType, String name, Predicate<BlockState> blockStateTest) {
         Names.block(registree, name, block -> ApexUtil.registerPoiBlockStates(poiType, block, blockStateTest));
+    }
+
+    private static void appendValidBlocks(BlockEntityType<?> blockEntityType, Block... blocks) {
+        if(blocks.length == 0)
+            return;
+
+        // neoforges implementation does not work very well
+        // when the given block entity type has 0 valid blocks initially
+        // the determined common super type is pulled from the first registered block
+        // which can differ vastly from the rest of the blocks causing 'IAE' in 'addValidBlock'
+        //
+        // our implementation is basically theirs but without the block type checking
+        // we are assuming that the given blocks are of the correct block types
+        var validBlocks = Sets.newHashSet(blockEntityType.getValidBlocks());
+        Collections.addAll(validBlocks, blocks);
+        ((BlockEntityTypeAccessor) blockEntityType).neoforge$setValidBlocks(validBlocks);
     }
 
     record SignPair<TSign extends SignBlock, TWall extends SignBlock>(
@@ -472,28 +504,11 @@ public interface FurnitureUtil {
 
         String CREATIVE_MODE_TAB = "furniture_set";
 
-        static <TRegistry> boolean ifPresent(Registree registree, ResourceKey<? extends Registry<TRegistry>> registryType, String name, Consumer<? super TRegistry> action) {
-            var value = registree.getValue(registryType, name);
+        static void block(Registree registree, String name, Consumer<? super Block> action) {
+            var block = registree.getValue(Registries.BLOCK, name);
 
-            if(value != null) {
-                action.accept(value);
-                return true;
-            }
-
-            return false;
-        }
-
-        @CanIgnoreReturnValue
-        static boolean block(Registree registree, String name, Consumer<? super Block> action) {
-            return ifPresent(registree, Registries.BLOCK, name, action);
-        }
-
-        @CanIgnoreReturnValue
-        static boolean item(Registree registree, String name, Consumer<? super Item> action) {
-            if(block(registree, name, block -> action.accept(block.asItem())))
-                return true;
-
-            return ifPresent(registree, Registries.ITEM, name, action);
+            if(block != null)
+                action.accept(block);
         }
 
         static void creativeModeTab(Registree registree, Consumer<ResourceKey<CreativeModeTab>> action) {

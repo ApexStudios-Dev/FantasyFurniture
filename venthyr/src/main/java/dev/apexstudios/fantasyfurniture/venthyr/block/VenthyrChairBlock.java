@@ -2,9 +2,6 @@ package dev.apexstudios.fantasyfurniture.venthyr.block;
 
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.ChairBlock;
-import java.util.Map;
-import net.minecraft.core.Direction;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class VenthyrChairBlock extends ChairBlock {
@@ -17,9 +14,7 @@ public final class VenthyrChairBlock extends ChairBlock {
             box(1D, 9D, 12D, 15D, 31D, 15D)
     );
 
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
-
     public VenthyrChairBlock(Properties properties) {
-        super(properties);
+        super(properties, SHAPE);
     }
 }

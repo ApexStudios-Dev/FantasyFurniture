@@ -2,9 +2,6 @@ package dev.apexstudios.fantasyfurniture.dunmer.block;
 
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.PaintingSmallBlock;
-import java.util.Map;
-import net.minecraft.core.Direction;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class DunmerPaintingSmallBlock extends PaintingSmallBlock {
@@ -14,9 +11,7 @@ public final class DunmerPaintingSmallBlock extends PaintingSmallBlock {
             box(1D, 3D, 14D, 15D, 13D, 16D)
     );
 
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
-
     public DunmerPaintingSmallBlock(Properties properties) {
-        super(properties);
+        super(properties, SHAPE);
     }
 }

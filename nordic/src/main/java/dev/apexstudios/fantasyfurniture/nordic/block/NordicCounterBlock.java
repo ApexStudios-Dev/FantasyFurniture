@@ -2,9 +2,6 @@ package dev.apexstudios.fantasyfurniture.nordic.block;
 
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.CounterBlock;
-import java.util.Map;
-import net.minecraft.core.Direction;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class NordicCounterBlock extends CounterBlock {
@@ -20,10 +17,7 @@ public final class NordicCounterBlock extends CounterBlock {
             box(1D, 1D, 2D, 15D, 12D, 3D)
     );
 
-    public static final Map<Direction, VoxelShape> CORNER_FACING_SHAPES = Shapes.rotateHorizontal(CORNER_SHAPE);
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
-
     public NordicCounterBlock(Properties properties) {
-        super(properties);
+        super(properties, SHAPE, CORNER_SHAPE);
     }
 }

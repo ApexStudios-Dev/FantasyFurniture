@@ -39,17 +39,17 @@ public interface FurnitureClientDataUtil {
         var blockModels = provider.blockModels();
         provider.fromRegistree(context.registree());
 
-        FurnitureUtil.Names.block(context.registree(), FurnitureUtil.Names.PLANKS, blockModels::createTrivialCube);
-        FurnitureUtil.Names.block(context.registree(), FurnitureUtil.Names.BRICKS, blockModels::createTrivialCube);
-        FurnitureUtil.Names.block(context.registree(), FurnitureUtil.Names.WOOL, blockModels::createTrivialCube);
+        context.block(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.PLANKS, blockModels::createTrivialCube);
+        context.block(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.BRICKS, blockModels::createTrivialCube);
+        context.block(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.WOOL, blockModels::createTrivialCube);
 
-        FurnitureUtil.Names.block(context.registree(), FurnitureUtil.Names.CARPET, block -> {
+        context.block(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.CARPET, block -> {
             var wool = context.registree().getValueOrThrow(Registries.BLOCK, FurnitureUtil.Names.WOOL);
             var variant = BlockModelGenerators.plainVariant(TexturedModel.CARPET.get(wool).create(block, blockModels.modelOutput));
             blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, variant));
         });
 
-        FurnitureUtil.Names.block(context.registree(), FurnitureUtil.Names.DRESSER, block -> {
+        context.block(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.DRESSER, block -> {
             blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
                     .with(createMultiBlockPropertyDispatch(block, index -> ModelLocationUtils.getModelLocation(block, index == 0 ? "_left" : "_right")))
                     .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
@@ -58,12 +58,12 @@ public interface FurnitureClientDataUtil {
             registerSimpleBlockItemModel(block, blockModels);
         });
 
-        FurnitureUtil.Names.block(context.registree(), FurnitureUtil.Names.STOOL, blockModels::createNonTemplateHorizontalBlock);
-        FurnitureUtil.Names.block(context.registree(), FurnitureUtil.Names.CUSHION, blockModels::createNonTemplateHorizontalBlock);
-        FurnitureUtil.Names.block(context.registree(), FurnitureUtil.Names.LOCKBOX, blockModels::createNonTemplateHorizontalBlock);
-        FurnitureUtil.Names.block(context.registree(), FurnitureUtil.Names.DRAWER, blockModels::createNonTemplateHorizontalBlock);
+        context.block(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.STOOL, blockModels::createNonTemplateHorizontalBlock);
+        context.block(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.CUSHION, blockModels::createNonTemplateHorizontalBlock);
+        context.block(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.LOCKBOX, blockModels::createNonTemplateHorizontalBlock);
+        context.block(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.DRAWER, blockModels::createNonTemplateHorizontalBlock);
 
-        FurnitureUtil.Names.block(context.registree(), FurnitureUtil.Names.CHAIR, block -> {
+        context.block(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.CHAIR, block -> {
             blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
                     .with(createMultiBlockPropertyDispatch(block, index -> ModelLocationUtils.getModelLocation(block, index == 0 ? "_bottom" : "_top")))
                     .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
@@ -72,7 +72,7 @@ public interface FurnitureClientDataUtil {
             registerSimpleBlockItemModel(block, blockModels);
         });
 
-        FurnitureUtil.Names.block(context.registree(), FurnitureUtil.Names.BOOKSHELF, block -> {
+        context.block(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.BOOKSHELF, block -> {
             blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
                     .with(createMultiBlockPropertyDispatch(block, index -> ModelLocationUtils.getModelLocation(block, switch (index) {
                         case 0 -> "_bottom_left";
@@ -86,7 +86,7 @@ public interface FurnitureClientDataUtil {
             registerSimpleBlockItemModel(block, blockModels);
         });
 
-        FurnitureUtil.Names.block(context.registree(), FurnitureUtil.Names.BED_SINGLE, block -> {
+        context.block(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.BED_SINGLE, block -> {
             blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
                     .with(PropertyDispatch.initial(BedBlock.PART)
                             .select(BedPart.HEAD, BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block, "_top")))
@@ -98,7 +98,7 @@ public interface FurnitureClientDataUtil {
             registerSimpleBlockItemModel(block, blockModels);
         });
 
-        FurnitureUtil.Names.block(context.registree(), FurnitureUtil.Names.BED_DOUBLE, block -> {
+        context.block(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.BED_DOUBLE, block -> {
             blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
                     .with(createMultiBlockPropertyDispatch(block, index -> ModelLocationUtils
                             .getModelLocation(block, switch (index) {
@@ -114,10 +114,10 @@ public interface FurnitureClientDataUtil {
         });
 
         // TODO: Add optional pack to restore 3d door item models
-        FurnitureUtil.Names.block(context.registree(), FurnitureUtil.Names.DOOR_SINGLE, block -> createDoorModel(block, blockModels));
-        FurnitureUtil.Names.block(context.registree(), FurnitureUtil.Names.DOOR_DOUBLE, block -> createDoorModel(block, blockModels));
+        context.block(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.DOOR_SINGLE, block -> createDoorModel(block, blockModels));
+        context.block(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.DOOR_DOUBLE, block -> createDoorModel(block, blockModels));
 
-        FurnitureUtil.Names.block(context.registree(), FurnitureUtil.Names.DESK_LEFT, block -> {
+        context.block(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.DESK_LEFT, block -> {
             blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
                     .with(createMultiBlockPropertyDispatch(block, index -> ModelLocationUtils.getModelLocation(block,  index == 0 ? "_left" : "_right")))
                     .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
@@ -126,7 +126,7 @@ public interface FurnitureClientDataUtil {
             registerSimpleBlockItemModel(block, blockModels);
         });
 
-        FurnitureUtil.Names.block(context.registree(), FurnitureUtil.Names.DESK_RIGHT, block -> {
+        context.block(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.DESK_RIGHT, block -> {
             blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
                     .with(createMultiBlockPropertyDispatch(block, index -> ModelLocationUtils.getModelLocation(block,  index == 0 ? "_left" : "_right")))
                     .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
@@ -135,7 +135,7 @@ public interface FurnitureClientDataUtil {
             registerSimpleBlockItemModel(block, blockModels);
         });
 
-        FurnitureUtil.Names.block(context.registree(), FurnitureUtil.Names.PAINTING_WIDE, block -> {
+        context.block(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.PAINTING_WIDE, block -> {
             blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
                     .with(createMultiBlockPropertyDispatch(block, index -> ModelLocationUtils.getModelLocation(block, index == 0 ? "_left" : "_right")))
                     .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
@@ -144,10 +144,10 @@ public interface FurnitureClientDataUtil {
             registerSimpleBlockItemModel(block, blockModels);
         });
 
-        FurnitureUtil.Names.block(context.registree(), FurnitureUtil.Names.PAINTING_SMALL, blockModels::createNonTemplateHorizontalBlock);
-        FurnitureUtil.Names.block(context.registree(), FurnitureUtil.Names.OVEN, blockModels::createNonTemplateHorizontalBlock);
+        context.block(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.PAINTING_SMALL, blockModels::createNonTemplateHorizontalBlock);
+        context.block(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.OVEN, blockModels::createNonTemplateHorizontalBlock);
 
-        FurnitureUtil.Names.block(context.registree(), FurnitureUtil.Names.CHEST, block -> {
+        context.block(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.CHEST, block -> {
             blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
                     .with(createMultiBlockPropertyDispatch(block, index -> ModelLocationUtils.getModelLocation(block, index == 0 ? "_left" : "_right")))
                     .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
@@ -156,7 +156,7 @@ public interface FurnitureClientDataUtil {
             registerSimpleBlockItemModel(block, blockModels);
         });
 
-        FurnitureUtil.Names.block(context.registree(), FurnitureUtil.Names.FLOOR_LIGHT, block -> {
+        context.block(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.FLOOR_LIGHT, block -> {
             blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
                     .with(createMultiBlockPropertyDispatch(block, index -> ModelLocationUtils.getModelLocation(block, index == 0 ? "_bottom" : "_top")))
                     .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
@@ -165,9 +165,9 @@ public interface FurnitureClientDataUtil {
             registerSimpleBlockItemModel(block, blockModels);
         });
 
-        FurnitureUtil.Names.block(context.registree(), FurnitureUtil.Names.CHANDELIER, blockModels::createNonTemplateModelBlock);
+        context.block(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.CHANDELIER, blockModels::createNonTemplateModelBlock);
 
-        FurnitureUtil.Names.block(context.registree(), FurnitureUtil.Names.SHELF, block -> {
+        context.block(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.SHELF, block -> {
             blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
                     .with(PropertyDispatch.initial(ShelfConnection.PROPERTY).generate(connection -> BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block, connection.getModelSuffix()))))
                     .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
@@ -176,7 +176,7 @@ public interface FurnitureClientDataUtil {
             blockModels.registerSimpleItemModel(block, ModelLocationUtils.getModelLocation(block, ShelfConnection.NONE.getModelSuffix()));
         });
 
-        FurnitureUtil.Names.block(context.registree(), FurnitureUtil.Names.SOFA, block -> {
+        context.block(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.SOFA, block -> {
             blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
                     .with(PropertyDispatch.initial(SofaConnection.PROPERTY).generate(connection -> BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block, connection.getModelSuffix()))))
                     .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
@@ -185,7 +185,7 @@ public interface FurnitureClientDataUtil {
             blockModels.registerSimpleItemModel(block, ModelLocationUtils.getModelLocation(block, SofaConnection.NONE.getModelSuffix()));
         });
 
-        FurnitureUtil.Names.block(context.registree(), FurnitureUtil.Names.COUNTER, block -> {
+        context.block(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.COUNTER, block -> {
             blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
                     .with(PropertyDispatch.initial(CounterConnection.PROPERTY).generate(connection -> BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block, connection.getModelSuffix()))))
                     .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
@@ -194,12 +194,12 @@ public interface FurnitureClientDataUtil {
             blockModels.registerSimpleItemModel(block, ModelLocationUtils.getModelLocation(block, CounterConnection.NONE.getModelSuffix()));
         });
 
-        FurnitureUtil.Names.block(context.registree(), FurnitureUtil.Names.WALL_LIGHT, block -> blockModels.blockStateOutput.accept(MultiVariantGenerator
+        context.block(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.WALL_LIGHT, block -> blockModels.blockStateOutput.accept(MultiVariantGenerator
                 .dispatch(block, BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block)))
                 .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
         ));
 
-        FurnitureUtil.Names.block(context.registree(), FurnitureUtil.Names.BENCH, block -> {
+        context.block(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.BENCH, block -> {
             blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
                     .with(createMultiBlockPropertyDispatch(block, index -> ModelLocationUtils.getModelLocation(block, index == 0 ? "_left" : "_right")))
                     .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
@@ -208,7 +208,7 @@ public interface FurnitureClientDataUtil {
             registerSimpleBlockItemModel(block, blockModels);
         });
 
-        FurnitureUtil.Names.block(context.registree(), FurnitureUtil.Names.WARDROBE, block -> {
+        context.block(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.WARDROBE, block -> {
             blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
                     .with(createMultiBlockPropertyDispatch(block, index -> ModelLocationUtils.getModelLocation(block, switch (index) {
                         case 0 -> "_bottom_left";
@@ -224,7 +224,7 @@ public interface FurnitureClientDataUtil {
             registerSimpleBlockItemModel(block, blockModels);
         });
 
-        FurnitureUtil.Names.block(context.registree(), FurnitureUtil.Names.TABLE, block -> blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
+        context.block(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.TABLE, block -> blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
                 .with(PropertyDispatch.initial(HorizontalDirectionalBlock.FACING, TableBlock.NORTH, TableBlock.EAST, TableBlock.SOUTH, TableBlock.WEST).generate((facing, north, east, south, west) -> {
                     var connections = EnumSet.noneOf(Direction.class);
                     var facingForConnection = TableBlock.getFacingForConnection(facing);
@@ -263,7 +263,7 @@ public interface FurnitureClientDataUtil {
                 }))
         ));
 
-        FurnitureUtil.Names.block(context.registree(), FurnitureUtil.Names.HANGING_SIGN, block -> {
+        context.block(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.HANGING_SIGN, block -> {
             var hangingSign = context.registree().getValueOrThrow(Registries.BLOCK, FurnitureUtil.Names.WALL_HANGING_SIGN);
             blockModels.createHangingSign(context.family().getBaseBlock(), block, hangingSign);
         });
@@ -341,6 +341,6 @@ public interface FurnitureClientDataUtil {
     }
 
     private static void registerLanguage(FurnitureDataUtil.DataGenContext context, String name, String englishName, LanguageProvider provider) {
-        FurnitureUtil.Names.block(context.registree(), name, block -> provider.add(block, context.englishName() + ' ' + englishName));
+        context.block(FurnitureDataUtil.DataType.LANGUAGE, name, block -> provider.add(block, context.englishName() + ' ' + englishName));
     }
 }

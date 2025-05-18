@@ -2,9 +2,6 @@ package dev.apexstudios.fantasyfurniture.royal.block;
 
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.ChairBlock;
-import java.util.Map;
-import net.minecraft.core.Direction;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class RoyalChairBlock extends ChairBlock {
@@ -32,9 +29,7 @@ public final class RoyalChairBlock extends ChairBlock {
             box(5D, 26D, 12D, 11D, 27D, 14D)
     );
 
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
-
     public RoyalChairBlock(Properties properties) {
-        super(properties);
+        super(properties, SHAPE);
     }
 }

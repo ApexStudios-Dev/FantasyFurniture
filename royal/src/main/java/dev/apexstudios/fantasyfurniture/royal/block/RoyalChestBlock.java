@@ -2,9 +2,6 @@ package dev.apexstudios.fantasyfurniture.royal.block;
 
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.ChestBlock;
-import java.util.Map;
-import net.minecraft.core.Direction;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class RoyalChestBlock extends ChestBlock {
@@ -17,9 +14,7 @@ public final class RoyalChestBlock extends ChestBlock {
             box(-11D, 6D, 2D, 11D, 16D, 14D)
     );
 
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
-
     public RoyalChestBlock(Properties properties) {
-        super(properties);
+        super(properties, SHAPE);
     }
 }

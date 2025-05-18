@@ -2,9 +2,6 @@ package dev.apexstudios.fantasyfurniture.nordic.block;
 
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.FloorLightBlock;
-import java.util.Map;
-import net.minecraft.core.Direction;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class NordicFloorLightBlock extends FloorLightBlock {
@@ -25,9 +22,7 @@ public final class NordicFloorLightBlock extends FloorLightBlock {
             box(7D, 16.75D, 9D, 9D, 20.75, 13D)
     );
 
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
-
     public NordicFloorLightBlock(Properties properties) {
-        super(properties);
+        super(properties, SHAPE);
     }
 }

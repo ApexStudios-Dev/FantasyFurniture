@@ -2,9 +2,6 @@ package dev.apexstudios.fantasyfurniture.dunmer.block;
 
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.WardrobeBlock;
-import java.util.Map;
-import net.minecraft.core.Direction;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class DunmerWardrobeBlock extends WardrobeBlock {
@@ -25,9 +22,7 @@ public final class DunmerWardrobeBlock extends WardrobeBlock {
             box(-13D, 4D, 2D, 13D, 30D, 14D)
     );
 
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
-
     public DunmerWardrobeBlock(Properties properties) {
-        super(properties);
+        super(properties, SHAPE);
     }
 }

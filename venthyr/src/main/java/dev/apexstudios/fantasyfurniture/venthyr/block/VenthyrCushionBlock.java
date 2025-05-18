@@ -2,9 +2,6 @@ package dev.apexstudios.fantasyfurniture.venthyr.block;
 
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.CushionBlock;
-import java.util.Map;
-import net.minecraft.core.Direction;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class VenthyrCushionBlock extends CushionBlock {
@@ -17,9 +14,7 @@ public final class VenthyrCushionBlock extends CushionBlock {
             box(2D, 4D, 2D, 14D, 7D, 14D)
     );
 
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
-
     public VenthyrCushionBlock(Properties properties) {
-        super(properties);
+        super(properties, SHAPE);
     }
 }
