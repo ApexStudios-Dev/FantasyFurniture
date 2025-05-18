@@ -2,9 +2,6 @@ package dev.apexstudios.fantasyfurniture.necrolord.block;
 
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.StoolBlock;
-import java.util.Map;
-import net.minecraft.core.Direction;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class NecrolordStoolBlock extends StoolBlock {
@@ -20,9 +17,7 @@ public final class NecrolordStoolBlock extends StoolBlock {
             box(2D, 3D, 2D, 14D, 6D, 14D)
     );
 
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
-
     public NecrolordStoolBlock(Properties properties) {
-        super(properties);
+        super(properties, SHAPE);
     }
 }

@@ -10,4 +10,14 @@ public final class RoyalTableBlock extends TableBlock {
     public RoyalTableBlock(Properties properties) {
         super(properties);
     }
+
+    @Override
+    protected VoxelShape getLegShape() {
+        return SHAPE_TABLE_LEG;
+    }
+
+    @Override
+    protected VoxelShape getTopShape() {
+        return SHAPE_TABLE_TOP;
+    }
 }

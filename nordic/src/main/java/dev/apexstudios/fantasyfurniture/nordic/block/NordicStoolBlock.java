@@ -2,9 +2,6 @@ package dev.apexstudios.fantasyfurniture.nordic.block;
 
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.StoolBlock;
-import java.util.Map;
-import net.minecraft.core.Direction;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class NordicStoolBlock extends StoolBlock {
@@ -22,9 +19,7 @@ public final class NordicStoolBlock extends StoolBlock {
             box(12.5D, 3.5D, 4.5D, 13.5D, 4.5D, 11.5D)
     );
 
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
-
     public NordicStoolBlock(Properties properties) {
-        super(properties);
+        super(properties, SHAPE);
     }
 }

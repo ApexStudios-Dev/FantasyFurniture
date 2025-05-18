@@ -2,9 +2,6 @@ package apexstudios.fantasyfurniture.bone.block;
 
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.LockBoxBlock;
-import java.util.Map;
-import net.minecraft.core.Direction;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class BoneLockBoxBlock extends LockBoxBlock {
@@ -17,9 +14,7 @@ public final class BoneLockBoxBlock extends LockBoxBlock {
             box(1.5D, 4D, 3.5D, 14.5D, 12.25D, 12.5D)
     );
 
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
-
     public BoneLockBoxBlock(Properties properties) {
-        super(properties);
+        super(properties, SHAPE);
     }
 }

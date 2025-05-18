@@ -2,9 +2,6 @@ package dev.apexstudios.fantasyfurniture.necrolord.block;
 
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.WardrobeBlock;
-import java.util.Map;
-import net.minecraft.core.Direction;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class NecrolordWardrobeBlock extends WardrobeBlock {
@@ -29,9 +26,7 @@ public final class NecrolordWardrobeBlock extends WardrobeBlock {
             box(12D, 41D, 12D, 16D, 43D, 16D)
     );
 
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
-
     public NecrolordWardrobeBlock(Properties properties) {
-        super(properties);
+        super(properties, SHAPE);
     }
 }

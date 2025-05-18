@@ -2,10 +2,7 @@ package dev.apexstudios.fantasyfurniture.nordic.block;
 
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.WallLightBlock;
-import java.util.Map;
-import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class NordicWallLightBlock extends WallLightBlock {
@@ -14,9 +11,7 @@ public final class NordicWallLightBlock extends WallLightBlock {
             box(6D, 2D, 8D, 10D, 15D, 15D)
     );
 
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
-
     public NordicWallLightBlock(Properties properties) {
-        super(ParticleTypes.FLAME, properties);
+        super(ParticleTypes.FLAME, properties, SHAPE);
     }
 }

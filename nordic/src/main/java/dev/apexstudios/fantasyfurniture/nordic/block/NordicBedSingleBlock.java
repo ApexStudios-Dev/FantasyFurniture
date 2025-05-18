@@ -2,9 +2,6 @@ package dev.apexstudios.fantasyfurniture.nordic.block;
 
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.BedSingleBlock;
-import java.util.Map;
-import net.minecraft.core.Direction;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class NordicBedSingleBlock extends BedSingleBlock {
@@ -15,9 +12,7 @@ public final class NordicBedSingleBlock extends BedSingleBlock {
             box(1D, 5D, 2D, 15D, 8D, 30D)
     );
 
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
-
     public NordicBedSingleBlock(Properties properties) {
-        super(properties);
+        super(properties, SHAPE);
     }
 }

@@ -2,9 +2,6 @@ package dev.apexstudios.fantasyfurniture.necrolord.block;
 
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.BedSingleBlock;
-import java.util.Map;
-import net.minecraft.core.Direction;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class NecrolordBedSingleBlock extends BedSingleBlock {
@@ -26,9 +23,7 @@ public final class NecrolordBedSingleBlock extends BedSingleBlock {
             box(1D, 3D, 3D, 15D, 8D, 29D)
     );
 
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
-
     public NecrolordBedSingleBlock(Properties properties) {
-        super(properties);
+        super(properties, SHAPE);
     }
 }

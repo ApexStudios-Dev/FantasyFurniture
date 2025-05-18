@@ -1,5 +1,8 @@
 package dev.apexstudios.fantasyfurniture.util;
 
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
+import com.google.common.collect.Multimaps;
 import dev.apexstudios.apexcore.lib.data.ProviderTypes;
 import dev.apexstudios.apexcore.lib.data.pack.PackGenerator;
 import dev.apexstudios.apexcore.lib.data.provider.RecipeProvider;
@@ -11,10 +14,14 @@ import dev.apexstudios.apexcore.lib.util.TagPair;
 import dev.apexstudios.fantasyfurniture.FantasyFurniture;
 import dev.apexstudios.fantasyfurniture.station.FurnitureStationRecipeBuilder;
 import dev.apexstudios.fantasyfurniture.station.FurnitureStationSetup;
+import java.util.function.Consumer;
+import net.minecraft.Util;
+import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.SingleItemRecipeBuilder;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
@@ -41,111 +48,111 @@ public interface FurnitureDataUtil {
         provider.fromRegistree(context.registree);
 
         provider.block(blocks -> {
-            FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.PLANKS, blocks::dropSelf);
-            FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.BRICKS, blocks::dropSelf);
-            FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.WOOL, blocks::dropSelf);
-            FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.CARPET, blocks::dropSelf);
-            FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.DRESSER, block -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)));
-            FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.STOOL, blocks::dropSelf);
-            FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.CUSHION, blocks::dropSelf);
-            FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.LOCKBOX, block -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)));
-            FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.DRAWER, block -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)));
-            FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.CHAIR, blocks::dropSelf);
-            FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.BOOKSHELF, block -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)));
-            FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.BED_SINGLE, block -> blocks.accept(block, blocks.createSinglePropConditionTable(block, BedBlock.PART, BedPart.HEAD)));
-            FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.BED_DOUBLE, block -> blocks.accept(block, blocks.createSinglePropConditionTable(block, BedBlock.PART, BedPart.HEAD)));
-            FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.DOOR_SINGLE, block -> blocks.accept(block, blocks.createDoorTable(block)));
-            FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.DOOR_DOUBLE, block -> blocks.accept(block, blocks.createDoorTable(block)));
-            FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.DESK_LEFT, block -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)));
-            FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.DESK_RIGHT, block -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)));
-            FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.PAINTING_WIDE, blocks::dropSelf);
-            FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.PAINTING_SMALL, blocks::dropSelf);
-            FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.OVEN, block -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)));
-            FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.CHEST, block -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)));
-            FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.FLOOR_LIGHT, blocks::dropSelf);
-            FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.CHANDELIER, blocks::dropSelf);
-            FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.SHELF, blocks::dropSelf);
-            FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.SOFA, blocks::dropSelf);
-            FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.COUNTER, block -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)));
-            FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.WALL_LIGHT, blocks::dropSelf);
-            FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.BENCH, blocks::dropSelf);
-            FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.WARDROBE, block -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)));
-            FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.TABLE, blocks::dropSelf);
-            FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.STAIRS, blocks::dropSelf);
-            FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.SLAB, block -> blocks.accept(block, blocks.createSlabItemTable(block)));
-            FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.FENCE, blocks::dropSelf);
-            FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.FENCE_GATE, blocks::dropSelf);
-            FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.TRAPDOOR, blocks::dropSelf);
-            FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.PRESSURE_PLATE, blocks::dropSelf);
-            FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.BUTTON, blocks::dropSelf);
-            FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.HANGING_SIGN, blocks::dropSelf);
-            // Names.block(context.registree, Names.WALL_HANGING_SIGN, blocks::dropSelf);
-            FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.SIGN, blocks::dropSelf);
-            // Names.block(context.registree, Names.WALL_SIGN, blocks::dropSelf);
+            context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.PLANKS, blocks::dropSelf);
+            context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.BRICKS, blocks::dropSelf);
+            context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.WOOL, blocks::dropSelf);
+            context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.CARPET, blocks::dropSelf);
+            context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.DRESSER, block -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)));
+            context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.STOOL, blocks::dropSelf);
+            context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.CUSHION, blocks::dropSelf);
+            context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.LOCKBOX, block -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)));
+            context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.DRAWER, block -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)));
+            context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.CHAIR, blocks::dropSelf);
+            context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.BOOKSHELF, block -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)));
+            context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.BED_SINGLE, block -> blocks.accept(block, blocks.createSinglePropConditionTable(block, BedBlock.PART, BedPart.HEAD)));
+            context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.BED_DOUBLE, block -> blocks.accept(block, blocks.createSinglePropConditionTable(block, BedBlock.PART, BedPart.HEAD)));
+            context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.DOOR_SINGLE, block -> blocks.accept(block, blocks.createDoorTable(block)));
+            context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.DOOR_DOUBLE, block -> blocks.accept(block, blocks.createDoorTable(block)));
+            context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.DESK_LEFT, block -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)));
+            context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.DESK_RIGHT, block -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)));
+            context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.PAINTING_WIDE, blocks::dropSelf);
+            context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.PAINTING_SMALL, blocks::dropSelf);
+            context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.OVEN, block -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)));
+            context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.CHEST, block -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)));
+            context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.FLOOR_LIGHT, blocks::dropSelf);
+            context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.CHANDELIER, blocks::dropSelf);
+            context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.SHELF, blocks::dropSelf);
+            context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.SOFA, blocks::dropSelf);
+            context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.COUNTER, block -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)));
+            context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.WALL_LIGHT, blocks::dropSelf);
+            context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.BENCH, blocks::dropSelf);
+            context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.WARDROBE, block -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)));
+            context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.TABLE, blocks::dropSelf);
+            context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.STAIRS, blocks::dropSelf);
+            context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.SLAB, block -> blocks.accept(block, blocks.createSlabItemTable(block)));
+            context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.FENCE, blocks::dropSelf);
+            context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.FENCE_GATE, blocks::dropSelf);
+            context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.TRAPDOOR, blocks::dropSelf);
+            context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.PRESSURE_PLATE, blocks::dropSelf);
+            context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.BUTTON, blocks::dropSelf);
+            context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.HANGING_SIGN, blocks::dropSelf);
+            // context.block(DataType.LOOT_TABLE, Names.WALL_HANGING_SIGN, blocks::dropSelf);
+            context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.SIGN, blocks::dropSelf);
+            // context.block(DataType.LOOT_TABLE, Names.WALL_SIGN, blocks::dropSelf);
         });
     }
 
     static void registerBlockTags(DataGenContext context, IntrusiveTagProvider<Block> provider) {
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.PLANKS, block -> tag(provider, block, context.mineableTag, BlockTags.PLANKS));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.BRICKS, block -> tag(provider, block, context.mineableTag, Tags.Blocks.STONES));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.WOOL, block -> tag(provider, block, BlockTags.WOOL));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.CARPET, block -> tag(provider, block, BlockTags.WOOL_CARPETS));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.DRESSER, block -> tag(provider, block, context.mineableTag, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.LOCKBOX, block -> tag(provider, block, context.mineableTag));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.DRAWER, block -> tag(provider, block, context.mineableTag));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.CHAIR, block -> tag(provider, block, context.mineableTag, ApexTags.Blocks.SEAT_ORIGIN_ONLY, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.BOOKSHELF, block -> tag(provider, block, context.mineableTag, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED, BlockTags.ENCHANTMENT_POWER_PROVIDER));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.BED_SINGLE, block -> tag(provider, block, context.mineableTag, BlockTags.BEDS, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.BED_DOUBLE, block -> tag(provider, block, context.mineableTag, BlockTags.BEDS, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.DOOR_SINGLE, block -> tag(provider, block, context.mineableTag, context.doorTag.block(), ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.DOOR_DOUBLE, block -> tag(provider, block, context.mineableTag, context.doorTag.block(), ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.DESK_LEFT, block -> tag(provider, block, context.mineableTag, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.DESK_RIGHT, block -> tag(provider, block, context.mineableTag, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.PAINTING_WIDE, block -> tag(provider, block, context.mineableTag, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.PAINTING_SMALL, block -> tag(provider, block, context.mineableTag));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.OVEN, block -> tag(provider, block, BlockTags.MINEABLE_WITH_PICKAXE, Tags.Blocks.PLAYER_WORKSTATIONS_FURNACES));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.CHEST, block -> tag(provider, block, context.mineableTag, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.FLOOR_LIGHT, block -> tag(provider, block, context.mineableTag, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.CHANDELIER, block -> tag(provider, block, context.mineableTag));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.SHELF, block -> tag(provider, block, context.mineableTag, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.SOFA, block -> tag(provider, block, context.mineableTag, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.COUNTER, block -> tag(provider, block, context.mineableTag, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.WALL_LIGHT, block -> tag(provider, block, context.mineableTag, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.BENCH, block -> tag(provider, block, context.mineableTag, ApexTags.Blocks.SEAT_ORIGIN_ONLY, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.WARDROBE, block -> tag(provider, block, context.mineableTag, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.TABLE, block -> tag(provider, block, context.mineableTag, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.STAIRS, block -> tag(provider, block, context.mineableTag, context.stairsTag));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.SLAB, block -> tag(provider, block, context.mineableTag, context.slabTag.block()));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.FENCE, block -> tag(provider, block, context.mineableTag, context.fenceTag.block()));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.FENCE_GATE, block -> tag(provider, block, context.mineableTag, BlockTags.FENCE_GATES));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.TRAPDOOR, block -> tag(provider, block, context.mineableTag, context.trapdoorTag.block()));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.PRESSURE_PLATE, block -> tag(provider, block, context.mineableTag, context.pressurePlateTag.block()));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.BUTTON, block -> tag(provider, block, context.mineableTag, context.buttonTag.block()));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.HANGING_SIGN, block -> tag(provider, block, context.mineableTag, BlockTags.CEILING_HANGING_SIGNS));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.WALL_HANGING_SIGN, block -> tag(provider, block, context.mineableTag, BlockTags.WALL_HANGING_SIGNS));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.SIGN, block -> tag(provider, block, context.mineableTag, BlockTags.STANDING_SIGNS));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.WALL_SIGN, block -> tag(provider, block, context.mineableTag, BlockTags.WALL_SIGNS));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.PLANKS, block -> tag(provider, block, context.mineableTag, BlockTags.PLANKS));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.BRICKS, block -> tag(provider, block, context.mineableTag, Tags.Blocks.STONES));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.WOOL, block -> tag(provider, block, BlockTags.WOOL));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.CARPET, block -> tag(provider, block, BlockTags.WOOL_CARPETS));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.DRESSER, block -> tag(provider, block, context.mineableTag, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.LOCKBOX, block -> tag(provider, block, context.mineableTag));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.DRAWER, block -> tag(provider, block, context.mineableTag));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.CHAIR, block -> tag(provider, block, context.mineableTag, ApexTags.Blocks.SEAT_ORIGIN_ONLY, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.BOOKSHELF, block -> tag(provider, block, context.mineableTag, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED, BlockTags.ENCHANTMENT_POWER_PROVIDER));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.BED_SINGLE, block -> tag(provider, block, context.mineableTag, BlockTags.BEDS, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.BED_DOUBLE, block -> tag(provider, block, context.mineableTag, BlockTags.BEDS, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.DOOR_SINGLE, block -> tag(provider, block, context.mineableTag, context.doorTag.block(), ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.DOOR_DOUBLE, block -> tag(provider, block, context.mineableTag, context.doorTag.block(), ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.DESK_LEFT, block -> tag(provider, block, context.mineableTag, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.DESK_RIGHT, block -> tag(provider, block, context.mineableTag, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.PAINTING_WIDE, block -> tag(provider, block, context.mineableTag, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.PAINTING_SMALL, block -> tag(provider, block, context.mineableTag));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.OVEN, block -> tag(provider, block, BlockTags.MINEABLE_WITH_PICKAXE, Tags.Blocks.PLAYER_WORKSTATIONS_FURNACES));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.CHEST, block -> tag(provider, block, context.mineableTag, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.FLOOR_LIGHT, block -> tag(provider, block, context.mineableTag, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.CHANDELIER, block -> tag(provider, block, context.mineableTag));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.SHELF, block -> tag(provider, block, context.mineableTag, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.SOFA, block -> tag(provider, block, context.mineableTag, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.COUNTER, block -> tag(provider, block, context.mineableTag, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.WALL_LIGHT, block -> tag(provider, block, context.mineableTag, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.BENCH, block -> tag(provider, block, context.mineableTag, ApexTags.Blocks.SEAT_ORIGIN_ONLY, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.WARDROBE, block -> tag(provider, block, context.mineableTag, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.TABLE, block -> tag(provider, block, context.mineableTag, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.STAIRS, block -> tag(provider, block, context.mineableTag, context.stairsTag));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.SLAB, block -> tag(provider, block, context.mineableTag, context.slabTag.block()));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.FENCE, block -> tag(provider, block, context.mineableTag, context.fenceTag.block()));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.FENCE_GATE, block -> tag(provider, block, context.mineableTag, BlockTags.FENCE_GATES));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.TRAPDOOR, block -> tag(provider, block, context.mineableTag, context.trapdoorTag.block()));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.PRESSURE_PLATE, block -> tag(provider, block, context.mineableTag, context.pressurePlateTag.block()));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.BUTTON, block -> tag(provider, block, context.mineableTag, context.buttonTag.block()));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.HANGING_SIGN, block -> tag(provider, block, context.mineableTag, BlockTags.CEILING_HANGING_SIGNS));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.WALL_HANGING_SIGN, block -> tag(provider, block, context.mineableTag, BlockTags.WALL_HANGING_SIGNS));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.SIGN, block -> tag(provider, block, context.mineableTag, BlockTags.STANDING_SIGNS));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.WALL_SIGN, block -> tag(provider, block, context.mineableTag, BlockTags.WALL_SIGNS));
     }
 
     static void registerItemTags(DataGenContext context, IntrusiveTagProvider<Item> provider) {
-        FurnitureUtil.Names.item(context.registree, FurnitureUtil.Names.PLANKS, item -> tag(provider, item, FantasyFurniture.FURNITURE_PLANKS));
-        FurnitureUtil.Names.item(context.registree, FurnitureUtil.Names.BRICKS, item -> tag(provider, item, FantasyFurniture.FURNITURE_BRICKS));
-        FurnitureUtil.Names.item(context.registree, FurnitureUtil.Names.WOOL, item -> tag(provider, item, FantasyFurniture.FURNITURE_WOOL));
-        FurnitureUtil.Names.item(context.registree, FurnitureUtil.Names.CARPET, item -> tag(provider, item, ItemTags.WOOL_CARPETS));
-        FurnitureUtil.Names.item(context.registree, FurnitureUtil.Names.BED_SINGLE, item -> tag(provider, item, ItemTags.BEDS));
-        FurnitureUtil.Names.item(context.registree, FurnitureUtil.Names.BED_DOUBLE, item -> tag(provider, item, ItemTags.BEDS));
-        FurnitureUtil.Names.item(context.registree, FurnitureUtil.Names.DOOR_SINGLE, item -> tag(provider, item, context.doorTag.item()));
-        FurnitureUtil.Names.item(context.registree, FurnitureUtil.Names.DOOR_DOUBLE, item -> tag(provider, item, context.doorTag.item()));
-        FurnitureUtil.Names.item(context.registree, FurnitureUtil.Names.OVEN, item -> tag(provider, item, Tags.Items.PLAYER_WORKSTATIONS_FURNACES));
-        FurnitureUtil.Names.item(context.registree, FurnitureUtil.Names.STAIRS, item -> tag(provider, item, ItemTags.STAIRS));
-        FurnitureUtil.Names.item(context.registree, FurnitureUtil.Names.SLAB, item -> tag(provider, item, context.slabTag.item()));
-        FurnitureUtil.Names.item(context.registree, FurnitureUtil.Names.FENCE, item -> tag(provider, item, context.fenceTag.item()));
-        FurnitureUtil.Names.item(context.registree, FurnitureUtil.Names.FENCE_GATE, item -> tag(provider, item, ItemTags.FENCE_GATES));
-        FurnitureUtil.Names.item(context.registree, FurnitureUtil.Names.TRAPDOOR, item -> tag(provider, item, context.trapdoorTag.item()));
-        FurnitureUtil.Names.item(context.registree, FurnitureUtil.Names.PRESSURE_PLATE, item -> tag(provider, item, context.pressurePlateTag.item()));
-        FurnitureUtil.Names.item(context.registree, FurnitureUtil.Names.BUTTON, item -> tag(provider, item, context.buttonTag.item()));
-        FurnitureUtil.Names.item(context.registree, FurnitureUtil.Names.WALL_HANGING_SIGN, item -> tag(provider, item, ItemTags.HANGING_SIGNS));
-        FurnitureUtil.Names.item(context.registree, FurnitureUtil.Names.SIGN, item -> tag(provider, item, ItemTags.SIGNS));
+        context.item(DataType.ITEM_TAG, FurnitureUtil.Names.PLANKS, item -> tag(provider, item, FantasyFurniture.FURNITURE_PLANKS));
+        context.item(DataType.ITEM_TAG, FurnitureUtil.Names.BRICKS, item -> tag(provider, item, FantasyFurniture.FURNITURE_BRICKS));
+        context.item(DataType.ITEM_TAG, FurnitureUtil.Names.WOOL, item -> tag(provider, item, FantasyFurniture.FURNITURE_WOOL));
+        context.item(DataType.ITEM_TAG, FurnitureUtil.Names.CARPET, item -> tag(provider, item, ItemTags.WOOL_CARPETS));
+        context.item(DataType.ITEM_TAG, FurnitureUtil.Names.BED_SINGLE, item -> tag(provider, item, ItemTags.BEDS));
+        context.item(DataType.ITEM_TAG, FurnitureUtil.Names.BED_DOUBLE, item -> tag(provider, item, ItemTags.BEDS));
+        context.item(DataType.ITEM_TAG, FurnitureUtil.Names.DOOR_SINGLE, item -> tag(provider, item, context.doorTag.item()));
+        context.item(DataType.ITEM_TAG, FurnitureUtil.Names.DOOR_DOUBLE, item -> tag(provider, item, context.doorTag.item()));
+        context.item(DataType.ITEM_TAG, FurnitureUtil.Names.OVEN, item -> tag(provider, item, Tags.Items.PLAYER_WORKSTATIONS_FURNACES));
+        context.item(DataType.ITEM_TAG, FurnitureUtil.Names.STAIRS, item -> tag(provider, item, ItemTags.STAIRS));
+        context.item(DataType.ITEM_TAG, FurnitureUtil.Names.SLAB, item -> tag(provider, item, context.slabTag.item()));
+        context.item(DataType.ITEM_TAG, FurnitureUtil.Names.FENCE, item -> tag(provider, item, context.fenceTag.item()));
+        context.item(DataType.ITEM_TAG, FurnitureUtil.Names.FENCE_GATE, item -> tag(provider, item, ItemTags.FENCE_GATES));
+        context.item(DataType.ITEM_TAG, FurnitureUtil.Names.TRAPDOOR, item -> tag(provider, item, context.trapdoorTag.item()));
+        context.item(DataType.ITEM_TAG, FurnitureUtil.Names.PRESSURE_PLATE, item -> tag(provider, item, context.pressurePlateTag.item()));
+        context.item(DataType.ITEM_TAG, FurnitureUtil.Names.BUTTON, item -> tag(provider, item, context.buttonTag.item()));
+        context.item(DataType.ITEM_TAG, FurnitureUtil.Names.WALL_HANGING_SIGN, item -> tag(provider, item, ItemTags.HANGING_SIGNS));
+        context.item(DataType.ITEM_TAG, FurnitureUtil.Names.SIGN, item -> tag(provider, item, ItemTags.SIGNS));
     }
 
     @SafeVarargs
@@ -157,45 +164,45 @@ public interface FurnitureDataUtil {
     }
 
     static void registerRecipes(DataGenContext context, RecipeProvider provider, FeatureFlagSet enabledFeatures) {
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.PLANKS, block -> conversionRecipe(ItemTags.PLANKS, FantasyFurniture.FURNITURE_PLANKS, "has_" + FurnitureUtil.Names.PLANKS, block, provider, enabledFeatures));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.BRICKS, block -> conversionRecipe(ItemTags.STONE_CRAFTING_MATERIALS, FantasyFurniture.FURNITURE_BRICKS, "has_" + FurnitureUtil.Names.BRICKS, block, provider, enabledFeatures));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.WOOL, block -> conversionRecipe(ItemTags.WOOL, FantasyFurniture.FURNITURE_WOOL, "has_" + FurnitureUtil.Names.WOOL, block, provider, enabledFeatures));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.CARPET, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.DRESSER, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.STOOL, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.CUSHION, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.LOCKBOX, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.DRAWER, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.CHAIR, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.BOOKSHELF, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.BED_SINGLE, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.BED_DOUBLE, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.DOOR_SINGLE, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.DOOR_DOUBLE, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.DESK_LEFT, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.DESK_RIGHT, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.PAINTING_WIDE, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.PAINTING_SMALL, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.OVEN, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.CHEST, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.FLOOR_LIGHT, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.CHANDELIER, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.SHELF, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.SOFA, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.COUNTER, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.WALL_LIGHT, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.BENCH, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.WARDROBE, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.TABLE, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.STAIRS, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.SLAB, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.FENCE, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.FENCE_GATE, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.TRAPDOOR, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.PRESSURE_PLATE, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.BUTTON, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.HANGING_SIGN, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        FurnitureUtil.Names.block(context.registree, FurnitureUtil.Names.SIGN, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.PLANKS, block -> conversionRecipe(ItemTags.PLANKS, FantasyFurniture.FURNITURE_PLANKS, "has_" + FurnitureUtil.Names.PLANKS, block, provider, enabledFeatures));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.BRICKS, block -> conversionRecipe(ItemTags.STONE_CRAFTING_MATERIALS, FantasyFurniture.FURNITURE_BRICKS, "has_" + FurnitureUtil.Names.BRICKS, block, provider, enabledFeatures));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.WOOL, block -> conversionRecipe(ItemTags.WOOL, FantasyFurniture.FURNITURE_WOOL, "has_" + FurnitureUtil.Names.WOOL, block, provider, enabledFeatures));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.CARPET, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.DRESSER, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.STOOL, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.CUSHION, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.LOCKBOX, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.DRAWER, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.CHAIR, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.BOOKSHELF, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.BED_SINGLE, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.BED_DOUBLE, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.DOOR_SINGLE, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.DOOR_DOUBLE, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.DESK_LEFT, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.DESK_RIGHT, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.PAINTING_WIDE, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.PAINTING_SMALL, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.OVEN, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.CHEST, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.FLOOR_LIGHT, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.CHANDELIER, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.SHELF, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.SOFA, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.COUNTER, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.WALL_LIGHT, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.BENCH, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.WARDROBE, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.TABLE, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.STAIRS, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.SLAB, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.FENCE, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.FENCE_GATE, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.TRAPDOOR, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.PRESSURE_PLATE, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.BUTTON, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.HANGING_SIGN, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.SIGN, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
     }
 
     static void conversionRecipe(TagKey<Item> baseTag, TagKey<Item> furnitureTag, String hasKey, ItemLike result, RecipeProvider provider, FeatureFlagSet enabledFeatures) {
@@ -230,6 +237,88 @@ public interface FurnitureDataUtil {
             TagPair pressurePlateTag,
             TagPair trapdoorTag,
             TagPair fenceTag,
-            TagPair slabTag
-    ) { }
+            TagPair slabTag,
+            Multimap<DataType, String> exclusions
+    ) {
+        public DataGenContext {
+            exclusions = Multimaps.unmodifiableMultimap(exclusions);
+        }
+
+        public DataGenContext(
+                Registree registree,
+                String englishName,
+                BlockFamily family,
+                TagKey<Block> mineableTag,
+                TagPair doorTag,
+                TagKey<Block> stairsTag,
+                TagPair buttonTag,
+                TagPair pressurePlateTag,
+                TagPair trapdoorTag,
+                TagPair fenceTag,
+                TagPair slabTag
+        ) {
+            this(registree, englishName, family, mineableTag, doorTag, stairsTag, buttonTag, pressurePlateTag, trapdoorTag, fenceTag, slabTag, HashMultimap.create());
+        }
+
+        public DataGenContext(
+                Registree registree,
+                String englishName,
+                BlockFamily family,
+                TagKey<Block> mineableTag,
+                TagPair doorTag,
+                TagKey<Block> stairsTag,
+                TagPair buttonTag,
+                TagPair pressurePlateTag,
+                TagPair trapdoorTag,
+                TagPair fenceTag,
+                TagPair slabTag,
+                Consumer<Multimap<DataType, String>> exclusions
+        ) {
+            this(registree, englishName, family, mineableTag, doorTag, stairsTag, buttonTag, pressurePlateTag, trapdoorTag, fenceTag, slabTag, Util.make(HashMultimap.create(), exclusions));
+        }
+
+        public boolean excluded(DataType dataType, String name) {
+            return exclusions.get(dataType).contains(name);
+        }
+
+        public void ifAllowed(DataType dataType, String name, Runnable runnable) {
+            if(!excluded(dataType, name))
+                runnable.run();
+        }
+
+        public <TRegistry> boolean ifPresent(DataType dataType, ResourceKey<? extends Registry<TRegistry>> registryType, String name, Consumer<? super TRegistry> action) {
+            if(excluded(dataType, name))
+                return true;
+
+            var value = registree.getValue(registryType, name);
+
+            if(value != null) {
+                action.accept(value);
+                return true;
+            }
+
+            return false;
+        }
+
+        public boolean block(DataType dataType, String name, Consumer<? super Block> action) {
+            return ifPresent(dataType, Registries.BLOCK, name, action);
+        }
+
+        public boolean item(DataType dataType, String name, Consumer<? super Item> action) {
+            if(ifPresent(dataType, Registries.ITEM, name, action))
+                return true;
+
+            return block(dataType, name, block -> action.accept(block.asItem()));
+        }
+    }
+
+    enum DataType {
+        LOOT_TABLE,
+        BLOCK_TAG,
+        ITEM_TAG,
+        RECIPE,
+
+        MODEL,
+        LANGUAGE
+    }
 }

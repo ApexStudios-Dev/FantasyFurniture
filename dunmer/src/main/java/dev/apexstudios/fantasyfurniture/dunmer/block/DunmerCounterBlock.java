@@ -2,9 +2,6 @@ package dev.apexstudios.fantasyfurniture.dunmer.block;
 
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.CounterBlock;
-import java.util.Map;
-import net.minecraft.core.Direction;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class DunmerCounterBlock extends CounterBlock {
@@ -28,10 +25,7 @@ public final class DunmerCounterBlock extends CounterBlock {
             box(0D, 14D, 0D, 16D, 16D, 16D)
     );
 
-    public static final Map<Direction, VoxelShape> CORNER_FACING_SHAPES = Shapes.rotateHorizontal(CORNER_SHAPE);
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
-
     public DunmerCounterBlock(Properties properties) {
-        super(properties);
+        super(properties, SHAPE, CORNER_SHAPE);
     }
 }

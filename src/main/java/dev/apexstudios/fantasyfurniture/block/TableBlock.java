@@ -1,7 +1,9 @@
 package dev.apexstudios.fantasyfurniture.block;
 
+import com.google.common.collect.Maps;
 import dev.apexstudios.apexcore.lib.block.SimpleHorizontalDirectionalBlock;
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
+import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -15,14 +17,17 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-public class TableBlock extends SimpleHorizontalDirectionalBlock {
+public abstract class TableBlock extends SimpleHorizontalDirectionalBlock {
     public static final BooleanProperty NORTH = BlockStateProperties.NORTH;
     public static final BooleanProperty EAST = BlockStateProperties.EAST;
     public static final BooleanProperty SOUTH = BlockStateProperties.SOUTH;
     public static final BooleanProperty WEST = BlockStateProperties.WEST;
+
+    private final Map<BlockState, VoxelShape> shapes = Maps.newHashMap();
 
     public TableBlock(Properties properties) {
         super(properties);
@@ -33,6 +38,15 @@ public class TableBlock extends SimpleHorizontalDirectionalBlock {
                 .setValue(SOUTH, false)
                 .setValue(WEST, false)
         );
+    }
+
+    protected abstract VoxelShape getLegShape();
+
+    protected abstract VoxelShape getTopShape();
+
+    @Override
+    protected VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return shapes.computeIfAbsent(blockState, $ -> getShape(blockState, getTopShape(), getLegShape()));
     }
 
     @Override
@@ -113,7 +127,7 @@ public class TableBlock extends SimpleHorizontalDirectionalBlock {
         return facing.getAxis() == Direction.Axis.X ? facing.getOpposite() : facing;
     }
 
-    public static VoxelShape getShape(BlockState blockState, VoxelShape top, VoxelShape leg) {
+    private static VoxelShape getShape(BlockState blockState, VoxelShape top, VoxelShape leg) {
         var result = top;
 
         var facing = blockState.getValue(FACING);

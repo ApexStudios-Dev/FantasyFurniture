@@ -2,9 +2,6 @@ package dev.apexstudios.fantasyfurniture.venthyr.block;
 
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.LockBoxBlock;
-import java.util.Map;
-import net.minecraft.core.Direction;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class VenthyrLockBoxBlock extends LockBoxBlock {
@@ -19,9 +16,7 @@ public final class VenthyrLockBoxBlock extends LockBoxBlock {
             box(12D, 0D, 10D, 14D, 1D, 12D)
     );
 
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
-
     public VenthyrLockBoxBlock(Properties properties) {
-        super(properties);
+        super(properties, SHAPE);
     }
 }

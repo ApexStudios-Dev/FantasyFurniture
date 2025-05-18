@@ -2,9 +2,6 @@ package dev.apexstudios.fantasyfurniture.necrolord.block;
 
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.PaintingWideBlock;
-import java.util.Map;
-import net.minecraft.core.Direction;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class NecrolordPaintingWideBlock extends PaintingWideBlock {
@@ -16,9 +13,7 @@ public final class NecrolordPaintingWideBlock extends PaintingWideBlock {
             box(-15D, 1D, 14D, 15D, 15D, 16D)
     );
 
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
-
     public NecrolordPaintingWideBlock(Properties properties) {
-        super(properties);
+        super(properties, SHAPE);
     }
 }

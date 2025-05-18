@@ -2,10 +2,7 @@ package dev.apexstudios.fantasyfurniture.venthyr.block;
 
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.WallLightBlock;
-import java.util.Map;
-import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class VenthyrWallLightBlock extends WallLightBlock {
@@ -17,9 +14,7 @@ public final class VenthyrWallLightBlock extends WallLightBlock {
             box(4.25D, 2.5D, 10.5D, 11.75D, 11.5D, 14D)
     );
 
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
-
     public VenthyrWallLightBlock(Properties properties) {
-        super(ParticleTypes.FLAME, properties);
+        super(ParticleTypes.FLAME, properties, SHAPE);
     }
 }
