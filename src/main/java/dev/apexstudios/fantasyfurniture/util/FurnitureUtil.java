@@ -43,11 +43,15 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
+import net.minecraft.client.renderer.MaterialMapper;
+import net.minecraft.client.renderer.Sheets;
+import net.minecraft.client.resources.model.Material;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.village.poi.PoiType;
 import net.minecraft.world.entity.ai.village.poi.PoiTypes;
 import net.minecraft.world.item.CreativeModeTab;
@@ -82,6 +86,7 @@ import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
@@ -431,11 +436,13 @@ public interface FurnitureUtil {
                 })
         );
 
-        // Vanilla seems to be registering these for us
-        /*modBus.addListener(FMLClientSetupEvent.class, event -> event.enqueueWork(() -> {
+        // Even though vanilla seems to be registering these for us most of the time
+        // there are times in which the game is crashing due to the material not being registered
+        // this is here to ensure that our materials are being registered
+        modBus.addListener(FMLClientSetupEvent.class, event -> event.enqueueWork(() -> {
             Names.block(registree, Names.HANGING_SIGN, block -> registerMaterial(woodType, Sheets.HANGING_SIGN_MATERIALS, Sheets.HANGING_SIGN_MAPPER, true));
             Names.block(registree, Names.SIGN, block -> registerMaterial(woodType, Sheets.SIGN_MATERIALS, Sheets.SIGN_MAPPER, false));
-        }));*/
+        }));
 
         NeoForge.EVENT_BUS.addListener(PlacementRenderEvent.DefaultBlockState.class, event -> {
             var blockState = event.defaultBlockState();
@@ -458,10 +465,13 @@ public interface FurnitureUtil {
         return getShape(shapes.get(facing), blockState, worldPos);
     }
 
-    /*private static void registerMaterial(WoodType woodType, Map<WoodType, Material> materials, MaterialMapper materialMapper, boolean hanging) {
-        if(materials.putIfAbsent(woodType, materialMapper.apply(ResourceLocation.parse(woodType.name()))) != null)
-            throw new IllegalStateException("Duplicate wood type material registration: " + woodType.name() + " (" + (hanging ? "hanging" : "standing") + ')');
-    }*/
+    private static void registerMaterial(WoodType woodType, Map<WoodType, Material> materials, MaterialMapper materialMapper, boolean hanging) {
+        // sometimes vanilla does register these for us
+        // which is causing the 'ISE' to be thrown
+        /*if(materials.putIfAbsent(woodType, materialMapper.apply(ResourceLocation.parse(woodType.name()))) != null)
+            throw new IllegalStateException("Duplicate wood type material registration: " + woodType.name() + " (" + (hanging ? "hanging" : "standing") + ')');*/
+        materials.put(woodType, materialMapper.apply(ResourceLocation.parse(woodType.name())));
+    }
 
     private static void registerPoi(Registree registree, ResourceKey<PoiType> poiType, String name, Predicate<BlockState> blockStateTest) {
         Names.block(registree, name, block -> ApexUtil.registerPoiBlockStates(poiType, block, blockStateTest));
