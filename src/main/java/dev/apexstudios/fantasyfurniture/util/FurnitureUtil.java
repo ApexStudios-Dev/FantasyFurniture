@@ -106,7 +106,7 @@ public interface FurnitureUtil {
     Supplier<BlockBehaviour.Properties> PAINTING_SMALL_PROPERTIES = PLANK_PROPERTIES;
     Supplier<BlockBehaviour.Properties> OVEN_PROPERTIES = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.SMOKER);
     Supplier<BlockBehaviour.Properties> CHEST_PROPERTIES = DRESSER_PROPERTIES;
-    Supplier<BlockBehaviour.Properties> FLOOR_LIGHT_PROPERTIES = mutating(PLANK_PROPERTIES, properties -> properties.pushReaction(PushReaction.BLOCK).lightLevel(blockState -> 14));
+    Supplier<BlockBehaviour.Properties> FLOOR_LIGHT_PROPERTIES = mutating(PLANK_PROPERTIES, properties -> properties.pushReaction(PushReaction.BLOCK).lightLevel(blockState -> MultiBlock.getIndex(blockState) == 1 ? 14 : 0));
     Supplier<BlockBehaviour.Properties> CHANDELIER_PROPERTIES = mutating(PLANK_PROPERTIES, properties -> properties.lightLevel(blockState -> 14));
     Supplier<BlockBehaviour.Properties> SHELF_PROPERTIES = PLANK_PROPERTIES;
     Supplier<BlockBehaviour.Properties> SOFA_PROPERTIES = PLANK_PROPERTIES;
