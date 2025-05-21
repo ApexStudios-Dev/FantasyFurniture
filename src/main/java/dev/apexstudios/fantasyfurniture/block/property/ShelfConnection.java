@@ -57,7 +57,6 @@ public enum ShelfConnection implements StringRepresentable {
         if(!otherBlockState.is(blockState.getBlock()))
             return false;
 
-        // TODO: should this be otherBlockState
-        return blockState.getValue(HorizontalDirectionalBlock.FACING) == facing;
+        return otherBlockState.getValue(HorizontalDirectionalBlock.FACING) == facing;
     }
 }
