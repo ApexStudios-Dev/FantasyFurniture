@@ -48,6 +48,6 @@ public final class BoneFloorLightBlock extends FloorLightBlock {
 
     private void addParticles(Level level, double x, double y, double z) {
         level.addParticle(ParticleTypes.SMOKE, x, y, z, 0D, 0D, 0D);
-        level.addParticle(ParticleTypes.FLAME, x, y, z, 0D, 0D, 0D);
+        level.addParticle(ParticleTypes.SOUL_FIRE_FLAME, x, y, z, 0D, 0D, 0D);
     }
 }

@@ -1,6 +1,7 @@
 package dev.apexstudios.fantasyfurniture.necrolord.block;
 
 import dev.apexstudios.fantasyfurniture.block.ChandelierBlock;
+import dev.apexstudios.fantasyfurniture.necrolord.NecrolordFurnitureSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
@@ -26,6 +27,6 @@ public final class NecrolordChandelierBlock extends ChandelierBlock {
 
     private void addParticles(Level level, double x, double y, double z) {
         level.addParticle(ParticleTypes.SMOKE, x, y, z, 0D, 0D, 0D);
-        level.addParticle(ParticleTypes.FLAME, x, y, z, 0D, 0D, 0D);
+        level.addParticle(NecrolordFurnitureSet.FLAME_PARTICLE.value(), x, y, z, 0D, 0D, 0D);
     }
 }

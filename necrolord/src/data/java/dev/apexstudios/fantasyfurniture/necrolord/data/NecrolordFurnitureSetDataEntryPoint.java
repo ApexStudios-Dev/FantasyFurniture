@@ -1,5 +1,6 @@
 package dev.apexstudios.fantasyfurniture.necrolord.data;
 
+import dev.apexstudios.apexcore.lib.data.ProviderTypes;
 import dev.apexstudios.apexcore.lib.data.ResourceGenerator;
 import dev.apexstudios.apexcore.lib.util.TagPair;
 import dev.apexstudios.fantasyfurniture.necrolord.NecrolordFurnitureSet;
@@ -43,6 +44,8 @@ public final class NecrolordFurnitureSetDataEntryPoint {
 
             FurnitureDataUtil.registerDataGen(context, pack);
             FurnitureClientDataUtil.registerDataGen(context, pack);
+
+            pack.providing(ProviderTypes.PARTICLES, (ctx, provider) -> provider.sprite(NecrolordFurnitureSet.FLAME_PARTICLE.value(), NecrolordFurnitureSet.FLAME_PARTICLE.getId()));
         });
     }
 }
