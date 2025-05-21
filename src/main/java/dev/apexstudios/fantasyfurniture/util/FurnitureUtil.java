@@ -136,7 +136,7 @@ public interface FurnitureUtil {
     Supplier<BlockBehaviour.Properties> SIGN_BLOCK_PROPERTIES = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.OAK_SIGN);
     Supplier<BlockBehaviour.Properties> WALL_SIGN_BLOCK_PROPERTIES = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.OAK_WALL_SIGN);
 
-    Supplier<Item.Properties> SIGN_ITEM_PROPERTIES = () -> new Item.Properties().stacksTo(16);
+    Supplier<Item.Properties> SIGN_ITEM_PROPERTIES = () -> new Item.Properties().stacksTo(16).useBlockDescriptionPrefix();
 
     static <TBlock extends Block> DeferredBlock<TBlock> planks(Registree registree, Function<BlockBehaviour.Properties, TBlock> factory) {
         var block = registree.registerBlock(Names.PLANKS, factory, PLANK_PROPERTIES);
