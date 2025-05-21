@@ -2,7 +2,11 @@ package dev.apexstudios.fantasyfurniture.dunmer.block;
 
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.WallLightBlock;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class DunmerWallLightBlock extends WallLightBlock {
@@ -18,5 +22,10 @@ public final class DunmerWallLightBlock extends WallLightBlock {
 
     public DunmerWallLightBlock(Properties properties) {
         super(ParticleTypes.FLAME, properties, SHAPE);
+    }
+
+    @Override
+    public void animateTick(BlockState blockState, Level level, BlockPos pos, RandomSource random) {
+        // NOOP
     }
 }
