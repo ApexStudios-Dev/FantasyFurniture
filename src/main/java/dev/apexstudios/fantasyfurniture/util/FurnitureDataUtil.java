@@ -100,7 +100,7 @@ public interface FurnitureDataUtil {
         context.block(DataType.RECIPE, FurnitureUtil.Names.DRESSER, block -> tag(provider, block, context.mineableTag, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED));
         context.block(DataType.RECIPE, FurnitureUtil.Names.LOCKBOX, block -> tag(provider, block, context.mineableTag));
         context.block(DataType.RECIPE, FurnitureUtil.Names.DRAWER, block -> tag(provider, block, context.mineableTag));
-        context.block(DataType.RECIPE, FurnitureUtil.Names.CHAIR, block -> tag(provider, block, context.mineableTag, ApexTags.Blocks.SEAT_ORIGIN_ONLY, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.CHAIR, block -> tag(provider, block, context.mineableTag, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED));
         context.block(DataType.RECIPE, FurnitureUtil.Names.BOOKSHELF, block -> tag(provider, block, context.mineableTag, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED, BlockTags.ENCHANTMENT_POWER_PROVIDER));
         context.block(DataType.RECIPE, FurnitureUtil.Names.BED_SINGLE, block -> tag(provider, block, context.mineableTag, BlockTags.BEDS, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED));
         context.block(DataType.RECIPE, FurnitureUtil.Names.BED_DOUBLE, block -> tag(provider, block, context.mineableTag, BlockTags.BEDS, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED));
@@ -118,7 +118,7 @@ public interface FurnitureDataUtil {
         context.block(DataType.RECIPE, FurnitureUtil.Names.SOFA, block -> tag(provider, block, context.mineableTag, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST));
         context.block(DataType.RECIPE, FurnitureUtil.Names.COUNTER, block -> tag(provider, block, context.mineableTag, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST));
         context.block(DataType.RECIPE, FurnitureUtil.Names.WALL_LIGHT, block -> tag(provider, block, context.mineableTag, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST));
-        context.block(DataType.RECIPE, FurnitureUtil.Names.BENCH, block -> tag(provider, block, context.mineableTag, ApexTags.Blocks.SEAT_ORIGIN_ONLY, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.BENCH, block -> tag(provider, block, context.mineableTag, ApexTags.Blocks.SEAT_PER_BLOCK, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED));
         context.block(DataType.RECIPE, FurnitureUtil.Names.WARDROBE, block -> tag(provider, block, context.mineableTag, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED));
         context.block(DataType.RECIPE, FurnitureUtil.Names.TABLE, block -> tag(provider, block, context.mineableTag, ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST));
         context.block(DataType.RECIPE, FurnitureUtil.Names.STAIRS, block -> tag(provider, block, context.mineableTag, context.stairsTag));

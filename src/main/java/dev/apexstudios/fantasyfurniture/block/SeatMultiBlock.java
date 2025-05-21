@@ -2,16 +2,19 @@ package dev.apexstudios.fantasyfurniture.block;
 
 import dev.apexstudios.apexcore.lib.block.Seat;
 import dev.apexstudios.apexcore.lib.multiblock.MultiBlock;
+import dev.apexstudios.apexcore.lib.util.ApexTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class SeatMultiBlock extends SeatBlock implements Seat, MultiBlock {
@@ -57,7 +60,20 @@ public abstract class SeatMultiBlock extends SeatBlock implements Seat, MultiBlo
     }
 
     @Override
+    public Vec3 getSeatPosition(BlockGetter level, BlockPos pos, BlockState blockState) {
+        if(blockState.is(ApexTags.Blocks.SEAT_PER_BLOCK))
+            return Seat.super.getSeatPosition(level, pos, blockState);
+
+        var origin = MultiBlock.getOrigin(pos, blockState);
+        var originBlockState = level.getBlockState(origin);
+        return Seat.super.getSeatPosition(level, origin, originBlockState);
+    }
+
+    @Override
     public void setSeatOccupied(Level level, BlockPos pos, BlockState blockState, boolean occupied) {
-        MultiBlock.forEachPos(pos, blockState, (otherPos, otherBlockState) -> Seat.super.setSeatOccupied(level, otherPos, otherBlockState, occupied));
+        if(blockState.is(ApexTags.Blocks.SEAT_PER_BLOCK))
+            Seat.super.setSeatOccupied(level, pos, blockState, occupied);
+        else
+            MultiBlock.forEachPos(pos, blockState, (otherPos, otherBlockState) -> Seat.super.setSeatOccupied(level, otherPos, otherBlockState, occupied));
     }
 }
