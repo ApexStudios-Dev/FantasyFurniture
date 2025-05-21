@@ -6,8 +6,12 @@ import dev.apexstudios.apexcore.lib.multiblock.MultiBlockProperty;
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.OvenBlock;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -150,5 +154,22 @@ public final class DunmerOvenBlock extends OvenBlock implements MultiBlock {
             player.openMenu(blockEntity);
             player.awardStat(Stats.INTERACT_WITH_SMOKER);
         }
+    }
+
+    @Override
+    public void animateTick(BlockState blockState, Level level, BlockPos pos, RandomSource random) {
+        if(!blockState.getValue(LIT) || MultiBlock.getIndex(blockState) != 0)
+            return;
+
+        var facing = blockState.getValue(FACING).getCounterClockWise();
+
+        var x = pos.getX() + .5D + (.5D * facing.getStepX());
+        var y = pos.getY() + .15D;
+        var z = pos.getZ() + .5D + (.5D * facing.getStepZ());
+
+        if (random.nextDouble() < .1D)
+            level.playLocalSound(x, y, z, SoundEvents.SMOKER_SMOKE, SoundSource.BLOCKS, 1F, 1F, false);
+
+        level.addParticle(ParticleTypes.SMOKE, x, y + 1.1D, z, 0D, 0D, 0D);
     }
 }
