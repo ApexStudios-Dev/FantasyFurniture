@@ -406,6 +406,11 @@ public interface FurnitureUtil {
             registerPoi(registree, PoiTypes.HOME, Names.BED_SINGLE, blockState -> blockState.getValue(BedBlock.PART) == BedPart.HEAD);
             registerPoi(registree, PoiTypes.HOME, Names.BED_DOUBLE, blockState -> blockState.getValue(BedBlock.PART) == BedPart.HEAD);
             registerPoi(registree, PoiTypes.BUTCHER, Names.OVEN, Predicates.alwaysTrue());
+
+            // on random launches our wood types are not being registered correctly
+            // leading to null wood types during game initialization
+            // doubly register to attempt to fix this
+            WoodType.register(woodType);
         }));
 
         modBus.addListener(RegisterClientExtensionsEvent.class, event -> event.registerBlock(
