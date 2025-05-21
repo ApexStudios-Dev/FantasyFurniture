@@ -6,13 +6,11 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.Shapes;
 
 public final class BoneChandelierBlock extends ChandelierBlock {
-    public static final VoxelShape SHAPE = box(0D, 0D, 0D, 16D, 16D, 16D);
-
     public BoneChandelierBlock(Properties properties) {
-        super(properties, SHAPE);
+        super(properties.noOcclusion(), Shapes.block());
     }
 
     @Override
