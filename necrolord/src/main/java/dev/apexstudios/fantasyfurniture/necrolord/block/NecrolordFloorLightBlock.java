@@ -3,6 +3,7 @@ package dev.apexstudios.fantasyfurniture.necrolord.block;
 import dev.apexstudios.apexcore.lib.multiblock.MultiBlock;
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.FloorLightBlock;
+import dev.apexstudios.fantasyfurniture.necrolord.NecrolordFurnitureSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
@@ -46,6 +47,6 @@ public final class NecrolordFloorLightBlock extends FloorLightBlock {
 
     private void addParticles(Level level, double x, double y, double z) {
         level.addParticle(ParticleTypes.SMOKE, x, y, z, 0D, 0D, 0D);
-        level.addParticle(ParticleTypes.FLAME, x, y, z, 0D, 0D, 0D);
+        level.addParticle(NecrolordFurnitureSet.FLAME_PARTICLE.value(), x, y, z, 0D, 0D, 0D);
     }
 }
