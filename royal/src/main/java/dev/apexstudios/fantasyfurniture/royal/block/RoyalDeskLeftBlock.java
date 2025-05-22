@@ -1,10 +1,9 @@
 package dev.apexstudios.fantasyfurniture.royal.block;
 
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
-import dev.apexstudios.fantasyfurniture.block.DeskBlock;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public final class RoyalDeskLeftBlock extends DeskBlock {
+public final class RoyalDeskLeftBlock extends RoyalDeskBlock {
     public static final VoxelShape SHAPE = ApexShapes.join(
             box(-16D, 14D, 0D, 16D, 16D, 16D),
             box(13D, 11D, 1D, 15D, 14D, 4D),

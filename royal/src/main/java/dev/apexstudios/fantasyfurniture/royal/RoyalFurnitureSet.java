@@ -7,6 +7,7 @@ import dev.apexstudios.fantasyfurniture.royal.block.RoyalBedDoubleBlock;
 import dev.apexstudios.fantasyfurniture.royal.block.RoyalBedSingleBlock;
 import dev.apexstudios.fantasyfurniture.royal.block.RoyalBenchBlock;
 import dev.apexstudios.fantasyfurniture.royal.block.RoyalBookshelfBlock;
+import dev.apexstudios.fantasyfurniture.royal.block.RoyalCarpetBlock;
 import dev.apexstudios.fantasyfurniture.royal.block.RoyalChairBlock;
 import dev.apexstudios.fantasyfurniture.royal.block.RoyalChandelierBlock;
 import dev.apexstudios.fantasyfurniture.royal.block.RoyalChestBlock;
@@ -28,11 +29,12 @@ import dev.apexstudios.fantasyfurniture.royal.block.RoyalStoolBlock;
 import dev.apexstudios.fantasyfurniture.royal.block.RoyalTableBlock;
 import dev.apexstudios.fantasyfurniture.royal.block.RoyalWallLightBlock;
 import dev.apexstudios.fantasyfurniture.royal.block.RoyalWardrobeBlock;
+import dev.apexstudios.fantasyfurniture.royal.block.RoyalWoolBlock;
 import dev.apexstudios.fantasyfurniture.util.FurnitureUtil;
+import java.util.List;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.CarpetBlock;
 import net.minecraft.world.level.block.CeilingHangingSignBlock;
 import net.minecraft.world.level.block.FenceBlock;
 import net.minecraft.world.level.block.FenceGateBlock;
@@ -61,8 +63,8 @@ public class RoyalFurnitureSet {
             .build(ID + ":royal");
 
     public static final DeferredBlock<Block> BRICKS = FurnitureUtil.bricks(REGISTREE, Block::new);
-    public static final DeferredBlock<Block> WOOL = FurnitureUtil.wool(REGISTREE, Block::new);
-    public static final DeferredBlock<CarpetBlock> CARPET = FurnitureUtil.carpet(REGISTREE, CarpetBlock::new);
+    public static final DeferredBlock<RoyalWoolBlock> WOOL = FurnitureUtil.wool(REGISTREE, RoyalWoolBlock::new);
+    public static final DeferredBlock<RoyalCarpetBlock> CARPET = FurnitureUtil.carpet(REGISTREE, RoyalCarpetBlock::new);
     public static final DeferredBlock<RoyalDresserBlock> DRESSER = FurnitureUtil.dresser(REGISTREE, RoyalDresserBlock::new);
     public static final DeferredBlock<RoyalStoolBlock> STOOL = FurnitureUtil.stool(REGISTREE, RoyalStoolBlock::new);
     public static final DeferredBlock<RoyalCushionBlock> CUSION = FurnitureUtil.cushion(REGISTREE, RoyalCushionBlock::new);
@@ -99,6 +101,15 @@ public class RoyalFurnitureSet {
     public static final FurnitureUtil.SignPair<StandingSignBlock, WallSignBlock> SIGN = FurnitureUtil.sign(REGISTREE, WOOD_TYPE);
 
     public static final ResourceKey<CreativeModeTab> CREATIVE_MODE_TAB = FurnitureUtil.creativeModeTab(REGISTREE, BED_SINGLE);
+
+    public static final List<DeferredBlock<?>> DYEABLE_BLOCKS = List.of(
+            WOOL, CARPET, DRESSER, STOOL,
+            CUSION, LOCKBOX, DRAWER, CHAIR,
+            BOOKSHELF, BED_SINGLE, BED_DOUBLE, DOOR_SINGLE,
+            DOOR_DOUBLE, DESK_LEFT, DESK_RIGHT, OVEN,
+            CHEST, SHELF, SOFA, COUNTER,
+            BENCH, WARDROBE, TABLE
+    );
 
     public RoyalFurnitureSet(IEventBus modBus) {
         FurnitureUtil.registerEvents(modBus, REGISTREE, WOOD_TYPE);
