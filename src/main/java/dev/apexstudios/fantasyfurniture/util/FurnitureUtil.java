@@ -414,7 +414,11 @@ public interface FurnitureUtil {
         }));
 
         modBus.addListener(RegisterClientExtensionsEvent.class, event -> event.registerBlock(
-                ClientMultiBlockExtensions.INSTANCE, Names.blocks(registree, Names.BED_DOUBLE, Names.DRESSER))
+                ClientMultiBlockExtensions.INSTANCE, Names.blocks(registree,
+                        Names.DRESSER, Names.CHAIR, Names.BOOKSHELF, Names.BED_DOUBLE,
+                        Names.DESK_LEFT, Names.DESK_RIGHT, Names.PAINTING_WIDE, Names.CHEST,
+                        Names.FLOOR_LIGHT, Names.BENCH, Names.WARDROBE
+                ))
         );
 
         modBus.addListener(RegisterCapabilitiesEvent.class, event -> Names.block(
