@@ -253,10 +253,10 @@ public interface FurnitureClientDataUtil {
 
                     var suffix = connectionId.isBlank() ? "" : '_' + connectionId;
                     return BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block, suffix))
-                            .with(variant -> variant.withYRot(switch (rotation) {
-                                case CLOCKWISE_90 -> Quadrant.R90;
-                                case CLOCKWISE_180 -> Quadrant.R180;
-                                case COUNTERCLOCKWISE_90 -> Quadrant.R270;
+                            .with(variant -> variant.withYRot(switch (facing) {
+                                case EAST -> Quadrant.R90;
+                                case SOUTH -> Quadrant.R180;
+                                case WEST -> Quadrant.R270;
                                 default -> Quadrant.R0;
                             }));
                 }))

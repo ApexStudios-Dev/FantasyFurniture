@@ -12,7 +12,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -130,7 +129,6 @@ public abstract class TableBlock extends SimpleHorizontalDirectionalBlock {
     private static VoxelShape getShape(BlockState blockState, VoxelShape top, VoxelShape leg) {
         var result = top;
 
-        var facing = blockState.getValue(FACING);
         var north = blockState.getValue(NORTH);
         var east = blockState.getValue(EAST);
         var south = blockState.getValue(SOUTH);
@@ -167,7 +165,7 @@ public abstract class TableBlock extends SimpleHorizontalDirectionalBlock {
                 face = Direction.NORTH;
 
             if(face != null)
-                result = ApexShapes.join(result, rotateShape(leg, face, facing), rotateShape(leg, face.getClockWise(), facing));
+                result = ApexShapes.join(result, ApexShapes.rotateHorizontal(leg, face), ApexShapes.rotateHorizontal(leg, face.getClockWise()));
         }
         // corners
         else if(count == 2) {
@@ -183,20 +181,9 @@ public abstract class TableBlock extends SimpleHorizontalDirectionalBlock {
                 face = Direction.NORTH;
 
             if(face != null)
-                result = ApexShapes.join(result, rotateShape(leg, face, facing));
+                result = ApexShapes.join(result, ApexShapes.rotateHorizontal(leg, face));
         }
 
         return result;
-    }
-
-    private static VoxelShape rotateShape(VoxelShape shape, Direction direction, Direction facing) {
-        var rotation = switch (getFacingForConnection(facing)) {
-            case EAST -> Rotation.CLOCKWISE_90;
-            case SOUTH -> Rotation.CLOCKWISE_180;
-            case WEST -> Rotation.COUNTERCLOCKWISE_90;
-            default -> Rotation.NONE;
-        };
-
-        return ApexShapes.rotateHorizontal(shape, rotation.rotate(direction));
     }
 }
