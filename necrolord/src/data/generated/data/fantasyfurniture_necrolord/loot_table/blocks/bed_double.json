@@ -10,15 +10,6 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "block": "fantasyfurniture_necrolord:bed_double",
-              "condition": "minecraft:block_state_property",
-              "properties": {
-                "part": "head"
-              }
-            }
-          ],
           "name": "fantasyfurniture_necrolord:bed_double"
         }
       ],
