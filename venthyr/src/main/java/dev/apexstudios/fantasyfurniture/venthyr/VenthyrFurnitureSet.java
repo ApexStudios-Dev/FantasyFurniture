@@ -29,6 +29,7 @@ import dev.apexstudios.fantasyfurniture.venthyr.block.VenthyrStoolBlock;
 import dev.apexstudios.fantasyfurniture.venthyr.block.VenthyrTableBlock;
 import dev.apexstudios.fantasyfurniture.venthyr.block.VenthyrWallLightBlock;
 import dev.apexstudios.fantasyfurniture.venthyr.block.VenthyrWardrobeBlock;
+import net.minecraft.Util;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.block.Block;
@@ -93,6 +94,8 @@ public class VenthyrFurnitureSet {
     public static final DeferredBlock<PressurePlateBlock> PRESSURE_PLATE = FurnitureUtil.pressurePlate(REGISTREE, WOOD_TYPE.setType());
     public static final FurnitureUtil.SignPair<CeilingHangingSignBlock, WallHangingSignBlock> HANGING_SIGN = FurnitureUtil.hangingSign(REGISTREE, WOOD_TYPE);
     public static final FurnitureUtil.SignPair<StandingSignBlock, WallSignBlock> SIGN = FurnitureUtil.sign(REGISTREE, WOOD_TYPE);
+
+    public static final DeferredBlock<VenthyrTableBlock> TABLE_CLOTH = Util.make(REGISTREE.registerBlock(FurnitureUtil.Names.TABLE + "_cloth", VenthyrTableBlock::new, FurnitureUtil.TABLE_PROPERTIES), REGISTREE::registerSimpleBlockItem);
 
     public static final ResourceKey<CreativeModeTab> CREATIVE_MODE_TAB = FurnitureUtil.creativeModeTab(REGISTREE, BED_SINGLE);
 

@@ -1,6 +1,8 @@
 package dev.apexstudios.fantasyfurniture.venthyr.data;
 
+import dev.apexstudios.apexcore.lib.data.ProviderTypes;
 import dev.apexstudios.apexcore.lib.data.ResourceGenerator;
+import dev.apexstudios.apexcore.lib.util.ApexTags;
 import dev.apexstudios.apexcore.lib.util.TagPair;
 import dev.apexstudios.fantasyfurniture.util.FurnitureClientDataUtil;
 import dev.apexstudios.fantasyfurniture.util.FurnitureDataUtil;
@@ -43,6 +45,18 @@ public final class VenthyrFurnitureSetDataEntryPoint {
 
             FurnitureDataUtil.registerDataGen(context, pack);
             FurnitureClientDataUtil.registerDataGen(context, pack);
+
+            pack.providing(ProviderTypes.LOOT_TABLE, (ctx, provider) -> provider
+                    .block(blocks -> blocks.dropSelf(VenthyrFurnitureSet.TABLE_CLOTH.value()))
+            ).providing(ProviderTypes.BLOCK_TAGS, (ctx, provider) -> FurnitureDataUtil
+                    .tag(provider, VenthyrFurnitureSet.TABLE_CLOTH.value(), context.mineableTag(), ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST)
+            ).providing(ProviderTypes.RECIPES, (ctx, provider) -> FurnitureDataUtil.furnitureStationRecipe(
+                    context, VenthyrFurnitureSet.TABLE_CLOTH, provider, ctx.enabledFeatures()
+            )).providing(ProviderTypes.MODELS, (ctx, provider) -> FurnitureClientDataUtil
+                    .createTableModel(VenthyrFurnitureSet.TABLE_CLOTH.value(), provider.blockModels())
+            ).providing(ProviderTypes.LANGUAGE, (ctx, provider) -> provider
+                    .addBlock(VenthyrFurnitureSet.TABLE_CLOTH, context.englishName() + " Table Cloth")
+            );
         });
     }
 }
