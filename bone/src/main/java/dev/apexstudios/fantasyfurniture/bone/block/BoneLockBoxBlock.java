@@ -1,0 +1,20 @@
+package dev.apexstudios.fantasyfurniture.bone.block;
+
+import dev.apexstudios.apexcore.lib.util.ApexShapes;
+import dev.apexstudios.fantasyfurniture.block.LockBoxBlock;
+import net.minecraft.world.phys.shapes.VoxelShape;
+
+public final class BoneLockBoxBlock extends LockBoxBlock {
+    public static final VoxelShape SHAPE = ApexShapes.join(
+            box(2D, 0D, 4D, 5D, 2D, 7D),
+            box(2D, 0D, 9D, 5D, 2D, 12D),
+            box(11D, 0D, 9D, 14D, 2D, 12D),
+            box(11D, 0D, 4D, 14D, 2D, 7D),
+            box(1D, 2D, 3D, 15D, 4D, 13D),
+            box(1.5D, 4D, 3.5D, 14.5D, 12.25D, 12.5D)
+    );
+
+    public BoneLockBoxBlock(Properties properties) {
+        super(properties, SHAPE);
+    }
+}

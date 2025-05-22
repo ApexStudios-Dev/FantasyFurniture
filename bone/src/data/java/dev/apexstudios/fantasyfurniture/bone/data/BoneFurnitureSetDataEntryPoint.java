@@ -1,10 +1,10 @@
 package dev.apexstudios.fantasyfurniture.bone.data;
 
-import apexstudios.fantasyfurniture.bone.BoneFurnitureSet;
 import dev.apexstudios.apexcore.lib.data.ResourceGenerator;
 import dev.apexstudios.apexcore.lib.data.pack.FeaturePackGenerator;
 import dev.apexstudios.apexcore.lib.util.TagPair;
 import dev.apexstudios.fantasyfurniture.FantasyFurniture;
+import dev.apexstudios.fantasyfurniture.bone.BoneFurnitureSet;
 import dev.apexstudios.fantasyfurniture.util.FurnitureClientDataUtil;
 import dev.apexstudios.fantasyfurniture.util.FurnitureDataUtil;
 import dev.apexstudios.fantasyfurniture.util.FurnitureUtil;
