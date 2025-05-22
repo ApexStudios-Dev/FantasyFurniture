@@ -60,7 +60,7 @@ public interface FurnitureDataUtil {
             context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.CHAIR, blocks::dropSelf);
             context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.BOOKSHELF, block -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)));
             context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.BED_SINGLE, block -> blocks.accept(block, blocks.createSinglePropConditionTable(block, BedBlock.PART, BedPart.HEAD)));
-            context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.BED_DOUBLE, block -> blocks.accept(block, blocks.createSinglePropConditionTable(block, BedBlock.PART, BedPart.HEAD)));
+            context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.BED_DOUBLE, blocks::dropSelf);
             context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.DOOR_SINGLE, block -> blocks.accept(block, blocks.createDoorTable(block)));
             context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.DOOR_DOUBLE, block -> blocks.accept(block, blocks.createDoorTable(block)));
             context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.DESK_LEFT, block -> blocks.accept(block, blocks.createNameableBlockEntityTable(block)));
