@@ -1,5 +1,6 @@
 package dev.apexstudios.fantasyfurniture.dunmer;
 
+import dev.apexstudios.apexcore.lib.multiblock.ClientMultiBlockExtensions;
 import dev.apexstudios.apexcore.lib.registree.Registree;
 import dev.apexstudios.apexcore.lib.registree.holder.DeferredBlock;
 import dev.apexstudios.apexcore.lib.util.WoodTypeBuilder;
@@ -46,6 +47,7 @@ import net.minecraft.world.level.block.WallSignBlock;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 
 @Mod(DunmerFurnitureSet.ID)
 public class DunmerFurnitureSet {
@@ -98,5 +100,9 @@ public class DunmerFurnitureSet {
 
     public DunmerFurnitureSet(IEventBus modBus) {
         FurnitureUtil.registerEvents(modBus, REGISTREE, WOOD_TYPE);
+
+        modBus.addListener(RegisterClientExtensionsEvent.class, event -> event.registerBlock(
+                ClientMultiBlockExtensions.INSTANCE, OVEN.value()
+        ));
     }
 }
