@@ -30,7 +30,7 @@ issueTrackerURL="https://github.com/ApexStudios-Dev/Issues/issues"
 [[dependencies.fantasyfurniture]]
     modId="apexcore"
     type="required"
-    versionRange="[21.6,21.7)"
+    versionRange="[21.5-beta,21.6)"
     [dependencies.fantasyfurniture.mc-publish]
         modrinth="xl3myxch"
         curseforge="550778"
