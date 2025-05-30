@@ -4,7 +4,7 @@ import dev.apexstudios.apexcore.lib.menu.SimpleMenuScreen;
 import dev.apexstudios.fantasyfurniture.FantasyFurniture;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -72,15 +72,15 @@ public final class FurnitureStationScreen extends AbstractContainerScreen<Furnit
     protected void renderBg(GuiGraphics graphics, float partialTick, int mouseX, int mouseY) {
         renderWindow(graphics);
 
-        graphics.blitSprite(RenderType::guiTextured, SPRITE_ARROW, recipeX + (18 * 3) + 15, recipeY - 18 - 7, 60, 16);
-        graphics.blitSprite(RenderType::guiTextured, SPRITE_RECIPE_BACKGROUND, recipeBackgroundX, recipeBackgroundY, recipeBackgroundWidth, recipeBackgroundHeight);
-        graphics.blitSprite(RenderType::guiTextured, SPRITE_SCROLLER_BACKGROUND, scrollBarX, scrollBarY, scrollBarBackgroundWidth, scrollBarBackgroundHeight);
+        graphics.blitSprite(RenderPipelines.GUI_TEXTURED, SPRITE_ARROW, recipeX + (18 * 3) + 15, recipeY - 18 - 7, 60, 16);
+        graphics.blitSprite(RenderPipelines.GUI_TEXTURED, SPRITE_RECIPE_BACKGROUND, recipeBackgroundX, recipeBackgroundY, recipeBackgroundWidth, recipeBackgroundHeight);
+        graphics.blitSprite(RenderPipelines.GUI_TEXTURED, SPRITE_SCROLLER_BACKGROUND, scrollBarX, scrollBarY, scrollBarBackgroundWidth, scrollBarBackgroundHeight);
 
         renderButtons(graphics, mouseX, mouseY, false);
 
         var k = (int) (57F * scrollOffs);
         var scrollerSprite = isScrollBarActive() ? SPRITE_SCROLLER : SPRITE_SCROLLER_DISABLED;
-        graphics.blitSprite(RenderType::guiTextured, scrollerSprite, scrollBarX + 1, scrollBarY + 1 + k, scrollBarWidth, scrollBarHeight);
+        graphics.blitSprite(RenderPipelines.GUI_TEXTURED, scrollerSprite, scrollBarX + 1, scrollBarY + 1 + k, scrollBarWidth, scrollBarHeight);
 
         renderButtons(graphics, mouseX, mouseY, true);
     }
@@ -103,7 +103,7 @@ public final class FurnitureStationScreen extends AbstractContainerScreen<Furnit
                 var slotY = recipeY + slotIndex / recipeColumns * AbstractContainerMenu.SLOT_SIZE;
 
                 if (mouseX >= slotX && mouseY >= slotY && mouseX < slotX + AbstractContainerMenu.SLOT_SIZE && mouseY < slotY + AbstractContainerMenu.SLOT_SIZE) {
-                    guiGraphics.renderTooltip(font, displayStack(index), mouseX, mouseY);
+                    guiGraphics.setTooltipForNextFrame(font, displayStack(index), mouseX, mouseY);
                     break;
                 }
             }
@@ -199,15 +199,15 @@ public final class FurnitureStationScreen extends AbstractContainerScreen<Furnit
     }
 
     private void renderWindow(GuiGraphics graphics) {
-        graphics.pose().pushPose();
-        graphics.pose().translate(leftPos, topPos, 0);
-        graphics.blitSprite(RenderType::guiTextured, SimpleMenuScreen.WINDOW_SPRITE, 0, 0, imageWidth, imageHeight + 1);
+        graphics.pose().pushMatrix();
+        graphics.pose().translate(leftPos, topPos);
+        graphics.blitSprite(RenderPipelines.GUI_TEXTURED, SimpleMenuScreen.WINDOW_SPRITE, 0, 0, imageWidth, imageHeight + 1);
 
         for(var slot : menu.slots) {
-            graphics.blitSprite(RenderType::guiTextured, SimpleMenuScreen.SLOT_SPRITE, slot.x - 1, slot.y - 1, AbstractContainerMenu.SLOT_SIZE, AbstractContainerMenu.SLOT_SIZE);
+            graphics.blitSprite(RenderPipelines.GUI_TEXTURED, SimpleMenuScreen.SLOT_SPRITE, slot.x - 1, slot.y - 1, AbstractContainerMenu.SLOT_SIZE, AbstractContainerMenu.SLOT_SIZE);
         }
 
-        graphics.pose().popPose();
+        graphics.pose().popMatrix();
     }
 
     private void renderButtons(GuiGraphics graphics, int mouseX, int mouseY, boolean drawItem) {
@@ -230,7 +230,7 @@ public final class FurnitureStationScreen extends AbstractContainerScreen<Furnit
                 else if (mouseX >= slotX && mouseY >= slotY && mouseX < slotX + AbstractContainerMenu.SLOT_SIZE && mouseY < slotY + AbstractContainerMenu.SLOT_SIZE)
                     slotSprite = SPRITE_RECIPE_HIGHLIGHTED;
 
-                graphics.blitSprite(RenderType::guiTextured, slotSprite, slotX, slotY, AbstractContainerMenu.SLOT_SIZE, AbstractContainerMenu.SLOT_SIZE);
+                graphics.blitSprite(RenderPipelines.GUI_TEXTURED, slotSprite, slotX, slotY, AbstractContainerMenu.SLOT_SIZE, AbstractContainerMenu.SLOT_SIZE);
             }
         }
     }

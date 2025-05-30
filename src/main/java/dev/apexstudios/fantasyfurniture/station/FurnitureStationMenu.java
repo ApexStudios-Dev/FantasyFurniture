@@ -233,7 +233,7 @@ public final class FurnitureStationMenu extends AbstractContainerMenu {
             if(!(player instanceof ServerPlayer sPlayer))
                 return false;
 
-            var recipes = sPlayer.serverLevel().recipeAccess().recipeMap().byType(FurnitureStationSetup.RECIPE_TYPE.value());
+            var recipes = sPlayer.level().recipeAccess().recipeMap().byType(FurnitureStationSetup.RECIPE_TYPE.value());
 
             for(var holder : recipes) {
                 var ingredient = ingredientGetter.apply(holder.value());
