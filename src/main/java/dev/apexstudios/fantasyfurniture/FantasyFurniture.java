@@ -2,7 +2,6 @@ package dev.apexstudios.fantasyfurniture;
 
 import dev.apexstudios.apexcore.lib.registree.Registree;
 import dev.apexstudios.fantasyfurniture.set.BlockTypes;
-import dev.apexstudios.fantasyfurniture.station.ClientboundSyncFurnitureStation;
 import dev.apexstudios.fantasyfurniture.station.FurnitureStationSetup;
 import java.util.Map;
 import net.minecraft.core.registries.Registries;
@@ -19,7 +18,6 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
-import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 
 @Mod(FantasyFurniture.ID)
 public final class FantasyFurniture {
@@ -45,11 +43,6 @@ public final class FantasyFurniture {
         FurnitureBlockEntities.register(modBus);
         FurnitureMenus.register(modBus);
         BlockTypes.register();
-
-        modBus.addListener(RegisterPayloadHandlersEvent.class, event -> event
-                .registrar("1.0")
-                .playToClient(ClientboundSyncFurnitureStation.TYPE, ClientboundSyncFurnitureStation.STREAM_CODEC, ClientboundSyncFurnitureStation::handle)
-        );
 
         modBus.addListener(AddPackFindersEvent.class, event -> {
             event.addPackFinders(

@@ -15,14 +15,14 @@ import net.minecraft.world.item.ItemStack;
 import org.joml.Math;
 
 public final class FurnitureStationScreen extends AbstractContainerScreen<FurnitureStationMenu> {
-    private static final ResourceLocation SPRITE_ARROW = FantasyFurniture.identifier("container/furniture_station/arrow");
-    private static final ResourceLocation SPRITE_RECIPE = FantasyFurniture.identifier("container/furniture_station/recipe");
-    private static final ResourceLocation SPRITE_RECIPE_BACKGROUND = FantasyFurniture.identifier("container/furniture_station/recipe_background");
-    private static final ResourceLocation SPRITE_RECIPE_HIGHLIGHTED = FantasyFurniture.identifier("container/furniture_station/recipe_highlighted");
-    private static final ResourceLocation SPRITE_RECIPE_SELECTED = FantasyFurniture.identifier("container/furniture_station/recipe_selected");
-    private static final ResourceLocation SPRITE_SCROLLER = FantasyFurniture.identifier("container/furniture_station/scroller");
-    private static final ResourceLocation SPRITE_SCROLLER_BACKGROUND = FantasyFurniture.identifier("container/furniture_station/scroller_background");
-    private static final ResourceLocation SPRITE_SCROLLER_DISABLED = FantasyFurniture.identifier("container/furniture_station/scroller_disabled");
+    public static final ResourceLocation SPRITE_ARROW = FantasyFurniture.identifier("container/furniture_station/arrow");
+    public static final ResourceLocation SPRITE_RECIPE = FantasyFurniture.identifier("container/furniture_station/recipe");
+    public static final ResourceLocation SPRITE_RECIPE_BACKGROUND = FantasyFurniture.identifier("container/furniture_station/recipe_background");
+    public static final ResourceLocation SPRITE_RECIPE_HIGHLIGHTED = FantasyFurniture.identifier("container/furniture_station/recipe_highlighted");
+    public static final ResourceLocation SPRITE_RECIPE_SELECTED = FantasyFurniture.identifier("container/furniture_station/recipe_selected");
+    public static final ResourceLocation SPRITE_SCROLLER = FantasyFurniture.identifier("container/furniture_station/scroller");
+    public static final ResourceLocation SPRITE_SCROLLER_BACKGROUND = FantasyFurniture.identifier("container/furniture_station/scroller_background");
+    public static final ResourceLocation SPRITE_SCROLLER_DISABLED = FantasyFurniture.identifier("container/furniture_station/scroller_disabled");
 
     private float scrollOffs = 0F;
     private boolean scrolling = false;
@@ -258,9 +258,6 @@ public final class FurnitureStationScreen extends AbstractContainerScreen<Furnit
         if(recipes.isEmpty() || index > recipes.size())
             return ItemStack.EMPTY;
 
-        if(!(recipes.get(index).value() instanceof FurnitureStationRecipe recipe))
-            return ItemStack.EMPTY;
-
-        return recipe.result();
+        return recipes.get(index).value().result();
     }
 }

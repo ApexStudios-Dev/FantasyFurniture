@@ -19,7 +19,6 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
 public final class FurnitureStationMenu extends AbstractContainerMenu {
@@ -33,7 +32,7 @@ public final class FurnitureStationMenu extends AbstractContainerMenu {
     private Runnable listener = Runnables.doNothing();
     private long lastSoundTime = 0L;
 
-    private List<RecipeHolder<?>> recipes = Collections.emptyList();
+    private List<RecipeHolder<FurnitureStationRecipe>> recipes = Collections.emptyList();
 
     FurnitureStationMenu(int windowId, Inventory inventory, ContainerLevelAccess levelAccess) {
         super(FurnitureStationSetup.MENU.value(), windowId);
@@ -91,7 +90,7 @@ public final class FurnitureStationMenu extends AbstractContainerMenu {
         return selectedRecipe.get();
     }
 
-    public List<RecipeHolder<?>> recipes() {
+    public List<RecipeHolder<FurnitureStationRecipe>> recipes() {
         return recipes;
     }
 
@@ -179,32 +178,20 @@ public final class FurnitureStationMenu extends AbstractContainerMenu {
         clearContainer(player, inputContainer);
     }
 
-    private void setupRecipes() {
-        if (!(player instanceof ServerPlayer sPlayer))
-            return;
+    private FurnitureStationRecipeInput asInput() {
+        return new FurnitureStationRecipeInput(
+                inputContainer.getItem(FurnitureStationSetup.SLOT_PLANKS),
+                inputContainer.getItem(FurnitureStationSetup.SLOT_WOOL),
+                inputContainer.getItem(FurnitureStationSetup.SLOT_BINDING_AGENT)
+        );
+    }
 
+    private void setupRecipes() {
         recipes = Collections.emptyList();
         resultContainer.setItem(0, ItemStack.EMPTY);
         selectedRecipe.set(-1);
 
-        var level = sPlayer.serverLevel();
-
-        recipes = List.copyOf(level.recipeAccess().recipeMap().getRecipesFor(
-                FurnitureStationSetup.RECIPE_TYPE.value(),
-                new FurnitureStationRecipeInput(
-                        inputContainer.getItem(FurnitureStationSetup.SLOT_PLANKS),
-                        inputContainer.getItem(FurnitureStationSetup.SLOT_WOOL),
-                        inputContainer.getItem(FurnitureStationSetup.SLOT_BINDING_AGENT)
-                ),
-                level
-        ).toList());
-
-        PacketDistributor.sendToPlayer(sPlayer, new ClientboundSyncFurnitureStation(recipes));
-    }
-
-    void syncRecipes(List<RecipeHolder<?>> recipes) {
-        this.recipes = recipes;
-        listener.run();
+        recipes = FurnitureStationSetup.RECIPES.stream().filter(recipe -> recipe.value().matches(asInput(), player.level())).toList();
     }
 
     private void setupResultSlot() {
@@ -216,11 +203,7 @@ public final class FurnitureStationMenu extends AbstractContainerMenu {
 
         if(!recipes.isEmpty()) {
             var recipe = recipes.get(index).value();
-            var result = ((FurnitureStationRecipe) recipe).assemble(new FurnitureStationRecipeInput(
-                    inputContainer.getItem(FurnitureStationSetup.SLOT_PLANKS),
-                    inputContainer.getItem(FurnitureStationSetup.SLOT_WOOL),
-                    inputContainer.getItem(FurnitureStationSetup.SLOT_BINDING_AGENT)
-            ), player.registryAccess());
+            var result = recipe.assemble(asInput(), player.registryAccess());
             resultContainer.setItem(0, result);
         }
 

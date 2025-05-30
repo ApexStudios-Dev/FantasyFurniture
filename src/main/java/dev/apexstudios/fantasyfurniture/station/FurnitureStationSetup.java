@@ -1,5 +1,6 @@
 package dev.apexstudios.fantasyfurniture.station;
 
+import com.google.common.collect.Lists;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.apexstudios.apexcore.lib.registree.holder.DeferredBlock;
@@ -7,6 +8,7 @@ import dev.apexstudios.apexcore.lib.registree.holder.DeferredItem;
 import dev.apexstudios.apexcore.lib.registree.holder.DeferredMenu;
 import dev.apexstudios.apexcore.lib.registree.holder.DeferredRecipeSerializer;
 import dev.apexstudios.fantasyfurniture.FantasyFurniture;
+import java.util.List;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -18,14 +20,18 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeBookCategory;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.client.event.RecipesReceivedEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
 public interface FurnitureStationSetup {
@@ -69,12 +75,21 @@ public interface FurnitureStationSetup {
     int SLOT_BINDING_AGENT = 2;
     int SLOTS = 3;
 
+    List<RecipeHolder<FurnitureStationRecipe>> RECIPES = Lists.newArrayList();
+
     static void register(IEventBus modBus) {
         modBus.addListener(RegisterMenuScreensEvent.class, event -> event.register(MENU.value(), FurnitureStationScreen::new));
 
         modBus.addListener(BuildCreativeModeTabContentsEvent.class, event -> {
             if(event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS)
                 event.accept(BLOCK_ITEM);
+        });
+
+        NeoForge.EVENT_BUS.addListener(OnDatapackSyncEvent.class, event -> event.sendRecipes(RECIPE_TYPE.value()));
+
+        NeoForge.EVENT_BUS.addListener(RecipesReceivedEvent.class, event -> {
+            RECIPES.clear();
+            RECIPES.addAll(event.getRecipeMap().byType(RECIPE_TYPE.value()));
         });
     }
 }
