@@ -1,7 +1,7 @@
 package dev.apexstudios.fantasyfurniture.station;
 
+import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.Runnables;
-import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 import net.minecraft.server.level.ServerPlayer;
@@ -31,8 +31,7 @@ public final class FurnitureStationMenu extends AbstractContainerMenu {
     private final DataSlot selectedRecipe = DataSlot.standalone();
     private Runnable listener = Runnables.doNothing();
     private long lastSoundTime = 0L;
-
-    private List<RecipeHolder<FurnitureStationRecipe>> recipes = Collections.emptyList();
+    private final List<FurnitureStationRecipe> recipes = Lists.newArrayList();
 
     FurnitureStationMenu(int windowId, Inventory inventory, ContainerLevelAccess levelAccess) {
         super(FurnitureStationSetup.MENU.value(), windowId);
@@ -90,7 +89,7 @@ public final class FurnitureStationMenu extends AbstractContainerMenu {
         return selectedRecipe.get();
     }
 
-    public List<RecipeHolder<FurnitureStationRecipe>> recipes() {
+    public List<FurnitureStationRecipe> recipes() {
         return recipes;
     }
 
@@ -162,7 +161,7 @@ public final class FurnitureStationMenu extends AbstractContainerMenu {
 
     @Override
     public boolean clickMenuButton(Player player, int id) {
-        if(isValidRecipeIndex(id)) {
+        if(isValidRecipeIndex(recipes, id)) {
             selectedRecipe.set(id);
             setupResultSlot();
         }
@@ -187,31 +186,30 @@ public final class FurnitureStationMenu extends AbstractContainerMenu {
     }
 
     private void setupRecipes() {
-        recipes = Collections.emptyList();
         resultContainer.setItem(0, ItemStack.EMPTY);
         selectedRecipe.set(-1);
-
-        recipes = FurnitureStationSetup.RECIPES.stream().filter(recipe -> recipe.value().matches(asInput(), player.level())).toList();
+        recipes.clear();
+        FurnitureStationSetup.recipes(asInput(), player.level()).map(RecipeHolder::value).forEach(recipes::add);
+        broadcastChanges();
     }
 
     private void setupResultSlot() {
         var index = selectedRecipe();
         resultContainer.setItem(0, ItemStack.EMPTY);
 
-        if(!isValidRecipeIndex(index))
-            return;
-
-        if(!recipes.isEmpty()) {
-            var recipe = recipes.get(index).value();
+        if(hasInput() && isValidRecipeIndex(recipes, index)) {
+            var recipe = recipes.get(index);
             var result = recipe.assemble(asInput(), player.registryAccess());
             resultContainer.setItem(0, result);
+        } else {
+            setupRecipes();
         }
 
         broadcastChanges();
     }
 
-    private boolean isValidRecipeIndex(int index) {
-        return hasInput() && index >= 0 && index < recipes.size();
+    public static boolean isValidRecipeIndex(List<FurnitureStationRecipe> recipes, int index) {
+        return index >= 0 && index < recipes.size();
     }
 
     private class InputSlot extends Slot {

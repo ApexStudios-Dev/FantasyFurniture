@@ -95,8 +95,9 @@ public final class FurnitureStationScreen extends AbstractContainerScreen<Furnit
         if (displayRecipes) {
             var maxSlots = recipeColumns * recipeRows;
             var lastIndex = startIndex + maxSlots;
+            var recipes = menu.recipes();
 
-            for (var index = startIndex; index < lastIndex && index < menu.recipes().size(); index++) {
+            for (var index = startIndex; index < lastIndex && index < recipes.size(); index++) {
                 var slotIndex = index - startIndex;
                 var slotX = recipeX + slotIndex % recipeColumns * AbstractContainerMenu.SLOT_SIZE;
                 var slotY = recipeY + slotIndex / recipeColumns * AbstractContainerMenu.SLOT_SIZE;
@@ -116,8 +117,9 @@ public final class FurnitureStationScreen extends AbstractContainerScreen<Furnit
         if (displayRecipes) {
             var maxSlots = recipeColumns * recipeRows;
             var lastIndex = startIndex + maxSlots;
+            var recipes = menu.recipes();
 
-            for (var index = startIndex; index < lastIndex && index < menu.recipes().size(); index++) {
+            for (var index = startIndex; index < lastIndex && index < recipes.size(); index++) {
                 if(menu.selectedRecipe() == index)
                     continue;
 
@@ -211,8 +213,9 @@ public final class FurnitureStationScreen extends AbstractContainerScreen<Furnit
     private void renderButtons(GuiGraphics graphics, int mouseX, int mouseY, boolean drawItem) {
         var maxSlots = recipeColumns * recipeRows;
         var lastIndex = startIndex + maxSlots;
+        var recipes = menu.recipes();
 
-        for (var index = startIndex; index < lastIndex && index < menu.recipes().size(); index++) {
+        for (var index = startIndex; index < lastIndex && index < recipes.size(); index++) {
             var slotIndex = index - startIndex;
             var slotX = recipeX + slotIndex % recipeColumns * AbstractContainerMenu.SLOT_SIZE;
             var slotY = recipeY + slotIndex / recipeColumns * AbstractContainerMenu.SLOT_SIZE;
@@ -254,10 +257,7 @@ public final class FurnitureStationScreen extends AbstractContainerScreen<Furnit
 
     private ItemStack displayStack(int index) {
         var recipes = menu.recipes();
+        return FurnitureStationMenu.isValidRecipeIndex(recipes, index) ? recipes.get(index).result() : ItemStack.EMPTY;
 
-        if(recipes.isEmpty() || index > recipes.size())
-            return ItemStack.EMPTY;
-
-        return recipes.get(index).value().result();
     }
 }
