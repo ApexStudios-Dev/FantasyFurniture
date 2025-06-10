@@ -18,6 +18,7 @@ public final class RoyalFurnitureSetClientSetup {
         modBus.addListener(FMLClientSetupEvent.class, event -> event.enqueueWork(() -> {
             ItemBlockRenderTypes.setRenderLayer(RoyalFurnitureSet.WOOL.value(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(RoyalFurnitureSet.CARPET.value(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(RoyalFurnitureSet.TRAPDOOR.value(), RenderType.cutout());
         }));
 
         modBus.addListener(RegisterColorHandlersEvent.Block.class, event -> event.register(
