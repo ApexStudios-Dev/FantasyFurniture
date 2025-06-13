@@ -1,19 +1,26 @@
 package dev.apexstudios.fantasyfurniture.royal.block;
 
-import dev.apexstudios.apexcore.lib.component.ComponentRegistrar;
-import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
-import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
+import dev.apexstudios.apexcore.lib.block.Dyeable;
+import dev.apexstudios.apexcore.lib.multiblock.MultiBlock;
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.BedDoubleBlock;
-import java.util.Map;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 
-public final class RoyalBedDoubleBlock extends BedDoubleBlock {
+public final class RoyalBedDoubleBlock extends BedDoubleBlock implements Dyeable {
     public static final VoxelShape SHAPE = ApexShapes.join(
             box(-16D, 0D, 0D, -13D, 3D, 2D),
             box(-15D, 3D, 0D, -13D, 9D, 2D),
@@ -37,21 +44,55 @@ public final class RoyalBedDoubleBlock extends BedDoubleBlock {
             box(-14D, 3D, 2D, 14D, 8D, 30D)
     );
 
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
-
     public RoyalBedDoubleBlock(Properties properties) {
-        super(properties);
+        super(properties, SHAPE);
+
+        registerDefaultState(defaultBlockState().setValue(Dyeable.PROPERTY, Dyeable.DEFAULT_COLOR));
     }
 
     @Override
-    protected VoxelShape getFurnitureShape(BlockState blockState, BlockPos pos) {
-        return getShape(FACING_SHAPES, blockState, pos);
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
+        builder.add(Dyeable.PROPERTY);
+    }
+
+    @Nullable
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        var placementBlockState = super.getStateForPlacement(context);
+
+        if(placementBlockState == null)
+            return null;
+
+        var color = Dyeable.getColorForPlacement(context);
+        return placementBlockState.setValue(Dyeable.PROPERTY, color);
     }
 
     @Override
-    protected void registerComponents(ComponentRegistrar<BlockComponent, Block> registrar) {
-        super.registerComponents(registrar);
+    protected InteractionResult useItemOn(ItemStack stack, BlockState blockState, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        var result = Dyeable.useItemOn(level, pos, blockState, stack);
 
-        registrar.register(BlockComponentTypes.DYEABLE);
+        if(result.consumesAction())
+            return result;
+
+        return super.useItemOn(stack, blockState, level, pos, player, hand, hitResult);
+    }
+
+    @Override
+    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState blockState, boolean includeData, Player player) {
+        return Dyeable.getCloneStack(this, blockState, player, includeData);
+    }
+
+    @Override
+    protected ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState blockState, boolean includeData) {
+        return Dyeable.getCloneStack(this, blockState, null, includeData);
+    }
+
+    @Override
+    public void setDyedColor(Level level, BlockPos pos, BlockState blockState, DyeColor color) {
+        MultiBlock.forEachPos(pos, blockState, (otherPos, otherBlockState) -> {
+            if(otherBlockState.is(blockState.getBlock()))
+                Dyeable.super.setDyedColor(level, otherPos, otherBlockState, color);
+        });
     }
 }

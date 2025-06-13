@@ -1,14 +1,13 @@
 package dev.apexstudios.fantasyfurniture.royal.block;
 
+import dev.apexstudios.apexcore.lib.multiblock.MultiBlock;
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.FloorLightBlock;
-import dev.apexstudios.fantasyfurniture.royal.RoyalFurnitureSet;
-import java.util.Map;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class RoyalFloorLightBlock extends FloorLightBlock {
@@ -23,31 +22,30 @@ public final class RoyalFloorLightBlock extends FloorLightBlock {
             box(10.5D, 24D, 6.5D, 13.5D, 25D, 9.5D)
     );
 
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
-
     public RoyalFloorLightBlock(Properties properties) {
-        super(RoyalFurnitureSet.FURNITURE_SET, properties, 3);
+        super(properties, SHAPE);
     }
 
     @Override
-    protected VoxelShape getFurnitureShape(BlockState blockState, BlockPos pos) {
-        return getShape(FACING_SHAPES, blockState, pos);
-    }
+    public void animateTick(BlockState blockState, Level level, BlockPos pos, RandomSource random) {
+        if(MultiBlock.getIndex(blockState) != 1)
+            return;
 
-    @Override
-    protected void addParticle(Level level, BlockPos pos, int index) {
+        var facing = blockState.getValue(FACING).getClockWise();
         var x = pos.getX() + .5D;
-        var y = pos.getY() + 1D;
+        var y = pos.getY() + .95D;
         var z = pos.getZ() + .5D;
+        var offset = .25D;
+        var xOffset = (facing.getStepX() * offset);
+        var zOffset = (facing.getStepZ() * offset);
 
-        if(index == 0 || index == 1) {
-            var offset = .25D;
-            var even = index % 2 == 0;
-            x = even ? x + offset : x - offset;
-        } else {
-            y += .1D;
-        }
+        addParticles(level, x + xOffset, y, z + zOffset);
+        addParticles(level, x, y + .1D, z);
+        addParticles(level, x - xOffset, y, z - zOffset);
+    }
 
-        playParticles(level, x, y, z);
+    private void addParticles(Level level, double x, double y, double z) {
+        level.addParticle(ParticleTypes.SMOKE, x, y, z, 0D, 0D, 0D);
+        level.addParticle(ParticleTypes.FLAME, x, y, z, 0D, 0D, 0D);
     }
 }

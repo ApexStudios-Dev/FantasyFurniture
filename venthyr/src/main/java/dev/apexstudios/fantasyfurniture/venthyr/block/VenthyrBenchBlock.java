@@ -2,11 +2,6 @@ package dev.apexstudios.fantasyfurniture.venthyr.block;
 
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.BenchBlock;
-import java.util.Map;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class VenthyrBenchBlock extends BenchBlock {
@@ -18,14 +13,7 @@ public final class VenthyrBenchBlock extends BenchBlock {
             box(-15D, 4D, 1D, 15D, 7D, 15D)
     );
 
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
-
     public VenthyrBenchBlock(Properties properties) {
-        super(properties);
-    }
-
-    @Override
-    protected VoxelShape getFurnitureShape(BlockState blockState, BlockPos pos) {
-        return getShape(FACING_SHAPES, blockState, pos);
+        super(properties, SHAPE);
     }
 }

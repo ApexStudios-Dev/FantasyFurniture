@@ -1,22 +1,25 @@
 package dev.apexstudios.fantasyfurniture.royal.block;
 
-import dev.apexstudios.apexcore.lib.component.ComponentRegistrar;
-import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
-import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
+import dev.apexstudios.apexcore.lib.block.Dyeable;
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.ShelfBlock;
-import dev.apexstudios.fantasyfurniture.block.property.ShelfConnection;
-import java.util.Map;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 
 public final class RoyalShelfBlock extends ShelfBlock {
     public static final VoxelShape LEFT_SHAPE = ApexShapes.join(
-            box(0D, 14D, 0D, 16D, 16D, 16D),
             box(13D, 11D, 3D, 15D, 14D, 6D),
             box(13D, 12D, 6D, 15D, 14D, 16D),
             box(13D, 8D, 14D, 15D, 12D, 16D),
@@ -24,50 +27,50 @@ public final class RoyalShelfBlock extends ShelfBlock {
     );
 
     public static final VoxelShape RIGHT_SHAPE = ApexShapes.join(
-            box(0D, 14D, 0D, 16D, 16D, 16D),
             box(1D, 11D, 3D, 3D, 14D, 6D),
             box(1D, 12D, 6D, 3D, 14D, 16D),
             box(1D, 8D, 14D, 3D, 12D, 16D),
             box(1D, 5D, 13D, 3D, 8D, 16D)
     );
 
-    public static final VoxelShape BOTH_SHAPE = box(0D, 14D, 0D, 16D, 16D, 16D);
-
-    public static final VoxelShape SHAPE = ApexShapes.join(
-            box(0D, 14D, 0D, 16D, 16D, 16D),
-            box(13D, 11D, 3D, 15D, 14D, 6D),
-            box(13D, 12D, 6D, 15D, 14D, 16D),
-            box(13D, 8D, 14D, 15D, 12D, 16D),
-            box(13D, 5D, 13D, 15D, 8D, 16D),
-            box(1D, 5D, 13D, 3D, 8D, 16D),
-            box(1D, 11D, 3D, 3D, 14D, 6D),
-            box(1D, 12D, 6D, 3D, 14D, 16D),
-            box(1D, 8D, 14D, 3D, 12D, 16D)
-    );
-
-    public static final Map<Direction, VoxelShape> LEFT_FACING_SHAPES = Shapes.rotateHorizontal(LEFT_SHAPE);
-    public static final Map<Direction, VoxelShape> RIGHT_FACING_SHAPES = Shapes.rotateHorizontal(RIGHT_SHAPE);
-    public static final Map<Direction, VoxelShape> BOTH_FACING_SHAPES = Shapes.rotateHorizontal(BOTH_SHAPE);
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
+    public static final VoxelShape TOP_SHAPE = box(0D, 14D, 0D, 16D, 16D, 16D);
 
     public RoyalShelfBlock(Properties properties) {
-        super(properties);
+        super(properties, LEFT_SHAPE, RIGHT_SHAPE, TOP_SHAPE);
+
+        registerDefaultState(defaultBlockState().setValue(Dyeable.PROPERTY, Dyeable.DEFAULT_COLOR));
     }
 
     @Override
-    protected VoxelShape getFurnitureShape(BlockState blockState, BlockPos pos) {
-        return getShape(switch (blockState.getValue(ShelfConnection.PROPERTY)) {
-            case LEFT -> LEFT_FACING_SHAPES;
-            case RIGHT -> RIGHT_FACING_SHAPES;
-            case BOTH -> BOTH_FACING_SHAPES;
-            case NONE -> FACING_SHAPES;
-        }, blockState, pos);
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
+        builder.add(Dyeable.PROPERTY);
+    }
+
+    @Nullable
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        var placementBlockState = super.getStateForPlacement(context);
+
+        if(placementBlockState == null)
+            return null;
+
+        var color = Dyeable.getColorForPlacement(context);
+        return placementBlockState.setValue(Dyeable.PROPERTY, color);
     }
 
     @Override
-    protected void registerComponents(ComponentRegistrar<BlockComponent, Block> registrar) {
-        super.registerComponents(registrar);
+    protected InteractionResult useItemOn(ItemStack stack, BlockState blockState, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        return Dyeable.useItemOn(level, pos, blockState, stack);
+    }
 
-        registrar.register(BlockComponentTypes.DYEABLE);
+    @Override
+    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState blockState, boolean includeData, Player player) {
+        return Dyeable.getCloneStack(this, blockState, player, includeData);
+    }
+
+    @Override
+    protected ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState blockState, boolean includeData) {
+        return Dyeable.getCloneStack(this, blockState, null, includeData);
     }
 }

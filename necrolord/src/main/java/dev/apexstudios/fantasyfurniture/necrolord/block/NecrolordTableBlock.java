@@ -1,10 +1,7 @@
 package dev.apexstudios.fantasyfurniture.necrolord.block;
 
-import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.TableBlock;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class NecrolordTableBlock extends TableBlock {
@@ -21,8 +18,12 @@ public final class NecrolordTableBlock extends TableBlock {
     }
 
     @Override
-    protected VoxelShape getFurnitureShape(BlockState blockState, BlockPos pos) {
-        var facing = getComponentOrThrow(BlockComponentTypes.FACING).get(blockState);
-        return ApexShapes.rotateHorizontal(getShape(blockState, SHAPE_TABLE_TOP, SHAPE_TABLE_LEG), facing);
+    protected VoxelShape getLegShape() {
+        return SHAPE_TABLE_LEG;
+    }
+
+    @Override
+    protected VoxelShape getTopShape() {
+        return SHAPE_TABLE_TOP;
     }
 }

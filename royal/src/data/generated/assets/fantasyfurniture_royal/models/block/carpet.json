@@ -1,6 +1,5 @@
 {
   "parent": "apexcore:block/carpet_tinted",
-  "render_type": "minecraft:cutout",
   "textures": {
     "wool": "fantasyfurniture_royal:block/wool",
     "wool_tinted": "fantasyfurniture_royal:block/wool_tint"

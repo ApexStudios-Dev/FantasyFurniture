@@ -1,47 +1,47 @@
 {
   "variants": {
-    "connection=corner_inner,facing_component=east": {
+    "connection=corner_inner,facing=east": {
       "model": "fantasyfurniture_nordic:block/counter_corner",
       "y": 90
     },
-    "connection=corner_inner,facing_component=north": {
+    "connection=corner_inner,facing=north": {
       "model": "fantasyfurniture_nordic:block/counter_corner"
     },
-    "connection=corner_inner,facing_component=south": {
+    "connection=corner_inner,facing=south": {
       "model": "fantasyfurniture_nordic:block/counter_corner",
       "y": 180
     },
-    "connection=corner_inner,facing_component=west": {
+    "connection=corner_inner,facing=west": {
       "model": "fantasyfurniture_nordic:block/counter_corner",
       "y": 270
     },
-    "connection=corner_outer,facing_component=east": {
+    "connection=corner_outer,facing=east": {
       "model": "fantasyfurniture_nordic:block/counter_corner",
       "y": 90
     },
-    "connection=corner_outer,facing_component=north": {
+    "connection=corner_outer,facing=north": {
       "model": "fantasyfurniture_nordic:block/counter_corner"
     },
-    "connection=corner_outer,facing_component=south": {
+    "connection=corner_outer,facing=south": {
       "model": "fantasyfurniture_nordic:block/counter_corner",
       "y": 180
     },
-    "connection=corner_outer,facing_component=west": {
+    "connection=corner_outer,facing=west": {
       "model": "fantasyfurniture_nordic:block/counter_corner",
       "y": 270
     },
-    "connection=single,facing_component=east": {
+    "connection=single,facing=east": {
       "model": "fantasyfurniture_nordic:block/counter_single",
       "y": 90
     },
-    "connection=single,facing_component=north": {
+    "connection=single,facing=north": {
       "model": "fantasyfurniture_nordic:block/counter_single"
     },
-    "connection=single,facing_component=south": {
+    "connection=single,facing=south": {
       "model": "fantasyfurniture_nordic:block/counter_single",
       "y": 180
     },
-    "connection=single,facing_component=west": {
+    "connection=single,facing=west": {
       "model": "fantasyfurniture_nordic:block/counter_single",
       "y": 270
     }

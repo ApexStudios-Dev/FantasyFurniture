@@ -1,92 +1,92 @@
 {
   "variants": {
-    "connection=center,facing_component=east": {
+    "connection=center,facing=east": {
       "model": "fantasyfurniture_necrolord:block/sofa_center",
       "y": 90
     },
-    "connection=center,facing_component=north": {
+    "connection=center,facing=north": {
       "model": "fantasyfurniture_necrolord:block/sofa_center"
     },
-    "connection=center,facing_component=south": {
+    "connection=center,facing=south": {
       "model": "fantasyfurniture_necrolord:block/sofa_center",
       "y": 180
     },
-    "connection=center,facing_component=west": {
+    "connection=center,facing=west": {
       "model": "fantasyfurniture_necrolord:block/sofa_center",
       "y": 270
     },
-    "connection=corner_inner,facing_component=east": {
+    "connection=corner_inner,facing=east": {
       "model": "fantasyfurniture_necrolord:block/sofa_corner",
       "y": 90
     },
-    "connection=corner_inner,facing_component=north": {
+    "connection=corner_inner,facing=north": {
       "model": "fantasyfurniture_necrolord:block/sofa_corner"
     },
-    "connection=corner_inner,facing_component=south": {
+    "connection=corner_inner,facing=south": {
       "model": "fantasyfurniture_necrolord:block/sofa_corner",
       "y": 180
     },
-    "connection=corner_inner,facing_component=west": {
+    "connection=corner_inner,facing=west": {
       "model": "fantasyfurniture_necrolord:block/sofa_corner",
       "y": 270
     },
-    "connection=corner_outer,facing_component=east": {
+    "connection=corner_outer,facing=east": {
       "model": "fantasyfurniture_necrolord:block/sofa_corner",
       "y": 90
     },
-    "connection=corner_outer,facing_component=north": {
+    "connection=corner_outer,facing=north": {
       "model": "fantasyfurniture_necrolord:block/sofa_corner"
     },
-    "connection=corner_outer,facing_component=south": {
+    "connection=corner_outer,facing=south": {
       "model": "fantasyfurniture_necrolord:block/sofa_corner",
       "y": 180
     },
-    "connection=corner_outer,facing_component=west": {
+    "connection=corner_outer,facing=west": {
       "model": "fantasyfurniture_necrolord:block/sofa_corner",
       "y": 270
     },
-    "connection=left,facing_component=east": {
+    "connection=left,facing=east": {
       "model": "fantasyfurniture_necrolord:block/sofa_left",
       "y": 90
     },
-    "connection=left,facing_component=north": {
+    "connection=left,facing=north": {
       "model": "fantasyfurniture_necrolord:block/sofa_left"
     },
-    "connection=left,facing_component=south": {
+    "connection=left,facing=south": {
       "model": "fantasyfurniture_necrolord:block/sofa_left",
       "y": 180
     },
-    "connection=left,facing_component=west": {
+    "connection=left,facing=west": {
       "model": "fantasyfurniture_necrolord:block/sofa_left",
       "y": 270
     },
-    "connection=right,facing_component=east": {
+    "connection=right,facing=east": {
       "model": "fantasyfurniture_necrolord:block/sofa_right",
       "y": 90
     },
-    "connection=right,facing_component=north": {
+    "connection=right,facing=north": {
       "model": "fantasyfurniture_necrolord:block/sofa_right"
     },
-    "connection=right,facing_component=south": {
+    "connection=right,facing=south": {
       "model": "fantasyfurniture_necrolord:block/sofa_right",
       "y": 180
     },
-    "connection=right,facing_component=west": {
+    "connection=right,facing=west": {
       "model": "fantasyfurniture_necrolord:block/sofa_right",
       "y": 270
     },
-    "connection=single,facing_component=east": {
+    "connection=single,facing=east": {
       "model": "fantasyfurniture_necrolord:block/sofa_single",
       "y": 90
     },
-    "connection=single,facing_component=north": {
+    "connection=single,facing=north": {
       "model": "fantasyfurniture_necrolord:block/sofa_single"
     },
-    "connection=single,facing_component=south": {
+    "connection=single,facing=south": {
       "model": "fantasyfurniture_necrolord:block/sofa_single",
       "y": 180
     },
-    "connection=single,facing_component=west": {
+    "connection=single,facing=west": {
       "model": "fantasyfurniture_necrolord:block/sofa_single",
       "y": 270
     }

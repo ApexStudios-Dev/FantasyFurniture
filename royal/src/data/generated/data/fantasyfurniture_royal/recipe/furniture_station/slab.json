@@ -1,0 +1,19 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:feature_flags_enabled",
+      "flags": [
+        "fantasyfurniture:experimental"
+      ]
+    }
+  ],
+  "type": "fantasyfurniture:furniture_station",
+  "binding_agent": "#fantasyfurniture:binding_agent",
+  "group": "royal",
+  "planks": "fantasyfurniture_royal:bricks",
+  "result": {
+    "count": 1,
+    "id": "fantasyfurniture_royal:slab"
+  },
+  "wool": "fantasyfurniture_royal:wool"
+}

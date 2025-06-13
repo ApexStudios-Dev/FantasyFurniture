@@ -2,12 +2,6 @@ package dev.apexstudios.fantasyfurniture.venthyr.block;
 
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.SofaBlock;
-import dev.apexstudios.fantasyfurniture.block.property.SofaConnection;
-import java.util.Map;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class VenthyrSofaBlock extends SofaBlock {
@@ -53,24 +47,7 @@ public final class VenthyrSofaBlock extends SofaBlock {
             box(0D, 6D, 13D, 16D, 16D, 16D)
     );
 
-    public static final Map<Direction, VoxelShape> LEFT_FACING_SHAPES = Shapes.rotateHorizontal(LEFT_SHAPE);
-    public static final Map<Direction, VoxelShape> RIGHT_FACING_SHAPES = Shapes.rotateHorizontal(RIGHT_SHAPE);
-    public static final Map<Direction, VoxelShape> BOTH_FACING_SHAPES = Shapes.rotateHorizontal(BOTH_SHAPE);
-    public static final Map<Direction, VoxelShape> CORNER_FACING_SHAPES = Shapes.rotateHorizontal(CORNER_SHAPE);
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
-
     public VenthyrSofaBlock(Properties properties) {
-        super(properties);
-    }
-
-    @Override
-    protected VoxelShape getFurnitureShape(BlockState blockState, BlockPos pos) {
-        return getShape(switch (blockState.getValue(SofaConnection.PROPERTY)) {
-            case LEFT -> LEFT_FACING_SHAPES;
-            case RIGHT -> RIGHT_FACING_SHAPES;
-            case BOTH -> BOTH_FACING_SHAPES;
-            case CORNER_INNER, CORNER_OUTER -> CORNER_FACING_SHAPES;
-            case NONE -> FACING_SHAPES;
-        }, blockState, pos);
+        super(properties, LEFT_SHAPE, RIGHT_SHAPE, BOTH_SHAPE, CORNER_SHAPE, SHAPE);
     }
 }

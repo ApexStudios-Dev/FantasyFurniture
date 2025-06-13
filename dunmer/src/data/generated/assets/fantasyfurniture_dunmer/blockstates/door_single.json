@@ -1,122 +1,122 @@
 {
   "variants": {
-    "facing_component=east,hinge=left,multi_block_index=0,open=false": {
+    "facing=east,half=lower,hinge=left,open=false": {
       "model": "fantasyfurniture_dunmer:block/door_single_left_bottom_closed"
     },
-    "facing_component=east,hinge=left,multi_block_index=0,open=true": {
+    "facing=east,half=lower,hinge=left,open=true": {
       "model": "fantasyfurniture_dunmer:block/door_single_left_bottom_open",
       "y": 90
     },
-    "facing_component=east,hinge=left,multi_block_index=1,open=false": {
-      "model": "fantasyfurniture_dunmer:block/door_single_left_top_closed"
-    },
-    "facing_component=east,hinge=left,multi_block_index=1,open=true": {
-      "model": "fantasyfurniture_dunmer:block/door_single_left_top_open",
-      "y": 90
-    },
-    "facing_component=east,hinge=right,multi_block_index=0,open=false": {
+    "facing=east,half=lower,hinge=right,open=false": {
       "model": "fantasyfurniture_dunmer:block/door_single_right_bottom_closed"
     },
-    "facing_component=east,hinge=right,multi_block_index=0,open=true": {
+    "facing=east,half=lower,hinge=right,open=true": {
       "model": "fantasyfurniture_dunmer:block/door_single_right_bottom_open",
       "y": 270
     },
-    "facing_component=east,hinge=right,multi_block_index=1,open=false": {
+    "facing=east,half=upper,hinge=left,open=false": {
+      "model": "fantasyfurniture_dunmer:block/door_single_left_top_closed"
+    },
+    "facing=east,half=upper,hinge=left,open=true": {
+      "model": "fantasyfurniture_dunmer:block/door_single_left_top_open",
+      "y": 90
+    },
+    "facing=east,half=upper,hinge=right,open=false": {
       "model": "fantasyfurniture_dunmer:block/door_single_right_top_closed"
     },
-    "facing_component=east,hinge=right,multi_block_index=1,open=true": {
+    "facing=east,half=upper,hinge=right,open=true": {
       "model": "fantasyfurniture_dunmer:block/door_single_right_top_open",
       "y": 270
     },
-    "facing_component=north,hinge=left,multi_block_index=0,open=false": {
+    "facing=north,half=lower,hinge=left,open=false": {
       "model": "fantasyfurniture_dunmer:block/door_single_left_bottom_closed",
       "y": 270
     },
-    "facing_component=north,hinge=left,multi_block_index=0,open=true": {
+    "facing=north,half=lower,hinge=left,open=true": {
       "model": "fantasyfurniture_dunmer:block/door_single_left_bottom_open"
     },
-    "facing_component=north,hinge=left,multi_block_index=1,open=false": {
-      "model": "fantasyfurniture_dunmer:block/door_single_left_top_closed",
-      "y": 270
-    },
-    "facing_component=north,hinge=left,multi_block_index=1,open=true": {
-      "model": "fantasyfurniture_dunmer:block/door_single_left_top_open"
-    },
-    "facing_component=north,hinge=right,multi_block_index=0,open=false": {
+    "facing=north,half=lower,hinge=right,open=false": {
       "model": "fantasyfurniture_dunmer:block/door_single_right_bottom_closed",
       "y": 270
     },
-    "facing_component=north,hinge=right,multi_block_index=0,open=true": {
+    "facing=north,half=lower,hinge=right,open=true": {
       "model": "fantasyfurniture_dunmer:block/door_single_right_bottom_open",
       "y": 180
     },
-    "facing_component=north,hinge=right,multi_block_index=1,open=false": {
+    "facing=north,half=upper,hinge=left,open=false": {
+      "model": "fantasyfurniture_dunmer:block/door_single_left_top_closed",
+      "y": 270
+    },
+    "facing=north,half=upper,hinge=left,open=true": {
+      "model": "fantasyfurniture_dunmer:block/door_single_left_top_open"
+    },
+    "facing=north,half=upper,hinge=right,open=false": {
       "model": "fantasyfurniture_dunmer:block/door_single_right_top_closed",
       "y": 270
     },
-    "facing_component=north,hinge=right,multi_block_index=1,open=true": {
+    "facing=north,half=upper,hinge=right,open=true": {
       "model": "fantasyfurniture_dunmer:block/door_single_right_top_open",
       "y": 180
     },
-    "facing_component=south,hinge=left,multi_block_index=0,open=false": {
+    "facing=south,half=lower,hinge=left,open=false": {
       "model": "fantasyfurniture_dunmer:block/door_single_left_bottom_closed",
       "y": 90
     },
-    "facing_component=south,hinge=left,multi_block_index=0,open=true": {
+    "facing=south,half=lower,hinge=left,open=true": {
       "model": "fantasyfurniture_dunmer:block/door_single_left_bottom_open",
       "y": 180
     },
-    "facing_component=south,hinge=left,multi_block_index=1,open=false": {
-      "model": "fantasyfurniture_dunmer:block/door_single_left_top_closed",
-      "y": 90
-    },
-    "facing_component=south,hinge=left,multi_block_index=1,open=true": {
-      "model": "fantasyfurniture_dunmer:block/door_single_left_top_open",
-      "y": 180
-    },
-    "facing_component=south,hinge=right,multi_block_index=0,open=false": {
+    "facing=south,half=lower,hinge=right,open=false": {
       "model": "fantasyfurniture_dunmer:block/door_single_right_bottom_closed",
       "y": 90
     },
-    "facing_component=south,hinge=right,multi_block_index=0,open=true": {
+    "facing=south,half=lower,hinge=right,open=true": {
       "model": "fantasyfurniture_dunmer:block/door_single_right_bottom_open"
     },
-    "facing_component=south,hinge=right,multi_block_index=1,open=false": {
+    "facing=south,half=upper,hinge=left,open=false": {
+      "model": "fantasyfurniture_dunmer:block/door_single_left_top_closed",
+      "y": 90
+    },
+    "facing=south,half=upper,hinge=left,open=true": {
+      "model": "fantasyfurniture_dunmer:block/door_single_left_top_open",
+      "y": 180
+    },
+    "facing=south,half=upper,hinge=right,open=false": {
       "model": "fantasyfurniture_dunmer:block/door_single_right_top_closed",
       "y": 90
     },
-    "facing_component=south,hinge=right,multi_block_index=1,open=true": {
+    "facing=south,half=upper,hinge=right,open=true": {
       "model": "fantasyfurniture_dunmer:block/door_single_right_top_open"
     },
-    "facing_component=west,hinge=left,multi_block_index=0,open=false": {
+    "facing=west,half=lower,hinge=left,open=false": {
       "model": "fantasyfurniture_dunmer:block/door_single_left_bottom_closed",
       "y": 180
     },
-    "facing_component=west,hinge=left,multi_block_index=0,open=true": {
+    "facing=west,half=lower,hinge=left,open=true": {
       "model": "fantasyfurniture_dunmer:block/door_single_left_bottom_open",
       "y": 270
     },
-    "facing_component=west,hinge=left,multi_block_index=1,open=false": {
-      "model": "fantasyfurniture_dunmer:block/door_single_left_top_closed",
-      "y": 180
-    },
-    "facing_component=west,hinge=left,multi_block_index=1,open=true": {
-      "model": "fantasyfurniture_dunmer:block/door_single_left_top_open",
-      "y": 270
-    },
-    "facing_component=west,hinge=right,multi_block_index=0,open=false": {
+    "facing=west,half=lower,hinge=right,open=false": {
       "model": "fantasyfurniture_dunmer:block/door_single_right_bottom_closed",
       "y": 180
     },
-    "facing_component=west,hinge=right,multi_block_index=0,open=true": {
+    "facing=west,half=lower,hinge=right,open=true": {
       "model": "fantasyfurniture_dunmer:block/door_single_right_bottom_open",
       "y": 90
     },
-    "facing_component=west,hinge=right,multi_block_index=1,open=false": {
+    "facing=west,half=upper,hinge=left,open=false": {
+      "model": "fantasyfurniture_dunmer:block/door_single_left_top_closed",
+      "y": 180
+    },
+    "facing=west,half=upper,hinge=left,open=true": {
+      "model": "fantasyfurniture_dunmer:block/door_single_left_top_open",
+      "y": 270
+    },
+    "facing=west,half=upper,hinge=right,open=false": {
       "model": "fantasyfurniture_dunmer:block/door_single_right_top_closed",
       "y": 180
     },
-    "facing_component=west,hinge=right,multi_block_index=1,open=true": {
+    "facing=west,half=upper,hinge=right,open=true": {
       "model": "fantasyfurniture_dunmer:block/door_single_right_top_open",
       "y": 90
     }

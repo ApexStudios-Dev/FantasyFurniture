@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/button",
-  "textures": {
-    "texture": "fantasyfurniture_bone:block/skeleton_bricks"
-  }
-}

@@ -1,72 +1,74 @@
 package dev.apexstudios.fantasyfurniture.royal.block;
 
-import dev.apexstudios.apexcore.lib.component.ComponentRegistrar;
-import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
-import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
-import dev.apexstudios.apexcore.lib.util.ApexShapes;
+import dev.apexstudios.apexcore.lib.block.Dyeable;
+import dev.apexstudios.apexcore.lib.multiblock.MultiBlock;
 import dev.apexstudios.fantasyfurniture.block.DeskBlock;
-import dev.apexstudios.fantasyfurniture.block.base.FurnitureBlockComponentHolder;
-import java.util.Map;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 
-public final class RoyalDeskBlock extends DeskBlock {
-    public static final VoxelShape SHAPE_LEFT = ApexShapes.join(
-            box(-16D, 14D, 0D, 16D, 16D, 16D),
-            box(13D, 11D, 1D, 15D, 14D, 4D),
-            box(13D, 3D, 2D, 15D, 11D, 4D),
-            box(13D, 0D, 1D, 15D, 3D, 4D),
-            box(-15D, 0D, 1D, -13D, 3D, 4D),
-            box(-15D, 11D, 1D, -13D, 14D, 4D),
-            box(-15D, 3D, 2D, -13D, 11D, 4D),
-            box(-15D, 0D, 12D, -13D, 3D, 15D),
-            box(-15D, 11D, 12D, -13D, 14D, 15D),
-            box(-15D, 3D, 12D, -13D, 11D, 14D),
-            box(13D, 0D, 12D, 15D, 3D, 15D),
-            box(13D, 11D, 12D, 15D, 14D, 15D),
-            box(13D, 3D, 12D, 15D, 11D, 14D),
-            box(4D, 10D, 2D, 12D, 14D, 14D),
-            box(6D, 12D, 1D, 10D, 13D, 2D)
-    );
+public class RoyalDeskBlock extends DeskBlock implements Dyeable {
+    public RoyalDeskBlock(Properties properties, VoxelShape baseShape) {
+        super(properties, baseShape);
 
-    public static final VoxelShape SHAPE_RIGHT = ApexShapes.join(
-            box(-16D, 14D, 0D, 16D, 16D, 16D),
-            box(13D, 11D, 1D, 15D, 14D, 4D),
-            box(13D, 3D, 2D, 15D, 11D, 4D),
-            box(13D, 0D, 1D, 15D, 3D, 4D),
-            box(-15D, 0D, 1D, -13D, 3D, 4D),
-            box(-15D, 11D, 1D, -13D, 14D, 4D),
-            box(-15D, 3D, 2D, -13D, 11D, 4D),
-            box(-15D, 0D, 12D, -13D, 3D, 15D),
-            box(-15D, 11D, 12D, -13D, 14D, 15D),
-            box(-15D, 3D, 12D, -13D, 11D, 14D),
-            box(13D, 0D, 12D, 15D, 3D, 15D),
-            box(13D, 11D, 12D, 15D, 14D, 15D),
-            box(13D, 3D, 12D, 15D, 11D, 14D),
-            box(-12D, 10D, 2D, -4D, 14D, 14D),
-            box(-10D, 12D, 1D, -6D, 13D, 2D)
-    );
-
-    public static final Map<Direction, VoxelShape> LEFT_FACING_SHAPES = Shapes.rotateHorizontal(SHAPE_LEFT);
-    public static final Map<Direction, VoxelShape> RIGHT_FACING_SHAPES = Shapes.rotateHorizontal(SHAPE_RIGHT);
-
-    public RoyalDeskBlock(Properties properties, boolean left) {
-        super(properties, left);
+        registerDefaultState(defaultBlockState().setValue(Dyeable.PROPERTY, Dyeable.DEFAULT_COLOR));
     }
 
     @Override
-    protected VoxelShape getFurnitureShape(BlockState blockState, BlockPos pos) {
-        return FurnitureBlockComponentHolder.getShape(left ? LEFT_FACING_SHAPES : RIGHT_FACING_SHAPES, blockState, pos);
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
+        builder.add(Dyeable.PROPERTY);
+    }
+
+    @Nullable
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        var placementBlockState = super.getStateForPlacement(context);
+
+        if(placementBlockState == null)
+            return null;
+
+        var color = Dyeable.getColorForPlacement(context);
+        return placementBlockState.setValue(Dyeable.PROPERTY, color);
     }
 
     @Override
-    protected void registerComponents(ComponentRegistrar<BlockComponent, Block> registrar) {
-        super.registerComponents(registrar);
+    protected InteractionResult useItemOn(ItemStack stack, BlockState blockState, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        var result = Dyeable.useItemOn(level, pos, blockState, stack);
 
-        registrar.register(BlockComponentTypes.DYEABLE);
+        if(result.consumesAction())
+            return result;
+
+        return super.useItemOn(stack, blockState, level, pos, player, hand, hitResult);
+    }
+
+    @Override
+    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState blockState, boolean includeData, Player player) {
+        return Dyeable.getCloneStack(this, blockState, player, includeData);
+    }
+
+    @Override
+    protected ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState blockState, boolean includeData) {
+        return Dyeable.getCloneStack(this, blockState, null, includeData);
+    }
+
+    @Override
+    public void setDyedColor(Level level, BlockPos pos, BlockState blockState, DyeColor color) {
+        MultiBlock.forEachPos(pos, blockState, (otherPos, otherBlockState) -> {
+            if(otherBlockState.is(blockState.getBlock()))
+                Dyeable.super.setDyedColor(level, otherPos, otherBlockState, color);
+        });
     }
 }

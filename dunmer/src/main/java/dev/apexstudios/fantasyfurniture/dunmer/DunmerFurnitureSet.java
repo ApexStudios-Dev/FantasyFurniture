@@ -1,11 +1,10 @@
 package dev.apexstudios.fantasyfurniture.dunmer;
 
-import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
-import dev.apexstudios.apexcore.lib.component.block.types.MultiBlockComponent;
-import dev.apexstudios.apexcore.lib.data.provider.model.ModelUtil;
+import dev.apexstudios.apexcore.lib.multiblock.ClientMultiBlockExtensions;
 import dev.apexstudios.apexcore.lib.registree.Registree;
-import dev.apexstudios.apexcore.lib.util.ApexTags;
-import dev.apexstudios.fantasyfurniture.block.OvenBlock;
+import dev.apexstudios.apexcore.lib.registree.holder.DeferredBlock;
+import dev.apexstudios.apexcore.lib.util.WoodTypeBuilder;
+import dev.apexstudios.fantasyfurniture.block.FurnitureDoorBlock;
 import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerBedDoubleBlock;
 import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerBedSingleBlock;
 import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerBenchBlock;
@@ -15,7 +14,8 @@ import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerChandelierBlock;
 import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerChestBlock;
 import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerCounterBlock;
 import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerCushionBlock;
-import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerDeskBlock;
+import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerDeskLeftBlock;
+import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerDeskRightBlock;
 import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerDrawerBlock;
 import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerDresserBlock;
 import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerFloorLightBlock;
@@ -29,68 +29,80 @@ import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerStoolBlock;
 import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerTableBlock;
 import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerWallLightBlock;
 import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerWardrobeBlock;
-import dev.apexstudios.fantasyfurniture.set.BlockTypes;
-import dev.apexstudios.fantasyfurniture.set.FurnitureSet;
-import dev.apexstudios.fantasyfurniture.set.function.BlockFactory;
-import net.minecraft.client.data.models.BlockModelGenerators;
-import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
-import net.minecraft.client.data.models.blockstates.PropertyDispatch;
-import net.minecraft.client.data.models.model.ModelLocationUtils;
+import dev.apexstudios.fantasyfurniture.util.FurnitureUtil;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.CarpetBlock;
+import net.minecraft.world.level.block.CeilingHangingSignBlock;
+import net.minecraft.world.level.block.FenceBlock;
+import net.minecraft.world.level.block.FenceGateBlock;
+import net.minecraft.world.level.block.PressurePlateBlock;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.StandingSignBlock;
+import net.minecraft.world.level.block.TrapDoorBlock;
+import net.minecraft.world.level.block.WallHangingSignBlock;
+import net.minecraft.world.level.block.WallSignBlock;
+import net.minecraft.world.level.block.state.properties.WoodType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 
 @Mod(DunmerFurnitureSet.ID)
 public class DunmerFurnitureSet {
     public static final String ID = "fantasyfurniture_dunmer";
     public static final Registree REGISTREE = new Registree(ID);
 
-    public static final FurnitureSet FURNITURE_SET = FurnitureSet.createWoodLike(REGISTREE, "dunmer", builder -> builder
-            .with(BlockTypes.OVEN.copy($ -> $
-                    .blockFactory(BlockFactory.wrapping(DunmerOvenBlock::new))
-                    .builder($$ -> $$
-                            .model(() -> (context, models, furnitureSet, block) -> {
-                                models.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
-                                        .with(PropertyDispatch.initial(block.getComponentOrThrow(BlockComponentTypes.MULTI_BLOCK).property(), OvenBlock.LIT).generate((index, lit) -> {
-                                            var halfName = index == MultiBlockComponent.ORIGIN_INDEX ? "_left" : "_right";
-                                            var litPrefix = lit ? "_lit" : "";
-                                            return BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block, litPrefix + halfName));
-                                        }))
-                                        .with(ModelUtil.createHorizontalFacingDispatch(block))
-                                );
+    public static final WoodType WOOD_TYPE = WoodTypeBuilder.builder()
+            .copy(WoodType.OAK)
+            .build(ID + ":dunmer");
 
-                                ModelUtil.registerBlockItemModel(block, models);
-                            })
-                            .blockTags(ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST, Tags.Blocks.RELOCATION_NOT_SUPPORTED)
-                    )
-            ))
-            .with(BlockTypes.DRESSER.extend(BlockFactory.wrapping(DunmerDresserBlock::new)))
-            .with(BlockTypes.STOOL.extend(BlockFactory.wrapping(DunmerStoolBlock::new)))
-            .with(BlockTypes.CUSHION.extend(BlockFactory.wrapping(DunmerCushionBlock::new)))
-            .with(BlockTypes.LOCKBOX.extend(BlockFactory.wrapping(DunmerLockBoxBlock::new)))
-            .with(BlockTypes.DRAWER.extend(BlockFactory.wrapping(DunmerDrawerBlock::new)))
-            .with(BlockTypes.CHAIR.extend(BlockFactory.wrapping(DunmerChairBlock::new)))
-            .with(BlockTypes.BOOKSHELF.extend(BlockFactory.wrapping(DunmerBookshelfBlock::new)))
-            .with(BlockTypes.BED_SINGLE.extend(BlockFactory.wrapping(DunmerBedSingleBlock::new)))
-            .with(BlockTypes.BED_DOUBLE.extend(BlockFactory.wrapping(DunmerBedDoubleBlock::new)))
-            .with(BlockTypes.DESK_LEFT.extend((furnitureSet, properties) -> new DunmerDeskBlock(properties, true)))
-            .with(BlockTypes.DESK_RIGHT.extend((furnitureSet, properties) -> new DunmerDeskBlock(properties, false)))
-            .with(BlockTypes.PAINTING_WIDE.extend(BlockFactory.wrapping(DunmerPaintingWideBlock::new)))
-            .with(BlockTypes.PAINTING_SMALL.extend(BlockFactory.wrapping(DunmerPaintingSmallBlock::new)))
-            .with(BlockTypes.CHEST.extend(BlockFactory.wrapping(DunmerChestBlock::new)))
-            .with(BlockTypes.FLOOR_LIGHT.extend(BlockFactory.wrapping(DunmerFloorLightBlock::new)))
-            .with(BlockTypes.CHANDELIER.extend(BlockFactory.wrapping(DunmerChandelierBlock::new)))
-            .with(BlockTypes.SHELF.extend(BlockFactory.wrapping(DunmerShelfBlock::new)))
-            .with(BlockTypes.SOFA.extend(BlockFactory.wrapping(DunmerSofaBlock::new)))
-            .with(BlockTypes.COUNTER.extend(BlockFactory.wrapping(DunmerCounterBlock::new)))
-            .with(BlockTypes.WALL_LIGHT.extend(BlockFactory.wrapping(DunmerWallLightBlock::new)))
-            .with(BlockTypes.BENCH.extend(BlockFactory.wrapping(DunmerBenchBlock::new)))
-            .with(BlockTypes.WARDROBE.extend(BlockFactory.wrapping(DunmerWardrobeBlock::new)))
-            .with(BlockTypes.TABLE.extend(BlockFactory.wrapping(DunmerTableBlock::new)))
-    );
+    public static final DeferredBlock<Block> PLANKS = FurnitureUtil.planks(REGISTREE, Block::new);
+    public static final DeferredBlock<Block> WOOL = FurnitureUtil.wool(REGISTREE, Block::new);
+    public static final DeferredBlock<CarpetBlock> CARPET = FurnitureUtil.carpet(REGISTREE, CarpetBlock::new);
+    public static final DeferredBlock<DunmerDresserBlock> DRESSER = FurnitureUtil.dresser(REGISTREE, DunmerDresserBlock::new);
+    public static final DeferredBlock<DunmerStoolBlock> STOOL = FurnitureUtil.stool(REGISTREE, DunmerStoolBlock::new);
+    public static final DeferredBlock<DunmerCushionBlock> CUSION = FurnitureUtil.cushion(REGISTREE, DunmerCushionBlock::new);
+    public static final DeferredBlock<DunmerLockBoxBlock> LOCKBOX = FurnitureUtil.lockbox(REGISTREE, DunmerLockBoxBlock::new);
+    public static final DeferredBlock<DunmerDrawerBlock> DRAWER = FurnitureUtil.drawer(REGISTREE, DunmerDrawerBlock::new);
+    public static final DeferredBlock<DunmerChairBlock> CHAIR = FurnitureUtil.chair(REGISTREE, DunmerChairBlock::new);
+    public static final DeferredBlock<DunmerBookshelfBlock> BOOKSHELF = FurnitureUtil.bookshelf(REGISTREE, DunmerBookshelfBlock::new);
+    public static final DeferredBlock<DunmerBedSingleBlock> BED_SINGLE = FurnitureUtil.bedSingle(REGISTREE, DunmerBedSingleBlock::new);
+    public static final DeferredBlock<DunmerBedDoubleBlock> BED_DOUBLE = FurnitureUtil.bedDouble(REGISTREE, DunmerBedDoubleBlock::new);
+    public static final DeferredBlock<FurnitureDoorBlock> DOOR_SINGLE = FurnitureUtil.doorSingle(REGISTREE, WOOD_TYPE.setType(), FurnitureDoorBlock::new);
+    public static final DeferredBlock<FurnitureDoorBlock> DOOR_DOUBLE = FurnitureUtil.doorDouble(REGISTREE, WOOD_TYPE.setType(), FurnitureDoorBlock::new);
+    public static final DeferredBlock<DunmerDeskLeftBlock> DESK_LEFT = FurnitureUtil.desk(REGISTREE, true, DunmerDeskLeftBlock::new);
+    public static final DeferredBlock<DunmerDeskRightBlock> DESK_RIGHT = FurnitureUtil.desk(REGISTREE, false, DunmerDeskRightBlock::new);
+    public static final DeferredBlock<DunmerPaintingWideBlock> PAINTING_WIDE = FurnitureUtil.paintingWide(REGISTREE, DunmerPaintingWideBlock::new);
+    public static final DeferredBlock<DunmerPaintingSmallBlock> PAINTING_SMALL = FurnitureUtil.paintingSmall(REGISTREE, DunmerPaintingSmallBlock::new);
+    public static final DeferredBlock<DunmerOvenBlock> OVEN = FurnitureUtil.oven(REGISTREE, DunmerOvenBlock::new);
+    public static final DeferredBlock<DunmerChestBlock> CHEST = FurnitureUtil.chest(REGISTREE, DunmerChestBlock::new);
+    public static final DeferredBlock<DunmerFloorLightBlock> FLOOR_LIGHT = FurnitureUtil.floorLight(REGISTREE, DunmerFloorLightBlock::new);
+    public static final DeferredBlock<DunmerChandelierBlock> CHANDELIER = FurnitureUtil.chandelier(REGISTREE, DunmerChandelierBlock::new);
+    public static final DeferredBlock<DunmerShelfBlock> SHELF = FurnitureUtil.shelf(REGISTREE, DunmerShelfBlock::new);
+    public static final DeferredBlock<DunmerSofaBlock> SOFA = FurnitureUtil.sofa(REGISTREE, DunmerSofaBlock::new);
+    public static final DeferredBlock<DunmerCounterBlock> COUNTER = FurnitureUtil.counter(REGISTREE, DunmerCounterBlock::new);
+    public static final DeferredBlock<DunmerWallLightBlock> WALL_LIGHT = FurnitureUtil.wallLight(REGISTREE, DunmerWallLightBlock::new);
+    public static final DeferredBlock<DunmerBenchBlock> BENCH = FurnitureUtil.bench(REGISTREE, DunmerBenchBlock::new);
+    public static final DeferredBlock<DunmerWardrobeBlock> WARDROBE = FurnitureUtil.wardrobe(REGISTREE, DunmerWardrobeBlock::new);
+    public static final DeferredBlock<DunmerTableBlock> TABLE = FurnitureUtil.table(REGISTREE, DunmerTableBlock::new);
+    public static final DeferredBlock<StairBlock> STAIRS = FurnitureUtil.stairs(REGISTREE, PLANKS);
+    public static final DeferredBlock<SlabBlock> SLAB = FurnitureUtil.slab(REGISTREE);
+    public static final DeferredBlock<FenceBlock> FENCE = FurnitureUtil.fence(REGISTREE);
+    public static final DeferredBlock<FenceGateBlock> FENCE_GATE = FurnitureUtil.fenceGate(REGISTREE, WOOD_TYPE);
+    public static final DeferredBlock<TrapDoorBlock> TRAPDOOR = FurnitureUtil.trapdoor(REGISTREE, WOOD_TYPE.setType());
+    public static final DeferredBlock<PressurePlateBlock> PRESSURE_PLATE = FurnitureUtil.pressurePlate(REGISTREE, WOOD_TYPE.setType());
+    public static final FurnitureUtil.SignPair<CeilingHangingSignBlock, WallHangingSignBlock> HANGING_SIGN = FurnitureUtil.hangingSign(REGISTREE, WOOD_TYPE);
+    public static final FurnitureUtil.SignPair<StandingSignBlock, WallSignBlock> SIGN = FurnitureUtil.sign(REGISTREE, WOOD_TYPE);
+
+    public static final ResourceKey<CreativeModeTab> CREATIVE_MODE_TAB = FurnitureUtil.creativeModeTab(REGISTREE, BED_SINGLE);
 
     public DunmerFurnitureSet(IEventBus modBus) {
-        FURNITURE_SET.register(modBus);
-        REGISTREE.registerEvents(modBus);
+        FurnitureUtil.registerEvents(modBus, REGISTREE, WOOD_TYPE);
+
+        modBus.addListener(RegisterClientExtensionsEvent.class, event -> event.registerBlock(
+                ClientMultiBlockExtensions.INSTANCE, OVEN.value()
+        ));
     }
 }

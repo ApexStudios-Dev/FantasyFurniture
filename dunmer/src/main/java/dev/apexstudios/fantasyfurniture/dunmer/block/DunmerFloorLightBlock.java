@@ -1,14 +1,13 @@
 package dev.apexstudios.fantasyfurniture.dunmer.block;
 
+import dev.apexstudios.apexcore.lib.multiblock.MultiBlock;
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.FloorLightBlock;
-import dev.apexstudios.fantasyfurniture.dunmer.DunmerFurnitureSet;
-import java.util.Map;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class DunmerFloorLightBlock extends FloorLightBlock {
@@ -19,19 +18,24 @@ public final class DunmerFloorLightBlock extends FloorLightBlock {
             box(7D, 27D, 7D, 9D, 28D, 9D)
     );
 
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
-
     public DunmerFloorLightBlock(Properties properties) {
-        super(DunmerFurnitureSet.FURNITURE_SET, properties, 1);
+        super(properties, SHAPE);
     }
 
     @Override
-    protected VoxelShape getFurnitureShape(BlockState blockState, BlockPos pos) {
-        return getShape(FACING_SHAPES, blockState, pos);
+    public void animateTick(BlockState blockState, Level level, BlockPos pos, RandomSource random) {
+        if(MultiBlock.getIndex(blockState) != 1)
+            return;
+
+        var x = pos.getX() + .5D;
+        var y = pos.getY() + .95D;
+        var z = pos.getZ() + .5D;
+
+        addParticles(level, x, y, z);
     }
 
-    @Override
-    protected void addParticle(Level level, BlockPos pos, int index) {
-        playParticles(level, pos.getX() + .5D, pos.getY() + .95D, pos.getZ() + .5D);
+    private void addParticles(Level level, double x, double y, double z) {
+        level.addParticle(ParticleTypes.SMOKE, x, y, z, 0D, 0D, 0D);
+        level.addParticle(ParticleTypes.FLAME, x, y, z, 0D, 0D, 0D);
     }
 }

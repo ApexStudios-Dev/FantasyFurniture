@@ -1,62 +1,62 @@
 {
   "variants": {
-    "facing_component=east,lit=false,multi_block_index=0": {
+    "facing=east,lit=false,multi_block_index=0": {
       "model": "fantasyfurniture_dunmer:block/oven_left",
       "y": 90
     },
-    "facing_component=east,lit=false,multi_block_index=1": {
+    "facing=east,lit=false,multi_block_index=1": {
       "model": "fantasyfurniture_dunmer:block/oven_right",
       "y": 90
     },
-    "facing_component=east,lit=true,multi_block_index=0": {
+    "facing=east,lit=true,multi_block_index=0": {
       "model": "fantasyfurniture_dunmer:block/oven_lit_left",
       "y": 90
     },
-    "facing_component=east,lit=true,multi_block_index=1": {
+    "facing=east,lit=true,multi_block_index=1": {
       "model": "fantasyfurniture_dunmer:block/oven_lit_right",
       "y": 90
     },
-    "facing_component=north,lit=false,multi_block_index=0": {
+    "facing=north,lit=false,multi_block_index=0": {
       "model": "fantasyfurniture_dunmer:block/oven_left"
     },
-    "facing_component=north,lit=false,multi_block_index=1": {
+    "facing=north,lit=false,multi_block_index=1": {
       "model": "fantasyfurniture_dunmer:block/oven_right"
     },
-    "facing_component=north,lit=true,multi_block_index=0": {
+    "facing=north,lit=true,multi_block_index=0": {
       "model": "fantasyfurniture_dunmer:block/oven_lit_left"
     },
-    "facing_component=north,lit=true,multi_block_index=1": {
+    "facing=north,lit=true,multi_block_index=1": {
       "model": "fantasyfurniture_dunmer:block/oven_lit_right"
     },
-    "facing_component=south,lit=false,multi_block_index=0": {
+    "facing=south,lit=false,multi_block_index=0": {
       "model": "fantasyfurniture_dunmer:block/oven_left",
       "y": 180
     },
-    "facing_component=south,lit=false,multi_block_index=1": {
+    "facing=south,lit=false,multi_block_index=1": {
       "model": "fantasyfurniture_dunmer:block/oven_right",
       "y": 180
     },
-    "facing_component=south,lit=true,multi_block_index=0": {
+    "facing=south,lit=true,multi_block_index=0": {
       "model": "fantasyfurniture_dunmer:block/oven_lit_left",
       "y": 180
     },
-    "facing_component=south,lit=true,multi_block_index=1": {
+    "facing=south,lit=true,multi_block_index=1": {
       "model": "fantasyfurniture_dunmer:block/oven_lit_right",
       "y": 180
     },
-    "facing_component=west,lit=false,multi_block_index=0": {
+    "facing=west,lit=false,multi_block_index=0": {
       "model": "fantasyfurniture_dunmer:block/oven_left",
       "y": 270
     },
-    "facing_component=west,lit=false,multi_block_index=1": {
+    "facing=west,lit=false,multi_block_index=1": {
       "model": "fantasyfurniture_dunmer:block/oven_right",
       "y": 270
     },
-    "facing_component=west,lit=true,multi_block_index=0": {
+    "facing=west,lit=true,multi_block_index=0": {
       "model": "fantasyfurniture_dunmer:block/oven_lit_left",
       "y": 270
     },
-    "facing_component=west,lit=true,multi_block_index=1": {
+    "facing=west,lit=true,multi_block_index=1": {
       "model": "fantasyfurniture_dunmer:block/oven_lit_right",
       "y": 270
     }

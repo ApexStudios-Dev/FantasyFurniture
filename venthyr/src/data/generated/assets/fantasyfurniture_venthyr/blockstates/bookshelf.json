@@ -1,63 +1,63 @@
 {
   "variants": {
-    "facing_component=east,multi_block_index=0": {
+    "facing=east,multi_block_index=0": {
       "model": "fantasyfurniture_venthyr:block/bookshelf_bottom_left",
       "y": 90
     },
-    "facing_component=east,multi_block_index=1": {
+    "facing=east,multi_block_index=1": {
       "model": "fantasyfurniture_venthyr:block/bookshelf_bottom_right",
       "y": 90
     },
-    "facing_component=east,multi_block_index=2": {
-      "model": "fantasyfurniture_venthyr:block/bookshelf_top_right",
-      "y": 90
-    },
-    "facing_component=east,multi_block_index=3": {
+    "facing=east,multi_block_index=2": {
       "model": "fantasyfurniture_venthyr:block/bookshelf_top_left",
       "y": 90
     },
-    "facing_component=north,multi_block_index=0": {
+    "facing=east,multi_block_index=3": {
+      "model": "fantasyfurniture_venthyr:block/bookshelf_top_right",
+      "y": 90
+    },
+    "facing=north,multi_block_index=0": {
       "model": "fantasyfurniture_venthyr:block/bookshelf_bottom_left"
     },
-    "facing_component=north,multi_block_index=1": {
+    "facing=north,multi_block_index=1": {
       "model": "fantasyfurniture_venthyr:block/bookshelf_bottom_right"
     },
-    "facing_component=north,multi_block_index=2": {
-      "model": "fantasyfurniture_venthyr:block/bookshelf_top_right"
-    },
-    "facing_component=north,multi_block_index=3": {
+    "facing=north,multi_block_index=2": {
       "model": "fantasyfurniture_venthyr:block/bookshelf_top_left"
     },
-    "facing_component=south,multi_block_index=0": {
+    "facing=north,multi_block_index=3": {
+      "model": "fantasyfurniture_venthyr:block/bookshelf_top_right"
+    },
+    "facing=south,multi_block_index=0": {
       "model": "fantasyfurniture_venthyr:block/bookshelf_bottom_left",
       "y": 180
     },
-    "facing_component=south,multi_block_index=1": {
+    "facing=south,multi_block_index=1": {
       "model": "fantasyfurniture_venthyr:block/bookshelf_bottom_right",
       "y": 180
     },
-    "facing_component=south,multi_block_index=2": {
-      "model": "fantasyfurniture_venthyr:block/bookshelf_top_right",
-      "y": 180
-    },
-    "facing_component=south,multi_block_index=3": {
+    "facing=south,multi_block_index=2": {
       "model": "fantasyfurniture_venthyr:block/bookshelf_top_left",
       "y": 180
     },
-    "facing_component=west,multi_block_index=0": {
+    "facing=south,multi_block_index=3": {
+      "model": "fantasyfurniture_venthyr:block/bookshelf_top_right",
+      "y": 180
+    },
+    "facing=west,multi_block_index=0": {
       "model": "fantasyfurniture_venthyr:block/bookshelf_bottom_left",
       "y": 270
     },
-    "facing_component=west,multi_block_index=1": {
+    "facing=west,multi_block_index=1": {
       "model": "fantasyfurniture_venthyr:block/bookshelf_bottom_right",
       "y": 270
     },
-    "facing_component=west,multi_block_index=2": {
-      "model": "fantasyfurniture_venthyr:block/bookshelf_top_right",
+    "facing=west,multi_block_index=2": {
+      "model": "fantasyfurniture_venthyr:block/bookshelf_top_left",
       "y": 270
     },
-    "facing_component=west,multi_block_index=3": {
-      "model": "fantasyfurniture_venthyr:block/bookshelf_top_left",
+    "facing=west,multi_block_index=3": {
+      "model": "fantasyfurniture_venthyr:block/bookshelf_top_right",
       "y": 270
     }
   }

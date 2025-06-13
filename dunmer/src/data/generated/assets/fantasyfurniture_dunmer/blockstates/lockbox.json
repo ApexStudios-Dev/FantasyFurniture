@@ -1,17 +1,17 @@
 {
   "variants": {
-    "facing_component=east": {
+    "facing=east": {
       "model": "fantasyfurniture_dunmer:block/lockbox",
       "y": 90
     },
-    "facing_component=north": {
+    "facing=north": {
       "model": "fantasyfurniture_dunmer:block/lockbox"
     },
-    "facing_component=south": {
+    "facing=south": {
       "model": "fantasyfurniture_dunmer:block/lockbox",
       "y": 180
     },
-    "facing_component=west": {
+    "facing=west": {
       "model": "fantasyfurniture_dunmer:block/lockbox",
       "y": 270
     }

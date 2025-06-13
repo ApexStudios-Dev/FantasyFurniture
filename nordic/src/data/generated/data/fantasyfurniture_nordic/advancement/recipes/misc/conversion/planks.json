@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "fantasyfurniture_nordic:planks"
+            "items": "#minecraft:planks"
           }
         ]
       },

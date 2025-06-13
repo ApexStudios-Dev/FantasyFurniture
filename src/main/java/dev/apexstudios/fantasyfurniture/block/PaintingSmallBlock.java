@@ -1,34 +1,27 @@
 package dev.apexstudios.fantasyfurniture.block;
 
-import dev.apexstudios.apexcore.lib.component.ComponentRegistrar;
-import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
-import dev.apexstudios.apexcore.lib.component.block.types.FacingBlockComponent;
-import dev.apexstudios.fantasyfurniture.block.base.FurnitureBlockComponentHolder;
+import dev.apexstudios.apexcore.lib.block.SimpleHorizontalDirectionalBlock;
+import dev.apexstudios.fantasyfurniture.util.FurnitureUtil;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class PaintingSmallBlock extends FurnitureBlockComponentHolder {
-    public static final VoxelShape SHAPE = box(0D, 0D, 14D, 16D, 16D, 16D);
-    public static final Map<Direction, VoxelShape> FACING_SHAPES = Shapes.rotateHorizontal(SHAPE);
+public class PaintingSmallBlock extends SimpleHorizontalDirectionalBlock {
+    private final Map<Direction, VoxelShape> shapes;
 
-    public PaintingSmallBlock(Properties properties) {
+    public PaintingSmallBlock(Properties properties, VoxelShape baseShape) {
         super(properties);
+
+        shapes = Shapes.rotateHorizontal(baseShape);
     }
 
     @Override
-    protected VoxelShape getFurnitureShape(BlockState blockState, BlockPos pos) {
-        return getShape(FACING_SHAPES, blockState, pos);
-    }
-
-    @Override
-    protected void registerComponents(ComponentRegistrar<BlockComponent, Block> registrar) {
-        super.registerComponents(registrar);
-
-        FacingBlockComponent.registerHorizontal(registrar);
+    protected VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return FurnitureUtil.getShape(shapes, blockState, pos);
     }
 }

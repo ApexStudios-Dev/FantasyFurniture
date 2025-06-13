@@ -10,6 +10,15 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "fantasyfurniture_royal:bed_single",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "part": "head"
+              }
+            }
+          ],
           "name": "fantasyfurniture_royal:bed_single"
         }
       ],

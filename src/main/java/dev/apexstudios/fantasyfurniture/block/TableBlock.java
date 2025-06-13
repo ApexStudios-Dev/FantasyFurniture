@@ -1,12 +1,9 @@
 package dev.apexstudios.fantasyfurniture.block;
 
-import dev.apexstudios.apexcore.lib.component.ComponentRegistrar;
-import dev.apexstudios.apexcore.lib.component.block.BlockComponent;
-import dev.apexstudios.apexcore.lib.component.block.BlockComponentHelper;
-import dev.apexstudios.apexcore.lib.component.block.BlockComponentTypes;
-import dev.apexstudios.apexcore.lib.component.block.types.FacingBlockComponent;
+import com.google.common.collect.Maps;
+import dev.apexstudios.apexcore.lib.block.SimpleHorizontalDirectionalBlock;
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
-import dev.apexstudios.fantasyfurniture.block.base.FurnitureBlockComponentHolder;
+import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -15,22 +12,21 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-public class TableBlock extends FurnitureBlockComponentHolder {
-    public static final VoxelShape SHAPE_TABLE_TOP = box(0D, 13D, 0D, 16D, 16D, 16D);
-    public static final VoxelShape SHAPE_TABLE_LEG = box(13D, 0D, 1D, 15D, 13D, 3D);
-
+public abstract class TableBlock extends SimpleHorizontalDirectionalBlock {
     public static final BooleanProperty NORTH = BlockStateProperties.NORTH;
     public static final BooleanProperty EAST = BlockStateProperties.EAST;
     public static final BooleanProperty SOUTH = BlockStateProperties.SOUTH;
     public static final BooleanProperty WEST = BlockStateProperties.WEST;
+
+    private final Map<BlockState, VoxelShape> shapes = Maps.newHashMap();
 
     public TableBlock(Properties properties) {
         super(properties);
@@ -43,21 +39,18 @@ public class TableBlock extends FurnitureBlockComponentHolder {
         );
     }
 
-    @Override
-    protected VoxelShape getFurnitureShape(BlockState blockState, BlockPos pos) {
-        var facing = getComponentOrThrow(BlockComponentTypes.FACING).get(blockState);
-        return ApexShapes.rotateHorizontal(getShape(blockState, SHAPE_TABLE_TOP, SHAPE_TABLE_LEG), facing);
-    }
+    protected abstract VoxelShape getLegShape();
+
+    protected abstract VoxelShape getTopShape();
 
     @Override
-    protected void registerComponents(ComponentRegistrar<BlockComponent, Block> registrar) {
-        super.registerComponents(registrar);
-
-        FacingBlockComponent.registerHorizontal(registrar);
+    protected VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return shapes.computeIfAbsent(blockState, $ -> getShape(blockState, getTopShape(), getLegShape()));
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
         builder.add(NORTH, EAST, SOUTH, WEST);
     }
 
@@ -74,8 +67,7 @@ public class TableBlock extends FurnitureBlockComponentHolder {
 
     @Override
     public BlockState updateShape(BlockState blockState, LevelReader level, ScheduledTickAccess tickAccess, BlockPos pos, Direction facing, BlockPos neighborPos, BlockState neighborBlockState, RandomSource random) {
-        var result = get(level, pos, blockState, facing);
-        return super.updateShape(result, level, tickAccess, pos, facing, neighborPos, neighborBlockState, random);
+        return get(level, pos, blockState, facing);
     }
 
     public static BlockState get(BlockGetter level, BlockPos pos, BlockState blockState) {
@@ -94,7 +86,7 @@ public class TableBlock extends FurnitureBlockComponentHolder {
 
         var result = blockState;
 
-        var facing = BlockComponentHelper.getComponentOrThrow(blockState, BlockComponentTypes.FACING).get(blockState);
+        var facing = blockState.getValue(FACING);
         var frontPos = pos.relative(facing);
         var frontBlockState = level.getBlockState(frontPos);
         var frontProperty = property(facing);
@@ -127,18 +119,16 @@ public class TableBlock extends FurnitureBlockComponentHolder {
         if(!target.is(source.getBlock()))
             return false;
 
-        var facing = BlockComponentHelper.getComponentOrThrow(source, BlockComponentTypes.FACING);
-        return target.hasProperty(facing.getProperty()) && facing.get(source) == facing.get(target);
+        return source.getValue(FACING) == target.getValue(FACING);
     }
 
     public static Direction getFacingForConnection(Direction facing) {
         return facing.getAxis() == Direction.Axis.X ? facing.getOpposite() : facing;
     }
 
-    public static VoxelShape getShape(BlockState blockState, VoxelShape top, VoxelShape leg) {
+    private static VoxelShape getShape(BlockState blockState, VoxelShape top, VoxelShape leg) {
         var result = top;
 
-        var facing = BlockComponentHelper.getComponentOrThrow(blockState, BlockComponentTypes.FACING).get(blockState);
         var north = blockState.getValue(NORTH);
         var east = blockState.getValue(EAST);
         var south = blockState.getValue(SOUTH);
@@ -175,7 +165,7 @@ public class TableBlock extends FurnitureBlockComponentHolder {
                 face = Direction.NORTH;
 
             if(face != null)
-                result = ApexShapes.join(result, rotateShape(leg, face, facing), rotateShape(leg, face.getClockWise(), facing));
+                result = ApexShapes.join(result, ApexShapes.rotateHorizontal(leg, face), ApexShapes.rotateHorizontal(leg, face.getClockWise()));
         }
         // corners
         else if(count == 2) {
@@ -191,20 +181,9 @@ public class TableBlock extends FurnitureBlockComponentHolder {
                 face = Direction.NORTH;
 
             if(face != null)
-                result = ApexShapes.join(result, rotateShape(leg, face, facing));
+                result = ApexShapes.join(result, ApexShapes.rotateHorizontal(leg, face));
         }
 
         return result;
-    }
-
-    private static VoxelShape rotateShape(VoxelShape shape, Direction direction, Direction facing) {
-        var rotation = switch (getFacingForConnection(facing)) {
-            case EAST -> Rotation.CLOCKWISE_90;
-            case SOUTH -> Rotation.CLOCKWISE_180;
-            case WEST -> Rotation.COUNTERCLOCKWISE_90;
-            default -> Rotation.NONE;
-        };
-
-        return ApexShapes.rotateHorizontal(shape, rotation.rotate(direction));
     }
 }
