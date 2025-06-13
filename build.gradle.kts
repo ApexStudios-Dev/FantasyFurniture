@@ -30,14 +30,6 @@ ModuleBuilder.modules(project) { furnitureSets.forEach {
     module(it, "fantasyfurniture_$it") { hasData() }
 } }
 
-neoForge.runs.getByName("boneData") {
-    programArguments.addAll(
-        "--mod", "fantasyfurniture_bone_skeleton",
-        "--mod", "fantasyfurniture_bone_wither",
-        "--flat"
-    )
-}
-
 furnitureSets.forEach {
     fixJarName(sourceSet(it, SourceSet.MAIN_SOURCE_SET_NAME), it)
     fixJarName(sourceSet(it, ApexExtension.DATA_NAME), "$it-data")
