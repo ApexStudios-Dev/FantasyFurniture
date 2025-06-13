@@ -4,6 +4,7 @@ import dev.apexstudios.apexcore.lib.data.ProviderTypes;
 import dev.apexstudios.apexcore.lib.data.ResourceGenerator;
 import dev.apexstudios.apexcore.lib.util.ApexTags;
 import dev.apexstudios.apexcore.lib.util.TagPair;
+import dev.apexstudios.fantasyfurniture.ctm.CtmPacks;
 import dev.apexstudios.fantasyfurniture.util.FurnitureClientDataUtil;
 import dev.apexstudios.fantasyfurniture.util.FurnitureDataUtil;
 import dev.apexstudios.fantasyfurniture.util.FurnitureUtil;
@@ -45,6 +46,7 @@ public final class VenthyrFurnitureSetDataEntryPoint {
 
             FurnitureDataUtil.registerDataGen(context, pack);
             FurnitureClientDataUtil.registerDataGen(context, pack);
+            CtmPacks.registerDataGen(VenthyrFurnitureSet.REGISTREE, pack, false);
 
             pack.providing(ProviderTypes.LOOT_TABLE, (ctx, provider) -> provider
                     .block(blocks -> blocks.dropSelf(VenthyrFurnitureSet.TABLE_CLOTH.value()))

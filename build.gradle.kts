@@ -30,20 +30,38 @@ ModuleBuilder.modules(project) { furnitureSets.forEach {
     module(it, "fantasyfurniture_$it") { hasData() }
 } }
 
-neoForge.runs.getByName("boneData") {
-    programArguments.addAll(
-        "--mod", "fantasyfurniture_bone_skeleton",
-        "--mod", "fantasyfurniture_bone_wither",
-        "--flat"
-    )
-}
-
 furnitureSets.forEach {
     fixJarName(sourceSet(it, SourceSet.MAIN_SOURCE_SET_NAME), it)
     fixJarName(sourceSet(it, ApexExtension.DATA_NAME), "$it-data")
 }
 
-repositories {
+neoForge {
+    runs {
+        getByName(ApexExtension.DATA_NAME) {
+            furnitureSets.forEach {
+                loadedMods.add(mods.getByName("${it.lowercase()}${SourceSet.MAIN_SOURCE_SET_NAME.capitalized()}"))
+                loadedMods.add(mods.getByName("${it.lowercase()}${ApexExtension.DATA_NAME.capitalized()}"))
+            }
+
+            // include bone built-in packs as they are needed for
+            // ctm asset generation to complete
+            programArguments.addAll(
+                "--existing", file("bone/src/data/generated/built-in/assets/skeleton").absolutePath,
+                "--existing", file("bone/src/data/generated/built-in/assets/wither").absolutePath
+            )
+        }
+
+        getByName("boneData") {
+            programArguments.addAll(
+                "--mod", "fantasyfurniture_bone_skeleton",
+                "--mod", "fantasyfurniture_bone_wither",
+                "--flat"
+            )
+        }
+    }
+}
+
+repositories() {
     maven("https://maven.apexstudios.dev/private")
 }
 
@@ -51,6 +69,8 @@ dependencies {
     implementation(libs.apexcore)
     "dataImplementation"(libs.apexcore)
     accessTransformers(libs.apexcore)
+
+    implementation(libs.contex)
 
     furnitureSets.forEach {
         sourceSet(it, SourceSet.MAIN_SOURCE_SET_NAME).implementationConfigurationName(libs.apexcore)

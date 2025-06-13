@@ -1,0 +1,13 @@
+{
+  "type": "connecting",
+  "parent": "minecraft:block/carpet",
+  "connections": [
+    {
+      "type": "is_same_block"
+    }
+  ],
+  "loader": "fusion:model",
+  "textures": {
+    "wool": "fantasyfurniture_nordic:block/ctm/wool_simple_vertical"
+  }
+}

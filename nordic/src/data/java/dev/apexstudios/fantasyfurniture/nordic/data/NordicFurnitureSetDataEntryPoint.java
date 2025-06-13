@@ -2,6 +2,7 @@ package dev.apexstudios.fantasyfurniture.nordic.data;
 
 import dev.apexstudios.apexcore.lib.data.ResourceGenerator;
 import dev.apexstudios.apexcore.lib.util.TagPair;
+import dev.apexstudios.fantasyfurniture.ctm.CtmPacks;
 import dev.apexstudios.fantasyfurniture.nordic.NordicFurnitureSet;
 import dev.apexstudios.fantasyfurniture.util.FurnitureClientDataUtil;
 import dev.apexstudios.fantasyfurniture.util.FurnitureDataUtil;
@@ -43,6 +44,7 @@ public final class NordicFurnitureSetDataEntryPoint {
 
             FurnitureDataUtil.registerDataGen(context, pack);
             FurnitureClientDataUtil.registerDataGen(context, pack);
+            CtmPacks.registerDataGen(NordicFurnitureSet.REGISTREE, pack, false);
         });
     }
 }

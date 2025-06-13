@@ -3,6 +3,7 @@ package dev.apexstudios.fantasyfurniture.data;
 import dev.apexstudios.apexcore.lib.data.ProviderTypes;
 import dev.apexstudios.apexcore.lib.data.ResourceGenerator;
 import dev.apexstudios.fantasyfurniture.FantasyFurniture;
+import dev.apexstudios.fantasyfurniture.ctm.CtmPacks;
 import dev.apexstudios.fantasyfurniture.station.FurnitureStationSetup;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.network.chat.Component;
@@ -59,6 +60,8 @@ public final class FantasyFurnitureDataEntryPoint {
             generator.pack("experimental")
                     .enabling(FantasyFurniture.EXPERIMENTAL)
                     .description(Component.translatable(experimentalDescKey));
+
+            CtmPacks.registerMainDataGen(generator);
         });
     }
 }

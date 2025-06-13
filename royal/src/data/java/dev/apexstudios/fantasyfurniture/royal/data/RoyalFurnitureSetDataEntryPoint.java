@@ -12,6 +12,7 @@ import dev.apexstudios.apexcore.lib.util.TagPair;
 import dev.apexstudios.fantasyfurniture.block.property.CounterConnection;
 import dev.apexstudios.fantasyfurniture.block.property.ShelfConnection;
 import dev.apexstudios.fantasyfurniture.block.property.SofaConnection;
+import dev.apexstudios.fantasyfurniture.ctm.CtmPacks;
 import dev.apexstudios.fantasyfurniture.royal.RoyalFurnitureSet;
 import dev.apexstudios.fantasyfurniture.util.FurnitureClientDataUtil;
 import dev.apexstudios.fantasyfurniture.util.FurnitureDataUtil;
@@ -83,6 +84,7 @@ public final class RoyalFurnitureSetDataEntryPoint {
 
             FurnitureDataUtil.registerDataGen(context, pack);
             FurnitureClientDataUtil.registerDataGen(context, pack);
+            CtmPacks.registerDataGen(RoyalFurnitureSet.REGISTREE, pack, true);
 
             pack.providing(ProviderTypes.MODELS, this::registerModels)
                     .providing(ProviderTypes.BLOCK_TAGS, this::registerBlockTags)
