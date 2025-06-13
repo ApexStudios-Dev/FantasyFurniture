@@ -3,6 +3,7 @@ package dev.apexstudios.fantasyfurniture.util;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import dev.apexstudios.apexcore.lib.block.Dyeable;
 import dev.apexstudios.apexcore.lib.multiblock.ClientMultiBlockExtensions;
 import dev.apexstudios.apexcore.lib.multiblock.MultiBlock;
 import dev.apexstudios.apexcore.lib.placement.PlacementRenderEvent;
@@ -35,6 +36,8 @@ import dev.apexstudios.fantasyfurniture.block.StoolBlock;
 import dev.apexstudios.fantasyfurniture.block.TableBlock;
 import dev.apexstudios.fantasyfurniture.block.WallLightBlock;
 import dev.apexstudios.fantasyfurniture.block.WardrobeBlock;
+import dev.apexstudios.fantasyfurniture.block.property.CounterConnection;
+import dev.apexstudios.fantasyfurniture.block.property.ShelfConnection;
 import dev.apexstudios.fantasyfurniture.block.property.SofaConnection;
 import java.util.Collections;
 import java.util.Map;
@@ -463,6 +466,40 @@ public interface FurnitureUtil {
         });
 
         registree.registerEvents(modBus);
+
+        NeoForge.EVENT_BUS.addListener(PlacementRenderEvent.DefaultBlockState.class, event -> {
+            Names.block(registree, Names.BED_SINGLE, block -> {
+                if(event.defaultBlockState().is(block))
+                    event.withProperty(BedBlock.FACING, () -> event.placeContext().getHorizontalDirection());
+            });
+
+            Names.block(registree, Names.BED_DOUBLE, block -> {
+                if(event.defaultBlockState().is(block))
+                    event.withProperty(BedBlock.FACING, () -> event.placeContext().getHorizontalDirection());
+            });
+
+            Names.block(registree, Names.COUNTER, block -> {
+                if(event.defaultBlockState().is(block))
+                    event.setDefaultBlockState(CounterConnection.setConnection(event.level(), event.pos(), event.defaultBlockState()));
+            });
+
+            Names.block(registree, Names.SHELF, block -> {
+                if(event.defaultBlockState().is(block))
+                    event.setDefaultBlockState(ShelfConnection.setConnection(event.level(), event.pos(), event.defaultBlockState()));
+            });
+
+            Names.block(registree, Names.SOFA, block -> {
+                if(event.defaultBlockState().is(block))
+                    event.setDefaultBlockState(SofaConnection.setConnection(event.level(), event.pos(), event.defaultBlockState()));
+            });
+
+            Names.block(registree, Names.TABLE, block -> {
+                if(event.defaultBlockState().is(block))
+                    event.setDefaultBlockState(TableBlock.get(event.level(), event.pos(), event.defaultBlockState()));
+            });
+
+            event.withProperty(Dyeable.PROPERTY, () -> Dyeable.getColorForPlacement(event.placeContext()));
+        });
     }
 
     static VoxelShape getShape(VoxelShape shape, BlockState blockState, BlockPos worldPos) {

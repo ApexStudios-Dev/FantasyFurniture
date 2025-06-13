@@ -1,9 +1,11 @@
 package dev.apexstudios.fantasyfurniture.venthyr;
 
+import dev.apexstudios.apexcore.lib.placement.PlacementRenderEvent;
 import dev.apexstudios.apexcore.lib.registree.Registree;
 import dev.apexstudios.apexcore.lib.registree.holder.DeferredBlock;
 import dev.apexstudios.apexcore.lib.util.WoodTypeBuilder;
 import dev.apexstudios.fantasyfurniture.block.FurnitureDoorBlock;
+import dev.apexstudios.fantasyfurniture.block.TableBlock;
 import dev.apexstudios.fantasyfurniture.util.FurnitureUtil;
 import dev.apexstudios.fantasyfurniture.venthyr.block.VenthyrBedDoubleBlock;
 import dev.apexstudios.fantasyfurniture.venthyr.block.VenthyrBedSingleBlock;
@@ -47,6 +49,7 @@ import net.minecraft.world.level.block.WallSignBlock;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.common.NeoForge;
 
 @Mod(VenthyrFurnitureSet.ID)
 public class VenthyrFurnitureSet {
@@ -101,5 +104,10 @@ public class VenthyrFurnitureSet {
 
     public VenthyrFurnitureSet(IEventBus modBus) {
         FurnitureUtil.registerEvents(modBus, REGISTREE, WOOD_TYPE);
+
+        NeoForge.EVENT_BUS.addListener(PlacementRenderEvent.DefaultBlockState.class, event -> {
+            if(TABLE_CLOTH.is(event.defaultBlockState()))
+                event.setDefaultBlockState(TableBlock.get(event.level(), event.pos(), event.defaultBlockState()));
+        });
     }
 }
