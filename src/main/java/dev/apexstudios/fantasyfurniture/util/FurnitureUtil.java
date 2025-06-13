@@ -3,6 +3,8 @@ package dev.apexstudios.fantasyfurniture.util;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import dev.apexstudios.apexcore.lib.block.BedClientBlockExtensions;
+import dev.apexstudios.apexcore.lib.block.DoorClientBlockExtensions;
 import dev.apexstudios.apexcore.lib.block.Dyeable;
 import dev.apexstudios.apexcore.lib.multiblock.ClientMultiBlockExtensions;
 import dev.apexstudios.apexcore.lib.multiblock.MultiBlock;
@@ -68,6 +70,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CarpetBlock;
 import net.minecraft.world.level.block.CeilingHangingSignBlock;
+import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.FenceBlock;
 import net.minecraft.world.level.block.FenceGateBlock;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
@@ -416,12 +419,17 @@ public interface FurnitureUtil {
             WoodType.register(woodType);
         }));
 
-        modBus.addListener(RegisterClientExtensionsEvent.class, event -> event.registerBlock(
-                ClientMultiBlockExtensions.INSTANCE, Names.blocks(registree,
-                        Names.DRESSER, Names.CHAIR, Names.BOOKSHELF, Names.BED_DOUBLE,
-                        Names.DESK_LEFT, Names.DESK_RIGHT, Names.PAINTING_WIDE, Names.CHEST,
-                        Names.FLOOR_LIGHT, Names.BENCH, Names.WARDROBE
-                ))
+        modBus.addListener(RegisterClientExtensionsEvent.class, event -> {
+                    event.registerBlock(ClientMultiBlockExtensions.INSTANCE, Names.blocks(registree,
+                            Names.DRESSER, Names.CHAIR, Names.BOOKSHELF, Names.BED_DOUBLE,
+                            Names.DESK_LEFT, Names.DESK_RIGHT, Names.PAINTING_WIDE, Names.CHEST,
+                            Names.FLOOR_LIGHT, Names.BENCH, Names.WARDROBE
+                    ));
+
+                    Names.block(registree, Names.BED_SINGLE, block -> event.registerBlock(new BedClientBlockExtensions((BedBlock) block), block));
+                    Names.block(registree, Names.DOOR_DOUBLE, block -> event.registerBlock(new DoorClientBlockExtensions((DoorBlock) block), block));
+                    Names.block(registree, Names.DOOR_SINGLE, block -> event.registerBlock(new DoorClientBlockExtensions((DoorBlock) block), block));
+                }
         );
 
         modBus.addListener(RegisterCapabilitiesEvent.class, event -> Names.block(
