@@ -9,6 +9,7 @@ import dev.apexstudios.apexcore.lib.registree.Registree;
 import dev.apexstudios.fantasyfurniture.FantasyFurniture;
 import java.util.Objects;
 import java.util.function.BiConsumer;
+import java.util.function.Supplier;
 import net.neoforged.fml.ModList;
 import org.jetbrains.annotations.Nullable;
 
@@ -44,7 +45,7 @@ public interface CtmPack {
         @Nullable private String packId = null;
         @Nullable private String displayName = null;
         @Nullable private String description = null;
-        private final Multimap<ProviderType<?>, BiConsumer<?, Registree>> providers = MultimapBuilder.hashKeys().linkedHashSetValues().build();
+        private final Multimap<ProviderType<?>, Supplier<? extends BiConsumer<?, Registree>>> providers = MultimapBuilder.hashKeys().linkedHashSetValues().build();
 
         private Builder(String modId) {
             this.modId = modId;
@@ -65,9 +66,13 @@ public interface CtmPack {
             return this;
         }
 
-        public <TProvider> Builder providing(ProviderType<TProvider> providerType, BiConsumer<TProvider, Registree> consumer) {
+        public <TProvider> Builder providing(ProviderType<TProvider> providerType, Supplier<BiConsumer<TProvider, Registree>> consumer) {
             providers.put(providerType, consumer);
             return this;
+        }
+
+        public <TProvider> Builder providing(ProviderType<TProvider> providerType, BiConsumer<TProvider, Registree> consumer) {
+            return providing(providerType, () -> consumer);
         }
 
         public CtmPack build() {
@@ -76,7 +81,7 @@ public interface CtmPack {
                 @Nullable private final String packId = Builder.this.packId;
                 @Nullable private final String displayName = Builder.this.displayName;
                 @Nullable private final String description = Builder.this.description;
-                private final Multimap<ProviderType<?>, BiConsumer<?, Registree>> providers = HashMultimap.create(Builder.this.providers);
+                private final Multimap<ProviderType<?>, Supplier<? extends BiConsumer<?, Registree>>> providers = HashMultimap.create(Builder.this.providers);
 
                 @Override
                 public String modId() {
@@ -107,7 +112,7 @@ public interface CtmPack {
                     generator.providing(providerType, (context, provider) -> CtmPacks.REFERENCES
                             .forEach(registree -> providers
                                     .get(providerType)
-                                    .forEach(listener -> ((BiConsumer<TProvider, Registree>) listener).accept(provider, registree))
+                                    .forEach(listener -> ((BiConsumer<TProvider, Registree>) listener.get()).accept(provider, registree))
                             )
                     );
                 }

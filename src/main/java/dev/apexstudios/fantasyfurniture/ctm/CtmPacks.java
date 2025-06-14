@@ -1,8 +1,6 @@
 package dev.apexstudios.fantasyfurniture.ctm;
 
 import com.google.common.collect.Lists;
-import dev.apexstudios.apexcore.core.client.DyeColorItemTintSource;
-import dev.apexstudios.apexcore.lib.block.Dyeable;
 import dev.apexstudios.apexcore.lib.data.ProviderTypes;
 import dev.apexstudios.apexcore.lib.data.ResourceGenerator;
 import dev.apexstudios.apexcore.lib.data.pack.PackGenerator;
@@ -10,15 +8,11 @@ import dev.apexstudios.apexcore.lib.registree.Registree;
 import dev.apexstudios.fantasyfurniture.FantasyFurniture;
 import dev.apexstudios.fantasyfurniture.util.FurnitureUtil;
 import java.util.List;
-import java.util.stream.Stream;
 import net.minecraft.Util;
-import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
 
@@ -46,23 +40,7 @@ public final class CtmPacks {
                     .description("Restores Fantasy's Furniture old 3D Door Item Models")
                     .displayName("3D Doors")
                     .packId("3d-doors")
-                    .providing(ProviderTypes.MODELS, (provider, registree) -> {
-                        var dyeable = SimpleJsonProvider.isDyeable(registree);
-                        var blockModels = provider.blockModels();
-                        var blocks = FurnitureUtil.Names.blocks(registree, FurnitureUtil.Names.DOOR_SINGLE, FurnitureUtil.Names.DOOR_DOUBLE);
-
-                        provider.knownBlocks(() -> Stream.of(blocks).map(Block::builtInRegistryHolder))
-                                .knownItems(() -> Stream.of(blocks).map(Block::asItem).map(Item::builtInRegistryHolder));
-
-                        for(var block : blocks) {
-                            var model = ModelLocationUtils.getModelLocation(block.asItem(), "_3d");
-
-                            if(dyeable)
-                                blockModels.registerSimpleTintedItemModel(block, model, new DyeColorItemTintSource(Dyeable.DEFAULT_COLOR));
-                            else
-                                blockModels.registerSimpleItemModel(block, model);
-                        }
-                    })
+                    .providing(ProviderTypes.MODELS, () -> LegacyDoorsProvider::register)
                     .build()
     );
 
