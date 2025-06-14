@@ -1,6 +1,7 @@
 package dev.apexstudios.fantasyfurniture.ctm;
 
 import com.google.common.collect.Lists;
+import dev.apexstudios.apexcore.lib.data.ProviderTypes;
 import dev.apexstudios.apexcore.lib.data.ResourceGenerator;
 import dev.apexstudios.apexcore.lib.data.pack.PackGenerator;
 import dev.apexstudios.apexcore.lib.registree.Registree;
@@ -32,6 +33,14 @@ public final class CtmPacks {
                     .displayName("XFactHD")
                     .packId("ctm-xfact")
                     .providing(ConTexProvider.PROVIDER_TYPE, ConTexProvider::with)
+                    .build(),
+
+            // 3D-Doors pack added via ctm-packing system
+            CtmPack.builder(FantasyFurniture.ID)
+                    .description("Restores Fantasy's Furniture old 3D Door Item Models")
+                    .displayName("3D Doors")
+                    .packId("3d-doors")
+                    .providing(ProviderTypes.MODELS, () -> LegacyDoorsProvider::register)
                     .build()
     );
 

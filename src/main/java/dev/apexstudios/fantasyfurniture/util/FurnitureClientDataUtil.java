@@ -77,7 +77,6 @@ public interface FurnitureClientDataUtil {
             registerSimpleBlockItemModel(block, blockModels);
         });
 
-        // TODO: Add optional pack to restore 3d door item models
         context.block(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.DOOR_SINGLE, block -> {
             createDoorModel(block, blockModels);
             blockModels.registerSimpleFlatItemModel(block.asItem());
