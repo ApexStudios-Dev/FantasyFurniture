@@ -6,6 +6,7 @@ import com.google.common.collect.MultimapBuilder;
 import dev.apexstudios.apexcore.lib.data.ProviderType;
 import dev.apexstudios.apexcore.lib.data.pack.FeaturePackGenerator;
 import dev.apexstudios.apexcore.lib.registree.Registree;
+import dev.apexstudios.fantasyfurniture.FantasyFurniture;
 import java.util.Objects;
 import java.util.function.BiConsumer;
 import net.neoforged.fml.ModList;
@@ -27,7 +28,7 @@ public interface CtmPack {
     }
 
     default boolean isEnabled() {
-        return ModList.get().isLoaded(modId());
+        return modId().equals(FantasyFurniture.ID) || ModList.get().isLoaded(modId());
     }
 
     default void provide(FeaturePackGenerator packGenerator) {
