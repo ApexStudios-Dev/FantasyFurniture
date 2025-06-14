@@ -256,7 +256,7 @@ jobs:
             wget -O "mods/fantasyfurniture-royal-${{ needs.generate-vars.outputs.version }}.jar" "https://maven.apexstudios.dev/private/dev/apexstudios/fantasyfurniture-royal/${{ needs.generate-vars.outputs.version }}/fantasyfurniture-royal-${{ needs.generate-vars.outputs.version }}.jar"
           fi
         env:
-          APEXCORE_VERSION: 21.5.23-beta-pr-40
+          APEXCORE_VERSION: 21.5.25-beta-pr-40
           NORDIC_CHANGED: ${{ needs.determine-changes.outputs.nordic-changed }}
           VENTHYR_CHANGED: ${{ needs.determine-changes.outputs.venthyr-changed }}
           BONE_CHANGED: ${{ needs.determine-changes.outputs.bone-changed }}
