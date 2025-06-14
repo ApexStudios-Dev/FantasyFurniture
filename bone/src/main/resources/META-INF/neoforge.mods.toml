@@ -16,7 +16,7 @@ issueTrackerURL="https://github.com/ApexStudios-Dev/Issues/issues"
 [[dependencies.fantasyfurniture_bone]]
     modId="minecraft"
     type="required"
-    versionRange="[1.21.6,1.21.7)"
+    versionRange="[1.21.6-rc1,1.21.7)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.fantasyfurniture_bone]]
@@ -54,7 +54,7 @@ issueTrackerURL="https://github.com/ApexStudios-Dev/Issues/issues"
 [[dependencies.fantasyfurniture_bone_skeleton]]
     modId="minecraft"
     type="required"
-    versionRange="[1.21.6,1.21.7)"
+    versionRange="[1.21.6-rc1,1.21.7)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.fantasyfurniture_bone_skeleton]]
@@ -90,7 +90,7 @@ issueTrackerURL="https://github.com/ApexStudios-Dev/Issues/issues"
 [[dependencies.fantasyfurniture_bone_wither]]
     modId="minecraft"
     type="required"
-    versionRange="[1.21.6,1.21.7)"
+    versionRange="[1.21.6-rc1,1.21.7)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.fantasyfurniture_bone_wither]]
