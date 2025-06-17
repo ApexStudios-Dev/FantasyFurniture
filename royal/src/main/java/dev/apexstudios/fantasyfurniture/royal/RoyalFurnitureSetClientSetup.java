@@ -2,7 +2,7 @@ package dev.apexstudios.fantasyfurniture.royal;
 
 import dev.apexstudios.apexcore.lib.block.Dyeable;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import net.minecraft.core.Holder;
 import net.minecraft.util.CommonColors;
 import net.minecraft.world.level.block.Block;
@@ -16,9 +16,9 @@ import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 public final class RoyalFurnitureSetClientSetup {
     public RoyalFurnitureSetClientSetup(IEventBus modBus) {
         modBus.addListener(FMLClientSetupEvent.class, event -> event.enqueueWork(() -> {
-            ItemBlockRenderTypes.setRenderLayer(RoyalFurnitureSet.WOOL.value(), RenderType.cutout());
-            ItemBlockRenderTypes.setRenderLayer(RoyalFurnitureSet.CARPET.value(), RenderType.cutout());
-            ItemBlockRenderTypes.setRenderLayer(RoyalFurnitureSet.TRAPDOOR.value(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(RoyalFurnitureSet.WOOL.value(), ChunkSectionLayer.CUTOUT);
+            ItemBlockRenderTypes.setRenderLayer(RoyalFurnitureSet.CARPET.value(), ChunkSectionLayer.CUTOUT);
+            ItemBlockRenderTypes.setRenderLayer(RoyalFurnitureSet.TRAPDOOR.value(), ChunkSectionLayer.CUTOUT);
         }));
 
         modBus.addListener(RegisterColorHandlersEvent.Block.class, event -> event.register(

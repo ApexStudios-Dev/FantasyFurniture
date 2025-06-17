@@ -1,7 +1,7 @@
 package dev.apexstudios.fantasyfurniture.nordic;
 
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
@@ -11,7 +11,7 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 public final class NordicFurnitureSetClientEntryPoint {
     public NordicFurnitureSetClientEntryPoint(IEventBus modBus) {
         modBus.addListener(FMLClientSetupEvent.class, event -> event.enqueueWork(() ->
-                ItemBlockRenderTypes.setRenderLayer(NordicFurnitureSet.TRAPDOOR.value(), RenderType.cutout())
+                ItemBlockRenderTypes.setRenderLayer(NordicFurnitureSet.TRAPDOOR.value(), ChunkSectionLayer.CUTOUT)
         ));
     }
 }
