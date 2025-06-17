@@ -61,6 +61,10 @@ neoForge {
     }
 }
 
+repositories() {
+    maven("https://maven.apexstudios.dev/private")
+}
+
 dependencies {
     implementation(libs.apexcore)
     "dataImplementation"(libs.apexcore)
