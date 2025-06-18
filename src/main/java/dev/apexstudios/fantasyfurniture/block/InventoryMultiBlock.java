@@ -1,6 +1,5 @@
 package dev.apexstudios.fantasyfurniture.block;
 
-import dev.apexstudios.apexcore.lib.block.entity.InventoryBlockEntity;
 import dev.apexstudios.apexcore.lib.multiblock.MultiBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -15,7 +14,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.neoforged.neoforge.items.ItemHandlerHelper;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class InventoryMultiBlock extends InventoryBlock implements MultiBlock {
@@ -79,11 +77,12 @@ public abstract class InventoryMultiBlock extends InventoryBlock implements Mult
         });
     }
 
-    @Override
+    // TODO
+    /*@Override
     protected int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos) {
         var blockEntity = MultiBlock.getBlockEntity(level, pos, blockState);
         return blockEntity instanceof InventoryBlockEntity inventory ? ItemHandlerHelper.calcRedstoneFromInventory(inventory.getItemHandler()) : 0;
-    }
+    }*/
 
     @Override
     protected boolean triggerEvent(BlockState blockState, Level level, BlockPos pos, int id, int param) {
