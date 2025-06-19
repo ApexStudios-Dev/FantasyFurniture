@@ -2,6 +2,7 @@ package dev.apexstudios.fantasyfurniture.block;
 
 import com.mojang.serialization.MapCodec;
 import dev.apexstudios.apexcore.lib.block.SimpleHorizontalDirectionalBlock;
+import dev.apexstudios.apexcore.lib.block.entity.InventoryBlockEntity;
 import dev.apexstudios.fantasyfurniture.block.entity.FurnitureInventoryBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -21,6 +22,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import net.neoforged.neoforge.transfer.ResourceHandlerUtil;
 
 public class InventoryBlock extends BaseEntityBlock {
     public static final MapCodec<InventoryBlock> CODEC = simpleCodec(InventoryBlock::new);
@@ -69,12 +71,11 @@ public class InventoryBlock extends BaseEntityBlock {
         return true;
     }
 
-    // TODO
-    /*@Override
+    @Override
     protected int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos) {
         var itemHandler = level.getBlockEntity(pos) instanceof InventoryBlockEntity blockEntity ? blockEntity.getItemHandler() : null;
-        return itemHandler == null ? super.getAnalogOutputSignal(blockState, level, pos) : ItemHandlerHelper.calcRedstoneFromInventory(itemHandler);
-    }*/
+        return itemHandler == null ? super.getAnalogOutputSignal(blockState, level, pos) : ResourceHandlerUtil.getRedstoneSignalStrength(itemHandler);
+    }
 
     // region: Facing
     @Override
