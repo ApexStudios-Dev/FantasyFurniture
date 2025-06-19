@@ -12,7 +12,7 @@ public interface FurnitureMenus {
     DeferredMenu<SimpleMenu> INVENTORY = new DeferredMenu<>(FantasyFurniture.REGISTREE.registryKey(Registries.MENU, "inventory"));
 
     static void register(IEventBus modBus) {
-        FantasyFurniture.REGISTREE.registerMenu(INVENTORY.getId().getPath(), (containerId, inventory) -> new SimpleMenu(INVENTORY.value(), containerId, inventory, FurnitureInventoryBlockEntity.ROWS));
+        FantasyFurniture.REGISTREE.registerMenu(INVENTORY.getId().getPath(), (containerId, inventory) -> SimpleMenu.forNetwork(INVENTORY.value(), containerId, inventory, FurnitureInventoryBlockEntity.ROWS));
 
         modBus.addListener(RegisterMenuScreensEvent.class, event -> event.register(INVENTORY.value(), SimpleMenuScreen::new));
     }

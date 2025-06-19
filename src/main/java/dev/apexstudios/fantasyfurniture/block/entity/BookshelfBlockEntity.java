@@ -1,10 +1,10 @@
 package dev.apexstudios.fantasyfurniture.block.entity;
 
-import dev.apexstudios.apexcore.lib.transfer.resource.item.ItemResource;
 import dev.apexstudios.fantasyfurniture.FurnitureBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.transfer.resources.ItemResource;
 
 public final class BookshelfBlockEntity extends FurnitureInventoryBlockEntity {
     public BookshelfBlockEntity(BlockPos pos, BlockState blockState) {

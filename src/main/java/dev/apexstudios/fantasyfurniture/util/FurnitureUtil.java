@@ -100,9 +100,9 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent;
-import net.neoforged.neoforge.items.wrapper.InvWrapper;
-import net.neoforged.neoforge.items.wrapper.SidedInvWrapper;
 import net.neoforged.neoforge.mixins.BlockEntityTypeAccessor;
+import net.neoforged.neoforge.transfer.handlers.wrappers.items.VanillaContainerWrapper;
+import net.neoforged.neoforge.transfer.handlers.wrappers.items.WorldlyContainerWrapper;
 
 public interface FurnitureUtil {
     Supplier<BlockBehaviour.Properties> PLANK_PROPERTIES = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.OAK_PLANKS);
@@ -442,7 +442,7 @@ public interface FurnitureUtil {
                     event.registerBlockEntity(
                             Capabilities.ItemHandler.BLOCK,
                             BlockEntityType.SMOKER,
-                            (blockEntity, side) -> side == null ? new InvWrapper(blockEntity) : new SidedInvWrapper(blockEntity, side)
+                            (blockEntity, side) -> side == null ? VanillaContainerWrapper.of(blockEntity) : new WorldlyContainerWrapper(blockEntity, side)
                     );
 
                     if(!(block instanceof MultiBlock))
@@ -454,7 +454,7 @@ public interface FurnitureUtil {
                         if(!(blockEntity instanceof SmokerBlockEntity smoker))
                             return null;
 
-                        return side == null ? new InvWrapper(smoker) : new SidedInvWrapper(smoker, side);
+                        return side == null ? VanillaContainerWrapper.of(smoker) : new WorldlyContainerWrapper(smoker, side);
                     }, block);
                 })
         );
