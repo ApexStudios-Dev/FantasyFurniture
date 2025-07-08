@@ -282,15 +282,11 @@ public interface FurnitureClientDataUtil {
     }
 
     static void createDoorModel(Block block, BlockModelGenerators blockModels) {
-        var leftBottomClosed = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block, "_left_bottom_closed"));
-        var leftBottomOpen = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block, "_left_bottom_open"));
-        var rightBottomClosed = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block, "_right_bottom_closed"));
-        var rightBottomOpen = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block, "_right_bottom_open"));
-        var leftTopClosed = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block, "_left_top_closed"));
-        var leftTopOpen = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block, "_left_top_open"));
-        var rightTopClosed = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block, "_right_top_closed"));
-        var rightTopOpen = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block, "_right_top_open"));
-        blockModels.blockStateOutput.accept(BlockModelGenerators.createDoor(block, leftBottomClosed, leftBottomOpen, rightBottomClosed, rightBottomOpen, leftTopClosed, leftTopOpen, rightTopClosed, rightTopOpen));
+        var bottomClosed = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block, "_bottom_closed"));
+        var bottomOpen = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block, "_bottom_open"));
+        var topClosed = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block, "_top_closed"));
+        var topOpen = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block, "_top_open"));
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createDoor(block, bottomClosed, bottomOpen, bottomOpen, bottomClosed, topClosed, topOpen, topOpen, topClosed));
     }
 
     static void registerSimpleBlockItemModel(Block block, BlockModelGenerators blockModels) {
