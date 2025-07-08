@@ -254,7 +254,7 @@ jobs:
             wget -O "mods/fantasyfurniture-royal-${{ needs.generate-vars.outputs.version }}.jar" "https://maven.apexstudios.dev/private/dev/apexstudios/fantasyfurniture-royal/${{ needs.generate-vars.outputs.version }}/fantasyfurniture-royal-${{ needs.generate-vars.outputs.version }}.jar"
           fi
         env:
-          APEXCORE_VERSION: 21.6.2
+          APEXCORE_VERSION: 21.6.5-beta-pr-47
           NORDIC_CHANGED: ${{ needs.determine-changes.outputs.nordic-changed }}
           VENTHYR_CHANGED: ${{ needs.determine-changes.outputs.venthyr-changed }}
           BONE_CHANGED: ${{ needs.determine-changes.outputs.bone-changed }}
@@ -267,5 +267,5 @@ jobs:
         with:
           java-version: 21
           java-vendor: temurin
-          neoforge-version: 21.6.0-beta
+          neoforge-version: 21.7.11-beta
           # neoforge-maven: 'https://prmaven.neoforged.net/NeoForge/pr2297'
