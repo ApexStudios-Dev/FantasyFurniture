@@ -29,14 +29,14 @@ issueTrackerURL="https://github.com/ApexStudios-Dev/Issues/issues"
 [[dependencies.fantasyfurniture_venthyr]]
     modId="apexcore"
     type="required"
-    versionRange="[21.7,21.8)"
+    versionRange="[21.6,21.7)"
     [dependencies.fantasyfurniture_venthyr.mc-publish]
         modrinth="xl3myxch"
         curseforge="550778"
 [[dependencies.fantasyfurniture_venthyr]]
     modId="fantasyfurniture"
     type="required"
-    versionRange="[21.7,21.8)"
+    versionRange="[21.6,21.7)"
     [dependencies.fantasyfurniture_venthyr.mc-publish]
         modrinth="A0nfCqYw"
         curseforge="579564"
