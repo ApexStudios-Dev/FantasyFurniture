@@ -8,6 +8,6 @@
     "description": {
       "translate": "feature_flag.fantasyfurniture.experimental.desc"
     },
-    "pack_format": 80
+    "pack_format": 81
   }
 }
