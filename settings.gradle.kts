@@ -1,23 +1,14 @@
 pluginManagement {
     repositories {
         gradlePluginPortal()
-        mavenLocal()
-
         maven("https://maven.apexstudios.dev/releases")
-    }
-
-    resolutionStrategy {
-        eachPlugin {
-            if(requested.id.namespace == "apex-conventions") {
-                useVersion("0.1.58")
-            }
-        }
+        maven("https://maven.apexstudios.dev/private")
     }
 }
 
 dependencyResolutionManagement {
     versionCatalogs.create("libs") {
-        library("apexcore", "dev.apexstudios", "apexcore").version("21.6.0")
+        library("apexcore", "dev.apexstudios", "apexcore").version("21.6.2")
         library("contex", "xfacthd.contex", "ConnectedTextures").version("9.1")
     }
 }

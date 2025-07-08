@@ -4,9 +4,9 @@ import dev.apexstudios.gradle.single.ApexSingleExtension
 import org.gradle.configurationcache.extensions.capitalized
 
 plugins {
-    id("apex-conventions.neoforge")
-    id("apex-conventions.immaculate")
-    id("apex-conventions.maven-publishing")
+    id("apex-conventions.neoforge") version "0.1.69"
+    id("apex-conventions.immaculate") version "0.1.69"
+    id("apex-conventions.maven-publishing") version "0.1.69"
 }
 
 group = "dev.apexstudios"
@@ -59,10 +59,6 @@ neoForge {
             )
         }
     }
-}
-
-repositories() {
-    maven("https://maven.apexstudios.dev/private")
 }
 
 dependencies {
