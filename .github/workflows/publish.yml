@@ -38,6 +38,11 @@ on:
         description: Publish 'royal' module
         required: false
         default: true
+      decorations:
+        type: boolean
+        description: Publish 'decorations' module
+        required: false
+        default: true
   push:
     branches: [ '**/main' ]
     paths: [ '**/src/**' ]
@@ -58,6 +63,7 @@ jobs:
       dunmer-changed: ${{ steps.changes.outputs.dunmer }}
       necrolord-changed: ${{ steps.changes.outputs.necrolord }}
       royal-changed: ${{ steps.changes.outputs.royal }}
+      decorations-changed: ${{ steps.changes.outputs.decorations }}
     steps:
       - name: Checkout Repository
         uses: ApexStudios-Dev/.github/actions/checkout@master
@@ -75,6 +81,7 @@ jobs:
             dunmer: [ 'dunmer/**' ]
             necrolord: [ 'necrolord/**' ]
             royal: [ 'royal/**' ]
+            decorations: [ 'decorations/**' ]
 
   publish-main:
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
@@ -194,3 +201,20 @@ jobs:
       release-type: release
       logo-url: 'https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture_royal/banner.png'
       color: 0xFFE88E
+
+  publish-decorations:
+    uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
+    needs: determine-changes
+    if: ${{ inputs.decorations || needs.determine-changes.outputs.decorations-changed == 'true' }}
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      publish-task: ':publishDecorationsReleasePublicationToApexStudios-ReleasesRepository'
+      curseforge-id: '1220590'
+      modrinth-id: 'bJ7GIx0B'
+      artifact-id: fantasyfurniture-decorations
+      display-name: Fantasy's Furniture - Decorations
+      release-type: release
+      logo-url: 'https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture_decorations/banner.png'
+      color: 0xFFD0B5
