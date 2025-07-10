@@ -20,7 +20,6 @@ jobs:
     name: Determine changes
     runs-on: ubuntu-latest
     outputs:
-      main-changed: ${{ steps.changes.outputs.main }}
       nordic-changed: ${{ steps.changes.outputs.nordic }}
       venthyr-changed: ${{ steps.changes.outputs.venthyr }}
       bone-changed: ${{ steps.changes.outputs.bone }}
@@ -34,7 +33,6 @@ jobs:
         with:
           base: 21.6/main
           filters: |
-            main: [ 'src/**' ]
             nordic: [ 'nordic/**' ]
             venthyr: [ 'venthyr/**' ]
             bone: [ 'bone/**' ]
@@ -56,7 +54,7 @@ jobs:
   check-local-changes-main:
     name: Check local changes (Main)
     needs: [ generate-vars, determine-changes, build ]
-    if: ${{ success() && needs.determine-changes.outputs.main-changed == 'true' }}
+    if: success()
     uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
     secrets: inherit
     with:
