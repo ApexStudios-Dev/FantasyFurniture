@@ -31,6 +31,7 @@ jobs:
         id: changes
         uses: dorny/paths-filter@v3
         with:
+          base: 21.7/main
           filters: |
             nordic: [ 'nordic/**' ]
             venthyr: [ 'venthyr/**' ]
