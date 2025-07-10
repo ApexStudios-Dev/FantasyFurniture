@@ -1,0 +1,7 @@
+{
+  "parent": "fantasyfurniture_decorations:block/berry_basket",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "berry_basket": "fantasyfurniture_decorations:block/empty_berry_basket"
+  }
+}
