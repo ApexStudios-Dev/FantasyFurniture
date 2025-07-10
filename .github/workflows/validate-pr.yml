@@ -32,7 +32,7 @@ jobs:
         id: changes
         uses: dorny/paths-filter@v3
         with:
-          ref: 21.6/main
+          base: 21.6/main
           filters: |
             main: [ 'src/**' ]
             nordic: [ 'nordic/**' ]
