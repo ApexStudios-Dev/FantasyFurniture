@@ -29,14 +29,14 @@ issueTrackerURL="https://github.com/ApexStudios-Dev/Issues/issues"
 [[dependencies.fantasyfurniture_nordic]]
     modId="apexcore"
     type="required"
-    versionRange="[21.8-beta,21.9)"
+    versionRange="[21.8,21.9)"
     [dependencies.fantasyfurniture_nordic.mc-publish]
         modrinth="xl3myxch"
         curseforge="550778"
 [[dependencies.fantasyfurniture_nordic]]
     modId="fantasyfurniture"
     type="required"
-    versionRange="[21.8-beta,21.9)"
+    versionRange="[21.8,21.9)"
     [dependencies.fantasyfurniture_nordic.mc-publish]
         modrinth="A0nfCqYw"
         curseforge="579564"
