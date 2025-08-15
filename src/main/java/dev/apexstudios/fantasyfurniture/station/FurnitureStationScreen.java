@@ -111,7 +111,7 @@ public final class FurnitureStationScreen extends AbstractContainerScreen<Furnit
     }
 
     @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+    public boolean mouseClicked(double mouseX, double mouseY, int button, boolean held) {
         scrolling = false;
 
         if (displayRecipes) {
@@ -141,7 +141,7 @@ public final class FurnitureStationScreen extends AbstractContainerScreen<Furnit
                 scrolling = true;
         }
 
-        return super.mouseClicked(mouseX, mouseY, button);
+        return super.mouseClicked(mouseX, mouseY, button, held);
     }
 
     @Override

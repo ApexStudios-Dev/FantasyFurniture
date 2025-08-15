@@ -228,7 +228,7 @@ jobs:
       - name: Prepare Environment
         run: |
           mkdir mods
-          wget -O "mods/apexcore-$APEXCORE_VERSION.jar" "https://maven.apexstudios.dev/releases/dev/apexstudios/apexcore/$APEXCORE_VERSION/apexcore-$APEXCORE_VERSION.jar"
+          wget -O "mods/apexcore-$APEXCORE_VERSION.jar" "https://maven.apexstudios.dev/private/dev/apexstudios/apexcore/$APEXCORE_VERSION/apexcore-$APEXCORE_VERSION.jar"
           wget -O "mods/fantasyfurniture-${{ needs.generate-vars.outputs.version }}.jar" "https://maven.apexstudios.dev/private/dev/apexstudios/fantasyfurniture/${{ needs.generate-vars.outputs.version }}/fantasyfurniture-${{ needs.generate-vars.outputs.version }}.jar"
 
           if [[ "$NORDIC_CHANGED" == "true" ]]; then
@@ -255,7 +255,7 @@ jobs:
             wget -O "mods/fantasyfurniture-royal-${{ needs.generate-vars.outputs.version }}.jar" "https://maven.apexstudios.dev/private/dev/apexstudios/fantasyfurniture-royal/${{ needs.generate-vars.outputs.version }}/fantasyfurniture-royal-${{ needs.generate-vars.outputs.version }}.jar"
           fi
         env:
-          APEXCORE_VERSION: 21.7.2
+          APEXCORE_VERSION: 21.9.1-beta-pr-49
           NORDIC_CHANGED: ${{ needs.determine-changes.outputs.nordic-changed }}
           VENTHYR_CHANGED: ${{ needs.determine-changes.outputs.venthyr-changed }}
           BONE_CHANGED: ${{ needs.determine-changes.outputs.bone-changed }}
@@ -268,5 +268,5 @@ jobs:
         with:
           java-version: 21
           java-vendor: temurin
-          neoforge-version: 21.7.11-beta
-          # neoforge-maven: 'https://prmaven.neoforged.net/NeoForge/pr2297'
+          neoforge-version: 21.9.0-alpha.25w34b.20250821.203312
+          neoforge-maven: 'https://maven.apexstudios.dev/private'

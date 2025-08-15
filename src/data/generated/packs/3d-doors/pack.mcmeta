@@ -1,6 +1,7 @@
 {
   "pack": {
     "description": "Restores Fantasy's Furniture old 3D Door Item Models",
-    "pack_format": 64
+    "max_format": 66,
+    "min_format": 66
   }
 }

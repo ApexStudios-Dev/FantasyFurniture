@@ -14,23 +14,23 @@ issueTrackerURL="https://github.com/ApexStudios-Dev/Issues/issues"
     displayURL="https://modrinth.com/mod/fantasy-furniture"
     # featureFlags="META-INF/feature_flags.json"
 
-[[dependencies.fantasyfurniture]]
-    modId="minecraft"
-    type="required"
-    versionRange="[1.21.7,1.21.8)"
-    ordering="NONE"
-    side="BOTH"
+#[[dependencies.fantasyfurniture]]
+#    modId="minecraft"
+#    type="required"
+#    versionRange="[1.21.9,1.21.10)"
+#    ordering="NONE"
+#    side="BOTH"
 [[dependencies.fantasyfurniture]]
     modId="neoforge"
     type="required"
-    versionRange="[21.7-beta,21.8)"
+    versionRange="[21.9-alpha,21.10)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.fantasyfurniture]]
     modId="apexcore"
     type="required"
-    versionRange="[21.7.2,21.8)"
+    versionRange="[21.9,21.10)"
     [dependencies.fantasyfurniture.mc-publish]
         modrinth="xl3myxch"
         curseforge="550778"

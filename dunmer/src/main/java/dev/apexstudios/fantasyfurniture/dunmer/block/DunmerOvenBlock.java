@@ -6,6 +6,7 @@ import dev.apexstudios.apexcore.lib.multiblock.MultiBlockProperty;
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.block.OvenBlock;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -106,7 +107,7 @@ public final class DunmerOvenBlock extends OvenBlock implements MultiBlock {
     }
 
     @Override
-    protected int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos) {
+    protected int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos, Direction facing) {
         var blockEntity = MultiBlock.getBlockEntity(level, pos, blockState);
         return AbstractContainerMenu.getRedstoneSignalFromBlockEntity(blockEntity);
     }
