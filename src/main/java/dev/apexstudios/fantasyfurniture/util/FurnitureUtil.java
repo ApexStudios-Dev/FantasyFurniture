@@ -397,6 +397,8 @@ public interface FurnitureUtil {
     }
 
     static void registerEvents(IEventBus modBus, Registree registree, WoodType woodType) {
+        FantasyFurniture.FURNITURE_MODS.add(registree.namespace());
+
         CtmPacks.register(registree);
 
         modBus.addListener(BlockEntityTypeAddBlocksEvent.class, event -> {
