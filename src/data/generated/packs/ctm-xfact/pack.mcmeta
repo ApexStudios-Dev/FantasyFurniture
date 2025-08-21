@@ -1,6 +1,7 @@
 {
   "pack": {
     "description": "Fantasy's Furniture XFactHD CTM support",
-    "pack_format": 64
+    "max_format": 66,
+    "min_format": 66
   }
 }

@@ -72,9 +72,9 @@ public class InventoryBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos) {
+    protected int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos, Direction facing) {
         var itemHandler = level.getBlockEntity(pos) instanceof InventoryBlockEntity blockEntity ? blockEntity.getItemHandler() : null;
-        return itemHandler == null ? super.getAnalogOutputSignal(blockState, level, pos) : ItemHandlerHelper.calcRedstoneFromInventory(itemHandler);
+        return itemHandler == null ? super.getAnalogOutputSignal(blockState, level, pos, facing) : ItemHandlerHelper.calcRedstoneFromInventory(itemHandler);
     }
 
     // region: Facing

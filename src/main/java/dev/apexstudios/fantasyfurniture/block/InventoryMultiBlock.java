@@ -3,6 +3,7 @@ package dev.apexstudios.fantasyfurniture.block;
 import dev.apexstudios.apexcore.lib.block.entity.InventoryBlockEntity;
 import dev.apexstudios.apexcore.lib.multiblock.MultiBlock;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.LivingEntity;
@@ -80,9 +81,9 @@ public abstract class InventoryMultiBlock extends InventoryBlock implements Mult
     }
 
     @Override
-    protected int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos) {
+    protected int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos, Direction facing) {
         var blockEntity = MultiBlock.getBlockEntity(level, pos, blockState);
-        return blockEntity instanceof InventoryBlockEntity inventory ? ItemHandlerHelper.calcRedstoneFromInventory(inventory.getItemHandler()) : 0;
+        return blockEntity instanceof InventoryBlockEntity inventory ? ItemHandlerHelper.calcRedstoneFromInventory(inventory.getItemHandler()) : super.getAnalogOutputSignal(blockState, level, pos, facing);
     }
 
     @Override
