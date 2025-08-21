@@ -16,27 +16,27 @@ issueTrackerURL="https://github.com/ApexStudios-Dev/Issues/issues"
 #[[dependencies.fantasyfurniture_bone]]
 #    modId="minecraft"
 #    type="required"
-#    versionRange="[1.21.8,1.21.9)"
+#    versionRange="[1.21.9,1.21.10)"
 #    ordering="NONE"
 #    side="BOTH"
 [[dependencies.fantasyfurniture_bone]]
     modId="neoforge"
     type="required"
-    versionRange="[21.5-alpha,21.9)"
+    versionRange="[21.9-alpha,21.10)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.fantasyfurniture_bone]]
     modId="apexcore"
     type="required"
-    versionRange="[21.8,21.9)"
+    versionRange="[21.9-beta,21.10)"
     [dependencies.fantasyfurniture_bone.mc-publish]
         modrinth="xl3myxch"
         curseforge="550778"
 [[dependencies.fantasyfurniture_bone]]
     modId="fantasyfurniture"
     type="required"
-    versionRange="[21.8,21.9)"
+    versionRange="[21.9-beta,21.10)"
     [dependencies.fantasyfurniture_bone.mc-publish]
         modrinth="A0nfCqYw"
         curseforge="579564"
