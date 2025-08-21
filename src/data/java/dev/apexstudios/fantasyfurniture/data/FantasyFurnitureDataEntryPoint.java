@@ -5,6 +5,10 @@ import dev.apexstudios.apexcore.lib.data.ResourceGenerator;
 import dev.apexstudios.fantasyfurniture.FantasyFurniture;
 import dev.apexstudios.fantasyfurniture.ctm.CtmPacks;
 import dev.apexstudios.fantasyfurniture.station.FurnitureStationSetup;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import net.minecraft.ChatFormatting;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.BlockTags;
@@ -40,6 +44,12 @@ public final class FantasyFurnitureDataEntryPoint {
                             .add(FurnitureStationSetup.BINDING_AGENT, "Furniture Binding Agents")
                             .add(FantasyFurniture.EXPERIMENTAL_FLAG_KEY, "Fantasy's Furniture - Experimental")
                             .add(experimentalDescKey, "Experimental Furniture Blocks")
+                            .add(FantasyFurniture.LOADING_ISSUE_KEY,
+                                    formatted("No Furniture Set modules detected.", ChatFormatting.BOLD, ChatFormatting.UNDERLINE, ChatFormatting.RED) +
+                                            "\n\nFantasy's Furniture does nothing on it's own, " +
+                                            formatted("at least 1", ChatFormatting.BOLD) +
+                                            " Furniture Set module must be installed."
+                            )
                     )
                     .providing(ProviderTypes.MODELS, (context, provider) -> {
                         provider.fromRegistree(FantasyFurniture.REGISTREE);
@@ -63,5 +73,17 @@ public final class FantasyFurnitureDataEntryPoint {
 
             CtmPacks.registerMainDataGen(generator);
         });
+    }
+
+    private String formatted(String str, ChatFormatting... codes) {
+        if(str.isBlank())
+            return "";
+        if(codes.length == 0)
+            return str;
+
+        var nonNull = Stream.of(codes).filter(Objects::nonNull).toList();
+        var colors = nonNull.stream().filter(ChatFormatting::isColor).map(Object::toString).collect(Collectors.joining());
+        var formats = nonNull.stream().filter(ChatFormatting::isFormat).map(Object::toString).collect(Collectors.joining());
+        return colors + formats + str + ChatFormatting.RESET;
     }
 }
