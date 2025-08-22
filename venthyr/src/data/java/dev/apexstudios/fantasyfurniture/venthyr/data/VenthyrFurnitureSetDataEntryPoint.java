@@ -53,7 +53,7 @@ public final class VenthyrFurnitureSetDataEntryPoint {
             ).providing(ProviderTypes.BLOCK_TAGS, (ctx, provider) -> FurnitureDataUtil
                     .tag(provider, VenthyrFurnitureSet.TABLE_CLOTH.value(), context.mineableTag(), ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST)
             ).providing(ProviderTypes.RECIPES, (ctx, provider) -> FurnitureDataUtil.furnitureStationRecipe(
-                    context, VenthyrFurnitureSet.TABLE_CLOTH, provider, ctx.enabledFeatures()
+                    context, VenthyrFurnitureSet.TABLE_CLOTH, provider
             )).providing(ProviderTypes.MODELS, (ctx, provider) -> FurnitureClientDataUtil
                     .createTableModel(VenthyrFurnitureSet.TABLE_CLOTH.value(), provider.blockModels())
             ).providing(ProviderTypes.LANGUAGE, (ctx, provider) -> provider

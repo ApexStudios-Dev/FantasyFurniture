@@ -1,12 +1,4 @@
 {
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:feature_flags_enabled",
-      "flags": [
-        "fantasyfurniture:experimental"
-      ]
-    }
-  ],
   "parent": "minecraft:recipes/root",
   "criteria": {
     "has_planks": {

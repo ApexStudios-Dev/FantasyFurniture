@@ -25,7 +25,6 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
@@ -33,7 +32,6 @@ import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.BedPart;
 import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.common.conditions.NeoForgeConditions;
 import net.neoforged.neoforge.common.crafting.DifferenceIngredient;
 
 public interface FurnitureDataUtil {
@@ -41,7 +39,7 @@ public interface FurnitureDataUtil {
         pack.providing(ProviderTypes.LOOT_TABLE, ($, provider) -> registerLootTables(context, provider))
                 .providing(ProviderTypes.BLOCK_TAGS, ($, provider) -> registerBlockTags(context, provider))
                 .providing(ProviderTypes.ITEM_TAGS, ($, provider) -> registerItemTags(context, provider))
-                .providing(ProviderTypes.RECIPES, ($, provider) -> registerRecipes(context, provider, $.enabledFeatures()));
+                .providing(ProviderTypes.RECIPES, ($, provider) -> registerRecipes(context, provider));
     }
 
     static void registerLootTables(DataGenContext context, LootTableProvider provider) {
@@ -163,67 +161,64 @@ public interface FurnitureDataUtil {
         }
     }
 
-    static void registerRecipes(DataGenContext context, RecipeProvider provider, FeatureFlagSet enabledFeatures) {
-        context.block(DataType.RECIPE, FurnitureUtil.Names.PLANKS, block -> conversionRecipe(ItemTags.PLANKS, FantasyFurniture.FURNITURE_PLANKS, "has_" + FurnitureUtil.Names.PLANKS, block, provider, enabledFeatures));
-        context.block(DataType.RECIPE, FurnitureUtil.Names.BRICKS, block -> conversionRecipe(ItemTags.STONE_CRAFTING_MATERIALS, FantasyFurniture.FURNITURE_BRICKS, "has_" + FurnitureUtil.Names.BRICKS, block, provider, enabledFeatures));
-        context.block(DataType.RECIPE, FurnitureUtil.Names.WOOL, block -> conversionRecipe(ItemTags.WOOL, FantasyFurniture.FURNITURE_WOOL, "has_" + FurnitureUtil.Names.WOOL, block, provider, enabledFeatures));
-        context.block(DataType.RECIPE, FurnitureUtil.Names.CARPET, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        context.block(DataType.RECIPE, FurnitureUtil.Names.DRESSER, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        context.block(DataType.RECIPE, FurnitureUtil.Names.STOOL, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        context.block(DataType.RECIPE, FurnitureUtil.Names.CUSHION, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        context.block(DataType.RECIPE, FurnitureUtil.Names.LOCKBOX, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        context.block(DataType.RECIPE, FurnitureUtil.Names.DRAWER, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        context.block(DataType.RECIPE, FurnitureUtil.Names.CHAIR, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        context.block(DataType.RECIPE, FurnitureUtil.Names.BOOKSHELF, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        context.block(DataType.RECIPE, FurnitureUtil.Names.BED_SINGLE, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        context.block(DataType.RECIPE, FurnitureUtil.Names.BED_DOUBLE, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        context.block(DataType.RECIPE, FurnitureUtil.Names.DOOR_SINGLE, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        context.block(DataType.RECIPE, FurnitureUtil.Names.DOOR_DOUBLE, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        context.block(DataType.RECIPE, FurnitureUtil.Names.DESK_LEFT, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        context.block(DataType.RECIPE, FurnitureUtil.Names.DESK_RIGHT, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        context.block(DataType.RECIPE, FurnitureUtil.Names.PAINTING_WIDE, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        context.block(DataType.RECIPE, FurnitureUtil.Names.PAINTING_SMALL, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        context.block(DataType.RECIPE, FurnitureUtil.Names.OVEN, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        context.block(DataType.RECIPE, FurnitureUtil.Names.CHEST, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        context.block(DataType.RECIPE, FurnitureUtil.Names.FLOOR_LIGHT, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        context.block(DataType.RECIPE, FurnitureUtil.Names.CHANDELIER, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        context.block(DataType.RECIPE, FurnitureUtil.Names.SHELF, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        context.block(DataType.RECIPE, FurnitureUtil.Names.SOFA, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        context.block(DataType.RECIPE, FurnitureUtil.Names.COUNTER, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        context.block(DataType.RECIPE, FurnitureUtil.Names.WALL_LIGHT, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        context.block(DataType.RECIPE, FurnitureUtil.Names.BENCH, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        context.block(DataType.RECIPE, FurnitureUtil.Names.WARDROBE, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        context.block(DataType.RECIPE, FurnitureUtil.Names.TABLE, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        context.block(DataType.RECIPE, FurnitureUtil.Names.STAIRS, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        context.block(DataType.RECIPE, FurnitureUtil.Names.SLAB, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        context.block(DataType.RECIPE, FurnitureUtil.Names.FENCE, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        context.block(DataType.RECIPE, FurnitureUtil.Names.FENCE_GATE, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        context.block(DataType.RECIPE, FurnitureUtil.Names.TRAPDOOR, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        context.block(DataType.RECIPE, FurnitureUtil.Names.PRESSURE_PLATE, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        context.block(DataType.RECIPE, FurnitureUtil.Names.BUTTON, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        context.block(DataType.RECIPE, FurnitureUtil.Names.HANGING_SIGN, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
-        context.block(DataType.RECIPE, FurnitureUtil.Names.SIGN, block -> furnitureStationRecipe(context, block, provider, enabledFeatures));
+    static void registerRecipes(DataGenContext context, RecipeProvider provider) {
+        context.block(DataType.RECIPE, FurnitureUtil.Names.PLANKS, block -> conversionRecipe(ItemTags.PLANKS, FantasyFurniture.FURNITURE_PLANKS, "has_" + FurnitureUtil.Names.PLANKS, block, provider));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.BRICKS, block -> conversionRecipe(ItemTags.STONE_CRAFTING_MATERIALS, FantasyFurniture.FURNITURE_BRICKS, "has_" + FurnitureUtil.Names.BRICKS, block, provider));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.WOOL, block -> conversionRecipe(ItemTags.WOOL, FantasyFurniture.FURNITURE_WOOL, "has_" + FurnitureUtil.Names.WOOL, block, provider));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.CARPET, block -> furnitureStationRecipe(context, block, provider));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.DRESSER, block -> furnitureStationRecipe(context, block, provider));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.STOOL, block -> furnitureStationRecipe(context, block, provider));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.CUSHION, block -> furnitureStationRecipe(context, block, provider));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.LOCKBOX, block -> furnitureStationRecipe(context, block, provider));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.DRAWER, block -> furnitureStationRecipe(context, block, provider));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.CHAIR, block -> furnitureStationRecipe(context, block, provider));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.BOOKSHELF, block -> furnitureStationRecipe(context, block, provider));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.BED_SINGLE, block -> furnitureStationRecipe(context, block, provider));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.BED_DOUBLE, block -> furnitureStationRecipe(context, block, provider));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.DOOR_SINGLE, block -> furnitureStationRecipe(context, block, provider));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.DOOR_DOUBLE, block -> furnitureStationRecipe(context, block, provider));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.DESK_LEFT, block -> furnitureStationRecipe(context, block, provider));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.DESK_RIGHT, block -> furnitureStationRecipe(context, block, provider));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.PAINTING_WIDE, block -> furnitureStationRecipe(context, block, provider));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.PAINTING_SMALL, block -> furnitureStationRecipe(context, block, provider));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.OVEN, block -> furnitureStationRecipe(context, block, provider));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.CHEST, block -> furnitureStationRecipe(context, block, provider));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.FLOOR_LIGHT, block -> furnitureStationRecipe(context, block, provider));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.CHANDELIER, block -> furnitureStationRecipe(context, block, provider));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.SHELF, block -> furnitureStationRecipe(context, block, provider));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.SOFA, block -> furnitureStationRecipe(context, block, provider));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.COUNTER, block -> furnitureStationRecipe(context, block, provider));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.WALL_LIGHT, block -> furnitureStationRecipe(context, block, provider));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.BENCH, block -> furnitureStationRecipe(context, block, provider));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.WARDROBE, block -> furnitureStationRecipe(context, block, provider));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.TABLE, block -> furnitureStationRecipe(context, block, provider));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.STAIRS, block -> furnitureStationRecipe(context, block, provider));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.SLAB, block -> furnitureStationRecipe(context, block, provider));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.FENCE, block -> furnitureStationRecipe(context, block, provider));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.FENCE_GATE, block -> furnitureStationRecipe(context, block, provider));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.TRAPDOOR, block -> furnitureStationRecipe(context, block, provider));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.PRESSURE_PLATE, block -> furnitureStationRecipe(context, block, provider));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.BUTTON, block -> furnitureStationRecipe(context, block, provider));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.HANGING_SIGN, block -> furnitureStationRecipe(context, block, provider));
+        context.block(DataType.RECIPE, FurnitureUtil.Names.SIGN, block -> furnitureStationRecipe(context, block, provider));
     }
 
-    static void conversionRecipe(TagKey<Item> baseTag, TagKey<Item> furnitureTag, String hasKey, ItemLike result, RecipeProvider provider, FeatureFlagSet enabledFeatures) {
-        var output = result.asItem().isEnabled(enabledFeatures) ? provider.output() : provider.output().withConditions(NeoForgeConditions.featureFlagsEnabled(FantasyFurniture.EXPERIMENTAL));
-
+    static void conversionRecipe(TagKey<Item> baseTag, TagKey<Item> furnitureTag, String hasKey, ItemLike result, RecipeProvider provider) {
         SingleItemRecipeBuilder
                 .stonecutting(DifferenceIngredient.of(provider.tag(baseTag), provider.tag(furnitureTag)), RecipeCategory.MISC, result)
                 .unlockedBy(hasKey, provider.has(baseTag))
-                .save(output, RecipeProvider.recipeKeyWithPrefix(result, "conversion/"));
+                .save(provider.output(), RecipeProvider.recipeKeyWithPrefix(result, "conversion/"));
     }
 
-    static void furnitureStationRecipe(DataGenContext context, ItemLike result, RecipeProvider provider, FeatureFlagSet enabledFeatures) {
+    static void furnitureStationRecipe(DataGenContext context, ItemLike result, RecipeProvider provider) {
         var wool = context.registree.getValue(Registries.BLOCK, FurnitureUtil.Names.WOOL);
         var woolIngredient = wool == null ? null : Ingredient.of(wool);
-        var output = result.asItem().isEnabled(enabledFeatures) ? provider.output() : provider.output().withConditions(NeoForgeConditions.featureFlagsEnabled(FantasyFurniture.EXPERIMENTAL));
 
         FurnitureStationRecipeBuilder
                 .builder(RecipeCategory.MISC, Ingredient.of(context.family.getBaseBlock()), woolIngredient, provider.tag(FurnitureStationSetup.BINDING_AGENT), result)
                 .group(context.family.getRecipeGroupPrefix().orElse(null))
                 .unlockedBy(context.family.getRecipeUnlockedBy().orElseGet(() -> RecipeProvider.getHasName(context.family.getBaseBlock())), provider.has(context.family.getBaseBlock()))
-                .save(output, RecipeProvider.recipeKeyWithPrefix(result, "furniture_station/"));
+                .save(provider.output(), RecipeProvider.recipeKeyWithPrefix(result, "furniture_station/"));
     }
 
     record DataGenContext(
