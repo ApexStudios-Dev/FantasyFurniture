@@ -1,7 +1,6 @@
 import dev.apexstudios.gradle.ApexExtension
 import dev.apexstudios.gradle.multi.ModuleBuilder
 import dev.apexstudios.gradle.single.ApexSingleExtension
-import org.gradle.configurationcache.extensions.capitalized
 
 plugins {
     id("apex-conventions.neoforge") version "0.1.69"
@@ -39,8 +38,8 @@ neoForge {
     runs {
         getByName(ApexExtension.DATA_NAME) {
             furnitureSets.forEach {
-                loadedMods.add(mods.getByName("${it.lowercase()}${SourceSet.MAIN_SOURCE_SET_NAME.capitalized()}"))
-                loadedMods.add(mods.getByName("${it.lowercase()}${ApexExtension.DATA_NAME.capitalized()}"))
+                loadedMods.add(mods.getByName("${it.lowercase()}${SourceSet.MAIN_SOURCE_SET_NAME.capitalize()}"))
+                loadedMods.add(mods.getByName("${it.lowercase()}${ApexExtension.DATA_NAME.capitalize()}"))
             }
 
             // include bone built-in packs as they are needed for
@@ -74,7 +73,7 @@ dependencies {
     }
 }
 
-fun sourceSet(furnitureSet: String, sourceSet: String): SourceSet = sourceSets["$furnitureSet${sourceSet.capitalized()}"]
+fun sourceSet(furnitureSet: String, sourceSet: String): SourceSet = sourceSets["$furnitureSet${sourceSet.capitalize()}"]
 
 fun fixJarName(sourceSet: SourceSet, baseName: String, sourcesName: String = baseName) {
     project.tasks.named(sourceSet.jarTaskName, Jar::class.java) {
