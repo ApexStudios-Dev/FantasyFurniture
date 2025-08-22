@@ -320,55 +320,51 @@ public interface FurnitureUtil {
     }
 
     static DeferredBlock<StairBlock> stairs(Registree registree, Supplier<? extends Block> baseBlock) {
-        var block = registree.registerBlock(Names.STAIRS, properties -> new StairBlock(baseBlock.get().defaultBlockState(), properties), experimental(STAIRS_PROPERTIES));
+        var block = registree.registerBlock(Names.STAIRS, properties -> new StairBlock(baseBlock.get().defaultBlockState(), properties), STAIRS_PROPERTIES);
         registree.registerSimpleBlockItem(block);
         return block;
     }
 
     static DeferredBlock<SlabBlock> slab(Registree registree) {
-        var block = registree.registerBlock(Names.SLAB, SlabBlock::new, experimental(SLAB_PROPERTIES));
+        var block = registree.registerBlock(Names.SLAB, SlabBlock::new, SLAB_PROPERTIES);
         registree.registerSimpleBlockItem(block);
         return block;
     }
 
     static DeferredBlock<FenceBlock> fence(Registree registree) {
-        var block = registree.registerBlock(Names.FENCE, FenceBlock::new, experimental(FENCE_PROPERTIES));
+        var block = registree.registerBlock(Names.FENCE, FenceBlock::new, FENCE_PROPERTIES);
         registree.registerSimpleBlockItem(block);
         return block;
     }
 
     static DeferredBlock<FenceGateBlock> fenceGate(Registree registree, WoodType woodType) {
-        var block = registree.registerBlock(Names.FENCE_GATE, properties -> new FenceGateBlock(woodType, properties), experimental(FENCE_GATE_PROPERTIES));
+        var block = registree.registerBlock(Names.FENCE_GATE, properties -> new FenceGateBlock(woodType, properties), FENCE_GATE_PROPERTIES);
         registree.registerSimpleBlockItem(block);
         return block;
     }
 
     static DeferredBlock<TrapDoorBlock> trapdoor(Registree registree, BlockSetType blockSet) {
-        var block = registree.registerBlock(Names.TRAPDOOR, properties -> new TrapDoorBlock(blockSet, properties), experimental(TRAPDOOR_PROPERTIES));
+        var block = registree.registerBlock(Names.TRAPDOOR, properties -> new TrapDoorBlock(blockSet, properties), TRAPDOOR_PROPERTIES);
         registree.registerSimpleBlockItem(block);
         return block;
     }
 
     static DeferredBlock<PressurePlateBlock> pressurePlate(Registree registree, BlockSetType blockSet) {
-        var block = registree.registerBlock(Names.PRESSURE_PLATE, properties -> new PressurePlateBlock(blockSet, properties), experimental(PRESSURE_PLATE_PROPERTIES));
+        var block = registree.registerBlock(Names.PRESSURE_PLATE, properties -> new PressurePlateBlock(blockSet, properties), PRESSURE_PLATE_PROPERTIES);
         registree.registerSimpleBlockItem(block);
         return block;
     }
 
     static SignPair<CeilingHangingSignBlock, WallHangingSignBlock> hangingSign(Registree registree, WoodType woodType) {
-        var ceilingSign = registree.registerBlock(Names.HANGING_SIGN, properties -> new CeilingHangingSignBlock(woodType, properties), experimental(HANGING_SIGN_BLOCK_PROPERTIES));
-        var wallSign = registree.registerBlock(Names.WALL_HANGING_SIGN, properties -> new WallHangingSignBlock(woodType, properties), experimental(mutating(
-                WALL_HANGING_SIGN_BLOCK_PROPERTIES, properties -> properties.overrideLootTable(ceilingSign.value().getLootTable()))
-        ));
+        var ceilingSign = registree.registerBlock(Names.HANGING_SIGN, properties -> new CeilingHangingSignBlock(woodType, properties), HANGING_SIGN_BLOCK_PROPERTIES);
+        var wallSign = registree.registerBlock(Names.WALL_HANGING_SIGN, properties -> new WallHangingSignBlock(woodType, properties), mutating(WALL_HANGING_SIGN_BLOCK_PROPERTIES, properties -> properties.overrideLootTable(ceilingSign.value().getLootTable())));
         registree.registerItem(Names.HANGING_SIGN, properties -> new HangingSignItem(ceilingSign.value(), wallSign.value(), properties), SIGN_ITEM_PROPERTIES);
         return new SignPair<>(ceilingSign, wallSign);
     }
 
     static SignPair<StandingSignBlock, WallSignBlock> sign(Registree registree, WoodType woodType) {
-        var standingSign = registree.registerBlock(Names.SIGN, properties -> new StandingSignBlock(woodType, properties), experimental(SIGN_BLOCK_PROPERTIES));
-        var wallSign = registree.registerBlock(Names.WALL_SIGN, properties -> new WallSignBlock(woodType, properties), experimental(mutating(
-                WALL_SIGN_BLOCK_PROPERTIES, properties -> properties.overrideLootTable(standingSign.value().getLootTable())
-        )));
+        var standingSign = registree.registerBlock(Names.SIGN, properties -> new StandingSignBlock(woodType, properties), SIGN_BLOCK_PROPERTIES);
+        var wallSign = registree.registerBlock(Names.WALL_SIGN, properties -> new WallSignBlock(woodType, properties), mutating(WALL_SIGN_BLOCK_PROPERTIES, properties -> properties.overrideLootTable(standingSign.value().getLootTable())));
         registree.registerItem(Names.SIGN, properties -> new SignItem(standingSign.value(), wallSign.value(), properties), SIGN_ITEM_PROPERTIES);
         return new SignPair<>(standingSign, wallSign);
     }
@@ -390,10 +386,6 @@ public interface FurnitureUtil {
             mutator.accept(properties);
             return properties;
         };
-    }
-
-    private static Supplier<BlockBehaviour.Properties> experimental(Supplier<BlockBehaviour.Properties> initial) {
-        return mutating(initial, properties -> properties.requiredFeatures(FantasyFurniture.EXPERIMENTAL));
     }
 
     static void registerEvents(IEventBus modBus, Registree registree, WoodType woodType) {

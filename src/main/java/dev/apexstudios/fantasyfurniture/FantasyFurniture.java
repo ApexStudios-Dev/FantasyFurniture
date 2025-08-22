@@ -6,21 +6,14 @@ import dev.apexstudios.fantasyfurniture.ctm.CtmPacks;
 import dev.apexstudios.fantasyfurniture.station.FurnitureStationSetup;
 import java.util.Set;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.PackType;
-import net.minecraft.server.packs.repository.Pack;
-import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.flag.FeatureFlag;
-import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModLoader;
 import net.neoforged.fml.ModLoadingIssue;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.neoforge.event.AddPackFindersEvent;
 
 @Mod(FantasyFurniture.ID)
 public final class FantasyFurniture {
@@ -29,10 +22,6 @@ public final class FantasyFurniture {
     public static final TagKey<Item> FURNITURE_PLANKS = REGISTREE.tag(Registries.ITEM, "furniture_planks");
     public static final TagKey<Item> FURNITURE_WOOL = REGISTREE.tag(Registries.ITEM, "furniture_wool");
     public static final TagKey<Item> FURNITURE_BRICKS = REGISTREE.tag(Registries.ITEM, "furniture_bricks");
-
-    public static final ResourceLocation EXPERIMENTAL_FLAG_ID = identifier("experimental");
-    public static final String EXPERIMENTAL_FLAG_KEY = EXPERIMENTAL_FLAG_ID.toLanguageKey("feature_flag");
-    public static final FeatureFlag EXPERIMENTAL = FeatureFlags.REGISTRY.getFlag(EXPERIMENTAL_FLAG_ID);
 
     public static final Set<String> FURNITURE_MODS = Sets.newHashSet();
     public static final String LOADING_ISSUE_KEY = ID + ".loading_issue.missing_furniture_sets";
@@ -43,15 +32,6 @@ public final class FantasyFurniture {
         FurnitureBlockEntities.register(modBus);
         FurnitureMenus.register(modBus);
         CtmPacks.register(modBus);
-
-        modBus.addListener(AddPackFindersEvent.class, event -> event.addPackFinders(
-                EXPERIMENTAL_FLAG_ID.withPrefix("packs/"),
-                PackType.SERVER_DATA,
-                Component.translatable(EXPERIMENTAL_FLAG_KEY),
-                PackSource.FEATURE,
-                false,
-                Pack.Position.TOP
-        ));
 
         modBus.addListener(FMLCommonSetupEvent.class, event -> {
             if(FURNITURE_MODS.isEmpty())

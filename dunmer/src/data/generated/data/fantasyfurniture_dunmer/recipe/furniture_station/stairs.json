@@ -1,12 +1,4 @@
 {
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:feature_flags_enabled",
-      "flags": [
-        "fantasyfurniture:experimental"
-      ]
-    }
-  ],
   "type": "fantasyfurniture:furniture_station",
   "binding_agent": "#fantasyfurniture:binding_agent",
   "group": "dunmer",
