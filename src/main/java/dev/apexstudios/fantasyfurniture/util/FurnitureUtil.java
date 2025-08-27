@@ -1,6 +1,5 @@
 package dev.apexstudios.fantasyfurniture.util;
 
-import com.google.common.base.Predicates;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import dev.apexstudios.apexcore.lib.block.BedClientBlockExtensions;
@@ -11,7 +10,6 @@ import dev.apexstudios.apexcore.lib.multiblock.MultiBlock;
 import dev.apexstudios.apexcore.lib.placement.PlacementRenderEvent;
 import dev.apexstudios.apexcore.lib.registree.Registree;
 import dev.apexstudios.apexcore.lib.registree.holder.DeferredBlock;
-import dev.apexstudios.apexcore.lib.util.ApexUtil;
 import dev.apexstudios.fantasyfurniture.FantasyFurniture;
 import dev.apexstudios.fantasyfurniture.FurnitureBlockEntities;
 import dev.apexstudios.fantasyfurniture.block.BedDoubleBlock;
@@ -47,8 +45,8 @@ import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 import net.minecraft.client.renderer.MaterialMapper;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.resources.model.Material;
@@ -58,7 +56,6 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.ai.village.poi.PoiType;
 import net.minecraft.world.entity.ai.village.poi.PoiTypes;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.HangingSignItem;
@@ -99,6 +96,7 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.common.world.poi.ExtendPoiTypesEvent;
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent;
 import net.neoforged.neoforge.items.wrapper.InvWrapper;
 import net.neoforged.neoforge.items.wrapper.SidedInvWrapper;
@@ -406,15 +404,17 @@ public interface FurnitureUtil {
         });
 
         modBus.addListener(FMLCommonSetupEvent.class, event -> event.enqueueWork(() -> {
-            registerPoi(registree, PoiTypes.HOME, Names.BED_SINGLE, blockState -> blockState.getValue(BedBlock.PART) == BedPart.HEAD);
-            registerPoi(registree, PoiTypes.HOME, Names.BED_DOUBLE, blockState -> blockState.getValue(BedBlock.PART) == BedPart.HEAD);
-            registerPoi(registree, PoiTypes.BUTCHER, Names.OVEN, Predicates.alwaysTrue());
-
             // on random launches our wood types are not being registered correctly
             // leading to null wood types during game initialization
             // doubly register to attempt to fix this
             WoodType.register(woodType);
         }));
+
+        modBus.addListener(ExtendPoiTypesEvent.class, event -> {
+            registerHomePoi(event, registree, Names.BED_SINGLE);
+            registerHomePoi(event, registree, Names.BED_DOUBLE);
+            Names.block(registree, Names.OVEN, block -> event.addBlockToPoi(PoiTypes.BUTCHER, block));
+        });
 
         modBus.addListener(RegisterClientExtensionsEvent.class, event -> {
                     event.registerBlock(ClientMultiBlockExtensions.INSTANCE, Names.blocks(registree,
@@ -524,8 +524,13 @@ public interface FurnitureUtil {
         materials.put(woodType, materialMapper.apply(ResourceLocation.parse(woodType.name())));
     }
 
-    private static void registerPoi(Registree registree, ResourceKey<PoiType> poiType, String name, Predicate<BlockState> blockStateTest) {
-        Names.block(registree, name, block -> ApexUtil.registerPoiBlockStates(poiType, block, blockStateTest));
+    private static void registerHomePoi(ExtendPoiTypesEvent event, Registree registree, String name) {
+        Names.block(registree, name, block -> event.addStatesToPoi(PoiTypes.HOME, block.getStateDefinition()
+                .getPossibleStates()
+                .stream()
+                .filter(blockState -> blockState.getValue(BedBlock.PART) == BedPart.HEAD)
+                .collect(Collectors.toSet())
+        ));
     }
 
     private static void appendValidBlocks(BlockEntityType<?> blockEntityType, Block... blocks) {
