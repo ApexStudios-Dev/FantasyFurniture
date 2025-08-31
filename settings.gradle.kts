@@ -8,7 +8,7 @@ pluginManagement {
 
 dependencyResolutionManagement {
     versionCatalogs.create("libs") {
-        library("apexcore", "dev.apexstudios", "apexcore").version("21.7.2-beta-pr-52")
+        library("apexcore", "dev.apexstudios", "apexcore").version("21.7.2")
         library("contex", "xfacthd.contex", "ConnectedTextures").version("9.1")
     }
 }

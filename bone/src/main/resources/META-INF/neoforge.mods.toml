@@ -29,7 +29,7 @@ issueTrackerURL="https://github.com/ApexStudios-Dev/Issues/issues"
 [[dependencies.fantasyfurniture_bone]]
     modId="apexcore"
     type="required"
-    versionRange="[21.7,21.8)"
+    versionRange="[21.7.2,21.8)"
     [dependencies.fantasyfurniture_bone.mc-publish]
         modrinth="xl3myxch"
         curseforge="550778"
@@ -71,7 +71,7 @@ issueTrackerURL="https://github.com/ApexStudios-Dev/Issues/issues"
 [[dependencies.fantasyfurniture_bone_skeleton]]
     modId="apexcore"
     type="required"
-    versionRange="[21.7,21.8)"
+    versionRange="[21.7.2,21.8)"
 [[dependencies.fantasyfurniture_bone_skeleton]]
     modId="fantasyfurniture"
     type="required"
@@ -103,7 +103,7 @@ issueTrackerURL="https://github.com/ApexStudios-Dev/Issues/issues"
 [[dependencies.fantasyfurniture_bone_wither]]
     modId="apexcore"
     type="required"
-    versionRange="[21.7,21.8)"
+    versionRange="[21.7.2,21.8)"
 [[dependencies.fantasyfurniture_bone_wither]]
     modId="fantasyfurniture"
     type="required"
