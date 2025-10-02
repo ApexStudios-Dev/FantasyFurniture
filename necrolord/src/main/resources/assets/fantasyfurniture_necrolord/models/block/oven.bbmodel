@@ -6,6 +6,7 @@
 	},
 	"name": "oven",
 	"parent": "",
+	"java_block_version": "1.21.6",
 	"ambientocclusion": true,
 	"front_gui_light": false,
 	"visible_box": [1, 1, 0],
@@ -1025,7 +1026,7 @@
 			"locked": false,
 			"visibility": true,
 			"autouv": 0,
-			"selected": true,
+			"selected": false,
 			"children": [
 				{
 					"name": "frame",
@@ -1107,7 +1108,7 @@
 	],
 	"textures": [
 		{
-			"path": "/mnt/development/Modding/ApexStudios/21.4/FantasyFurniture/necrolord/src/main/resources/assets/fantasyfurniture_necrolord/textures/block/oven.png",
+			"path": "/mnt/Dev/Modding/ApexStudios/21.9/FantasyFurniture/necrolord/src/main/resources/assets/fantasyfurniture_necrolord/textures/block/oven.png",
 			"name": "oven.png",
 			"folder": "block",
 			"namespace": "fantasyfurniture_necrolord",
@@ -1134,6 +1135,35 @@
 			"uuid": "fdb55f19-ad07-3eeb-dec2-1da28bc65f98",
 			"relative_path": "../../textures/block/oven.png",
 			"source": "data:image/png;base64,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"
+		},
+		{
+			"path": "/mnt/Dev/Modding/ApexStudios/21.9/FantasyFurniture/necrolord/src/main/resources/assets/fantasyfurniture_necrolord/textures/block/particle.png",
+			"name": "particle.png",
+			"folder": "block",
+			"namespace": "fantasyfurniture_necrolord",
+			"id": "particle",
+			"group": "",
+			"width": 16,
+			"height": 16,
+			"uv_width": 128,
+			"uv_height": 128,
+			"particle": true,
+			"use_as_default": false,
+			"layers_enabled": false,
+			"sync_to_project": "",
+			"render_mode": "default",
+			"render_sides": "auto",
+			"pbr_channel": "color",
+			"frame_time": 1,
+			"frame_order_type": "loop",
+			"frame_order": "",
+			"frame_interpolate": false,
+			"visible": true,
+			"internal": true,
+			"saved": true,
+			"uuid": "755c1714-4359-b72b-e760-b9c3f25843a9",
+			"relative_path": "../../textures/block/particle.png",
+			"source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAC5JREFUOE9jDHVz/8+AB0iJCuGTZmAcNWBYhEF+dCT+dCDCjz8djBrAwDj0wwAAGmkkGfBbEWoAAAAASUVORK5CYII="
 		}
 	],
 	"display": {
@@ -1152,7 +1182,7 @@
 			"scale": [0.4, 0.4, 0.4]
 		},
 		"firstperson_lefthand": {
-			"rotation": [0, 225, 0],
+			"rotation": [0, -135, 0],
 			"scale": [0.4, 0.4, 0.4]
 		},
 		"ground": {
@@ -1160,12 +1190,11 @@
 			"scale": [0.25, 0.25, 0.25]
 		},
 		"gui": {
-			"rotation": [30, 225, 0],
+			"rotation": [30, -135, 0],
 			"scale": [0.625, 0.625, 0.625]
 		},
 		"fixed": {
 			"scale": [0.5, 0.5, 0.5]
 		}
-	},
-	"tint_color": [1, 0.705, 0.294]
+	}
 }
