@@ -59,6 +59,10 @@ neoForge {
     }
 }
 
+repositories {
+    maven("https://cursemaven.com")
+}
+
 dependencies {
     implementation(libs.apexcore)
     "dataImplementation"(libs.apexcore)

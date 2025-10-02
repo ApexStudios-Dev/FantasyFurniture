@@ -9,7 +9,7 @@ pluginManagement {
 dependencyResolutionManagement {
     versionCatalogs.create("libs") {
         library("apexcore", "dev.apexstudios", "apexcore").version("21.9.11-beta-pr-51")
-        library("contex", "curse.maven", "contex-1296805").version("6709151") // https://www.curseforge.com/minecraft/mc-mods/contex/files/6709151
+        library("contex", "curse.maven", "contex-1296805").version("7051640")
     }
 }
 
