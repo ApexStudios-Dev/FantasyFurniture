@@ -7,7 +7,7 @@ import dev.apexstudios.apexcore.lib.block.DoorClientBlockExtensions;
 import dev.apexstudios.apexcore.lib.block.Dyeable;
 import dev.apexstudios.apexcore.lib.multiblock.ClientMultiBlockExtensions;
 import dev.apexstudios.apexcore.lib.multiblock.MultiBlock;
-import dev.apexstudios.apexcore.lib.placement.PlacementRenderEvent;
+import dev.apexstudios.apexcore.lib.placement.GetDefaultBlockPlacementStateEvent;
 import dev.apexstudios.apexcore.lib.registree.Registree;
 import dev.apexstudios.apexcore.lib.registree.holder.DeferredBlock;
 import dev.apexstudios.fantasyfurniture.FantasyFurniture;
@@ -457,18 +457,9 @@ public interface FurnitureUtil {
             Names.block(registree, Names.SIGN, block -> registerMaterial(woodType, Sheets.SIGN_MATERIALS, Sheets.SIGN_MAPPER, false));
         }));
 
-        NeoForge.EVENT_BUS.addListener(PlacementRenderEvent.DefaultBlockState.class, event -> {
-            var blockState = event.defaultBlockState();
-
-            Names.block(registree, Names.SOFA, block -> {
-                if(blockState.is(block))
-                    event.setDefaultBlockState(SofaConnection.setConnection(event.level(), event.pos(), blockState));
-            });
-        });
-
         registree.registerEvents(modBus);
 
-        NeoForge.EVENT_BUS.addListener(PlacementRenderEvent.DefaultBlockState.class, event -> {
+        NeoForge.EVENT_BUS.addListener(GetDefaultBlockPlacementStateEvent.class, event -> {
             Names.block(registree, Names.BED_SINGLE, block -> {
                 if(event.defaultBlockState().is(block))
                     event.withProperty(BedBlock.FACING, () -> event.placeContext().getHorizontalDirection());

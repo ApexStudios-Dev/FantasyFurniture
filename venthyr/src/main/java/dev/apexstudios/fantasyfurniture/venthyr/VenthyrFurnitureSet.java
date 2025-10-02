@@ -1,6 +1,6 @@
 package dev.apexstudios.fantasyfurniture.venthyr;
 
-import dev.apexstudios.apexcore.lib.placement.PlacementRenderEvent;
+import dev.apexstudios.apexcore.lib.placement.GetDefaultBlockPlacementStateEvent;
 import dev.apexstudios.apexcore.lib.registree.Registree;
 import dev.apexstudios.apexcore.lib.registree.holder.DeferredBlock;
 import dev.apexstudios.apexcore.lib.util.WoodTypeBuilder;
@@ -105,7 +105,7 @@ public class VenthyrFurnitureSet {
     public VenthyrFurnitureSet(IEventBus modBus) {
         FurnitureUtil.registerEvents(modBus, REGISTREE, WOOD_TYPE);
 
-        NeoForge.EVENT_BUS.addListener(PlacementRenderEvent.DefaultBlockState.class, event -> {
+        NeoForge.EVENT_BUS.addListener(GetDefaultBlockPlacementStateEvent.class, event -> {
             if(TABLE_CLOTH.is(event.defaultBlockState()))
                 event.setDefaultBlockState(TableBlock.get(event.level(), event.pos(), event.defaultBlockState()));
         });
