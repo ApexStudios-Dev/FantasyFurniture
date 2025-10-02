@@ -16,27 +16,27 @@ issueTrackerURL="https://github.com/ApexStudios-Dev/Issues/issues"
 [[dependencies.fantasyfurniture_dunmer]]
     modId="minecraft"
     type="required"
-    versionRange="[1.21.9-pre3,1.21.10)"
+    versionRange="[1.21.9,1.21.10)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.fantasyfurniture_dunmer]]
     modId="neoforge"
     type="required"
-    versionRange="[21.9-alpha,21.10)"
+    versionRange="[21.9-beta,21.10)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.fantasyfurniture_dunmer]]
     modId="apexcore"
     type="required"
-    versionRange="[21.9-beta,21.10)"
+    versionRange="[21.9,21.10)"
     [dependencies.fantasyfurniture_dunmer.mc-publish]
         modrinth="xl3myxch"
         curseforge="550778"
 [[dependencies.fantasyfurniture_dunmer]]
     modId="fantasyfurniture"
     type="required"
-    versionRange="[21.9-beta,21.10)"
+    versionRange="[21.9,21.10)"
     [dependencies.fantasyfurniture_dunmer.mc-publish]
         modrinth="A0nfCqYw"
         curseforge="579564"

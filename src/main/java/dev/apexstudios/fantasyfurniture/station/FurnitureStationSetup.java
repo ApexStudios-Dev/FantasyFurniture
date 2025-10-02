@@ -79,7 +79,7 @@ public interface FurnitureStationSetup {
     static Stream<RecipeHolder<FurnitureStationRecipe>> recipes(Level level) {
         if(level instanceof ServerLevel sLevel)
             return sLevel.recipeAccess().recipeMap().byType(RECIPE_TYPE.value()).stream();
-        if(FMLEnvironment.dist.isClient())
+        if(FMLEnvironment.getDist().isClient())
             return FurnitureStationClientSetup.RECIPES.stream();
 
         return Stream.empty();
