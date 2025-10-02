@@ -30,8 +30,8 @@ public final class CtmPacks {
                     .build(),
 
             CtmPack.builder(ConTexProvider.ID)
-                    .displayName("XFactHD")
-                    .packId("ctm-xfact")
+                    .displayName("ConTex")
+                    .packId("ctm-context")
                     .providing(ConTexProvider.PROVIDER_TYPE, ConTexProvider::with)
                     .build(),
 
