@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.neoforged.neoforge.items.ItemHandlerHelper;
+import net.neoforged.neoforge.transfer.ResourceHandlerUtil;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class InventoryMultiBlock extends InventoryBlock implements MultiBlock {
@@ -83,7 +83,7 @@ public abstract class InventoryMultiBlock extends InventoryBlock implements Mult
     @Override
     protected int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos, Direction facing) {
         var blockEntity = MultiBlock.getBlockEntity(level, pos, blockState);
-        return blockEntity instanceof InventoryBlockEntity inventory ? ItemHandlerHelper.calcRedstoneFromInventory(inventory.getItemHandler()) : super.getAnalogOutputSignal(blockState, level, pos, facing);
+        return blockEntity instanceof InventoryBlockEntity inventory ? ResourceHandlerUtil.getRedstoneSignalFromResourceHandler(inventory.getResourceHandler()) : super.getAnalogOutputSignal(blockState, level, pos, facing);
     }
 
     @Override

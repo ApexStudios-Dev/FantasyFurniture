@@ -98,9 +98,8 @@ import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsE
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.world.poi.ExtendPoiTypesEvent;
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent;
-import net.neoforged.neoforge.items.wrapper.InvWrapper;
-import net.neoforged.neoforge.items.wrapper.SidedInvWrapper;
 import net.neoforged.neoforge.mixins.BlockEntityTypeAccessor;
+import net.neoforged.neoforge.transfer.item.WorldlyContainerWrapper;
 
 public interface FurnitureUtil {
     Supplier<BlockBehaviour.Properties> PLANK_PROPERTIES = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.OAK_PLANKS);
@@ -434,22 +433,18 @@ public interface FurnitureUtil {
                 registree,
                 Names.OVEN,
                 block -> {
-                    event.registerBlockEntity(
-                            Capabilities.ItemHandler.BLOCK,
-                            BlockEntityType.SMOKER,
-                            (blockEntity, side) -> side == null ? new InvWrapper(blockEntity) : new SidedInvWrapper(blockEntity, side)
-                    );
+                    event.registerBlockEntity(Capabilities.Item.BLOCK, BlockEntityType.SMOKER, WorldlyContainerWrapper::new);
 
                     if(!(block instanceof MultiBlock))
                         return;
 
-                    event.registerBlock(Capabilities.ItemHandler.BLOCK, (level, pos, blockState, blockEntity, side) -> {
+                    event.registerBlock(Capabilities.Item.BLOCK, (level, pos, blockState, blockEntity, side) -> {
                         if(blockEntity == null)
                             blockEntity = MultiBlock.getBlockEntity(level, pos, blockState);
                         if(!(blockEntity instanceof SmokerBlockEntity smoker))
                             return null;
 
-                        return side == null ? new InvWrapper(smoker) : new SidedInvWrapper(smoker, side);
+                        return new WorldlyContainerWrapper(smoker, side);
                     }, block);
                 })
         );

@@ -22,7 +22,7 @@ issueTrackerURL="https://github.com/ApexStudios-Dev/Issues/issues"
 [[dependencies.fantasyfurniture_bone]]
     modId="neoforge"
     type="required"
-    versionRange="[21.9-beta,21.10)"
+    versionRange="[21.9.1-beta,21.10)"
     ordering="NONE"
     side="BOTH"
 
@@ -60,7 +60,7 @@ issueTrackerURL="https://github.com/ApexStudios-Dev/Issues/issues"
 [[dependencies.fantasyfurniture_bone_skeleton]]
     modId="neoforge"
     type="required"
-    versionRange="[21.9-beta,21.10)"
+    versionRange="[21.9.1-beta,21.10)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.fantasyfurniture_bone_skeleton]]
@@ -96,7 +96,7 @@ issueTrackerURL="https://github.com/ApexStudios-Dev/Issues/issues"
 [[dependencies.fantasyfurniture_bone_wither]]
     modId="neoforge"
     type="required"
-    versionRange="[21.9-beta,21.10)"
+    versionRange="[21.9.1-beta,21.10)"
     ordering="NONE"
     side="BOTH"
 
