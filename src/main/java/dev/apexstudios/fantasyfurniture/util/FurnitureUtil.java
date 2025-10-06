@@ -2,12 +2,7 @@ package dev.apexstudios.fantasyfurniture.util;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import dev.apexstudios.apexcore.lib.block.BedClientBlockExtensions;
-import dev.apexstudios.apexcore.lib.block.DoorClientBlockExtensions;
-import dev.apexstudios.apexcore.lib.block.Dyeable;
-import dev.apexstudios.apexcore.lib.multiblock.ClientMultiBlockExtensions;
 import dev.apexstudios.apexcore.lib.multiblock.MultiBlock;
-import dev.apexstudios.apexcore.lib.placement.GetDefaultBlockPlacementStateEvent;
 import dev.apexstudios.apexcore.lib.registree.Registree;
 import dev.apexstudios.apexcore.lib.registree.holder.DeferredBlock;
 import dev.apexstudios.fantasyfurniture.FantasyFurniture;
@@ -36,9 +31,6 @@ import dev.apexstudios.fantasyfurniture.block.StoolBlock;
 import dev.apexstudios.fantasyfurniture.block.TableBlock;
 import dev.apexstudios.fantasyfurniture.block.WallLightBlock;
 import dev.apexstudios.fantasyfurniture.block.WardrobeBlock;
-import dev.apexstudios.fantasyfurniture.block.property.CounterConnection;
-import dev.apexstudios.fantasyfurniture.block.property.ShelfConnection;
-import dev.apexstudios.fantasyfurniture.block.property.SofaConnection;
 import dev.apexstudios.fantasyfurniture.ctm.CtmPacks;
 import java.util.Collections;
 import java.util.Map;
@@ -68,7 +60,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CarpetBlock;
 import net.minecraft.world.level.block.CeilingHangingSignBlock;
-import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.FenceBlock;
 import net.minecraft.world.level.block.FenceGateBlock;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
@@ -94,8 +85,6 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
-import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.world.poi.ExtendPoiTypesEvent;
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent;
 import net.neoforged.neoforge.mixins.BlockEntityTypeAccessor;
@@ -416,19 +405,6 @@ public interface FurnitureUtil {
             Names.block(registree, Names.OVEN, block -> event.addBlockToPoi(PoiTypes.BUTCHER, block));
         });
 
-        modBus.addListener(RegisterClientExtensionsEvent.class, event -> {
-                    event.registerBlock(ClientMultiBlockExtensions.INSTANCE, Names.blocks(registree,
-                            Names.DRESSER, Names.CHAIR, Names.BOOKSHELF, Names.BED_DOUBLE,
-                            Names.DESK_LEFT, Names.DESK_RIGHT, Names.PAINTING_WIDE, Names.CHEST,
-                            Names.FLOOR_LIGHT, Names.BENCH, Names.WARDROBE
-                    ));
-
-                    Names.block(registree, Names.BED_SINGLE, block -> event.registerBlock(new BedClientBlockExtensions((BedBlock) block), block));
-                    Names.block(registree, Names.DOOR_DOUBLE, block -> event.registerBlock(new DoorClientBlockExtensions((DoorBlock) block), block));
-                    Names.block(registree, Names.DOOR_SINGLE, block -> event.registerBlock(new DoorClientBlockExtensions((DoorBlock) block), block));
-                }
-        );
-
         modBus.addListener(RegisterCapabilitiesEvent.class, event -> Names.block(
                 registree,
                 Names.OVEN,
@@ -458,40 +434,6 @@ public interface FurnitureUtil {
         }));
 
         registree.registerEvents(modBus);
-
-        NeoForge.EVENT_BUS.addListener(GetDefaultBlockPlacementStateEvent.class, event -> {
-            Names.block(registree, Names.BED_SINGLE, block -> {
-                if(event.defaultBlockState().is(block))
-                    event.withProperty(BedBlock.FACING, () -> event.placeContext().getHorizontalDirection());
-            });
-
-            Names.block(registree, Names.BED_DOUBLE, block -> {
-                if(event.defaultBlockState().is(block))
-                    event.withProperty(BedBlock.FACING, () -> event.placeContext().getHorizontalDirection());
-            });
-
-            Names.block(registree, Names.COUNTER, block -> {
-                if(event.defaultBlockState().is(block))
-                    event.setDefaultBlockState(CounterConnection.setConnection(event.level(), event.pos(), event.defaultBlockState()));
-            });
-
-            Names.block(registree, Names.SHELF, block -> {
-                if(event.defaultBlockState().is(block))
-                    event.setDefaultBlockState(ShelfConnection.setConnection(event.level(), event.pos(), event.defaultBlockState()));
-            });
-
-            Names.block(registree, Names.SOFA, block -> {
-                if(event.defaultBlockState().is(block))
-                    event.setDefaultBlockState(SofaConnection.setConnection(event.level(), event.pos(), event.defaultBlockState()));
-            });
-
-            Names.block(registree, Names.TABLE, block -> {
-                if(event.defaultBlockState().is(block))
-                    event.setDefaultBlockState(TableBlock.get(event.level(), event.pos(), event.defaultBlockState()));
-            });
-
-            event.withProperty(Dyeable.PROPERTY, () -> Dyeable.getColorForPlacement(event.placeContext()));
-        });
     }
 
     static VoxelShape getShape(VoxelShape shape, BlockState blockState, BlockPos worldPos) {
