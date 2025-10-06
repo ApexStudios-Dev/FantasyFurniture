@@ -8,6 +8,6 @@ import net.neoforged.fml.common.Mod;
 @Mod(WitherFurnitureSet.ID)
 public final class WitherFurnitureSetDataEntryPoint {
     public WitherFurnitureSetDataEntryPoint(IEventBus modBus) {
-        ResourceGenerator.of(modBus, generator -> BoneFurnitureSetDataEntryPoint.register(generator, WitherFurnitureSet.get(), "Wither"));
+        ResourceGenerator.of(modBus, generator -> BoneFurnitureSetDataEntryPoint.register(generator, WitherFurnitureSet.FURNITURE_SET, "Wither"));
     }
 }

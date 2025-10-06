@@ -54,7 +54,7 @@ import net.minecraft.world.level.block.state.properties.WoodType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
 
-public sealed class BoneFurnitureSet permits SkeletonFurnitureSet, WitherFurnitureSet {
+public final class BoneFurnitureSet {
     public static final String ID = FantasyFurniture.ID + "_bone";
 
     public final String id;
@@ -99,7 +99,7 @@ public sealed class BoneFurnitureSet permits SkeletonFurnitureSet, WitherFurnitu
     public final FurnitureUtil.SignPair<StandingSignBlock, WallSignBlock> sign;
     public final ResourceKey<CreativeModeTab> creativeModeTab;
 
-    protected BoneFurnitureSet(IEventBus modBus, String modId, String id) {
+    protected BoneFurnitureSet(String modId, String id) {
         this.id = id;
 
         registree = new Registree(modId);
@@ -150,7 +150,9 @@ public sealed class BoneFurnitureSet permits SkeletonFurnitureSet, WitherFurnitu
         sign = FurnitureUtil.sign(registree, woodType);
 
         creativeModeTab = FurnitureUtil.creativeModeTab(registree, bedSingle);
+    }
 
+    public void register(IEventBus modBus) {
         FurnitureUtil.registerEvents(modBus, registree, woodType);
 
         modBus.addListener(AddPackFindersEvent.class, event -> {
