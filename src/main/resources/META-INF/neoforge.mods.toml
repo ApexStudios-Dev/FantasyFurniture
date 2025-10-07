@@ -30,7 +30,7 @@ side = "BOTH"
 [[dependencies.fantasyfurniture]]
 modId = "apexcore"
 type = "required"
-versionRange = "[21.10,21.11)"
+versionRange = "[21.10-beta,21.11)"
 [dependencies.fantasyfurniture.mc-publish]
 modrinth = "xl3myxch"
 curseforge = "550778"
