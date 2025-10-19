@@ -52,6 +52,9 @@ repositories {
 }
 
 dependencies {
+    implementation(libs.registree)
+    "dataImplementation"(libs.registree)
+
     implementation(libs.apexcore)
     "dataImplementation"(libs.apexcore)
     accessTransformers(libs.apexcore)
@@ -59,6 +62,9 @@ dependencies {
     implementation(libs.contex)
 
     furnitureSets.forEach {
+        sourceSet(it, SourceSet.MAIN_SOURCE_SET_NAME).implementationConfigurationName(libs.registree)
+        sourceSet(it, ApexExtension.DATA_NAME).implementationConfigurationName(libs.registree)
+
         sourceSet(it, SourceSet.MAIN_SOURCE_SET_NAME).implementationConfigurationName(libs.apexcore)
         sourceSet(it, ApexExtension.DATA_NAME).implementationConfigurationName(libs.apexcore)
     }

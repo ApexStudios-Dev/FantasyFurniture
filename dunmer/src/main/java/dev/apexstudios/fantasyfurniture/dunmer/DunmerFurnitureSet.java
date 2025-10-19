@@ -1,7 +1,5 @@
 package dev.apexstudios.fantasyfurniture.dunmer;
 
-import dev.apexstudios.apexcore.lib.registree.Registree;
-import dev.apexstudios.apexcore.lib.registree.holder.DeferredBlock;
 import dev.apexstudios.apexcore.lib.util.WoodTypeBuilder;
 import dev.apexstudios.fantasyfurniture.block.FurnitureDoorBlock;
 import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerBedDoubleBlock;
@@ -29,6 +27,8 @@ import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerTableBlock;
 import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerWallLightBlock;
 import dev.apexstudios.fantasyfurniture.dunmer.block.DunmerWardrobeBlock;
 import dev.apexstudios.fantasyfurniture.util.FurnitureUtil;
+import dev.apexstudios.registree.api.Registree;
+import dev.apexstudios.registree.api.holder.DeferredBlock;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.block.Block;
@@ -50,7 +50,7 @@ import net.neoforged.fml.common.Mod;
 @Mod(DunmerFurnitureSet.ID)
 public class DunmerFurnitureSet {
     public static final String ID = "fantasyfurniture_dunmer";
-    public static final Registree REGISTREE = new Registree(ID);
+    public static final Registree REGISTREE = Registree.create(ID);
 
     public static final WoodType WOOD_TYPE = WoodTypeBuilder.builder()
             .copy(WoodType.OAK)

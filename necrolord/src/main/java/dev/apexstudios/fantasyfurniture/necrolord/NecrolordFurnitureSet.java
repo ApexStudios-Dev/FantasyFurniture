@@ -1,8 +1,5 @@
 package dev.apexstudios.fantasyfurniture.necrolord;
 
-import dev.apexstudios.apexcore.lib.registree.Registree;
-import dev.apexstudios.apexcore.lib.registree.holder.DeferredBlock;
-import dev.apexstudios.apexcore.lib.registree.holder.DeferredParticleType;
 import dev.apexstudios.apexcore.lib.util.WoodTypeBuilder;
 import dev.apexstudios.fantasyfurniture.block.FurnitureDoorBlock;
 import dev.apexstudios.fantasyfurniture.necrolord.block.NecrolordBedDoubleBlock;
@@ -30,6 +27,9 @@ import dev.apexstudios.fantasyfurniture.necrolord.block.NecrolordTableBlock;
 import dev.apexstudios.fantasyfurniture.necrolord.block.NecrolordWallLightBlock;
 import dev.apexstudios.fantasyfurniture.necrolord.block.NecrolordWardrobeBlock;
 import dev.apexstudios.fantasyfurniture.util.FurnitureUtil;
+import dev.apexstudios.registree.api.Registree;
+import dev.apexstudios.registree.api.holder.DeferredBlock;
+import dev.apexstudios.registree.api.holder.DeferredParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
@@ -53,7 +53,7 @@ import net.neoforged.fml.common.Mod;
 @Mod(NecrolordFurnitureSet.ID)
 public class NecrolordFurnitureSet {
     public static final String ID = "fantasyfurniture_necrolord";
-    public static final Registree REGISTREE = new Registree(ID);
+    public static final Registree REGISTREE = Registree.create(ID);
 
     public static final WoodType WOOD_TYPE = WoodTypeBuilder.builder()
             .copy(WoodType.OAK)

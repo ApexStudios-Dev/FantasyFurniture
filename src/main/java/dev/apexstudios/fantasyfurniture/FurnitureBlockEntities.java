@@ -1,9 +1,9 @@
 package dev.apexstudios.fantasyfurniture;
 
 import dev.apexstudios.apexcore.lib.block.entity.InventoryBlockEntity;
-import dev.apexstudios.apexcore.lib.registree.holder.DeferredBlockEntity;
 import dev.apexstudios.fantasyfurniture.block.entity.BookshelfBlockEntity;
 import dev.apexstudios.fantasyfurniture.block.entity.FurnitureInventoryBlockEntity;
+import dev.apexstudios.registree.api.holder.DeferredBlockEntity;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 
