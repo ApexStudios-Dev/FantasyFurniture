@@ -55,6 +55,9 @@ dependencies {
     implementation(libs.registree)
     "dataImplementation"(libs.registree)
 
+    implementation(libs.placementvisualizer)
+    "dataImplementation"(libs.placementvisualizer)
+
     implementation(libs.apexcore)
     "dataImplementation"(libs.apexcore)
     accessTransformers(libs.apexcore)
