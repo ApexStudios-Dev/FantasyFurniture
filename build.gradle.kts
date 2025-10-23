@@ -68,6 +68,9 @@ dependencies {
         sourceSet(it, SourceSet.MAIN_SOURCE_SET_NAME).implementationConfigurationName(libs.registree)
         sourceSet(it, ApexExtension.DATA_NAME).implementationConfigurationName(libs.registree)
 
+        sourceSet(it, SourceSet.MAIN_SOURCE_SET_NAME).implementationConfigurationName(libs.placementvisualizer)
+        sourceSet(it, ApexExtension.DATA_NAME).implementationConfigurationName(libs.placementvisualizer)
+
         sourceSet(it, SourceSet.MAIN_SOURCE_SET_NAME).implementationConfigurationName(libs.apexcore)
         sourceSet(it, ApexExtension.DATA_NAME).implementationConfigurationName(libs.apexcore)
     }
