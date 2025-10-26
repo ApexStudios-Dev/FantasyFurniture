@@ -40,6 +40,10 @@ versionRange = "[21.10-beta,21.11)"
 [dependencies.fantasyfurniture_royal.mc-publish]
 modrinth = "A0nfCqYw"
 curseforge = "579564"
+[[dependencies.fantasyfurniture_royal]]
+modId = "placementvisualizer"
+type = "required"
+versionRange = "[21.10,21.11)"
 
 #[[accessTransformers]]
 #    file="META-INF/accesstransformer.cfg"
