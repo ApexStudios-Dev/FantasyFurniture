@@ -3,8 +3,8 @@ import dev.apexstudios.gradle.multi.ModuleBuilder
 import dev.apexstudios.gradle.single.ApexSingleExtension
 
 plugins {
-    id("apex-conventions.neoforge") version "0.1.74"
-    id("apex-conventions.maven-publishing") version "0.1.74"
+    id("apex-conventions.neoforge") version "0.1.75"
+    id("apex-conventions.maven-publishing") version "0.1.75"
 }
 
 group = "dev.apexstudios"
@@ -52,6 +52,12 @@ repositories {
 }
 
 dependencies {
+    implementation(libs.registree)
+    "dataImplementation"(libs.registree)
+
+    implementation(libs.placementvisualizer)
+    "dataImplementation"(libs.placementvisualizer)
+
     implementation(libs.apexcore)
     "dataImplementation"(libs.apexcore)
     accessTransformers(libs.apexcore)
@@ -59,6 +65,12 @@ dependencies {
     implementation(libs.contex)
 
     furnitureSets.forEach {
+        sourceSet(it, SourceSet.MAIN_SOURCE_SET_NAME).implementationConfigurationName(libs.registree)
+        sourceSet(it, ApexExtension.DATA_NAME).implementationConfigurationName(libs.registree)
+
+        sourceSet(it, SourceSet.MAIN_SOURCE_SET_NAME).implementationConfigurationName(libs.placementvisualizer)
+        sourceSet(it, ApexExtension.DATA_NAME).implementationConfigurationName(libs.placementvisualizer)
+
         sourceSet(it, SourceSet.MAIN_SOURCE_SET_NAME).implementationConfigurationName(libs.apexcore)
         sourceSet(it, ApexExtension.DATA_NAME).implementationConfigurationName(libs.apexcore)
     }

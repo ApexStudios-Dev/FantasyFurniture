@@ -40,6 +40,10 @@ versionRange = "[21.10-beta,21.11)"
 [dependencies.fantasyfurniture_bone.mc-publish]
 modrinth = "A0nfCqYw"
 curseforge = "579564"
+[[dependencies.fantasyfurniture_bone]]
+modId = "placementvisualizer"
+type = "required"
+versionRange = "[21.10,21.11)"
 
 [[mods]]
 modId = "fantasyfurniture_bone_skeleton"
@@ -76,6 +80,10 @@ versionRange = "[21.10-beta,21.11)"
 modId = "fantasyfurniture"
 type = "required"
 versionRange = "[21.10-beta,21.11)"
+[[dependencies.fantasyfurniture_bone_skeleton]]
+modId = "placementvisualizer"
+type = "required"
+versionRange = "[21.10,21.11)"
 
 [[mods]]
 modId = "fantasyfurniture_bone_wither"
@@ -108,6 +116,10 @@ versionRange = "[21.10-beta,21.11)"
 modId = "fantasyfurniture"
 type = "required"
 versionRange = "[21.10-beta,21.11)"
+[[dependencies.fantasyfurniture_bone_wither]]
+modId = "placementvisualizer"
+type = "required"
+versionRange = "[21.10,21.11)"
 [[dependencies.fantasyfurniture_bone_wither]]
 modId = "fantasyfurniture_bone"
 type = "required"

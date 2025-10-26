@@ -1,7 +1,5 @@
 package dev.apexstudios.fantasyfurniture.royal;
 
-import dev.apexstudios.apexcore.lib.registree.Registree;
-import dev.apexstudios.apexcore.lib.registree.holder.DeferredBlock;
 import dev.apexstudios.apexcore.lib.util.WoodTypeBuilder;
 import dev.apexstudios.fantasyfurniture.royal.block.RoyalBedDoubleBlock;
 import dev.apexstudios.fantasyfurniture.royal.block.RoyalBedSingleBlock;
@@ -31,6 +29,8 @@ import dev.apexstudios.fantasyfurniture.royal.block.RoyalWallLightBlock;
 import dev.apexstudios.fantasyfurniture.royal.block.RoyalWardrobeBlock;
 import dev.apexstudios.fantasyfurniture.royal.block.RoyalWoolBlock;
 import dev.apexstudios.fantasyfurniture.util.FurnitureUtil;
+import dev.apexstudios.registree.api.Registree;
+import dev.apexstudios.registree.api.holder.DeferredBlock;
 import java.util.List;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
@@ -53,7 +53,7 @@ import net.neoforged.fml.common.Mod;
 @Mod(RoyalFurnitureSet.ID)
 public class RoyalFurnitureSet {
     public static final String ID = "fantasyfurniture_royal";
-    public static final Registree REGISTREE = new Registree(ID);
+    public static final Registree REGISTREE = Registree.create(ID);
 
     public static final WoodType WOOD_TYPE = WoodTypeBuilder.builder()
             .copy(WoodType.OAK)

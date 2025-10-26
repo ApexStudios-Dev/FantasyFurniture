@@ -2,13 +2,13 @@ package dev.apexstudios.fantasyfurniture.venthyr.data;
 
 import dev.apexstudios.apexcore.lib.data.ProviderTypes;
 import dev.apexstudios.apexcore.lib.data.ResourceGenerator;
-import dev.apexstudios.apexcore.lib.util.ApexTags;
 import dev.apexstudios.apexcore.lib.util.TagPair;
 import dev.apexstudios.fantasyfurniture.ctm.CtmPacks;
 import dev.apexstudios.fantasyfurniture.util.FurnitureClientDataUtil;
 import dev.apexstudios.fantasyfurniture.util.FurnitureDataUtil;
 import dev.apexstudios.fantasyfurniture.util.FurnitureUtil;
 import dev.apexstudios.fantasyfurniture.venthyr.VenthyrFurnitureSet;
+import dev.apexstudios.placementvisualizer.api.BlockItemPlacementEvent;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
@@ -51,7 +51,7 @@ public final class VenthyrFurnitureSetDataEntryPoint {
             pack.providing(ProviderTypes.LOOT_TABLE, (ctx, provider) -> provider
                     .block(blocks -> blocks.dropSelf(VenthyrFurnitureSet.TABLE_CLOTH.value()))
             ).providing(ProviderTypes.BLOCK_TAGS, (ctx, provider) -> FurnitureDataUtil
-                    .tag(provider, VenthyrFurnitureSet.TABLE_CLOTH.value(), context.mineableTag(), ApexTags.Blocks.RENDER_PLACEMENT_WHITELIST)
+                    .tag(provider, VenthyrFurnitureSet.TABLE_CLOTH.value(), context.mineableTag(), BlockItemPlacementEvent.RENDERABLES)
             ).providing(ProviderTypes.RECIPES, (ctx, provider) -> FurnitureDataUtil.furnitureStationRecipe(
                     context, VenthyrFurnitureSet.TABLE_CLOTH, provider
             )).providing(ProviderTypes.MODELS, (ctx, provider) -> FurnitureClientDataUtil

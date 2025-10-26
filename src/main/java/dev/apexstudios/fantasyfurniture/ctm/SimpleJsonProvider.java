@@ -7,7 +7,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import dev.apexstudios.apexcore.core.data.provider.BaseProvider;
 import dev.apexstudios.apexcore.lib.data.provider.context.ProviderOutputContext;
-import dev.apexstudios.apexcore.lib.registree.Registree;
+import dev.apexstudios.registree.api.Registree;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Map;
