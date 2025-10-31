@@ -13,7 +13,7 @@ import net.minecraft.Util;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.internal.versions.neoforge.NeoForgeVersion;
+import net.neoforged.neoforge.common.NeoForgeMod;
 
 final class ConTexProvider extends ExtendedBlockStateProvider {
     public static final String ID = "contex";
@@ -63,7 +63,7 @@ final class ConTexProvider extends ExtendedBlockStateProvider {
     @Override
     protected JsonObject json(ProviderOutputContext context, Block block, Consumer<JsonObject> consumer) {
         var root = super.json(context, block, consumer);
-        root.addProperty(NeoForgeVersion.MOD_ID + ":definition_type", ID + ":definition");
+        root.addProperty(NeoForgeMod.MOD_ID + ":definition_type", ID + ":definition");
         return root;
     }
 }
