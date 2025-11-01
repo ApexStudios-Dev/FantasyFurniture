@@ -1,7 +1,5 @@
 package dev.apexstudios.fantasyfurniture.bone;
 
-import dev.apexstudios.apexcore.lib.registree.Registree;
-import dev.apexstudios.apexcore.lib.registree.holder.DeferredBlock;
 import dev.apexstudios.apexcore.lib.util.WoodTypeBuilder;
 import dev.apexstudios.fantasyfurniture.FantasyFurniture;
 import dev.apexstudios.fantasyfurniture.block.FurnitureDoorBlock;
@@ -30,9 +28,10 @@ import dev.apexstudios.fantasyfurniture.bone.block.BoneTableBlock;
 import dev.apexstudios.fantasyfurniture.bone.block.BoneWallLightBlock;
 import dev.apexstudios.fantasyfurniture.bone.block.BoneWardrobeBlock;
 import dev.apexstudios.fantasyfurniture.util.FurnitureUtil;
+import dev.apexstudios.registree.api.Registree;
+import dev.apexstudios.registree.api.holder.DeferredBlock;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
@@ -54,7 +53,7 @@ import net.minecraft.world.level.block.state.properties.WoodType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
 
-public sealed class BoneFurnitureSet permits SkeletonFurnitureSet, WitherFurnitureSet {
+public final class BoneFurnitureSet {
     public static final String ID = FantasyFurniture.ID + "_bone";
 
     public final String id;
@@ -99,17 +98,17 @@ public sealed class BoneFurnitureSet permits SkeletonFurnitureSet, WitherFurnitu
     public final FurnitureUtil.SignPair<StandingSignBlock, WallSignBlock> sign;
     public final ResourceKey<CreativeModeTab> creativeModeTab;
 
-    protected BoneFurnitureSet(IEventBus modBus, String modId, String id) {
+    protected BoneFurnitureSet(String modId, String id) {
         this.id = id;
 
-        registree = new Registree(modId);
+        registree = Registree.create(modId);
 
         woodType = WoodTypeBuilder.builder()
                 .copy(WoodType.OAK)
                 .blockSetType(blockSet -> blockSet
                         .copy(BlockSetType.STONE)
                 )
-                .build(modId + ResourceLocation.NAMESPACE_SEPARATOR + id);
+                .build(registree.registryIdentifier(id));
 
         bricks = FurnitureUtil.bricks(registree, Block::new);
         wool = FurnitureUtil.wool(registree, Block::new);
@@ -150,7 +149,9 @@ public sealed class BoneFurnitureSet permits SkeletonFurnitureSet, WitherFurnitu
         sign = FurnitureUtil.sign(registree, woodType);
 
         creativeModeTab = FurnitureUtil.creativeModeTab(registree, bedSingle);
+    }
 
+    public void register(IEventBus modBus) {
         FurnitureUtil.registerEvents(modBus, registree, woodType);
 
         modBus.addListener(AddPackFindersEvent.class, event -> {

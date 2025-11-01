@@ -3,8 +3,8 @@ package dev.apexstudios.fantasyfurniture.block.entity;
 import dev.apexstudios.fantasyfurniture.FurnitureBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 
 public final class BookshelfBlockEntity extends FurnitureInventoryBlockEntity {
     public BookshelfBlockEntity(BlockPos pos, BlockState blockState) {
@@ -12,7 +12,7 @@ public final class BookshelfBlockEntity extends FurnitureInventoryBlockEntity {
     }
 
     @Override
-    protected boolean canInsert(int slot, ItemStack stack) {
-        return stack.is(ItemTags.BOOKSHELF_BOOKS);
+    protected boolean canInsert(int index, ItemResource itemResource) {
+        return itemResource.is(ItemTags.BOOKSHELF_BOOKS);
     }
 }

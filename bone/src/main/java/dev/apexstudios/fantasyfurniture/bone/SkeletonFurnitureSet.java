@@ -1,23 +1,14 @@
 package dev.apexstudios.fantasyfurniture.bone;
 
-import java.util.Objects;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
-import org.jetbrains.annotations.Nullable;
 
 @Mod(SkeletonFurnitureSet.ID)
-public final class SkeletonFurnitureSet extends BoneFurnitureSet {
+public final class SkeletonFurnitureSet {
     public static final String ID = BoneFurnitureSet.ID + "_skeleton";
-    @Nullable
-    private static SkeletonFurnitureSet INSTANCE = null;
+    public static final BoneFurnitureSet FURNITURE_SET = new BoneFurnitureSet(ID, "skeleton");
 
     public SkeletonFurnitureSet(IEventBus modBus) {
-        super(modBus, ID, "skeleton");
-
-        INSTANCE = this;
-    }
-
-    public static SkeletonFurnitureSet get() {
-        return Objects.requireNonNull(INSTANCE);
+        FURNITURE_SET.register(modBus);
     }
 }

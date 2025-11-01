@@ -3,30 +3,25 @@ import dev.apexstudios.gradle.multi.ModuleBuilder
 import dev.apexstudios.gradle.single.ApexSingleExtension
 
 plugins {
-    id("apex-conventions.neoforge") version "0.1.74"
-    id("apex-conventions.maven-publishing") version "0.1.74"
+    id("apex-conventions.neoforge") version "0.1.75"
+    id("apex-conventions.maven-publishing") version "0.1.75"
 }
 
 group = "dev.apexstudios"
 
-apex.neoVersion("21.7.11-beta", "1.21.5", "2025.06.15")
+apex.neoVersion("21.10.34-beta", "2025.10.12")
 apex.extendCompilerErrors()
 
 val single = ApexSingleExtension.getOrCreate(project)
 single.withDataGen()
 
-val furnitureSets = setOf(
-    "nordic",
-    "venthyr",
-    "bone",
-    "dunmer",
-    "necrolord",
-    "royal"
-)
+val furnitureSets = setOf("nordic", "venthyr", "bone", "dunmer", "necrolord", "royal")
 
-ModuleBuilder.modules(project) { furnitureSets.forEach {
-    module(it, "fantasyfurniture_$it") { hasData() }
-} }
+ModuleBuilder.modules(project) {
+    furnitureSets.forEach {
+        module(it, "fantasyfurniture_$it") { hasData() }
+    }
+}
 
 furnitureSets.forEach {
     fixJarName(sourceSet(it, SourceSet.MAIN_SOURCE_SET_NAME), it)
@@ -43,23 +38,26 @@ neoForge {
 
             // include bone built-in packs as they are needed for
             // ctm asset generation to complete
-            programArguments.addAll(
-                "--existing", file("bone/src/data/generated/built-in/assets/skeleton").absolutePath,
-                "--existing", file("bone/src/data/generated/built-in/assets/wither").absolutePath
-            )
+            programArguments.addAll("--existing", file("bone/src/data/generated/built-in/assets/skeleton").absolutePath, "--existing", file("bone/src/data/generated/built-in/assets/wither").absolutePath)
         }
 
         getByName("boneData") {
-            programArguments.addAll(
-                "--mod", "fantasyfurniture_bone_skeleton",
-                "--mod", "fantasyfurniture_bone_wither",
-                "--flat"
-            )
+            programArguments.addAll("--mod", "fantasyfurniture_bone_skeleton", "--mod", "fantasyfurniture_bone_wither", "--flat")
         }
     }
 }
 
+repositories {
+    maven("https://cursemaven.com")
+}
+
 dependencies {
+    implementation(libs.registree)
+    "dataImplementation"(libs.registree)
+
+    implementation(libs.placementvisualizer)
+    "dataImplementation"(libs.placementvisualizer)
+
     implementation(libs.apexcore)
     "dataImplementation"(libs.apexcore)
     accessTransformers(libs.apexcore)
@@ -67,6 +65,12 @@ dependencies {
     implementation(libs.contex)
 
     furnitureSets.forEach {
+        sourceSet(it, SourceSet.MAIN_SOURCE_SET_NAME).implementationConfigurationName(libs.registree)
+        sourceSet(it, ApexExtension.DATA_NAME).implementationConfigurationName(libs.registree)
+
+        sourceSet(it, SourceSet.MAIN_SOURCE_SET_NAME).implementationConfigurationName(libs.placementvisualizer)
+        sourceSet(it, ApexExtension.DATA_NAME).implementationConfigurationName(libs.placementvisualizer)
+
         sourceSet(it, SourceSet.MAIN_SOURCE_SET_NAME).implementationConfigurationName(libs.apexcore)
         sourceSet(it, ApexExtension.DATA_NAME).implementationConfigurationName(libs.apexcore)
     }

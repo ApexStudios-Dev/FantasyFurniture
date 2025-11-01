@@ -2,11 +2,11 @@ package dev.apexstudios.fantasyfurniture.station;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import dev.apexstudios.apexcore.lib.registree.holder.DeferredBlock;
-import dev.apexstudios.apexcore.lib.registree.holder.DeferredItem;
-import dev.apexstudios.apexcore.lib.registree.holder.DeferredMenu;
-import dev.apexstudios.apexcore.lib.registree.holder.DeferredRecipeSerializer;
 import dev.apexstudios.fantasyfurniture.FantasyFurniture;
+import dev.apexstudios.registree.api.holder.DeferredBlock;
+import dev.apexstudios.registree.api.holder.DeferredItem;
+import dev.apexstudios.registree.api.holder.DeferredMenu;
+import dev.apexstudios.registree.api.holder.DeferredRecipeSerializer;
 import java.util.stream.Stream;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -79,7 +79,7 @@ public interface FurnitureStationSetup {
     static Stream<RecipeHolder<FurnitureStationRecipe>> recipes(Level level) {
         if(level instanceof ServerLevel sLevel)
             return sLevel.recipeAccess().recipeMap().byType(RECIPE_TYPE.value()).stream();
-        if(FMLEnvironment.dist.isClient())
+        if(FMLEnvironment.getDist().isClient())
             return FurnitureStationClientSetup.RECIPES.stream();
 
         return Stream.empty();

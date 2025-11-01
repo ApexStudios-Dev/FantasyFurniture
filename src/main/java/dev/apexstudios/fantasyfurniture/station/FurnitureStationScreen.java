@@ -4,6 +4,7 @@ import dev.apexstudios.apexcore.lib.menu.SimpleMenuScreen;
 import dev.apexstudios.fantasyfurniture.FantasyFurniture;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
@@ -111,7 +112,7 @@ public final class FurnitureStationScreen extends AbstractContainerScreen<Furnit
     }
 
     @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+    public boolean mouseClicked(MouseButtonEvent event, boolean held) {
         scrolling = false;
 
         if (displayRecipes) {
@@ -127,7 +128,7 @@ public final class FurnitureStationScreen extends AbstractContainerScreen<Furnit
                 var slotX = (double) (recipeX + slotIndex % recipeColumns * AbstractContainerMenu.SLOT_SIZE);
                 var slotY = (double) (recipeY + slotIndex / recipeColumns * AbstractContainerMenu.SLOT_SIZE);
 
-                if (mouseX >= slotX && mouseY >= slotY && mouseX < slotX + AbstractContainerMenu.SLOT_SIZE && mouseY < slotY + AbstractContainerMenu.SLOT_SIZE) {
+                if (event.x() >= slotX && event.y() >= slotY && event.x() < slotX + AbstractContainerMenu.SLOT_SIZE && event.y() < slotY + AbstractContainerMenu.SLOT_SIZE) {
                     if (!menu.clickMenuButton(minecraft.player, index))
                         continue;
 
@@ -137,24 +138,24 @@ public final class FurnitureStationScreen extends AbstractContainerScreen<Furnit
                 }
             }
 
-            if (mouseX >= scrollBarX && mouseY >= scrollBarY && mouseX < scrollBarX + scrollBarWidth && mouseY < scrollBarY + scrollBarFullHeight)
+            if (event.x() >= scrollBarX && event.y() >= scrollBarY && event.x() < scrollBarX + scrollBarWidth && event.y() < scrollBarY + scrollBarFullHeight)
                 scrolling = true;
         }
 
-        return super.mouseClicked(mouseX, mouseY, button);
+        return super.mouseClicked(event, held);
     }
 
     @Override
-    public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {
+    public boolean mouseDragged(MouseButtonEvent event, double dragX, double dragY) {
         if (scrolling && isScrollBarActive()) {
             var scrollEndY = recipeY + scrollBarFullHeight;
-            scrollOffs = (float) (mouseY - recipeY - (scrollBarHeight / 2F)) / ((scrollEndY - recipeY) - scrollBarHeight);
+            scrollOffs = (float) (event.y() - recipeY - (scrollBarHeight / 2F)) / ((scrollEndY - recipeY) - scrollBarHeight);
             scrollOffs = Math.clamp(0F, 1F, scrollOffs);
             startIndex = (int) ((scrollOffs * getOffscreenRows()) + .5D) * recipeColumns;
             return true;
         }
 
-        return super.mouseDragged(mouseX, mouseY, button, dragX, dragY);
+        return super.mouseDragged(event, dragX, dragY);
     }
 
     @Override

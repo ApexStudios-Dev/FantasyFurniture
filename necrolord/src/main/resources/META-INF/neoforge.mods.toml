@@ -1,45 +1,49 @@
-modLoader="javafml"
-loaderVersion="[4,)"
-license="AllRightsReserved"
-issueTrackerURL="https://github.com/ApexStudios-Dev/Issues/issues"
+modLoader = "javafml"
+loaderVersion = "[4,)"
+license = "AllRightsReserved"
+issueTrackerURL = "https://github.com/ApexStudios-Dev/Issues/issues"
 
 [[mods]]
-    modId="fantasyfurniture_necrolord"
-    version="${file.jarVersion}"
-    displayName="Fantasy's Furniture - Necrolord"
-    credits="Apex - Programming"
-    authors="ApexStudios"
-    description="Necrolord Furniture set for Fantasy's Furniture"
-    logoFile="logo.png"
-    displayURL="https://modrinth.com/project/fantasys-furniture-necrolord"
+modId = "fantasyfurniture_necrolord"
+version = "${file.jarVersion}"
+displayName = "Fantasy's Furniture - Necrolord"
+credits = "Apex - Programming"
+authors = "ApexStudios"
+description = "Necrolord Furniture set for Fantasy's Furniture"
+logoFile = "logo.png"
+displayURL = "https://modrinth.com/project/fantasys-furniture-necrolord"
 
 [[dependencies.fantasyfurniture_necrolord]]
-    modId="minecraft"
-    type="required"
-    versionRange="[1.21.7,1.21.8)"
-    ordering="NONE"
-    side="BOTH"
+modId = "minecraft"
+type = "required"
+versionRange = "[1.21.10,1.21.11)"
+ordering = "NONE"
+side = "BOTH"
 [[dependencies.fantasyfurniture_necrolord]]
-    modId="neoforge"
-    type="required"
-    versionRange="[21.7-beta,21.8)"
-    ordering="NONE"
-    side="BOTH"
+modId = "neoforge"
+type = "required"
+versionRange = "[21.10.34-beta,21.11)"
+ordering = "NONE"
+side = "BOTH"
 
 [[dependencies.fantasyfurniture_necrolord]]
-    modId="apexcore"
-    type="required"
-    versionRange="[21.7.2,21.8)"
-    [dependencies.fantasyfurniture_necrolord.mc-publish]
-        modrinth="xl3myxch"
-        curseforge="550778"
+modId = "apexcore"
+type = "required"
+versionRange = "[21.10,21.11)"
+[dependencies.fantasyfurniture_necrolord.mc-publish]
+modrinth = "xl3myxch"
+curseforge = "550778"
 [[dependencies.fantasyfurniture_necrolord]]
-    modId="fantasyfurniture"
-    type="required"
-    versionRange="[21.7,21.8)"
-    [dependencies.fantasyfurniture_necrolord.mc-publish]
-        modrinth="A0nfCqYw"
-        curseforge="579564"
+modId = "fantasyfurniture"
+type = "required"
+versionRange = "[21.10,21.11)"
+[dependencies.fantasyfurniture_necrolord.mc-publish]
+modrinth = "A0nfCqYw"
+curseforge = "579564"
+[[dependencies.fantasyfurniture_necrolord]]
+modId = "placementvisualizer"
+type = "required"
+versionRange = "[21.10,21.11)"
 
 #[[accessTransformers]]
 #    file="META-INF/accesstransformer.cfg"

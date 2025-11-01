@@ -1,17 +1,8 @@
 package dev.apexstudios.fantasyfurniture.util;
 
-import com.google.common.base.Predicates;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import dev.apexstudios.apexcore.lib.block.BedClientBlockExtensions;
-import dev.apexstudios.apexcore.lib.block.DoorClientBlockExtensions;
-import dev.apexstudios.apexcore.lib.block.Dyeable;
-import dev.apexstudios.apexcore.lib.multiblock.ClientMultiBlockExtensions;
 import dev.apexstudios.apexcore.lib.multiblock.MultiBlock;
-import dev.apexstudios.apexcore.lib.placement.PlacementRenderEvent;
-import dev.apexstudios.apexcore.lib.registree.Registree;
-import dev.apexstudios.apexcore.lib.registree.holder.DeferredBlock;
-import dev.apexstudios.apexcore.lib.util.ApexUtil;
 import dev.apexstudios.fantasyfurniture.FantasyFurniture;
 import dev.apexstudios.fantasyfurniture.FurnitureBlockEntities;
 import dev.apexstudios.fantasyfurniture.block.BedDoubleBlock;
@@ -38,17 +29,16 @@ import dev.apexstudios.fantasyfurniture.block.StoolBlock;
 import dev.apexstudios.fantasyfurniture.block.TableBlock;
 import dev.apexstudios.fantasyfurniture.block.WallLightBlock;
 import dev.apexstudios.fantasyfurniture.block.WardrobeBlock;
-import dev.apexstudios.fantasyfurniture.block.property.CounterConnection;
-import dev.apexstudios.fantasyfurniture.block.property.ShelfConnection;
-import dev.apexstudios.fantasyfurniture.block.property.SofaConnection;
 import dev.apexstudios.fantasyfurniture.ctm.CtmPacks;
+import dev.apexstudios.registree.api.Registree;
+import dev.apexstudios.registree.api.holder.DeferredBlock;
 import java.util.Collections;
 import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 import net.minecraft.client.renderer.MaterialMapper;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.resources.model.Material;
@@ -58,7 +48,6 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.ai.village.poi.PoiType;
 import net.minecraft.world.entity.ai.village.poi.PoiTypes;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.HangingSignItem;
@@ -71,7 +60,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CarpetBlock;
 import net.minecraft.world.level.block.CeilingHangingSignBlock;
-import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.FenceBlock;
 import net.minecraft.world.level.block.FenceGateBlock;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
@@ -97,12 +85,10 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
-import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.common.world.poi.ExtendPoiTypesEvent;
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent;
-import net.neoforged.neoforge.items.wrapper.InvWrapper;
-import net.neoforged.neoforge.items.wrapper.SidedInvWrapper;
 import net.neoforged.neoforge.mixins.BlockEntityTypeAccessor;
+import net.neoforged.neoforge.transfer.item.WorldlyContainerWrapper;
 
 public interface FurnitureUtil {
     Supplier<BlockBehaviour.Properties> PLANK_PROPERTIES = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.OAK_PLANKS);
@@ -406,47 +392,35 @@ public interface FurnitureUtil {
         });
 
         modBus.addListener(FMLCommonSetupEvent.class, event -> event.enqueueWork(() -> {
-            registerPoi(registree, PoiTypes.HOME, Names.BED_SINGLE, blockState -> blockState.getValue(BedBlock.PART) == BedPart.HEAD);
-            registerPoi(registree, PoiTypes.HOME, Names.BED_DOUBLE, blockState -> blockState.getValue(BedBlock.PART) == BedPart.HEAD);
-            registerPoi(registree, PoiTypes.BUTCHER, Names.OVEN, Predicates.alwaysTrue());
-
+            // on random launches our wood types are not being registered correctly
+            // leading to null wood types during game initialization
+            // doubly register to attempt to fix this
             WoodType.register(woodType);
             BlockSetType.register(woodType.setType());
         }));
 
-        modBus.addListener(RegisterClientExtensionsEvent.class, event -> {
-                    event.registerBlock(ClientMultiBlockExtensions.INSTANCE, Names.blocks(registree,
-                            Names.DRESSER, Names.CHAIR, Names.BOOKSHELF, Names.BED_DOUBLE,
-                            Names.DESK_LEFT, Names.DESK_RIGHT, Names.PAINTING_WIDE, Names.CHEST,
-                            Names.FLOOR_LIGHT, Names.BENCH, Names.WARDROBE
-                    ));
-
-                    Names.block(registree, Names.BED_SINGLE, block -> event.registerBlock(new BedClientBlockExtensions((BedBlock) block), block));
-                    Names.block(registree, Names.DOOR_DOUBLE, block -> event.registerBlock(new DoorClientBlockExtensions((DoorBlock) block), block));
-                    Names.block(registree, Names.DOOR_SINGLE, block -> event.registerBlock(new DoorClientBlockExtensions((DoorBlock) block), block));
-                }
-        );
+        modBus.addListener(ExtendPoiTypesEvent.class, event -> {
+            registerHomePoi(event, registree, Names.BED_SINGLE);
+            registerHomePoi(event, registree, Names.BED_DOUBLE);
+            Names.block(registree, Names.OVEN, block -> event.addBlockToPoi(PoiTypes.BUTCHER, block));
+        });
 
         modBus.addListener(RegisterCapabilitiesEvent.class, event -> Names.block(
                 registree,
                 Names.OVEN,
                 block -> {
-                    event.registerBlockEntity(
-                            Capabilities.ItemHandler.BLOCK,
-                            BlockEntityType.SMOKER,
-                            (blockEntity, side) -> side == null ? new InvWrapper(blockEntity) : new SidedInvWrapper(blockEntity, side)
-                    );
+                    event.registerBlockEntity(Capabilities.Item.BLOCK, BlockEntityType.SMOKER, WorldlyContainerWrapper::new);
 
                     if(!(block instanceof MultiBlock))
                         return;
 
-                    event.registerBlock(Capabilities.ItemHandler.BLOCK, (level, pos, blockState, blockEntity, side) -> {
+                    event.registerBlock(Capabilities.Item.BLOCK, (level, pos, blockState, blockEntity, side) -> {
                         if(blockEntity == null)
                             blockEntity = MultiBlock.getBlockEntity(level, pos, blockState);
                         if(!(blockEntity instanceof SmokerBlockEntity smoker))
                             return null;
 
-                        return side == null ? new InvWrapper(smoker) : new SidedInvWrapper(smoker, side);
+                        return new WorldlyContainerWrapper(smoker, side);
                     }, block);
                 })
         );
@@ -459,50 +433,7 @@ public interface FurnitureUtil {
             Names.block(registree, Names.SIGN, block -> registerMaterial(woodType, Sheets.SIGN_MATERIALS, Sheets.SIGN_MAPPER, false));
         }));
 
-        NeoForge.EVENT_BUS.addListener(PlacementRenderEvent.DefaultBlockState.class, event -> {
-            var blockState = event.defaultBlockState();
-
-            Names.block(registree, Names.SOFA, block -> {
-                if(blockState.is(block))
-                    event.setDefaultBlockState(SofaConnection.setConnection(event.level(), event.pos(), blockState));
-            });
-        });
-
         registree.registerEvents(modBus);
-
-        NeoForge.EVENT_BUS.addListener(PlacementRenderEvent.DefaultBlockState.class, event -> {
-            Names.block(registree, Names.BED_SINGLE, block -> {
-                if(event.defaultBlockState().is(block))
-                    event.withProperty(BedBlock.FACING, () -> event.placeContext().getHorizontalDirection());
-            });
-
-            Names.block(registree, Names.BED_DOUBLE, block -> {
-                if(event.defaultBlockState().is(block))
-                    event.withProperty(BedBlock.FACING, () -> event.placeContext().getHorizontalDirection());
-            });
-
-            Names.block(registree, Names.COUNTER, block -> {
-                if(event.defaultBlockState().is(block))
-                    event.setDefaultBlockState(CounterConnection.setConnection(event.level(), event.pos(), event.defaultBlockState()));
-            });
-
-            Names.block(registree, Names.SHELF, block -> {
-                if(event.defaultBlockState().is(block))
-                    event.setDefaultBlockState(ShelfConnection.setConnection(event.level(), event.pos(), event.defaultBlockState()));
-            });
-
-            Names.block(registree, Names.SOFA, block -> {
-                if(event.defaultBlockState().is(block))
-                    event.setDefaultBlockState(SofaConnection.setConnection(event.level(), event.pos(), event.defaultBlockState()));
-            });
-
-            Names.block(registree, Names.TABLE, block -> {
-                if(event.defaultBlockState().is(block))
-                    event.setDefaultBlockState(TableBlock.get(event.level(), event.pos(), event.defaultBlockState()));
-            });
-
-            event.withProperty(Dyeable.PROPERTY, () -> Dyeable.getColorForPlacement(event.placeContext()));
-        });
     }
 
     static VoxelShape getShape(VoxelShape shape, BlockState blockState, BlockPos worldPos) {
@@ -522,8 +453,13 @@ public interface FurnitureUtil {
         materials.put(woodType, materialMapper.apply(ResourceLocation.parse(woodType.name())));
     }
 
-    private static void registerPoi(Registree registree, ResourceKey<PoiType> poiType, String name, Predicate<BlockState> blockStateTest) {
-        Names.block(registree, name, block -> ApexUtil.registerPoiBlockStates(poiType, block, blockStateTest));
+    private static void registerHomePoi(ExtendPoiTypesEvent event, Registree registree, String name) {
+        Names.block(registree, name, block -> event.addStatesToPoi(PoiTypes.HOME, block.getStateDefinition()
+                .getPossibleStates()
+                .stream()
+                .filter(blockState -> blockState.getValue(BedBlock.PART) == BedPart.HEAD)
+                .collect(Collectors.toSet())
+        ));
     }
 
     private static void appendValidBlocks(BlockEntityType<?> blockEntityType, Block... blocks) {

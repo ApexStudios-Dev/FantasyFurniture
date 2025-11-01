@@ -8,8 +8,10 @@ pluginManagement {
 
 dependencyResolutionManagement {
     versionCatalogs.create("libs") {
-        library("apexcore", "dev.apexstudios", "apexcore").version("21.7.2")
-        library("contex", "xfacthd.contex", "ConnectedTextures").version("9.1")
+        library("registree", "dev.apexstudios", "registree").version("21.10.8") // match version ApexCore is compiled against
+        library("placementvisualizer", "dev.apexstudios", "placementvisualizer").version("21.10.5") // match version ApexCore is compiled against
+        library("apexcore", "dev.apexstudios", "apexcore").version("21.10.0")
+        library("contex", "curse.maven", "contex-1296805").version("7051640")
     }
 }
 

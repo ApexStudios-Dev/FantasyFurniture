@@ -1,7 +1,9 @@
 {
+	"format_version": "1.21.6",
 	"texture_size": [128, 128],
 	"textures": {
-		"oven": "fantasyfurniture_necrolord:block/oven"
+		"oven": "fantasyfurniture_necrolord:block/oven",
+		"particle": "fantasyfurniture_necrolord:block/particle"
 	},
 	"render_type": "minecraft:cutout",
 	"elements": [
@@ -282,7 +284,7 @@
 			"scale": [0.4, 0.4, 0.4]
 		},
 		"firstperson_lefthand": {
-			"rotation": [0, 225, 0],
+			"rotation": [0, -135, 0],
 			"scale": [0.4, 0.4, 0.4]
 		},
 		"ground": {
@@ -290,7 +292,7 @@
 			"scale": [0.25, 0.25, 0.25]
 		},
 		"gui": {
-			"rotation": [30, 225, 0],
+			"rotation": [30, -135, 0],
 			"scale": [0.625, 0.625, 0.625]
 		},
 		"fixed": {

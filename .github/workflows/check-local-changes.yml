@@ -1,0 +1,123 @@
+name: Check Local Changes
+
+on:
+  pull_request:
+    types:
+      - synchronize
+      - opened
+
+permissions:
+  actions: write
+  checks: write
+  pull-requests: write
+  contents: read
+
+jobs:
+  determine-changes:
+    name: Determine changes
+    runs-on: ubuntu-latest
+    outputs:
+      main-changed: ${{ steps.changes.outputs.main }}
+      nordic-changed: ${{ steps.changes.outputs.nordic }}
+      venthyr-changed: ${{ steps.changes.outputs.venthyr }}
+      bone-changed: ${{ steps.changes.outputs.bone }}
+      dunmer-changed: ${{ steps.changes.outputs.dunmer }}
+      necrolord-changed: ${{ steps.changes.outputs.necrolord }}
+      royal-changed: ${{ steps.changes.outputs.royal }}
+    steps:
+      - name: Determine changes
+        id: changes
+        uses: dorny/paths-filter@v3
+        with:
+          base: 21.10/main
+          filters: |
+            main: [ 'src/**' ]
+            nordic: [ 'nordic/**' ]
+            venthyr: [ 'venthyr/**' ]
+            bone: [ 'bone/**' ]
+            dunmer: [ 'dunmer/**' ]
+            necrolord: [ 'necrolord/**' ]
+            royal: [ 'royal/**' ]
+
+  check-local-changes-main:
+    name: Check Local Changes (Main)
+    needs: determine-changes
+    if: ${{ needs.determine-changes.outputs.main-changed }}
+    uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      use-self-runner: false
+
+  check-local-changes-nordic:
+    name: Check Local Changes (Nordic)
+    needs: determine-changes
+    if: ${{ needs.determine-changes.outputs.nordic-changed }}
+    uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      use-self-runner: false
+      data-task: ':runNordicData'
+
+  check-local-changes-venthyr:
+    name: Check Local Changes (Venthyr)
+    needs: determine-changes
+    if: ${{ needs.determine-changes.outputs.venthyr-changed }}
+    uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      use-self-runner: false
+      data-task: ':runVenthyrData'
+
+  check-local-changes-bone:
+    name: Check Local Changes (Bone)
+    needs: determine-changes
+    if: ${{ needs.determine-changes.outputs.bone-changed }}
+    uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      use-self-runner: false
+      data-task: ':runBoneData'
+
+  check-local-changes-dunmer:
+    name: Check Local Changes (Dunmer)
+    needs: determine-changes
+    if: ${{ needs.determine-changes.outputs.dunmer-changed }}
+    uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      use-self-runner: false
+      data-task: ':runDunmerData'
+
+  check-local-changes-necrolord:
+    name: Check Local Changes (Necrolord)
+    needs: determine-changes
+    if: ${{ needs.determine-changes.outputs.necrolord-changed }}
+    uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      use-self-runner: false
+      data-task: ':runNecrolordData'
+
+  check-local-changes-royal:
+    name: Check Local Changes (Royal)
+    needs: determine-changes
+    if: ${{ needs.determine-changes.outputs.royal-changed }}
+    uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      use-self-runner: false
+      data-task: ':runRoyalData'

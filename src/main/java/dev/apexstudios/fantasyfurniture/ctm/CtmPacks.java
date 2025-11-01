@@ -4,9 +4,9 @@ import com.google.common.collect.Lists;
 import dev.apexstudios.apexcore.lib.data.ProviderTypes;
 import dev.apexstudios.apexcore.lib.data.ResourceGenerator;
 import dev.apexstudios.apexcore.lib.data.pack.PackGenerator;
-import dev.apexstudios.apexcore.lib.registree.Registree;
 import dev.apexstudios.fantasyfurniture.FantasyFurniture;
 import dev.apexstudios.fantasyfurniture.util.FurnitureUtil;
+import dev.apexstudios.registree.api.Registree;
 import java.util.List;
 import net.minecraft.Util;
 import net.minecraft.network.chat.Component;
@@ -30,8 +30,8 @@ public final class CtmPacks {
                     .build(),
 
             CtmPack.builder(ConTexProvider.ID)
-                    .displayName("XFactHD")
-                    .packId("ctm-xfact")
+                    .displayName("ConTex")
+                    .packId("ctm-context")
                     .providing(ConTexProvider.PROVIDER_TYPE, ConTexProvider::with)
                     .build(),
 

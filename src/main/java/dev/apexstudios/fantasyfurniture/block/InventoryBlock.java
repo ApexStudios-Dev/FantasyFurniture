@@ -22,7 +22,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
-import net.neoforged.neoforge.items.ItemHandlerHelper;
+import net.neoforged.neoforge.transfer.ResourceHandlerUtil;
 
 public class InventoryBlock extends BaseEntityBlock {
     public static final MapCodec<InventoryBlock> CODEC = simpleCodec(InventoryBlock::new);
@@ -72,9 +72,9 @@ public class InventoryBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos) {
-        var itemHandler = level.getBlockEntity(pos) instanceof InventoryBlockEntity blockEntity ? blockEntity.getItemHandler() : null;
-        return itemHandler == null ? super.getAnalogOutputSignal(blockState, level, pos) : ItemHandlerHelper.calcRedstoneFromInventory(itemHandler);
+    protected int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos, Direction facing) {
+        var itemHandler = level.getBlockEntity(pos) instanceof InventoryBlockEntity blockEntity ? blockEntity.getResourceHandler() : null;
+        return itemHandler == null ? super.getAnalogOutputSignal(blockState, level, pos, facing) : ResourceHandlerUtil.getRedstoneSignalFromResourceHandler(itemHandler);
     }
 
     // region: Facing

@@ -4,16 +4,16 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import dev.apexstudios.apexcore.lib.data.ProviderType;
 import dev.apexstudios.apexcore.lib.data.provider.context.ProviderOutputContext;
-import dev.apexstudios.apexcore.lib.registree.Registree;
 import dev.apexstudios.fantasyfurniture.FantasyFurniture;
 import dev.apexstudios.fantasyfurniture.util.FurnitureUtil;
+import dev.apexstudios.registree.api.Registree;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import net.minecraft.Util;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.internal.versions.neoforge.NeoForgeVersion;
+import net.neoforged.neoforge.common.NeoForgeMod;
 
 final class ConTexProvider extends ExtendedBlockStateProvider {
     public static final String ID = "contex";
@@ -63,7 +63,7 @@ final class ConTexProvider extends ExtendedBlockStateProvider {
     @Override
     protected JsonObject json(ProviderOutputContext context, Block block, Consumer<JsonObject> consumer) {
         var root = super.json(context, block, consumer);
-        root.addProperty(NeoForgeVersion.MOD_ID + ":definition_type", ID + ":definition");
+        root.addProperty(NeoForgeMod.MOD_ID + ":definition_type", ID + ":definition");
         return root;
     }
 }

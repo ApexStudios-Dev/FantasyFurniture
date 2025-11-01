@@ -7,6 +7,6 @@ import net.neoforged.fml.common.Mod;
 @Mod(value = SkeletonFurnitureSet.ID, dist = Dist.CLIENT)
 public final class SkeletonFurnitureSetClientEntryPoint {
     public SkeletonFurnitureSetClientEntryPoint(IEventBus modBus) {
-        BoneFurnitureSetClient.register(SkeletonFurnitureSet.get(), modBus);
+        BoneFurnitureSetClient.register(SkeletonFurnitureSet.FURNITURE_SET, modBus);
     }
 }
