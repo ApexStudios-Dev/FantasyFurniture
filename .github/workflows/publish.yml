@@ -66,7 +66,7 @@ jobs:
         id: changes
         uses: dorny/paths-filter@v3
         with:
-          base: 21.7/main
+          base: 21.10/main
           filters: |
             main: [ 'src/**' ]
             nordic: [ 'nordic/**' ]
@@ -92,6 +92,7 @@ jobs:
       release-type: release
       logo-url: 'https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture/banner.png'
       color: 0x97C6E7
+      use-self-runner: false
 
   publish-nordic:
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
@@ -109,6 +110,7 @@ jobs:
       release-type: release
       logo-url: 'https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture_nordic/banner.png'
       color: 0x97C6E7
+      use-self-runner: false
 
   publish-venthyr:
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
@@ -126,6 +128,7 @@ jobs:
       release-type: release
       logo-url: 'https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture_venthyr/banner.png'
       color: 0xEB8080
+      use-self-runner: false
 
   publish-bone:
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
@@ -143,6 +146,7 @@ jobs:
       release-type: release
       logo-url: 'https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture_bone/banner.png'
       color: 0xFFF9E4
+      use-self-runner: false
 
   publish-dunmer:
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
@@ -160,6 +164,7 @@ jobs:
       release-type: release
       logo-url: 'https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture_dunmer/banner.png'
       color: 0x94DC8A
+      use-self-runner: false
 
   publish-necrolord:
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
@@ -177,6 +182,7 @@ jobs:
       release-type: release
       logo-url: 'https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture_necrolord/banner.png'
       color: 0xB297E7
+      use-self-runner: false
 
   publish-royal:
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
@@ -194,3 +200,4 @@ jobs:
       release-type: release
       logo-url: 'https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture_royal/banner.png'
       color: 0xFFE88E
+      use-self-runner: false

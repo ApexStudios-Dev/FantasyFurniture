@@ -29,14 +29,14 @@ side = "BOTH"
 [[dependencies.fantasyfurniture_bone]]
 modId = "apexcore"
 type = "required"
-versionRange = "[21.10-beta,21.11)"
+versionRange = "[21.10,21.11)"
 [dependencies.fantasyfurniture_bone.mc-publish]
 modrinth = "xl3myxch"
 curseforge = "550778"
 [[dependencies.fantasyfurniture_bone]]
 modId = "fantasyfurniture"
 type = "required"
-versionRange = "[21.10-beta,21.11)"
+versionRange = "[21.10,21.11)"
 [dependencies.fantasyfurniture_bone.mc-publish]
 modrinth = "A0nfCqYw"
 curseforge = "579564"
@@ -70,16 +70,16 @@ side = "BOTH"
 [[dependencies.fantasyfurniture_bone_skeleton]]
 modId = "fantasyfurniture_bone"
 type = "required"
-versionRange = "[21.10-beta,21.11)"
+versionRange = "[21.10,21.11)"
 
 [[dependencies.fantasyfurniture_bone_skeleton]]
 modId = "apexcore"
 type = "required"
-versionRange = "[21.10-beta,21.11)"
+versionRange = "[21.10,21.11)"
 [[dependencies.fantasyfurniture_bone_skeleton]]
 modId = "fantasyfurniture"
 type = "required"
-versionRange = "[21.10-beta,21.11)"
+versionRange = "[21.10,21.11)"
 [[dependencies.fantasyfurniture_bone_skeleton]]
 modId = "placementvisualizer"
 type = "required"
@@ -111,11 +111,11 @@ side = "BOTH"
 [[dependencies.fantasyfurniture_bone_wither]]
 modId = "apexcore"
 type = "required"
-versionRange = "[21.10-beta,21.11)"
+versionRange = "[21.10,21.11)"
 [[dependencies.fantasyfurniture_bone_wither]]
 modId = "fantasyfurniture"
 type = "required"
-versionRange = "[21.10-beta,21.11)"
+versionRange = "[21.10,21.11)"
 [[dependencies.fantasyfurniture_bone_wither]]
 modId = "placementvisualizer"
 type = "required"
@@ -123,7 +123,7 @@ versionRange = "[21.10,21.11)"
 [[dependencies.fantasyfurniture_bone_wither]]
 modId = "fantasyfurniture_bone"
 type = "required"
-versionRange = "[21.10-beta,21.11)"
+versionRange = "[21.10,21.11)"
 
 [[mixins]]
 config = "META-INF/fantasyfurniture_bone.mixins.json"
