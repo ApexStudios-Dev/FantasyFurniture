@@ -7,7 +7,10 @@ on:
       - opened
 
 permissions:
-  pull-requests: read
+  actions: write
+  checks: write
+  pull-requests: write
+  contents: read
 
 jobs:
   determine-changes:
