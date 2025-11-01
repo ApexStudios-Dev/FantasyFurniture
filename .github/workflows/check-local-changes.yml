@@ -6,6 +6,9 @@ on:
       - synchronize
       - opened
 
+permissions:
+  pull-requests: read
+
 jobs:
   determine-changes:
     name: Determine changes
