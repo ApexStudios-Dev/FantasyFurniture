@@ -24,6 +24,7 @@ jobs:
       dunmer-changed: ${{ steps.changes.outputs.dunmer }}
       necrolord-changed: ${{ steps.changes.outputs.necrolord }}
       royal-changed: ${{ steps.changes.outputs.royal }}
+      decorations-changed: ${{ steps.changes.outputs.decorations }}
     steps:
       - name: Determine changes
         id: changes
@@ -38,6 +39,7 @@ jobs:
             dunmer: [ 'dunmer/**' ]
             necrolord: [ 'necrolord/**' ]
             royal: [ 'royal/**' ]
+            decorations: [ 'decorations/**' ]
 
   check-local-changes-main:
     name: Check Local Changes (Main)
@@ -121,3 +123,15 @@ jobs:
       java-vendor: temurin
       use-self-runner: false
       data-task: ':runRoyalData'
+
+  check-local-changes-decorations:
+    name: Check Local Changes (Decorations)
+    needs: determine-changes
+    if: ${{ needs.determine-changes.outputs.decorations-changed }}
+    uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
+    secrets: inherit
+    with:
+      java-version: 21
+      java-vendor: temurin
+      use-self-runner: false
+      data-task: ':runDecorationsData'
