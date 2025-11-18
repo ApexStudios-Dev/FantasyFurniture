@@ -35,3 +35,61 @@ public class DecorationsFurnitureModule {
         return ID + ResourceLocation.NAMESPACE_SEPARATOR + identifier;
     }
 }
+
+// TODO: Porting List
+// - [X] Berry Baskets
+// - [ ] Bolts of Cloth
+// - [ ] Book Stack
+// - [ ] Bowls
+// - [ ] Tankards
+// - [ ] Mushrooms
+// - [ ] Coin Stacks
+// - [ ] Muffins
+// - [ ] Paper Stack
+// - [ ] Cookie Jar
+// - [ ] Brewing Cauldron
+// - [ ] Floating Tomes
+// - [ ] Gravestone
+// - [ ] Hanging Herbs
+// - [ ] Spider Webs
+// - [ ] Stackable Pumpkins
+// - [ ] Bronze Chain
+// - [ ] Potion Bottles
+// - [ ] Fairy Lights
+// - [ ] Present Stacks
+// - [ ] Snowballs
+// - [ ] Stocking
+//
+// Nordic
+// - [ ] Boiled Creme Treats
+// - [ ] Sweetrolls
+// - [ ] Mead Bottles
+// - [ ] Soul Gems
+//
+// Venthyr
+// - [ ] Foods
+// - [ ] Tea Set
+// - [ ] Platter
+// - [ ] Widow Bloom
+// - [ ] Tomes
+// - [ ] Chalices
+// - [ ] Candles
+// - [ ] Banner
+//
+// Dunmer
+// - [ ] Pottery
+//
+// Bone
+// - [ ] Chalices
+// - [ ] Pile
+// - [ ] Skull Blossoms
+//
+// Royal
+// - [ ] Crown
+// - [ ] Candelabra
+// - [ ] Chalices
+// - [ ] Cushioned Crown
+// - [ ] Food
+// - [ ] Platter
+// - [ ] Floor Cushion
+// - [ ] Wall Mirrors
