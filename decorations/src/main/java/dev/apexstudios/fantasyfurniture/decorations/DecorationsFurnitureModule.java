@@ -16,10 +16,10 @@ public class DecorationsFurnitureModule {
     public static final String ID = "fantasyfurniture_decorations";
     public static final Registree REGISTREE = Registree.create(ID);
 
-    public static final DeferredBlock<BerryBasketBlock> BERRY_BASKET = DecorationUtil.berryBasket(REGISTREE, "berry_basket", BerryBasketBlock::new);
-    public static final DeferredBlock<BerryBasketBlock> BLUEBERRY_BASKET = DecorationUtil.berryBasket(REGISTREE, "blueberry_basket", BerryBasketBlock::new);
-    public static final DeferredBlock<BerryBasketBlock> STRAWBERRY_BASKET = DecorationUtil.berryBasket(REGISTREE, "strawberry_basket", BerryBasketBlock::new);
-    public static final DeferredBlock<BerryBasketBlock> SWEETBERRY_BASKET = DecorationUtil.berryBasket(REGISTREE, "sweetberry_basket", BerryBasketBlock::new);
+    public static final DeferredBlock<BerryBasketBlock> BERRY_BASKET = DecorationUtil.berryBasket(REGISTREE, "berry", BerryBasketBlock::new);
+    public static final DeferredBlock<BerryBasketBlock> BLUEBERRY_BASKET = DecorationUtil.berryBasket(REGISTREE, "blueberry", BerryBasketBlock::new);
+    public static final DeferredBlock<BerryBasketBlock> STRAWBERRY_BASKET = DecorationUtil.berryBasket(REGISTREE, "strawberry", BerryBasketBlock::new);
+    public static final DeferredBlock<BerryBasketBlock> SWEETBERRY_BASKET = DecorationUtil.berryBasket(REGISTREE, "sweetberry", BerryBasketBlock::new);
 
     public static final ResourceKey<CreativeModeTab> CREATIVE_MODE_TAB = FurnitureUtil.creativeModeTab(REGISTREE, BERRY_BASKET);
 
@@ -38,14 +38,14 @@ public class DecorationsFurnitureModule {
 
 // TODO: Porting List
 // - [X] Berry Baskets
-// - [ ] Bolts of Cloth
+// - [ ] Bolts of Cloth *
 // - [ ] Book Stack
 // - [ ] Bowls
 // - [ ] Tankards
 // - [ ] Mushrooms
-// - [ ] Coin Stacks
+// - [ ] Coin Stacks *
 // - [ ] Muffins
-// - [ ] Paper Stack
+// - [ ] Paper Stack *
 // - [ ] Cookie Jar
 // - [ ] Brewing Cauldron
 // - [ ] Floating Tomes
@@ -54,7 +54,7 @@ public class DecorationsFurnitureModule {
 // - [ ] Spider Webs
 // - [ ] Stackable Pumpkins
 // - [ ] Bronze Chain
-// - [ ] Potion Bottles
+// - [ ] Potion Bottles *
 // - [ ] Fairy Lights
 // - [ ] Present Stacks
 // - [ ] Snowballs
@@ -63,21 +63,21 @@ public class DecorationsFurnitureModule {
 // Nordic
 // - [ ] Boiled Creme Treats
 // - [ ] Sweetrolls
-// - [ ] Mead Bottles
-// - [ ] Soul Gems
+// - [ ] Mead Bottles *
+// - [ ] Soul Gems *
 //
 // Venthyr
-// - [ ] Foods
-// - [ ] Tea Set
+// - [ ] Foods *
+// - [ ] Tea Set *
 // - [ ] Platter
 // - [ ] Widow Bloom
-// - [ ] Tomes
+// - [ ] Tomes *
 // - [ ] Chalices
-// - [ ] Candles
+// - [ ] Candles *
 // - [ ] Banner
 //
 // Dunmer
-// - [ ] Pottery
+// - [ ] Pottery *
 //
 // Bone
 // - [ ] Chalices
@@ -89,7 +89,7 @@ public class DecorationsFurnitureModule {
 // - [ ] Candelabra
 // - [ ] Chalices
 // - [ ] Cushioned Crown
-// - [ ] Food
+// - [ ] Food *
 // - [ ] Platter
 // - [ ] Floor Cushion
 // - [ ] Wall Mirrors
