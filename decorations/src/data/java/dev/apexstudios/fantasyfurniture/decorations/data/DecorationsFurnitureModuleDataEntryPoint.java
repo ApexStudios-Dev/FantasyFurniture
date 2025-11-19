@@ -37,6 +37,8 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     berryBasket(DecorationsFurnitureModule.BLUEBERRY_BASKET, blockModels, false);
                     berryBasket(DecorationsFurnitureModule.STRAWBERRY_BASKET, blockModels, false);
                     berryBasket(DecorationsFurnitureModule.SWEETBERRY_BASKET, blockModels, false);
+
+                    existingHorizontalModel(DecorationsFurnitureModule.BOLTS_OF_CLOTH, blockModels);
                 })
                 .providing(ProviderTypes.LANGUAGE, (context, provider) -> {
                     provider.addCreativeModeTab(DecorationsFurnitureModule.CREATIVE_MODE_TAB, "Fantasy's Furniture - Decorations");
@@ -45,6 +47,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     provider.addBlock(DecorationsFurnitureModule.BLUEBERRY_BASKET, "Blueberry Basket");
                     provider.addBlock(DecorationsFurnitureModule.STRAWBERRY_BASKET, "Strawberry Basket");
                     provider.addBlock(DecorationsFurnitureModule.SWEETBERRY_BASKET, "Sweetberry Basket");
+                    provider.addBlock(DecorationsFurnitureModule.BOLTS_OF_CLOTH, "Bolts of Cloth");
                 })
                 .providing(ProviderTypes.RECIPES, (context, provider) -> DecorationsFurnitureModule.REGISTREE
                         .asLookup(Registries.ITEM)
@@ -61,6 +64,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                         lootTables.dropSelf(DecorationsFurnitureModule.BLUEBERRY_BASKET.value());
                         lootTables.dropSelf(DecorationsFurnitureModule.STRAWBERRY_BASKET.value());
                         lootTables.dropSelf(DecorationsFurnitureModule.SWEETBERRY_BASKET.value());
+                        lootTables.dropSelf(DecorationsFurnitureModule.BOLTS_OF_CLOTH.value());
                     });
                 })
                 .providing(ProviderTypes.BLOCK_TAGS, (context, provider) -> {
@@ -68,9 +72,18 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                             .withElement(DecorationsFurnitureModule.BERRY_BASKET)
                             .withElement(DecorationsFurnitureModule.BLUEBERRY_BASKET)
                             .withElement(DecorationsFurnitureModule.STRAWBERRY_BASKET)
-                            .withElement(DecorationsFurnitureModule.SWEETBERRY_BASKET);
+                            .withElement(DecorationsFurnitureModule.SWEETBERRY_BASKET)
+                            .withElement(DecorationsFurnitureModule.BOLTS_OF_CLOTH);
                 })
         );
+    }
+
+    private void existingModel(DeferredBlock<? extends Block> holder, BlockModelGenerators blockModels, BlockStateGenerator blockStateGenerator) {
+        blockStateGenerator.accept(holder, assetPath(holder), blockModels);
+    }
+
+    private void existingHorizontalModel(DeferredBlock<? extends Block> holder, BlockModelGenerators blockModels) {
+        existingModel(holder, blockModels, this::horizontalFacingBlock);
     }
 
     private void berryBasket(DeferredBlock<? extends Block> holder, BlockModelGenerators blockModels, boolean isEmpty) {
@@ -93,7 +106,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
         horizontalFacingBlock(holder, model, blockModels);
     }
 
-    private void horizontalFacingBlock(DeferredBlock<? extends Block> block, ResourceLocation model, BlockModelGenerators blockModels) {
+    private void horizontalFacingBlock(Holder<? extends Block> block, ResourceLocation model, BlockModelGenerators blockModels) {
         blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block.value(), BlockModelGenerators.plainVariant(model)).with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING));
     }
 
@@ -106,5 +119,10 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                 .builder(RecipeCategory.DECORATIONS, provider.tag(Tags.Items.DYES), null, provider.tag(FurnitureStationSetup.BINDING_AGENT), item)
                 .unlockedBy(RecipeProvider.getHasName(Tags.Items.DYES), provider.has(Tags.Items.DYES))
                 .save(provider.output(), RecipeProvider.recipeKeyWithPrefix(item, "furniture_station/"));
+    }
+
+    @FunctionalInterface
+    interface BlockStateGenerator {
+        void accept(Holder<Block> holder, ResourceLocation model, BlockModelGenerators blockModels);
     }
 }
