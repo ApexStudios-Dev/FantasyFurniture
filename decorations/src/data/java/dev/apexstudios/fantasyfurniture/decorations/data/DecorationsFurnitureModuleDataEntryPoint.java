@@ -33,12 +33,14 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
 
                     var blockModels = models.blockModels();
 
-                    berryBasket(DecorationsFurnitureModule.BERRY_BASKET, blockModels, true);
-                    berryBasket(DecorationsFurnitureModule.BLUEBERRY_BASKET, blockModels, false);
-                    berryBasket(DecorationsFurnitureModule.STRAWBERRY_BASKET, blockModels, false);
-                    berryBasket(DecorationsFurnitureModule.SWEETBERRY_BASKET, blockModels, false);
-
+                    berryBasket(DecorationsFurnitureModule.BERRY_BASKET, blockModels);
+                    berryBasket(DecorationsFurnitureModule.BLUEBERRY_BASKET, blockModels);
+                    berryBasket(DecorationsFurnitureModule.STRAWBERRY_BASKET, blockModels);
+                    berryBasket(DecorationsFurnitureModule.SWEETBERRY_BASKET, blockModels);
                     existingHorizontalModel(DecorationsFurnitureModule.BOLTS_OF_CLOTH, blockModels);
+                    bowl(DecorationsFurnitureModule.BOWL, blockModels);
+                    bowl(DecorationsFurnitureModule.BEETROOT_SOUP_BOWL, blockModels);
+                    bowl(DecorationsFurnitureModule.MUSHROOM_STEW_BOWL, blockModels);
                 })
                 .providing(ProviderTypes.LANGUAGE, (context, provider) -> {
                     provider.addCreativeModeTab(DecorationsFurnitureModule.CREATIVE_MODE_TAB, "Fantasy's Furniture - Decorations");
@@ -48,6 +50,9 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     provider.addBlock(DecorationsFurnitureModule.STRAWBERRY_BASKET, "Strawberry Basket");
                     provider.addBlock(DecorationsFurnitureModule.SWEETBERRY_BASKET, "Sweetberry Basket");
                     provider.addBlock(DecorationsFurnitureModule.BOLTS_OF_CLOTH, "Bolts of Cloth");
+                    provider.addBlock(DecorationsFurnitureModule.BOWL, "Bowl");
+                    provider.addBlock(DecorationsFurnitureModule.BEETROOT_SOUP_BOWL, "Beetroot Soup Bowl");
+                    provider.addBlock(DecorationsFurnitureModule.MUSHROOM_STEW_BOWL, "Mushroom Stew Bowl");
                 })
                 .providing(ProviderTypes.RECIPES, (context, provider) -> DecorationsFurnitureModule.REGISTREE
                         .asLookup(Registries.ITEM)
@@ -65,6 +70,9 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                         lootTables.dropSelf(DecorationsFurnitureModule.STRAWBERRY_BASKET.value());
                         lootTables.dropSelf(DecorationsFurnitureModule.SWEETBERRY_BASKET.value());
                         lootTables.dropSelf(DecorationsFurnitureModule.BOLTS_OF_CLOTH.value());
+                        lootTables.dropSelf(DecorationsFurnitureModule.BOWL.value());
+                        lootTables.dropSelf(DecorationsFurnitureModule.BEETROOT_SOUP_BOWL.value());
+                        lootTables.dropSelf(DecorationsFurnitureModule.MUSHROOM_STEW_BOWL.value());
                     });
                 })
                 .providing(ProviderTypes.BLOCK_TAGS, (context, provider) -> {
@@ -73,7 +81,10 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                             .withElement(DecorationsFurnitureModule.BLUEBERRY_BASKET)
                             .withElement(DecorationsFurnitureModule.STRAWBERRY_BASKET)
                             .withElement(DecorationsFurnitureModule.SWEETBERRY_BASKET)
-                            .withElement(DecorationsFurnitureModule.BOLTS_OF_CLOTH);
+                            .withElement(DecorationsFurnitureModule.BOLTS_OF_CLOTH)
+                            .withElement(DecorationsFurnitureModule.BOWL)
+                            .withElement(DecorationsFurnitureModule.BEETROOT_SOUP_BOWL)
+                            .withElement(DecorationsFurnitureModule.MUSHROOM_STEW_BOWL);
                 })
         );
     }
@@ -86,12 +97,12 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
         existingModel(holder, blockModels, this::horizontalFacingBlock);
     }
 
-    private void berryBasket(DeferredBlock<? extends Block> holder, BlockModelGenerators blockModels, boolean isEmpty) {
-        var template = assetPath(DecorationsFurnitureModule.BERRY_BASKET);
+    private void existingTemplate(DeferredBlock<? extends Block> templateHolder, DeferredBlock<? extends Block> holder, String textureSlot, BlockModelGenerators blockModels, BlockStateGenerator blockStateGenerator) {
+        var template = assetPath(templateHolder);
         var model = template;
 
-        if(!isEmpty) {
-            var slot = TextureSlot.create("berry_basket");
+        if(!holder.is(templateHolder)) {
+            var slot = TextureSlot.create(textureSlot);
             var assetPath = assetPath(holder);
 
             var textures = new TextureMapping().put(slot, assetPath);
@@ -103,7 +114,19 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                                                 .create(holder.value(), textures, blockModels.modelOutput);
         }
 
-        horizontalFacingBlock(holder, model, blockModels);
+        blockStateGenerator.accept(holder, model, blockModels);
+    }
+
+    private void existingTemplateHorizontal(DeferredBlock<? extends Block> templateHolder, DeferredBlock<? extends Block> holder, String textureSlot, BlockModelGenerators blockModels) {
+        existingTemplate(templateHolder, holder, textureSlot, blockModels, this::horizontalFacingBlock);
+    }
+
+    private void berryBasket(DeferredBlock<? extends Block> holder, BlockModelGenerators blockModels) {
+        existingTemplateHorizontal(DecorationsFurnitureModule.BERRY_BASKET, holder, "berry_basket", blockModels);
+    }
+
+    private void bowl(DeferredBlock<? extends Block> holder, BlockModelGenerators blockModels) {
+        existingTemplateHorizontal(DecorationsFurnitureModule.BOWL, holder, "bowl", blockModels);
     }
 
     private void horizontalFacingBlock(Holder<? extends Block> block, ResourceLocation model, BlockModelGenerators blockModels) {

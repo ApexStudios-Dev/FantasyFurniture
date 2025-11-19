@@ -1,12 +1,24 @@
 package dev.apexstudios.fantasyfurniture.decorations.util;
 
 import dev.apexstudios.fantasyfurniture.decorations.block.BerryBasketBlock;
+import dev.apexstudios.fantasyfurniture.decorations.block.BowlBlock;
 import dev.apexstudios.fantasyfurniture.util.FurnitureUtil;
 import dev.apexstudios.registree.api.Registree;
 import dev.apexstudios.registree.api.holder.DeferredBlock;
+import org.jetbrains.annotations.Nullable;
 
 public interface DecorationUtil {
     static DeferredBlock<BerryBasketBlock> berryBasket(Registree registree, String berryType) {
         return FurnitureUtil.simpleBlock(registree, berryType + "_basket", BerryBasketBlock::new, FurnitureUtil.PLANK_PROPERTIES);
+    }
+
+    static DeferredBlock<BowlBlock> bowl(Registree registree, @Nullable String soup) {
+        var name = "bowl";
+
+        if(soup != null && !soup.isBlank()) {
+            name = soup + '_' + name;
+        }
+
+        return FurnitureUtil.simpleBlock(registree, name, BowlBlock::new, FurnitureUtil.PLANK_PROPERTIES);
     }
 }
