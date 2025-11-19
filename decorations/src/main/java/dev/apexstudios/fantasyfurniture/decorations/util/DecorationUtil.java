@@ -11,9 +11,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 public interface DecorationUtil {
     Supplier<BlockBehaviour.Properties> BERRY_BASKET_PROPERTIES = FurnitureUtil.PLANK_PROPERTIES;
 
-    static <TBlock extends Block> DeferredBlock<TBlock> berryBasket(Registree registree, String identifier, Function<BlockBehaviour.Properties, TBlock> factory) {
-        var block = registree.registerBlock(identifier, factory, BERRY_BASKET_PROPERTIES);
-        registree.registerSimpleBlockItem(block);
-        return block;
+    static <TBlock extends Block> DeferredBlock<TBlock> berryBasket(Registree registree, String berryType, Function<BlockBehaviour.Properties, TBlock> factory) {
+        return FurnitureUtil.simpleBlock(registree, berryType + "_basket", factory, BERRY_BASKET_PROPERTIES);
     }
 }
