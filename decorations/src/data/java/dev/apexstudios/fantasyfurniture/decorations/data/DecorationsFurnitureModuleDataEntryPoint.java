@@ -41,6 +41,8 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     bowl(DecorationsFurnitureModule.BOWL, blockModels);
                     bowl(DecorationsFurnitureModule.BEETROOT_SOUP_BOWL, blockModels);
                     bowl(DecorationsFurnitureModule.MUSHROOM_STEW_BOWL, blockModels);
+                    coinStack(DecorationsFurnitureModule.GOLDEN_COIN_STACK, blockModels);
+                    coinStack(DecorationsFurnitureModule.IRON_COIN_STACK, blockModels);
                 })
                 .providing(ProviderTypes.LANGUAGE, (context, provider) -> {
                     provider.addCreativeModeTab(DecorationsFurnitureModule.CREATIVE_MODE_TAB, "Fantasy's Furniture - Decorations");
@@ -53,6 +55,8 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     provider.addBlock(DecorationsFurnitureModule.BOWL, "Bowl");
                     provider.addBlock(DecorationsFurnitureModule.BEETROOT_SOUP_BOWL, "Beetroot Soup Bowl");
                     provider.addBlock(DecorationsFurnitureModule.MUSHROOM_STEW_BOWL, "Mushroom Stew Bowl");
+                    provider.addBlock(DecorationsFurnitureModule.GOLDEN_COIN_STACK, "Golden Coin Stack");
+                    provider.addBlock(DecorationsFurnitureModule.IRON_COIN_STACK, "Iron Coin Stack");
                 })
                 .providing(ProviderTypes.RECIPES, (context, provider) -> DecorationsFurnitureModule.REGISTREE
                         .asLookup(Registries.ITEM)
@@ -73,6 +77,8 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                         lootTables.dropSelf(DecorationsFurnitureModule.BOWL.value());
                         lootTables.dropSelf(DecorationsFurnitureModule.BEETROOT_SOUP_BOWL.value());
                         lootTables.dropSelf(DecorationsFurnitureModule.MUSHROOM_STEW_BOWL.value());
+                        lootTables.dropSelf(DecorationsFurnitureModule.GOLDEN_COIN_STACK.value());
+                        lootTables.dropSelf(DecorationsFurnitureModule.IRON_COIN_STACK.value());
                     });
                 })
                 .providing(ProviderTypes.BLOCK_TAGS, (context, provider) -> {
@@ -84,7 +90,9 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                             .withElement(DecorationsFurnitureModule.BOLTS_OF_CLOTH)
                             .withElement(DecorationsFurnitureModule.BOWL)
                             .withElement(DecorationsFurnitureModule.BEETROOT_SOUP_BOWL)
-                            .withElement(DecorationsFurnitureModule.MUSHROOM_STEW_BOWL);
+                            .withElement(DecorationsFurnitureModule.MUSHROOM_STEW_BOWL)
+                            .withElement(DecorationsFurnitureModule.GOLDEN_COIN_STACK)
+                            .withElement(DecorationsFurnitureModule.IRON_COIN_STACK);
                 })
         );
     }
@@ -97,36 +105,52 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
         existingModel(holder, blockModels, this::horizontalFacingBlock);
     }
 
-    private void existingTemplate(DeferredBlock<? extends Block> templateHolder, DeferredBlock<? extends Block> holder, String textureSlot, BlockModelGenerators blockModels, BlockStateGenerator blockStateGenerator) {
-        var template = assetPath(templateHolder);
-        var model = template;
+    private void existingTemplate(ResourceLocation templatePath, DeferredBlock<? extends Block> holder, String textureSlot, boolean overrideParticle, BlockModelGenerators blockModels, BlockStateGenerator blockStateGenerator) {
+        var slot = TextureSlot.create(textureSlot);
+        var assetPath = assetPath(holder);
+        var textures = new TextureMapping().put(slot, assetPath);
+        var templateBuilder = ExtendedModelTemplateBuilder.builder().parent(templatePath).requiredTextureSlot(slot);
 
-        if(!holder.is(templateHolder)) {
-            var slot = TextureSlot.create(textureSlot);
-            var assetPath = assetPath(holder);
-
-            var textures = new TextureMapping().put(slot, assetPath);
-
-            model = ExtendedModelTemplateBuilder.builder()
-                                                .parent(template)
-                                                .requiredTextureSlot(slot)
-                                                .build()
-                                                .create(holder.value(), textures, blockModels.modelOutput);
+        if(overrideParticle) {
+            textures = textures.put(TextureSlot.PARTICLE, assetPath.withSuffix("_particle"));
+            templateBuilder = templateBuilder.requiredTextureSlot(TextureSlot.PARTICLE);
         }
 
-        blockStateGenerator.accept(holder, model, blockModels);
+        blockStateGenerator.accept(
+                holder,
+                templateBuilder.build().create(holder.value(), textures, blockModels.modelOutput),
+                blockModels
+        );
     }
 
-    private void existingTemplateHorizontal(DeferredBlock<? extends Block> templateHolder, DeferredBlock<? extends Block> holder, String textureSlot, BlockModelGenerators blockModels) {
-        existingTemplate(templateHolder, holder, textureSlot, blockModels, this::horizontalFacingBlock);
+    private void existingTemplateHorizontal(ResourceLocation templatePath, DeferredBlock<? extends Block> holder, String textureSlot, boolean overrideParticle, BlockModelGenerators blockModels) {
+        existingTemplate(templatePath, holder, textureSlot, overrideParticle, blockModels, this::horizontalFacingBlock);
+    }
+
+    private void existingTemplate(DeferredBlock<? extends Block> templateHolder, DeferredBlock<? extends Block> holder, String textureSlot, boolean overrideParticle, BlockModelGenerators blockModels, BlockStateGenerator blockStateGenerator) {
+        var template = assetPath(templateHolder);
+
+        if(holder.is(templateHolder)) {
+            blockStateGenerator.accept(holder, template, blockModels);
+        } else {
+            existingTemplate(template, holder, textureSlot, overrideParticle, blockModels, blockStateGenerator);
+        }
+    }
+
+    private void existingTemplateHorizontal(DeferredBlock<? extends Block> templateHolder, DeferredBlock<? extends Block> holder, String textureSlot, boolean overrideParticle, BlockModelGenerators blockModels) {
+        existingTemplate(templateHolder, holder, textureSlot, overrideParticle, blockModels, this::horizontalFacingBlock);
     }
 
     private void berryBasket(DeferredBlock<? extends Block> holder, BlockModelGenerators blockModels) {
-        existingTemplateHorizontal(DecorationsFurnitureModule.BERRY_BASKET, holder, "berry_basket", blockModels);
+        existingTemplateHorizontal(DecorationsFurnitureModule.BERRY_BASKET, holder, "berry_basket", false, blockModels);
     }
 
     private void bowl(DeferredBlock<? extends Block> holder, BlockModelGenerators blockModels) {
-        existingTemplateHorizontal(DecorationsFurnitureModule.BOWL, holder, "bowl", blockModels);
+        existingTemplateHorizontal(DecorationsFurnitureModule.BOWL, holder, "bowl", false, blockModels);
+    }
+
+    private void coinStack(DeferredBlock<? extends Block> holder, BlockModelGenerators blockModels) {
+        existingTemplateHorizontal(DecorationsFurnitureModule.identifier("block/coin_stack"), holder, "coin_stack", true, blockModels);
     }
 
     private void horizontalFacingBlock(Holder<? extends Block> block, ResourceLocation model, BlockModelGenerators blockModels) {
