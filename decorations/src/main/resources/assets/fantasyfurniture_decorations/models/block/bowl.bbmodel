@@ -295,7 +295,7 @@
 			"visibility": true,
 			"autouv": 0,
 			"isOpen": false,
-			"primary_selected": true
+			"primary_selected": false
 		}
 	],
 	"outliner": [
@@ -346,13 +346,13 @@
 			"relative_path": "../../textures/block/bowl_particle.png",
 			"folder": "block",
 			"namespace": "fantasyfurniture_decorations",
-			"id": "3",
+			"id": "particle",
 			"group": "",
 			"width": 16,
 			"height": 16,
 			"uv_width": 32,
 			"uv_height": 32,
-			"particle": false,
+			"particle": true,
 			"use_as_default": false,
 			"layers_enabled": false,
 			"sync_to_project": "",

@@ -2,7 +2,8 @@
 	"format_version": "1.21.6",
 	"texture_size": [32, 32],
 	"textures": {
-		"bowl": "fantasyfurniture_decorations:block/bowl"
+		"bowl": "fantasyfurniture_decorations:block/bowl",
+		"particle": "fantasyfurniture_decorations:block/bowl_particle"
 	},
     "render_type": "cutout",
 	"elements": [
