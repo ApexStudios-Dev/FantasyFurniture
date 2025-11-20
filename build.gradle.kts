@@ -65,7 +65,6 @@ dependencies {
 
     implementation(libs.apexcore)
     "dataImplementation"(libs.apexcore)
-    accessTransformers(libs.apexcore)
 
     implementation(libs.contex)
 
