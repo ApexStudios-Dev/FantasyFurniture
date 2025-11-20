@@ -15,29 +15,12 @@ displayURL = "https://modrinth.com/mod/fantasy-furniture"
 # featureFlags="META-INF/feature_flags.json"
 
 [[dependencies.fantasyfurniture]]
-modId = "minecraft"
-type = "required"
-versionRange = "[1.21.10,1.21.11)"
-ordering = "NONE"
-side = "BOTH"
-[[dependencies.fantasyfurniture]]
-modId = "neoforge"
-type = "required"
-versionRange = "[21.10.34-beta,21.11)"
-ordering = "NONE"
-side = "BOTH"
-
-[[dependencies.fantasyfurniture]]
 modId = "apexcore"
 type = "required"
-versionRange = "[21.10,21.11)"
+versionRange = "[21.11,21.12)"
 [dependencies.fantasyfurniture.mc-publish]
 modrinth = "xl3myxch"
 curseforge = "550778"
-[[dependencies.fantasyfurniture]]
-modId = "placementvisualizer"
-type = "required"
-versionRange = "[21.10,21.11)"
 
 #[[accessTransformers]]
 #    file="META-INF/accesstransformer.cfg"

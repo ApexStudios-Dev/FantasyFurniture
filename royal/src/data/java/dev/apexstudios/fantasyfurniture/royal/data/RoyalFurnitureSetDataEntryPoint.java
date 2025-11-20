@@ -24,7 +24,7 @@ import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
 import net.minecraft.client.data.models.model.TexturedModel;
 import net.minecraft.data.BlockFamily;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
@@ -152,7 +152,7 @@ public final class RoyalFurnitureSetDataEntryPoint {
         blockModels.blockStateOutput.accept(variantGenerator);
     }
 
-    private void registerDyeableItemModel(Block block, ResourceLocation modelPath, BlockModelGenerators blockModels) {
+    private void registerDyeableItemModel(Block block, Identifier modelPath, BlockModelGenerators blockModels) {
         blockModels.registerSimpleTintedItemModel(block, modelPath, new DyeColorItemTintSource(Dyeable.DEFAULT_COLOR));
     }
 

@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.level.block.Block;
@@ -31,7 +31,7 @@ final class TextureProvider implements BaseProvider {
     private final List<Textures> textures = Lists.newArrayList();
 
     public void with(Block block, boolean dyeable) {
-        var blockName = block.builtInRegistryHolder().key().location();
+        var blockName = block.builtInRegistryHolder().key().identifier();
 
         textures.add(Textures.create(blockName));
 
@@ -71,7 +71,7 @@ final class TextureProvider implements BaseProvider {
         });
     }
 
-    private ResourceLocation expand(ResourceLocation modelPath) {
+    private Identifier expand(Identifier modelPath) {
         return modelPath.withPath(path -> "textures/block/" + path + ".png");
     }
 
@@ -169,13 +169,13 @@ final class TextureProvider implements BaseProvider {
     }
 
     private record Textures(
-            ResourceLocation base,
-            ResourceLocation center,
-            ResourceLocation empty,
-            ResourceLocation horizontal,
-            ResourceLocation vertical
+            Identifier base,
+            Identifier center,
+            Identifier empty,
+            Identifier horizontal,
+            Identifier vertical
     ) {
-        public static Textures create(ResourceLocation blockName) {
+        public static Textures create(Identifier blockName) {
             var ctmName = blockName.withPrefix("ctm/");
 
             return new Textures(

@@ -8,11 +8,11 @@ import dev.apexstudios.fantasyfurniture.FantasyFurniture;
 import dev.apexstudios.fantasyfurniture.util.FurnitureUtil;
 import dev.apexstudios.registree.api.Registree;
 import java.util.List;
-import net.minecraft.Util;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
+import net.minecraft.util.Util;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
 
