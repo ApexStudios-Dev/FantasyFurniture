@@ -4,11 +4,13 @@ import dev.apexstudios.apexcore.lib.data.ProviderTypes;
 import dev.apexstudios.apexcore.lib.data.ResourceGenerator;
 import dev.apexstudios.apexcore.lib.data.provider.RecipeProvider;
 import dev.apexstudios.fantasyfurniture.decorations.DecorationsFurnitureModule;
+import dev.apexstudios.fantasyfurniture.decorations.cookie.CookieJarBlock;
 import dev.apexstudios.fantasyfurniture.station.FurnitureStationRecipeBuilder;
 import dev.apexstudios.fantasyfurniture.station.FurnitureStationSetup;
 import dev.apexstudios.registree.api.holder.DeferredBlock;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
+import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
 import net.minecraft.core.Holder;
@@ -43,6 +45,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     bowl(DecorationsFurnitureModule.MUSHROOM_STEW_BOWL, blockModels);
                     coinStack(DecorationsFurnitureModule.GOLDEN_COIN_STACK, blockModels);
                     coinStack(DecorationsFurnitureModule.IRON_COIN_STACK, blockModels);
+                    cookieJar(blockModels);
                 })
                 .providing(ProviderTypes.LANGUAGE, (context, provider) -> {
                     provider.addCreativeModeTab(DecorationsFurnitureModule.CREATIVE_MODE_TAB, "Fantasy's Furniture - Decorations");
@@ -57,6 +60,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     provider.addBlock(DecorationsFurnitureModule.MUSHROOM_STEW_BOWL, "Mushroom Stew Bowl");
                     provider.addBlock(DecorationsFurnitureModule.GOLDEN_COIN_STACK, "Golden Coin Stack");
                     provider.addBlock(DecorationsFurnitureModule.IRON_COIN_STACK, "Iron Coin Stack");
+                    provider.addBlock(DecorationsFurnitureModule.COOKIE_JAR_BLOCK, "Cookie Jar");
                 })
                 .providing(ProviderTypes.RECIPES, (context, provider) -> DecorationsFurnitureModule.REGISTREE
                         .asLookup(Registries.ITEM)
@@ -79,6 +83,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                         lootTables.dropSelf(DecorationsFurnitureModule.MUSHROOM_STEW_BOWL.value());
                         lootTables.dropSelf(DecorationsFurnitureModule.GOLDEN_COIN_STACK.value());
                         lootTables.dropSelf(DecorationsFurnitureModule.IRON_COIN_STACK.value());
+                        lootTables.dropSelf(DecorationsFurnitureModule.COOKIE_JAR_BLOCK.value());
                     });
                 })
                 .providing(ProviderTypes.BLOCK_TAGS, (context, provider) -> {
@@ -92,7 +97,8 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                             .withElement(DecorationsFurnitureModule.BEETROOT_SOUP_BOWL)
                             .withElement(DecorationsFurnitureModule.MUSHROOM_STEW_BOWL)
                             .withElement(DecorationsFurnitureModule.GOLDEN_COIN_STACK)
-                            .withElement(DecorationsFurnitureModule.IRON_COIN_STACK);
+                            .withElement(DecorationsFurnitureModule.IRON_COIN_STACK)
+                            .withElement(DecorationsFurnitureModule.COOKIE_JAR_BLOCK);
                 })
         );
     }
@@ -155,6 +161,20 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
 
     private void horizontalFacingBlock(Holder<? extends Block> block, ResourceLocation model, BlockModelGenerators blockModels) {
         blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block.value(), BlockModelGenerators.plainVariant(model)).with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING));
+    }
+
+    private void cookieJar(BlockModelGenerators blockModels) {
+        var assetPath = assetPath(DecorationsFurnitureModule.COOKIE_JAR_BLOCK);
+
+        blockModels.blockStateOutput.accept(MultiVariantGenerator
+                .dispatch(DecorationsFurnitureModule.COOKIE_JAR_BLOCK.value(), BlockModelGenerators.plainVariant(assetPath))
+                .with(PropertyDispatch.modify(CookieJarBlock.FULLNESS)
+                                      .select(CookieJarBlock.Fullness.FULL, variant -> variant.withModel(assetPath.withSuffix("_full")))
+                                      .select(CookieJarBlock.Fullness.HALF, variant -> variant.withModel(assetPath.withSuffix("_half")))
+                                      .select(CookieJarBlock.Fullness.EMPTY, variant -> variant)
+                )
+                .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
+        );
     }
 
     private ResourceLocation assetPath(DeferredBlock<? extends Block> block) {
