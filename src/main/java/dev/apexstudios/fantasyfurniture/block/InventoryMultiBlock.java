@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.neoforged.neoforge.transfer.ResourceHandlerUtil;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public abstract class InventoryMultiBlock extends InventoryBlock implements MultiBlock {
     public InventoryMultiBlock(Properties properties) {

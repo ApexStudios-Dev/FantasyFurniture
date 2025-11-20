@@ -98,7 +98,7 @@ public final class BoneFurnitureSet {
     public final FurnitureUtil.SignPair<StandingSignBlock, WallSignBlock> sign;
     public final ResourceKey<CreativeModeTab> creativeModeTab;
 
-    protected BoneFurnitureSet(String modId, String id) {
+    public BoneFurnitureSet(String modId, String id) {
         this.id = id;
 
         registree = Registree.create(modId);

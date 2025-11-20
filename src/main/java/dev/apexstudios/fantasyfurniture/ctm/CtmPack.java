@@ -11,7 +11,7 @@ import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 import net.neoforged.fml.ModList;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public interface CtmPack {
     String modId();

@@ -53,7 +53,7 @@ final class TextureProvider implements BaseProvider {
                 var centerIs = resourceManager.open(expand(textures.center));
                 var emptyIs = resourceManager.open(expand(textures.empty));
                 var horizontalIs = resourceManager.open(expand(textures.horizontal));
-                var verticalIs = resourceManager.open(expand(textures.vertical));
+                var verticalIs = resourceManager.open(expand(textures.vertical))
             ) {
                 var loaded = new LoadedTextures(
                         textures,
