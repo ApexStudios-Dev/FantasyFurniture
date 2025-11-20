@@ -29,6 +29,8 @@ furnitureSets.forEach {
 }
 
 neoForge {
+    accessTransformers.from(file("src/${ApexExtension.DATA_NAME}/datagen-at.cfg"))
+
     runs {
         getByName(ApexExtension.DATA_NAME) {
             furnitureSets.forEach {
