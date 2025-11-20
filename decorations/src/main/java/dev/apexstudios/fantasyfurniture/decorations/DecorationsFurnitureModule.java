@@ -1,8 +1,10 @@
 package dev.apexstudios.fantasyfurniture.decorations;
 
+import dev.apexstudios.apexcore.lib.block.Dyeable;
 import dev.apexstudios.fantasyfurniture.decorations.block.BerryBasketBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.BoltsOfClothBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.BowlBlock;
+import dev.apexstudios.fantasyfurniture.decorations.block.BrewingCauldronBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.CoinStackBlock;
 import dev.apexstudios.fantasyfurniture.decorations.cookie.CookieJarBlock;
 import dev.apexstudios.fantasyfurniture.decorations.cookie.CookieJarBlockEntity;
@@ -14,10 +16,14 @@ import dev.apexstudios.registree.api.Registree;
 import dev.apexstudios.registree.api.holder.DeferredBlock;
 import dev.apexstudios.registree.api.holder.DeferredBlockEntity;
 import dev.apexstudios.registree.api.holder.DeferredMenu;
+import java.util.stream.Stream;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 
@@ -42,7 +48,9 @@ public class DecorationsFurnitureModule {
 
     public static final DeferredBlock<CookieJarBlock> COOKIE_JAR_BLOCK = FurnitureUtil.simpleBlock(REGISTREE, "cookie_jar", CookieJarBlock::new, FurnitureUtil.PLANK_PROPERTIES);
     public static final DeferredBlockEntity<CookieJarBlockEntity> COOKIE_JAR_BLOCK_ENTITY = REGISTREE.registerBlockEntity(COOKIE_JAR_BLOCK, CookieJarBlockEntity::new);
-    public static final DeferredMenu<CookieJarMenu> COOKIE_JAR_MENU = REGISTREE.registerMenu("cookie_jar", (MenuType.MenuSupplier<CookieJarMenu>) CookieJarMenu::new, () -> CookieJarMenuScreen::new);
+    public static final DeferredMenu<CookieJarMenu> COOKIE_JAR_MENU = REGISTREE.registerMenu("cookie_jar", CookieJarMenu::new, () -> CookieJarMenuScreen::new);
+
+    public static final DeferredBlock<BrewingCauldronBlock> BREWING_CAULDRON = FurnitureUtil.simpleBlock(REGISTREE, "brewing_cauldron", BrewingCauldronBlock::new, FurnitureUtil.PLANK_PROPERTIES);
 
     public static final ResourceKey<CreativeModeTab> CREATIVE_MODE_TAB = FurnitureUtil.creativeModeTab(REGISTREE, BERRY_BASKET);
 
@@ -56,5 +64,13 @@ public class DecorationsFurnitureModule {
 
     public static String id(String identifier) {
         return ID + ResourceLocation.NAMESPACE_SEPARATOR + identifier;
+    }
+
+    public static Stream<Block> dyeables(FeatureFlagSet enabledFeatures) {
+        return REGISTREE.asLookup(Registries.BLOCK)
+                        .filterFeatures(enabledFeatures)
+                        .listElements()
+                        .map(Holder::value)
+                        .filter(Dyeable.class::isInstance);
     }
 }
