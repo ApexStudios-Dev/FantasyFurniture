@@ -442,12 +442,12 @@
 				},
 				"up": {
 					"uv": [20, 10, 10, 0],
-					"tint": 1,
+					"tint": 0,
 					"texture": 1
 				},
 				"down": {
 					"uv": [20, 10, 10, 20],
-					"tint": 1,
+					"tint": 0,
 					"texture": 1
 				}
 			},
@@ -487,12 +487,12 @@
 				},
 				"up": {
 					"uv": [10, 10, 0, 0],
-					"tint": 1,
+					"tint": 0,
 					"texture": 1
 				},
 				"down": {
 					"uv": [10, 10, 0, 20],
-					"tint": 1,
+					"tint": 0,
 					"texture": 1
 				}
 			},
@@ -516,14 +516,14 @@
 			"selected": false,
 			"visibility": true,
 			"autouv": 0,
-			"isOpen": false,
+			"isOpen": true,
 			"primary_selected": false
 		}
 	],
 	"outliner": [
 		{
 			"uuid": "a7008f06-c552-3b16-0ad1-3c8a78436cf9",
-			"isOpen": false,
+			"isOpen": true,
 			"children": [
 				"4a4cb55b-92e4-dabc-1ff6-315fe6cf015c",
 				"10bc653a-0eef-b7fb-663c-573132c3c087",
