@@ -45,7 +45,7 @@ modId = "placementvisualizer"
 type = "required"
 versionRange = "[21.10,21.11)"
 
-#[[accessTransformers]]
-#    file="META-INF/accesstransformer.cfg"
+[[accessTransformers]]
+    file="META-INF/accesstransformer.cfg"
 #[[mixins]]
 #    config="META-INF/fantasyfurniture_decorations.mixins.json"
