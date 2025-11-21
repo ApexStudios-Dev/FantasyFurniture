@@ -52,6 +52,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     cookieJar(blockModels);
                     existingHorizontalModel(DecorationsFurnitureModule.BREWING_CAULDRON, blockModels);
                     existingHorizontalModel(DecorationsFurnitureModule.GRAVESTONE, blockModels);
+                    existingHorizontalModel(DecorationsFurnitureModule.HANGING_HERBS, blockModels);
 
                     DecorationsFurnitureModule.dyeables().forEach(block -> blockModels.registerSimpleTintedItemModel(
                             block,
@@ -75,6 +76,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     provider.addBlock(DecorationsFurnitureModule.COOKIE_JAR_BLOCK, "Cookie Jar");
                     provider.addBlock(DecorationsFurnitureModule.BREWING_CAULDRON, "Brewing Cauldron");
                     provider.addBlock(DecorationsFurnitureModule.GRAVESTONE, "Gravestone");
+                    provider.addBlock(DecorationsFurnitureModule.HANGING_HERBS, "Hanging Herbs");
                 })
                 .providing(ProviderTypes.RECIPES, (context, provider) -> DecorationsFurnitureModule.REGISTREE
                         .listElements(Registries.ITEM)
