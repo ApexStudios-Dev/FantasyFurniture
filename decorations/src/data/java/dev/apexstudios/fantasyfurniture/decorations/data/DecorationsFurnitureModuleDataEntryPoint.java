@@ -18,12 +18,14 @@ import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
+import net.minecraft.client.data.models.model.TexturedModel;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
@@ -61,6 +63,9 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     FurnitureClientDataUtil.createLeftRightModel(DecorationsFurnitureModule.SPIDER_WEB_WIDE.value(), blockModels);
                     FurnitureClientDataUtil.registerSimpleBlockItemModel(DecorationsFurnitureModule.SPIDER_WEB_WIDE.value(), blockModels);
 
+                    // blockModels.registerSimpleFlatItemModel(DecorationsFurnitureModule.BRONZE_CHAIN.value());
+                    blockModels.createAxisAlignedPillarBlockCustomModel(DecorationsFurnitureModule.BRONZE_CHAIN.value(), BlockModelGenerators.plainVariant(TexturedModel.CHAIN.create(DecorationsFurnitureModule.BRONZE_CHAIN.value(), blockModels.modelOutput)));
+
                     DecorationsFurnitureModule.dyeables().forEach(block -> blockModels.registerSimpleTintedItemModel(
                             block,
                             assetPath(block),
@@ -87,6 +92,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     provider.addBlock(DecorationsFurnitureModule.PAPER_STACK, "Paper Stack");
                     provider.addBlock(DecorationsFurnitureModule.SPIDER_WEB_SMALL, "Spiderweb Small");
                     provider.addBlock(DecorationsFurnitureModule.SPIDER_WEB_WIDE, "Spiderweb Wide");
+                    provider.addBlock(DecorationsFurnitureModule.BRONZE_CHAIN, "Bronze Chain");
                 })
                 .providing(ProviderTypes.RECIPES, (context, provider) -> DecorationsFurnitureModule.REGISTREE
                         .listElements(Registries.ITEM)
@@ -118,12 +124,19 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                                 provider.tag(BlockItemPlacementEvent.RENDERABLES).withElement(block);
                                 provider.tag(Tags.Blocks.RELOCATION_NOT_SUPPORTED).withElement(block);
                             });
+
+                    provider.tag(BlockItemPlacementEvent.RENDERABLES).withElement(DecorationsFurnitureModule.BRONZE_CHAIN);
+                    provider.tag(Tags.Blocks.CHAINS).withElement(DecorationsFurnitureModule.BRONZE_CHAIN);
+                    provider.tag(Tags.Blocks.CHAINS).withElement(DecorationsFurnitureModule.BRONZE_CHAIN);
                 })
-                .providing(ProviderTypes.ITEM_TAGS, (context, provider) -> DecorationsFurnitureModule
-                        .dyeables()
-                        .map(ItemLike::asItem)
-                        .forEach(block -> provider.tag(Tags.Items.DYED).withElement(block))
-                )
+                .providing(ProviderTypes.ITEM_TAGS, (context, provider) -> {
+                    DecorationsFurnitureModule.dyeables()
+                                              .map(ItemLike::asItem)
+                                              .forEach(block -> provider.tag(Tags.Items.DYED).withElement(block));
+
+                    provider.tag(ItemTags.CHAINS).withElement(DecorationsFurnitureModule.BRONZE_CHAIN.asItem());
+                    provider.tag(Tags.Items.CHAINS).withElement(DecorationsFurnitureModule.BRONZE_CHAIN.asItem());
+                })
         );
     }
 

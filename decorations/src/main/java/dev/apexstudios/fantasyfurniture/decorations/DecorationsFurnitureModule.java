@@ -28,6 +28,8 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.ChainBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
@@ -53,6 +55,7 @@ public class DecorationsFurnitureModule {
     public static final DeferredBlock<PaperStackBlock> PAPER_STACK = FurnitureUtil.simpleBlock(REGISTREE, "paper_stack", PaperStackBlock::new, FurnitureUtil.PLANK_PROPERTIES);
     public static final DeferredBlock<SpiderWebSmallBlock> SPIDER_WEB_SMALL = FurnitureUtil.simpleBlock(REGISTREE, "spider_web_small", SpiderWebSmallBlock::new, FurnitureUtil.mutating(FurnitureUtil.PLANK_PROPERTIES, BlockBehaviour.Properties::noCollision));
     public static final DeferredBlock<SpiderWebWideBlock> SPIDER_WEB_WIDE = FurnitureUtil.simpleBlock(REGISTREE, "spider_web_wide", SpiderWebWideBlock::new, FurnitureUtil.mutating(FurnitureUtil.PLANK_PROPERTIES, BlockBehaviour.Properties::noCollision));
+    public static final DeferredBlock<ChainBlock> BRONZE_CHAIN = FurnitureUtil.simpleBlock(REGISTREE, "bronze_chain", ChainBlock::new, () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.IRON_CHAIN));
 
     public static final DeferredBlock<CookieJarBlock> COOKIE_JAR_BLOCK = FurnitureUtil.simpleBlock(REGISTREE, "cookie_jar", CookieJarBlock::new, FurnitureUtil.PLANK_PROPERTIES);
     public static final DeferredBlockEntity<CookieJarBlockEntity> COOKIE_JAR_BLOCK_ENTITY = REGISTREE.registerBlockEntity(COOKIE_JAR_BLOCK, CookieJarBlockEntity::new);
