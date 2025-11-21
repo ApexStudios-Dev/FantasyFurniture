@@ -6,6 +6,10 @@ import dev.apexstudios.apexcore.lib.util.ApexShapes;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ColorParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.ARGB;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -39,6 +43,30 @@ public final class BrewingCauldronBlock extends SimpleHorizontalDirectionalBlock
         super(properties);
 
         registerDefaultState(setDyedColor(defaultBlockState(), Dyeable.DyedColor.WHITE));
+    }
+
+    @Override
+    public void animateTick(BlockState blockState, Level level, BlockPos pos, RandomSource random) {
+        var color = ARGB.color(145, Dyeable.getColor(blockState).getTextureDiffuseColor());
+
+        var particle = ColorParticleOption.create(ParticleTypes.ENTITY_EFFECT, color);
+
+        var x = pos.getX() + .5D;
+        var y = pos.getY() + .4D;
+        var z = pos.getZ() + .5D;
+
+        for(var i = 0; i < 2; i ++) {
+            var rand = random.nextInt(0, 4);
+
+            if(rand == 0)
+                level.addParticle(particle, x + .25D, y, z, 0D, 0D, 0D);
+            else if(rand == 1)
+                level.addParticle(particle, x - .25D, y, z, 0D, 0D, 0D);
+            else if(rand == 2)
+                level.addParticle(particle, x, y, z + .25D, 0D, 0D, 0D);
+            else
+                level.addParticle(particle, x, y, z - .25D, 0D, 0D, 0D);
+        }
     }
 
     @Override
