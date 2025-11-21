@@ -6,6 +6,7 @@ import dev.apexstudios.fantasyfurniture.decorations.block.BoltsOfClothBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.BowlBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.BrewingCauldronBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.CoinStackBlock;
+import dev.apexstudios.fantasyfurniture.decorations.block.GravestoneBlock;
 import dev.apexstudios.fantasyfurniture.decorations.cookie.CookieJarBlock;
 import dev.apexstudios.fantasyfurniture.decorations.cookie.CookieJarBlockEntity;
 import dev.apexstudios.fantasyfurniture.decorations.cookie.CookieJarMenu;
@@ -35,21 +36,18 @@ public class DecorationsFurnitureModule {
     public static final DeferredBlock<BerryBasketBlock> BLUEBERRY_BASKET = DecorationUtil.berryBasket(REGISTREE, "blueberry");
     public static final DeferredBlock<BerryBasketBlock> STRAWBERRY_BASKET = DecorationUtil.berryBasket(REGISTREE, "strawberry");
     public static final DeferredBlock<BerryBasketBlock> SWEETBERRY_BASKET = DecorationUtil.berryBasket(REGISTREE, "sweetberry");
-
     public static final DeferredBlock<BoltsOfClothBlock> BOLTS_OF_CLOTH = FurnitureUtil.simpleBlock(REGISTREE, "bolts_of_cloth", BoltsOfClothBlock::new, FurnitureUtil.PLANK_PROPERTIES);
-
     public static final DeferredBlock<BowlBlock> BOWL = DecorationUtil.bowl(REGISTREE, null);
     public static final DeferredBlock<BowlBlock> BEETROOT_SOUP_BOWL = DecorationUtil.bowl(REGISTREE, "beetroot_soup");
     public static final DeferredBlock<BowlBlock> MUSHROOM_STEW_BOWL = DecorationUtil.bowl(REGISTREE, "mushroom_stew");
-
     public static final DeferredBlock<CoinStackBlock> GOLDEN_COIN_STACK = DecorationUtil.coinStack(REGISTREE, "golden");
     public static final DeferredBlock<CoinStackBlock> IRON_COIN_STACK = DecorationUtil.coinStack(REGISTREE, "iron");
+    public static final DeferredBlock<BrewingCauldronBlock> BREWING_CAULDRON = FurnitureUtil.simpleBlock(REGISTREE, "brewing_cauldron", BrewingCauldronBlock::new, FurnitureUtil.PLANK_PROPERTIES);
+    public static final DeferredBlock<GravestoneBlock> GRAVESTONE = FurnitureUtil.simpleBlock(REGISTREE, "gravestone", GravestoneBlock::new, FurnitureUtil.PLANK_PROPERTIES);
 
     public static final DeferredBlock<CookieJarBlock> COOKIE_JAR_BLOCK = FurnitureUtil.simpleBlock(REGISTREE, "cookie_jar", CookieJarBlock::new, FurnitureUtil.PLANK_PROPERTIES);
     public static final DeferredBlockEntity<CookieJarBlockEntity> COOKIE_JAR_BLOCK_ENTITY = REGISTREE.registerBlockEntity(COOKIE_JAR_BLOCK, CookieJarBlockEntity::new);
     public static final DeferredMenu<CookieJarMenu> COOKIE_JAR_MENU = REGISTREE.registerMenu("cookie_jar", CookieJarMenu::new, () -> CookieJarMenuScreen::new);
-
-    public static final DeferredBlock<BrewingCauldronBlock> BREWING_CAULDRON = FurnitureUtil.simpleBlock(REGISTREE, "brewing_cauldron", BrewingCauldronBlock::new, FurnitureUtil.PLANK_PROPERTIES);
 
     public static final ResourceKey<CreativeModeTab> CREATIVE_MODE_TAB = FurnitureUtil.creativeModeTab(REGISTREE, BERRY_BASKET);
 
