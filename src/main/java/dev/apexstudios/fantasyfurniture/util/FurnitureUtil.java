@@ -308,7 +308,7 @@ public interface FurnitureUtil {
         );
     }
 
-    private static <T> Supplier<T> mutating(Supplier<T> initial, Consumer<T> mutator) {
+    static <T> Supplier<T> mutating(Supplier<T> initial, Consumer<T> mutator) {
         return () -> {
             var properties = initial.get();
             mutator.accept(properties);

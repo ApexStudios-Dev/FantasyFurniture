@@ -5,10 +5,13 @@ import dev.apexstudios.apexcore.lib.block.Dyeable;
 import dev.apexstudios.apexcore.lib.data.ProviderTypes;
 import dev.apexstudios.apexcore.lib.data.ResourceGenerator;
 import dev.apexstudios.apexcore.lib.data.provider.RecipeProvider;
+import dev.apexstudios.apexcore.lib.multiblock.MultiBlock;
 import dev.apexstudios.fantasyfurniture.decorations.DecorationsFurnitureModule;
 import dev.apexstudios.fantasyfurniture.decorations.cookie.CookieJarBlock;
 import dev.apexstudios.fantasyfurniture.station.FurnitureStationRecipeBuilder;
 import dev.apexstudios.fantasyfurniture.station.FurnitureStationSetup;
+import dev.apexstudios.fantasyfurniture.util.FurnitureClientDataUtil;
+import dev.apexstudios.placementvisualizer.api.BlockItemPlacementEvent;
 import java.util.Objects;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
@@ -54,6 +57,9 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     existingHorizontalModel(DecorationsFurnitureModule.GRAVESTONE, blockModels);
                     existingHorizontalModel(DecorationsFurnitureModule.HANGING_HERBS, blockModels);
                     existingHorizontalModel(DecorationsFurnitureModule.PAPER_STACK, blockModels);
+                    existingHorizontalModel(DecorationsFurnitureModule.SPIDER_WEB_SMALL, blockModels);
+                    FurnitureClientDataUtil.createLeftRightModel(DecorationsFurnitureModule.SPIDER_WEB_WIDE.value(), blockModels);
+                    FurnitureClientDataUtil.registerSimpleBlockItemModel(DecorationsFurnitureModule.SPIDER_WEB_WIDE.value(), blockModels);
 
                     DecorationsFurnitureModule.dyeables().forEach(block -> blockModels.registerSimpleTintedItemModel(
                             block,
@@ -79,6 +85,8 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     provider.addBlock(DecorationsFurnitureModule.GRAVESTONE, "Gravestone");
                     provider.addBlock(DecorationsFurnitureModule.HANGING_HERBS, "Hanging Herbs");
                     provider.addBlock(DecorationsFurnitureModule.PAPER_STACK, "Paper Stack");
+                    provider.addBlock(DecorationsFurnitureModule.SPIDER_WEB_SMALL, "Spiderweb Small");
+                    provider.addBlock(DecorationsFurnitureModule.SPIDER_WEB_WIDE, "Spiderweb Wide");
                 })
                 .providing(ProviderTypes.RECIPES, (context, provider) -> DecorationsFurnitureModule.REGISTREE
                         .listElements(Registries.ITEM)
@@ -101,6 +109,15 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                             .forEach(block -> provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block));
 
                     DecorationsFurnitureModule.dyeables().forEach(block -> provider.tag(Tags.Blocks.DYED).withElement(block));
+
+                    DecorationsFurnitureModule.REGISTREE
+                            .listElements(Registries.BLOCK)
+                            .map(Holder::value)
+                            .filter(MultiBlock.class::isInstance)
+                            .forEach(block -> {
+                                provider.tag(BlockItemPlacementEvent.RENDERABLES).withElement(block);
+                                provider.tag(Tags.Blocks.RELOCATION_NOT_SUPPORTED).withElement(block);
+                            });
                 })
                 .providing(ProviderTypes.ITEM_TAGS, (context, provider) -> DecorationsFurnitureModule
                         .dyeables()
