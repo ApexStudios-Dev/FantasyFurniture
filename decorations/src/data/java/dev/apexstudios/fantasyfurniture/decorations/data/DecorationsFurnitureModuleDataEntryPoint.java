@@ -53,6 +53,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     existingHorizontalModel(DecorationsFurnitureModule.BREWING_CAULDRON, blockModels);
                     existingHorizontalModel(DecorationsFurnitureModule.GRAVESTONE, blockModels);
                     existingHorizontalModel(DecorationsFurnitureModule.HANGING_HERBS, blockModels);
+                    existingHorizontalModel(DecorationsFurnitureModule.PAPER_STACK, blockModels);
 
                     DecorationsFurnitureModule.dyeables().forEach(block -> blockModels.registerSimpleTintedItemModel(
                             block,
@@ -77,6 +78,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     provider.addBlock(DecorationsFurnitureModule.BREWING_CAULDRON, "Brewing Cauldron");
                     provider.addBlock(DecorationsFurnitureModule.GRAVESTONE, "Gravestone");
                     provider.addBlock(DecorationsFurnitureModule.HANGING_HERBS, "Hanging Herbs");
+                    provider.addBlock(DecorationsFurnitureModule.PAPER_STACK, "Paper Stack");
                 })
                 .providing(ProviderTypes.RECIPES, (context, provider) -> DecorationsFurnitureModule.REGISTREE
                         .listElements(Registries.ITEM)
