@@ -71,6 +71,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     blockModels.createAxisAlignedPillarBlockCustomModel(DecorationsFurnitureModule.BRONZE_CHAIN.value(), BlockModelGenerators.plainVariant(TexturedModel.CHAIN.create(DecorationsFurnitureModule.BRONZE_CHAIN.value(), blockModels.modelOutput)));
 
                     fairyLights(blockModels);
+                    existingHorizontalModel(DecorationsFurnitureModule.STOCKING, blockModels);
 
                     DecorationsFurnitureModule.dyeables().filter(Predicate.not(DecorationsFurnitureModule.FAIRY_LIGHTS::is)).forEach(block -> blockModels.registerSimpleTintedItemModel(
                             block,
@@ -108,6 +109,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     provider.addBlock(DecorationsFurnitureModule.SPIDER_WEB_WIDE, "Spiderweb Wide");
                     provider.addBlock(DecorationsFurnitureModule.BRONZE_CHAIN, "Bronze Chain");
                     provider.addBlock(DecorationsFurnitureModule.FAIRY_LIGHTS, "Fairy Lights");
+                    provider.addBlock(DecorationsFurnitureModule.STOCKING, "Stocking");
                 })
                 .providing(ProviderTypes.RECIPES, (context, provider) -> DecorationsFurnitureModule.REGISTREE
                         .listElements(Registries.ITEM)
