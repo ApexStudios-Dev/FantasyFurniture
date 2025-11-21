@@ -39,7 +39,9 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.MaterialMapper;
+import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -80,6 +82,7 @@ import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.world.poi.ExtendPoiTypesEvent;
@@ -365,10 +368,12 @@ public interface FurnitureUtil {
         // Even though vanilla seems to be registering these for us most of the time
         // there are times in which the game is crashing due to the material not being registered
         // this is here to ensure that our materials are being registered
-        /*modBus.addListener(FMLClientSetupEvent.class, event -> event.enqueueWork(() -> {
-            Names.block(registree, Names.HANGING_SIGN, block -> registerMaterial(woodType.get(), Sheets.HANGING_SIGN_MATERIALS, Sheets.HANGING_SIGN_MAPPER, true));
-            Names.block(registree, Names.SIGN, block -> registerMaterial(woodType.get(), Sheets.SIGN_MATERIALS, Sheets.SIGN_MAPPER, false));
-        }));*/
+        modBus.addListener(FMLClientSetupEvent.class, event -> event.enqueueWork(() -> {
+            /*Names.block(registree, Names.HANGING_SIGN, block -> registerMaterial(woodType.get(), Sheets.HANGING_SIGN_MATERIALS, Sheets.HANGING_SIGN_MAPPER, true));
+            Names.block(registree, Names.SIGN, block -> registerMaterial(woodType.get(), Sheets.SIGN_MATERIALS, Sheets.SIGN_MAPPER, false));*/
+
+            registree.listElements(Registries.BLOCK).map(Holder::value).forEach(block -> ItemBlockRenderTypes.setRenderLayer(block, ChunkSectionLayer.CUTOUT));
+        }));
 
         registree.registerEvents(modBus);
     }

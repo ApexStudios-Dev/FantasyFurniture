@@ -5,8 +5,7 @@
 		"bowl": "fantasyfurniture_decorations:block/bowl",
 		"particle": "fantasyfurniture_decorations:block/bowl_particle"
 	},
-    "render_type": "cutout",
-	"elements": [
+    "elements": [
 		{
 			"name": "bowl_base",
 			"from": [4, 0, 4],

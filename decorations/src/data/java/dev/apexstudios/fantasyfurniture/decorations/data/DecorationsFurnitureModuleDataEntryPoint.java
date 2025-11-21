@@ -52,7 +52,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     cookieJar(blockModels);
                     existingHorizontalModel(DecorationsFurnitureModule.BREWING_CAULDRON, blockModels);
 
-                    DecorationsFurnitureModule.dyeables(context.enabledFeatures()).forEach(block -> blockModels.registerSimpleTintedItemModel(
+                    DecorationsFurnitureModule.dyeables().forEach(block -> blockModels.registerSimpleTintedItemModel(
                             block,
                             assetPath(block),
                             new DyeColorItemTintSource(Dyeable.DEFAULT_COLOR)
@@ -75,9 +75,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     provider.addBlock(DecorationsFurnitureModule.BREWING_CAULDRON, "Brewing Cauldron");
                 })
                 .providing(ProviderTypes.RECIPES, (context, provider) -> DecorationsFurnitureModule.REGISTREE
-                        .asLookup(Registries.ITEM)
-                        .filterFeatures(context.enabledFeatures())
-                        .listElements()
+                        .listElements(Registries.ITEM)
                         .map(Holder::value)
                         .forEach(item -> furnitureStation(item, provider))
                 )
@@ -85,25 +83,21 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     provider.fromRegistree(DecorationsFurnitureModule.REGISTREE);
 
                     provider.block(lootTables -> DecorationsFurnitureModule.REGISTREE
-                            .asLookup(Registries.BLOCK)
-                            .filterFeatures(context.enabledFeatures())
-                            .listElements()
+                            .listElements(Registries.BLOCK)
                             .map(Holder::value)
                             .forEach(lootTables::dropSelf)
                     );
                 })
                 .providing(ProviderTypes.BLOCK_TAGS, (context, provider) -> {
                     DecorationsFurnitureModule.REGISTREE
-                            .asLookup(Registries.BLOCK)
-                            .filterFeatures(context.enabledFeatures())
-                            .listElements()
+                            .listElements(Registries.BLOCK)
                             .map(Holder::value)
                             .forEach(block -> provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block));
 
-                    DecorationsFurnitureModule.dyeables(context.enabledFeatures()).forEach(block -> provider.tag(Tags.Blocks.DYED).withElement(block));
+                    DecorationsFurnitureModule.dyeables().forEach(block -> provider.tag(Tags.Blocks.DYED).withElement(block));
                 })
                 .providing(ProviderTypes.ITEM_TAGS, (context, provider) -> DecorationsFurnitureModule
-                        .dyeables(context.enabledFeatures())
+                        .dyeables()
                         .map(ItemLike::asItem)
                         .forEach(block -> provider.tag(Tags.Items.DYED).withElement(block))
                 )

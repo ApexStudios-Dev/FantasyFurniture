@@ -5,7 +5,6 @@
 		"particle": "fantasyfurniture_venthyr:block/particle",
 		"table_cloth": "fantasyfurniture_venthyr:block/table_cloth"
 	},
-	"render_type": "minecraft:cutout",
 	"elements": [
 		{
 			"name": "base_1",
