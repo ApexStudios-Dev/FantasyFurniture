@@ -8,11 +8,13 @@ import dev.apexstudios.apexcore.lib.data.provider.RecipeProvider;
 import dev.apexstudios.apexcore.lib.multiblock.MultiBlock;
 import dev.apexstudios.fantasyfurniture.decorations.DecorationsFurnitureModule;
 import dev.apexstudios.fantasyfurniture.decorations.block.FairyLightsBlock;
+import dev.apexstudios.fantasyfurniture.decorations.block.Stackable;
 import dev.apexstudios.fantasyfurniture.decorations.cookie.CookieJarBlock;
 import dev.apexstudios.fantasyfurniture.station.FurnitureStationRecipeBuilder;
 import dev.apexstudios.fantasyfurniture.station.FurnitureStationSetup;
 import dev.apexstudios.fantasyfurniture.util.FurnitureClientDataUtil;
 import dev.apexstudios.placementvisualizer.api.BlockItemPlacementEvent;
+import dev.apexstudios.registree.api.holder.DeferredBlock;
 import java.util.Objects;
 import java.util.function.Predicate;
 import net.minecraft.client.data.models.BlockModelGenerators;
@@ -72,6 +74,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
 
                     fairyLights(blockModels);
                     existingHorizontalModel(DecorationsFurnitureModule.STOCKING, blockModels);
+                    stackable(DecorationsFurnitureModule.BOOK_STACK, blockModels);
 
                     DecorationsFurnitureModule.dyeables().filter(Predicate.not(DecorationsFurnitureModule.FAIRY_LIGHTS::is)).forEach(block -> blockModels.registerSimpleTintedItemModel(
                             block,
@@ -110,6 +113,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     provider.addBlock(DecorationsFurnitureModule.BRONZE_CHAIN, "Bronze Chain");
                     provider.addBlock(DecorationsFurnitureModule.FAIRY_LIGHTS, "Fairy Lights");
                     provider.addBlock(DecorationsFurnitureModule.STOCKING, "Stocking");
+                    provider.addBlock(DecorationsFurnitureModule.BOOK_STACK, "Book Stack");
                 })
                 .providing(ProviderTypes.RECIPES, (context, provider) -> DecorationsFurnitureModule.REGISTREE
                         .listElements(Registries.ITEM)
@@ -126,23 +130,22 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     );
                 })
                 .providing(ProviderTypes.BLOCK_TAGS, (context, provider) -> {
-                    DecorationsFurnitureModule.REGISTREE
-                            .listElements(Registries.BLOCK)
-                            .map(Holder::value)
-                            .forEach(block -> provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block));
+                    DecorationsFurnitureModule.REGISTREE.listElements(Registries.BLOCK).map(Holder::value).forEach(block -> {
+                        provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
 
-                    DecorationsFurnitureModule.dyeables().forEach(block -> provider.tag(Tags.Blocks.DYED).withElement(block));
+                        if(block instanceof Dyeable) {
+                            provider.tag(Tags.Blocks.DYED).withElement(block);
+                        }
 
-                    DecorationsFurnitureModule.REGISTREE
-                            .listElements(Registries.BLOCK)
-                            .map(Holder::value)
-                            .filter(MultiBlock.class::isInstance)
-                            .forEach(block -> {
-                                provider.tag(BlockItemPlacementEvent.RENDERABLES).withElement(block);
-                                provider.tag(Tags.Blocks.RELOCATION_NOT_SUPPORTED).withElement(block);
-                            });
+                        if(block instanceof MultiBlock || block instanceof Stackable || DecorationsFurnitureModule.BRONZE_CHAIN.is(block)) {
+                            provider.tag(BlockItemPlacementEvent.RENDERABLES).withElement(block);
+                        }
 
-                    provider.tag(BlockItemPlacementEvent.RENDERABLES).withElement(DecorationsFurnitureModule.BRONZE_CHAIN);
+                        if(block instanceof MultiBlock) {
+                            provider.tag(Tags.Blocks.RELOCATION_NOT_SUPPORTED).withElement(block);
+                        }
+                    });
+
                     provider.tag(Tags.Blocks.CHAINS).withElement(DecorationsFurnitureModule.BRONZE_CHAIN);
                     provider.tag(Tags.Blocks.CHAINS).withElement(DecorationsFurnitureModule.BRONZE_CHAIN);
                 })
@@ -248,6 +251,22 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                 .with(PropertyDispatch.modify(FairyLightsBlock.COLOR).generate(color -> variant -> color == FairyLightsBlock.LightColor.NONE ? variant.withModel(cleanModel) : variant))
                 .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
         );
+    }
+
+    private <TBlock extends Block & Stackable> void stackable(DeferredBlock<TBlock> holder, BlockModelGenerators blockModels) {
+        var block = holder.value();
+        var property = block.getStackableProperty();
+
+        blockModels.blockStateOutput.accept(MultiVariantGenerator
+                .dispatch(block)
+                .with(PropertyDispatch
+                        .initial(property)
+                        .generate(count -> BlockModelGenerators.plainVariant(assetPath(block).withSuffix("_" + count)))
+                )
+                .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
+        );
+
+        blockModels.registerSimpleItemModel(block, assetPath(block).withSuffix("_" + property.max));
     }
 
     private ResourceLocation assetPath(ResourceKey<?> registryKey) {
