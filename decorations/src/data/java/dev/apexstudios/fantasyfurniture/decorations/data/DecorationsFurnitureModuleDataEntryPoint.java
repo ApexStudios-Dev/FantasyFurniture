@@ -7,19 +7,23 @@ import dev.apexstudios.apexcore.lib.data.ResourceGenerator;
 import dev.apexstudios.apexcore.lib.data.provider.RecipeProvider;
 import dev.apexstudios.apexcore.lib.multiblock.MultiBlock;
 import dev.apexstudios.fantasyfurniture.decorations.DecorationsFurnitureModule;
+import dev.apexstudios.fantasyfurniture.decorations.block.FairyLightsBlock;
 import dev.apexstudios.fantasyfurniture.decorations.cookie.CookieJarBlock;
 import dev.apexstudios.fantasyfurniture.station.FurnitureStationRecipeBuilder;
 import dev.apexstudios.fantasyfurniture.station.FurnitureStationSetup;
 import dev.apexstudios.fantasyfurniture.util.FurnitureClientDataUtil;
 import dev.apexstudios.placementvisualizer.api.BlockItemPlacementEvent;
 import java.util.Objects;
+import java.util.function.Predicate;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
+import net.minecraft.client.data.models.model.ItemModelUtils;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
 import net.minecraft.client.data.models.model.TexturedModel;
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.resources.ResourceKey;
@@ -66,11 +70,21 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     // blockModels.registerSimpleFlatItemModel(DecorationsFurnitureModule.BRONZE_CHAIN.value());
                     blockModels.createAxisAlignedPillarBlockCustomModel(DecorationsFurnitureModule.BRONZE_CHAIN.value(), BlockModelGenerators.plainVariant(TexturedModel.CHAIN.create(DecorationsFurnitureModule.BRONZE_CHAIN.value(), blockModels.modelOutput)));
 
-                    DecorationsFurnitureModule.dyeables().forEach(block -> blockModels.registerSimpleTintedItemModel(
+                    fairyLights(blockModels);
+
+                    DecorationsFurnitureModule.dyeables().filter(Predicate.not(DecorationsFurnitureModule.FAIRY_LIGHTS::is)).forEach(block -> blockModels.registerSimpleTintedItemModel(
                             block,
                             assetPath(block),
                             new DyeColorItemTintSource(Dyeable.DEFAULT_COLOR)
                     ));
+
+                    blockModels.itemModelOutput.accept(DecorationsFurnitureModule.FAIRY_LIGHTS.asItem(),
+                            ItemModelUtils.conditional(
+                                    ItemModelUtils.hasComponent(DataComponents.BASE_COLOR),
+                                    ItemModelUtils.tintedModel(assetPath(DecorationsFurnitureModule.FAIRY_LIGHTS), new DyeColorItemTintSource(Dyeable.DEFAULT_COLOR)),
+                                    ItemModelUtils.plainModel(assetPath(DecorationsFurnitureModule.FAIRY_LIGHTS).withSuffix("_clean"))
+                            )
+                    );
                 })
                 .providing(ProviderTypes.LANGUAGE, (context, provider) -> {
                     provider.addCreativeModeTab(DecorationsFurnitureModule.CREATIVE_MODE_TAB, "Fantasy's Furniture - Decorations");
@@ -93,6 +107,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     provider.addBlock(DecorationsFurnitureModule.SPIDER_WEB_SMALL, "Spiderweb Small");
                     provider.addBlock(DecorationsFurnitureModule.SPIDER_WEB_WIDE, "Spiderweb Wide");
                     provider.addBlock(DecorationsFurnitureModule.BRONZE_CHAIN, "Bronze Chain");
+                    provider.addBlock(DecorationsFurnitureModule.FAIRY_LIGHTS, "Fairy Lights");
                 })
                 .providing(ProviderTypes.RECIPES, (context, provider) -> DecorationsFurnitureModule.REGISTREE
                         .listElements(Registries.ITEM)
@@ -210,6 +225,25 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                                       .select(CookieJarBlock.Fullness.HALF, variant -> variant.withModel(assetPath.withSuffix("_half")))
                                       .select(CookieJarBlock.Fullness.EMPTY, variant -> variant)
                 )
+                .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
+        );
+    }
+
+    private void fairyLights(BlockModelGenerators blockModels) {
+        var assetPath = assetPath(DecorationsFurnitureModule.FAIRY_LIGHTS);
+
+        var slot = TextureSlot.create("lights");
+        var textures = new TextureMapping().put(slot, assetPath);
+        var cleanModel = ExtendedModelTemplateBuilder
+                .builder()
+                .parent(assetPath)
+                .requiredTextureSlot(slot)
+                .build()
+        .create(assetPath.withSuffix("_clean"), textures, blockModels.modelOutput);
+
+        blockModels.blockStateOutput.accept(MultiVariantGenerator
+                .dispatch(DecorationsFurnitureModule.FAIRY_LIGHTS.value(), BlockModelGenerators.plainVariant(assetPath))
+                .with(PropertyDispatch.modify(FairyLightsBlock.COLOR).generate(color -> variant -> color == FairyLightsBlock.LightColor.NONE ? variant.withModel(cleanModel) : variant))
                 .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
         );
     }

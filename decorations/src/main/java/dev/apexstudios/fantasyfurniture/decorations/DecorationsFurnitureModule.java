@@ -6,6 +6,7 @@ import dev.apexstudios.fantasyfurniture.decorations.block.BoltsOfClothBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.BowlBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.BrewingCauldronBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.CoinStackBlock;
+import dev.apexstudios.fantasyfurniture.decorations.block.FairyLightsBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.GravestoneBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.HangingHerbsBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.PaperStackBlock;
@@ -56,6 +57,7 @@ public class DecorationsFurnitureModule {
     public static final DeferredBlock<SpiderWebSmallBlock> SPIDER_WEB_SMALL = FurnitureUtil.simpleBlock(REGISTREE, "spider_web_small", SpiderWebSmallBlock::new, FurnitureUtil.mutating(FurnitureUtil.PLANK_PROPERTIES, BlockBehaviour.Properties::noCollision));
     public static final DeferredBlock<SpiderWebWideBlock> SPIDER_WEB_WIDE = FurnitureUtil.simpleBlock(REGISTREE, "spider_web_wide", SpiderWebWideBlock::new, FurnitureUtil.mutating(FurnitureUtil.PLANK_PROPERTIES, BlockBehaviour.Properties::noCollision));
     public static final DeferredBlock<ChainBlock> BRONZE_CHAIN = FurnitureUtil.simpleBlock(REGISTREE, "bronze_chain", ChainBlock::new, () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.IRON_CHAIN));
+    public static final DeferredBlock<FairyLightsBlock> FAIRY_LIGHTS = FurnitureUtil.simpleBlock(REGISTREE, "fairy_lights", FairyLightsBlock::new, FurnitureUtil.mutating(FurnitureUtil.PLANK_PROPERTIES, BlockBehaviour.Properties::noCollision));
 
     public static final DeferredBlock<CookieJarBlock> COOKIE_JAR_BLOCK = FurnitureUtil.simpleBlock(REGISTREE, "cookie_jar", CookieJarBlock::new, FurnitureUtil.PLANK_PROPERTIES);
     public static final DeferredBlockEntity<CookieJarBlockEntity> COOKIE_JAR_BLOCK_ENTITY = REGISTREE.registerBlockEntity(COOKIE_JAR_BLOCK, CookieJarBlockEntity::new);
