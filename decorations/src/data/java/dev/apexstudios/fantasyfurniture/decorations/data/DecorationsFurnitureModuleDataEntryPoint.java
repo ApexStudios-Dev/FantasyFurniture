@@ -16,7 +16,9 @@ import dev.apexstudios.fantasyfurniture.util.FurnitureClientDataUtil;
 import dev.apexstudios.placementvisualizer.api.BlockItemPlacementEvent;
 import dev.apexstudios.registree.api.holder.DeferredBlock;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.function.Predicate;
+import net.minecraft.Util;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
@@ -75,6 +77,10 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     fairyLights(blockModels);
                     existingHorizontalModel(DecorationsFurnitureModule.STOCKING, blockModels);
                     stackable(DecorationsFurnitureModule.BOOK_STACK, blockModels);
+                    stackable(DecorationsFurnitureModule.TANKARDS, blockModels);
+                    stackable(DecorationsFurnitureModule.TANKARDS, DecorationsFurnitureModule.TANKARDS_HONEYMEAD, blockModels);
+                    stackable(DecorationsFurnitureModule.TANKARDS, DecorationsFurnitureModule.TANKARDS_MILK, blockModels);
+                    stackable(DecorationsFurnitureModule.TANKARDS, DecorationsFurnitureModule.TANKARDS_SWEETBERRY, blockModels);
 
                     DecorationsFurnitureModule.dyeables().filter(Predicate.not(DecorationsFurnitureModule.FAIRY_LIGHTS::is)).forEach(block -> blockModels.registerSimpleTintedItemModel(
                             block,
@@ -114,6 +120,10 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     provider.addBlock(DecorationsFurnitureModule.FAIRY_LIGHTS, "Fairy Lights");
                     provider.addBlock(DecorationsFurnitureModule.STOCKING, "Stocking");
                     provider.addBlock(DecorationsFurnitureModule.BOOK_STACK, "Book Stack");
+                    provider.addBlock(DecorationsFurnitureModule.TANKARDS, "Tankards");
+                    provider.addBlock(DecorationsFurnitureModule.TANKARDS_HONEYMEAD, "Honeymead Tankards");
+                    provider.addBlock(DecorationsFurnitureModule.TANKARDS_MILK, "Milk Tankards");
+                    provider.addBlock(DecorationsFurnitureModule.TANKARDS_SWEETBERRY, "Sweetberry Tankards");
                 })
                 .providing(ProviderTypes.RECIPES, (context, provider) -> DecorationsFurnitureModule.REGISTREE
                         .listElements(Registries.ITEM)
@@ -253,20 +263,37 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
         );
     }
 
-    private <TBlock extends Block & Stackable> void stackable(DeferredBlock<TBlock> holder, BlockModelGenerators blockModels) {
-        var block = holder.value();
-        var property = block.getStackableProperty();
+    private <TBlock extends Block & Stackable> void stackable(Holder<Block> template, DeferredBlock<TBlock> holder, BlockModelGenerators blockModels) {
+        var property = holder.value().getStackableProperty();
+
+        Function<Integer, ResourceLocation> model = Util.memoize(count -> {
+            var modelPath = assetPath(holder).withSuffix("_" + count);
+
+            if(template.is(holder)) {
+                return modelPath;
+            }
+
+            var slot = TextureSlot.create("tankards");
+
+            return ExtendedModelTemplateBuilder
+                    .builder()
+                    .requiredTextureSlot(slot)
+                    .parent(assetPath(template).withSuffix("_" + count))
+                    .build()
+                    .create(modelPath, new TextureMapping().put(slot, assetPath(holder)), blockModels.modelOutput);
+        });
 
         blockModels.blockStateOutput.accept(MultiVariantGenerator
-                .dispatch(block)
-                .with(PropertyDispatch
-                        .initial(property)
-                        .generate(count -> BlockModelGenerators.plainVariant(assetPath(block).withSuffix("_" + count)))
-                )
+                .dispatch(holder.value())
+                .with(PropertyDispatch.initial(property).generate(count -> BlockModelGenerators.plainVariant(model.apply(count))))
                 .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
         );
 
-        blockModels.registerSimpleItemModel(block, assetPath(block).withSuffix("_" + property.max));
+        blockModels.registerSimpleItemModel(holder.value(), assetPath(holder).withSuffix("_" + property.max));
+    }
+
+    private <TBlock extends Block & Stackable> void stackable(DeferredBlock<TBlock> holder, BlockModelGenerators blockModels) {
+        stackable(holder, holder, blockModels);
     }
 
     private ResourceLocation assetPath(ResourceKey<?> registryKey) {

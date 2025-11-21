@@ -14,6 +14,7 @@ import dev.apexstudios.fantasyfurniture.decorations.block.PaperStackBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.SpiderWebSmallBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.SpiderWebWideBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.StockingBlock;
+import dev.apexstudios.fantasyfurniture.decorations.block.TankardsBlock;
 import dev.apexstudios.fantasyfurniture.decorations.cookie.CookieJarBlock;
 import dev.apexstudios.fantasyfurniture.decorations.cookie.CookieJarBlockEntity;
 import dev.apexstudios.fantasyfurniture.decorations.cookie.CookieJarMenu;
@@ -62,6 +63,10 @@ public class DecorationsFurnitureModule {
     public static final DeferredBlock<FairyLightsBlock> FAIRY_LIGHTS = FurnitureUtil.simpleBlock(REGISTREE, "fairy_lights", FairyLightsBlock::new, FurnitureUtil.mutating(FurnitureUtil.PLANK_PROPERTIES, BlockBehaviour.Properties::noCollision));
     public static final DeferredBlock<StockingBlock> STOCKING = FurnitureUtil.simpleBlock(REGISTREE, "stocking", StockingBlock::new, FurnitureUtil.PLANK_PROPERTIES);
     public static final DeferredBlock<BookStackBlock> BOOK_STACK = FurnitureUtil.simpleBlock(REGISTREE, "book_stack", BookStackBlock::new, FurnitureUtil.PLANK_PROPERTIES);
+    public static final DeferredBlock<TankardsBlock> TANKARDS = DecorationUtil.tankards(REGISTREE, null);
+    public static final DeferredBlock<TankardsBlock> TANKARDS_HONEYMEAD = DecorationUtil.tankards(REGISTREE, "honeymead");
+    public static final DeferredBlock<TankardsBlock> TANKARDS_MILK = DecorationUtil.tankards(REGISTREE, "milk");
+    public static final DeferredBlock<TankardsBlock> TANKARDS_SWEETBERRY = DecorationUtil.tankards(REGISTREE, "sweetberry");
 
     public static final DeferredBlock<CookieJarBlock> COOKIE_JAR_BLOCK = FurnitureUtil.simpleBlock(REGISTREE, "cookie_jar", CookieJarBlock::new, FurnitureUtil.PLANK_PROPERTIES);
     public static final DeferredBlockEntity<CookieJarBlockEntity> COOKIE_JAR_BLOCK_ENTITY = REGISTREE.registerBlockEntity(COOKIE_JAR_BLOCK, CookieJarBlockEntity::new);
