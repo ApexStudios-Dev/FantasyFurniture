@@ -4,7 +4,6 @@
 		"lockbox": "fantasyfurniture_dunmer:block/lockbox",
 		"particle": "fantasyfurniture_dunmer:block/particle"
 	},
-	"render_type": "minecraft:cutout",
 	"elements": [
 		{
 			"name": "top_5",

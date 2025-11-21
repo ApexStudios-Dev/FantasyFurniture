@@ -21,7 +21,6 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.IEventBus;
@@ -66,11 +65,7 @@ public class DecorationsFurnitureModule {
         return ID + ResourceLocation.NAMESPACE_SEPARATOR + identifier;
     }
 
-    public static Stream<Block> dyeables(FeatureFlagSet enabledFeatures) {
-        return REGISTREE.asLookup(Registries.BLOCK)
-                        .filterFeatures(enabledFeatures)
-                        .listElements()
-                        .map(Holder::value)
-                        .filter(Dyeable.class::isInstance);
+    public static Stream<Block> dyeables() {
+        return REGISTREE.listElements(Registries.BLOCK).map(Holder::value).filter(Dyeable.class::isInstance);
     }
 }

@@ -5,8 +5,7 @@
 		"berry_basket": "fantasyfurniture_decorations:block/berry_basket",
 		"particle": "fantasyfurniture_decorations:block/berry_basket_particle"
 	},
-    "render_type": "cutout",
-	"elements": [
+    "elements": [
 		{
 			"name": "base",
 			"from": [2.5, 0, 4],

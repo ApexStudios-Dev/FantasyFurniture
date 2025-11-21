@@ -4,7 +4,6 @@
 		"floor_light": "fantasyfurniture_dunmer:block/floor_light",
 		"particle": "fantasyfurniture_dunmer:block/particle"
 	},
-	"render_type": "minecraft:cutout",
 	"elements": [
 		{
 			"name": "top",

@@ -1,5 +1,4 @@
 {
-	"render_type": "minecraft:cutout",
 	"texture_size": [128, 128],
 	"textures": {
 		"oven": "fantasyfurniture_nordic:block/oven",
