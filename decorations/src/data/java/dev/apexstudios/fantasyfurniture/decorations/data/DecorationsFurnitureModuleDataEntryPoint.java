@@ -76,20 +76,21 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
 
                     fairyLights(blockModels);
                     existingHorizontalModel(DecorationsFurnitureModule.STOCKING, blockModels);
-                    stackable(DecorationsFurnitureModule.BOOK_STACK, "book_stack", blockModels);
-                    stackable(DecorationsFurnitureModule.TANKARDS, "tankards", blockModels);
-                    stackable(DecorationsFurnitureModule.TANKARDS, DecorationsFurnitureModule.TANKARDS_HONEYMEAD, "tankards", blockModels);
-                    stackable(DecorationsFurnitureModule.TANKARDS, DecorationsFurnitureModule.TANKARDS_MILK, "tankards", blockModels);
-                    stackable(DecorationsFurnitureModule.TANKARDS, DecorationsFurnitureModule.TANKARDS_SWEETBERRY, "tankards", blockModels);
-                    stackable(DecorationsFurnitureModule.MUSHROOMS_RED, "mushrooms_red", blockModels);
-                    stackable(DecorationsFurnitureModule.MUSHROOMS_BROWN, "mushrooms_brown", blockModels);
-                    stackable(DecorationsFurnitureModule.MUFFINS_BLUEBERRY, "muffins", blockModels);
-                    stackable(DecorationsFurnitureModule.MUFFINS_BLUEBERRY, DecorationsFurnitureModule.MUFFINS_CHOCOLATE, "muffins", blockModels);
-                    stackable(DecorationsFurnitureModule.MUFFINS_BLUEBERRY, DecorationsFurnitureModule.MUFFINS_SWEETBERRY, "muffins", blockModels);
+                    stackable(DecorationsFurnitureModule.BOOK_STACK, "book_stack", true, blockModels);
+                    stackable(DecorationsFurnitureModule.TANKARDS, "tankards", true, blockModels);
+                    stackable(DecorationsFurnitureModule.TANKARDS, DecorationsFurnitureModule.TANKARDS_HONEYMEAD, "tankards", true, blockModels);
+                    stackable(DecorationsFurnitureModule.TANKARDS, DecorationsFurnitureModule.TANKARDS_MILK, "tankards", true, blockModels);
+                    stackable(DecorationsFurnitureModule.TANKARDS, DecorationsFurnitureModule.TANKARDS_SWEETBERRY, "tankards", true, blockModels);
+                    stackable(DecorationsFurnitureModule.MUSHROOMS_RED, "mushrooms_red", true, blockModels);
+                    stackable(DecorationsFurnitureModule.MUSHROOMS_BROWN, "mushrooms_brown", true, blockModels);
+                    stackable(DecorationsFurnitureModule.MUFFINS_BLUEBERRY, "muffins", true, blockModels);
+                    stackable(DecorationsFurnitureModule.MUFFINS_BLUEBERRY, DecorationsFurnitureModule.MUFFINS_CHOCOLATE, "muffins", true, blockModels);
+                    stackable(DecorationsFurnitureModule.MUFFINS_BLUEBERRY, DecorationsFurnitureModule.MUFFINS_SWEETBERRY, "muffins", true, blockModels);
+                    stackable(DecorationsFurnitureModule.FLOATING_TOMES, "floating_tomes", false, blockModels);
 
                     DecorationsFurnitureModule.dyeables().filter(Predicate.not(DecorationsFurnitureModule.FAIRY_LIGHTS::is)).forEach(block -> blockModels.registerSimpleTintedItemModel(
                             block,
-                            assetPath(block),
+                            block instanceof Stackable stackable ? stackableItemModelPath(stackable) : assetPath(block),
                             new DyeColorItemTintSource(Dyeable.DEFAULT_COLOR)
                     ));
 
@@ -134,6 +135,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     provider.addBlock(DecorationsFurnitureModule.MUFFINS_BLUEBERRY, "Blueberry Muffins");
                     provider.addBlock(DecorationsFurnitureModule.MUFFINS_CHOCOLATE, "Chocolate Muffins");
                     provider.addBlock(DecorationsFurnitureModule.MUFFINS_SWEETBERRY, "Sweetberry Muffins");
+                    provider.addBlock(DecorationsFurnitureModule.FLOATING_TOMES, "Floating Tomes");
                 })
                 .providing(ProviderTypes.RECIPES, (context, provider) -> DecorationsFurnitureModule.REGISTREE
                         .listElements(Registries.ITEM)
@@ -273,7 +275,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
         );
     }
 
-    private <TBlock extends Block & Stackable> void stackable(Holder<Block> template, DeferredBlock<TBlock> holder, String slotName, BlockModelGenerators blockModels) {
+    private <TBlock extends Block & Stackable> void stackable(Holder<Block> template, DeferredBlock<TBlock> holder, String slotName, boolean withItemModel, BlockModelGenerators blockModels) {
         var property = holder.value().getStackableProperty();
 
         Function<Integer, ResourceLocation> model = Util.memoize(count -> {
@@ -299,11 +301,21 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                 .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
         );
 
-        blockModels.registerSimpleItemModel(holder.value(), assetPath(holder).withSuffix("_" + property.max));
+        if(withItemModel) {
+            stackableItemModel(holder, blockModels);
+        }
     }
 
-    private <TBlock extends Block & Stackable> void stackable(DeferredBlock<TBlock> holder, String slotName, BlockModelGenerators blockModels) {
-        stackable(holder, holder, slotName, blockModels);
+    private <TBlock extends Block & Stackable> void stackable(DeferredBlock<TBlock> holder, String slotName, boolean withItemModel, BlockModelGenerators blockModels) {
+        stackable(holder, holder, slotName, withItemModel, blockModels);
+    }
+
+    private <TBlock extends Block & Stackable> void stackableItemModel(DeferredBlock<TBlock> holder, BlockModelGenerators blockModels) {
+        blockModels.registerSimpleItemModel(holder.value(), stackableItemModelPath(holder.value()));
+    }
+
+    private ResourceLocation stackableItemModelPath(Stackable stackable) {
+        return assetPath((Block) stackable).withSuffix("_" + stackable.getStackableProperty().max);
     }
 
     private ResourceLocation assetPath(ResourceKey<?> registryKey) {
