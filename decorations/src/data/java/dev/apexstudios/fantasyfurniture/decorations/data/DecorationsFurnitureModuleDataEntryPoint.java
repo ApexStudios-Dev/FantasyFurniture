@@ -87,6 +87,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     stackable(DecorationsFurnitureModule.MUFFINS_BLUEBERRY, DecorationsFurnitureModule.MUFFINS_CHOCOLATE, "muffins", true, blockModels);
                     stackable(DecorationsFurnitureModule.MUFFINS_BLUEBERRY, DecorationsFurnitureModule.MUFFINS_SWEETBERRY, "muffins", true, blockModels);
                     stackable(DecorationsFurnitureModule.FLOATING_TOMES, "floating_tomes", false, blockModels);
+                    stackable(DecorationsFurnitureModule.STACKABLE_PUMPKINS, "stackable_pumpkins", true, blockModels);
 
                     DecorationsFurnitureModule.dyeables().filter(Predicate.not(DecorationsFurnitureModule.FAIRY_LIGHTS::is)).forEach(block -> blockModels.registerSimpleTintedItemModel(
                             block,
@@ -136,6 +137,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     provider.addBlock(DecorationsFurnitureModule.MUFFINS_CHOCOLATE, "Chocolate Muffins");
                     provider.addBlock(DecorationsFurnitureModule.MUFFINS_SWEETBERRY, "Sweetberry Muffins");
                     provider.addBlock(DecorationsFurnitureModule.FLOATING_TOMES, "Floating Tomes");
+                    provider.addBlock(DecorationsFurnitureModule.STACKABLE_PUMPKINS, "Stackable Pumpkins");
                 })
                 .providing(ProviderTypes.RECIPES, (context, provider) -> DecorationsFurnitureModule.REGISTREE
                         .listElements(Registries.ITEM)
