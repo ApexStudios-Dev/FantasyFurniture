@@ -7,7 +7,6 @@ import dev.apexstudios.apexcore.lib.data.ResourceGenerator;
 import dev.apexstudios.apexcore.lib.data.provider.RecipeProvider;
 import dev.apexstudios.apexcore.lib.multiblock.MultiBlock;
 import dev.apexstudios.fantasyfurniture.decorations.DecorationsFurnitureModule;
-import dev.apexstudios.fantasyfurniture.decorations.block.FairyLightsBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.Stackable;
 import dev.apexstudios.fantasyfurniture.decorations.cookie.CookieJarBlock;
 import dev.apexstudios.fantasyfurniture.station.FurnitureStationRecipeBuilder;
@@ -89,16 +88,16 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     stackable(DecorationsFurnitureModule.FLOATING_TOMES, "floating_tomes", false, blockModels);
                     stackable(DecorationsFurnitureModule.STACKABLE_PUMPKINS, "stackable_pumpkins", true, blockModels);
 
-                    DecorationsFurnitureModule.dyeables().filter(Predicate.not(DecorationsFurnitureModule.FAIRY_LIGHTS::is)).forEach(block -> blockModels.registerSimpleTintedItemModel(
+                    Dyeable.dyeableBlocks(DecorationsFurnitureModule.REGISTREE).filter(Predicate.not(DecorationsFurnitureModule.FAIRY_LIGHTS::is)).forEach(block -> blockModels.registerSimpleTintedItemModel(
                             block,
                             block instanceof Stackable stackable ? stackableItemModelPath(stackable) : assetPath(block),
-                            new DyeColorItemTintSource(Dyeable.DEFAULT_COLOR)
+                            new DyeColorItemTintSource()
                     ));
 
                     blockModels.itemModelOutput.accept(DecorationsFurnitureModule.FAIRY_LIGHTS.asItem(),
                             ItemModelUtils.conditional(
                                     ItemModelUtils.hasComponent(DataComponents.BASE_COLOR),
-                                    ItemModelUtils.tintedModel(assetPath(DecorationsFurnitureModule.FAIRY_LIGHTS), new DyeColorItemTintSource(Dyeable.DEFAULT_COLOR)),
+                                    ItemModelUtils.tintedModel(assetPath(DecorationsFurnitureModule.FAIRY_LIGHTS), new DyeColorItemTintSource()),
                                     ItemModelUtils.plainModel(assetPath(DecorationsFurnitureModule.FAIRY_LIGHTS).withSuffix("_clean"))
                             )
                     );
@@ -174,9 +173,9 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     provider.tag(Tags.Blocks.CHAINS).withElement(DecorationsFurnitureModule.BRONZE_CHAIN);
                 })
                 .providing(ProviderTypes.ITEM_TAGS, (context, provider) -> {
-                    DecorationsFurnitureModule.dyeables()
-                                              .map(ItemLike::asItem)
-                                              .forEach(block -> provider.tag(Tags.Items.DYED).withElement(block));
+                    Dyeable.dyeableItems(DecorationsFurnitureModule.REGISTREE)
+                           .map(ItemLike::asItem)
+                           .forEach(block -> provider.tag(Tags.Items.DYED).withElement(block));
 
                     provider.tag(ItemTags.CHAINS).withElement(DecorationsFurnitureModule.BRONZE_CHAIN.asItem());
                     provider.tag(Tags.Items.CHAINS).withElement(DecorationsFurnitureModule.BRONZE_CHAIN.asItem());
@@ -272,7 +271,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
 
         blockModels.blockStateOutput.accept(MultiVariantGenerator
                 .dispatch(DecorationsFurnitureModule.FAIRY_LIGHTS.value(), BlockModelGenerators.plainVariant(assetPath))
-                .with(PropertyDispatch.modify(FairyLightsBlock.COLOR).generate(color -> variant -> color == FairyLightsBlock.LightColor.NONE ? variant.withModel(cleanModel) : variant))
+                .with(PropertyDispatch.modify(Dyeable.WithNone.DYED_COLOR).generate(color -> variant -> color == Dyeable.DyedColor.NONE ? variant.withModel(cleanModel) : variant))
                 .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
         );
     }
