@@ -81,6 +81,8 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     stackable(DecorationsFurnitureModule.TANKARDS, DecorationsFurnitureModule.TANKARDS_HONEYMEAD, blockModels);
                     stackable(DecorationsFurnitureModule.TANKARDS, DecorationsFurnitureModule.TANKARDS_MILK, blockModels);
                     stackable(DecorationsFurnitureModule.TANKARDS, DecorationsFurnitureModule.TANKARDS_SWEETBERRY, blockModels);
+                    stackable(DecorationsFurnitureModule.MUSHROOMS_RED, blockModels);
+                    stackable(DecorationsFurnitureModule.MUSHROOMS_BROWN, blockModels);
 
                     DecorationsFurnitureModule.dyeables().filter(Predicate.not(DecorationsFurnitureModule.FAIRY_LIGHTS::is)).forEach(block -> blockModels.registerSimpleTintedItemModel(
                             block,
@@ -124,6 +126,8 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     provider.addBlock(DecorationsFurnitureModule.TANKARDS_HONEYMEAD, "Honeymead Tankards");
                     provider.addBlock(DecorationsFurnitureModule.TANKARDS_MILK, "Milk Tankards");
                     provider.addBlock(DecorationsFurnitureModule.TANKARDS_SWEETBERRY, "Sweetberry Tankards");
+                    provider.addBlock(DecorationsFurnitureModule.MUSHROOMS_RED, "Mushrooms Red");
+                    provider.addBlock(DecorationsFurnitureModule.MUSHROOMS_BROWN, "Mushrooms Brown");
                 })
                 .providing(ProviderTypes.RECIPES, (context, provider) -> DecorationsFurnitureModule.REGISTREE
                         .listElements(Registries.ITEM)
