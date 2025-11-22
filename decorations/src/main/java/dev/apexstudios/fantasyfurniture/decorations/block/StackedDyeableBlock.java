@@ -2,61 +2,74 @@ package dev.apexstudios.fantasyfurniture.decorations.block;
 
 import dev.apexstudios.apexcore.lib.block.Dyeable;
 import dev.apexstudios.apexcore.lib.block.SimpleHorizontalDirectionalBlock;
-import dev.apexstudios.apexcore.lib.util.ApexShapes;
-import java.util.Map;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.Shapes;
-import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-public final class BrewingCauldronBlock extends SimpleHorizontalDirectionalBlock implements Dyeable.Colored {
-    public static final VoxelShape SHAPE = ApexShapes.join(
-            box(3D, 0D, 3D, 5D, 2D, 5D),
-            box(3D, 0D, 11D, 5D, 2D, 13D),
-            box(11D, 0D, 11D, 13D, 2D, 13D),
-            box(11D, 0D, 3D, 13D, 2D, 5D),
-            box(2D, 2D, 2D, 14D, 9D, 14D),
-            box(1D, 9D, 1D, 15D, 11D, 15D)
-    );
-
-    public static final Map<Direction, VoxelShape> SHAPES = Shapes.rotateHorizontal(SHAPE);
-
-    public BrewingCauldronBlock(Properties properties) {
+public abstract class StackedDyeableBlock extends SimpleHorizontalDirectionalBlock implements Dyeable, Stackable {
+    public StackedDyeableBlock(Properties properties) {
         super(properties);
 
-        registerDefaultState(setDyedColor(defaultBlockState(), Dyeable.DyedColor.WHITE));
-    }
-
-    @Override
-    protected VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext context) {
-        var facing = blockState.getValue(FACING);
-        return SHAPES.get(facing);
+        registerDefaultState(setDyedColor(defaultBlockState(), this instanceof WithNone ? DyedColor.NONE : DyedColor.WHITE));
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        super.createBlockStateDefinition(builder.add(DYED_COLOR));
+        super.createBlockStateDefinition(builder.add(getStackableProperty()));
+
+        if(this instanceof WithNone) {
+            builder.add(WithNone.DYED_COLOR);
+        } else if(this instanceof Colored) {
+            builder.add(Colored.DYED_COLOR);
+        }
     }
 
-    @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         var placementBlockState = super.getStateForPlacement(context);
-        return placementBlockState == null ? null : setDyedColor(placementBlockState, getDyedColorForPlacement(context));
+
+        if(placementBlockState == null) {
+            return null;
+        }
+
+        var color = getDyedColorForPlacement(context);
+
+        if(color == DyedColor.NONE || color == DyedColor.WHITE) {
+            var existing = context.getLevel().getBlockState(context.getClickedPos());
+
+            if(existing.is(this)) {
+                color = getDyedColor(existing);
+            }
+        }
+
+        var count = Stackable.getCountForPlacement(this, context);
+        return setDyedColor(placementBlockState.setValue(getStackableProperty(), count), color);
+    }
+
+    @Override
+    protected boolean canBeReplaced(BlockState blockState, BlockPlaceContext context) {
+        if(Stackable.canBeReplaced(this, blockState, context)) {
+            return true;
+        }
+
+        return super.canBeReplaced(blockState, context);
+    }
+
+    @Override
+    public void playerDestroy(Level level, Player player, BlockPos pos, BlockState blockState, @Nullable BlockEntity blockEntity, ItemStack tool) {
+        super.playerDestroy(level, player, pos, blockState, blockEntity, tool);
+        Stackable.playerDestroy(this, level, pos, blockState);
     }
 
     @Override

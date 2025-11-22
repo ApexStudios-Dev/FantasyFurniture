@@ -4,8 +4,7 @@
     "model": "fantasyfurniture_decorations:block/brewing_cauldron",
     "tints": [
       {
-        "type": "apexcore:dye_color",
-        "default": "white"
+        "type": "apexcore:dye_color"
       }
     ]
   }
