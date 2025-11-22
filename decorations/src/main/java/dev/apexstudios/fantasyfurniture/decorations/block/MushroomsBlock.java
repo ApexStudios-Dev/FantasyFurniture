@@ -59,11 +59,11 @@ public final class MushroomsBlock extends SimpleHorizontalDirectionalBlock imple
 
     public static final Map<Direction, VoxelShape> SHAPES_RED_0 = Shapes.rotateHorizontal(SHAPE_RED_0);
     public static final Map<Direction, VoxelShape> SHAPES_RED_1 = Shapes.rotateHorizontal(SHAPE_RED_1);
-    public static final Map<Direction, VoxelShape> SHAPES_RED_2 = Shapes.rotateHorizontal(SHAPE_RED_1);
+    public static final Map<Direction, VoxelShape> SHAPES_RED_2 = Shapes.rotateHorizontal(SHAPE_RED_2);
 
     public static final Map<Direction, VoxelShape> SHAPES_BROWN_0 = Shapes.rotateHorizontal(SHAPE_BROWN_0);
     public static final Map<Direction, VoxelShape> SHAPES_BROWN_1 = Shapes.rotateHorizontal(SHAPE_BROWN_1);
-    public static final Map<Direction, VoxelShape> SHAPES_BROWN_2 = Shapes.rotateHorizontal(SHAPE_BROWN_1);
+    public static final Map<Direction, VoxelShape> SHAPES_BROWN_2 = Shapes.rotateHorizontal(SHAPE_BROWN_2);
 
     private final boolean red;
 
