@@ -3,6 +3,7 @@ package dev.apexstudios.fantasyfurniture.decorations.util;
 import dev.apexstudios.fantasyfurniture.decorations.block.BerryBasketBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.BowlBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.CoinStackBlock;
+import dev.apexstudios.fantasyfurniture.decorations.block.MushroomsBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.TankardsBlock;
 import dev.apexstudios.fantasyfurniture.util.FurnitureUtil;
 import dev.apexstudios.registree.api.Registree;
@@ -36,5 +37,10 @@ public interface DecorationUtil {
         }
 
         return FurnitureUtil.simpleBlock(registree, name, TankardsBlock::new, FurnitureUtil.PLANK_PROPERTIES);
+    }
+
+    static DeferredBlock<MushroomsBlock> mushrooms(Registree registree, boolean red) {
+        var name = "mushrooms_" + (red ? "red" : "brown");
+        return FurnitureUtil.simpleBlock(registree, name, properties -> new MushroomsBlock(properties, red), FurnitureUtil.PLANK_PROPERTIES);
     }
 }
