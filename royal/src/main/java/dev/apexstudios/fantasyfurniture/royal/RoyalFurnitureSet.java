@@ -31,7 +31,6 @@ import dev.apexstudios.fantasyfurniture.royal.block.RoyalWoolBlock;
 import dev.apexstudios.fantasyfurniture.util.FurnitureUtil;
 import dev.apexstudios.registree.api.Registree;
 import dev.apexstudios.registree.api.holder.DeferredBlock;
-import java.util.List;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.block.Block;
@@ -101,15 +100,6 @@ public class RoyalFurnitureSet {
     public static final FurnitureUtil.SignPair<StandingSignBlock, WallSignBlock> SIGN = FurnitureUtil.sign(REGISTREE, WOOD_TYPE);
 
     public static final ResourceKey<CreativeModeTab> CREATIVE_MODE_TAB = FurnitureUtil.creativeModeTab(REGISTREE, BED_SINGLE);
-
-    public static final List<DeferredBlock<?>> DYEABLE_BLOCKS = List.of(
-            WOOL, CARPET, DRESSER, STOOL,
-            CUSION, LOCKBOX, DRAWER, CHAIR,
-            BOOKSHELF, BED_SINGLE, BED_DOUBLE, DOOR_SINGLE,
-            DOOR_DOUBLE, DESK_LEFT, DESK_RIGHT, OVEN,
-            CHEST, SHELF, SOFA, COUNTER,
-            BENCH, WARDROBE, TABLE
-    );
 
     public RoyalFurnitureSet(IEventBus modBus) {
         FurnitureUtil.registerEvents(modBus, REGISTREE, WOOD_TYPE);

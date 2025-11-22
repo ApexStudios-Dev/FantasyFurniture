@@ -28,7 +28,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
@@ -153,7 +152,7 @@ public final class RoyalFurnitureSetDataEntryPoint {
     }
 
     private void registerDyeableItemModel(Block block, ResourceLocation modelPath, BlockModelGenerators blockModels) {
-        blockModels.registerSimpleTintedItemModel(block, modelPath, new DyeColorItemTintSource(Dyeable.DEFAULT_COLOR));
+        blockModels.registerSimpleTintedItemModel(block, modelPath, new DyeColorItemTintSource());
     }
 
     private void registerDyeableItemModel(Block block, String modelSuffix, BlockModelGenerators blockModels) {
@@ -178,11 +177,11 @@ public final class RoyalFurnitureSetDataEntryPoint {
 
     private void registerBlockTags(ProviderListenerContext context, IntrusiveTagProvider<Block> provider) {
         var dyedTag = provider.tag(Tags.Blocks.DYED);
-        RoyalFurnitureSet.DYEABLE_BLOCKS.forEach(dyedTag::withElement);
+        Dyeable.dyeableBlocks(RoyalFurnitureSet.REGISTREE).forEach(dyedTag::withElement);
     }
 
     private void registerItemTags(ProviderListenerContext context, IntrusiveTagProvider<Item> provider) {
         var dyedTag = provider.tag(Tags.Items.DYED);
-        RoyalFurnitureSet.DYEABLE_BLOCKS.stream().map(ItemLike::asItem).forEach(dyedTag::withElement);
+        Dyeable.dyeableItems(RoyalFurnitureSet.REGISTREE).forEach(dyedTag::withElement);
     }
 }

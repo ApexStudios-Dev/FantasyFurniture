@@ -4,8 +4,7 @@
     "model": "fantasyfurniture_royal:block/drawer",
     "tints": [
       {
-        "type": "apexcore:dye_color",
-        "default": "white"
+        "type": "apexcore:dye_color"
       }
     ]
   }

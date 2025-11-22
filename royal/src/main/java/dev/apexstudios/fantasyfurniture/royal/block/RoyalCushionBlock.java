@@ -18,7 +18,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-public final class RoyalCushionBlock extends CushionBlock {
+public final class RoyalCushionBlock extends CushionBlock implements Dyeable.Colored {
     public static final VoxelShape SHAPE = ApexShapes.join(
             box(1D, 0D, 1D, 5D, 4D, 5D),
             box(1D, 0D, 11D, 5D, 4D, 15D),
@@ -31,44 +31,43 @@ public final class RoyalCushionBlock extends CushionBlock {
     public RoyalCushionBlock(Properties properties) {
         super(properties, SHAPE);
 
-        registerDefaultState(defaultBlockState().setValue(Dyeable.PROPERTY, Dyeable.DEFAULT_COLOR));
+        registerDefaultState(setDyedColor(defaultBlockState(), DyedColor.WHITE));
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        super.createBlockStateDefinition(builder);
-        builder.add(Dyeable.PROPERTY);
+        super.createBlockStateDefinition(builder.add(DYED_COLOR));
     }
 
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         var placementBlockState = super.getStateForPlacement(context);
-
-        if(placementBlockState == null)
-            return null;
-
-        var color = Dyeable.getColorForPlacement(context);
-        return placementBlockState.setValue(Dyeable.PROPERTY, color);
+        return placementBlockState == null ? null : setDyedColor(placementBlockState, getDyedColorForPlacement(context));
     }
 
     @Override
     protected InteractionResult useItemOn(ItemStack stack, BlockState blockState, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        var result = Dyeable.useItemOn(level, pos, blockState, stack);
+        var result = tryDyeBlock(stack, blockState, level, pos, player);
 
-        if(result.consumesAction())
-            return result;
+        if(!result.consumesAction()) {
+            result = super.useItemOn(stack, blockState, level, pos, player, hand, hitResult);
+        }
 
-        return super.useItemOn(stack, blockState, level, pos, player, hand, hitResult);
+        return result;
     }
 
     @Override
     public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState blockState, boolean includeData, Player player) {
-        return Dyeable.getCloneStack(this, blockState, player, includeData);
+        var stack = new ItemStack(this);
+        appendDyedColor(stack, blockState, player, includeData);
+        return stack;
     }
 
     @Override
     protected ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState blockState, boolean includeData) {
-        return Dyeable.getCloneStack(this, blockState, null, includeData);
+        var stack = new ItemStack(this);
+        appendDyedColor(stack, blockState, null, includeData);
+        return stack;
     }
 }
