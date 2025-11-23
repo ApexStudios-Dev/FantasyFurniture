@@ -1,0 +1,6 @@
+{
+  "parent": "fantasyfurniture_decorations:block/potion_bottles_2",
+  "textures": {
+    "potion_bottles_tint": "fantasyfurniture_decorations:block/potion_bottles"
+  }
+}
