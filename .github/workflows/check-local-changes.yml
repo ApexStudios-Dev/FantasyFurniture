@@ -42,7 +42,7 @@ jobs:
   check-local-changes-main:
     name: Check Local Changes (Main)
     needs: determine-changes
-    if: ${{ needs.determine-changes.outputs.main-changed }}
+    if: ${{ needs.determine-changes.outputs.main-changed == 'true' }}
     uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
     secrets: inherit
     with:
@@ -53,7 +53,7 @@ jobs:
   check-local-changes-nordic:
     name: Check Local Changes (Nordic)
     needs: determine-changes
-    if: ${{ needs.determine-changes.outputs.nordic-changed }}
+    if: ${{ needs.determine-changes.outputs.nordic-changed == 'true' }}
     uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
     secrets: inherit
     with:
@@ -65,7 +65,7 @@ jobs:
   check-local-changes-venthyr:
     name: Check Local Changes (Venthyr)
     needs: determine-changes
-    if: ${{ needs.determine-changes.outputs.venthyr-changed }}
+    if: ${{ needs.determine-changes.outputs.venthyr-changed == 'true' }}
     uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
     secrets: inherit
     with:
@@ -77,7 +77,7 @@ jobs:
   check-local-changes-bone:
     name: Check Local Changes (Bone)
     needs: determine-changes
-    if: ${{ needs.determine-changes.outputs.bone-changed }}
+    if: ${{ needs.determine-changes.outputs.bone-changed == 'true' }}
     uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
     secrets: inherit
     with:
@@ -89,7 +89,7 @@ jobs:
   check-local-changes-dunmer:
     name: Check Local Changes (Dunmer)
     needs: determine-changes
-    if: ${{ needs.determine-changes.outputs.dunmer-changed }}
+    if: ${{ needs.determine-changes.outputs.dunmer-changed == 'true' }}
     uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
     secrets: inherit
     with:
@@ -101,7 +101,7 @@ jobs:
   check-local-changes-necrolord:
     name: Check Local Changes (Necrolord)
     needs: determine-changes
-    if: ${{ needs.determine-changes.outputs.necrolord-changed }}
+    if: ${{ needs.determine-changes.outputs.necrolord-changed == 'true' }}
     uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
     secrets: inherit
     with:
@@ -113,7 +113,7 @@ jobs:
   check-local-changes-royal:
     name: Check Local Changes (Royal)
     needs: determine-changes
-    if: ${{ needs.determine-changes.outputs.royal-changed }}
+    if: ${{ needs.determine-changes.outputs.royal-changed == 'true' }}
     uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
     secrets: inherit
     with:
