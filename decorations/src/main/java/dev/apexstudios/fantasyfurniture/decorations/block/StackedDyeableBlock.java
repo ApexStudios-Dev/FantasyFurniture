@@ -21,7 +21,7 @@ public abstract class StackedDyeableBlock extends SimpleHorizontalDirectionalBlo
     public StackedDyeableBlock(Properties properties) {
         super(properties);
 
-        registerDefaultState(setDyedColor(defaultBlockState(), this instanceof WithNone ? DyedColor.NONE : DyedColor.WHITE));
+        registerDefaultState(setDyedColor(defaultBlockState().setValue(getStackableProperty(), 0), this instanceof WithNone ? DyedColor.NONE : DyedColor.WHITE));
     }
 
     @Override

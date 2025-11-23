@@ -15,7 +15,7 @@ import dev.apexstudios.fantasyfurniture.util.FurnitureClientDataUtil;
 import dev.apexstudios.placementvisualizer.api.BlockItemPlacementEvent;
 import dev.apexstudios.registree.api.holder.DeferredBlock;
 import java.util.Objects;
-import java.util.function.Function;
+import java.util.function.BiFunction;
 import java.util.function.Predicate;
 import net.minecraft.Util;
 import net.minecraft.client.data.models.BlockModelGenerators;
@@ -33,6 +33,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.util.TriState;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
@@ -87,20 +88,16 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     stackable(DecorationsFurnitureModule.MUFFINS_BLUEBERRY, DecorationsFurnitureModule.MUFFINS_SWEETBERRY, "muffins", true, blockModels);
                     stackable(DecorationsFurnitureModule.FLOATING_TOMES, "floating_tomes", false, blockModels);
                     stackable(DecorationsFurnitureModule.STACKABLE_PUMPKINS, "stackable_pumpkins", true, blockModels);
+                    stackable(DecorationsFurnitureModule.POTION_BOTTLES, "potion_bottles", false, blockModels);
 
-                    Dyeable.dyeableBlocks(DecorationsFurnitureModule.REGISTREE).filter(Predicate.not(DecorationsFurnitureModule.FAIRY_LIGHTS::is)).forEach(block -> blockModels.registerSimpleTintedItemModel(
+                    Dyeable.dyeableBlocks(DecorationsFurnitureModule.REGISTREE).filter(Predicate.not(Dyeable.WithNone.class::isInstance)).forEach(block -> blockModels.registerSimpleTintedItemModel(
                             block,
-                            block instanceof Stackable stackable ? stackableItemModelPath(stackable) : assetPath(block),
+                            block instanceof Stackable stackable ? assetPath(block).withSuffix("_" + stackable.getStackableProperty().max) : assetPath(block),
                             new DyeColorItemTintSource()
                     ));
 
-                    blockModels.itemModelOutput.accept(DecorationsFurnitureModule.FAIRY_LIGHTS.asItem(),
-                            ItemModelUtils.conditional(
-                                    ItemModelUtils.hasComponent(DataComponents.BASE_COLOR),
-                                    ItemModelUtils.tintedModel(assetPath(DecorationsFurnitureModule.FAIRY_LIGHTS), new DyeColorItemTintSource()),
-                                    ItemModelUtils.plainModel(assetPath(DecorationsFurnitureModule.FAIRY_LIGHTS).withSuffix("_clean"))
-                            )
-                    );
+                    cleanDyeableItemModel(DecorationsFurnitureModule.FAIRY_LIGHTS, blockModels);
+                    cleanDyeableItemModel(DecorationsFurnitureModule.POTION_BOTTLES, blockModels);
                 })
                 .providing(ProviderTypes.LANGUAGE, (context, provider) -> {
                     provider.addCreativeModeTab(DecorationsFurnitureModule.CREATIVE_MODE_TAB, "Fantasy's Furniture - Decorations");
@@ -137,6 +134,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     provider.addBlock(DecorationsFurnitureModule.MUFFINS_SWEETBERRY, "Sweetberry Muffins");
                     provider.addBlock(DecorationsFurnitureModule.FLOATING_TOMES, "Floating Tomes");
                     provider.addBlock(DecorationsFurnitureModule.STACKABLE_PUMPKINS, "Stackable Pumpkins");
+                    provider.addBlock(DecorationsFurnitureModule.POTION_BOTTLES, "Potion Bottles");
                 })
                 .providing(ProviderTypes.RECIPES, (context, provider) -> DecorationsFurnitureModule.REGISTREE
                         .listElements(Registries.ITEM)
@@ -279,31 +277,60 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
     private <TBlock extends Block & Stackable> void stackable(Holder<Block> template, DeferredBlock<TBlock> holder, String slotName, boolean withItemModel, BlockModelGenerators blockModels) {
         var property = holder.value().getStackableProperty();
 
-        Function<Integer, ResourceLocation> model = Util.memoize(count -> {
-            var modelPath = assetPath(holder).withSuffix("_" + count);
+        // TriState values
+        // true -> tint + clean
+        // default -> only tint
+        // false -> not dyeable
+        BiFunction<Integer, TriState, ResourceLocation> model = Util.memoize((count, tint) -> {
+            var modelPath = assetPath(holder);
+            var countSuffix = "_" + count;
+            var suffix = "";
+            var slotId = slotName;
 
-            if(template.is(holder)) {
-                return modelPath;
+            if(!tint.isTrue() && template.is(holder)) {
+                return modelPath.withSuffix(countSuffix);
             }
 
-            var slot = TextureSlot.create(slotName);
+            if(!tint.isFalse()) {
+                slotId += "_tint";
+
+                if(tint.isTrue()) {
+                    suffix = "_clean";
+                }
+            }
+
+            var slot = TextureSlot.create(slotId);
 
             return ExtendedModelTemplateBuilder
                     .builder()
                     .requiredTextureSlot(slot)
-                    .parent(assetPath(template).withSuffix("_" + count))
+                    .parent(assetPath(template).withSuffix(countSuffix))
                     .build()
-                    .create(modelPath, new TextureMapping().put(slot, assetPath(holder)), blockModels.modelOutput);
+                    .create(modelPath.withSuffix(suffix + countSuffix), new TextureMapping().put(slot, assetPath(holder)), blockModels.modelOutput);
         });
 
-        blockModels.blockStateOutput.accept(MultiVariantGenerator
-                .dispatch(holder.value())
-                .with(PropertyDispatch.initial(property).generate(count -> BlockModelGenerators.plainVariant(model.apply(count))))
-                .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
-        );
+        var dispatcher = MultiVariantGenerator.dispatch(holder.value());
+        MultiVariantGenerator variantGenerator;
+
+        if(holder.value() instanceof Dyeable.WithNone dyeable) {
+            variantGenerator = dispatcher.with(PropertyDispatch
+                    .initial(Dyeable.WithNone.DYED_COLOR, property)
+                    .generate((color, count) -> {
+                        var isClean = dyeable.isBlankDyedColor(color);
+                        return BlockModelGenerators.plainVariant(model.apply(count, isClean ? TriState.TRUE : TriState.DEFAULT));
+                    })
+            );
+        } else {
+            variantGenerator = dispatcher.with(PropertyDispatch
+                    .initial(property)
+                    .generate(count -> BlockModelGenerators.plainVariant(model.apply(count, TriState.FALSE)))
+            );
+        }
+
+        blockModels.blockStateOutput.accept(variantGenerator.with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING));
 
         if(withItemModel) {
-            stackableItemModel(holder, blockModels);
+            blockModels.registerSimpleItemModel(holder.value(), assetPath(holder).withSuffix("_" + property.max));
         }
     }
 
@@ -311,12 +338,20 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
         stackable(holder, holder, slotName, withItemModel, blockModels);
     }
 
-    private <TBlock extends Block & Stackable> void stackableItemModel(DeferredBlock<TBlock> holder, BlockModelGenerators blockModels) {
-        blockModels.registerSimpleItemModel(holder.value(), stackableItemModelPath(holder.value()));
-    }
+    private void cleanDyeableItemModel(Holder<Block> holder, BlockModelGenerators blockModels) {
+        var suffix = "";
 
-    private ResourceLocation stackableItemModelPath(Stackable stackable) {
-        return assetPath((Block) stackable).withSuffix("_" + stackable.getStackableProperty().max);
+        if(holder.value() instanceof Stackable stackable) {
+            suffix = "_" + stackable.getStackableProperty().max;
+        }
+
+        blockModels.itemModelOutput.accept(holder.value().asItem(),
+                ItemModelUtils.conditional(
+                        ItemModelUtils.hasComponent(DataComponents.BASE_COLOR),
+                        ItemModelUtils.tintedModel(assetPath(holder).withSuffix(suffix), new DyeColorItemTintSource()),
+                        ItemModelUtils.plainModel(assetPath(holder).withSuffix("_clean" + suffix))
+                )
+        );
     }
 
     private ResourceLocation assetPath(ResourceKey<?> registryKey) {

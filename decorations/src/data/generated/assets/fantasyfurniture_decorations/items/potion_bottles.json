@@ -1,0 +1,20 @@
+{
+  "model": {
+    "type": "minecraft:condition",
+    "component": "minecraft:base_color",
+    "on_false": {
+      "type": "minecraft:model",
+      "model": "fantasyfurniture_decorations:block/potion_bottles_clean_2"
+    },
+    "on_true": {
+      "type": "minecraft:model",
+      "model": "fantasyfurniture_decorations:block/potion_bottles_2",
+      "tints": [
+        {
+          "type": "apexcore:dye_color"
+        }
+      ]
+    },
+    "property": "minecraft:has_component"
+  }
+}
