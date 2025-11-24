@@ -26,6 +26,8 @@ import dev.apexstudios.fantasyfurniture.decorations.block.StackablePumpkinsBlock
 import dev.apexstudios.fantasyfurniture.decorations.block.StockingBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.SweetrollsBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.TankardsBlock;
+import dev.apexstudios.fantasyfurniture.decorations.block.TeaCupsBlock;
+import dev.apexstudios.fantasyfurniture.decorations.block.TeaSetBlock;
 import dev.apexstudios.fantasyfurniture.decorations.cookie.CookieJarBlock;
 import dev.apexstudios.fantasyfurniture.decorations.cookie.CookieJarBlockEntity;
 import dev.apexstudios.fantasyfurniture.decorations.cookie.CookieJarMenu;
@@ -94,6 +96,8 @@ public class DecorationsFurnitureModule {
     public static final DeferredBlock<FoodBlock> FOOD_1 = DecorationUtil.food(REGISTREE, 1);
     public static final DeferredBlock<FoodBlock> FOOD_2 = DecorationUtil.food(REGISTREE, 2);
     public static final DeferredBlock<FoodBlock> FOOD_3 = DecorationUtil.food(REGISTREE, 3);
+    public static final DeferredBlock<TeaSetBlock> TEA_SET = FurnitureUtil.simpleBlock(REGISTREE, "tea_set", TeaSetBlock::new, FurnitureUtil.PLANK_PROPERTIES);
+    public static final DeferredBlock<TeaCupsBlock> TEA_CUPS = FurnitureUtil.simpleBlock(REGISTREE, "tea_cups", TeaCupsBlock::new, FurnitureUtil.PLANK_PROPERTIES);
 
     public static final DeferredBlock<CookieJarBlock> COOKIE_JAR_BLOCK = FurnitureUtil.simpleBlock(REGISTREE, "cookie_jar", CookieJarBlock::new, FurnitureUtil.PLANK_PROPERTIES);
     public static final DeferredBlockEntity<CookieJarBlockEntity> COOKIE_JAR_BLOCK_ENTITY = REGISTREE.registerBlockEntity(COOKIE_JAR_BLOCK, CookieJarBlockEntity::new);
