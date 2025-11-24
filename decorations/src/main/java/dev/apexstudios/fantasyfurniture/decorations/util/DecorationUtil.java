@@ -3,6 +3,7 @@ package dev.apexstudios.fantasyfurniture.decorations.util;
 import dev.apexstudios.fantasyfurniture.decorations.block.BerryBasketBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.BookStackBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.BowlBlock;
+import dev.apexstudios.fantasyfurniture.decorations.block.ChalicesBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.CoinStackBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.FoodBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.MuffinsBlock;
@@ -13,6 +14,8 @@ import dev.apexstudios.fantasyfurniture.decorations.block.TankardsBlock;
 import dev.apexstudios.fantasyfurniture.util.FurnitureUtil;
 import dev.apexstudios.registree.api.Registree;
 import dev.apexstudios.registree.api.holder.DeferredBlock;
+import java.util.function.Function;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import org.jetbrains.annotations.Nullable;
 
 public interface DecorationUtil {
@@ -68,5 +71,9 @@ public interface DecorationUtil {
 
     static DeferredBlock<BookStackBlock> bookStack(Registree registree, int id) {
         return FurnitureUtil.simpleBlock(registree, "book_stack_" + id, BookStackBlock::new, FurnitureUtil.PLANK_PROPERTIES);
+    }
+
+    static <TBlock extends ChalicesBlock> DeferredBlock<TBlock> chalices(Registree registree, int id, Function<BlockBehaviour.Properties, TBlock> factory) {
+        return FurnitureUtil.simpleBlock(registree, "chalices_" + id, factory, FurnitureUtil.PLANK_PROPERTIES);
     }
 }
