@@ -9,6 +9,7 @@ import dev.apexstudios.apexcore.lib.multiblock.MultiBlock;
 import dev.apexstudios.fantasyfurniture.decorations.DecorationsFurnitureModule;
 import dev.apexstudios.fantasyfurniture.decorations.block.BookStackBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.BowlBlock;
+import dev.apexstudios.fantasyfurniture.decorations.block.ChalicesBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.CoinStackBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.MuffinsBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.MushroomsBlock;
@@ -111,6 +112,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     teaCups(blockModels);
                     platter(DecorationsFurnitureModule.PLATTER_0, blockModels);
                     platter(DecorationsFurnitureModule.PLATTER_1, blockModels);
+                    chalices(blockModels);
                 })
                 .providing(ProviderTypes.LANGUAGE, (context, provider) -> {
                     provider.addCreativeModeTab(DecorationsFurnitureModule.CREATIVE_MODE_TAB, "Fantasy's Furniture - Decorations");
@@ -165,6 +167,10 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     provider.addBlock(DecorationsFurnitureModule.TEA_CUPS, "Tea Cups");
                     provider.addBlock(DecorationsFurnitureModule.PLATTER_0, "Platter 0");
                     provider.addBlock(DecorationsFurnitureModule.PLATTER_1, "Platter 1");
+                    provider.addBlock(DecorationsFurnitureModule.CHALICES_0, "Chalices 0");
+                    provider.addBlock(DecorationsFurnitureModule.CHALICES_1, "Chalices 1");
+                    provider.addBlock(DecorationsFurnitureModule.CHALICES_2, "Chalices 2");
+                    provider.addBlock(DecorationsFurnitureModule.CHALICES_3, "Chalices 3");
                 })
                 .providing(ProviderTypes.RECIPES, (context, provider) -> DecorationsFurnitureModule.REGISTREE
                         .listElements(Registries.ITEM)
@@ -491,6 +497,58 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
         stackedItemModel(holder, blockModels);
     }
 
+    private void chalices(BlockModelGenerators blockModels) {
+        createStackedTemplatedModels(DecorationsFurnitureModule.CHALICES_1, DecorationsFurnitureModule.CHALICES_2, TextureSlot.create("chalices"), true, blockModels.modelOutput);
+
+        var baseParentPath = ModelLocationUtils.getModelLocation(DecorationsFurnitureModule.CHALICES_0.value());
+        var baseTexturePath = TextureMapping.getBlockTexture(DecorationsFurnitureModule.CHALICES_3.value());
+        var cupSlot = TextureSlot.create("cup");
+        var fluidSlot = TextureSlot.create("fluid");
+        var textures = TextureMapping.particle(baseTexturePath.withSuffix("_particle"))
+                                     .put(cupSlot, baseTexturePath)
+                                     .put(fluidSlot, baseTexturePath.withSuffix("_tint"));
+
+        var template = ExtendedModelTemplateBuilder
+                .builder()
+                .requiredTextureSlot(TextureSlot.PARTICLE)
+                .requiredTextureSlot(cupSlot)
+                .requiredTextureSlot(fluidSlot);
+
+        for(var i = ChalicesBlock.COUNT.min; i < ChalicesBlock.COUNT.max + 1; i++) {
+            template.parent(baseParentPath.withSuffix("_" + i))
+                    .suffix("_" + i)
+                    .build()
+                    .create(DecorationsFurnitureModule.CHALICES_3.value(), textures, blockModels.modelOutput);
+        }
+
+
+        blockModels.blockStateOutput.accept(blockState(DecorationsFurnitureModule.CHALICES_0)
+                .with(stackableDispatch(DecorationsFurnitureModule.CHALICES_0))
+                .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
+        );
+
+        blockModels.blockStateOutput.accept(blockState(DecorationsFurnitureModule.CHALICES_1)
+                .with(stackableDispatch(DecorationsFurnitureModule.CHALICES_1))
+                .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
+        );
+
+        blockModels.blockStateOutput.accept(blockState(DecorationsFurnitureModule.CHALICES_2)
+                .with(stackableDispatch(DecorationsFurnitureModule.CHALICES_2))
+                .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
+        );
+
+        blockModels.blockStateOutput.accept(blockState(DecorationsFurnitureModule.CHALICES_3)
+                .with(stackableDispatch(DecorationsFurnitureModule.CHALICES_3))
+                .with(dyedColorDispatch(DecorationsFurnitureModule.CHALICES_3))
+                .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
+        );
+
+        stackedItemModel(DecorationsFurnitureModule.CHALICES_0, blockModels);
+        stackedItemModel(DecorationsFurnitureModule.CHALICES_1, blockModels);
+        stackedItemModel(DecorationsFurnitureModule.CHALICES_2, blockModels);
+        stackedDyedColorItemModel(DecorationsFurnitureModule.CHALICES_3, blockModels);
+    }
+
     private MultiVariantGenerator blockState(Holder<Block> holder) {
         return MultiVariantGenerator.dispatch(holder.value(), BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(holder.value())));
     }
@@ -518,7 +576,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
         );
     }
 
-    private <TBlock extends Block & Stackable> void createStackedTemplatedModels(DeferredBlock<TBlock> templateHolder, DeferredBlock<TBlock> holder, TextureSlot slot, boolean replaceParticle, BiConsumer<ResourceLocation, ModelInstance> modelOutput) {
+    private <TTemplate extends Block & Stackable, TBlock extends TTemplate> void createStackedTemplatedModels(DeferredBlock<TTemplate> templateHolder, DeferredBlock<TBlock> holder, TextureSlot slot, boolean replaceParticle, BiConsumer<ResourceLocation, ModelInstance> modelOutput) {
         if(templateHolder.is(holder)) {
             return;
         }
