@@ -1,6 +1,7 @@
 package dev.apexstudios.fantasyfurniture.decorations.util;
 
 import dev.apexstudios.fantasyfurniture.decorations.block.BerryBasketBlock;
+import dev.apexstudios.fantasyfurniture.decorations.block.BookStackBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.BowlBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.CoinStackBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.FoodBlock;
@@ -63,5 +64,9 @@ public interface DecorationUtil {
 
     static DeferredBlock<PlatterBlock> platter(Registree registree, int id) {
         return FurnitureUtil.simpleBlock(registree, "platter_" + id, PlatterBlock::new, FurnitureUtil.PLANK_PROPERTIES);
+    }
+
+    static DeferredBlock<BookStackBlock> bookStack(Registree registree, int id) {
+        return FurnitureUtil.simpleBlock(registree, "book_stack_" + id, BookStackBlock::new, FurnitureUtil.PLANK_PROPERTIES);
     }
 }

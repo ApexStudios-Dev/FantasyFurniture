@@ -615,7 +615,7 @@
 			"visibility": true,
 			"autouv": 0,
 			"isOpen": false,
-			"primary_selected": true
+			"primary_selected": false
 		}
 	],
 	"outliner": [
@@ -658,8 +658,8 @@
 	],
 	"textures": [
 		{
-			"name": "book_stack.png",
-			"relative_path": "../../textures/block/book_stack.png",
+			"name": "book_stack_0.png",
+			"relative_path": "../../textures/block/book_stack_0.png",
 			"folder": "block",
 			"namespace": "fantasyfurniture_decorations",
 			"id": "book_stack",
@@ -686,8 +686,8 @@
 			"source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAEyklEQVR4AeyZTYwURRTHX3eMiWyUMRgzuK4ag0KynIzJJn5xQY0mHryQPahEOKmXxYOGsHrQJWaNipKg8YvNqjHKAQ5u0CAHvgOEwAUSCB8BFtgJgWQXssuFZNhfhxqKnurqrpme7WZown+6+/3fe1Xv1at9NT3+S68srdqwZOmqahjov/jm89UovNFZrr7dvaAOyPds/7d67MiBABdGT1QV8Lnxk57IuShOUv7n2/z19RwN6K6uTtFRnvtoII/6eHfZ4wH1cMcs0VEqlQJ51MdfZxcLvk2Ai7JrRm5NwLf7FjTke2j9GWe7ascJ6X1sq4xd2WYEHDrOjmMMrAmIsU2dXl+ZI7Mfmm0EXOoDTjvMTQIIvH/RrOkpmf/DoWNmG5fmJgGEMLB9iosRNs5okFCYmwRMXJqQZeXLwtUExSWMK7FabhLAjNnnlLkJcOikDWsCVBt0HVS1QRe70v6TQQV4mw+KCVQAOi4+k+haE6Da4OjoedFRGTtn9a3a4MXJKdExPj5utdu0cUI4K5gAZzVukAwSYDp4KH8EG4biTKWqONcrQX+wcmGkGRw6kQoNEr4qc/2kxz1JsflcsfB6QJfnlqdPb7dAUtQW0E+B3McFsO6Lw4FP04eNM+knlfmqzJMaKL01h+9Rt3VXtQXqCIsgbntgmkQHPRcEW8DFoFW6K/8ckve+X2PFP+crXtrj5yYBTzz5lMQh7eDxl5sEnD51XOLAhJtF2D43CYhbffjw5NN4zk0C4lYfPo2Awz5qbTBMxD2rNmjSU23QxEXJWOE4RNk2I6+1Qf2kxz2HH5tj1QYrYxXRwRcZ1Qb1UyD3tjbWu/xz6esfqgPyR7rmecA2n0Y5n7csU/cekjCQ28C5/ME9pyQM5I1OJgs7X5Wy6URnm5Aqc054Ojjt2Tibzyw4X5Wy6+CqzE12Ns6kn6UsN12A7Rbehjwjb2WCcpOAVgZp810kwJadu4HLTQXQPsMtlWfkrVyIWht0HUS1OpOdjTPpZymrtUH9NMc9JzrbxFSr44Sng9OejbP5zILzB/v65eu+zwL89OlaUUD+y8B3Av5eOywK3uQ84fA00f2qnOnsqQOrr3Onn54jgMRkEWDcmA39DeCXWt4ZmgDHoF++MymAZIFVgy8IgDOBN0L9G/4QMPjfiCg0+xbINJYuc04AQX/48jHdx233cOh89FuHAE6aYPXHuwTcpqw98E3w/gdKAq5eGRfQqq/A2rDinACMv/l/PhcjbJzR4KaQYAkakARAUm7SLbs4J+Da1l+D3/G5msDv+MhdZ0ywBA1IAiAprn5c9Z0TwF7t7l0nX20ZkR/37qrhvsXLBfAbXvX1Z1znkZm+cwJ+eH+FDCx5S+Z3Pxu8pOBFBdgwvNoDIz9v9kBURM8tes3DFmBnAhxAN8pPWnLnBPx+5KgH0ppA1n6cE5B0wrRAQAsEtECQ1H6m9HzKjHIDejlGyZNOjBYIaIGAFgiS2s+UXssqYMeWYQ/s3LTbAxxowEwFlnScliUg6QSy1isSkPUKZD1+UQFZr0DW4xcVkPUKpD2+q7+iAlwz1m76RQW024q6xlNUgGvG2k2/qIB2W1HXeIoKcM1Yu+kXFdBuK+oaT1EBrhlrN/2iAu70FW12/jcAAAD//wrrFFcAAAAGSURBVAMAvpzcn/L7F5UAAAAASUVORK5CYII="
 		},
 		{
-			"name": "book_stack_particle.png",
-			"relative_path": "../../textures/block/book_stack_particle.png",
+			"name": "book_stack_0_particle.png",
+			"relative_path": "../../textures/block/book_stack_0_particle.png",
 			"folder": "block",
 			"namespace": "fantasyfurniture_decorations",
 			"id": "particle",

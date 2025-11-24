@@ -7,6 +7,7 @@ import dev.apexstudios.apexcore.lib.data.ResourceGenerator;
 import dev.apexstudios.apexcore.lib.data.provider.RecipeProvider;
 import dev.apexstudios.apexcore.lib.multiblock.MultiBlock;
 import dev.apexstudios.fantasyfurniture.decorations.DecorationsFurnitureModule;
+import dev.apexstudios.fantasyfurniture.decorations.block.BookStackBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.BowlBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.CoinStackBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.MuffinsBlock;
@@ -80,7 +81,8 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
 
                     fairyLights(blockModels);
                     blockModels.createNonTemplateHorizontalBlock(DecorationsFurnitureModule.STOCKING.value());
-                    bookstack(blockModels);
+                    bookstack(DecorationsFurnitureModule.BOOK_STACK_0, blockModels);
+                    bookstack(DecorationsFurnitureModule.BOOK_STACK_1, blockModels);
                     tankards(DecorationsFurnitureModule.TANKARDS, blockModels);
                     tankards(DecorationsFurnitureModule.TANKARDS_HONEYMEAD, blockModels);
                     tankards(DecorationsFurnitureModule.TANKARDS_MILK, blockModels);
@@ -133,7 +135,8 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     provider.addBlock(DecorationsFurnitureModule.BRONZE_CHAIN, "Bronze Chain");
                     provider.addBlock(DecorationsFurnitureModule.FAIRY_LIGHTS, "Fairy Lights");
                     provider.addBlock(DecorationsFurnitureModule.STOCKING, "Stocking");
-                    provider.addBlock(DecorationsFurnitureModule.BOOK_STACK, "Book Stack");
+                    provider.addBlock(DecorationsFurnitureModule.BOOK_STACK_0, "Book Stack 0");
+                    provider.addBlock(DecorationsFurnitureModule.BOOK_STACK_1, "Book Stack 1");
                     provider.addBlock(DecorationsFurnitureModule.TANKARDS, "Tankards");
                     provider.addBlock(DecorationsFurnitureModule.TANKARDS_HONEYMEAD, "Honeymead Tankards");
                     provider.addBlock(DecorationsFurnitureModule.TANKARDS_MILK, "Milk Tankards");
@@ -298,13 +301,15 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
         dyedColorItemModel(DecorationsFurnitureModule.FAIRY_LIGHTS, blockModels);
     }
 
-    private void bookstack(BlockModelGenerators blockModels) {
-        blockModels.blockStateOutput.accept(blockState(DecorationsFurnitureModule.BOOK_STACK)
-                .with(stackableDispatch(DecorationsFurnitureModule.BOOK_STACK))
+    private void bookstack(DeferredBlock<BookStackBlock> holder, BlockModelGenerators blockModels) {
+        createStackedTemplatedModels(DecorationsFurnitureModule.BOOK_STACK_0, holder, TextureSlot.create("book_stack"), true, blockModels.modelOutput);
+
+        blockModels.blockStateOutput.accept(blockState(holder)
+                .with(stackableDispatch(holder))
                 .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
         );
 
-        stackedItemModel(DecorationsFurnitureModule.BOOK_STACK, blockModels);
+        stackedItemModel(holder, blockModels);
     }
 
     private void tankards(DeferredBlock<TankardsBlock> holder, BlockModelGenerators blockModels) {

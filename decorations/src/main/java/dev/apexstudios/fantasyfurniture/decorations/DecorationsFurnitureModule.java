@@ -72,7 +72,8 @@ public class DecorationsFurnitureModule {
     public static final DeferredBlock<ChainBlock> BRONZE_CHAIN = FurnitureUtil.simpleBlock(REGISTREE, "bronze_chain", ChainBlock::new, () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.IRON_CHAIN));
     public static final DeferredBlock<FairyLightsBlock> FAIRY_LIGHTS = FurnitureUtil.simpleBlock(REGISTREE, "fairy_lights", FairyLightsBlock::new, FurnitureUtil.mutating(FurnitureUtil.PLANK_PROPERTIES, BlockBehaviour.Properties::noCollision));
     public static final DeferredBlock<StockingBlock> STOCKING = FurnitureUtil.simpleBlock(REGISTREE, "stocking", StockingBlock::new, FurnitureUtil.PLANK_PROPERTIES);
-    public static final DeferredBlock<BookStackBlock> BOOK_STACK = FurnitureUtil.simpleBlock(REGISTREE, "book_stack", BookStackBlock::new, FurnitureUtil.PLANK_PROPERTIES);
+    public static final DeferredBlock<BookStackBlock> BOOK_STACK_0 = DecorationUtil.bookStack(REGISTREE, 0);
+    public static final DeferredBlock<BookStackBlock> BOOK_STACK_1 = DecorationUtil.bookStack(REGISTREE, 1);
     public static final DeferredBlock<TankardsBlock> TANKARDS = DecorationUtil.tankards(REGISTREE, null);
     public static final DeferredBlock<TankardsBlock> TANKARDS_HONEYMEAD = DecorationUtil.tankards(REGISTREE, "honeymead");
     public static final DeferredBlock<TankardsBlock> TANKARDS_MILK = DecorationUtil.tankards(REGISTREE, "milk");
