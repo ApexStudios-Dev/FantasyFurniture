@@ -11,6 +11,7 @@ import dev.apexstudios.fantasyfurniture.decorations.block.BowlBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.CoinStackBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.MuffinsBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.MushroomsBlock;
+import dev.apexstudios.fantasyfurniture.decorations.block.PlatterBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.SoulGemsBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.Stackable;
 import dev.apexstudios.fantasyfurniture.decorations.block.TankardsBlock;
@@ -106,6 +107,8 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     FurnitureClientDataUtil.registerSimpleBlockItemModel(DecorationsFurnitureModule.TEA_SET.value(), blockModels);
 
                     teaCups(blockModels);
+                    platter(DecorationsFurnitureModule.PLATTER_0, blockModels);
+                    platter(DecorationsFurnitureModule.PLATTER_1, blockModels);
                 })
                 .providing(ProviderTypes.LANGUAGE, (context, provider) -> {
                     provider.addCreativeModeTab(DecorationsFurnitureModule.CREATIVE_MODE_TAB, "Fantasy's Furniture - Decorations");
@@ -157,6 +160,8 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     provider.addBlock(DecorationsFurnitureModule.FOOD_3, "Food 3");
                     provider.addBlock(DecorationsFurnitureModule.TEA_SET, "Tea Set");
                     provider.addBlock(DecorationsFurnitureModule.TEA_CUPS, "Tea Cups");
+                    provider.addBlock(DecorationsFurnitureModule.PLATTER_0, "Platter 0");
+                    provider.addBlock(DecorationsFurnitureModule.PLATTER_1, "Platter 1");
                 })
                 .providing(ProviderTypes.RECIPES, (context, provider) -> DecorationsFurnitureModule.REGISTREE
                         .listElements(Registries.ITEM)
@@ -468,6 +473,17 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
         );
 
         stackedItemModel(DecorationsFurnitureModule.TEA_CUPS, blockModels);
+    }
+
+    private void platter(DeferredBlock<PlatterBlock> holder, BlockModelGenerators blockModels) {
+        createStackedTemplatedModels(DecorationsFurnitureModule.PLATTER_0, holder, TextureSlot.create("platter"), true, blockModels.modelOutput);
+
+        blockModels.blockStateOutput.accept(blockState(holder)
+                .with(stackableDispatch(holder))
+                .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
+        );
+
+        stackedItemModel(holder, blockModels);
     }
 
     private MultiVariantGenerator blockState(Holder<Block> holder) {
