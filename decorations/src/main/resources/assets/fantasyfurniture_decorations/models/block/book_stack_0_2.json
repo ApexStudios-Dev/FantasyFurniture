@@ -2,8 +2,8 @@
 	"format_version": "1.21.6",
 	"texture_size": [64, 64],
 	"textures": {
-		"book_stack": "fantasyfurniture_decorations:block/book_stack",
-		"particle": "fantasyfurniture_decorations:block/book_stack_particle"
+		"book_stack": "fantasyfurniture_decorations:block/book_stack_0",
+		"particle": "fantasyfurniture_decorations:block/book_stack_0_particle"
 	},
 	"elements": [
 		{

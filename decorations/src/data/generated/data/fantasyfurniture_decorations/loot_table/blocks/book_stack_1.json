@@ -10,11 +10,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "fantasyfurniture_decorations:book_stack"
+          "name": "fantasyfurniture_decorations:book_stack_1"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "fantasyfurniture_decorations:blocks/book_stack"
+  "random_sequence": "fantasyfurniture_decorations:blocks/book_stack_1"
 }
