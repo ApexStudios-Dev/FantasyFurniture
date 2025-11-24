@@ -101,6 +101,11 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     soulGems(DecorationsFurnitureModule.SOUL_GEMS_DARK, blockModels);
                     soulGems(DecorationsFurnitureModule.SOUL_GEMS_LIGHT, blockModels);
                     food(blockModels);
+
+                    FurnitureClientDataUtil.createLeftRightModel(DecorationsFurnitureModule.TEA_SET.value(), blockModels);
+                    FurnitureClientDataUtil.registerSimpleBlockItemModel(DecorationsFurnitureModule.TEA_SET.value(), blockModels);
+
+                    teaCups(blockModels);
                 })
                 .providing(ProviderTypes.LANGUAGE, (context, provider) -> {
                     provider.addCreativeModeTab(DecorationsFurnitureModule.CREATIVE_MODE_TAB, "Fantasy's Furniture - Decorations");
@@ -150,6 +155,8 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     provider.addBlock(DecorationsFurnitureModule.FOOD_1, "Food 1");
                     provider.addBlock(DecorationsFurnitureModule.FOOD_2, "Food 2");
                     provider.addBlock(DecorationsFurnitureModule.FOOD_3, "Food 3");
+                    provider.addBlock(DecorationsFurnitureModule.TEA_SET, "Tea Set");
+                    provider.addBlock(DecorationsFurnitureModule.TEA_CUPS, "Tea Cups");
                 })
                 .providing(ProviderTypes.RECIPES, (context, provider) -> DecorationsFurnitureModule.REGISTREE
                         .listElements(Registries.ITEM)
@@ -452,6 +459,15 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
         blockModels.createNonTemplateHorizontalBlock(DecorationsFurnitureModule.FOOD_1.value());
         blockModels.createNonTemplateHorizontalBlock(DecorationsFurnitureModule.FOOD_2.value());
         blockModels.createNonTemplateHorizontalBlock(DecorationsFurnitureModule.FOOD_3.value());
+    }
+
+    private void teaCups(BlockModelGenerators blockModels) {
+        blockModels.blockStateOutput.accept(blockState(DecorationsFurnitureModule.TEA_CUPS)
+                .with(stackableDispatch(DecorationsFurnitureModule.TEA_CUPS))
+                .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
+        );
+
+        stackedItemModel(DecorationsFurnitureModule.TEA_CUPS, blockModels);
     }
 
     private MultiVariantGenerator blockState(Holder<Block> holder) {
