@@ -1,5 +1,5 @@
 {
-  "parent": "fantasyfurniture_decorations:block/coin_stack",
+  "parent": "fantasyfurniture_decorations:block/golden_coin_stack",
   "textures": {
     "coin_stack": "fantasyfurniture_decorations:block/iron_coin_stack",
     "particle": "fantasyfurniture_decorations:block/iron_coin_stack_particle"

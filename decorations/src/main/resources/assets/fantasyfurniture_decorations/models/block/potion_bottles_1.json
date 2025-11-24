@@ -1,8 +1,8 @@
 {
 	"format_version": "1.21.6",
 	"textures": {
-		"potion_bottles": "fantasyfurniture_decorations:block/potion_bottles_glass",
-		"potion_bottles_tint": "fantasyfurniture_decorations:block/potion_bottles_tint",
+		"glass": "fantasyfurniture_decorations:block/potion_bottles_glass",
+		"potion": "fantasyfurniture_decorations:block/potion_bottles",
 		"particle": "fantasyfurniture_decorations:block/potion_bottles_particle"
 	},
 	"elements": [
@@ -12,12 +12,12 @@
 			"to": [14, 5, 11],
 			"rotation": {"angle": 0, "axis": "y", "origin": [1, 0, -3]},
 			"faces": {
-				"north": {"uv": [0, 0, 4, 5], "texture": "#potion_bottles"},
-				"east": {"uv": [4, 0, 8, 5], "texture": "#potion_bottles"},
-				"south": {"uv": [0, 5, 4, 10], "texture": "#potion_bottles"},
-				"west": {"uv": [4, 5, 8, 10], "texture": "#potion_bottles"},
-				"up": {"uv": [12, 4, 8, 0], "texture": "#potion_bottles"},
-				"down": {"uv": [12, 4, 8, 8], "texture": "#potion_bottles", "cullface": "down"}
+				"north": {"uv": [0, 0, 4, 5], "texture": "#glass"},
+				"east": {"uv": [4, 0, 8, 5], "texture": "#glass"},
+				"south": {"uv": [0, 5, 4, 10], "texture": "#glass"},
+				"west": {"uv": [4, 5, 8, 10], "texture": "#glass"},
+				"up": {"uv": [12, 4, 8, 0], "texture": "#glass"},
+				"down": {"uv": [12, 4, 8, 8], "texture": "#glass", "cullface": "down"}
 			}
 		},
 		{
@@ -26,12 +26,12 @@
 			"to": [13, 7, 10],
 			"rotation": {"angle": 0, "axis": "y", "origin": [1, 0, -3]},
 			"faces": {
-				"north": {"uv": [12, 0, 14, 2], "texture": "#potion_bottles"},
-				"east": {"uv": [12, 2, 14, 4], "texture": "#potion_bottles"},
-				"south": {"uv": [3, 12, 5, 14], "texture": "#potion_bottles"},
-				"west": {"uv": [12, 4, 14, 6], "texture": "#potion_bottles"},
-				"up": {"uv": [14, 8, 12, 6], "texture": "#potion_bottles"},
-				"down": {"uv": [14, 10, 12, 12], "texture": "#potion_bottles"}
+				"north": {"uv": [12, 0, 14, 2], "texture": "#glass"},
+				"east": {"uv": [12, 2, 14, 4], "texture": "#glass"},
+				"south": {"uv": [3, 12, 5, 14], "texture": "#glass"},
+				"west": {"uv": [12, 4, 14, 6], "texture": "#glass"},
+				"up": {"uv": [14, 8, 12, 6], "texture": "#glass"},
+				"down": {"uv": [14, 10, 12, 12], "texture": "#glass"}
 			}
 		},
 		{
@@ -40,12 +40,12 @@
 			"to": [13.5, 9, 10.5],
 			"rotation": {"angle": 0, "axis": "y", "origin": [1, 0, -3]},
 			"faces": {
-				"north": {"uv": [3, 10, 6, 12], "texture": "#potion_bottles"},
-				"east": {"uv": [6, 11, 9, 13], "texture": "#potion_bottles"},
-				"south": {"uv": [11, 8, 14, 10], "texture": "#potion_bottles"},
-				"west": {"uv": [9, 11, 12, 13], "texture": "#potion_bottles"},
-				"up": {"uv": [11, 11, 8, 8], "texture": "#potion_bottles"},
-				"down": {"uv": [3, 10, 0, 13], "texture": "#potion_bottles"}
+				"north": {"uv": [3, 10, 6, 12], "texture": "#glass"},
+				"east": {"uv": [6, 11, 9, 13], "texture": "#glass"},
+				"south": {"uv": [11, 8, 14, 10], "texture": "#glass"},
+				"west": {"uv": [9, 11, 12, 13], "texture": "#glass"},
+				"up": {"uv": [11, 11, 8, 8], "texture": "#glass"},
+				"down": {"uv": [3, 10, 0, 13], "texture": "#glass"}
 			}
 		},
 		{
@@ -54,12 +54,12 @@
 			"to": [13, 10, 10],
 			"rotation": {"angle": 0, "axis": "y", "origin": [1, 0, -3]},
 			"faces": {
-				"north": {"uv": [6, 10, 8, 11], "texture": "#potion_bottles"},
-				"east": {"uv": [5, 13, 7, 14], "texture": "#potion_bottles"},
-				"south": {"uv": [7, 13, 9, 14], "texture": "#potion_bottles"},
-				"west": {"uv": [9, 13, 11, 14], "texture": "#potion_bottles"},
-				"up": {"uv": [14, 14, 12, 12], "texture": "#potion_bottles"},
-				"down": {"uv": [2, 13, 0, 15], "texture": "#potion_bottles"}
+				"north": {"uv": [6, 10, 8, 11], "texture": "#glass"},
+				"east": {"uv": [5, 13, 7, 14], "texture": "#glass"},
+				"south": {"uv": [7, 13, 9, 14], "texture": "#glass"},
+				"west": {"uv": [9, 13, 11, 14], "texture": "#glass"},
+				"up": {"uv": [14, 14, 12, 12], "texture": "#glass"},
+				"down": {"uv": [2, 13, 0, 15], "texture": "#glass"}
 			}
 		},
 		{
@@ -68,12 +68,12 @@
 			"to": [13.5, 3.25, 10.5],
 			"rotation": {"angle": 0, "axis": "y", "origin": [1, -0.75, -3]},
 			"faces": {
-				"north": {"uv": [0, 0, 3, 3], "texture": "#potion_bottles_tint", "tintindex": 0},
-				"east": {"uv": [0, 3, 3, 6], "texture": "#potion_bottles_tint", "tintindex": 0},
-				"south": {"uv": [3, 0, 6, 3], "texture": "#potion_bottles_tint", "tintindex": 0},
-				"west": {"uv": [3, 3, 6, 6], "texture": "#potion_bottles_tint", "tintindex": 0},
-				"up": {"uv": [3, 9, 0, 6], "texture": "#potion_bottles_tint", "tintindex": 0},
-				"down": {"uv": [9, 0, 6, 3], "texture": "#potion_bottles_tint", "tintindex": 0}
+				"north": {"uv": [0, 0, 3, 3], "texture": "#potion", "tintindex": 0},
+				"east": {"uv": [0, 3, 3, 6], "texture": "#potion", "tintindex": 0},
+				"south": {"uv": [3, 0, 6, 3], "texture": "#potion", "tintindex": 0},
+				"west": {"uv": [3, 3, 6, 6], "texture": "#potion", "tintindex": 0},
+				"up": {"uv": [3, 9, 0, 6], "texture": "#potion", "tintindex": 0},
+				"down": {"uv": [9, 0, 6, 3], "texture": "#potion", "tintindex": 0}
 			}
 		},
 		{
@@ -82,12 +82,12 @@
 			"to": [6, 5, 8],
 			"rotation": {"angle": -22.5, "axis": "y", "origin": [4, 6, 6]},
 			"faces": {
-				"north": {"uv": [0, 0, 4, 5], "texture": "#potion_bottles"},
-				"east": {"uv": [4, 0, 8, 5], "texture": "#potion_bottles"},
-				"south": {"uv": [0, 5, 4, 10], "texture": "#potion_bottles"},
-				"west": {"uv": [4, 5, 8, 10], "texture": "#potion_bottles"},
-				"up": {"uv": [12, 4, 8, 0], "texture": "#potion_bottles"},
-				"down": {"uv": [12, 4, 8, 8], "texture": "#potion_bottles", "cullface": "down"}
+				"north": {"uv": [0, 0, 4, 5], "texture": "#glass"},
+				"east": {"uv": [4, 0, 8, 5], "texture": "#glass"},
+				"south": {"uv": [0, 5, 4, 10], "texture": "#glass"},
+				"west": {"uv": [4, 5, 8, 10], "texture": "#glass"},
+				"up": {"uv": [12, 4, 8, 0], "texture": "#glass"},
+				"down": {"uv": [12, 4, 8, 8], "texture": "#glass", "cullface": "down"}
 			}
 		},
 		{
@@ -96,12 +96,12 @@
 			"to": [5, 7, 7],
 			"rotation": {"angle": -22.5, "axis": "y", "origin": [4, 6, 6]},
 			"faces": {
-				"north": {"uv": [12, 0, 14, 2], "texture": "#potion_bottles"},
-				"east": {"uv": [12, 2, 14, 4], "texture": "#potion_bottles"},
-				"south": {"uv": [3, 12, 5, 14], "texture": "#potion_bottles"},
-				"west": {"uv": [12, 4, 14, 6], "texture": "#potion_bottles"},
-				"up": {"uv": [14, 8, 12, 6], "texture": "#potion_bottles"},
-				"down": {"uv": [14, 10, 12, 12], "texture": "#potion_bottles"}
+				"north": {"uv": [12, 0, 14, 2], "texture": "#glass"},
+				"east": {"uv": [12, 2, 14, 4], "texture": "#glass"},
+				"south": {"uv": [3, 12, 5, 14], "texture": "#glass"},
+				"west": {"uv": [12, 4, 14, 6], "texture": "#glass"},
+				"up": {"uv": [14, 8, 12, 6], "texture": "#glass"},
+				"down": {"uv": [14, 10, 12, 12], "texture": "#glass"}
 			}
 		},
 		{
@@ -110,12 +110,12 @@
 			"to": [5.5, 9, 7.5],
 			"rotation": {"angle": -22.5, "axis": "y", "origin": [4, 6, 6]},
 			"faces": {
-				"north": {"uv": [3, 10, 6, 12], "texture": "#potion_bottles"},
-				"east": {"uv": [6, 11, 9, 13], "texture": "#potion_bottles"},
-				"south": {"uv": [11, 8, 14, 10], "texture": "#potion_bottles"},
-				"west": {"uv": [9, 11, 12, 13], "texture": "#potion_bottles"},
-				"up": {"uv": [11, 11, 8, 8], "texture": "#potion_bottles"},
-				"down": {"uv": [3, 10, 0, 13], "texture": "#potion_bottles"}
+				"north": {"uv": [3, 10, 6, 12], "texture": "#glass"},
+				"east": {"uv": [6, 11, 9, 13], "texture": "#glass"},
+				"south": {"uv": [11, 8, 14, 10], "texture": "#glass"},
+				"west": {"uv": [9, 11, 12, 13], "texture": "#glass"},
+				"up": {"uv": [11, 11, 8, 8], "texture": "#glass"},
+				"down": {"uv": [3, 10, 0, 13], "texture": "#glass"}
 			}
 		},
 		{
@@ -124,12 +124,12 @@
 			"to": [5, 10, 7],
 			"rotation": {"angle": -22.5, "axis": "y", "origin": [4, 6, 6]},
 			"faces": {
-				"north": {"uv": [6, 10, 8, 11], "texture": "#potion_bottles"},
-				"east": {"uv": [5, 13, 7, 14], "texture": "#potion_bottles"},
-				"south": {"uv": [7, 13, 9, 14], "texture": "#potion_bottles"},
-				"west": {"uv": [9, 13, 11, 14], "texture": "#potion_bottles"},
-				"up": {"uv": [14, 14, 12, 12], "texture": "#potion_bottles"},
-				"down": {"uv": [2, 13, 0, 15], "texture": "#potion_bottles"}
+				"north": {"uv": [6, 10, 8, 11], "texture": "#glass"},
+				"east": {"uv": [5, 13, 7, 14], "texture": "#glass"},
+				"south": {"uv": [7, 13, 9, 14], "texture": "#glass"},
+				"west": {"uv": [9, 13, 11, 14], "texture": "#glass"},
+				"up": {"uv": [14, 14, 12, 12], "texture": "#glass"},
+				"down": {"uv": [2, 13, 0, 15], "texture": "#glass"}
 			}
 		},
 		{
@@ -138,12 +138,12 @@
 			"to": [5.5, 3.25, 7.5],
 			"rotation": {"angle": -22.5, "axis": "y", "origin": [4, 5.25, 6]},
 			"faces": {
-				"north": {"uv": [10, 0, 13, 3], "texture": "#potion_bottles_tint", "tintindex": 0},
-				"east": {"uv": [0, 10, 3, 13], "texture": "#potion_bottles_tint", "tintindex": 0},
-				"south": {"uv": [13, 3, 16, 6], "texture": "#potion_bottles_tint", "tintindex": 0},
-				"west": {"uv": [13, 0, 16, 3], "texture": "#potion_bottles_tint", "tintindex": 0},
-				"up": {"uv": [3, 16, 0, 13], "texture": "#potion_bottles_tint", "tintindex": 0},
-				"down": {"uv": [6, 13, 3, 16], "texture": "#potion_bottles_tint", "tintindex": 0}
+				"north": {"uv": [10, 0, 13, 3], "texture": "#potion", "tintindex": 0},
+				"east": {"uv": [0, 10, 3, 13], "texture": "#potion", "tintindex": 0},
+				"south": {"uv": [13, 3, 16, 6], "texture": "#potion", "tintindex": 0},
+				"west": {"uv": [13, 0, 16, 3], "texture": "#potion", "tintindex": 0},
+				"up": {"uv": [3, 16, 0, 13], "texture": "#potion", "tintindex": 0},
+				"down": {"uv": [6, 13, 3, 16], "texture": "#potion", "tintindex": 0}
 			}
 		}
 	],

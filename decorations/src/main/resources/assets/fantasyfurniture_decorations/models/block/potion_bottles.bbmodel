@@ -4,7 +4,7 @@
 		"model_format": "java_block",
 		"box_uv": false
 	},
-	"name": "potion_bottles_0",
+	"name": "potion_bottles",
 	"parent": "",
 	"java_block_version": "1.21.6",
 	"ambientocclusion": true,
@@ -1696,7 +1696,7 @@
 			"relative_path": "../../textures/block/potion_bottles_glass.png",
 			"folder": "block",
 			"namespace": "fantasyfurniture_decorations",
-			"id": "potion_bottles",
+			"id": "glass",
 			"group": "",
 			"width": 16,
 			"height": 16,
@@ -1720,11 +1720,11 @@
 			"source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABb0lEQVR4AZSSPUsDQRCG56ayESw0QRGEFCriR1ora8FaxMrGysbCTgsFf4AI2ljaiIpYCAHBTrATQRFNERBEUFMkkCJFyOWeTeZYLiQhIe/tM+/Ozkz2ors3ufDu7csJRt3ii5fPkBxpfXRxckZWZicCBCMYwegp/y4Inh4bkrlMpnVcRMdTA3EAIzN8Nu/q8dnQrfr9V3XAA0Ywgq0z3WG6MwX7SDHtN8PIj0ny9VooyMdPKbY0pg5gnSkMt02AyYUhGMEITtZtm8C/KBjZIdg6UwxmAopYTs9LJLFSq7rXCCfV8xKtIyviDbBaISVgVLpgEjPq4PWeLDwcC+Pisa5lpwLeAEXIRUpgJonErPfz61LfPCInLsJfmH3y3Ub0UALf5J9GJ4rgsyLj/MGGjN4eRkebX9WzbSmf7giHLOlyazkkCZ99BJOTHhmW3/9i83T0VN/IptIBSasnuWBp/9wJRsRRvrASw0iTBmY/agAAAP//Wdy71gAAAAZJREFUAwBErwYwALMpcwAAAABJRU5ErkJggg=="
 		},
 		{
-			"name": "potion_bottles_tint.png",
-			"relative_path": "../../textures/block/potion_bottles_tint.png",
+			"name": "potion_bottles.png",
+			"relative_path": "../../textures/block/potion_bottles.png",
 			"folder": "block",
 			"namespace": "fantasyfurniture_decorations",
-			"id": "potion_bottles_tint",
+			"id": "potion",
 			"group": "",
 			"width": 16,
 			"height": 16,

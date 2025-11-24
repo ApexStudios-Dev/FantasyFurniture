@@ -1,7 +1,7 @@
 {
 	"format_version": "1.21.6",
 	"textures": {
-		"lights": "fantasyfurniture_decorations:block/fairy_lights_tint",
+		"lights": "fantasyfurniture_decorations:block/fairy_lights",
 		"string": "fantasyfurniture_decorations:block/fairy_lights_string",
 		"particle": "fantasyfurniture_decorations:block/fairy_lights_particle"
 	},
