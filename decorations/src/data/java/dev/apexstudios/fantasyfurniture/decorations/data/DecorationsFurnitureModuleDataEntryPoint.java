@@ -94,6 +94,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     presents(blockModels);
                     coinStack(DecorationsFurnitureModule.COPPER_COIN_STACK, blockModels);
                     snowballs(blockModels);
+                    boiledCremeTreats(blockModels);
                 })
                 .providing(ProviderTypes.LANGUAGE, (context, provider) -> {
                     provider.addCreativeModeTab(DecorationsFurnitureModule.CREATIVE_MODE_TAB, "Fantasy's Furniture - Decorations");
@@ -134,6 +135,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     provider.addBlock(DecorationsFurnitureModule.PRESENTS, "Presents");
                     provider.addBlock(DecorationsFurnitureModule.COPPER_COIN_STACK, "Copper Coin Stack");
                     provider.addBlock(DecorationsFurnitureModule.SNOWBALLS, "Snowballs");
+                    provider.addBlock(DecorationsFurnitureModule.BOILED_CREME_TREATS, "Boiled Creme Treats");
                 })
                 .providing(ProviderTypes.RECIPES, (context, provider) -> DecorationsFurnitureModule.REGISTREE
                         .listElements(Registries.ITEM)
@@ -360,6 +362,15 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
         );
 
         stackedItemModel(DecorationsFurnitureModule.SNOWBALLS, blockModels);
+    }
+
+    private void boiledCremeTreats(BlockModelGenerators blockModels) {
+        blockModels.blockStateOutput.accept(blockState(DecorationsFurnitureModule.BOILED_CREME_TREATS)
+                .with(stackableDispatch(DecorationsFurnitureModule.BOILED_CREME_TREATS))
+                .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
+        );
+
+        stackedItemModel(DecorationsFurnitureModule.BOILED_CREME_TREATS, blockModels);
     }
 
     private MultiVariantGenerator blockState(Holder<Block> holder) {
