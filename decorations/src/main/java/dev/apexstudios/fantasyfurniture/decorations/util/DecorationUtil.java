@@ -3,6 +3,7 @@ package dev.apexstudios.fantasyfurniture.decorations.util;
 import dev.apexstudios.fantasyfurniture.decorations.block.BerryBasketBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.BowlBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.CoinStackBlock;
+import dev.apexstudios.fantasyfurniture.decorations.block.FoodBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.MuffinsBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.MushroomsBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.SoulGemsBlock;
@@ -53,5 +54,9 @@ public interface DecorationUtil {
 
     static DeferredBlock<SoulGemsBlock> soulGems(Registree registree, String type) {
         return FurnitureUtil.simpleBlock(registree, "soul_gems_" + type, SoulGemsBlock::new, FurnitureUtil.PLANK_PROPERTIES);
+    }
+
+    static DeferredBlock<FoodBlock> food(Registree registree, int id) {
+        return FurnitureUtil.simpleBlock(registree, "food_" + id, FoodBlock::new, FurnitureUtil.PLANK_PROPERTIES);
     }
 }

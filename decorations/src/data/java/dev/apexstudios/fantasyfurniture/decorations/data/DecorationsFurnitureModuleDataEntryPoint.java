@@ -100,6 +100,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     meadBottles(blockModels);
                     soulGems(DecorationsFurnitureModule.SOUL_GEMS_DARK, blockModels);
                     soulGems(DecorationsFurnitureModule.SOUL_GEMS_LIGHT, blockModels);
+                    food(blockModels);
                 })
                 .providing(ProviderTypes.LANGUAGE, (context, provider) -> {
                     provider.addCreativeModeTab(DecorationsFurnitureModule.CREATIVE_MODE_TAB, "Fantasy's Furniture - Decorations");
@@ -145,6 +146,10 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     provider.addBlock(DecorationsFurnitureModule.MEAD_BOTTLES, "Mead Bottles");
                     provider.addBlock(DecorationsFurnitureModule.SOUL_GEMS_DARK, "Soul Gems Dark");
                     provider.addBlock(DecorationsFurnitureModule.SOUL_GEMS_LIGHT, "Soul Gems Light");
+                    provider.addBlock(DecorationsFurnitureModule.FOOD_0, "Food 0");
+                    provider.addBlock(DecorationsFurnitureModule.FOOD_1, "Food 1");
+                    provider.addBlock(DecorationsFurnitureModule.FOOD_2, "Food 2");
+                    provider.addBlock(DecorationsFurnitureModule.FOOD_3, "Food 3");
                 })
                 .providing(ProviderTypes.RECIPES, (context, provider) -> DecorationsFurnitureModule.REGISTREE
                         .listElements(Registries.ITEM)
@@ -419,6 +424,34 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
         }
 
         blockModels.createNonTemplateHorizontalBlock(holder.value());
+    }
+
+    private void food(BlockModelGenerators blockModels) {
+        var slot = TextureSlot.create("food");
+
+        var template = ExtendedModelTemplateBuilder
+                .builder()
+                .requiredTextureSlot(TextureSlot.PARTICLE)
+                .requiredTextureSlot(slot);
+
+        var textures = TextureMapping.particle(TextureMapping.getBlockTexture(DecorationsFurnitureModule.FOOD_2.value(), "_particle"));
+
+        template.parent(ModelLocationUtils.getModelLocation(DecorationsFurnitureModule.FOOD_0.value())).build().create(
+                DecorationsFurnitureModule.FOOD_2.value(),
+                textures.put(slot, TextureMapping.getBlockTexture(DecorationsFurnitureModule.FOOD_2.value())),
+                blockModels.modelOutput
+        );
+
+        template.parent(ModelLocationUtils.getModelLocation(DecorationsFurnitureModule.FOOD_1.value())).build().create(
+                DecorationsFurnitureModule.FOOD_3.value(),
+                textures.put(slot, TextureMapping.getBlockTexture(DecorationsFurnitureModule.FOOD_3.value())),
+                blockModels.modelOutput
+        );
+
+        blockModels.createNonTemplateHorizontalBlock(DecorationsFurnitureModule.FOOD_0.value());
+        blockModels.createNonTemplateHorizontalBlock(DecorationsFurnitureModule.FOOD_1.value());
+        blockModels.createNonTemplateHorizontalBlock(DecorationsFurnitureModule.FOOD_2.value());
+        blockModels.createNonTemplateHorizontalBlock(DecorationsFurnitureModule.FOOD_3.value());
     }
 
     private MultiVariantGenerator blockState(Holder<Block> holder) {
