@@ -93,6 +93,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     potionBottles(blockModels);
                     presents(blockModels);
                     coinStack(DecorationsFurnitureModule.COPPER_COIN_STACK, blockModels);
+                    snowballs(blockModels);
                 })
                 .providing(ProviderTypes.LANGUAGE, (context, provider) -> {
                     provider.addCreativeModeTab(DecorationsFurnitureModule.CREATIVE_MODE_TAB, "Fantasy's Furniture - Decorations");
@@ -132,6 +133,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     provider.addBlock(DecorationsFurnitureModule.POTION_BOTTLES, "Potion Bottles");
                     provider.addBlock(DecorationsFurnitureModule.PRESENTS, "Presents");
                     provider.addBlock(DecorationsFurnitureModule.COPPER_COIN_STACK, "Copper Coin Stack");
+                    provider.addBlock(DecorationsFurnitureModule.SNOWBALLS, "Snowballs");
                 })
                 .providing(ProviderTypes.RECIPES, (context, provider) -> DecorationsFurnitureModule.REGISTREE
                         .listElements(Registries.ITEM)
@@ -349,6 +351,15 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
         );
 
         stackedDyedColorItemModel(DecorationsFurnitureModule.PRESENTS, blockModels);
+    }
+
+    private void snowballs(BlockModelGenerators blockModels) {
+        blockModels.blockStateOutput.accept(blockState(DecorationsFurnitureModule.SNOWBALLS)
+                .with(stackableDispatch(DecorationsFurnitureModule.SNOWBALLS))
+                .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
+        );
+
+        stackedItemModel(DecorationsFurnitureModule.SNOWBALLS, blockModels);
     }
 
     private MultiVariantGenerator blockState(Holder<Block> holder) {

@@ -15,6 +15,7 @@ import dev.apexstudios.fantasyfurniture.decorations.block.MushroomsBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.PaperStackBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.PotionBottlesBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.PresentsBlock;
+import dev.apexstudios.fantasyfurniture.decorations.block.SnowballsBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.SpiderWebSmallBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.SpiderWebWideBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.StackablePumpkinsBlock;
@@ -78,6 +79,7 @@ public class DecorationsFurnitureModule {
     public static final DeferredBlock<PotionBottlesBlock> POTION_BOTTLES = FurnitureUtil.simpleBlock(REGISTREE, "potion_bottles", PotionBottlesBlock::new, FurnitureUtil.PLANK_PROPERTIES);
     public static final DeferredBlock<PresentsBlock> PRESENTS = FurnitureUtil.simpleBlock(REGISTREE, "presents", PresentsBlock::new, FurnitureUtil.PLANK_PROPERTIES);
     public static final DeferredBlock<CoinStackBlock> COPPER_COIN_STACK = DecorationUtil.coinStack(REGISTREE, "copper");
+    public static final DeferredBlock<SnowballsBlock> SNOWBALLS = FurnitureUtil.simpleBlock(REGISTREE, "snowballs", SnowballsBlock::new, FurnitureUtil.PLANK_PROPERTIES);
 
     public static final DeferredBlock<CookieJarBlock> COOKIE_JAR_BLOCK = FurnitureUtil.simpleBlock(REGISTREE, "cookie_jar", CookieJarBlock::new, FurnitureUtil.PLANK_PROPERTIES);
     public static final DeferredBlockEntity<CookieJarBlockEntity> COOKIE_JAR_BLOCK_ENTITY = REGISTREE.registerBlockEntity(COOKIE_JAR_BLOCK, CookieJarBlockEntity::new);
