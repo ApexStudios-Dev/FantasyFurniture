@@ -5,6 +5,7 @@ import dev.apexstudios.fantasyfurniture.decorations.block.BowlBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.CoinStackBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.MuffinsBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.MushroomsBlock;
+import dev.apexstudios.fantasyfurniture.decorations.block.SoulGemsBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.TankardsBlock;
 import dev.apexstudios.fantasyfurniture.util.FurnitureUtil;
 import dev.apexstudios.registree.api.Registree;
@@ -48,5 +49,9 @@ public interface DecorationUtil {
     static DeferredBlock<MuffinsBlock> muffins(Registree registree, String berry) {
         var name = "muffins_" + berry;
         return FurnitureUtil.simpleBlock(registree, name, MuffinsBlock::new, FurnitureUtil.PLANK_PROPERTIES);
+    }
+
+    static DeferredBlock<SoulGemsBlock> soulGems(Registree registree, String type) {
+        return FurnitureUtil.simpleBlock(registree, "soul_gems_" + type, SoulGemsBlock::new, FurnitureUtil.PLANK_PROPERTIES);
     }
 }
