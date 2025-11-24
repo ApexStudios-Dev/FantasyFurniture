@@ -92,6 +92,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     stackablePumpkins(blockModels);
                     potionBottles(blockModels);
                     presents(blockModels);
+                    coinStack(DecorationsFurnitureModule.COPPER_COIN_STACK, blockModels);
                 })
                 .providing(ProviderTypes.LANGUAGE, (context, provider) -> {
                     provider.addCreativeModeTab(DecorationsFurnitureModule.CREATIVE_MODE_TAB, "Fantasy's Furniture - Decorations");
@@ -130,6 +131,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     provider.addBlock(DecorationsFurnitureModule.STACKABLE_PUMPKINS, "Stackable Pumpkins");
                     provider.addBlock(DecorationsFurnitureModule.POTION_BOTTLES, "Potion Bottles");
                     provider.addBlock(DecorationsFurnitureModule.PRESENTS, "Presents");
+                    provider.addBlock(DecorationsFurnitureModule.COPPER_COIN_STACK, "Copper Coin Stack");
                 })
                 .providing(ProviderTypes.RECIPES, (context, provider) -> DecorationsFurnitureModule.REGISTREE
                         .listElements(Registries.ITEM)

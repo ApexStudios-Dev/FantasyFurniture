@@ -77,6 +77,7 @@ public class DecorationsFurnitureModule {
     public static final DeferredBlock<StackablePumpkinsBlock> STACKABLE_PUMPKINS = FurnitureUtil.simpleBlock(REGISTREE, "stackable_pumpkins", StackablePumpkinsBlock::new, FurnitureUtil.PLANK_PROPERTIES);
     public static final DeferredBlock<PotionBottlesBlock> POTION_BOTTLES = FurnitureUtil.simpleBlock(REGISTREE, "potion_bottles", PotionBottlesBlock::new, FurnitureUtil.PLANK_PROPERTIES);
     public static final DeferredBlock<PresentsBlock> PRESENTS = FurnitureUtil.simpleBlock(REGISTREE, "presents", PresentsBlock::new, FurnitureUtil.PLANK_PROPERTIES);
+    public static final DeferredBlock<CoinStackBlock> COPPER_COIN_STACK = DecorationUtil.coinStack(REGISTREE, "copper");
 
     public static final DeferredBlock<CookieJarBlock> COOKIE_JAR_BLOCK = FurnitureUtil.simpleBlock(REGISTREE, "cookie_jar", CookieJarBlock::new, FurnitureUtil.PLANK_PROPERTIES);
     public static final DeferredBlockEntity<CookieJarBlockEntity> COOKIE_JAR_BLOCK_ENTITY = REGISTREE.registerBlockEntity(COOKIE_JAR_BLOCK, CookieJarBlockEntity::new);
