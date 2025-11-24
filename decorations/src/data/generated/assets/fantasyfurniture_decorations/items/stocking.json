@@ -1,11 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "fantasyfurniture_decorations:block/stocking",
-    "tints": [
-      {
-        "type": "apexcore:dye_color"
-      }
-    ]
+    "model": "fantasyfurniture_decorations:block/stocking"
   }
 }

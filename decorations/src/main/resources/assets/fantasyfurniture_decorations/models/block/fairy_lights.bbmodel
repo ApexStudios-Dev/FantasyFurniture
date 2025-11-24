@@ -342,8 +342,8 @@
 	],
 	"textures": [
 		{
-			"name": "fairy_lights_tint.png",
-			"relative_path": "../../textures/block/fairy_lights_tint.png",
+			"name": "fairy_lights.png",
+			"relative_path": "../../textures/block/fairy_lights.png",
 			"folder": "block",
 			"namespace": "fantasyfurniture_decorations",
 			"id": "lights",
@@ -367,7 +367,7 @@
 			"internal": true,
 			"saved": true,
 			"uuid": "71313c6f-58d6-9d23-b7ff-aa1545504c88",
-			"source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA0UlEQVR4AeySuw2FMAxFjRt6qBiAjjWYmjXYgQr6VLwcC0fISqQ3AEj+Xf9uLDSldB/Hce/7Xuy2bcUHJ5bGp9d1yXmekoeYHcdRpmmSYRgEHyFu9IuSmOdZlmXBNSE251ExfmAzyvbIghghh+BbdUUpFCliy5sFGDkEv9JrkPpb2UKh38KtY1ZdUeWIXgiLyKbSVyC7AdugyrUZ9GbjeOkIjt2ARn+K570x57rMqnM82uYN4sDY6LH2fd+xBWHTuq620XEvbFn7kVrJf/BvgMgPAAD//4HW7b8AAAAGSURBVAMAd6udIR0hpcMAAAAASUVORK5CYII="
+			"source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABQUlEQVR4AexSPUsDQRB9t+aMZzQEcpBCTjCNRYhgYWdhY5+fIFikFztBbPwBgoVpxELRRrARC0EI2NmIh4UWEQwWgbQhmlNW3sAcFrfiD3Bhd3befLyZ2TX9et0+Vqu2HUWpPA5Du/wwb5eu5wSnDscyvcEA/SRBdzgUGfo+oiDA2IxFvjIO1R3xMDTUSiUsFou8onnhY/s+wPlKHq1GkupizDgM2X9W8dEb4evNg2KqZ8QKZFgik5D14KYsIA9itLENJiGWtU2lUJA+yUrH99dPUOpMeCeWFUzMNE5GWGtZCaLj2a6Pq42pdCZ0+m0bZWCpE7M5eQntn1Uo7kpijpoe9neQPtvmYU4mv3U5ib3TadwuPHl3qy+eM4FrBvoPXIGKmzCOvVqn4ylTvN4Vxnb5WTB1dEn5SC7jX/D/BMA3AAAA//9Y05XQAAAABklEQVQDADIrqyHZwoc5AAAAAElFTkSuQmCC"
 		},
 		{
 			"name": "fairy_lights_string.png",

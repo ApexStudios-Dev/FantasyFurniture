@@ -4,7 +4,7 @@
 		"model_format": "java_block",
 		"box_uv": false
 	},
-	"name": "coin_stack",
+	"name": "golden_coin_stack",
 	"parent": "",
 	"java_block_version": "1.21.6",
 	"ambientocclusion": true,
@@ -301,7 +301,7 @@
 			"visibility": true,
 			"autouv": 0,
 			"isOpen": false,
-			"primary_selected": true
+			"primary_selected": false
 		}
 	],
 	"outliner": [
