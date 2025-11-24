@@ -7,6 +7,7 @@ import dev.apexstudios.apexcore.lib.data.ResourceGenerator;
 import dev.apexstudios.apexcore.lib.data.provider.RecipeProvider;
 import dev.apexstudios.apexcore.lib.multiblock.MultiBlock;
 import dev.apexstudios.fantasyfurniture.decorations.DecorationsFurnitureModule;
+import dev.apexstudios.fantasyfurniture.decorations.block.PresentsBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.Stackable;
 import dev.apexstudios.fantasyfurniture.decorations.cookie.CookieJarBlock;
 import dev.apexstudios.fantasyfurniture.station.FurnitureStationRecipeBuilder;
@@ -15,16 +16,21 @@ import dev.apexstudios.fantasyfurniture.util.FurnitureClientDataUtil;
 import dev.apexstudios.placementvisualizer.api.BlockItemPlacementEvent;
 import dev.apexstudios.registree.api.holder.DeferredBlock;
 import java.util.Objects;
+import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Predicate;
 import net.minecraft.Util;
 import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.client.data.models.MultiVariant;
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.model.ItemModelUtils;
+import net.minecraft.client.data.models.model.ModelInstance;
+import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
 import net.minecraft.client.data.models.model.TexturedModel;
+import net.minecraft.client.renderer.block.model.VariantMutator;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
@@ -89,6 +95,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     stackable(DecorationsFurnitureModule.FLOATING_TOMES, "floating_tomes", false, blockModels);
                     stackable(DecorationsFurnitureModule.STACKABLE_PUMPKINS, "stackable_pumpkins", true, blockModels);
                     stackable(DecorationsFurnitureModule.POTION_BOTTLES, "potion_bottles", false, blockModels);
+                    presents(blockModels);
 
                     Dyeable.dyeableBlocks(DecorationsFurnitureModule.REGISTREE).filter(Predicate.not(Dyeable.WithNone.class::isInstance)).forEach(block -> blockModels.registerSimpleTintedItemModel(
                             block,
@@ -135,6 +142,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     provider.addBlock(DecorationsFurnitureModule.FLOATING_TOMES, "Floating Tomes");
                     provider.addBlock(DecorationsFurnitureModule.STACKABLE_PUMPKINS, "Stackable Pumpkins");
                     provider.addBlock(DecorationsFurnitureModule.POTION_BOTTLES, "Potion Bottles");
+                    provider.addBlock(DecorationsFurnitureModule.PRESENTS, "Presents");
                 })
                 .providing(ProviderTypes.RECIPES, (context, provider) -> DecorationsFurnitureModule.REGISTREE
                         .listElements(Registries.ITEM)
@@ -371,6 +379,78 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                 .builder(RecipeCategory.DECORATIONS, provider.tag(Tags.Items.DYES), null, provider.tag(FurnitureStationSetup.BINDING_AGENT), item)
                 .unlockedBy(RecipeProvider.getHasName(Tags.Items.DYES), provider.has(Tags.Items.DYES))
                 .save(provider.output(), RecipeProvider.recipeKeyWithPrefix(item, "furniture_station/"));
+    }
+
+    private void presents(BlockModelGenerators blockModels) {
+        stackedDyeableModel(
+                DecorationsFurnitureModule.PRESENTS,
+                TextureSlot.create("presents"),
+                true,
+                blockModels
+        );
+    }
+
+    private <TBlock extends Block & Stackable & Dyeable> void stackedDyeableModel(DeferredBlock<TBlock> holder, TextureSlot slot, boolean replaceParticle, BlockModelGenerators blockModels) {
+        if(holder.value() instanceof Dyeable.WithNone) {
+            createStackedTintedModels(holder, slot, replaceParticle, blockModels.modelOutput);
+        }
+
+        blockModels.blockStateOutput.accept(MultiVariantGenerator
+                .dispatch(holder.value())
+                .with(stackableDispatch(holder))
+                .with(dyeableDispatch(holder))
+                .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
+        );
+
+        blockModels.registerSimpleTintedItemModel(
+                holder.value(),
+                ModelLocationUtils.getModelLocation(holder.value(), "_" + PresentsBlock.COUNT.max),
+                new DyeColorItemTintSource()
+        );
+    }
+
+    <TBlock extends Block & Stackable & Dyeable> void createStackedTintedModels(DeferredBlock<TBlock> holder, TextureSlot slot, boolean replaceParticle, BiConsumer<ResourceLocation, ModelInstance> modelOutput) {
+        var block = holder.value();
+        var stackProperty = block.getStackableProperty();
+        var baseModelPath = ModelLocationUtils.getModelLocation(block);
+        var baseTexturePath = TextureMapping.getBlockTexture(block);
+
+        var textures = new TextureMapping()
+                .put(slot, baseTexturePath.withSuffix("_tint"));
+
+        if(replaceParticle) {
+            textures = textures.put(TextureSlot.PARTICLE, baseTexturePath.withSuffix("_tint_particle"));
+        }
+
+        for(var i = stackProperty.min; i < stackProperty.max + 1; i++) {
+            var template = ExtendedModelTemplateBuilder
+                    .builder()
+                    .requiredTextureSlot(slot)
+                    .parent(baseModelPath.withSuffix("_" + i))
+                    .suffix("_" + i + "_tint");
+
+            if(replaceParticle) {
+                template = template.requiredTextureSlot(TextureSlot.PARTICLE);
+            }
+
+            template.build().create(block, textures, modelOutput);
+        }
+    }
+
+    <TBlock extends Block & Stackable> PropertyDispatch<MultiVariant> stackableDispatch(DeferredBlock<TBlock> holder) {
+        return PropertyDispatch.initial(holder.value().getStackableProperty()).generate(count -> BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(
+                holder.value(),
+                "_" + count
+        )));
+    }
+
+    <TBlock extends Block & Dyeable> PropertyDispatch<VariantMutator> dyeableDispatch(DeferredBlock<TBlock> holder) {
+        var isNone = holder.value() instanceof Dyeable.WithNone;
+
+        return PropertyDispatch.modify(isNone ? Dyeable.WithNone.DYED_COLOR : Dyeable.Colored.DYED_COLOR).generate(color -> variant -> {
+            var isBlank = !isNone || holder.value().isBlankDyedColor(color);
+            return isBlank ? variant : variant.withModel(variant.modelLocation().withSuffix("_tint"));
+        });
     }
 
     @FunctionalInterface
