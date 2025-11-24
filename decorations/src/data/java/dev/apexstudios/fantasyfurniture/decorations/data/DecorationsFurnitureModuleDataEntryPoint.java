@@ -11,6 +11,7 @@ import dev.apexstudios.fantasyfurniture.decorations.block.BowlBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.CoinStackBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.MuffinsBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.MushroomsBlock;
+import dev.apexstudios.fantasyfurniture.decorations.block.SoulGemsBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.Stackable;
 import dev.apexstudios.fantasyfurniture.decorations.block.TankardsBlock;
 import dev.apexstudios.fantasyfurniture.decorations.cookie.CookieJarBlock;
@@ -97,6 +98,8 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     boiledCremeTreats(blockModels);
                     sweetrolls(blockModels);
                     meadBottles(blockModels);
+                    soulGems(DecorationsFurnitureModule.SOUL_GEMS_DARK, blockModels);
+                    soulGems(DecorationsFurnitureModule.SOUL_GEMS_LIGHT, blockModels);
                 })
                 .providing(ProviderTypes.LANGUAGE, (context, provider) -> {
                     provider.addCreativeModeTab(DecorationsFurnitureModule.CREATIVE_MODE_TAB, "Fantasy's Furniture - Decorations");
@@ -140,6 +143,8 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     provider.addBlock(DecorationsFurnitureModule.BOILED_CREME_TREATS, "Boiled Creme Treats");
                     provider.addBlock(DecorationsFurnitureModule.SWEETROLLS, "Sweetrolls");
                     provider.addBlock(DecorationsFurnitureModule.MEAD_BOTTLES, "Mead Bottles");
+                    provider.addBlock(DecorationsFurnitureModule.SOUL_GEMS_DARK, "Soul Gems Dark");
+                    provider.addBlock(DecorationsFurnitureModule.SOUL_GEMS_LIGHT, "Soul Gems Light");
                 })
                 .providing(ProviderTypes.RECIPES, (context, provider) -> DecorationsFurnitureModule.REGISTREE
                         .listElements(Registries.ITEM)
@@ -393,6 +398,27 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
         );
 
         stackedItemModel(DecorationsFurnitureModule.MEAD_BOTTLES, blockModels);
+    }
+
+    private void soulGems(DeferredBlock<SoulGemsBlock> holder, BlockModelGenerators blockModels) {
+        if(!DecorationsFurnitureModule.SOUL_GEMS_DARK.is(holder)) {
+            var slot = TextureSlot.create("soul_gems");
+
+            var template = ExtendedModelTemplateBuilder
+                    .builder()
+                    .parent(ModelLocationUtils.getModelLocation(DecorationsFurnitureModule.SOUL_GEMS_DARK.value()))
+                    .requiredTextureSlot(TextureSlot.PARTICLE)
+                    .requiredTextureSlot(slot);
+
+            template.build().create(
+                    holder.value(),
+                    TextureMapping.particle(TextureMapping.getBlockTexture(holder.value(), "_particle"))
+                                  .put(slot, TextureMapping.getBlockTexture(holder.value())),
+                    blockModels.modelOutput
+            );
+        }
+
+        blockModels.createNonTemplateHorizontalBlock(holder.value());
     }
 
     private MultiVariantGenerator blockState(Holder<Block> holder) {
