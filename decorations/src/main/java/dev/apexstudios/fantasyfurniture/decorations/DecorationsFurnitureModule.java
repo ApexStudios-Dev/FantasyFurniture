@@ -16,6 +16,7 @@ import dev.apexstudios.fantasyfurniture.decorations.block.MeadBottlesBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.MuffinsBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.MushroomsBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.PaperStackBlock;
+import dev.apexstudios.fantasyfurniture.decorations.block.PlatterBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.PotionBottlesBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.PresentsBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.SnowballsBlock;
@@ -98,6 +99,8 @@ public class DecorationsFurnitureModule {
     public static final DeferredBlock<FoodBlock> FOOD_3 = DecorationUtil.food(REGISTREE, 3);
     public static final DeferredBlock<TeaSetBlock> TEA_SET = FurnitureUtil.simpleBlock(REGISTREE, "tea_set", TeaSetBlock::new, FurnitureUtil.PLANK_PROPERTIES);
     public static final DeferredBlock<TeaCupsBlock> TEA_CUPS = FurnitureUtil.simpleBlock(REGISTREE, "tea_cups", TeaCupsBlock::new, FurnitureUtil.PLANK_PROPERTIES);
+    public static final DeferredBlock<PlatterBlock> PLATTER_0 = DecorationUtil.platter(REGISTREE, 0);
+    public static final DeferredBlock<PlatterBlock> PLATTER_1 = DecorationUtil.platter(REGISTREE, 1);
 
     public static final DeferredBlock<CookieJarBlock> COOKIE_JAR_BLOCK = FurnitureUtil.simpleBlock(REGISTREE, "cookie_jar", CookieJarBlock::new, FurnitureUtil.PLANK_PROPERTIES);
     public static final DeferredBlockEntity<CookieJarBlockEntity> COOKIE_JAR_BLOCK_ENTITY = REGISTREE.registerBlockEntity(COOKIE_JAR_BLOCK, CookieJarBlockEntity::new);

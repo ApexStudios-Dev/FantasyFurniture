@@ -6,6 +6,7 @@ import dev.apexstudios.fantasyfurniture.decorations.block.CoinStackBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.FoodBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.MuffinsBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.MushroomsBlock;
+import dev.apexstudios.fantasyfurniture.decorations.block.PlatterBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.SoulGemsBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.TankardsBlock;
 import dev.apexstudios.fantasyfurniture.util.FurnitureUtil;
@@ -58,5 +59,9 @@ public interface DecorationUtil {
 
     static DeferredBlock<FoodBlock> food(Registree registree, int id) {
         return FurnitureUtil.simpleBlock(registree, "food_" + id, FoodBlock::new, FurnitureUtil.PLANK_PROPERTIES);
+    }
+
+    static DeferredBlock<PlatterBlock> platter(Registree registree, int id) {
+        return FurnitureUtil.simpleBlock(registree, "platter_" + id, PlatterBlock::new, FurnitureUtil.PLANK_PROPERTIES);
     }
 }
