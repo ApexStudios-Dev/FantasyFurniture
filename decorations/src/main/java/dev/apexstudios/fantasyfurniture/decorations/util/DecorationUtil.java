@@ -3,6 +3,7 @@ package dev.apexstudios.fantasyfurniture.decorations.util;
 import dev.apexstudios.fantasyfurniture.decorations.block.BerryBasketBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.BookStackBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.BowlBlock;
+import dev.apexstudios.fantasyfurniture.decorations.block.CandlesBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.ChalicesBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.CoinStackBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.FoodBlock;
@@ -75,5 +76,9 @@ public interface DecorationUtil {
 
     static <TBlock extends ChalicesBlock> DeferredBlock<TBlock> chalices(Registree registree, int id, Function<BlockBehaviour.Properties, TBlock> factory) {
         return FurnitureUtil.simpleBlock(registree, "chalices_" + id, factory, FurnitureUtil.PLANK_PROPERTIES);
+    }
+
+    static DeferredBlock<CandlesBlock> candles(Registree registree, int id) {
+        return FurnitureUtil.simpleBlock(registree, "candles_" + id, CandlesBlock::new, FurnitureUtil.PLANK_PROPERTIES);
     }
 }

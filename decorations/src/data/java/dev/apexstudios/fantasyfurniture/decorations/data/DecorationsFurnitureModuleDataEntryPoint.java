@@ -113,6 +113,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     platter(DecorationsFurnitureModule.PLATTER_0, blockModels);
                     platter(DecorationsFurnitureModule.PLATTER_1, blockModels);
                     chalices(blockModels);
+                    candles(blockModels);
                 })
                 .providing(ProviderTypes.LANGUAGE, (context, provider) -> {
                     provider.addCreativeModeTab(DecorationsFurnitureModule.CREATIVE_MODE_TAB, "Fantasy's Furniture - Decorations");
@@ -171,6 +172,8 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     provider.addBlock(DecorationsFurnitureModule.CHALICES_1, "Chalices 1");
                     provider.addBlock(DecorationsFurnitureModule.CHALICES_2, "Chalices 2");
                     provider.addBlock(DecorationsFurnitureModule.CHALICES_3, "Chalices 3");
+                    provider.addBlock(DecorationsFurnitureModule.CANDLES_0, "Candles 0");
+                    provider.addBlock(DecorationsFurnitureModule.CANDLES_1, "Candles 1");
                 })
                 .providing(ProviderTypes.RECIPES, (context, provider) -> DecorationsFurnitureModule.REGISTREE
                         .listElements(Registries.ITEM)
@@ -547,6 +550,24 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
         stackedItemModel(DecorationsFurnitureModule.CHALICES_1, blockModels);
         stackedItemModel(DecorationsFurnitureModule.CHALICES_2, blockModels);
         stackedDyedColorItemModel(DecorationsFurnitureModule.CHALICES_3, blockModels);
+    }
+
+    private void candles(BlockModelGenerators blockModels) {
+        var slot = TextureSlot.create("candles");
+
+        var template = ExtendedModelTemplateBuilder
+                .builder()
+                .parent(ModelLocationUtils.getModelLocation(DecorationsFurnitureModule.CANDLES_0.value()))
+                .requiredTextureSlot(TextureSlot.PARTICLE)
+                .requiredTextureSlot(slot)
+                .build();
+
+        var provider = TexturedModel.createDefault(block -> TextureMapping
+                .particle(TextureMapping.getBlockTexture(block, "_particle"))
+                .put(slot, TextureMapping.getBlockTexture(block)), template);
+
+        blockModels.createNonTemplateHorizontalBlock(DecorationsFurnitureModule.CANDLES_0.value());
+        blockModels.createHorizontallyRotatedBlock(DecorationsFurnitureModule.CANDLES_1.value(), provider);
     }
 
     private MultiVariantGenerator blockState(Holder<Block> holder) {
