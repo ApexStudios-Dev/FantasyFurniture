@@ -13,6 +13,7 @@ import dev.apexstudios.fantasyfurniture.decorations.block.Lightable;
 import dev.apexstudios.fantasyfurniture.decorations.block.MuffinsBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.MushroomsBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.PlatterBlock;
+import dev.apexstudios.fantasyfurniture.decorations.block.PotteryBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.SoulGemsBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.TankardsBlock;
 import dev.apexstudios.fantasyfurniture.util.FurnitureUtil;
@@ -97,5 +98,9 @@ public interface DecorationUtil {
         return FurnitureUtil.simpleBlock(registree, "candelabra_" + id, properties -> new CandelabraBlock(properties, baseShape), FurnitureUtil.mutating(FurnitureUtil.PLANK_PROPERTIES, properties -> properties.lightLevel(
                 blockState -> ((Lightable) blockState.getBlock()).isLit(blockState) ? AbstractCandleBlock.LIGHT_PER_CANDLE * 3 : 0
         )));
+    }
+
+    static DeferredBlock<PotteryBlock> pottery(Registree registree, int id, VoxelShape baseShape) {
+        return FurnitureUtil.simpleBlock(registree, "pottery_" + id, properties -> new PotteryBlock(properties, baseShape), FurnitureUtil.PLANK_PROPERTIES);
     }
 }
