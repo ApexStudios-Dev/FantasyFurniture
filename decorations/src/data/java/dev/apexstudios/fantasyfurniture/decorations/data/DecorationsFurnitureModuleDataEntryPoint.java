@@ -19,6 +19,7 @@ import dev.apexstudios.fantasyfurniture.decorations.block.SoulGemsBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.Stackable;
 import dev.apexstudios.fantasyfurniture.decorations.block.TankardsBlock;
 import dev.apexstudios.fantasyfurniture.decorations.cookie.CookieJarBlock;
+import dev.apexstudios.fantasyfurniture.decorations.grave.GravestoneEditScreen;
 import dev.apexstudios.fantasyfurniture.station.FurnitureStationRecipeBuilder;
 import dev.apexstudios.fantasyfurniture.station.FurnitureStationSetup;
 import dev.apexstudios.fantasyfurniture.util.FurnitureClientDataUtil;
@@ -71,7 +72,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     coinStack(DecorationsFurnitureModule.IRON_COIN_STACK, blockModels);
                     cookieJar(blockModels);
                     blockModels.createNonTemplateHorizontalBlock(DecorationsFurnitureModule.BREWING_CAULDRON.value());
-                    blockModels.createNonTemplateHorizontalBlock(DecorationsFurnitureModule.GRAVESTONE.value());
+                    blockModels.createNonTemplateHorizontalBlock(DecorationsFurnitureModule.GRAVESTONE_BLOCK.value());
                     blockModels.createNonTemplateHorizontalBlock(DecorationsFurnitureModule.HANGING_HERBS.value());
                     blockModels.createNonTemplateHorizontalBlock(DecorationsFurnitureModule.PAPER_STACK.value());
                     blockModels.createNonTemplateHorizontalBlock(DecorationsFurnitureModule.SPIDER_WEB_SMALL.value());
@@ -128,6 +129,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                 })
                 .providing(ProviderTypes.LANGUAGE, (context, provider) -> {
                     provider.addCreativeModeTab(DecorationsFurnitureModule.CREATIVE_MODE_TAB, "Fantasy's Furniture - Decorations");
+                    provider.add(GravestoneEditScreen.TRANSLATION, "Edit Gravestone Message");
 
                     provider.addBlock(DecorationsFurnitureModule.BERRY_BASKET, "Berry Basket");
                     provider.addBlock(DecorationsFurnitureModule.BLUEBERRY_BASKET, "Blueberry Basket");
@@ -141,7 +143,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     provider.addBlock(DecorationsFurnitureModule.IRON_COIN_STACK, "Iron Coin Stack");
                     provider.addBlock(DecorationsFurnitureModule.COOKIE_JAR_BLOCK, "Cookie Jar");
                     provider.addBlock(DecorationsFurnitureModule.BREWING_CAULDRON, "Brewing Cauldron");
-                    provider.addBlock(DecorationsFurnitureModule.GRAVESTONE, "Gravestone");
+                    provider.addBlock(DecorationsFurnitureModule.GRAVESTONE_BLOCK, "Gravestone");
                     provider.addBlock(DecorationsFurnitureModule.HANGING_HERBS, "Hanging Herbs");
                     provider.addBlock(DecorationsFurnitureModule.PAPER_STACK, "Paper Stack");
                     provider.addBlock(DecorationsFurnitureModule.SPIDER_WEB_SMALL, "Spiderweb Small");
