@@ -1,6 +1,7 @@
 package dev.apexstudios.fantasyfurniture.decorations.util;
 
 import dev.apexstudios.fantasyfurniture.decorations.block.BerryBasketBlock;
+import dev.apexstudios.fantasyfurniture.decorations.block.BonePileBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.BookStackBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.BowlBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.CandlesBlock;
@@ -83,5 +84,9 @@ public interface DecorationUtil {
         return FurnitureUtil.simpleBlock(registree, "candles_" + id, CandlesBlock::new, FurnitureUtil.mutating(FurnitureUtil.PLANK_PROPERTIES, properties -> properties.lightLevel(
                 blockState -> blockState.getValueOrElse(CandlesBlock.LIT, false) ? AbstractCandleBlock.LIGHT_PER_CANDLE * 4 : 0
         )));
+    }
+
+    static DeferredBlock<BonePileBlock> bonePile(Registree registree, String type) {
+        return FurnitureUtil.simpleBlock(registree, "bone_pile_" + type, BonePileBlock::new, FurnitureUtil.mutating(FurnitureUtil.PLANK_PROPERTIES, BlockBehaviour.Properties::noOcclusion));
     }
 }
