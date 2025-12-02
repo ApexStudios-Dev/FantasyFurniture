@@ -121,6 +121,9 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
 
                     bonePile(DecorationsFurnitureModule.BONE_PILE_SKELETON, blockModels);
                     bonePile(DecorationsFurnitureModule.BONE_PILE_WITHER, blockModels);
+
+                    blockModels.createNonTemplateHorizontalBlock(DecorationsFurnitureModule.CROWN.value());
+                    blockModels.createNonTemplateHorizontalBlock(DecorationsFurnitureModule.CUSHIONED_CROWN.value());
                 })
                 .providing(ProviderTypes.LANGUAGE, (context, provider) -> {
                     provider.addCreativeModeTab(DecorationsFurnitureModule.CREATIVE_MODE_TAB, "Fantasy's Furniture - Decorations");
@@ -184,6 +187,8 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     provider.addBlock(DecorationsFurnitureModule.BANNER, "Banner");
                     provider.addBlock(DecorationsFurnitureModule.BONE_PILE_SKELETON, "Bone Pile Skeleton");
                     provider.addBlock(DecorationsFurnitureModule.BONE_PILE_WITHER, "Bone Pile Wither");
+                    provider.addBlock(DecorationsFurnitureModule.CROWN, "Crown");
+                    provider.addBlock(DecorationsFurnitureModule.CUSHIONED_CROWN, "Cushioned Crown");
                 })
                 .providing(ProviderTypes.RECIPES, (context, provider) -> DecorationsFurnitureModule.REGISTREE
                         .listElements(Registries.ITEM)
