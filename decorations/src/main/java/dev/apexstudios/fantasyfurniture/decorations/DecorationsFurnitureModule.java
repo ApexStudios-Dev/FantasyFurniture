@@ -18,7 +18,6 @@ import dev.apexstudios.fantasyfurniture.decorations.block.FairyLightsBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.FloatingTomesBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.FloorCushionBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.FoodBlock;
-import dev.apexstudios.fantasyfurniture.decorations.block.GravestoneBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.HangingHerbsBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.MeadBottlesBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.MuffinsBlock;
@@ -44,6 +43,8 @@ import dev.apexstudios.fantasyfurniture.decorations.cookie.CookieJarBlock;
 import dev.apexstudios.fantasyfurniture.decorations.cookie.CookieJarBlockEntity;
 import dev.apexstudios.fantasyfurniture.decorations.cookie.CookieJarMenu;
 import dev.apexstudios.fantasyfurniture.decorations.cookie.CookieJarMenuScreen;
+import dev.apexstudios.fantasyfurniture.decorations.grave.GravestoneBlock;
+import dev.apexstudios.fantasyfurniture.decorations.grave.GravestoneBlockEntity;
 import dev.apexstudios.fantasyfurniture.decorations.util.DecorationUtil;
 import dev.apexstudios.fantasyfurniture.util.FurnitureUtil;
 import dev.apexstudios.registree.api.Registree;
@@ -75,7 +76,6 @@ public class DecorationsFurnitureModule {
     public static final DeferredBlock<CoinStackBlock> GOLDEN_COIN_STACK = DecorationUtil.coinStack(REGISTREE, "golden");
     public static final DeferredBlock<CoinStackBlock> IRON_COIN_STACK = DecorationUtil.coinStack(REGISTREE, "iron");
     public static final DeferredBlock<BrewingCauldronBlock> BREWING_CAULDRON = FurnitureUtil.simpleBlock(REGISTREE, "brewing_cauldron", BrewingCauldronBlock::new, FurnitureUtil.PLANK_PROPERTIES);
-    public static final DeferredBlock<GravestoneBlock> GRAVESTONE = FurnitureUtil.simpleBlock(REGISTREE, "gravestone", GravestoneBlock::new, FurnitureUtil.PLANK_PROPERTIES);
     public static final DeferredBlock<HangingHerbsBlock> HANGING_HERBS = FurnitureUtil.simpleBlock(REGISTREE, "hanging_herbs", HangingHerbsBlock::new, FurnitureUtil.mutating(FurnitureUtil.PLANK_PROPERTIES, BlockBehaviour.Properties::noCollision));
     public static final DeferredBlock<PaperStackBlock> PAPER_STACK = FurnitureUtil.simpleBlock(REGISTREE, "paper_stack", PaperStackBlock::new, FurnitureUtil.PLANK_PROPERTIES);
     public static final DeferredBlock<SpiderWebSmallBlock> SPIDER_WEB_SMALL = FurnitureUtil.simpleBlock(REGISTREE, "spider_web_small", SpiderWebSmallBlock::new, FurnitureUtil.mutating(FurnitureUtil.PLANK_PROPERTIES, BlockBehaviour.Properties::noCollision));
@@ -131,6 +131,9 @@ public class DecorationsFurnitureModule {
     public static final DeferredBlock<WallMirrorLargeBlock> WALL_MIRROR_LARGE = FurnitureUtil.simpleBlock(REGISTREE, "wall_mirror_large", WallMirrorLargeBlock::new, FurnitureUtil.mutating(FurnitureUtil.PLANK_PROPERTIES, BlockBehaviour.Properties::noCollision));
     public static final DeferredBlock<PotteryBlock> POTTERY_0 = DecorationUtil.pottery(REGISTREE, 0, PotteryBlock.SHAPE_0);
     public static final DeferredBlock<PotteryBlock> POTTERY_1 = DecorationUtil.pottery(REGISTREE, 1, PotteryBlock.SHAPE_1);
+
+    public static final DeferredBlock<GravestoneBlock> GRAVESTONE_BLOCK = FurnitureUtil.simpleBlock(REGISTREE, "gravestone", GravestoneBlock::new, FurnitureUtil.PLANK_PROPERTIES);
+    public static final DeferredBlockEntity<GravestoneBlockEntity> GRAVESTONE_BLOCK_ENTITY = REGISTREE.registerBlockEntity(GRAVESTONE_BLOCK, GravestoneBlockEntity::new);
 
     public static final DeferredBlock<CookieJarBlock> COOKIE_JAR_BLOCK = FurnitureUtil.simpleBlock(REGISTREE, "cookie_jar", CookieJarBlock::new, FurnitureUtil.PLANK_PROPERTIES);
     public static final DeferredBlockEntity<CookieJarBlockEntity> COOKIE_JAR_BLOCK_ENTITY = REGISTREE.registerBlockEntity(COOKIE_JAR_BLOCK, CookieJarBlockEntity::new);
