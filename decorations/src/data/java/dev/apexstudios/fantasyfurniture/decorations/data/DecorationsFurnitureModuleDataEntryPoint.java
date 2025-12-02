@@ -114,6 +114,9 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     platter(DecorationsFurnitureModule.PLATTER_1, blockModels);
                     chalices(blockModels);
                     candles(blockModels);
+
+                    FurnitureClientDataUtil.createBottomTopModel(DecorationsFurnitureModule.BANNER.value(), blockModels);
+                    FurnitureClientDataUtil.registerSimpleBlockItemModel(DecorationsFurnitureModule.BANNER.value(), blockModels);
                 })
                 .providing(ProviderTypes.LANGUAGE, (context, provider) -> {
                     provider.addCreativeModeTab(DecorationsFurnitureModule.CREATIVE_MODE_TAB, "Fantasy's Furniture - Decorations");
@@ -174,6 +177,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     provider.addBlock(DecorationsFurnitureModule.CHALICES_3, "Chalices 3");
                     provider.addBlock(DecorationsFurnitureModule.CANDLES_0, "Candles 0");
                     provider.addBlock(DecorationsFurnitureModule.CANDLES_1, "Candles 1");
+                    provider.addBlock(DecorationsFurnitureModule.BANNER, "Banner");
                 })
                 .providing(ProviderTypes.RECIPES, (context, provider) -> DecorationsFurnitureModule.REGISTREE
                         .listElements(Registries.ITEM)
