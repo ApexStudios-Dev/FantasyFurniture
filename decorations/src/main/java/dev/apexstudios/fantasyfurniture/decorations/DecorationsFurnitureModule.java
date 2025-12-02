@@ -37,6 +37,8 @@ import dev.apexstudios.fantasyfurniture.decorations.block.SweetrollsBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.TankardsBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.TeaCupsBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.TeaSetBlock;
+import dev.apexstudios.fantasyfurniture.decorations.block.WallMirrorLargeBlock;
+import dev.apexstudios.fantasyfurniture.decorations.block.WallMirrorSmallBlock;
 import dev.apexstudios.fantasyfurniture.decorations.cookie.CookieJarBlock;
 import dev.apexstudios.fantasyfurniture.decorations.cookie.CookieJarBlockEntity;
 import dev.apexstudios.fantasyfurniture.decorations.cookie.CookieJarMenu;
@@ -124,6 +126,8 @@ public class DecorationsFurnitureModule {
     public static final DeferredBlock<FloorCushionBlock> FLOOR_CUSHION = FurnitureUtil.simpleBlock(REGISTREE, "floor_cushion", FloorCushionBlock::new, FurnitureUtil.PLANK_PROPERTIES);
     public static final DeferredBlock<CandelabraBlock> CANDELABRA_0 = DecorationUtil.candelabra(REGISTREE, 0, CandelabraBlock.SHAPE_0);
     public static final DeferredBlock<CandelabraBlock> CANDELABRA_1 = DecorationUtil.candelabra(REGISTREE, 1, CandelabraBlock.SHAPE_1);
+    public static final DeferredBlock<WallMirrorSmallBlock> WALL_MIRROR_SMALL = FurnitureUtil.simpleBlock(REGISTREE, "wall_mirror_small", WallMirrorSmallBlock::new, FurnitureUtil.PLANK_PROPERTIES);
+    public static final DeferredBlock<WallMirrorLargeBlock> WALL_MIRROR_LARGE = FurnitureUtil.simpleBlock(REGISTREE, "wall_mirror_large", WallMirrorLargeBlock::new, FurnitureUtil.PLANK_PROPERTIES);
 
     public static final DeferredBlock<CookieJarBlock> COOKIE_JAR_BLOCK = FurnitureUtil.simpleBlock(REGISTREE, "cookie_jar", CookieJarBlock::new, FurnitureUtil.PLANK_PROPERTIES);
     public static final DeferredBlockEntity<CookieJarBlockEntity> COOKIE_JAR_BLOCK_ENTITY = REGISTREE.registerBlockEntity(COOKIE_JAR_BLOCK, CookieJarBlockEntity::new);
