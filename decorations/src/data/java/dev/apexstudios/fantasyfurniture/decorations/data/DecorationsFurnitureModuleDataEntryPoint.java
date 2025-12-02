@@ -127,6 +127,9 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     blockModels.createNonTemplateHorizontalBlock(DecorationsFurnitureModule.FLOOR_CUSHION.value());
                     blockModels.createNonTemplateHorizontalBlock(DecorationsFurnitureModule.CANDELABRA_0.value());
                     blockModels.createNonTemplateHorizontalBlock(DecorationsFurnitureModule.CANDELABRA_1.value());
+                    blockModels.createNonTemplateHorizontalBlock(DecorationsFurnitureModule.WALL_MIRROR_SMALL.value());
+                    FurnitureClientDataUtil.createBottomTopModel(DecorationsFurnitureModule.WALL_MIRROR_LARGE.value(), blockModels);
+                    FurnitureClientDataUtil.registerSimpleBlockItemModel(DecorationsFurnitureModule.WALL_MIRROR_LARGE.value(), blockModels);
                 })
                 .providing(ProviderTypes.LANGUAGE, (context, provider) -> {
                     provider.addCreativeModeTab(DecorationsFurnitureModule.CREATIVE_MODE_TAB, "Fantasy's Furniture - Decorations");
@@ -195,6 +198,8 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     provider.addBlock(DecorationsFurnitureModule.FLOOR_CUSHION, "Floor Cushion");
                     provider.addBlock(DecorationsFurnitureModule.CANDELABRA_0, "Candelabra 0");
                     provider.addBlock(DecorationsFurnitureModule.CANDELABRA_1, "Candelabra 1");
+                    provider.addBlock(DecorationsFurnitureModule.WALL_MIRROR_SMALL, "Wall Mirror Small");
+                    provider.addBlock(DecorationsFurnitureModule.WALL_MIRROR_LARGE, "Wall Mirror Large");
                 })
                 .providing(ProviderTypes.RECIPES, (context, provider) -> DecorationsFurnitureModule.REGISTREE
                         .listElements(Registries.ITEM)
