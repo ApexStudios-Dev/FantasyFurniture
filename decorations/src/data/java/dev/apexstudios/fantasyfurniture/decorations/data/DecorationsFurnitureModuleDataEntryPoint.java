@@ -124,6 +124,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
 
                     blockModels.createNonTemplateHorizontalBlock(DecorationsFurnitureModule.CROWN.value());
                     blockModels.createNonTemplateHorizontalBlock(DecorationsFurnitureModule.CUSHIONED_CROWN.value());
+                    blockModels.createNonTemplateHorizontalBlock(DecorationsFurnitureModule.FLOOR_CUSHION.value());
                 })
                 .providing(ProviderTypes.LANGUAGE, (context, provider) -> {
                     provider.addCreativeModeTab(DecorationsFurnitureModule.CREATIVE_MODE_TAB, "Fantasy's Furniture - Decorations");
@@ -189,6 +190,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     provider.addBlock(DecorationsFurnitureModule.BONE_PILE_WITHER, "Bone Pile Wither");
                     provider.addBlock(DecorationsFurnitureModule.CROWN, "Crown");
                     provider.addBlock(DecorationsFurnitureModule.CUSHIONED_CROWN, "Cushioned Crown");
+                    provider.addBlock(DecorationsFurnitureModule.FLOOR_CUSHION, "Floor Cushion");
                 })
                 .providing(ProviderTypes.RECIPES, (context, provider) -> DecorationsFurnitureModule.REGISTREE
                         .listElements(Registries.ITEM)
