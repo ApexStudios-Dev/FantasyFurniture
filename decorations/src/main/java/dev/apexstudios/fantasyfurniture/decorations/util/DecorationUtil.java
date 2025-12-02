@@ -16,6 +16,7 @@ import dev.apexstudios.fantasyfurniture.util.FurnitureUtil;
 import dev.apexstudios.registree.api.Registree;
 import dev.apexstudios.registree.api.holder.DeferredBlock;
 import java.util.function.Function;
+import net.minecraft.world.level.block.AbstractCandleBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import org.jetbrains.annotations.Nullable;
 
@@ -79,6 +80,8 @@ public interface DecorationUtil {
     }
 
     static DeferredBlock<CandlesBlock> candles(Registree registree, int id) {
-        return FurnitureUtil.simpleBlock(registree, "candles_" + id, CandlesBlock::new, FurnitureUtil.PLANK_PROPERTIES);
+        return FurnitureUtil.simpleBlock(registree, "candles_" + id, CandlesBlock::new, FurnitureUtil.mutating(FurnitureUtil.PLANK_PROPERTIES, properties -> properties.lightLevel(
+                blockState -> blockState.getValueOrElse(CandlesBlock.LIT, false) ? AbstractCandleBlock.LIGHT_PER_CANDLE * 4 : 0
+        )));
     }
 }
