@@ -23,7 +23,7 @@ public final class TeaSetBlock extends SimpleHorizontalDirectionalMultiBlock {
 
     @Override
     protected VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return FurnitureUtil.getShape(Shapes.rotateHorizontal(box(-16D, 0D, 14D, 16D, 16D, 16D)), blockState, pos);
+        return FurnitureUtil.getShape(SHAPE, blockState, pos);
     }
 
     @Override
