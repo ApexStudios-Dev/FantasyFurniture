@@ -77,10 +77,8 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     blockModels.createNonTemplateHorizontalBlock(DecorationsFurnitureModule.SPIDER_WEB_SMALL.value());
                     FurnitureClientDataUtil.createLeftRightModel(DecorationsFurnitureModule.SPIDER_WEB_WIDE.value(), blockModels);
                     FurnitureClientDataUtil.registerSimpleBlockItemModel(DecorationsFurnitureModule.SPIDER_WEB_WIDE.value(), blockModels);
-
                     // blockModels.registerSimpleFlatItemModel(DecorationsFurnitureModule.BRONZE_CHAIN.value());
                     blockModels.createAxisAlignedPillarBlockCustomModel(DecorationsFurnitureModule.BRONZE_CHAIN.value(), BlockModelGenerators.plainVariant(TexturedModel.CHAIN.create(DecorationsFurnitureModule.BRONZE_CHAIN.value(), blockModels.modelOutput)));
-
                     fairyLights(blockModels);
                     blockModels.createNonTemplateHorizontalBlock(DecorationsFurnitureModule.STOCKING.value());
                     bookstack(DecorationsFurnitureModule.BOOK_STACK_0, blockModels);
@@ -106,22 +104,17 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     soulGems(DecorationsFurnitureModule.SOUL_GEMS_DARK, blockModels);
                     soulGems(DecorationsFurnitureModule.SOUL_GEMS_LIGHT, blockModels);
                     food(blockModels);
-
                     FurnitureClientDataUtil.createLeftRightModel(DecorationsFurnitureModule.TEA_SET.value(), blockModels);
                     FurnitureClientDataUtil.registerSimpleBlockItemModel(DecorationsFurnitureModule.TEA_SET.value(), blockModels);
-
                     teaCups(blockModels);
                     platter(DecorationsFurnitureModule.PLATTER_0, blockModels);
                     platter(DecorationsFurnitureModule.PLATTER_1, blockModels);
                     chalices(blockModels);
                     candles(blockModels);
-
                     FurnitureClientDataUtil.createBottomTopModel(DecorationsFurnitureModule.BANNER.value(), blockModels);
                     FurnitureClientDataUtil.registerSimpleBlockItemModel(DecorationsFurnitureModule.BANNER.value(), blockModels);
-
                     bonePile(DecorationsFurnitureModule.BONE_PILE_SKELETON, blockModels);
                     bonePile(DecorationsFurnitureModule.BONE_PILE_WITHER, blockModels);
-
                     blockModels.createNonTemplateHorizontalBlock(DecorationsFurnitureModule.CROWN.value());
                     blockModels.createNonTemplateHorizontalBlock(DecorationsFurnitureModule.CUSHIONED_CROWN.value());
                     blockModels.createNonTemplateHorizontalBlock(DecorationsFurnitureModule.FLOOR_CUSHION.value());
