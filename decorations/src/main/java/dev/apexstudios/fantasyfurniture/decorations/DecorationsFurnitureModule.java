@@ -8,6 +8,7 @@ import dev.apexstudios.fantasyfurniture.decorations.block.BonePileBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.BookStackBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.BowlBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.BrewingCauldronBlock;
+import dev.apexstudios.fantasyfurniture.decorations.block.CandelabraBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.CandlesBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.ChalicesBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.CoinStackBlock;
@@ -121,6 +122,8 @@ public class DecorationsFurnitureModule {
     public static final DeferredBlock<CrownBlock> CROWN = FurnitureUtil.simpleBlock(REGISTREE, "crown", CrownBlock::new, FurnitureUtil.PLANK_PROPERTIES);
     public static final DeferredBlock<CushionedCrownBlock> CUSHIONED_CROWN = FurnitureUtil.simpleBlock(REGISTREE, "cushioned_crown", CushionedCrownBlock::new, FurnitureUtil.PLANK_PROPERTIES);
     public static final DeferredBlock<FloorCushionBlock> FLOOR_CUSHION = FurnitureUtil.simpleBlock(REGISTREE, "floor_cushion", FloorCushionBlock::new, FurnitureUtil.PLANK_PROPERTIES);
+    public static final DeferredBlock<CandelabraBlock> CANDELABRA_0 = DecorationUtil.candelabra(REGISTREE, 0, CandelabraBlock.SHAPE_0);
+    public static final DeferredBlock<CandelabraBlock> CANDELABRA_1 = DecorationUtil.candelabra(REGISTREE, 1, CandelabraBlock.SHAPE_1);
 
     public static final DeferredBlock<CookieJarBlock> COOKIE_JAR_BLOCK = FurnitureUtil.simpleBlock(REGISTREE, "cookie_jar", CookieJarBlock::new, FurnitureUtil.PLANK_PROPERTIES);
     public static final DeferredBlockEntity<CookieJarBlockEntity> COOKIE_JAR_BLOCK_ENTITY = REGISTREE.registerBlockEntity(COOKIE_JAR_BLOCK, CookieJarBlockEntity::new);
