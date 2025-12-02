@@ -2,6 +2,7 @@ package dev.apexstudios.fantasyfurniture.decorations.block;
 
 import dev.apexstudios.apexcore.lib.block.SimpleHorizontalDirectionalBlock;
 import dev.apexstudios.apexcore.lib.util.ApexShapes;
+import dev.apexstudios.fantasyfurniture.decorations.DecorationsFurnitureModule;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -30,18 +31,33 @@ import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
 import org.joml.Vector3dc;
 
-public final class CandlesBlock extends SimpleHorizontalDirectionalBlock implements Lightable {
-    public static final VoxelShape SHAPE = ApexShapes.join(
-            box(5D, 0D, 4D, 8D, 3D, 7D),
-            box(9D, 0D, 5D, 12D, 6D, 8D),
-            box(8D, 0D, 10D, 11D, 8D, 13D),
-            box(4D, 0D, 9D, 7D, 5D, 12D)
+public final class CandelabraBlock extends SimpleHorizontalDirectionalBlock implements Lightable {
+    public static final VoxelShape SHAPE_0 = ApexShapes.join(
+            box(6D, 0D, 6D, 10D, 2D, 10D),
+            box(7D, 2D, 7D, 9D, 14D, 9D),
+            box(3D, 5D, 7D, 13D, 7D, 9D),
+            box(11D, 7D, 7D, 13D, 13D, 9D),
+            box(3D, 7D, 7D, 5D, 13D, 9D),
+            box(2.5D, 9D, 6.5D, 5.5D, 10D, 9.5D),
+            box(6.5D, 10D, 6.5D, 9.5D, 11D, 9.5D),
+            box(10.5D, 9D, 6.5D, 13.5D, 10D, 9.5D)
     );
 
-    public static final Map<Direction, VoxelShape> SHAPES = Shapes.rotateHorizontal(SHAPE);
+    public static final VoxelShape SHAPE_1 = ApexShapes.join(
+            box(6D, 0D, 6D, 10D, 2D, 10D),
+            box(7D, 2D, 7D, 9D, 5D, 9D),
+            box(1.25D, 5D, 6.5D, 14.75D, 12D, 9.5D),
+            box(12.25D, 12D, 7D, 14.25D, 15D, 9D),
+            box(1.75D, 12D, 7D, 3.75D, 15D, 9D),
+            box(7D, 12D, 7D, 9D, 16D, 9D)
+    );
 
-    public CandlesBlock(Properties properties) {
+    private final Map<Direction, VoxelShape> shapes;
+
+    public CandelabraBlock(Properties properties, VoxelShape baseShape) {
         super(properties);
+
+        shapes = Shapes.rotateHorizontal(baseShape);
 
         registerDefaultState(setLit(defaultBlockState(), false));
     }
@@ -49,7 +65,7 @@ public final class CandlesBlock extends SimpleHorizontalDirectionalBlock impleme
     @Override
     protected VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext context) {
         var facing = blockState.getValue(FACING);
-        return SHAPES.get(facing);
+        return shapes.get(facing);
     }
 
     @Override
@@ -90,38 +106,22 @@ public final class CandlesBlock extends SimpleHorizontalDirectionalBlock impleme
 
     @Override
     public void forEachLightPos(BlockState blockState, BlockPos pos, Consumer<Vector3dc> consumer) {
-        var x = pos.getX();
-        var y = pos.getY();
-        var z = pos.getZ();
+        var x = pos.getX() + .5D;
+        var y = pos.getY() + .5D + .45D + .075D;
+        var z = pos.getZ() + .5D;
 
-        switch (blockState.getValue(FACING)) {
-            case NORTH -> {
-                consumer.accept(new Vector3d(x + .4D, y + .313D, z + .35D));
-                consumer.accept(new Vector3d(x + .65D, y + .5D, z + .4D));
-                consumer.accept(new Vector3d(x + .375D, y + .45D, z + .65D));
-                consumer.accept(new Vector3d(x + .6D, y + .65D, z + .725D));
-            }
+        var facing = blockState.getValue(FACING).getClockWise();
+        var stepX = facing.getStepX();
+        var stepZ = facing.getStepZ();
+        var stepOffset = .25D;
 
-            case EAST -> {
-                consumer.accept(new Vector3d(x + .65D, y + .313D, z + .4D));
-                consumer.accept(new Vector3d(x + .6D, y + .5D, z + .65D));
-                consumer.accept(new Vector3d(x + .35D, y + .45D, z + .35D));
-                consumer.accept(new Vector3d(x + .3D, y + .65D, z + .6D));
-            }
-
-            case SOUTH -> {
-                consumer.accept(new Vector3d(x + .6D, y + .313D, z + .65D));
-                consumer.accept(new Vector3d(x + .35D, y + .5D, z + .6D));
-                consumer.accept(new Vector3d(x + .4D, y + .65D, z + .3D));
-                consumer.accept(new Vector3d(x + .65D, y + .45D, z + .3D));
-            }
-
-            case WEST -> {
-                consumer.accept(new Vector3d(x + .35D, y + .313D, z + .6D));
-                consumer.accept(new Vector3d(x + .4D, y + .5D, z + .35D));
-                consumer.accept(new Vector3d(x + .7D, y + .65D, z + .4D));
-                consumer.accept(new Vector3d(x + .65D, y + .45D, z + .65D));
-            }
+        if(DecorationsFurnitureModule.CANDELABRA_1.is(blockState)) {
+            y += .1D;
+            stepOffset += .1D;
         }
+
+        consumer.accept(new Vector3d(x, y, z));
+        consumer.accept(new Vector3d(x + (stepX * stepOffset), y - .05D, z + (stepZ * stepOffset)));
+        consumer.accept(new Vector3d(x - (stepX * stepOffset), y - .05D, z - (stepZ * stepOffset)));
     }
 }

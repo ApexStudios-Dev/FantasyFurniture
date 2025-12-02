@@ -4,10 +4,12 @@ import dev.apexstudios.fantasyfurniture.decorations.block.BerryBasketBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.BonePileBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.BookStackBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.BowlBlock;
+import dev.apexstudios.fantasyfurniture.decorations.block.CandelabraBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.CandlesBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.ChalicesBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.CoinStackBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.FoodBlock;
+import dev.apexstudios.fantasyfurniture.decorations.block.Lightable;
 import dev.apexstudios.fantasyfurniture.decorations.block.MuffinsBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.MushroomsBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.PlatterBlock;
@@ -19,6 +21,7 @@ import dev.apexstudios.registree.api.holder.DeferredBlock;
 import java.util.function.Function;
 import net.minecraft.world.level.block.AbstractCandleBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 public interface DecorationUtil {
@@ -82,11 +85,17 @@ public interface DecorationUtil {
 
     static DeferredBlock<CandlesBlock> candles(Registree registree, int id) {
         return FurnitureUtil.simpleBlock(registree, "candles_" + id, CandlesBlock::new, FurnitureUtil.mutating(FurnitureUtil.PLANK_PROPERTIES, properties -> properties.lightLevel(
-                blockState -> blockState.getValueOrElse(CandlesBlock.LIT, false) ? AbstractCandleBlock.LIGHT_PER_CANDLE * 4 : 0
+                blockState -> ((Lightable) blockState.getBlock()).isLit(blockState) ? AbstractCandleBlock.LIGHT_PER_CANDLE * 4 : 0
         )));
     }
 
     static DeferredBlock<BonePileBlock> bonePile(Registree registree, String type) {
         return FurnitureUtil.simpleBlock(registree, "bone_pile_" + type, BonePileBlock::new, FurnitureUtil.mutating(FurnitureUtil.PLANK_PROPERTIES, BlockBehaviour.Properties::noOcclusion));
+    }
+
+    static DeferredBlock<CandelabraBlock> candelabra(Registree registree, int id, VoxelShape baseShape) {
+        return FurnitureUtil.simpleBlock(registree, "candelabra_" + id, properties -> new CandelabraBlock(properties, baseShape), FurnitureUtil.mutating(FurnitureUtil.PLANK_PROPERTIES, properties -> properties.lightLevel(
+                blockState -> ((Lightable) blockState.getBlock()).isLit(blockState) ? AbstractCandleBlock.LIGHT_PER_CANDLE * 3 : 0
+        )));
     }
 }
