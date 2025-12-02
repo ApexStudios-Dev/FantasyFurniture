@@ -7,6 +7,7 @@ import dev.apexstudios.apexcore.lib.data.ResourceGenerator;
 import dev.apexstudios.apexcore.lib.data.provider.RecipeProvider;
 import dev.apexstudios.apexcore.lib.multiblock.MultiBlock;
 import dev.apexstudios.fantasyfurniture.decorations.DecorationsFurnitureModule;
+import dev.apexstudios.fantasyfurniture.decorations.block.BonePileBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.BookStackBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.BowlBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.ChalicesBlock;
@@ -117,6 +118,9 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
 
                     FurnitureClientDataUtil.createBottomTopModel(DecorationsFurnitureModule.BANNER.value(), blockModels);
                     FurnitureClientDataUtil.registerSimpleBlockItemModel(DecorationsFurnitureModule.BANNER.value(), blockModels);
+
+                    bonePile(DecorationsFurnitureModule.BONE_PILE_SKELETON, blockModels);
+                    bonePile(DecorationsFurnitureModule.BONE_PILE_WITHER, blockModels);
                 })
                 .providing(ProviderTypes.LANGUAGE, (context, provider) -> {
                     provider.addCreativeModeTab(DecorationsFurnitureModule.CREATIVE_MODE_TAB, "Fantasy's Furniture - Decorations");
@@ -178,6 +182,8 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     provider.addBlock(DecorationsFurnitureModule.CANDLES_0, "Candles 0");
                     provider.addBlock(DecorationsFurnitureModule.CANDLES_1, "Candles 1");
                     provider.addBlock(DecorationsFurnitureModule.BANNER, "Banner");
+                    provider.addBlock(DecorationsFurnitureModule.BONE_PILE_SKELETON, "Bone Pile Skeleton");
+                    provider.addBlock(DecorationsFurnitureModule.BONE_PILE_WITHER, "Bone Pile Wither");
                 })
                 .providing(ProviderTypes.RECIPES, (context, provider) -> DecorationsFurnitureModule.REGISTREE
                         .listElements(Registries.ITEM)
@@ -572,6 +578,27 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
 
         blockModels.createNonTemplateHorizontalBlock(DecorationsFurnitureModule.CANDLES_0.value());
         blockModels.createHorizontallyRotatedBlock(DecorationsFurnitureModule.CANDLES_1.value(), provider);
+    }
+
+    private void bonePile(DeferredBlock<BonePileBlock> holder, BlockModelGenerators blockModels) {
+        if(!DecorationsFurnitureModule.BONE_PILE_SKELETON.is(holder)) {
+            var slot = TextureSlot.create("bone_pile");
+
+            var template = ExtendedModelTemplateBuilder
+                    .builder()
+                    .parent(ModelLocationUtils.getModelLocation(DecorationsFurnitureModule.BONE_PILE_SKELETON.value()))
+                    .requiredTextureSlot(TextureSlot.PARTICLE)
+                    .requiredTextureSlot(slot);
+
+            template.build().create(
+                    holder.value(),
+                    TextureMapping.particle(TextureMapping.getBlockTexture(holder.value(), "_particle"))
+                            .put(slot, TextureMapping.getBlockTexture(holder.value())),
+                    blockModels.modelOutput
+            );
+        }
+
+        blockModels.createNonTemplateHorizontalBlock(holder.value());
     }
 
     private MultiVariantGenerator blockState(Holder<Block> holder) {
