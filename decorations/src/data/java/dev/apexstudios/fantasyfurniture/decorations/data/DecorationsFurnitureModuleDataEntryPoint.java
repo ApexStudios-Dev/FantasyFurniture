@@ -7,6 +7,8 @@ import dev.apexstudios.apexcore.lib.data.ResourceGenerator;
 import dev.apexstudios.apexcore.lib.data.provider.RecipeProvider;
 import dev.apexstudios.apexcore.lib.multiblock.MultiBlock;
 import dev.apexstudios.fantasyfurniture.decorations.DecorationsFurnitureModule;
+import dev.apexstudios.fantasyfurniture.decorations.ber.SimpleBlockEntityBlock;
+import dev.apexstudios.fantasyfurniture.decorations.ber.SimpleBlockEntitySpecialRenderer;
 import dev.apexstudios.fantasyfurniture.decorations.block.BonePileBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.BookStackBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.BowlBlock;
@@ -29,6 +31,7 @@ import java.util.function.BiConsumer;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
+import net.minecraft.client.data.models.model.ItemModelUtils;
 import net.minecraft.client.data.models.model.ModelInstance;
 import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.TextureMapping;
@@ -42,6 +45,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
@@ -126,6 +130,9 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     FurnitureClientDataUtil.registerSimpleBlockItemModel(DecorationsFurnitureModule.WALL_MIRROR_LARGE.value(), blockModels);
                     blockModels.createNonTemplateHorizontalBlock(DecorationsFurnitureModule.POTTERY_0.value());
                     blockModels.createNonTemplateHorizontalBlock(DecorationsFurnitureModule.POTTERY_1.value());
+                    simpleBlockEntity(DecorationsFurnitureModule.WIDOW_BLOOM_BLOCK, new SimpleBlockEntitySpecialRenderer.WidowBloom(), blockModels);
+                    simpleBlockEntity(DecorationsFurnitureModule.SKULL_BLOSSOM_SKELETON_BLOCK, new SimpleBlockEntitySpecialRenderer.SkullBlossom(true), blockModels);
+                    simpleBlockEntity(DecorationsFurnitureModule.SKULL_BLOSSOM_WITHER_BLOCK, new SimpleBlockEntitySpecialRenderer.SkullBlossom(false), blockModels);
                 })
                 .providing(ProviderTypes.LANGUAGE, (context, provider) -> {
                     provider.addCreativeModeTab(DecorationsFurnitureModule.CREATIVE_MODE_TAB, "Fantasy's Furniture - Decorations");
@@ -199,6 +206,9 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     provider.addBlock(DecorationsFurnitureModule.WALL_MIRROR_LARGE, "Wall Mirror Large");
                     provider.addBlock(DecorationsFurnitureModule.POTTERY_0, "Pottery 0");
                     provider.addBlock(DecorationsFurnitureModule.POTTERY_1, "Pottery 1");
+                    provider.addBlock(DecorationsFurnitureModule.WIDOW_BLOOM_BLOCK, "Widow Bloom");
+                    provider.addBlock(DecorationsFurnitureModule.SKULL_BLOSSOM_SKELETON_BLOCK, "Skull Blossoms Skeleton");
+                    provider.addBlock(DecorationsFurnitureModule.SKULL_BLOSSOM_WITHER_BLOCK, "Skull Blossoms Wither");
                 })
                 .providing(ProviderTypes.RECIPES, (context, provider) -> DecorationsFurnitureModule.REGISTREE
                         .listElements(Registries.ITEM)
@@ -614,6 +624,61 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
         }
 
         blockModels.createNonTemplateHorizontalBlock(holder.value());
+    }
+
+    private void simpleBlockEntity(DeferredBlock<? extends SimpleBlockEntityBlock> block, SimpleBlockEntitySpecialRenderer.Unbaked specialModel, BlockModelGenerators blockModels) {
+        var blockModel = ExtendedModelTemplateBuilder
+                .builder()
+                .requiredTextureSlot(TextureSlot.PARTICLE)
+                .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND, transform -> transform
+                        .rotation(75F, 45F, 0F)
+                        .translation(0F, 3F, 4F)
+                        .scale(.375F, .375F, .375F)
+                )
+                .transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND, transform -> transform
+                        .rotation(75F, 45F, 0F)
+                        .translation(0F, 3F, 4F)
+                        .scale(.375F, .375F, .375F)
+                )
+                .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND, transform -> transform
+                        .rotation(0F, 135F, 0F)
+                        .translation(0F, 2.5F, 0F)
+                        .scale(.4F, .4F, .4F)
+                )
+                .transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND, transform -> transform
+                        .rotation(0F, 135F, 0F)
+                        .translation(0F, 2.5F, 0F)
+                        .scale(.4F, .4F, .4F)
+                )
+                .transform(ItemDisplayContext.HEAD, transform -> transform
+                        .rotation(0F, 0F, 0F)
+                        .translation(0F, 30F, 0F)
+                        .scale(1F, 1F, 1F)
+                )
+                .transform(ItemDisplayContext.GROUND, transform -> transform
+                        .rotation(0F, 0F, 0F)
+                        .translation(0F, 6F, 0F)
+                        .scale(.25F, .25F, .25F)
+                )
+                .transform(ItemDisplayContext.FIXED, transform -> transform
+                        .rotation(-90F, 0F, 0F)
+                        .translation(0F, 0F, -23F)
+                        .scale(1F, 1F, 1F)
+                )
+                .transform(ItemDisplayContext.GUI, transform -> transform
+                        .rotation(30F, -135F, 0F)
+                        .translation(0F, -3F, 0F)
+                        .scale(.5F, .5F, .5F)
+                )
+                .build()
+                .create(block.value(), TextureMapping.particle(TextureMapping.getBlockTexture(block.value(), "_particle")), blockModels.modelOutput);
+
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(
+                block.value(),
+                BlockModelGenerators.plainVariant(blockModel)
+        ));
+
+        blockModels.itemModelOutput.accept(block.asItem(), ItemModelUtils.specialModel(blockModel, specialModel));
     }
 
     private MultiVariantGenerator blockState(Holder<Block> holder) {

@@ -1,5 +1,7 @@
 package dev.apexstudios.fantasyfurniture.decorations;
 
+import dev.apexstudios.fantasyfurniture.decorations.ber.SimpleBlockEntity;
+import dev.apexstudios.fantasyfurniture.decorations.ber.SimpleBlockEntityBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.BannerBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.BerryBasketBlock;
 import dev.apexstudios.fantasyfurniture.decorations.block.BoiledCremeTreatsBlock;
@@ -137,6 +139,13 @@ public class DecorationsFurnitureModule {
     public static final DeferredBlock<GravestoneBlock> GRAVESTONE_BLOCK = REGISTREE.registerBlock("gravestone", GravestoneBlock::new, FurnitureUtil.PLANK_PROPERTIES);
     public static final DeferredBlockEntity<GravestoneBlockEntity> GRAVESTONE_BLOCK_ENTITY = REGISTREE.registerBlockEntity(GRAVESTONE_BLOCK, GravestoneBlockEntity::new);
     public static final DeferredItem<GravestoneBlockItem> GRAVESTONE_BLOCK_ITEM = REGISTREE.registerBlockItem(GRAVESTONE_BLOCK, GravestoneBlockItem::new);
+
+    public static final DeferredBlock<SimpleBlockEntityBlock.WidowBloom> WIDOW_BLOOM_BLOCK = FurnitureUtil.simpleBlock(REGISTREE, "widow_bloom", SimpleBlockEntityBlock.WidowBloom::new, FurnitureUtil.mutating(FurnitureUtil.PLANK_PROPERTIES, BlockBehaviour.Properties::noOcclusion));
+    public static final DeferredBlockEntity<SimpleBlockEntity.WidowBloom> WIDOW_BLOOM_BLOCK_ENTITY = REGISTREE.registerBlockEntity(WIDOW_BLOOM_BLOCK, SimpleBlockEntity.WidowBloom::new);
+
+    public static final DeferredBlock<SimpleBlockEntityBlock.SkullBlossom> SKULL_BLOSSOM_SKELETON_BLOCK = FurnitureUtil.simpleBlock(REGISTREE, "skull_blossom_skeleton", SimpleBlockEntityBlock.SkullBlossom::new, FurnitureUtil.mutating(FurnitureUtil.PLANK_PROPERTIES, BlockBehaviour.Properties::noOcclusion));
+    public static final DeferredBlock<SimpleBlockEntityBlock.SkullBlossom> SKULL_BLOSSOM_WITHER_BLOCK = FurnitureUtil.simpleBlock(REGISTREE, "skull_blossom_wither", SimpleBlockEntityBlock.SkullBlossom::new, FurnitureUtil.mutating(FurnitureUtil.PLANK_PROPERTIES, BlockBehaviour.Properties::noOcclusion));
+    public static final DeferredBlockEntity<SimpleBlockEntity.SkullBlossom> SKULL_BLOSSOM_BLOCK_ENTITY = REGISTREE.registerBlockEntity("skull_blossom", SimpleBlockEntity.SkullBlossom::new, SKULL_BLOSSOM_SKELETON_BLOCK, SKULL_BLOSSOM_WITHER_BLOCK);
 
     public static final DeferredBlock<CookieJarBlock> COOKIE_JAR_BLOCK = FurnitureUtil.simpleBlock(REGISTREE, "cookie_jar", CookieJarBlock::new, FurnitureUtil.PLANK_PROPERTIES);
     public static final DeferredBlockEntity<CookieJarBlockEntity> COOKIE_JAR_BLOCK_ENTITY = REGISTREE.registerBlockEntity(COOKIE_JAR_BLOCK, CookieJarBlockEntity::new);
