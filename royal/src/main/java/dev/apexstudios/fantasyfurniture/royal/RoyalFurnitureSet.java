@@ -31,6 +31,7 @@ import dev.apexstudios.fantasyfurniture.royal.block.RoyalWoolBlock;
 import dev.apexstudios.fantasyfurniture.util.FurnitureUtil;
 import dev.apexstudios.registree.api.Registree;
 import dev.apexstudios.registree.api.holder.DeferredBlock;
+import java.util.function.Supplier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.block.Block;
@@ -54,12 +55,14 @@ public class RoyalFurnitureSet {
     public static final String ID = "fantasyfurniture_royal";
     public static final Registree REGISTREE = Registree.create(ID);
 
-    public static final WoodType WOOD_TYPE = WoodTypeBuilder.builder()
+    public static final Supplier<WoodType> WOOD_TYPE = WoodTypeBuilder.builder()
             .copy(WoodType.OAK)
             .blockSetType(blockSet -> blockSet
                     .copy(BlockSetType.STONE)
             )
             .build(ID + ":royal");
+
+    public static final Supplier<BlockSetType> BLOCK_SET_TYPE = () -> WOOD_TYPE.get().setType();
 
     public static final DeferredBlock<Block> BRICKS = FurnitureUtil.bricks(REGISTREE, Block::new);
     public static final DeferredBlock<RoyalWoolBlock> WOOL = FurnitureUtil.wool(REGISTREE, RoyalWoolBlock::new);
@@ -73,8 +76,8 @@ public class RoyalFurnitureSet {
     public static final DeferredBlock<RoyalBookshelfBlock> BOOKSHELF = FurnitureUtil.bookshelf(REGISTREE, RoyalBookshelfBlock::new);
     public static final DeferredBlock<RoyalBedSingleBlock> BED_SINGLE = FurnitureUtil.bedSingle(REGISTREE, RoyalBedSingleBlock::new);
     public static final DeferredBlock<RoyalBedDoubleBlock> BED_DOUBLE = FurnitureUtil.bedDouble(REGISTREE, RoyalBedDoubleBlock::new);
-    public static final DeferredBlock<RoyalDoorBlock> DOOR_SINGLE = FurnitureUtil.doorSingle(REGISTREE, WOOD_TYPE.setType(), RoyalDoorBlock::new);
-    public static final DeferredBlock<RoyalDoorBlock> DOOR_DOUBLE = FurnitureUtil.doorDouble(REGISTREE, WOOD_TYPE.setType(), RoyalDoorBlock::new);
+    public static final DeferredBlock<RoyalDoorBlock> DOOR_SINGLE = FurnitureUtil.doorSingle(REGISTREE, BLOCK_SET_TYPE, RoyalDoorBlock::new);
+    public static final DeferredBlock<RoyalDoorBlock> DOOR_DOUBLE = FurnitureUtil.doorDouble(REGISTREE, BLOCK_SET_TYPE, RoyalDoorBlock::new);
     public static final DeferredBlock<RoyalDeskLeftBlock> DESK_LEFT = FurnitureUtil.desk(REGISTREE, true, RoyalDeskLeftBlock::new);
     public static final DeferredBlock<RoyalDeskRightBlock> DESK_RIGHT = FurnitureUtil.desk(REGISTREE, false, RoyalDeskRightBlock::new);
     public static final DeferredBlock<RoyalPaintingWideBlock> PAINTING_WIDE = FurnitureUtil.paintingWide(REGISTREE, RoyalPaintingWideBlock::new);
@@ -94,8 +97,8 @@ public class RoyalFurnitureSet {
     public static final DeferredBlock<SlabBlock> SLAB = FurnitureUtil.slab(REGISTREE);
     public static final DeferredBlock<FenceBlock> FENCE = FurnitureUtil.fence(REGISTREE);
     public static final DeferredBlock<FenceGateBlock> FENCE_GATE = FurnitureUtil.fenceGate(REGISTREE, WOOD_TYPE);
-    public static final DeferredBlock<TrapDoorBlock> TRAPDOOR = FurnitureUtil.trapdoor(REGISTREE, WOOD_TYPE.setType());
-    public static final DeferredBlock<PressurePlateBlock> PRESSURE_PLATE = FurnitureUtil.pressurePlate(REGISTREE, WOOD_TYPE.setType());
+    public static final DeferredBlock<TrapDoorBlock> TRAPDOOR = FurnitureUtil.trapdoor(REGISTREE, BLOCK_SET_TYPE);
+    public static final DeferredBlock<PressurePlateBlock> PRESSURE_PLATE = FurnitureUtil.pressurePlate(REGISTREE, BLOCK_SET_TYPE);
     public static final FurnitureUtil.SignPair<CeilingHangingSignBlock, WallHangingSignBlock> HANGING_SIGN = FurnitureUtil.hangingSign(REGISTREE, WOOD_TYPE);
     public static final FurnitureUtil.SignPair<StandingSignBlock, WallSignBlock> SIGN = FurnitureUtil.sign(REGISTREE, WOOD_TYPE);
 
