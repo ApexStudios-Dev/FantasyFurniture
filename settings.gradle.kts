@@ -10,7 +10,7 @@ dependencyResolutionManagement {
     versionCatalogs.create("libs") {
         library("registree", "dev.apexstudios", "registree").version("21.10.8") // match version ApexCore is compiled against
         library("placementvisualizer", "dev.apexstudios", "placementvisualizer").version("21.10.5") // match version ApexCore is compiled against
-        library("apexcore", "dev.apexstudios", "apexcore").version("21.10.4-beta-pr-65")
+        library("apexcore", "dev.apexstudios", "apexcore").version("21.10.4")
         library("contex", "curse.maven", "contex-1296805").version("7051640")
     }
 }
