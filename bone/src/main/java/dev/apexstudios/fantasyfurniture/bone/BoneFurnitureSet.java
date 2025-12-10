@@ -30,6 +30,7 @@ import dev.apexstudios.fantasyfurniture.bone.block.BoneWardrobeBlock;
 import dev.apexstudios.fantasyfurniture.util.FurnitureUtil;
 import dev.apexstudios.registree.api.Registree;
 import dev.apexstudios.registree.api.holder.DeferredBlock;
+import java.util.function.Supplier;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.packs.PackType;
@@ -58,7 +59,8 @@ public final class BoneFurnitureSet {
 
     public final String id;
     public final Registree registree;
-    public final WoodType woodType;
+    public final Supplier<WoodType> woodType;
+    public final Supplier<BlockSetType> blockSetType;
     public final DeferredBlock<Block> bricks;
     public final DeferredBlock<Block> wool;
     public final DeferredBlock<CarpetBlock> carpet;
@@ -110,6 +112,8 @@ public final class BoneFurnitureSet {
                 )
                 .build(registree.registryIdentifier(id));
 
+        blockSetType = () -> woodType.get().setType();
+
         bricks = FurnitureUtil.bricks(registree, Block::new);
         wool = FurnitureUtil.wool(registree, Block::new);
         carpet = FurnitureUtil.carpet(registree, CarpetBlock::new);
@@ -122,8 +126,8 @@ public final class BoneFurnitureSet {
         bookshelf = FurnitureUtil.bookshelf(registree, BoneBookshelfBlock::new);
         bedSingle = FurnitureUtil.bedSingle(registree, BoneBedSingleBlock::new);
         bedDouble = FurnitureUtil.bedDouble(registree, BoneBedDoubleBlock::new);
-        doorSingle = FurnitureUtil.doorSingle(registree, woodType.setType(), FurnitureDoorBlock::new);
-        doorDouble = FurnitureUtil.doorDouble(registree, woodType.setType(), FurnitureDoorBlock::new);
+        doorSingle = FurnitureUtil.doorSingle(registree, blockSetType, FurnitureDoorBlock::new);
+        doorDouble = FurnitureUtil.doorDouble(registree, blockSetType, FurnitureDoorBlock::new);
         deskLeft = FurnitureUtil.desk(registree, true, BoneDeskLeftBlock::new);
         deskRight = FurnitureUtil.desk(registree, false, BoneDeskRightBlock::new);
         paintingWide = FurnitureUtil.paintingWide(registree, BonePaintingWideBlock::new);
@@ -143,8 +147,8 @@ public final class BoneFurnitureSet {
         slab = FurnitureUtil.slab(registree);
         fence = FurnitureUtil.fence(registree);
         fenceGate = FurnitureUtil.fenceGate(registree, woodType);
-        trapdoor = FurnitureUtil.trapdoor(registree, woodType.setType());
-        pressurePlate = FurnitureUtil.pressurePlate(registree, woodType.setType());
+        trapdoor = FurnitureUtil.trapdoor(registree, blockSetType);
+        pressurePlate = FurnitureUtil.pressurePlate(registree, blockSetType);
         hangingSign = FurnitureUtil.hangingSign(registree, woodType);
         sign = FurnitureUtil.sign(registree, woodType);
 

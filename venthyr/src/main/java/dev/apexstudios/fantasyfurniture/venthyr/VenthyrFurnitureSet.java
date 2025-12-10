@@ -29,6 +29,7 @@ import dev.apexstudios.fantasyfurniture.venthyr.block.VenthyrWallLightBlock;
 import dev.apexstudios.fantasyfurniture.venthyr.block.VenthyrWardrobeBlock;
 import dev.apexstudios.registree.api.Registree;
 import dev.apexstudios.registree.api.holder.DeferredBlock;
+import java.util.function.Supplier;
 import net.minecraft.Util;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
@@ -44,6 +45,7 @@ import net.minecraft.world.level.block.StandingSignBlock;
 import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.world.level.block.WallHangingSignBlock;
 import net.minecraft.world.level.block.WallSignBlock;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
@@ -53,9 +55,11 @@ public class VenthyrFurnitureSet {
     public static final String ID = "fantasyfurniture_venthyr";
     public static final Registree REGISTREE = Registree.create(ID);
 
-    public static final WoodType WOOD_TYPE = WoodTypeBuilder.builder()
+    public static final Supplier<WoodType> WOOD_TYPE = WoodTypeBuilder.builder()
             .copy(WoodType.OAK)
             .build(ID + ":venthyr");
+
+    public static final Supplier<BlockSetType> BLOCK_SET_TYPE = () -> WOOD_TYPE.get().setType();
 
     public static final DeferredBlock<Block> PLANKS = FurnitureUtil.planks(REGISTREE, Block::new);
     public static final DeferredBlock<Block> WOOL = FurnitureUtil.wool(REGISTREE, Block::new);
@@ -69,8 +73,8 @@ public class VenthyrFurnitureSet {
     public static final DeferredBlock<VenthyrBookshelfBlock> BOOKSHELF = FurnitureUtil.bookshelf(REGISTREE, VenthyrBookshelfBlock::new);
     public static final DeferredBlock<VenthyrBedSingleBlock> BED_SINGLE = FurnitureUtil.bedSingle(REGISTREE, VenthyrBedSingleBlock::new);
     public static final DeferredBlock<VenthyrBedDoubleBlock> BED_DOUBLE = FurnitureUtil.bedDouble(REGISTREE, VenthyrBedDoubleBlock::new);
-    public static final DeferredBlock<FurnitureDoorBlock> DOOR_SINGLE = FurnitureUtil.doorSingle(REGISTREE, WOOD_TYPE.setType(), FurnitureDoorBlock::new);
-    public static final DeferredBlock<FurnitureDoorBlock> DOOR_DOUBLE = FurnitureUtil.doorDouble(REGISTREE, WOOD_TYPE.setType(), FurnitureDoorBlock::new);
+    public static final DeferredBlock<FurnitureDoorBlock> DOOR_SINGLE = FurnitureUtil.doorSingle(REGISTREE, BLOCK_SET_TYPE, FurnitureDoorBlock::new);
+    public static final DeferredBlock<FurnitureDoorBlock> DOOR_DOUBLE = FurnitureUtil.doorDouble(REGISTREE, BLOCK_SET_TYPE, FurnitureDoorBlock::new);
     public static final DeferredBlock<VenthyrDeskLeftBlock> DESK_LEFT = FurnitureUtil.desk(REGISTREE, true, VenthyrDeskLeftBlock::new);
     public static final DeferredBlock<VenthyrDeskRightBlock> DESK_RIGHT = FurnitureUtil.desk(REGISTREE, false, VenthyrDeskRightBlock::new);
     public static final DeferredBlock<VenthyrPaintingWideBlock> PAINTING_WIDE = FurnitureUtil.paintingWide(REGISTREE, VenthyrPaintingWideBlock::new);
@@ -90,8 +94,8 @@ public class VenthyrFurnitureSet {
     public static final DeferredBlock<SlabBlock> SLAB = FurnitureUtil.slab(REGISTREE);
     public static final DeferredBlock<FenceBlock> FENCE = FurnitureUtil.fence(REGISTREE);
     public static final DeferredBlock<FenceGateBlock> FENCE_GATE = FurnitureUtil.fenceGate(REGISTREE, WOOD_TYPE);
-    public static final DeferredBlock<TrapDoorBlock> TRAPDOOR = FurnitureUtil.trapdoor(REGISTREE, WOOD_TYPE.setType());
-    public static final DeferredBlock<PressurePlateBlock> PRESSURE_PLATE = FurnitureUtil.pressurePlate(REGISTREE, WOOD_TYPE.setType());
+    public static final DeferredBlock<TrapDoorBlock> TRAPDOOR = FurnitureUtil.trapdoor(REGISTREE, BLOCK_SET_TYPE);
+    public static final DeferredBlock<PressurePlateBlock> PRESSURE_PLATE = FurnitureUtil.pressurePlate(REGISTREE, BLOCK_SET_TYPE);
     public static final FurnitureUtil.SignPair<CeilingHangingSignBlock, WallHangingSignBlock> HANGING_SIGN = FurnitureUtil.hangingSign(REGISTREE, WOOD_TYPE);
     public static final FurnitureUtil.SignPair<StandingSignBlock, WallSignBlock> SIGN = FurnitureUtil.sign(REGISTREE, WOOD_TYPE);
 
