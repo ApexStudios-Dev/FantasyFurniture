@@ -4,8 +4,7 @@
     "model": "fantasyfurniture_royal:item/desk_right",
     "tints": [
       {
-        "type": "apexcore:dye_color",
-        "default": "white"
+        "type": "apexcore:dye_color"
       }
     ]
   }

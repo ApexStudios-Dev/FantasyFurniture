@@ -4,8 +4,7 @@
     "model": "fantasyfurniture_royal:item/door_single_3d",
     "tints": [
       {
-        "type": "apexcore:dye_color",
-        "default": "white"
+        "type": "apexcore:dye_color"
       }
     ]
   }

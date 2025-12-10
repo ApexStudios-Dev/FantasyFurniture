@@ -1,7 +1,6 @@
 package dev.apexstudios.fantasyfurniture.ctm;
 
 import dev.apexstudios.apexcore.core.client.DyeColorItemTintSource;
-import dev.apexstudios.apexcore.lib.block.Dyeable;
 import dev.apexstudios.apexcore.lib.data.provider.model.ModelProvider;
 import dev.apexstudios.fantasyfurniture.util.FurnitureUtil;
 import dev.apexstudios.registree.api.Registree;
@@ -22,10 +21,11 @@ public interface LegacyDoorsProvider {
         for(var block : blocks) {
             var model = ModelLocationUtils.getModelLocation(block.asItem(), "_3d");
 
-            if(dyeable)
-                blockModels.registerSimpleTintedItemModel(block, model, new DyeColorItemTintSource(Dyeable.DEFAULT_COLOR));
-            else
+            if(dyeable) {
+                blockModels.registerSimpleTintedItemModel(block, model, new DyeColorItemTintSource());
+            } else {
                 blockModels.registerSimpleItemModel(block, model);
+            }
         }
     }
 }

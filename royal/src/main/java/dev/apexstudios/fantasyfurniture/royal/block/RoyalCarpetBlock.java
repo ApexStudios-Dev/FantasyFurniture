@@ -15,37 +15,46 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.phys.BlockHitResult;
 
-public final class RoyalCarpetBlock extends CarpetBlock {
+public final class RoyalCarpetBlock extends CarpetBlock implements Dyeable.Colored {
     public RoyalCarpetBlock(Properties properties) {
         super(properties);
 
-        registerDefaultState(defaultBlockState().setValue(Dyeable.PROPERTY, Dyeable.DEFAULT_COLOR));
+        registerDefaultState(setDyedColor(defaultBlockState(), DyedColor.WHITE));
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        super.createBlockStateDefinition(builder);
-        builder.add(Dyeable.PROPERTY);
+        super.createBlockStateDefinition(builder.add(DYED_COLOR));
     }
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        var color = Dyeable.getColorForPlacement(context);
-        return defaultBlockState().setValue(Dyeable.PROPERTY, color);
+        var placementBlockState = super.getStateForPlacement(context);
+        return placementBlockState == null ? null : setDyedColor(placementBlockState, getDyedColorForPlacement(context));
     }
 
     @Override
     protected InteractionResult useItemOn(ItemStack stack, BlockState blockState, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        return Dyeable.useItemOn(level, pos, blockState, stack);
+        var result = tryDyeBlock(stack, blockState, level, pos, player);
+
+        if(!result.consumesAction()) {
+            result = super.useItemOn(stack, blockState, level, pos, player, hand, hitResult);
+        }
+
+        return result;
     }
 
     @Override
     public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState blockState, boolean includeData, Player player) {
-        return Dyeable.getCloneStack(this, blockState, player, includeData);
+        var stack = new ItemStack(this);
+        appendDyedColor(stack, blockState, player, includeData);
+        return stack;
     }
 
     @Override
     protected ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState blockState, boolean includeData) {
-        return Dyeable.getCloneStack(this, blockState, null, includeData);
+        var stack = new ItemStack(this);
+        appendDyedColor(stack, blockState, null, includeData);
+        return stack;
     }
 }
