@@ -29,14 +29,14 @@ side = "BOTH"
 [[dependencies.fantasyfurniture_necrolord]]
 modId = "apexcore"
 type = "required"
-versionRange = "[21.10,21.11)"
+versionRange = "[21.10.5,21.11)"
 [dependencies.fantasyfurniture_necrolord.mc-publish]
 modrinth = "xl3myxch"
 curseforge = "550778"
 [[dependencies.fantasyfurniture_necrolord]]
 modId = "fantasyfurniture"
 type = "required"
-versionRange = "[21.10,21.11)"
+versionRange = "[21.10.4,21.11)"
 [dependencies.fantasyfurniture_necrolord.mc-publish]
 modrinth = "A0nfCqYw"
 curseforge = "579564"
