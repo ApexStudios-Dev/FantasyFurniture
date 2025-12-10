@@ -53,7 +53,7 @@ neoForge {
 
 repositories {
     maven("https://cursemaven.com")
-    maven("https://maven.apexstudios.dev/prs/ApexCore/pr66")
+    maven("https://maven.apexstudios.dev/prs/ApexCore-Private/pr66")
 }
 
 dependencies {
