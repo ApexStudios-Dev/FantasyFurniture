@@ -53,7 +53,7 @@ public abstract class SimpleJsonProvider implements BaseProvider {
         try(var reader = resourceManager.openAsReader(path)) {
             return GsonHelper.fromJson(GSON, reader, JsonObject.class);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            return new JsonObject();
         }
     }
 
