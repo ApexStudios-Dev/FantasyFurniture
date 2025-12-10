@@ -13,19 +13,19 @@ import java.nio.file.Path;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
-import net.minecraft.Util;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.Util;
 import net.minecraft.world.level.block.Block;
 
 final class FusionProvider extends SimpleJsonProvider {
     public static final String ID = "fusion";
     public static final ProviderType<FusionProvider> PROVIDER_TYPE = ProviderType.register(FantasyFurniture.identifier("ctm/" + ID), FusionProvider::new);
 
-    private final Set<ResourceLocation> textures = Sets.newHashSet();
+    private final Set<Identifier> textures = Sets.newHashSet();
 
     public void with(Registree registree) {
         FurnitureUtil.Names.block(registree, FurnitureUtil.Names.CARPET, carpet -> {
@@ -53,7 +53,7 @@ final class FusionProvider extends SimpleJsonProvider {
         }));
     }
 
-    private JsonObject texture(ResourceLocation texture) {
+    private JsonObject texture(Identifier texture) {
         var root = new JsonObject();
 
         root.addProperty("type", "connecting");

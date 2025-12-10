@@ -5,7 +5,7 @@ import dev.apexstudios.apexcore.lib.data.provider.context.ProviderOutputContext;
 import java.nio.file.Path;
 import java.util.function.Consumer;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.world.level.block.Block;
 
@@ -24,7 +24,7 @@ public class ExtendedBlockStateProvider extends SimpleJsonProvider {
         return root;
     }
 
-    private static ResourceLocation blockStatePath(Block block) {
+    private static Identifier blockStatePath(Block block) {
         return registryName(block).withPath(path -> "blockstates/" + path + ".json");
     }
 }

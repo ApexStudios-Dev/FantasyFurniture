@@ -1,16 +1,15 @@
 pluginManagement {
     repositories {
+        maven("https://maven.apexstudios.dev/proxy")
         gradlePluginPortal()
-        maven("https://maven.apexstudios.dev/releases")
-        maven("https://maven.apexstudios.dev/private")
     }
 }
 
 dependencyResolutionManagement {
     versionCatalogs.create("libs") {
-        library("registree", "dev.apexstudios", "registree").version("21.10.8") // match version ApexCore is compiled against
-        library("placementvisualizer", "dev.apexstudios", "placementvisualizer").version("21.10.5") // match version ApexCore is compiled against
-        library("apexcore", "dev.apexstudios", "apexcore").version("21.10.5")
+        library("registree", "dev.apexstudios", "registree").version("21.11.0-beta-pr-11") // match version ApexCore is compiled against
+        library("placementvisualizer", "dev.apexstudios", "placementvisualizer").version("21.11.0-beta-pr-14") // match version ApexCore is compiled against
+        library("apexcore", "dev.apexstudios", "apexcore").version("21.11.1-beta-pr-67")
         library("contex", "curse.maven", "contex-1296805").version("7051640")
     }
 }

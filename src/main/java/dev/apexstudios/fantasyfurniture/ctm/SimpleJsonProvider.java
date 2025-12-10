@@ -15,7 +15,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.level.block.Block;
@@ -45,11 +45,11 @@ public abstract class SimpleJsonProvider implements BaseProvider {
         return CompletableFuture.allOf(futures.toArray(CompletableFuture[]::new));
     }
 
-    public static ResourceLocation registryName(Block block) {
-        return block.builtInRegistryHolder().key().location();
+    public static Identifier registryName(Block block) {
+        return block.builtInRegistryHolder().key().identifier();
     }
 
-    public static JsonObject existing(ResourceManager resourceManager, ResourceLocation path) {
+    public static JsonObject existing(ResourceManager resourceManager, Identifier path) {
         try(var reader = resourceManager.openAsReader(path)) {
             return GsonHelper.fromJson(GSON, reader, JsonObject.class);
         } catch (IOException e) {

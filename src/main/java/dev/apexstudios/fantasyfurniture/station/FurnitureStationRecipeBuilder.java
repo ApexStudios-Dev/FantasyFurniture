@@ -7,7 +7,7 @@ import java.util.Optional;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.Criterion;
-import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
+import net.minecraft.advancements.criterion.RecipeUnlockedTrigger;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -56,7 +56,7 @@ public final class FurnitureStationRecipeBuilder implements RecipeBuilder {
     @Override
     public void save(RecipeOutput output, ResourceKey<Recipe<?>> recipeKey) {
         if(criteria.isEmpty())
-            throw new IllegalStateException("No way of obtaining recipe: " + recipeKey.location());
+            throw new IllegalStateException("No way of obtaining recipe: " + recipeKey.identifier());
 
         var advancement = output.advancement()
                 .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(recipeKey))
@@ -66,7 +66,7 @@ public final class FurnitureStationRecipeBuilder implements RecipeBuilder {
         criteria.forEach(advancement::addCriterion);
 
         var recipe = new FurnitureStationRecipe(Objects.requireNonNullElse(group, ""), planks, wool, bindingAgent, result);
-        output.accept(recipeKey, recipe, advancement.build(recipeKey.location().withPrefix("recipes/" + category.getFolderName() + '/')));
+        output.accept(recipeKey, recipe, advancement.build(recipeKey.identifier().withPrefix("recipes/" + category.getFolderName() + '/')));
     }
 
     public static FurnitureStationRecipeBuilder builder(RecipeCategory category, Ingredient planks, @Nullable Ingredient wool, Ingredient bindingAgent, ItemStack result) {

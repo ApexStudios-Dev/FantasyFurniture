@@ -45,8 +45,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.village.poi.PoiTypes;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.HangingSignItem;
@@ -447,7 +447,7 @@ public interface FurnitureUtil {
         // which is causing the 'ISE' to be thrown
         /*if(materials.putIfAbsent(woodType, materialMapper.apply(ResourceLocation.parse(woodType.name()))) != null)
             throw new IllegalStateException("Duplicate wood type material registration: " + woodType.name() + " (" + (hanging ? "hanging" : "standing") + ')');*/
-        materials.put(woodType, materialMapper.apply(ResourceLocation.parse(woodType.name())));
+        materials.put(woodType, materialMapper.apply(Identifier.parse(woodType.name())));
     }
 
     private static void registerHomePoi(ExtendPoiTypesEvent event, Registree registree, String name) {
