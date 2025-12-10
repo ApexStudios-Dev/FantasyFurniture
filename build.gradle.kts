@@ -29,6 +29,10 @@ furnitureSets.forEach {
 }
 
 neoForge {
+    accessTransformers {
+        from(file("src/${ApexExtension.DATA_NAME}/accesstransformer.cfg"))
+    }
+
     runs {
         getByName(ApexExtension.DATA_NAME) {
             furnitureSets.forEach {
@@ -61,7 +65,7 @@ dependencies {
 
     implementation(libs.apexcore)
     "dataImplementation"(libs.apexcore)
-    accessTransformers(libs.apexcore)
+    // accessTransformers(libs.apexcore)
 
     implementation(libs.contex)
 
