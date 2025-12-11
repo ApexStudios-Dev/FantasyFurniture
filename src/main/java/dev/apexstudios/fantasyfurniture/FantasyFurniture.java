@@ -6,7 +6,7 @@ import dev.apexstudios.fantasyfurniture.station.FurnitureStationSetup;
 import dev.apexstudios.registree.api.Registree;
 import java.util.Set;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
@@ -39,12 +39,12 @@ public final class FantasyFurniture {
         });
     }
 
-    public static ResourceLocation identifier(String identifier) {
+    public static Identifier identifier(String identifier) {
         return REGISTREE.registryName(identifier);
     }
 
     public static String id(String identifier) {
-        return ID + ResourceLocation.NAMESPACE_SEPARATOR + identifier;
+        return ID + Identifier.NAMESPACE_SEPARATOR + identifier;
     }
 
     private record CtmPack(String packId, String packName) { }

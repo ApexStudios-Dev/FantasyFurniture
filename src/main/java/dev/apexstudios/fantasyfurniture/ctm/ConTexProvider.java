@@ -9,9 +9,9 @@ import dev.apexstudios.fantasyfurniture.util.FurnitureUtil;
 import dev.apexstudios.registree.api.Registree;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-import net.minecraft.Util;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.Util;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.NeoForgeMod;
 
@@ -22,7 +22,7 @@ final class ConTexProvider extends ExtendedBlockStateProvider {
     public void with(Registree registree) {
         FurnitureUtil.Names.block(registree, FurnitureUtil.Names.CARPET, carpet -> {
             var wool = registree.getOrThrow(Registries.BLOCK, FurnitureUtil.Names.WOOL);
-            var woolRegistryName = wool.key().location();
+            var woolRegistryName = wool.key().identifier();
             var texture = woolRegistryName.withPrefix("block/");
             var ctmTexture = woolRegistryName.withPath(path -> "block/ctm/" + path + "_simple");
             BiConsumer<JsonObject, Boolean> additional = (root, isCarpet) -> { };
@@ -38,14 +38,14 @@ final class ConTexProvider extends ExtendedBlockStateProvider {
         });
     }
 
-    private void with(Block block, ResourceLocation texture, ResourceLocation ctmTexture, boolean isCarpet, BiConsumer<JsonObject, Boolean> additional) {
+    private void with(Block block, Identifier texture, Identifier ctmTexture, boolean isCarpet, BiConsumer<JsonObject, Boolean> additional) {
         with(block, root -> {
             withTexture(root, texture, ctmTexture, isCarpet);
             additional.accept(root, isCarpet);
         });
     }
 
-    private void withTexture(JsonObject root, ResourceLocation texture, ResourceLocation ctmTexture, boolean isCarpet) {
+    private void withTexture(JsonObject root, Identifier texture, Identifier ctmTexture, boolean isCarpet) {
         var metaKey = ID + "_meta";
         var metaJson = root.has(metaKey) ? root.getAsJsonArray(metaKey) : new JsonArray();
 

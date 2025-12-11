@@ -3,13 +3,13 @@ import dev.apexstudios.gradle.multi.ModuleBuilder
 import dev.apexstudios.gradle.single.ApexSingleExtension
 
 plugins {
-    id("apex-conventions.neoforge") version "0.1.75"
-    id("apex-conventions.maven-publishing") version "0.1.75"
+    id("apex-conventions.neoforge") version "0.1.82"
+    id("apex-conventions.maven-publishing") version "0.1.82"
 }
 
 group = "dev.apexstudios"
 
-apex.neoVersion("21.10.34-beta", "2025.10.12")
+apex.neoVersion("21.11.0-beta", "1.21.10", "2025.10.12")
 apex.extendCompilerErrors()
 
 val single = ApexSingleExtension.getOrCreate(project)
@@ -45,10 +45,6 @@ neoForge {
             programArguments.addAll("--mod", "fantasyfurniture_bone_skeleton", "--mod", "fantasyfurniture_bone_wither", "--flat")
         }
     }
-}
-
-repositories {
-    maven("https://cursemaven.com")
 }
 
 dependencies {
