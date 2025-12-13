@@ -4,7 +4,6 @@
 		"wall_light": "fantasyfurniture_nordic:block/wall_light",
 		"particle": "fantasyfurniture_nordic:block/particle"
 	},
-	"render_type": "minecraft:cutout",
 	"elements": [
 		{
 			"name": "holder_1",

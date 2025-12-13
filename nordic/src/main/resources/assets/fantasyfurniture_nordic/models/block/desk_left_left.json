@@ -4,7 +4,6 @@
 		"desk": "fantasyfurniture_nordic:block/desk",
 		"particle": "fantasyfurniture_nordic:block/particle"
 	},
-	"render_type": "minecraft:cutout",
 	"elements": [
 		{
 			"name": "surface",

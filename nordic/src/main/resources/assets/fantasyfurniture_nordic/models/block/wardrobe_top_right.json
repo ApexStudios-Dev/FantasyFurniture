@@ -4,7 +4,6 @@
 		"wardrobe": "fantasyfurniture_nordic:block/wardrobe",
 		"particle": "fantasyfurniture_nordic:block/particle"
 	},
-	"render_type": "minecraft:cutout",
 	"elements": [
 		{
 			"name": "middle_5",
