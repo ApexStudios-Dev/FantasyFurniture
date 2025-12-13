@@ -1,0 +1,9 @@
+{
+  "type": "fantasyfurniture:furniture_station",
+  "binding_agent": "#fantasyfurniture:binding_agent",
+  "planks": "#c:dyes",
+  "result": {
+    "count": 1,
+    "id": "fantasyfurniture_decorations:brewing_cauldron"
+  }
+}

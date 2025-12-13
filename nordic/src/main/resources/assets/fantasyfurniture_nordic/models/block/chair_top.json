@@ -1,5 +1,4 @@
 {
-	"render_type": "minecraft:cutout",
 	"texture_size": [64, 64],
 	"textures": {
 		"2": "fantasyfurniture_nordic:block/chair",

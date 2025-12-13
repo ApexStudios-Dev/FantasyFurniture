@@ -4,7 +4,6 @@
 		"bookshelf": "fantasyfurniture_necrolord:block/bookshelf",
 		"particle": "fantasyfurniture_necrolord:block/particle"
 	},
-	"render_type": "minecraft:cutout",
 	"elements": [
 		{
 			"name": "cap_7",

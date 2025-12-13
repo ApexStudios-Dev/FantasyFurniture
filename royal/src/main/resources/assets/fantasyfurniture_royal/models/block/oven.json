@@ -5,7 +5,6 @@
 		"oven_tint": "fantasyfurniture_royal:block/oven_tint",
 		"particle": "fantasyfurniture_royal:block/particle"
 	},
-	"render_type": "minecraft:cutout",
 	"elements": [
 		{
 			"name": "foot_1",

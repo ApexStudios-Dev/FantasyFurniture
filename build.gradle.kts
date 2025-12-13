@@ -15,7 +15,7 @@ apex.extendCompilerErrors()
 val single = ApexSingleExtension.getOrCreate(project)
 single.withDataGen()
 
-val furnitureSets = setOf("nordic", "venthyr", "bone", "dunmer", "necrolord", "royal")
+val furnitureSets = setOf("nordic", "venthyr", "bone", "dunmer", "necrolord", "royal", "decorations")
 
 ModuleBuilder.modules(project) {
     furnitureSets.forEach {
