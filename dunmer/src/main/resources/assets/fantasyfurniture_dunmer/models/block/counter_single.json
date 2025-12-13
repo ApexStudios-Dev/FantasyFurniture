@@ -3,7 +3,6 @@
 		"counter_corner": "fantasyfurniture_dunmer:block/counter",
 		"particle": "fantasyfurniture_dunmer:block/particle"
 	},
-	"render_type": "minecraft:cutout",
 	"elements": [
 		{
 			"name": "post_1",

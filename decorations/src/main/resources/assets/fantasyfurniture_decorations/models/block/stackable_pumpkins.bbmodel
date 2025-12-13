@@ -1,0 +1,279 @@
+{
+	"meta": {
+		"format_version": "5.0",
+		"model_format": "java_block",
+		"box_uv": false
+	},
+	"name": "stackable_pumpkins",
+	"parent": "",
+	"java_block_version": "1.21.6",
+	"ambientocclusion": true,
+	"front_gui_light": false,
+	"visible_box": [1, 1, 0],
+	"variable_placeholders": "",
+	"variable_placeholder_buttons": [],
+	"unhandled_root_fields": {},
+	"resolution": {
+		"width": 32,
+		"height": 32
+	},
+	"elements": [
+		{
+			"name": "1",
+			"box_uv": false,
+			"render_order": "default",
+			"rescale": false,
+			"locked": false,
+			"shade": true,
+			"light_emission": 0,
+			"allow_mirror_modeling": true,
+			"from": [4, 0, 4],
+			"to": [12, 7, 12],
+			"autouv": 0,
+			"color": 4,
+			"origin": [0, 0, 0],
+			"faces": {
+				"north": {
+					"uv": [8, 0, 16, 7],
+					"texture": 0
+				},
+				"east": {
+					"uv": [8, 7, 16, 14],
+					"texture": 0
+				},
+				"south": {
+					"uv": [8, 14, 16, 21],
+					"texture": 0
+				},
+				"west": {
+					"uv": [0, 16, 8, 23],
+					"texture": 0
+				},
+				"up": {
+					"uv": [8, 8, 0, 0],
+					"texture": 0
+				},
+				"down": {
+					"uv": [8, 8, 0, 16],
+					"cullface": "down",
+					"texture": 0
+				}
+			},
+			"type": "cube",
+			"uuid": "fb67f729-7436-d21a-d135-59f2d68781fc"
+		},
+		{
+			"name": "2",
+			"box_uv": false,
+			"render_order": "default",
+			"rescale": false,
+			"locked": false,
+			"shade": true,
+			"light_emission": 0,
+			"allow_mirror_modeling": true,
+			"from": [4.5, 7, 4.5],
+			"to": [11.5, 12, 11.5],
+			"autouv": 0,
+			"color": 8,
+			"visibility": false,
+			"export": false,
+			"rotation": [0, -22.5, 0],
+			"origin": [8, 9.5, 8],
+			"faces": {
+				"north": {
+					"uv": [16, 14, 23, 19],
+					"texture": 0
+				},
+				"east": {
+					"uv": [16, 19, 23, 24],
+					"texture": 0
+				},
+				"south": {
+					"uv": [8, 21, 15, 26],
+					"texture": 0
+				},
+				"west": {
+					"uv": [0, 23, 7, 28],
+					"texture": 0
+				},
+				"up": {
+					"uv": [23, 7, 16, 0],
+					"texture": 0
+				},
+				"down": {
+					"uv": [23, 7, 16, 14],
+					"texture": 0
+				}
+			},
+			"type": "cube",
+			"uuid": "f5f334f8-305b-4d56-5c7e-e55135c765f7"
+		},
+		{
+			"name": "3",
+			"box_uv": false,
+			"render_order": "default",
+			"rescale": false,
+			"locked": false,
+			"shade": true,
+			"light_emission": 0,
+			"allow_mirror_modeling": true,
+			"from": [5.5, 12, 5.5],
+			"to": [10.5, 16, 10.5],
+			"autouv": 0,
+			"color": 7,
+			"visibility": false,
+			"export": false,
+			"origin": [0, 0, 0],
+			"faces": {
+				"north": {
+					"uv": [23, 10, 28, 14],
+					"texture": 0
+				},
+				"east": {
+					"uv": [23, 14, 28, 18],
+					"texture": 0
+				},
+				"south": {
+					"uv": [23, 18, 28, 22],
+					"texture": 0
+				},
+				"west": {
+					"uv": [23, 22, 28, 26],
+					"texture": 0
+				},
+				"up": {
+					"uv": [28, 5, 23, 0],
+					"cullface": "up",
+					"texture": 0
+				},
+				"down": {
+					"uv": [28, 5, 23, 10],
+					"texture": 0
+				}
+			},
+			"type": "cube",
+			"uuid": "775a0a28-2743-a21e-f95d-6153345fe927"
+		}
+	],
+	"groups": [
+		{
+			"uuid": "cef68e70-9929-c250-aa10-67ee17e3fda1",
+			"export": true,
+			"locked": false,
+			"origin": [8, 8, 8],
+			"rotation": [0, 0, 0],
+			"color": 0,
+			"name": "stackable_pumpkins",
+			"children": [],
+			"reset": false,
+			"shade": true,
+			"mirror_uv": false,
+			"selected": false,
+			"visibility": true,
+			"autouv": 0,
+			"isOpen": true,
+			"primary_selected": false
+		}
+	],
+	"outliner": [
+		{
+			"uuid": "cef68e70-9929-c250-aa10-67ee17e3fda1",
+			"isOpen": true,
+			"children": ["fb67f729-7436-d21a-d135-59f2d68781fc", "f5f334f8-305b-4d56-5c7e-e55135c765f7", "775a0a28-2743-a21e-f95d-6153345fe927"]
+		}
+	],
+	"textures": [
+		{
+			"name": "stackable_pumpkins.png",
+			"relative_path": "../../textures/block/stackable_pumpkins.png",
+			"folder": "block",
+			"namespace": "fantasyfurniture_decorations",
+			"id": "stackable_pumpkins",
+			"group": "",
+			"width": 32,
+			"height": 32,
+			"uv_width": 32,
+			"uv_height": 32,
+			"particle": false,
+			"use_as_default": false,
+			"layers_enabled": false,
+			"sync_to_project": "",
+			"render_mode": "default",
+			"render_sides": "auto",
+			"pbr_channel": "color",
+			"frame_time": 1,
+			"frame_order_type": "loop",
+			"frame_order": "",
+			"frame_interpolate": false,
+			"visible": true,
+			"internal": true,
+			"saved": true,
+			"uuid": "064b7bab-9edc-ed6e-46e2-77630ba60b15",
+			"source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAADvUlEQVR4AdzVTcpdRRAG4JOr4M9EcXAJjY0bCE4lW3AVWYUzR67CWVbhwA0EJw4kGzgojXwDURB/QEnqOem6FJ2bfBkkkwRequrtt/769vly+ubLD548fPDxge+/unvY5FjI8+rjxMCH1c+41t2Wf6d+fm9r5/cPjJt/Dtsnx0Kb533yrcS9cKuf8Q+P/7jUXfpvp59v/t00dsAn5kObjT47f7iBmE2I6UDeo5/+21gxOBf/8us7By/GV1xuIIXEBiEyGOw3fwmvgnbEzckjYMXJf3Hvo+3Tu/9vLJ6m4mSqawc4RVK8xxAjGu1hceyIuJ+f/YSa4NkWN9eDl0+TzcU0FSdBmwmSoUdym5wkRSD9PYYY0VwsHzS5//m7GysGt0GTWjG+4uQQkQ37+dlGOJCkCKQvZ42TY8G5ZeR4G6xYzYrLI8wkh3zIIobC54Zt3o6CCtPB6vdYRl5ijfEnSSYUECgkZp3h2mzI1i+gR4McglYNFvBq4BJrjD8RcjQFyWLWWYvmmqZ1BsnxX4Ss4ebUEq/a4wZWMuMeG6a/2n0+xGtFafGaqtFiiR61xM4qLjdQyfRd2YjXvs9mbJ6lvVbUGV7TFs3ztnoM4azi+ENUierbIodIawgYMRiu6lffOd0+FxCvmuPvwEpmbIscIu2IxqAYDuhAHgt4oKt6morjM6zE6ivm6tK2uFKaHteJAz6sfsYtcvrUy604HiEhOGDrq5XYZgE2f09+j6Jw/94nl//tqu+sRW7m9NDrUXE8QgegOdsiqYdY3MLPAqxkFpyJ9/iNWeA74+f140b8dGJ8xfEIFYIeTVtp2COu4mu+oopD+o8e/7bxX+kNtNnQ1OlrlLHCe2w4YoM9rDPgj+CySW2YvhvssUSLHj2sWG7F5SvYo/iIgnvYKlBsBJ92j3MYk1NUcbjmt2iey/QYotbmH/8b7lFUUIEb0SQ3TIuD/LOtaIsm0KNBfYR1aDni2oN/fIYOgYDdY6ARzcW5lS9DQgL/7Y9/3snYlvw9ctOvQ6slpqk4PkOHQMCO2VxsqxYb2qzHhi186OErlPp8eHLTNyRdi5weerGciqufYQpyQxvtsRmezyYMaQhYfU1bNJfD9hgi89I+9xnatEVSn2KFbTTmrVRfEUN+/d3fd2D15crbY/gx8+VUHF+BCZPcQ1zjdStFAZ85L7I0tGM2F6/a4xHWrYjFEonXrWwKeOcvAw3tg4e/X25o1V99hJpfm3ZNfh3xKac06eq/jga31TjewG2iN3n+9g9w2+09BQAA///3Uw6oAAAABklEQVQDACjUsG4Xq5O0AAAAAElFTkSuQmCC"
+		},
+		{
+			"name": "stackable_pumpkins_particle.png",
+			"relative_path": "../../textures/block/stackable_pumpkins_particle.png",
+			"folder": "block",
+			"namespace": "fantasyfurniture_decorations",
+			"id": "particle",
+			"group": "",
+			"width": 16,
+			"height": 16,
+			"uv_width": 32,
+			"uv_height": 32,
+			"particle": true,
+			"use_as_default": false,
+			"layers_enabled": false,
+			"sync_to_project": "",
+			"render_mode": "default",
+			"render_sides": "auto",
+			"pbr_channel": "color",
+			"frame_time": 1,
+			"frame_order_type": "loop",
+			"frame_order": "",
+			"frame_interpolate": false,
+			"visible": true,
+			"internal": true,
+			"saved": true,
+			"uuid": "8abfd1ff-d336-675c-64e5-42a4941ab9b4",
+			"source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAR0lEQVR4AeySuwkAIAxEj3SCYGvhCFY27uAiDuLcEje4JoUpcvDag/vIHlkZZyVlCIwKA8BBB61eMGYvYDiIYDyihxW+R3gAAAD//93RaAcAAAAGSURBVAMA0jopASCC1UcAAAAASUVORK5CYII="
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 45, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, -135, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"ground": {
+			"translation": [0, 3, 0],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"gui": {
+			"rotation": [30, -135, 0],
+			"scale": [0.625, 0.625, 0.625]
+		},
+		"head": {
+			"translation": [0, 14.5, 0]
+		},
+		"fixed": {
+			"rotation": [-90, 0, 0],
+			"translation": [0, 0, -4],
+			"scale": [0.5, 0.5, 0.5]
+		}
+	}
+}

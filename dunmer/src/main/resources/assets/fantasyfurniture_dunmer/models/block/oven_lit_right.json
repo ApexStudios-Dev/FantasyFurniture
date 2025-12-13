@@ -5,7 +5,6 @@
 		"oven_fire": "fantasyfurniture_dunmer:block/oven_fire",
 		"particle": "fantasyfurniture_dunmer:block/particle"
 	},
-	"render_type": "minecraft:cutout",
 	"elements": [
 		{
 			"name": "log_2",
