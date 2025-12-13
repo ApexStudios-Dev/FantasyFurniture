@@ -47,6 +47,10 @@ neoForge {
     }
 }
 
+repositories {
+    maven("https://cursemaven.com")
+}
+
 dependencies {
     implementation(libs.registree)
     "dataImplementation"(libs.registree)
