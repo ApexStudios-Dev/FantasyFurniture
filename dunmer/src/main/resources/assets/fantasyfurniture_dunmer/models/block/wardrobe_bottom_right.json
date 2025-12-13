@@ -4,7 +4,6 @@
 		"particle": "fantasyfurniture_dunmer:block/particle",
 		"wardrobe": "fantasyfurniture_dunmer:block/wardrobe"
 	},
-	"render_type": "minecraft:cutout",
 	"elements": [
 		{
 			"name": "post_2",
