@@ -47,12 +47,6 @@ neoForge {
     }
 }
 
-repositories {
-    maven("https://cursemaven.com")
-
-    maven("https://maven.apexstudios.dev/prs/ApexCore-Private/pr65")
-}
-
 dependencies {
     implementation(libs.registree)
     "dataImplementation"(libs.registree)
