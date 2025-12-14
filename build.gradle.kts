@@ -48,7 +48,6 @@ neoForge {
 }
 
 repositories {
-    maven("https://maven.apexstudios.dev/prs/Registree/pr14")
     maven("https://maven.apexstudios.dev/prs/ApexCore-Private/pr69")
 }
 
