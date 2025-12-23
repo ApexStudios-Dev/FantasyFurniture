@@ -47,7 +47,7 @@ public final class FurnitureStationScreen extends AbstractContainerScreen<Furnit
     private int scrollBarFullHeight;
 
     FurnitureStationScreen(FurnitureStationMenu menu, Inventory inventory, Component title) {
-        super(menu, inventory, title);
+        super(menu, inventory, title, DEFAULT_IMAGE_WIDTH, 166 + AbstractContainerMenu.SLOT_SIZE + 12);
 
         menu.registerListener(this::containerChanged);
     }
@@ -195,8 +195,6 @@ public final class FurnitureStationScreen extends AbstractContainerScreen<Furnit
 
         scrollBarX = recipeBackgroundX + recipeBackgroundWidth + 1;
         scrollBarY = recipeBackgroundY;
-
-        imageHeight = 166 + AbstractContainerMenu.SLOT_SIZE + 12;
     }
 
     private void renderWindow(GuiGraphics graphics) {

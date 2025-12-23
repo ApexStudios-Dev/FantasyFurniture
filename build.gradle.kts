@@ -1,15 +1,16 @@
 import dev.apexstudios.gradle.ApexExtension
 import dev.apexstudios.gradle.multi.ModuleBuilder
 import dev.apexstudios.gradle.single.ApexSingleExtension
+import org.gradle.internal.extensions.stdlib.capitalized
 
 plugins {
-    id("apex-conventions.neoforge") version "0.1.85"
-    id("apex-conventions.maven-publishing") version "0.1.85"
+    id("apex-conventions.neoforge") version "0.1.87"
+    id("apex-conventions.maven-publishing") version "0.1.87"
 }
 
 group = "dev.apexstudios"
 
-apex.neoVersion("21.11.0-beta", "1.21.10", "2025.10.12")
+apex.neoVersion("26.1.0.0-alpha.1+snapshot-1")
 apex.extendCompilerErrors()
 
 val single = ApexSingleExtension.getOrCreate(project)
@@ -32,8 +33,8 @@ neoForge {
     runs {
         getByName(ApexExtension.DATA_NAME) {
             furnitureSets.forEach {
-                loadedMods.add(mods.getByName("${it.lowercase()}${SourceSet.MAIN_SOURCE_SET_NAME.capitalize()}"))
-                loadedMods.add(mods.getByName("${it.lowercase()}${ApexExtension.DATA_NAME.capitalize()}"))
+                loadedMods.add(mods.getByName("${it.lowercase()}${SourceSet.MAIN_SOURCE_SET_NAME.capitalized()}"))
+                loadedMods.add(mods.getByName("${it.lowercase()}${ApexExtension.DATA_NAME.capitalized()}"))
             }
 
             // include bone built-in packs as they are needed for
@@ -43,6 +44,26 @@ neoForge {
 
         getByName("boneData") {
             programArguments.addAll("--mod", "fantasyfurniture_bone_skeleton", "--mod", "fantasyfurniture_bone_wither", "--flat")
+        }
+    }
+}
+
+repositories {
+    maven("https://maven.apexstudios.dev/prs/Registree/pr17") {
+        content {
+            includeModule("dev.apexstudios", "registree")
+        }
+    }
+
+    maven("https://maven.apexstudios.dev/prs/Placement-Visualizer/pr19") {
+        content {
+            includeModule("dev.apexstudios", "placementvisualizer")
+        }
+    }
+
+    maven("https://maven.apexstudios.dev/prs/ApexCore-Private/pr70") {
+        content {
+            includeModule("dev.apexstudios", "apexcore")
         }
     }
 }

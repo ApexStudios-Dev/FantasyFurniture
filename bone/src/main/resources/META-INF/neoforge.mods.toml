@@ -16,34 +16,34 @@ displayURL = "https://modrinth.com/project/fantasys-furniture-bone"
 [[dependencies.fantasyfurniture_bone]]
 modId = "minecraft"
 type = "required"
-versionRange = "[1.21.11,1.21.12)"
+versionRange = "[26.1-snapshot,26.2)"
 ordering = "NONE"
 side = "BOTH"
 [[dependencies.fantasyfurniture_bone]]
 modId = "neoforge"
 type = "required"
-versionRange = "[21.11-beta,21.12)"
+versionRange = "[26.1-alpha,26.2)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.fantasyfurniture_bone]]
 modId = "apexcore"
 type = "required"
-versionRange = "[21.11-beta,21.12)"
+versionRange = "[26.1-beta,26.2)"
 [dependencies.fantasyfurniture_bone.mc-publish]
 modrinth = "xl3myxch"
 curseforge = "550778"
 [[dependencies.fantasyfurniture_bone]]
 modId = "fantasyfurniture"
 type = "required"
-versionRange = "[21.11-beta,21.12)"
+versionRange = "[26.1-beta,26.2)"
 [dependencies.fantasyfurniture_bone.mc-publish]
 modrinth = "A0nfCqYw"
 curseforge = "579564"
 [[dependencies.fantasyfurniture_bone]]
 modId = "placementvisualizer"
 type = "required"
-versionRange = "[21.11-beta,21.12)"
+versionRange = "[26.1-beta,26.2)"
 
 [[mods]]
 modId = "fantasyfurniture_bone_skeleton"
@@ -58,32 +58,32 @@ displayURL = "https://modrinth.com/project/fantasys-furniture-bone"
 [[dependencies.fantasyfurniture_bone_skeleton]]
 modId = "minecraft"
 type = "required"
-versionRange = "[1.21.11,1.21.12)"
+versionRange = "[26.1-snapshot,26.2)"
 ordering = "NONE"
 side = "BOTH"
 [[dependencies.fantasyfurniture_bone_skeleton]]
 modId = "neoforge"
 type = "required"
-versionRange = "[21.11-beta,21.12)"
+versionRange = "[26.1-alpha,26.2)"
 ordering = "NONE"
 side = "BOTH"
 [[dependencies.fantasyfurniture_bone_skeleton]]
 modId = "fantasyfurniture_bone"
 type = "required"
-versionRange = "[21.11-beta,21.12)"
+versionRange = "[26.1-beta,26.2)"
 
 [[dependencies.fantasyfurniture_bone_skeleton]]
 modId = "apexcore"
 type = "required"
-versionRange = "[21.11-beta,21.12)"
+versionRange = "[26.1-beta,26.2)"
 [[dependencies.fantasyfurniture_bone_skeleton]]
 modId = "fantasyfurniture"
 type = "required"
-versionRange = "[21.11-beta,21.12)"
+versionRange = "[26.1-beta,26.2)"
 [[dependencies.fantasyfurniture_bone_skeleton]]
 modId = "placementvisualizer"
 type = "required"
-versionRange = "[21.11-beta,21.12)"
+versionRange = "[26.1-beta,26.2)"
 
 [[mods]]
 modId = "fantasyfurniture_bone_wither"
@@ -98,32 +98,32 @@ displayURL = "https://modrinth.com/project/fantasys-furniture-bone"
 [[dependencies.fantasyfurniture_bone_wither]]
 modId = "minecraft"
 type = "required"
-versionRange = "[1.21.11,1.21.12)"
+versionRange = "[26.1-snapshot,26.2)"
 ordering = "NONE"
 side = "BOTH"
 [[dependencies.fantasyfurniture_bone_wither]]
 modId = "neoforge"
 type = "required"
-versionRange = "[21.11-beta,21.12)"
+versionRange = "[26.1-alpha,26.2)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.fantasyfurniture_bone_wither]]
 modId = "apexcore"
 type = "required"
-versionRange = "[21.11-beta,21.12)"
+versionRange = "[26.1-beta,26.2)"
 [[dependencies.fantasyfurniture_bone_wither]]
 modId = "fantasyfurniture"
 type = "required"
-versionRange = "[21.11-beta,21.12)"
+versionRange = "[26.1-beta,26.2)"
 [[dependencies.fantasyfurniture_bone_wither]]
 modId = "placementvisualizer"
 type = "required"
-versionRange = "[21.11-beta,21.12)"
+versionRange = "[26.1-beta,26.2)"
 [[dependencies.fantasyfurniture_bone_wither]]
 modId = "fantasyfurniture_bone"
 type = "required"
-versionRange = "[21.11-beta,21.12)"
+versionRange = "[26.1-beta,26.2)"
 
 [[mixins]]
 config = "META-INF/fantasyfurniture_bone.mixins.json"

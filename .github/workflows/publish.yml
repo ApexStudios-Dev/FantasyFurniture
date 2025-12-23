@@ -72,7 +72,7 @@ jobs:
         id: changes
         uses: dorny/paths-filter@v3
         with:
-          base: 21.11/main
+          base: 26.1/main
           filters: |
             main: [ 'src/**' ]
             nordic: [ 'nordic/**' ]
@@ -89,7 +89,7 @@ jobs:
     if: ${{ inputs.main || needs.determine-changes.outputs.main-changed == 'true' }}
     secrets: inherit
     with:
-      java-version: 21
+      java-version: 25
       java-vendor: temurin
       publish-task: ':publishReleasePublicationToApexStudios-ReleasesRepository'
       curseforge-id: '579564'
@@ -107,7 +107,7 @@ jobs:
     if: ${{ inputs.nordic || needs.determine-changes.outputs.nordic-changed == 'true' }}
     secrets: inherit
     with:
-      java-version: 21
+      java-version: 25
       java-vendor: temurin
       publish-task: ':publishNordicReleasePublicationToApexStudios-ReleasesRepository'
       curseforge-id: '1191799'
@@ -125,7 +125,7 @@ jobs:
     if: ${{ inputs.venthyr || needs.determine-changes.outputs.venthyr-changed == 'true' }}
     secrets: inherit
     with:
-      java-version: 21
+      java-version: 25
       java-vendor: temurin
       publish-task: ':publishVenthyrReleasePublicationToApexStudios-ReleasesRepository'
       curseforge-id: '1206300'
@@ -143,7 +143,7 @@ jobs:
     if: ${{ inputs.bone || needs.determine-changes.outputs.bone-changed == 'true' }}
     secrets: inherit
     with:
-      java-version: 21
+      java-version: 25
       java-vendor: temurin
       publish-task: ':publishBoneReleasePublicationToApexStudios-ReleasesRepository'
       curseforge-id: '1209697'
@@ -161,7 +161,7 @@ jobs:
     if: ${{ inputs.dunmer || needs.determine-changes.outputs.dunmer-changed == 'true' }}
     secrets: inherit
     with:
-      java-version: 21
+      java-version: 25
       java-vendor: temurin
       publish-task: ':publishDunmerReleasePublicationToApexStudios-ReleasesRepository'
       curseforge-id: '1209702'
@@ -179,7 +179,7 @@ jobs:
     if: ${{ inputs.necrolord || needs.determine-changes.outputs.necrolord-changed == 'true' }}
     secrets: inherit
     with:
-      java-version: 21
+      java-version: 25
       java-vendor: temurin
       publish-task: ':publishNecrolordReleasePublicationToApexStudios-ReleasesRepository'
       curseforge-id: '1209752'
@@ -197,7 +197,7 @@ jobs:
     if: ${{ inputs.royal || needs.determine-changes.outputs.royal-changed == 'true' }}
     secrets: inherit
     with:
-      java-version: 21
+      java-version: 25
       java-vendor: temurin
       publish-task: ':publishRoyalReleasePublicationToApexStudios-ReleasesRepository'
       curseforge-id: '1209706'
@@ -215,7 +215,7 @@ jobs:
     if: ${{ inputs.decorations || needs.determine-changes.outputs.decorations-changed == 'true' }}
     secrets: inherit
     with:
-      java-version: 21
+      java-version: 25
       java-vendor: temurin
       publish-task: ':publishDecorationsReleasePublicationToApexStudios-ReleasesRepository'
       curseforge-id: '1220590'

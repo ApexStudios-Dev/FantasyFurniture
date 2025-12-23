@@ -16,34 +16,34 @@ displayURL = "https://modrinth.com/project/fantasys-furniture-decorations"
 [[dependencies.fantasyfurniture_decorations]]
 modId = "minecraft"
 type = "required"
-versionRange = "[1.21.11,1.21.12)"
+versionRange = "[26.1-snapshot,26.2)"
 ordering = "NONE"
 side = "BOTH"
 [[dependencies.fantasyfurniture_decorations]]
 modId = "neoforge"
 type = "required"
-versionRange = "[21.11-beta,21.12)"
+versionRange = "[26.1-alpha,26.2)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.fantasyfurniture_decorations]]
 modId = "apexcore"
 type = "required"
-versionRange = "[21.11.1,21.12)"
+versionRange = "[26.1-beta,26.2)"
 [dependencies.fantasyfurniture_decorations.mc-publish]
 modrinth = "xl3myxch"
 curseforge = "550778"
 [[dependencies.fantasyfurniture_decorations]]
 modId = "fantasyfurniture"
 type = "required"
-versionRange = "[21.11-beta,21.12)"
+versionRange = "[26.1-beta,26.2)"
 [dependencies.fantasyfurniture_decorations.mc-publish]
 modrinth = "A0nfCqYw"
 curseforge = "579564"
 [[dependencies.fantasyfurniture_decorations]]
 modId = "placementvisualizer"
 type = "required"
-versionRange = "[21.11-beta,21.12)"
+versionRange = "[26.1-beta,26.2)"
 
 [[accessTransformers]]
     file="META-INF/accesstransformer.cfg"

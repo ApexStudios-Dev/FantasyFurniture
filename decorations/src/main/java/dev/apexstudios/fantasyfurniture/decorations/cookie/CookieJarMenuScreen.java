@@ -10,14 +10,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 
 public final class CookieJarMenuScreen extends AbstractContainerScreen<CookieJarMenu> {
     public CookieJarMenuScreen(CookieJarMenu menu, Inventory playerInventory, Component title) {
-        super(menu, playerInventory, title);
-    }
-
-    @Override
-    protected void init() {
-        imageHeight = 114 + 3 * 18;
-        inventoryLabelY = imageHeight - 94;
-        super.init();
+        super(menu, playerInventory, title, DEFAULT_IMAGE_WIDTH, 114 + 3 * AbstractContainerMenu.SLOT_SIZE);
     }
 
     @Override
