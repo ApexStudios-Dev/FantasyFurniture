@@ -1,33 +1,37 @@
 package dev.apexstudios.fantasyfurniture.decorations.data;
 
-import dev.apexstudios.apexcore.core.client.DyeColorItemTintSource;
-import dev.apexstudios.apexcore.lib.block.Dyeable;
-import dev.apexstudios.apexcore.lib.data.ProviderTypes;
-import dev.apexstudios.apexcore.lib.data.ResourceGenerator;
-import dev.apexstudios.apexcore.lib.data.provider.RecipeProvider;
-import dev.apexstudios.apexcore.lib.multiblock.MultiBlock;
-import dev.apexstudios.fantasyfurniture.decorations.DecorationsFurnitureModule;
-import dev.apexstudios.fantasyfurniture.decorations.ber.SimpleBlockEntityBlock;
-import dev.apexstudios.fantasyfurniture.decorations.ber.SimpleBlockEntitySpecialRenderer;
-import dev.apexstudios.fantasyfurniture.decorations.block.BonePileBlock;
-import dev.apexstudios.fantasyfurniture.decorations.block.BookStackBlock;
-import dev.apexstudios.fantasyfurniture.decorations.block.BowlBlock;
-import dev.apexstudios.fantasyfurniture.decorations.block.ChalicesBlock;
-import dev.apexstudios.fantasyfurniture.decorations.block.CoinStackBlock;
-import dev.apexstudios.fantasyfurniture.decorations.block.MuffinsBlock;
-import dev.apexstudios.fantasyfurniture.decorations.block.MushroomsBlock;
-import dev.apexstudios.fantasyfurniture.decorations.block.PlatterBlock;
-import dev.apexstudios.fantasyfurniture.decorations.block.SoulGemsBlock;
-import dev.apexstudios.fantasyfurniture.decorations.block.Stackable;
-import dev.apexstudios.fantasyfurniture.decorations.block.TankardsBlock;
-import dev.apexstudios.fantasyfurniture.decorations.cookie.CookieJarBlock;
-import dev.apexstudios.fantasyfurniture.decorations.grave.GravestoneEditScreen;
-import dev.apexstudios.fantasyfurniture.station.FurnitureStationRecipeBuilder;
-import dev.apexstudios.fantasyfurniture.station.FurnitureStationSetup;
-import dev.apexstudios.fantasyfurniture.util.FurnitureClientDataUtil;
-import dev.apexstudios.placementvisualizer.api.BlockItemPlacementEvent;
+import dev.apexstudios.apexcore.api.block.Dyeable;
+import dev.apexstudios.apexcore.api.data.ProviderTypes;
+import dev.apexstudios.apexcore.api.data.ResourceGenerator;
+import dev.apexstudios.apexcore.api.data.provider.RecipeProvider;
+import dev.apexstudios.apexcore.api.multiblock.MultiBlock;
+import dev.apexstudios.apexcore.api.placement.BlockItemPlacementEvent;
+import dev.apexstudios.apexcore.api.util.ApexTags;
+import dev.apexstudios.apexcore.client.DyeColorItemTintSource;
+import dev.apexstudios.fantasyfurniture.common.station.FurnitureStationRecipeBuilder;
+import dev.apexstudios.fantasyfurniture.common.station.FurnitureStationSetup;
+import dev.apexstudios.fantasyfurniture.common.util.FurnitureClientDataUtil;
+import dev.apexstudios.fantasyfurniture.decorations.common.DecorationsFurnitureModule;
+import dev.apexstudios.fantasyfurniture.decorations.common.ber.SimpleBlockEntityBlock;
+import dev.apexstudios.fantasyfurniture.decorations.common.ber.SimpleBlockEntitySpecialRenderer;
+import dev.apexstudios.fantasyfurniture.decorations.common.block.BonePileBlock;
+import dev.apexstudios.fantasyfurniture.decorations.common.block.BookStackBlock;
+import dev.apexstudios.fantasyfurniture.decorations.common.block.BowlBlock;
+import dev.apexstudios.fantasyfurniture.decorations.common.block.ChalicesBlock;
+import dev.apexstudios.fantasyfurniture.decorations.common.block.CoinStackBlock;
+import dev.apexstudios.fantasyfurniture.decorations.common.block.MuffinsBlock;
+import dev.apexstudios.fantasyfurniture.decorations.common.block.MushroomsBlock;
+import dev.apexstudios.fantasyfurniture.decorations.common.block.PlatterBlock;
+import dev.apexstudios.fantasyfurniture.decorations.common.block.SoulGemsBlock;
+import dev.apexstudios.fantasyfurniture.decorations.common.block.Stackable;
+import dev.apexstudios.fantasyfurniture.decorations.common.block.TankardsBlock;
+import dev.apexstudios.fantasyfurniture.decorations.common.cookie.CookieJarBlock;
+import dev.apexstudios.fantasyfurniture.decorations.common.grave.GravestoneEditScreen;
+import dev.apexstudios.fantasyfurniture.decorations.common.plushie.PlushieBlockItem;
+import dev.apexstudios.fantasyfurniture.decorations.common.plushie.PlushieSpecialModelRenderer;
 import dev.apexstudios.registree.api.holder.DeferredBlock;
 import java.util.function.BiConsumer;
+import java.util.function.Predicate;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
@@ -37,8 +41,10 @@ import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
 import net.minecraft.client.data.models.model.TexturedModel;
-import net.minecraft.client.renderer.block.model.VariantMutator;
+import net.minecraft.client.renderer.block.dispatch.VariantMutator;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.resources.Identifier;
@@ -48,7 +54,14 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.client.model.generators.template.ExtendedModelTemplateBuilder;
@@ -133,6 +146,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     simpleBlockEntity(DecorationsFurnitureModule.WIDOW_BLOOM_BLOCK, new SimpleBlockEntitySpecialRenderer.WidowBloom(), blockModels);
                     simpleBlockEntity(DecorationsFurnitureModule.SKULL_BLOSSOM_SKELETON_BLOCK, new SimpleBlockEntitySpecialRenderer.SkullBlossom(true), blockModels);
                     simpleBlockEntity(DecorationsFurnitureModule.SKULL_BLOSSOM_WITHER_BLOCK, new SimpleBlockEntitySpecialRenderer.SkullBlossom(false), blockModels);
+                    plushie(blockModels);
                 })
                 .providing(ProviderTypes.LANGUAGE, (context, provider) -> {
                     provider.addCreativeModeTab(DecorationsFurnitureModule.CREATIVE_MODE_TAB, "Fantasy's Furniture - Decorations");
@@ -209,6 +223,9 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     provider.addBlock(DecorationsFurnitureModule.WIDOW_BLOOM_BLOCK, "Widow Bloom");
                     provider.addBlock(DecorationsFurnitureModule.SKULL_BLOSSOM_SKELETON_BLOCK, "Skull Blossoms Skeleton");
                     provider.addBlock(DecorationsFurnitureModule.SKULL_BLOSSOM_WITHER_BLOCK, "Skull Blossoms Wither");
+                    provider.addBlock(DecorationsFurnitureModule.PLUSHIE_BLOCK, "Plushie");
+                    provider.add(PlushieBlockItem.PLAYER_KEY, "Player");
+                    provider.add(PlushieBlockItem.DYANMIC_KEY, "%s %s");
                 })
                 .providing(ProviderTypes.RECIPES, (context, provider) -> DecorationsFurnitureModule.REGISTREE
                         .listElements(Registries.ITEM)
@@ -218,11 +235,29 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                 .providing(ProviderTypes.LOOT_TABLE, (context, provider) -> {
                     provider.fromRegistree(DecorationsFurnitureModule.REGISTREE);
 
-                    provider.block(lootTables -> DecorationsFurnitureModule.REGISTREE
-                            .listElements(Registries.BLOCK)
-                            .map(Holder::value)
-                            .forEach(lootTables::dropSelf)
-                    );
+                    provider.block(lootTables -> {
+                        DecorationsFurnitureModule.REGISTREE
+                                .listElements(Registries.BLOCK)
+                                .map(Holder::value)
+                                .filter(Predicate.not(DecorationsFurnitureModule.PLUSHIE_BLOCK::is))
+                                .forEach(lootTables::dropSelf);
+
+                        lootTables.accept(DecorationsFurnitureModule.PLUSHIE_BLOCK.value(), () -> LootTable
+                                .lootTable()
+                                .withPool(lootTables.applyExplosionCondition(DecorationsFurnitureModule.PLUSHIE_BLOCK.value(), LootPool
+                                        .lootPool()
+                                        .setRolls(ConstantValue.exactly(1F))
+                                        .add(LootItem
+                                                .lootTableItem(DecorationsFurnitureModule.PLUSHIE_BLOCK.value())
+                                                .apply(CopyComponentsFunction
+                                                        .copyComponentsFromBlockEntity(LootContextParams.BLOCK_ENTITY)
+                                                        .include(DataComponents.PROFILE)
+                                                        .include(DecorationsFurnitureModule.PLUSHIE_RENDER_NAME.value())
+                                                )
+                                        )
+                                ))
+                        );
+                    });
                 })
                 .providing(ProviderTypes.BLOCK_TAGS, (context, provider) -> {
                     DecorationsFurnitureModule.REGISTREE.listElements(Registries.BLOCK).map(Holder::value).forEach(block -> {
@@ -243,14 +278,16 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
 
                     provider.tag(Tags.Blocks.CHAINS).withElement(DecorationsFurnitureModule.BRONZE_CHAIN);
                     provider.tag(Tags.Blocks.CHAINS).withElement(DecorationsFurnitureModule.BRONZE_CHAIN);
+
+                    provider.tag(ApexTags.Blocks.SHEARS_EFFICIENT).withElement(DecorationsFurnitureModule.PLUSHIE_BLOCK);
                 })
                 .providing(ProviderTypes.ITEM_TAGS, (context, provider) -> {
                     Dyeable.dyeableItems(DecorationsFurnitureModule.REGISTREE)
                            .map(ItemLike::asItem)
                            .forEach(block -> provider.tag(Tags.Items.DYED).withElement(block));
 
-                    provider.tag(ItemTags.CHAINS).withElement(DecorationsFurnitureModule.BRONZE_CHAIN.asItem());
-                    provider.tag(Tags.Items.CHAINS).withElement(DecorationsFurnitureModule.BRONZE_CHAIN.asItem());
+                    provider.tag(ItemTags.CHAINS).withElement(DecorationsFurnitureModule.BRONZE_CHAIN.value().asItem());
+                    provider.tag(Tags.Items.CHAINS).withElement(DecorationsFurnitureModule.BRONZE_CHAIN.value().asItem());
                 })
         );
     }
@@ -539,12 +576,11 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
         createStackedTemplatedModels(DecorationsFurnitureModule.CHALICES_1, DecorationsFurnitureModule.CHALICES_2, TextureSlot.create("chalices"), true, blockModels.modelOutput);
 
         var baseParentPath = ModelLocationUtils.getModelLocation(DecorationsFurnitureModule.CHALICES_0.value());
-        var baseTexturePath = TextureMapping.getBlockTexture(DecorationsFurnitureModule.CHALICES_3.value());
         var cupSlot = TextureSlot.create("cup");
         var fluidSlot = TextureSlot.create("fluid");
-        var textures = TextureMapping.particle(baseTexturePath.withSuffix("_particle"))
-                                     .put(cupSlot, baseTexturePath)
-                                     .put(fluidSlot, baseTexturePath.withSuffix("_tint"));
+        var textures = TextureMapping.particle(TextureMapping.getBlockTexture(DecorationsFurnitureModule.CHALICES_3.value(), "_particle"))
+                                     .put(cupSlot, TextureMapping.getBlockTexture(DecorationsFurnitureModule.CHALICES_3.value(), "_particle"))
+                                     .put(fluidSlot, TextureMapping.getBlockTexture(DecorationsFurnitureModule.CHALICES_3.value(), "_tint"));
 
         var template = ExtendedModelTemplateBuilder
                 .builder()
@@ -678,7 +714,19 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                 BlockModelGenerators.plainVariant(blockModel)
         ));
 
-        blockModels.itemModelOutput.accept(block.asItem(), ItemModelUtils.specialModel(blockModel, specialModel));
+        blockModels.itemModelOutput.accept(block.value().asItem(), ItemModelUtils.specialModel(blockModel, specialModel));
+    }
+
+    private void plushie(BlockModelGenerators blockModels) {
+        var model = ExtendedModelTemplateBuilder.builder()
+                .parent(Identifier.withDefaultNamespace("block/block"))
+                .requiredTextureSlot(TextureSlot.PARTICLE)
+                .build()
+                .create(DecorationsFurnitureModule.PLUSHIE_BLOCK.value(), TextureMapping.particle(Blocks.WHITE_WOOL), blockModels.modelOutput);
+
+        var variant = BlockModelGenerators.plainVariant(model);
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(DecorationsFurnitureModule.PLUSHIE_BLOCK.value(), variant));
+        blockModels.itemModelOutput.accept(DecorationsFurnitureModule.PLUSHIE_BLOCK.value().asItem(), ItemModelUtils.specialModel(model, new PlushieSpecialModelRenderer.Unbaked()));
     }
 
     private MultiVariantGenerator blockState(Holder<Block> holder) {
@@ -716,13 +764,12 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
         var block = holder.value();
         var stackProperty = block.getStackableProperty();
         var templateModelPath = ModelLocationUtils.getModelLocation(templateHolder.value());
-        var baseTexturePath = TextureMapping.getBlockTexture(block);
 
         var textures = new TextureMapping()
-                .put(slot, baseTexturePath);
+                .put(slot, TextureMapping.getBlockTexture(block));
 
         if(replaceParticle) {
-            textures = textures.put(TextureSlot.PARTICLE, baseTexturePath.withSuffix("_particle"));
+            textures = textures.put(TextureSlot.PARTICLE, TextureMapping.getBlockTexture(block, "_particle"));
         }
 
         for(var i = stackProperty.min; i < stackProperty.max + 1; i++) {
@@ -740,11 +787,11 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
         }
     }
 
-    private void createdDyeColorModel(Identifier baseModelPath, Identifier baseTexturePath, TextureSlot slot, boolean replaceParticle, BiConsumer<Identifier, ModelInstance> modelOutput) {
-        var textures = new TextureMapping().put(slot, baseTexturePath.withSuffix("_tint"));
+    private void createdDyeColorModel(Identifier baseModelPath, Material baseTexturePath, TextureSlot slot, boolean replaceParticle, BiConsumer<Identifier, ModelInstance> modelOutput) {
+        var textures = new TextureMapping().put(slot, new Material(baseTexturePath.sprite().withSuffix("_tint")));
 
         if(replaceParticle) {
-            textures = textures.put(TextureSlot.PARTICLE, baseTexturePath.withSuffix("_tint_particle"));
+            textures = textures.put(TextureSlot.PARTICLE, new Material(baseTexturePath.sprite().withSuffix("_tint_particle")));
         }
 
         var template = ExtendedModelTemplateBuilder

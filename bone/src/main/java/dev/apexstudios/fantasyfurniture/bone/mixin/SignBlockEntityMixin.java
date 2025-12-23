@@ -1,7 +1,7 @@
 package dev.apexstudios.fantasyfurniture.bone.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import dev.apexstudios.fantasyfurniture.bone.WitherFurnitureSet;
+import dev.apexstudios.fantasyfurniture.bone.common.WitherFurnitureSet;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.DyeColor;

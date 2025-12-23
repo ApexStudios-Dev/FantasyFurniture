@@ -30,16 +30,16 @@ jobs:
         id: changes
         uses: dorny/paths-filter@v3
         with:
-          base: 21.11/main
+          base: 26.1/main
           filters: |
             main: [ 'src/**' ]
-            nordic: [ 'nordic/**' ]
-            venthyr: [ 'venthyr/**' ]
-            bone: [ 'bone/**' ]
-            dunmer: [ 'dunmer/**' ]
-            necrolord: [ 'necrolord/**' ]
-            royal: [ 'royal/**' ]
-            decorations: [ 'decorations/**' ]
+            nordic: [ 'nordic/src/**' ]
+            venthyr: [ 'venthyr/src/**' ]
+            bone: [ 'bone/src/**' ]
+            dunmer: [ 'dunmer/src/**' ]
+            necrolord: [ 'necrolord/src/**' ]
+            royal: [ 'royal/src/**' ]
+            decorations: [ 'decorations/src/**' ]
 
   check-local-changes-main:
     name: Check Local Changes (Main)
@@ -48,9 +48,10 @@ jobs:
     uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
     secrets: inherit
     with:
-      java-version: 21
+      java-version: 25
       java-vendor: temurin
       use-self-runner: false
+      unmark-gradlew-exec: false
 
   check-local-changes-nordic:
     name: Check Local Changes (Nordic)
@@ -59,10 +60,11 @@ jobs:
     uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
     secrets: inherit
     with:
-      java-version: 21
+      java-version: 25
       java-vendor: temurin
       use-self-runner: false
-      data-task: ':runNordicData'
+      data-task: ':fantasyfurniture-nordic:runData'
+      unmark-gradlew-exec: false
 
   check-local-changes-venthyr:
     name: Check Local Changes (Venthyr)
@@ -71,10 +73,11 @@ jobs:
     uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
     secrets: inherit
     with:
-      java-version: 21
+      java-version: 25
       java-vendor: temurin
       use-self-runner: false
-      data-task: ':runVenthyrData'
+      data-task: ':fantasyfurniture-venthyr:runData'
+      unmark-gradlew-exec: false
 
   check-local-changes-bone:
     name: Check Local Changes (Bone)
@@ -83,10 +86,11 @@ jobs:
     uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
     secrets: inherit
     with:
-      java-version: 21
+      java-version: 25
       java-vendor: temurin
       use-self-runner: false
-      data-task: ':runBoneData'
+      data-task: ':fantasyfurniture-bone:runData'
+      unmark-gradlew-exec: false
 
   check-local-changes-dunmer:
     name: Check Local Changes (Dunmer)
@@ -95,10 +99,11 @@ jobs:
     uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
     secrets: inherit
     with:
-      java-version: 21
+      java-version: 25
       java-vendor: temurin
       use-self-runner: false
-      data-task: ':runDunmerData'
+      data-task: ':fantasyfurniture-dunmer:runData'
+      unmark-gradlew-exec: false
 
   check-local-changes-necrolord:
     name: Check Local Changes (Necrolord)
@@ -107,10 +112,11 @@ jobs:
     uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
     secrets: inherit
     with:
-      java-version: 21
+      java-version: 25
       java-vendor: temurin
       use-self-runner: false
-      data-task: ':runNecrolordData'
+      data-task: ':fantasyfurniture-necrolord:runData'
+      unmark-gradlew-exec: false
 
   check-local-changes-royal:
     name: Check Local Changes (Royal)
@@ -119,10 +125,11 @@ jobs:
     uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
     secrets: inherit
     with:
-      java-version: 21
+      java-version: 25
       java-vendor: temurin
       use-self-runner: false
-      data-task: ':runRoyalData'
+      data-task: ':fantasyfurniture-royal:runData'
+      unmark-gradlew-exec: false
 
   check-local-changes-decorations:
     name: Check Local Changes (Decorations)
@@ -131,7 +138,8 @@ jobs:
     uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
     secrets: inherit
     with:
-      java-version: 21
+      java-version: 25
       java-vendor: temurin
       use-self-runner: false
-      data-task: ':runDecorationsData'
+      data-task: ':fantasyfurniture-decorations:runData'
+      unmark-gradlew-exec: false

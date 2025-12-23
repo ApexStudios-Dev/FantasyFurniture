@@ -1,14 +1,14 @@
 package dev.apexstudios.fantasyfurniture.venthyr.data;
 
-import dev.apexstudios.apexcore.lib.data.ProviderTypes;
-import dev.apexstudios.apexcore.lib.data.ResourceGenerator;
-import dev.apexstudios.apexcore.lib.util.TagPair;
-import dev.apexstudios.fantasyfurniture.ctm.CtmPacks;
-import dev.apexstudios.fantasyfurniture.util.FurnitureClientDataUtil;
-import dev.apexstudios.fantasyfurniture.util.FurnitureDataUtil;
-import dev.apexstudios.fantasyfurniture.util.FurnitureUtil;
-import dev.apexstudios.fantasyfurniture.venthyr.VenthyrFurnitureSet;
-import dev.apexstudios.placementvisualizer.api.BlockItemPlacementEvent;
+import dev.apexstudios.apexcore.api.data.ProviderTypes;
+import dev.apexstudios.apexcore.api.data.ResourceGenerator;
+import dev.apexstudios.apexcore.api.placement.BlockItemPlacementEvent;
+import dev.apexstudios.apexcore.api.util.TagPair;
+import dev.apexstudios.fantasyfurniture.common.ctm.CtmPacks;
+import dev.apexstudios.fantasyfurniture.common.util.FurnitureClientDataUtil;
+import dev.apexstudios.fantasyfurniture.common.util.FurnitureDataUtil;
+import dev.apexstudios.fantasyfurniture.common.util.FurnitureUtil;
+import dev.apexstudios.fantasyfurniture.venthyr.common.VenthyrFurnitureSet;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
@@ -53,7 +53,7 @@ public final class VenthyrFurnitureSetDataEntryPoint {
             ).providing(ProviderTypes.BLOCK_TAGS, (ctx, provider) -> FurnitureDataUtil
                     .tag(provider, VenthyrFurnitureSet.TABLE_CLOTH.value(), context.mineableTag(), BlockItemPlacementEvent.RENDERABLES)
             ).providing(ProviderTypes.RECIPES, (ctx, provider) -> FurnitureDataUtil.furnitureStationRecipe(
-                    context, VenthyrFurnitureSet.TABLE_CLOTH, provider
+                    context, VenthyrFurnitureSet.TABLE_CLOTH.value(), provider
             )).providing(ProviderTypes.MODELS, (ctx, provider) -> FurnitureClientDataUtil
                     .createTableModel(VenthyrFurnitureSet.TABLE_CLOTH.value(), provider.blockModels())
             ).providing(ProviderTypes.LANGUAGE, (ctx, provider) -> provider

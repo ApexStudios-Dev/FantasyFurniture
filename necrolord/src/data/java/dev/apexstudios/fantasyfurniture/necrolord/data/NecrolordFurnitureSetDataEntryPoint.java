@@ -1,13 +1,13 @@
 package dev.apexstudios.fantasyfurniture.necrolord.data;
 
-import dev.apexstudios.apexcore.lib.data.ProviderTypes;
-import dev.apexstudios.apexcore.lib.data.ResourceGenerator;
-import dev.apexstudios.apexcore.lib.util.TagPair;
-import dev.apexstudios.fantasyfurniture.ctm.CtmPacks;
-import dev.apexstudios.fantasyfurniture.necrolord.NecrolordFurnitureSet;
-import dev.apexstudios.fantasyfurniture.util.FurnitureClientDataUtil;
-import dev.apexstudios.fantasyfurniture.util.FurnitureDataUtil;
-import dev.apexstudios.fantasyfurniture.util.FurnitureUtil;
+import dev.apexstudios.apexcore.api.data.ProviderTypes;
+import dev.apexstudios.apexcore.api.data.ResourceGenerator;
+import dev.apexstudios.apexcore.api.util.TagPair;
+import dev.apexstudios.fantasyfurniture.common.ctm.CtmPacks;
+import dev.apexstudios.fantasyfurniture.common.util.FurnitureClientDataUtil;
+import dev.apexstudios.fantasyfurniture.common.util.FurnitureDataUtil;
+import dev.apexstudios.fantasyfurniture.common.util.FurnitureUtil;
+import dev.apexstudios.fantasyfurniture.necrolord.common.NecrolordFurnitureSet;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;

@@ -1,85 +1,74 @@
-import dev.apexstudios.gradle.ApexExtension
-import dev.apexstudios.gradle.multi.ModuleBuilder
-import dev.apexstudios.gradle.single.ApexSingleExtension
-
 plugins {
-    id("apex-conventions.neoforge") version "0.1.85"
-    id("apex-conventions.maven-publishing") version "0.1.85"
+    id("apex-conventions.neoforge")
+    id("apex-conventions.neoforge-datagen")
+    id("apex-conventions.maven-publishing")
+    id("apex-conventions.jspecify")
 }
+
+// while 'rootProject' == 'fantasyfurniture' here i use a multiproject workspace
+// which includes all my mods under this setup 'rootProject' != 'fantasyfurniture'
+// and we have to find the correct furnitureset modules based on the project name
+// which should be in the format 'fantasyfurniture-<furniture_set>'
+val furnitureSets = rootProject.subprojects.filter { it.name.contains("fantasyfurniture-") }.toList()
 
 group = "dev.apexstudios"
+neoForge.version = libs.versions.neoforge.get()
 
-apex.neoVersion("21.11.0-beta", "1.21.10", "2025.10.12")
-apex.extendCompilerErrors()
-
-val single = ApexSingleExtension.getOrCreate(project)
-single.withDataGen()
-
-val furnitureSets = setOf("nordic", "venthyr", "bone", "dunmer", "necrolord", "royal", "decorations")
-
-ModuleBuilder.modules(project) {
+afterEvaluate {
     furnitureSets.forEach {
-        module(it, "fantasyfurniture_$it") { hasData() }
+        evaluationDependsOn(it.path)
     }
-}
 
-furnitureSets.forEach {
-    fixJarName(sourceSet(it, SourceSet.MAIN_SOURCE_SET_NAME), it)
-    fixJarName(sourceSet(it, ApexExtension.DATA_NAME), "$it-data")
-}
-
-neoForge {
-    runs {
-        getByName(ApexExtension.DATA_NAME) {
+    neoForge {
+        mods {
             furnitureSets.forEach {
-                loadedMods.add(mods.getByName("${it.lowercase()}${SourceSet.MAIN_SOURCE_SET_NAME.capitalize()}"))
-                loadedMods.add(mods.getByName("${it.lowercase()}${ApexExtension.DATA_NAME.capitalize()}"))
+                create(it.name) {
+                    sourceSet(it.sourceSets[SourceSet.MAIN_SOURCE_SET_NAME])
+                }
+            }
+        }
+
+        runs.getByName("data") {
+            furnitureSets.forEach {
+                loadedMods.add(mods[it.name])
             }
 
             // include bone built-in packs as they are needed for
             // ctm asset generation to complete
-            programArguments.addAll("--existing", file("bone/src/data/generated/built-in/assets/skeleton").absolutePath, "--existing", file("bone/src/data/generated/built-in/assets/wither").absolutePath)
+            programArguments.addAll(
+                "--mod", "fantasyfurniture",
+                "--existing", file("bone/src/data/generated/built-in/assets/skeleton").absolutePath,
+                "--existing", file("bone/src/data/generated/built-in/assets/wither").absolutePath
+            )
         }
+    }
+}
 
-        getByName("boneData") {
-            programArguments.addAll("--mod", "fantasyfurniture_bone_skeleton", "--mod", "fantasyfurniture_bone_wither", "--flat")
+repositories {
+    maven("https://maven.apexmodder.com/prs/Registree/pr17") {
+        content {
+            includeModule("dev.apexstudios", "registree")
+        }
+    }
+
+    maven("https://maven.apexmodder.com/prs/ApexCore-Private/pr70") {
+        content {
+            includeModule("dev.apexstudios", "apexcore")
         }
     }
 }
 
 dependencies {
-    implementation(libs.registree)
-    "dataImplementation"(libs.registree)
-
-    implementation(libs.placementvisualizer)
-    "dataImplementation"(libs.placementvisualizer)
-
-    implementation(libs.apexcore)
-    "dataImplementation"(libs.apexcore)
+    implementation(libs.bundles.apexcore)
+    "dataImplementation"(libs.bundles.apexcore)
     accessTransformers(libs.apexcore)
 
-    implementation(libs.contex)
+    compileOnly(libs.contex)
 
-    furnitureSets.forEach {
-        sourceSet(it, SourceSet.MAIN_SOURCE_SET_NAME).implementationConfigurationName(libs.registree)
-        sourceSet(it, ApexExtension.DATA_NAME).implementationConfigurationName(libs.registree)
-
-        sourceSet(it, SourceSet.MAIN_SOURCE_SET_NAME).implementationConfigurationName(libs.placementvisualizer)
-        sourceSet(it, ApexExtension.DATA_NAME).implementationConfigurationName(libs.placementvisualizer)
-
-        sourceSet(it, SourceSet.MAIN_SOURCE_SET_NAME).implementationConfigurationName(libs.apexcore)
-        sourceSet(it, ApexExtension.DATA_NAME).implementationConfigurationName(libs.apexcore)
-    }
-}
-
-fun sourceSet(furnitureSet: String, sourceSet: String): SourceSet = sourceSets["$furnitureSet${sourceSet.capitalize()}"]
-
-fun fixJarName(sourceSet: SourceSet, baseName: String, sourcesName: String = baseName) {
-    project.tasks.named(sourceSet.jarTaskName, Jar::class.java) {
-        archiveBaseName.set("${single.getModId().get()}-$baseName")
-    }
-
-    project.tasks.named(sourceSet.sourcesJarTaskName, Jar::class.java) {
-        archiveBaseName.set("${single.getModId().get()}-$sourcesName")
+    // for some reason without this datagen fails when run locally (in my larger multi project workspace) while CI runs just fine
+    if(rootProject != project) {
+        furnitureSets.forEach {
+            "dataRuntimeOnly"(it)
+        }
     }
 }

@@ -1,10 +1,10 @@
 package dev.apexstudios.fantasyfurniture.data;
 
-import dev.apexstudios.apexcore.lib.data.ProviderTypes;
-import dev.apexstudios.apexcore.lib.data.ResourceGenerator;
-import dev.apexstudios.fantasyfurniture.FantasyFurniture;
-import dev.apexstudios.fantasyfurniture.ctm.CtmPacks;
-import dev.apexstudios.fantasyfurniture.station.FurnitureStationSetup;
+import dev.apexstudios.apexcore.api.data.ProviderTypes;
+import dev.apexstudios.apexcore.api.data.ResourceGenerator;
+import dev.apexstudios.fantasyfurniture.common.FantasyFurniture;
+import dev.apexstudios.fantasyfurniture.common.ctm.CtmPacks;
+import dev.apexstudios.fantasyfurniture.common.station.FurnitureStationSetup;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -13,12 +13,11 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
-import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.Tags;
 
-@Mod(value = FantasyFurniture.ID, dist = Dist.CLIENT)
+@Mod(FantasyFurniture.ID)
 public final class FantasyFurnitureDataEntryPoint {
     public FantasyFurnitureDataEntryPoint(IEventBus modBus) {
         ResourceGenerator.of(modBus, generator -> {
@@ -55,7 +54,7 @@ public final class FantasyFurnitureDataEntryPoint {
                             .withElement(FurnitureStationSetup.BLOCK)
                     )
                     .providing(ProviderTypes.RECIPES, (context, provider) -> provider
-                            .shapeless(RecipeCategory.MISC, FurnitureStationSetup.BLOCK)
+                            .shapeless(RecipeCategory.MISC, FurnitureStationSetup.BLOCK.value())
                             .requires(Tags.Items.PLAYER_WORKSTATIONS_CRAFTING_TABLES)
                             .requires(Tags.Items.LEATHERS)
                             .unlockedBy("has_crafting_table", provider.has(Tags.Items.PLAYER_WORKSTATIONS_CRAFTING_TABLES))

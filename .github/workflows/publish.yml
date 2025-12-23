@@ -72,16 +72,16 @@ jobs:
         id: changes
         uses: dorny/paths-filter@v3
         with:
-          base: 21.11/main
+          base: 26.1/main
           filters: |
             main: [ 'src/**' ]
-            nordic: [ 'nordic/**' ]
-            venthyr: [ 'venthyr/**' ]
-            bone: [ 'bone/**' ]
-            dunmer: [ 'dunmer/**' ]
-            necrolord: [ 'necrolord/**' ]
-            royal: [ 'royal/**' ]
-            decorations: [ 'decorations/**' ]
+            nordic: [ 'nordic/src/**' ]
+            venthyr: [ 'venthyr/src/**' ]
+            bone: [ 'bone/src/**' ]
+            dunmer: [ 'dunmer/src/**' ]
+            necrolord: [ 'necrolord/src/**' ]
+            royal: [ 'royal/src/**' ]
+            decorations: [ 'decorations/src/**' ]
 
   publish-main:
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
@@ -89,7 +89,7 @@ jobs:
     if: ${{ inputs.main || needs.determine-changes.outputs.main-changed == 'true' }}
     secrets: inherit
     with:
-      java-version: 21
+      java-version: 25
       java-vendor: temurin
       publish-task: ':publishReleasePublicationToApexStudios-ReleasesRepository'
       curseforge-id: '579564'
@@ -107,9 +107,9 @@ jobs:
     if: ${{ inputs.nordic || needs.determine-changes.outputs.nordic-changed == 'true' }}
     secrets: inherit
     with:
-      java-version: 21
+      java-version: 25
       java-vendor: temurin
-      publish-task: ':publishNordicReleasePublicationToApexStudios-ReleasesRepository'
+      publish-task: ':fantasyfurniture-nordic:publishReleasePublicationToApexStudios-ReleasesRepository'
       curseforge-id: '1191799'
       modrinth-id: 'DIHzMa8h'
       artifact-id: fantasyfurniture-nordic
@@ -125,9 +125,9 @@ jobs:
     if: ${{ inputs.venthyr || needs.determine-changes.outputs.venthyr-changed == 'true' }}
     secrets: inherit
     with:
-      java-version: 21
+      java-version: 25
       java-vendor: temurin
-      publish-task: ':publishVenthyrReleasePublicationToApexStudios-ReleasesRepository'
+      publish-task: ':fantasyfurniture-venthyr:publishReleasePublicationToApexStudios-ReleasesRepository'
       curseforge-id: '1206300'
       modrinth-id: 'FjHW4JvP'
       artifact-id: fantasyfurniture-venthyr
@@ -143,9 +143,9 @@ jobs:
     if: ${{ inputs.bone || needs.determine-changes.outputs.bone-changed == 'true' }}
     secrets: inherit
     with:
-      java-version: 21
+      java-version: 25
       java-vendor: temurin
-      publish-task: ':publishBoneReleasePublicationToApexStudios-ReleasesRepository'
+      publish-task: ':fantasyfurniture-bone:publishReleasePublicationToApexStudios-ReleasesRepository'
       curseforge-id: '1209697'
       modrinth-id: 'oJ4TI49S'
       artifact-id: fantasyfurniture-bone
@@ -161,9 +161,9 @@ jobs:
     if: ${{ inputs.dunmer || needs.determine-changes.outputs.dunmer-changed == 'true' }}
     secrets: inherit
     with:
-      java-version: 21
+      java-version: 25
       java-vendor: temurin
-      publish-task: ':publishDunmerReleasePublicationToApexStudios-ReleasesRepository'
+      publish-task: ':fantasyfurniture-dunmer:publishReleasePublicationToApexStudios-ReleasesRepository'
       curseforge-id: '1209702'
       modrinth-id: 'Bs7e2IyQ'
       artifact-id: fantasyfurniture-dunmer
@@ -179,9 +179,9 @@ jobs:
     if: ${{ inputs.necrolord || needs.determine-changes.outputs.necrolord-changed == 'true' }}
     secrets: inherit
     with:
-      java-version: 21
+      java-version: 25
       java-vendor: temurin
-      publish-task: ':publishNecrolordReleasePublicationToApexStudios-ReleasesRepository'
+      publish-task: ':fantasyfurniture-necrolord:publishReleasePublicationToApexStudios-ReleasesRepository'
       curseforge-id: '1209752'
       modrinth-id: 'V9TnGtTg'
       artifact-id: fantasyfurniture-necrolord
@@ -197,9 +197,9 @@ jobs:
     if: ${{ inputs.royal || needs.determine-changes.outputs.royal-changed == 'true' }}
     secrets: inherit
     with:
-      java-version: 21
+      java-version: 25
       java-vendor: temurin
-      publish-task: ':publishRoyalReleasePublicationToApexStudios-ReleasesRepository'
+      publish-task: ':fantasyfurniture-royal:publishReleasePublicationToApexStudios-ReleasesRepository'
       curseforge-id: '1209706'
       modrinth-id: 'OIAm13ki'
       artifact-id: fantasyfurniture-royal
@@ -215,9 +215,9 @@ jobs:
     if: ${{ inputs.decorations || needs.determine-changes.outputs.decorations-changed == 'true' }}
     secrets: inherit
     with:
-      java-version: 21
+      java-version: 25
       java-vendor: temurin
-      publish-task: ':publishDecorationsReleasePublicationToApexStudios-ReleasesRepository'
+      publish-task: ':fantasyfurniture-decorations:publishReleasePublicationToApexStudios-ReleasesRepository'
       curseforge-id: '1220590'
       modrinth-id: 'bJ7GIx0B'
       artifact-id: fantasyfurniture-decorations
