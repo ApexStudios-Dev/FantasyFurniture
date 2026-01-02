@@ -25,6 +25,7 @@ import dev.apexstudios.fantasyfurniture.decorations.common.block.Stackable;
 import dev.apexstudios.fantasyfurniture.decorations.common.block.TankardsBlock;
 import dev.apexstudios.fantasyfurniture.decorations.common.cookie.CookieJarBlock;
 import dev.apexstudios.fantasyfurniture.decorations.common.grave.GravestoneEditScreen;
+import dev.apexstudios.fantasyfurniture.decorations.plushie.PlushieBlockItem;
 import dev.apexstudios.fantasyfurniture.decorations.plushie.PlushieSpecialModelRenderer;
 import dev.apexstudios.apexcore.api.placement.BlockItemPlacementEvent;
 import dev.apexstudios.registree.api.holder.DeferredBlock;
@@ -212,7 +213,9 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     provider.addBlock(DecorationsFurnitureModule.WIDOW_BLOOM_BLOCK, "Widow Bloom");
                     provider.addBlock(DecorationsFurnitureModule.SKULL_BLOSSOM_SKELETON_BLOCK, "Skull Blossoms Skeleton");
                     provider.addBlock(DecorationsFurnitureModule.SKULL_BLOSSOM_WITHER_BLOCK, "Skull Blossoms Wither");
-                    provider.addBlock(DecorationsFurnitureModule.PLUSHIE_BLOCK, "Player Plushie");
+                    provider.addBlock(DecorationsFurnitureModule.PLUSHIE_BLOCK, "Plushie");
+                    provider.add(PlushieBlockItem.PLAYER_KEY, "Player");
+                    provider.add(PlushieBlockItem.DYANMIC_KEY, "%s %s");
                 })
                 .providing(ProviderTypes.RECIPES, (context, provider) -> DecorationsFurnitureModule.REGISTREE
                         .listElements(Registries.ITEM)
