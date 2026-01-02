@@ -25,6 +25,7 @@ import dev.apexstudios.fantasyfurniture.decorations.common.block.Stackable;
 import dev.apexstudios.fantasyfurniture.decorations.common.block.TankardsBlock;
 import dev.apexstudios.fantasyfurniture.decorations.common.cookie.CookieJarBlock;
 import dev.apexstudios.fantasyfurniture.decorations.common.grave.GravestoneEditScreen;
+import dev.apexstudios.fantasyfurniture.decorations.plushie.PlushieSpecialModelRenderer;
 import dev.apexstudios.apexcore.api.placement.BlockItemPlacementEvent;
 import dev.apexstudios.registree.api.holder.DeferredBlock;
 import java.util.function.BiConsumer;
@@ -48,6 +49,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
@@ -133,6 +135,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     simpleBlockEntity(DecorationsFurnitureModule.WIDOW_BLOOM_BLOCK, new SimpleBlockEntitySpecialRenderer.WidowBloom(), blockModels);
                     simpleBlockEntity(DecorationsFurnitureModule.SKULL_BLOSSOM_SKELETON_BLOCK, new SimpleBlockEntitySpecialRenderer.SkullBlossom(true), blockModels);
                     simpleBlockEntity(DecorationsFurnitureModule.SKULL_BLOSSOM_WITHER_BLOCK, new SimpleBlockEntitySpecialRenderer.SkullBlossom(false), blockModels);
+                    plushie(blockModels);
                 })
                 .providing(ProviderTypes.LANGUAGE, (context, provider) -> {
                     provider.addCreativeModeTab(DecorationsFurnitureModule.CREATIVE_MODE_TAB, "Fantasy's Furniture - Decorations");
@@ -209,6 +212,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     provider.addBlock(DecorationsFurnitureModule.WIDOW_BLOOM_BLOCK, "Widow Bloom");
                     provider.addBlock(DecorationsFurnitureModule.SKULL_BLOSSOM_SKELETON_BLOCK, "Skull Blossoms Skeleton");
                     provider.addBlock(DecorationsFurnitureModule.SKULL_BLOSSOM_WITHER_BLOCK, "Skull Blossoms Wither");
+                    provider.addBlock(DecorationsFurnitureModule.PLUSHIE_BLOCK, "Player Plushie");
                 })
                 .providing(ProviderTypes.RECIPES, (context, provider) -> DecorationsFurnitureModule.REGISTREE
                         .listElements(Registries.ITEM)
@@ -679,6 +683,18 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
         ));
 
         blockModels.itemModelOutput.accept(block.asItem(), ItemModelUtils.specialModel(blockModel, specialModel));
+    }
+
+    private void plushie(BlockModelGenerators blockModels) {
+        var model = ExtendedModelTemplateBuilder.builder()
+                .parent(Identifier.withDefaultNamespace("block/block"))
+                .requiredTextureSlot(TextureSlot.PARTICLE)
+                .build()
+                .create(DecorationsFurnitureModule.PLUSHIE_BLOCK.value(), TextureMapping.particle(Blocks.WHITE_WOOL), blockModels.modelOutput);
+
+        var variant = BlockModelGenerators.plainVariant(model);
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(DecorationsFurnitureModule.PLUSHIE_BLOCK.value(), variant));
+        blockModels.itemModelOutput.accept(DecorationsFurnitureModule.PLUSHIE_BLOCK.asItem(), ItemModelUtils.specialModel(model, new PlushieSpecialModelRenderer.Unbaked()));
     }
 
     private MultiVariantGenerator blockState(Holder<Block> holder) {

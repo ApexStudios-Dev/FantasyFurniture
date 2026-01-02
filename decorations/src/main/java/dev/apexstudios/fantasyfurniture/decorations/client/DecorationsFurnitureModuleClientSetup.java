@@ -8,6 +8,8 @@ import dev.apexstudios.fantasyfurniture.decorations.common.ber.SimpleBlockEntity
 import dev.apexstudios.fantasyfurniture.decorations.common.grave.GravestoneBlockEntity;
 import dev.apexstudios.fantasyfurniture.decorations.common.grave.GravestoneBlockEntityRenderer;
 import dev.apexstudios.fantasyfurniture.decorations.common.grave.GravestoneEditScreen;
+import dev.apexstudios.fantasyfurniture.decorations.plushie.PlushieBlockEntityRenderer;
+import dev.apexstudios.fantasyfurniture.decorations.plushie.PlushieSpecialModelRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractSignEditScreen;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -38,6 +40,7 @@ public final class DecorationsFurnitureModuleClientSetup {
         modBus.addListener(EntityRenderersEvent.RegisterRenderers.class, event -> {
             event.registerBlockEntityRenderer(DecorationsFurnitureModule.GRAVESTONE_BLOCK_ENTITY.value(), GravestoneBlockEntityRenderer::new);
             event.registerBlockEntityRenderer(DecorationsFurnitureModule.WIDOW_BLOOM_BLOCK_ENTITY.value(), SimpleBlockEntityRenderer.create(DecorLayerDefinitions.WIDOW_BLOOM, blockEntity -> DecorLayerDefinitions.WIDOW_BLOOM_TEXTURE));
+            event.registerBlockEntityRenderer(DecorationsFurnitureModule.PLUSHIE_BLOCK_ENTITY.value(), PlushieBlockEntityRenderer::new);
 
             event.registerBlockEntityRenderer(DecorationsFurnitureModule.SKULL_BLOSSOM_BLOCK_ENTITY.value(), SimpleBlockEntityRenderer.create(
                     DecorLayerDefinitions.SKULL_BLOSSOM,
@@ -48,6 +51,7 @@ public final class DecorationsFurnitureModuleClientSetup {
         modBus.addListener(RegisterSpecialModelRendererEvent.class, event -> {
             event.register(DecorationsFurnitureModule.identifier("widow_bloom"), SimpleBlockEntitySpecialRenderer.WidowBloom.MAP_CODEC);
             event.register(DecorationsFurnitureModule.identifier("skull_blossom"), SimpleBlockEntitySpecialRenderer.SkullBlossom.MAP_CODEC);
+            event.register(DecorationsFurnitureModule.identifier("plushie"), PlushieSpecialModelRenderer.Unbaked.MAP_CODEC);
         });
 
         modBus.addListener(EntityRenderersEvent.RegisterLayerDefinitions.class, event -> {
