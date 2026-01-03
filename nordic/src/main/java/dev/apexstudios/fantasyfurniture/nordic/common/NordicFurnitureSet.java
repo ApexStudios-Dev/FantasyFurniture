@@ -1,6 +1,7 @@
 package dev.apexstudios.fantasyfurniture.nordic.common;
 
 import dev.apexstudios.apexcore.api.util.WoodTypeBuilder;
+import dev.apexstudios.fantasyfurniture.common.util.FurnitureUtil;
 import dev.apexstudios.fantasyfurniture.nordic.common.block.NordicBedDoubleBlock;
 import dev.apexstudios.fantasyfurniture.nordic.common.block.NordicBedSingleBlock;
 import dev.apexstudios.fantasyfurniture.nordic.common.block.NordicBenchBlock;
@@ -26,7 +27,6 @@ import dev.apexstudios.fantasyfurniture.nordic.common.block.NordicStoolBlock;
 import dev.apexstudios.fantasyfurniture.nordic.common.block.NordicTableBlock;
 import dev.apexstudios.fantasyfurniture.nordic.common.block.NordicWallLightBlock;
 import dev.apexstudios.fantasyfurniture.nordic.common.block.NordicWardrobeBlock;
-import dev.apexstudios.fantasyfurniture.common.util.FurnitureUtil;
 import dev.apexstudios.registree.api.Registree;
 import dev.apexstudios.registree.api.holder.DeferredBlock;
 import java.util.function.Supplier;

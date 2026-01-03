@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public final class RoyalLockBoxBlock extends LockBoxBlock implements Dyeable.Colored {
     public static final VoxelShape SHAPE = box(2.5D, 0D, 3.5D, 13.5D, 9.25D, 12.5D);

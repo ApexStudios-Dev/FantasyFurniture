@@ -27,9 +27,9 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.common.ItemAbility;
-import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
 import org.joml.Vector3dc;
+import org.jspecify.annotations.Nullable;
 
 public final class CandelabraBlock extends SimpleHorizontalDirectionalBlock implements Lightable {
     public static final VoxelShape SHAPE_0 = ApexShapes.join(

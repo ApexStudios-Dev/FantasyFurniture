@@ -2,6 +2,7 @@ package dev.apexstudios.fantasyfurniture.dunmer.common;
 
 import dev.apexstudios.apexcore.api.util.WoodTypeBuilder;
 import dev.apexstudios.fantasyfurniture.common.block.FurnitureDoorBlock;
+import dev.apexstudios.fantasyfurniture.common.util.FurnitureUtil;
 import dev.apexstudios.fantasyfurniture.dunmer.common.block.DunmerBedDoubleBlock;
 import dev.apexstudios.fantasyfurniture.dunmer.common.block.DunmerBedSingleBlock;
 import dev.apexstudios.fantasyfurniture.dunmer.common.block.DunmerBenchBlock;
@@ -26,7 +27,6 @@ import dev.apexstudios.fantasyfurniture.dunmer.common.block.DunmerStoolBlock;
 import dev.apexstudios.fantasyfurniture.dunmer.common.block.DunmerTableBlock;
 import dev.apexstudios.fantasyfurniture.dunmer.common.block.DunmerWallLightBlock;
 import dev.apexstudios.fantasyfurniture.dunmer.common.block.DunmerWardrobeBlock;
-import dev.apexstudios.fantasyfurniture.common.util.FurnitureUtil;
 import dev.apexstudios.registree.api.Registree;
 import dev.apexstudios.registree.api.holder.DeferredBlock;
 import java.util.function.Supplier;

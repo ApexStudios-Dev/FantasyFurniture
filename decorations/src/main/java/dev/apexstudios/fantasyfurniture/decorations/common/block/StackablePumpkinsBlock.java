@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public final class StackablePumpkinsBlock extends SimpleHorizontalDirectionalBlock implements Stackable {
     public static final IntegerProperty COUNT = IntegerProperty.create("count", 0, 2);

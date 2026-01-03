@@ -20,7 +20,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public final class CushionedCrownBlock extends SimpleHorizontalDirectionalBlock implements Dyeable.Colored {
     public static final VoxelShape SHAPE = box(2D, 0D, 2D, 14D, 8D, 14D);

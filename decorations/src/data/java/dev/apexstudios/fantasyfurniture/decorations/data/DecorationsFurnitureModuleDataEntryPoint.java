@@ -1,11 +1,14 @@
 package dev.apexstudios.fantasyfurniture.decorations.data;
 
-import dev.apexstudios.apexcore.client.DyeColorItemTintSource;
 import dev.apexstudios.apexcore.api.block.Dyeable;
 import dev.apexstudios.apexcore.api.data.ProviderTypes;
 import dev.apexstudios.apexcore.api.data.ResourceGenerator;
 import dev.apexstudios.apexcore.api.data.provider.RecipeProvider;
 import dev.apexstudios.apexcore.api.multiblock.MultiBlock;
+import dev.apexstudios.apexcore.client.DyeColorItemTintSource;
+import dev.apexstudios.fantasyfurniture.common.station.FurnitureStationRecipeBuilder;
+import dev.apexstudios.fantasyfurniture.common.station.FurnitureStationSetup;
+import dev.apexstudios.fantasyfurniture.common.util.FurnitureClientDataUtil;
 import dev.apexstudios.fantasyfurniture.decorations.common.DecorationsFurnitureModule;
 import dev.apexstudios.fantasyfurniture.decorations.common.ber.SimpleBlockEntityBlock;
 import dev.apexstudios.fantasyfurniture.decorations.common.ber.SimpleBlockEntitySpecialRenderer;
@@ -22,9 +25,6 @@ import dev.apexstudios.fantasyfurniture.decorations.common.block.Stackable;
 import dev.apexstudios.fantasyfurniture.decorations.common.block.TankardsBlock;
 import dev.apexstudios.fantasyfurniture.decorations.common.cookie.CookieJarBlock;
 import dev.apexstudios.fantasyfurniture.decorations.common.grave.GravestoneEditScreen;
-import dev.apexstudios.fantasyfurniture.common.station.FurnitureStationRecipeBuilder;
-import dev.apexstudios.fantasyfurniture.common.station.FurnitureStationSetup;
-import dev.apexstudios.fantasyfurniture.common.util.FurnitureClientDataUtil;
 import dev.apexstudios.placementvisualizer.api.BlockItemPlacementEvent;
 import dev.apexstudios.registree.api.holder.DeferredBlock;
 import java.util.function.BiConsumer;

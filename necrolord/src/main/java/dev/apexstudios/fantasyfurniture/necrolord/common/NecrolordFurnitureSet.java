@@ -2,6 +2,7 @@ package dev.apexstudios.fantasyfurniture.necrolord.common;
 
 import dev.apexstudios.apexcore.api.util.WoodTypeBuilder;
 import dev.apexstudios.fantasyfurniture.common.block.FurnitureDoorBlock;
+import dev.apexstudios.fantasyfurniture.common.util.FurnitureUtil;
 import dev.apexstudios.fantasyfurniture.necrolord.common.block.NecrolordBedDoubleBlock;
 import dev.apexstudios.fantasyfurniture.necrolord.common.block.NecrolordBedSingleBlock;
 import dev.apexstudios.fantasyfurniture.necrolord.common.block.NecrolordBenchBlock;
@@ -26,7 +27,6 @@ import dev.apexstudios.fantasyfurniture.necrolord.common.block.NecrolordStoolBlo
 import dev.apexstudios.fantasyfurniture.necrolord.common.block.NecrolordTableBlock;
 import dev.apexstudios.fantasyfurniture.necrolord.common.block.NecrolordWallLightBlock;
 import dev.apexstudios.fantasyfurniture.necrolord.common.block.NecrolordWardrobeBlock;
-import dev.apexstudios.fantasyfurniture.common.util.FurnitureUtil;
 import dev.apexstudios.registree.api.Registree;
 import dev.apexstudios.registree.api.holder.DeferredBlock;
 import dev.apexstudios.registree.api.holder.DeferredParticleType;

@@ -16,7 +16,7 @@ import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public final class GravestoneBlockEntityRenderer implements BlockEntityRenderer<GravestoneBlockEntity, SignRenderState> {
     private static final Vec3 TEXT_OFFSET = new Vec3(0D, 0D, .063D);

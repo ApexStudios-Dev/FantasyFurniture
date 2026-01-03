@@ -1,7 +1,7 @@
 package dev.apexstudios.fantasyfurniture.common.ctm;
 
-import dev.apexstudios.apexcore.client.DyeColorItemTintSource;
 import dev.apexstudios.apexcore.api.data.provider.model.ModelProvider;
+import dev.apexstudios.apexcore.client.DyeColorItemTintSource;
 import dev.apexstudios.fantasyfurniture.common.util.FurnitureUtil;
 import dev.apexstudios.registree.api.Registree;
 import java.util.stream.Stream;

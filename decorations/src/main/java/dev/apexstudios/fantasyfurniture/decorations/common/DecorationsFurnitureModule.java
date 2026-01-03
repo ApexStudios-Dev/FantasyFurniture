@@ -1,5 +1,6 @@
 package dev.apexstudios.fantasyfurniture.decorations.common;
 
+import dev.apexstudios.fantasyfurniture.common.util.FurnitureUtil;
 import dev.apexstudios.fantasyfurniture.decorations.common.ber.SimpleBlockEntity;
 import dev.apexstudios.fantasyfurniture.decorations.common.ber.SimpleBlockEntityBlock;
 import dev.apexstudios.fantasyfurniture.decorations.common.block.BannerBlock;
@@ -49,7 +50,6 @@ import dev.apexstudios.fantasyfurniture.decorations.common.grave.GravestoneBlock
 import dev.apexstudios.fantasyfurniture.decorations.common.grave.GravestoneBlockEntity;
 import dev.apexstudios.fantasyfurniture.decorations.common.grave.GravestoneBlockItem;
 import dev.apexstudios.fantasyfurniture.decorations.common.util.DecorationUtil;
-import dev.apexstudios.fantasyfurniture.common.util.FurnitureUtil;
 import dev.apexstudios.registree.api.Registree;
 import dev.apexstudios.registree.api.holder.DeferredBlock;
 import dev.apexstudios.registree.api.holder.DeferredBlockEntity;

@@ -1,6 +1,7 @@
 package dev.apexstudios.fantasyfurniture.royal.common;
 
 import dev.apexstudios.apexcore.api.util.WoodTypeBuilder;
+import dev.apexstudios.fantasyfurniture.common.util.FurnitureUtil;
 import dev.apexstudios.fantasyfurniture.royal.common.block.RoyalBedDoubleBlock;
 import dev.apexstudios.fantasyfurniture.royal.common.block.RoyalBedSingleBlock;
 import dev.apexstudios.fantasyfurniture.royal.common.block.RoyalBenchBlock;
@@ -28,7 +29,6 @@ import dev.apexstudios.fantasyfurniture.royal.common.block.RoyalTableBlock;
 import dev.apexstudios.fantasyfurniture.royal.common.block.RoyalWallLightBlock;
 import dev.apexstudios.fantasyfurniture.royal.common.block.RoyalWardrobeBlock;
 import dev.apexstudios.fantasyfurniture.royal.common.block.RoyalWoolBlock;
-import dev.apexstudios.fantasyfurniture.common.util.FurnitureUtil;
 import dev.apexstudios.registree.api.Registree;
 import dev.apexstudios.registree.api.holder.DeferredBlock;
 import java.util.function.Supplier;

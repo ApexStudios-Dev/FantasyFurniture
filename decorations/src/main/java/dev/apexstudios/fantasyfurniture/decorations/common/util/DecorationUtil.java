@@ -1,5 +1,6 @@
 package dev.apexstudios.fantasyfurniture.decorations.common.util;
 
+import dev.apexstudios.fantasyfurniture.common.util.FurnitureUtil;
 import dev.apexstudios.fantasyfurniture.decorations.common.block.BerryBasketBlock;
 import dev.apexstudios.fantasyfurniture.decorations.common.block.BonePileBlock;
 import dev.apexstudios.fantasyfurniture.decorations.common.block.BookStackBlock;
@@ -16,14 +17,13 @@ import dev.apexstudios.fantasyfurniture.decorations.common.block.PlatterBlock;
 import dev.apexstudios.fantasyfurniture.decorations.common.block.PotteryBlock;
 import dev.apexstudios.fantasyfurniture.decorations.common.block.SoulGemsBlock;
 import dev.apexstudios.fantasyfurniture.decorations.common.block.TankardsBlock;
-import dev.apexstudios.fantasyfurniture.common.util.FurnitureUtil;
 import dev.apexstudios.registree.api.Registree;
 import dev.apexstudios.registree.api.holder.DeferredBlock;
 import java.util.function.Function;
 import net.minecraft.world.level.block.AbstractCandleBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public interface DecorationUtil {
     static DeferredBlock<BerryBasketBlock> berryBasket(Registree registree, String berryType) {

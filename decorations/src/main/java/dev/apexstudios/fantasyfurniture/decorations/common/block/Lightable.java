@@ -25,9 +25,9 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.common.ItemAbility;
-import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
 import org.joml.Vector3dc;
+import org.jspecify.annotations.Nullable;
 
 public interface Lightable {
     BooleanProperty LIT = BlockStateProperties.LIT;

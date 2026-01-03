@@ -17,7 +17,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public final class SimpleBlockEntityRenderer implements BlockEntityRenderer<BlockEntity, SimpleBlockEntityRenderer.RenderState> {
     private final SimpleBlockEntityModel model;

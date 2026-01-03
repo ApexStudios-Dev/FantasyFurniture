@@ -1,8 +1,6 @@
 package dev.apexstudios.fantasyfurniture.bone.common;
 
 import dev.apexstudios.apexcore.api.util.WoodTypeBuilder;
-import dev.apexstudios.fantasyfurniture.common.FantasyFurniture;
-import dev.apexstudios.fantasyfurniture.common.block.FurnitureDoorBlock;
 import dev.apexstudios.fantasyfurniture.bone.common.block.BoneBedDoubleBlock;
 import dev.apexstudios.fantasyfurniture.bone.common.block.BoneBedSingleBlock;
 import dev.apexstudios.fantasyfurniture.bone.common.block.BoneBenchBlock;
@@ -27,6 +25,8 @@ import dev.apexstudios.fantasyfurniture.bone.common.block.BoneStoolBlock;
 import dev.apexstudios.fantasyfurniture.bone.common.block.BoneTableBlock;
 import dev.apexstudios.fantasyfurniture.bone.common.block.BoneWallLightBlock;
 import dev.apexstudios.fantasyfurniture.bone.common.block.BoneWardrobeBlock;
+import dev.apexstudios.fantasyfurniture.common.FantasyFurniture;
+import dev.apexstudios.fantasyfurniture.common.block.FurnitureDoorBlock;
 import dev.apexstudios.fantasyfurniture.common.util.FurnitureUtil;
 import dev.apexstudios.registree.api.Registree;
 import dev.apexstudios.registree.api.holder.DeferredBlock;

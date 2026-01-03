@@ -1,6 +1,5 @@
 package dev.apexstudios.fantasyfurniture.royal.data;
 
-import dev.apexstudios.apexcore.client.DyeColorItemTintSource;
 import dev.apexstudios.apexcore.api.block.Dyeable;
 import dev.apexstudios.apexcore.api.data.ProviderTypes;
 import dev.apexstudios.apexcore.api.data.ResourceGenerator;
@@ -9,14 +8,15 @@ import dev.apexstudios.apexcore.api.data.provider.model.ApexModelTemplates;
 import dev.apexstudios.apexcore.api.data.provider.model.ModelProvider;
 import dev.apexstudios.apexcore.api.data.provider.tag.IntrusiveTagProvider;
 import dev.apexstudios.apexcore.api.util.TagPair;
+import dev.apexstudios.apexcore.client.DyeColorItemTintSource;
 import dev.apexstudios.fantasyfurniture.common.block.property.CounterConnection;
 import dev.apexstudios.fantasyfurniture.common.block.property.ShelfConnection;
 import dev.apexstudios.fantasyfurniture.common.block.property.SofaConnection;
 import dev.apexstudios.fantasyfurniture.common.ctm.CtmPacks;
-import dev.apexstudios.fantasyfurniture.royal.common.RoyalFurnitureSet;
 import dev.apexstudios.fantasyfurniture.common.util.FurnitureClientDataUtil;
 import dev.apexstudios.fantasyfurniture.common.util.FurnitureDataUtil;
 import dev.apexstudios.fantasyfurniture.common.util.FurnitureUtil;
+import dev.apexstudios.fantasyfurniture.royal.common.RoyalFurnitureSet;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.ModelTemplates;
