@@ -1,10 +1,10 @@
 package dev.apexstudios.fantasyfurniture.data;
 
-import dev.apexstudios.apexcore.lib.data.ProviderTypes;
-import dev.apexstudios.apexcore.lib.data.ResourceGenerator;
-import dev.apexstudios.fantasyfurniture.FantasyFurniture;
-import dev.apexstudios.fantasyfurniture.ctm.CtmPacks;
-import dev.apexstudios.fantasyfurniture.station.FurnitureStationSetup;
+import dev.apexstudios.apexcore.api.data.ProviderTypes;
+import dev.apexstudios.apexcore.api.data.ResourceGenerator;
+import dev.apexstudios.fantasyfurniture.common.FantasyFurniture;
+import dev.apexstudios.fantasyfurniture.common.ctm.CtmPacks;
+import dev.apexstudios.fantasyfurniture.common.station.FurnitureStationSetup;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;

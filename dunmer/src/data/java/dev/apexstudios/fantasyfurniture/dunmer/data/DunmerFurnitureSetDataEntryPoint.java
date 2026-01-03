@@ -1,16 +1,16 @@
 package dev.apexstudios.fantasyfurniture.dunmer.data;
 
-import dev.apexstudios.apexcore.lib.data.ProviderTypes;
-import dev.apexstudios.apexcore.lib.data.ResourceGenerator;
-import dev.apexstudios.apexcore.lib.data.provider.context.ProviderListenerContext;
-import dev.apexstudios.apexcore.lib.data.provider.model.ModelProvider;
-import dev.apexstudios.apexcore.lib.util.TagPair;
-import dev.apexstudios.fantasyfurniture.block.OvenBlock;
-import dev.apexstudios.fantasyfurniture.ctm.CtmPacks;
-import dev.apexstudios.fantasyfurniture.dunmer.DunmerFurnitureSet;
-import dev.apexstudios.fantasyfurniture.util.FurnitureClientDataUtil;
-import dev.apexstudios.fantasyfurniture.util.FurnitureDataUtil;
-import dev.apexstudios.fantasyfurniture.util.FurnitureUtil;
+import dev.apexstudios.apexcore.api.data.ProviderTypes;
+import dev.apexstudios.apexcore.api.data.ResourceGenerator;
+import dev.apexstudios.apexcore.api.data.provider.context.ProviderListenerContext;
+import dev.apexstudios.apexcore.api.data.provider.model.ModelProvider;
+import dev.apexstudios.apexcore.api.util.TagPair;
+import dev.apexstudios.fantasyfurniture.common.block.OvenBlock;
+import dev.apexstudios.fantasyfurniture.common.ctm.CtmPacks;
+import dev.apexstudios.fantasyfurniture.dunmer.common.DunmerFurnitureSet;
+import dev.apexstudios.fantasyfurniture.common.util.FurnitureClientDataUtil;
+import dev.apexstudios.fantasyfurniture.common.util.FurnitureDataUtil;
+import dev.apexstudios.fantasyfurniture.common.util.FurnitureUtil;
 import dev.apexstudios.placementvisualizer.api.BlockItemPlacementEvent;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;

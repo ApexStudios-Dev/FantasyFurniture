@@ -7,9 +7,9 @@ pluginManagement {
 
 dependencyResolutionManagement {
     versionCatalogs.create("libs") {
-        library("registree", "dev.apexstudios", "registree").version("26.1.0-beta-pr-17") // match version ApexCore is compiled against
+        library("registree", "dev.apexstudios", "registree").version("26.1.1-beta-pr-17") // match version ApexCore is compiled against
         library("placementvisualizer", "dev.apexstudios", "placementvisualizer").version("26.1.1-beta-pr-19") // match version ApexCore is compiled against
-        library("apexcore", "dev.apexstudios", "apexcore").version("26.1.0-beta-pr-70")
+        library("apexcore", "dev.apexstudios", "apexcore").version("26.1.1-beta-pr-70")
         library("contex", "curse.maven", "contex-1296805").version("7051640")
     }
 }

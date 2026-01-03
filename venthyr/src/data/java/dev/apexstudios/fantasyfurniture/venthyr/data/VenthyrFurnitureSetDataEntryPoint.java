@@ -1,13 +1,13 @@
 package dev.apexstudios.fantasyfurniture.venthyr.data;
 
-import dev.apexstudios.apexcore.lib.data.ProviderTypes;
-import dev.apexstudios.apexcore.lib.data.ResourceGenerator;
-import dev.apexstudios.apexcore.lib.util.TagPair;
-import dev.apexstudios.fantasyfurniture.ctm.CtmPacks;
-import dev.apexstudios.fantasyfurniture.util.FurnitureClientDataUtil;
-import dev.apexstudios.fantasyfurniture.util.FurnitureDataUtil;
-import dev.apexstudios.fantasyfurniture.util.FurnitureUtil;
-import dev.apexstudios.fantasyfurniture.venthyr.VenthyrFurnitureSet;
+import dev.apexstudios.apexcore.api.data.ProviderTypes;
+import dev.apexstudios.apexcore.api.data.ResourceGenerator;
+import dev.apexstudios.apexcore.api.util.TagPair;
+import dev.apexstudios.fantasyfurniture.common.ctm.CtmPacks;
+import dev.apexstudios.fantasyfurniture.common.util.FurnitureClientDataUtil;
+import dev.apexstudios.fantasyfurniture.common.util.FurnitureDataUtil;
+import dev.apexstudios.fantasyfurniture.common.util.FurnitureUtil;
+import dev.apexstudios.fantasyfurniture.venthyr.common.VenthyrFurnitureSet;
 import dev.apexstudios.placementvisualizer.api.BlockItemPlacementEvent;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.tags.BlockTags;

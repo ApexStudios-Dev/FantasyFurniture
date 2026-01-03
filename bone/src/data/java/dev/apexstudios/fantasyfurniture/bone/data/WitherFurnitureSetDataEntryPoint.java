@@ -1,7 +1,7 @@
 package dev.apexstudios.fantasyfurniture.bone.data;
 
-import dev.apexstudios.apexcore.lib.data.ResourceGenerator;
-import dev.apexstudios.fantasyfurniture.bone.WitherFurnitureSet;
+import dev.apexstudios.apexcore.api.data.ResourceGenerator;
+import dev.apexstudios.fantasyfurniture.bone.common.WitherFurnitureSet;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 

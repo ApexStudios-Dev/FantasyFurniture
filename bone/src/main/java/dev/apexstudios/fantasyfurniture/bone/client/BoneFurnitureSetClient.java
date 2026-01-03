@@ -1,0 +1,15 @@
+package dev.apexstudios.fantasyfurniture.bone.client;
+
+import dev.apexstudios.fantasyfurniture.bone.common.BoneFurnitureSet;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+
+public interface BoneFurnitureSetClient {
+    static void register(BoneFurnitureSet furnitureSet, IEventBus modBus) {
+        modBus.addListener(FMLClientSetupEvent.class, event -> event.enqueueWork(() ->
+                ItemBlockRenderTypes.setRenderLayer(furnitureSet.trapdoor.value(), ChunkSectionLayer.CUTOUT)
+        ));
+    }
+}
