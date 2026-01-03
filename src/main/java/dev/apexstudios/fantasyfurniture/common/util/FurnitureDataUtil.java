@@ -13,7 +13,7 @@ import dev.apexstudios.apexcore.api.util.TagPair;
 import dev.apexstudios.fantasyfurniture.common.FantasyFurniture;
 import dev.apexstudios.fantasyfurniture.common.station.FurnitureStationRecipeBuilder;
 import dev.apexstudios.fantasyfurniture.common.station.FurnitureStationSetup;
-import dev.apexstudios.placementvisualizer.api.BlockItemPlacementEvent;
+import dev.apexstudios.apexcore.api.placement.BlockItemPlacementEvent;
 import dev.apexstudios.registree.api.Registree;
 import java.util.function.Consumer;
 import net.minecraft.core.Registry;

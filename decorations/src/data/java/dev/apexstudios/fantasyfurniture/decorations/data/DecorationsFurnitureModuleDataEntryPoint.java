@@ -25,7 +25,7 @@ import dev.apexstudios.fantasyfurniture.decorations.common.block.Stackable;
 import dev.apexstudios.fantasyfurniture.decorations.common.block.TankardsBlock;
 import dev.apexstudios.fantasyfurniture.decorations.common.cookie.CookieJarBlock;
 import dev.apexstudios.fantasyfurniture.decorations.common.grave.GravestoneEditScreen;
-import dev.apexstudios.placementvisualizer.api.BlockItemPlacementEvent;
+import dev.apexstudios.apexcore.api.placement.BlockItemPlacementEvent;
 import dev.apexstudios.registree.api.holder.DeferredBlock;
 import java.util.function.BiConsumer;
 import net.minecraft.client.data.models.BlockModelGenerators;

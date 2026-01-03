@@ -56,12 +56,6 @@ repositories {
         }
     }
 
-    maven("https://maven.apexstudios.dev/prs/Placement-Visualizer/pr19") {
-        content {
-            includeModule("dev.apexstudios", "placementvisualizer")
-        }
-    }
-
     maven("https://maven.apexstudios.dev/prs/ApexCore-Private/pr70") {
         content {
             includeModule("dev.apexstudios", "apexcore")
@@ -73,9 +67,6 @@ dependencies {
     implementation(libs.registree)
     "dataImplementation"(libs.registree)
 
-    implementation(libs.placementvisualizer)
-    "dataImplementation"(libs.placementvisualizer)
-
     implementation(libs.apexcore)
     "dataImplementation"(libs.apexcore)
     accessTransformers(libs.apexcore)
@@ -85,9 +76,6 @@ dependencies {
     furnitureSets.forEach {
         sourceSet(it, SourceSet.MAIN_SOURCE_SET_NAME).implementationConfigurationName(libs.registree)
         sourceSet(it, ApexExtension.DATA_NAME).implementationConfigurationName(libs.registree)
-
-        sourceSet(it, SourceSet.MAIN_SOURCE_SET_NAME).implementationConfigurationName(libs.placementvisualizer)
-        sourceSet(it, ApexExtension.DATA_NAME).implementationConfigurationName(libs.placementvisualizer)
 
         sourceSet(it, SourceSet.MAIN_SOURCE_SET_NAME).implementationConfigurationName(libs.apexcore)
         sourceSet(it, ApexExtension.DATA_NAME).implementationConfigurationName(libs.apexcore)

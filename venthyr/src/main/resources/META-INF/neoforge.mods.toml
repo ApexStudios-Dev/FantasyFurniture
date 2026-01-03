@@ -40,10 +40,6 @@ versionRange = "[26.1-beta,26.2)"
 [dependencies.fantasyfurniture_venthyr.mc-publish]
 modrinth = "A0nfCqYw"
 curseforge = "579564"
-[[dependencies.fantasyfurniture_venthyr]]
-modId = "placementvisualizer"
-type = "required"
-versionRange = "[26.1-beta,26.2)"
 
 #[[accessTransformers]]
 #    file="META-INF/accesstransformer.cfg"
