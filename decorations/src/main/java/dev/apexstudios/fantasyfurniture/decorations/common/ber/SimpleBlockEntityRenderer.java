@@ -35,7 +35,7 @@ public final class SimpleBlockEntityRenderer implements BlockEntityRenderer<Bloc
     }
 
     @Override
-    public void extractRenderState(BlockEntity blockEntity, RenderState renderState, float partialTick, Vec3 cameraPosition, @Nullable ModelFeatureRenderer.CrumblingOverlay breakProgress) {
+    public void extractRenderState(BlockEntity blockEntity, RenderState renderState, float partialTick, Vec3 cameraPosition, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
         BlockEntityRenderer.super.extractRenderState(blockEntity, renderState, partialTick, cameraPosition, breakProgress);
         renderState.facing = blockEntity.getBlockState().getValue(SimpleHorizontalDirectionalBlock.FACING);
         renderState.texture = textureGetter.apply(blockEntity);

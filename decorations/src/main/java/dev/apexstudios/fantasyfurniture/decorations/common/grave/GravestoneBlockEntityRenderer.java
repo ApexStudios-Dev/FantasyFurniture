@@ -33,7 +33,7 @@ public final class GravestoneBlockEntityRenderer implements BlockEntityRenderer<
     }
 
     @Override
-    public void extractRenderState(GravestoneBlockEntity blockEntity, SignRenderState renderState, float partialTick, Vec3 cameraPosition, @Nullable ModelFeatureRenderer.CrumblingOverlay breakProgress) {
+    public void extractRenderState(GravestoneBlockEntity blockEntity, SignRenderState renderState, float partialTick, Vec3 cameraPosition, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
         BlockEntityRenderer.super.extractRenderState(blockEntity, renderState, partialTick, cameraPosition, breakProgress);
 
         renderState.maxTextLineWidth = blockEntity.getMaxTextLineWidth();

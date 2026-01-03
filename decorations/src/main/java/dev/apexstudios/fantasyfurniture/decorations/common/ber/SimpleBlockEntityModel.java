@@ -21,7 +21,7 @@ final class SimpleBlockEntityModel {
         model = new Model.Simple(models.bakeLayer(modelLocation), RenderTypes::entityTranslucent);
     }
 
-    public void submitModel(PoseStack poseStack, SubmitNodeCollector nodeCollector, Identifier texture, @Nullable Direction facing, int packedLight, @Nullable ModelFeatureRenderer.CrumblingOverlay breakProgress) {
+    public void submitModel(PoseStack poseStack, SubmitNodeCollector nodeCollector, Identifier texture, @Nullable Direction facing, int packedLight, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
         poseStack.pushPose();
         preparePose(poseStack, facing);
 
