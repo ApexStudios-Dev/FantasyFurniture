@@ -7,7 +7,7 @@ pluginManagement {
     resolutionStrategy {
         eachPlugin {
             if(requested.id.namespace == "apex-conventions") {
-                useVersion("0.1.90")
+                useVersion("0.1.91")
             }
         }
     }
@@ -23,7 +23,7 @@ plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
 }
 
-include(
+includeFurnitureSets(
     "Nordic",
     "Venthyr",
     "Bone",
@@ -33,12 +33,14 @@ include(
     "Decorations",
 )
 
-project(":Nordic").projectDir = file("nordic")
-project(":Venthyr").projectDir = file("venthyr")
-project(":Bone").projectDir = file("bone")
-project(":Dunmer").projectDir = file("dunmer")
-project(":Necrolord").projectDir = file("necrolord")
-project(":Royal").projectDir = file("royal")
-project(":Decorations").projectDir = file("decorations")
-
 rootProject.name = "FantasyFurniture"
+
+fun includeFurnitureSets(vararg names: String) {
+    names.forEach {
+        include(it)
+        val project = project(":$it")
+        val lower = it.lowercase()
+        project.projectDir = file(lower)
+        project.name = "fantasyfurniture-$lower"
+    }
+}
