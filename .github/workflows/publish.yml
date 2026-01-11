@@ -109,7 +109,7 @@ jobs:
     with:
       java-version: 25
       java-vendor: temurin
-      publish-task: ':Nordic:publishReleasePublicationToApexStudios-ReleasesRepository'
+      publish-task: ':fantasyfurniture-nordic:publishReleasePublicationToApexStudios-ReleasesRepository'
       curseforge-id: '1191799'
       modrinth-id: 'DIHzMa8h'
       artifact-id: fantasyfurniture-nordic
@@ -127,7 +127,7 @@ jobs:
     with:
       java-version: 25
       java-vendor: temurin
-      publish-task: ':Venthyr:publishReleasePublicationToApexStudios-ReleasesRepository'
+      publish-task: ':fantasyfurniture-venthyr:publishReleasePublicationToApexStudios-ReleasesRepository'
       curseforge-id: '1206300'
       modrinth-id: 'FjHW4JvP'
       artifact-id: fantasyfurniture-venthyr
@@ -145,7 +145,7 @@ jobs:
     with:
       java-version: 25
       java-vendor: temurin
-      publish-task: ':Bone:publishReleasePublicationToApexStudios-ReleasesRepository'
+      publish-task: ':fantasyfurniture-bone:publishReleasePublicationToApexStudios-ReleasesRepository'
       curseforge-id: '1209697'
       modrinth-id: 'oJ4TI49S'
       artifact-id: fantasyfurniture-bone
@@ -163,7 +163,7 @@ jobs:
     with:
       java-version: 25
       java-vendor: temurin
-      publish-task: ':Dunmer:publishReleasePublicationToApexStudios-ReleasesRepository'
+      publish-task: ':fantasyfurniture-dunmer:publishReleasePublicationToApexStudios-ReleasesRepository'
       curseforge-id: '1209702'
       modrinth-id: 'Bs7e2IyQ'
       artifact-id: fantasyfurniture-dunmer
@@ -181,7 +181,7 @@ jobs:
     with:
       java-version: 25
       java-vendor: temurin
-      publish-task: ':Necrolord:publishReleasePublicationToApexStudios-ReleasesRepository'
+      publish-task: ':fantasyfurniture-necrolord:publishReleasePublicationToApexStudios-ReleasesRepository'
       curseforge-id: '1209752'
       modrinth-id: 'V9TnGtTg'
       artifact-id: fantasyfurniture-necrolord
@@ -199,7 +199,7 @@ jobs:
     with:
       java-version: 25
       java-vendor: temurin
-      publish-task: ':Royal:publishReleasePublicationToApexStudios-ReleasesRepository'
+      publish-task: ':fantasyfurniture-royal:publishReleasePublicationToApexStudios-ReleasesRepository'
       curseforge-id: '1209706'
       modrinth-id: 'OIAm13ki'
       artifact-id: fantasyfurniture-royal
@@ -217,7 +217,7 @@ jobs:
     with:
       java-version: 25
       java-vendor: temurin
-      publish-task: ':Decorations:publishReleasePublicationToApexStudios-ReleasesRepository'
+      publish-task: ':fantasyfurniture-decorations:publishReleasePublicationToApexStudios-ReleasesRepository'
       curseforge-id: '1220590'
       modrinth-id: 'bJ7GIx0B'
       artifact-id: fantasyfurniture-decorations

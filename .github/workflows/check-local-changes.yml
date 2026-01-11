@@ -63,7 +63,7 @@ jobs:
       java-version: 25
       java-vendor: temurin
       use-self-runner: false
-      data-task: ':Nordic:runData'
+      data-task: ':fantasyfurniture-nordic:runData'
       unmark-gradlew-exec: false
 
   check-local-changes-venthyr:
@@ -76,7 +76,7 @@ jobs:
       java-version: 25
       java-vendor: temurin
       use-self-runner: false
-      data-task: ':Venthyr:runData'
+      data-task: ':fantasyfurniture-venthyr:runData'
       unmark-gradlew-exec: false
 
   check-local-changes-bone:
@@ -89,7 +89,7 @@ jobs:
       java-version: 25
       java-vendor: temurin
       use-self-runner: false
-      data-task: ':Bone:runData'
+      data-task: ':fantasyfurniture-bone:runData'
       unmark-gradlew-exec: false
 
   check-local-changes-dunmer:
@@ -102,7 +102,7 @@ jobs:
       java-version: 25
       java-vendor: temurin
       use-self-runner: false
-      data-task: ':Dunmer:runData'
+      data-task: ':fantasyfurniture-dunmer:runData'
       unmark-gradlew-exec: false
 
   check-local-changes-necrolord:
@@ -115,7 +115,7 @@ jobs:
       java-version: 25
       java-vendor: temurin
       use-self-runner: false
-      data-task: ':Necrolord:runData'
+      data-task: ':fantasyfurniture-necrolord:runData'
       unmark-gradlew-exec: false
 
   check-local-changes-royal:
@@ -128,7 +128,7 @@ jobs:
       java-version: 25
       java-vendor: temurin
       use-self-runner: false
-      data-task: ':Royal:runData'
+      data-task: ':fantasyfurniture-royal:runData'
       unmark-gradlew-exec: false
 
   check-local-changes-decorations:
@@ -141,5 +141,5 @@ jobs:
       java-version: 25
       java-vendor: temurin
       use-self-runner: false
-      data-task: ':Decorations:runData'
+      data-task: ':fantasyfurniture-decorations:runData'
       unmark-gradlew-exec: false
