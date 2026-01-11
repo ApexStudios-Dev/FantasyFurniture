@@ -1,3 +1,5 @@
+import dev.apexstudios.gradle.ApexExtension
+
 plugins {
     id("apex-conventions.neoforge")
     id("apex-conventions.neoforge-datagen")
@@ -78,4 +80,8 @@ dependencies {
     furnitureSets.forEach {
         "dataRuntimeOnly"(it)
     }
+}
+
+allprojects {
+    println(ApexExtension.modId(this))
 }
