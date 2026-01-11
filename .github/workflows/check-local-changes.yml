@@ -33,13 +33,13 @@ jobs:
           base: 26.1/main
           filters: |
             main: [ 'src/**' ]
-            nordic: [ 'nordic/**' ]
-            venthyr: [ 'venthyr/**' ]
-            bone: [ 'bone/**' ]
-            dunmer: [ 'dunmer/**' ]
-            necrolord: [ 'necrolord/**' ]
-            royal: [ 'royal/**' ]
-            decorations: [ 'decorations/**' ]
+            nordic: [ 'nordic/src/**' ]
+            venthyr: [ 'venthyr/src/**' ]
+            bone: [ 'bone/src/**' ]
+            dunmer: [ 'dunmer/src/**' ]
+            necrolord: [ 'necrolord/src/**' ]
+            royal: [ 'royal/src/**' ]
+            decorations: [ 'decorations/src/**' ]
 
   check-local-changes-main:
     name: Check Local Changes (Main)
@@ -63,7 +63,7 @@ jobs:
       java-version: 25
       java-vendor: temurin
       use-self-runner: false
-      data-task: ':runNordicData'
+      data-task: ':Nordic:runData'
       unmark-gradlew-exec: false
 
   check-local-changes-venthyr:
@@ -76,7 +76,7 @@ jobs:
       java-version: 25
       java-vendor: temurin
       use-self-runner: false
-      data-task: ':runVenthyrData'
+      data-task: ':Venthyr:runData'
       unmark-gradlew-exec: false
 
   check-local-changes-bone:
@@ -89,7 +89,7 @@ jobs:
       java-version: 25
       java-vendor: temurin
       use-self-runner: false
-      data-task: ':runBoneData'
+      data-task: ':Bone:runData'
       unmark-gradlew-exec: false
 
   check-local-changes-dunmer:
@@ -102,7 +102,7 @@ jobs:
       java-version: 25
       java-vendor: temurin
       use-self-runner: false
-      data-task: ':runDunmerData'
+      data-task: ':Dunmer:runData'
       unmark-gradlew-exec: false
 
   check-local-changes-necrolord:
@@ -115,7 +115,7 @@ jobs:
       java-version: 25
       java-vendor: temurin
       use-self-runner: false
-      data-task: ':runNecrolordData'
+      data-task: ':Necrolord:runData'
       unmark-gradlew-exec: false
 
   check-local-changes-royal:
@@ -128,7 +128,7 @@ jobs:
       java-version: 25
       java-vendor: temurin
       use-self-runner: false
-      data-task: ':runRoyalData'
+      data-task: ':Royal:runData'
       unmark-gradlew-exec: false
 
   check-local-changes-decorations:
@@ -141,5 +141,5 @@ jobs:
       java-version: 25
       java-vendor: temurin
       use-self-runner: false
-      data-task: ':runDecorationsData'
+      data-task: ':Decorations:runData'
       unmark-gradlew-exec: false

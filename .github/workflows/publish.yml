@@ -75,13 +75,13 @@ jobs:
           base: 26.1/main
           filters: |
             main: [ 'src/**' ]
-            nordic: [ 'nordic/**' ]
-            venthyr: [ 'venthyr/**' ]
-            bone: [ 'bone/**' ]
-            dunmer: [ 'dunmer/**' ]
-            necrolord: [ 'necrolord/**' ]
-            royal: [ 'royal/**' ]
-            decorations: [ 'decorations/**' ]
+            nordic: [ 'nordic/src/**' ]
+            venthyr: [ 'venthyr/src/**' ]
+            bone: [ 'bone/src/**' ]
+            dunmer: [ 'dunmer/src/**' ]
+            necrolord: [ 'necrolord/src/**' ]
+            royal: [ 'royal/src/**' ]
+            decorations: [ 'decorations/src/**' ]
 
   publish-main:
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod.yml@master
@@ -109,7 +109,7 @@ jobs:
     with:
       java-version: 25
       java-vendor: temurin
-      publish-task: ':publishNordicReleasePublicationToApexStudios-ReleasesRepository'
+      publish-task: ':Nordic:publishReleasePublicationToApexStudios-ReleasesRepository'
       curseforge-id: '1191799'
       modrinth-id: 'DIHzMa8h'
       artifact-id: fantasyfurniture-nordic
@@ -127,7 +127,7 @@ jobs:
     with:
       java-version: 25
       java-vendor: temurin
-      publish-task: ':publishVenthyrReleasePublicationToApexStudios-ReleasesRepository'
+      publish-task: ':Venthyr:publishReleasePublicationToApexStudios-ReleasesRepository'
       curseforge-id: '1206300'
       modrinth-id: 'FjHW4JvP'
       artifact-id: fantasyfurniture-venthyr
@@ -145,7 +145,7 @@ jobs:
     with:
       java-version: 25
       java-vendor: temurin
-      publish-task: ':publishBoneReleasePublicationToApexStudios-ReleasesRepository'
+      publish-task: ':Bone:publishReleasePublicationToApexStudios-ReleasesRepository'
       curseforge-id: '1209697'
       modrinth-id: 'oJ4TI49S'
       artifact-id: fantasyfurniture-bone
@@ -163,7 +163,7 @@ jobs:
     with:
       java-version: 25
       java-vendor: temurin
-      publish-task: ':publishDunmerReleasePublicationToApexStudios-ReleasesRepository'
+      publish-task: ':Dunmer:publishReleasePublicationToApexStudios-ReleasesRepository'
       curseforge-id: '1209702'
       modrinth-id: 'Bs7e2IyQ'
       artifact-id: fantasyfurniture-dunmer
@@ -181,7 +181,7 @@ jobs:
     with:
       java-version: 25
       java-vendor: temurin
-      publish-task: ':publishNecrolordReleasePublicationToApexStudios-ReleasesRepository'
+      publish-task: ':Necrolord:publishReleasePublicationToApexStudios-ReleasesRepository'
       curseforge-id: '1209752'
       modrinth-id: 'V9TnGtTg'
       artifact-id: fantasyfurniture-necrolord
@@ -199,7 +199,7 @@ jobs:
     with:
       java-version: 25
       java-vendor: temurin
-      publish-task: ':publishRoyalReleasePublicationToApexStudios-ReleasesRepository'
+      publish-task: ':Royal:publishReleasePublicationToApexStudios-ReleasesRepository'
       curseforge-id: '1209706'
       modrinth-id: 'OIAm13ki'
       artifact-id: fantasyfurniture-royal
@@ -217,7 +217,7 @@ jobs:
     with:
       java-version: 25
       java-vendor: temurin
-      publish-task: ':publishDecorationsReleasePublicationToApexStudios-ReleasesRepository'
+      publish-task: ':Decorations:publishReleasePublicationToApexStudios-ReleasesRepository'
       curseforge-id: '1220590'
       modrinth-id: 'bJ7GIx0B'
       artifact-id: fantasyfurniture-decorations

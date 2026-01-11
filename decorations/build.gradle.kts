@@ -5,8 +5,11 @@ plugins {
     id("apex-conventions.jspecify")
 }
 
+val furnitureProject = findProject(":FantasyFurniture") ?: rootProject
+
 group = "dev.apexstudios"
-neoForge.version = "26.1.0.0-alpha.5+snapshot-2"
+base.archivesName = "fantasyfurniture-${project.name.lowercase()}"
+neoForge.version = furnitureProject.neoForge.version
 
 repositories {
     maven("https://maven.apexstudios.dev/prs/Registree/pr17") {
@@ -32,5 +35,7 @@ dependencies {
     "dataImplementation"("dev.apexstudios:apexcore:$apexcore")
     // accessTransformers("dev.apexstudios:apexcore:$apexcore")
 
-    compileOnly(libs.contex)
+    val furnitureProject = findProject(":FantasyFurniture") ?: rootProject
+    implementation(furnitureProject)
+    "dataImplementation"(furnitureProject)
 }
