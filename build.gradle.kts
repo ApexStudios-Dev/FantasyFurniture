@@ -5,6 +5,12 @@ plugins {
     id("apex-conventions.jspecify")
 }
 
+// while 'rootProject' == 'fantasyfurniture' here i use a multiproject workspace
+// which includes all my mods under this setup 'rootProject' != 'fantasyfurniture'
+// and we have to find the correct furnitureset modules based on the project name
+// which should be in the format 'fantasyfurniture-<furniture_set>'
+val furnitureSets = rootProject.subprojects.filter { it.name.contains("fantasyfurniture-") }.toList()
+
 group = "dev.apexstudios"
 neoForge.version = "26.1.0.0-alpha.5+snapshot-2"
 
@@ -13,34 +19,24 @@ neoForge.version = "26.1.0.0-alpha.5+snapshot-2"
 //
 // all that is needed locally is the 'dataRuntimeOnly' dependency
 // this issue only occurs in CI
-//
-// while 'rootProject' == 'fantasyfurniture' here i use a multiproject workspace
-// which includes all my mods under this setup 'rootProject' != 'fantasyfurniture'
-// and we have to find the correct furnitureset modules based on the project name
-// which should be in the format 'fantasyfurniture-<furniture_set>'
 afterEvaluate {
-    rootProject.subprojects.forEach {
-        if(it.name.contains("fantasyfurniture-")) {
-            evaluationDependsOn(it.path)
-        }
+    furnitureSets.forEach {
+        evaluationDependsOn(it.path)
     }
 
     neoForge {
         mods {
-            rootProject.subprojects.forEach {
-                if(it.name.contains("fantasyfurniture-")) {
-                    create(it.name) {
-                        sourceSet(it.sourceSets[SourceSet.MAIN_SOURCE_SET_NAME])
-                    }
+            furnitureSets.forEach {
+                create(it.name) {
+                    sourceSet(it.sourceSets[SourceSet.MAIN_SOURCE_SET_NAME])
+                    sourceSet(it.sourceSets["data"])
                 }
             }
         }
 
         runs.getByName("data") {
-            rootProject.subprojects.forEach {
-                if(it.name.contains("fantasyfurniture-")) {
-                    loadedMods.add(mods[it.name])
-                }
+            furnitureSets.forEach {
+                loadedMods.add(mods[it.name])
             }
 
             // include bone built-in packs as they are needed for
@@ -79,9 +75,7 @@ dependencies {
 
     compileOnly(libs.contex)
 
-    rootProject.subprojects.forEach {
-        if(it.name.contains("fantasyfurniture-")) {
-            "dataRuntimeOnly"(it)
-        }
+    furnitureSets.forEach {
+        "dataRuntimeOnly"(it)
     }
 }
