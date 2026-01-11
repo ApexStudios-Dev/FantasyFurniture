@@ -8,14 +8,48 @@ plugins {
 group = "dev.apexstudios"
 neoForge.version = "26.1.0.0-alpha.5+snapshot-2"
 
+// no idea why but if i dont include the child mods like this
+// CI fails to generate files for them
+//
+// all that is needed locally is the 'dataRuntimeOnly' dependency
+// this issue only occurs in CI
+//
+// while 'rootProject' == 'fantasyfurniture' here i use a multiproject workspace
+// which includes all my mods under this setup 'rootProject' != 'fantasyfurniture'
+// and we have to find the correct furnitureset modules based on the project name
+// which should be in the format 'fantasyfurniture-<furniture_set>'
 afterEvaluate {
-    neoForge.runs.getByName("data") {
-        // include bone built-in packs as they are needed for
-        // ctm asset generation to complete
-        programArguments.addAll(
-            "--existing", file("bone/src/data/generated/built-in/assets/skeleton").absolutePath,
-            "--existing", file("bone/src/data/generated/built-in/assets/wither").absolutePath
-        )
+    rootProject.subprojects.forEach {
+        if(it.name.contains("fantasyfurniture-")) {
+            evaluationDependsOn(it.path)
+        }
+    }
+
+    neoForge {
+        mods {
+            rootProject.subprojects.forEach {
+                if(it.name.contains("fantasyfurniture-")) {
+                    create(it.name) {
+                        sourceSet(it.sourceSets[SourceSet.MAIN_SOURCE_SET_NAME])
+                    }
+                }
+            }
+        }
+
+        runs.getByName("data") {
+            rootProject.subprojects.forEach {
+                if(it.name.contains("fantasyfurniture-")) {
+                    loadedMods.add(mods[it.name])
+                }
+            }
+
+            // include bone built-in packs as they are needed for
+            // ctm asset generation to complete
+            programArguments.addAll(
+                "--existing", file("bone/src/data/generated/built-in/assets/skeleton").absolutePath,
+                "--existing", file("bone/src/data/generated/built-in/assets/wither").absolutePath
+            )
+        }
     }
 }
 
