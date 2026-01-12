@@ -14,11 +14,6 @@ val furnitureSets = rootProject.subprojects.filter { it.name.contains("fantasyfu
 group = "dev.apexstudios"
 neoForge.version = "26.1.0.0-alpha.5+snapshot-2"
 
-// no idea why but if i dont include the child mods like this
-// CI fails to generate files for them
-//
-// all that is needed locally is the 'dataRuntimeOnly' dependency
-// this issue only occurs in CI
 afterEvaluate {
     furnitureSets.forEach {
         evaluationDependsOn(it.path)
@@ -29,7 +24,6 @@ afterEvaluate {
             furnitureSets.forEach {
                 create(it.name) {
                     sourceSet(it.sourceSets[SourceSet.MAIN_SOURCE_SET_NAME])
-                    // sourceSet(it.sourceSets["data"])
                 }
             }
         }
@@ -39,8 +33,6 @@ afterEvaluate {
                 loadedMods.add(mods[it.name])
             }
 
-            // sourceSet.set(sourceSets["data"])
-
             // include bone built-in packs as they are needed for
             // ctm asset generation to complete
             programArguments.addAll(
@@ -48,12 +40,6 @@ afterEvaluate {
                 "--existing", file("bone/src/data/generated/built-in/assets/skeleton").absolutePath,
                 "--existing", file("bone/src/data/generated/built-in/assets/wither").absolutePath
             )
-
-            /*additionalRuntimeClasspathConfiguration.withDependencies {
-                furnitureSets.forEach {
-                    add(dependencyFactory.create(it))
-                }
-            }*/
         }
     }
 }
@@ -83,8 +69,4 @@ dependencies {
     accessTransformers("dev.apexstudios:apexcore:$apexcore")
 
     compileOnly(libs.contex)
-
-    /*furnitureSets.forEach {
-        "dataRuntimeOnly"(it)
-    }*/
 }
