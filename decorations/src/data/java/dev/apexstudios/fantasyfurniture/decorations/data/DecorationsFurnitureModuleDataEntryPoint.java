@@ -6,6 +6,7 @@ import dev.apexstudios.apexcore.api.data.ResourceGenerator;
 import dev.apexstudios.apexcore.api.data.provider.RecipeProvider;
 import dev.apexstudios.apexcore.api.multiblock.MultiBlock;
 import dev.apexstudios.apexcore.api.placement.BlockItemPlacementEvent;
+import dev.apexstudios.apexcore.api.util.ApexTags;
 import dev.apexstudios.apexcore.client.DyeColorItemTintSource;
 import dev.apexstudios.fantasyfurniture.common.station.FurnitureStationRecipeBuilder;
 import dev.apexstudios.fantasyfurniture.common.station.FurnitureStationSetup;
@@ -48,7 +49,6 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.ItemLike;
@@ -276,7 +276,8 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
 
                     provider.tag(Tags.Blocks.CHAINS).withElement(DecorationsFurnitureModule.BRONZE_CHAIN);
                     provider.tag(Tags.Blocks.CHAINS).withElement(DecorationsFurnitureModule.BRONZE_CHAIN);
-                    provider.tag(TagKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath("c", "shears_efficient"))).withElement(DecorationsFurnitureModule.PLUSHIE_BLOCK);
+
+                    provider.tag(ApexTags.Blocks.SHEARS_EFFICIENT).withElement(DecorationsFurnitureModule.PLUSHIE_BLOCK);
                 })
                 .providing(ProviderTypes.ITEM_TAGS, (context, provider) -> {
                     Dyeable.dyeableItems(DecorationsFurnitureModule.REGISTREE)
