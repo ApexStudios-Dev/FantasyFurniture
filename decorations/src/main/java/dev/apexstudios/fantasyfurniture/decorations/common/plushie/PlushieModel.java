@@ -1,4 +1,4 @@
-package dev.apexstudios.fantasyfurniture.decorations.plushie;
+package dev.apexstudios.fantasyfurniture.decorations.common.plushie;
 
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.player.PlayerModel;

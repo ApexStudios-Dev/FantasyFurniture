@@ -8,8 +8,8 @@ import dev.apexstudios.fantasyfurniture.decorations.common.ber.SimpleBlockEntity
 import dev.apexstudios.fantasyfurniture.decorations.common.grave.GravestoneBlockEntity;
 import dev.apexstudios.fantasyfurniture.decorations.common.grave.GravestoneBlockEntityRenderer;
 import dev.apexstudios.fantasyfurniture.decorations.common.grave.GravestoneEditScreen;
-import dev.apexstudios.fantasyfurniture.decorations.plushie.PlushieBlockEntityRenderer;
-import dev.apexstudios.fantasyfurniture.decorations.plushie.PlushieSpecialModelRenderer;
+import dev.apexstudios.fantasyfurniture.decorations.common.plushie.PlushieBlockEntityRenderer;
+import dev.apexstudios.fantasyfurniture.decorations.common.plushie.PlushieSpecialModelRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractSignEditScreen;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;

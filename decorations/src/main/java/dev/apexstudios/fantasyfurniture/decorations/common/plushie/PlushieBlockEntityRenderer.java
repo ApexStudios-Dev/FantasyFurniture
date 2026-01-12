@@ -1,4 +1,4 @@
-package dev.apexstudios.fantasyfurniture.decorations.plushie;
+package dev.apexstudios.fantasyfurniture.decorations.common.plushie;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;

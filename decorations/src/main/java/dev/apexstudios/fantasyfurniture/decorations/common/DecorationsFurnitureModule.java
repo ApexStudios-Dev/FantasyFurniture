@@ -49,10 +49,10 @@ import dev.apexstudios.fantasyfurniture.decorations.common.cookie.CookieJarMenuS
 import dev.apexstudios.fantasyfurniture.decorations.common.grave.GravestoneBlock;
 import dev.apexstudios.fantasyfurniture.decorations.common.grave.GravestoneBlockEntity;
 import dev.apexstudios.fantasyfurniture.decorations.common.grave.GravestoneBlockItem;
+import dev.apexstudios.fantasyfurniture.decorations.common.plushie.PlushieBlock;
+import dev.apexstudios.fantasyfurniture.decorations.common.plushie.PlushieBlockEntity;
+import dev.apexstudios.fantasyfurniture.decorations.common.plushie.PlushieBlockItem;
 import dev.apexstudios.fantasyfurniture.decorations.common.util.DecorationUtil;
-import dev.apexstudios.fantasyfurniture.decorations.plushie.PlushieBlock;
-import dev.apexstudios.fantasyfurniture.decorations.plushie.PlushieBlockEntity;
-import dev.apexstudios.fantasyfurniture.decorations.plushie.PlushieBlockItem;
 import dev.apexstudios.registree.api.Registree;
 import dev.apexstudios.registree.api.holder.DeferredBlock;
 import dev.apexstudios.registree.api.holder.DeferredBlockEntity;

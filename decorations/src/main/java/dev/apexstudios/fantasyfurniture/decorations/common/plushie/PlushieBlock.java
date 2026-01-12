@@ -1,7 +1,7 @@
-package dev.apexstudios.fantasyfurniture.decorations.plushie;
+package dev.apexstudios.fantasyfurniture.decorations.common.plushie;
 
 import com.mojang.serialization.MapCodec;
-import dev.apexstudios.fantasyfurniture.decorations.DecorationsFurnitureModule;
+import dev.apexstudios.fantasyfurniture.decorations.common.DecorationsFurnitureModule;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;

@@ -1,6 +1,6 @@
-package dev.apexstudios.fantasyfurniture.decorations.plushie;
+package dev.apexstudios.fantasyfurniture.decorations.common.plushie;
 
-import dev.apexstudios.fantasyfurniture.decorations.DecorationsFurnitureModule;
+import dev.apexstudios.fantasyfurniture.decorations.common.DecorationsFurnitureModule;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponentGetter;

@@ -1,8 +1,8 @@
-package dev.apexstudios.fantasyfurniture.decorations.plushie;
+package dev.apexstudios.fantasyfurniture.decorations.common.plushie;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.serialization.MapCodec;
-import dev.apexstudios.fantasyfurniture.decorations.DecorationsFurnitureModule;
+import dev.apexstudios.fantasyfurniture.decorations.common.DecorationsFurnitureModule;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import net.minecraft.client.renderer.PlayerSkinRenderCache;
