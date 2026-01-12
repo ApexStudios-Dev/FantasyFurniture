@@ -42,6 +42,7 @@ afterEvaluate {
             // include bone built-in packs as they are needed for
             // ctm asset generation to complete
             programArguments.addAll(
+                "--mod", "fantasyfurniture",
                 "--existing", file("bone/src/data/generated/built-in/assets/skeleton").absolutePath,
                 "--existing", file("bone/src/data/generated/built-in/assets/wither").absolutePath
             )
