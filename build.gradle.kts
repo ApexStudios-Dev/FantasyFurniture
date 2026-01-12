@@ -69,4 +69,11 @@ dependencies {
     accessTransformers("dev.apexstudios:apexcore:$apexcore")
 
     compileOnly(libs.contex)
+
+    // for some reason without this datagen fails when run locally (in my larger multi project workspace) while CI runs just fine
+    if(rootProject != project) {
+        furnitureSets.forEach {
+            "dataRuntimeOnly"(it)
+        }
+    }
 }
