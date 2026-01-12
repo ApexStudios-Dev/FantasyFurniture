@@ -1,5 +1,3 @@
-import dev.apexstudios.gradle.ApexExtension
-
 plugins {
     id("apex-conventions.neoforge")
     id("apex-conventions.neoforge-datagen")
@@ -47,6 +45,12 @@ afterEvaluate {
                 "--existing", file("bone/src/data/generated/built-in/assets/skeleton").absolutePath,
                 "--existing", file("bone/src/data/generated/built-in/assets/wither").absolutePath
             )
+
+            additionalRuntimeClasspathConfiguration.withDependencies {
+                furnitureSets.forEach {
+                    add(dependencyFactory.create(it))
+                }
+            }
         }
     }
 }
@@ -80,8 +84,4 @@ dependencies {
     furnitureSets.forEach {
         "dataRuntimeOnly"(it)
     }
-}
-
-allprojects {
-    println(ApexExtension.modId(this))
 }
