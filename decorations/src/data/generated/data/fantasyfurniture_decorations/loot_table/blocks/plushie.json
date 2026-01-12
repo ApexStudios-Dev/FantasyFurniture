@@ -10,6 +10,15 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:copy_components",
+              "include": [
+                "minecraft:profile"
+              ],
+              "source": "block_entity"
+            }
+          ],
           "name": "fantasyfurniture_decorations:plushie"
         }
       ],

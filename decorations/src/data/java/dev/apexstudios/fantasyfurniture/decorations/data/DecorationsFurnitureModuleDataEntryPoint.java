@@ -30,6 +30,7 @@ import dev.apexstudios.fantasyfurniture.decorations.common.plushie.PlushieBlockI
 import dev.apexstudios.fantasyfurniture.decorations.common.plushie.PlushieSpecialModelRenderer;
 import dev.apexstudios.registree.api.holder.DeferredBlock;
 import java.util.function.BiConsumer;
+import java.util.function.Predicate;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
@@ -41,17 +42,25 @@ import net.minecraft.client.data.models.model.TextureSlot;
 import net.minecraft.client.data.models.model.TexturedModel;
 import net.minecraft.client.renderer.block.model.VariantMutator;
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.client.model.generators.template.ExtendedModelTemplateBuilder;
@@ -225,11 +234,28 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                 .providing(ProviderTypes.LOOT_TABLE, (context, provider) -> {
                     provider.fromRegistree(DecorationsFurnitureModule.REGISTREE);
 
-                    provider.block(lootTables -> DecorationsFurnitureModule.REGISTREE
-                            .listElements(Registries.BLOCK)
-                            .map(Holder::value)
-                            .forEach(lootTables::dropSelf)
-                    );
+                    provider.block(lootTables -> {
+                        DecorationsFurnitureModule.REGISTREE
+                                .listElements(Registries.BLOCK)
+                                .map(Holder::value)
+                                .filter(Predicate.not(DecorationsFurnitureModule.PLUSHIE_BLOCK::is))
+                                .forEach(lootTables::dropSelf);
+
+                        lootTables.accept(DecorationsFurnitureModule.PLUSHIE_BLOCK.value(), () -> LootTable
+                                .lootTable()
+                                .withPool(lootTables.applyExplosionCondition(DecorationsFurnitureModule.PLUSHIE_BLOCK, LootPool
+                                        .lootPool()
+                                        .setRolls(ConstantValue.exactly(1F))
+                                        .add(LootItem
+                                                .lootTableItem(DecorationsFurnitureModule.PLUSHIE_BLOCK)
+                                                .apply(CopyComponentsFunction
+                                                        .copyComponentsFromBlockEntity(LootContextParams.BLOCK_ENTITY)
+                                                        .include(DataComponents.PROFILE)
+                                                )
+                                        )
+                                ))
+                        );
+                    });
                 })
                 .providing(ProviderTypes.BLOCK_TAGS, (context, provider) -> {
                     DecorationsFurnitureModule.REGISTREE.listElements(Registries.BLOCK).map(Holder::value).forEach(block -> {
@@ -250,6 +276,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
 
                     provider.tag(Tags.Blocks.CHAINS).withElement(DecorationsFurnitureModule.BRONZE_CHAIN);
                     provider.tag(Tags.Blocks.CHAINS).withElement(DecorationsFurnitureModule.BRONZE_CHAIN);
+                    provider.tag(TagKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath("c", "shears_efficient"))).withElement(DecorationsFurnitureModule.PLUSHIE_BLOCK);
                 })
                 .providing(ProviderTypes.ITEM_TAGS, (context, provider) -> {
                     Dyeable.dyeableItems(DecorationsFurnitureModule.REGISTREE)

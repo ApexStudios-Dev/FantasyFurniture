@@ -1,6 +1,7 @@
 package dev.apexstudios.fantasyfurniture.decorations.common.plushie;
 
 import dev.apexstudios.fantasyfurniture.decorations.common.DecorationsFurnitureModule;
+import java.util.Objects;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -34,20 +35,15 @@ public final class PlushieBlockItem extends BlockItem {
         return super.use(level, player, hand);
     }
 
-    public static void setProfile(ItemStack stack, @Nullable ResolvableProfile profile) {
-        stack.set(DataComponents.PROFILE, profile);
-
-        if(stack.has(DataComponents.PROFILE)) {
-            stack.set(DataComponents.ITEM_NAME, createDynamicName(stack));
-        } else {
-            stack.remove(DataComponents.ITEM_NAME);
-        }
+    @Override
+    public Component getName(ItemStack stack) {
+        var playerName = Objects.requireNonNullElseGet(resolvePlayerName(stack), () -> Component.translatable(PLAYER_KEY));
+        var itemName = super.getName(stack);
+        return Component.translatable(DYANMIC_KEY, playerName, itemName);
     }
 
-    public static Component createDynamicName(ItemStack stack) {
-        var playerName = resolvePlayerNameOrDefault(stack);
-        var itemName = Component.translatable(stack.getItem().getDescriptionId());
-        return Component.translatable(DYANMIC_KEY, playerName, itemName);
+    public static void setProfile(ItemStack stack, @Nullable ResolvableProfile profile) {
+        stack.set(DataComponents.PROFILE, profile);
     }
 
     public static @Nullable Component resolvePlayerName(ItemStack stack) {
@@ -67,10 +63,5 @@ public final class PlushieBlockItem extends BlockItem {
 
         var name = resolved.name();
         return name == null || name.isBlank() ? null : Component.literal(name);
-    }
-
-    public static Component resolvePlayerNameOrDefault(ItemStack stack) {
-        var playerName = resolvePlayerName(stack);
-        return playerName == null ? Component.translatable(PLAYER_KEY) : playerName;
     }
 }
