@@ -29,7 +29,7 @@ afterEvaluate {
             furnitureSets.forEach {
                 create(it.name) {
                     sourceSet(it.sourceSets[SourceSet.MAIN_SOURCE_SET_NAME])
-                    sourceSet(it.sourceSets["data"])
+                    // sourceSet(it.sourceSets["data"])
                 }
             }
         }
@@ -39,7 +39,7 @@ afterEvaluate {
                 loadedMods.add(mods[it.name])
             }
 
-            sourceSet.set(sourceSets["data"])
+            // sourceSet.set(sourceSets["data"])
 
             // include bone built-in packs as they are needed for
             // ctm asset generation to complete
@@ -49,11 +49,11 @@ afterEvaluate {
                 "--existing", file("bone/src/data/generated/built-in/assets/wither").absolutePath
             )
 
-            additionalRuntimeClasspathConfiguration.withDependencies {
+            /*additionalRuntimeClasspathConfiguration.withDependencies {
                 furnitureSets.forEach {
                     add(dependencyFactory.create(it))
                 }
-            }
+            }*/
         }
     }
 }
@@ -84,7 +84,7 @@ dependencies {
 
     compileOnly(libs.contex)
 
-    furnitureSets.forEach {
+    /*furnitureSets.forEach {
         "dataRuntimeOnly"(it)
-    }
+    }*/
 }
