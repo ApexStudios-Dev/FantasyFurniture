@@ -1,5 +1,3 @@
-import gradle.kotlin.dsl.accessors._5dccda78fc1de8a9543a9f24eeb37510.sourceSets
-
 plugins {
     id("apex-conventions.neoforge")
     id("apex-conventions.neoforge-datagen")
