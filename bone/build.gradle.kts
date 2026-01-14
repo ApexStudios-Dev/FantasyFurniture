@@ -5,12 +5,10 @@ plugins {
     id("apex-conventions.jspecify")
 }
 
-val furnitureProject = findProject(":FantasyFurniture") ?: rootProject
-
 group = "dev.apexstudios"
 
 neoForge {
-    version = furnitureProject.neoForge.version
+    version = libs.versions.neoforge.get()
 
     afterEvaluate {
         runs.getByName("data") {
@@ -38,15 +36,11 @@ repositories {
 }
 
 dependencies {
-    val registree = "26.1.9-beta-pr-17"
-    implementation("dev.apexstudios:registree:$registree")
-    "dataImplementation"("dev.apexstudios:registree:$registree")
+    implementation(libs.bundles.apexcore)
+    "dataImplementation"(libs.bundles.apexcore)
+    accessTransformers(libs.apexcore)
 
-    val apexcore = "26.1.11-beta-pr-70"
-    implementation("dev.apexstudios:apexcore:$apexcore")
-    "dataImplementation"("dev.apexstudios:apexcore:$apexcore")
-    accessTransformers("dev.apexstudios:apexcore:$apexcore")
-
+    val furnitureProject = findProject(":FantasyFurniture") ?: rootProject
     implementation(furnitureProject)
     "dataImplementation"(furnitureProject)
 }

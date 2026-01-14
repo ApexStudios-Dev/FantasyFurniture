@@ -12,7 +12,7 @@ plugins {
 val furnitureSets = rootProject.subprojects.filter { it.name.contains("fantasyfurniture-") }.toList()
 
 group = "dev.apexstudios"
-neoForge.version = "26.1.0.0-alpha.5+snapshot-2"
+neoForge.version = libs.versions.neoforge.get()
 
 afterEvaluate {
     furnitureSets.forEach {
@@ -59,14 +59,9 @@ repositories {
 }
 
 dependencies {
-    val registree = "26.1.9-beta-pr-17"
-    implementation("dev.apexstudios:registree:$registree")
-    "dataImplementation"("dev.apexstudios:registree:$registree")
-
-    val apexcore = "26.1.11-beta-pr-70"
-    implementation("dev.apexstudios:apexcore:$apexcore")
-    "dataImplementation"("dev.apexstudios:apexcore:$apexcore")
-    accessTransformers("dev.apexstudios:apexcore:$apexcore")
+    implementation(libs.bundles.apexcore)
+    "dataImplementation"(libs.bundles.apexcore)
+    accessTransformers(libs.apexcore)
 
     compileOnly(libs.contex)
 
