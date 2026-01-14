@@ -251,6 +251,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                                                 .apply(CopyComponentsFunction
                                                         .copyComponentsFromBlockEntity(LootContextParams.BLOCK_ENTITY)
                                                         .include(DataComponents.PROFILE)
+                                                        .include(DecorationsFurnitureModule.PLUSHIE_RENDER_NAME.value())
                                                 )
                                         )
                                 ))

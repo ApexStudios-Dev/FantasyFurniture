@@ -56,14 +56,14 @@ import dev.apexstudios.fantasyfurniture.decorations.common.util.DecorationUtil;
 import dev.apexstudios.registree.api.Registree;
 import dev.apexstudios.registree.api.holder.DeferredBlock;
 import dev.apexstudios.registree.api.holder.DeferredBlockEntity;
+import dev.apexstudios.registree.api.holder.DeferredDataComponent;
 import dev.apexstudios.registree.api.holder.DeferredItem;
 import dev.apexstudios.registree.api.holder.DeferredMenu;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.util.StringUtil;
+import net.minecraft.util.Unit;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.component.ResolvableProfile;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ChainBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -162,6 +162,7 @@ public class DecorationsFurnitureModule {
     public static final DeferredBlock<PlushieBlock> PLUSHIE_BLOCK = REGISTREE.registerBlock("plushie", PlushieBlock::new, FurnitureUtil.mutating(FurnitureUtil.WOOL_PROPERTIES, BlockBehaviour.Properties::noOcclusion));
     public static final DeferredItem<PlushieBlockItem> PLUSHIE_BLOCK_ITEM = REGISTREE.registerBlockItem(PLUSHIE_BLOCK, PlushieBlockItem::new, properties -> properties.equippable(EquipmentSlot.HEAD));
     public static final DeferredBlockEntity<PlushieBlockEntity> PLUSHIE_BLOCK_ENTITY = REGISTREE.registerBlockEntity(PLUSHIE_BLOCK, PlushieBlockEntity::new);
+    public static final DeferredDataComponent<Unit> PLUSHIE_RENDER_NAME = REGISTREE.registerDataComponent("render_name", Unit.CODEC, Unit.STREAM_CODEC);
 
     public static final ResourceKey<CreativeModeTab> CREATIVE_MODE_TAB = FurnitureUtil.creativeModeTab(REGISTREE, BERRY_BASKET);
 
@@ -175,18 +176,14 @@ public class DecorationsFurnitureModule {
                 return;
             }
 
-            var name = event.getName();
+            var profile = PlushieBlockItem.profileFrom(event.getName());
 
-            if(name != null) {
-                name = name.trim();
-            }
-
-            if(name == null || name.isBlank() || !StringUtil.isValidPlayerName(name)) {
+            if(profile == null) {
                 return;
             }
 
             var result = left.copy();
-            PlushieBlockItem.setProfile(result, ResolvableProfile.createUnresolved(name));
+            PlushieBlockItem.setProfile(result, profile);
             event.setOutput(result);
         });
     }

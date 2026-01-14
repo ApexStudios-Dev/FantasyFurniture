@@ -1,9 +1,11 @@
 package dev.apexstudios.fantasyfurniture.decorations.common.plushie;
 
+import com.mojang.util.UndashedUuid;
 import dev.apexstudios.fantasyfurniture.decorations.common.DecorationsFurnitureModule;
 import java.util.Objects;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.StringUtil;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -63,5 +65,31 @@ public final class PlushieBlockItem extends BlockItem {
 
         var name = resolved.name();
         return name == null || name.isBlank() ? null : Component.literal(name);
+    }
+
+    public static @Nullable ResolvableProfile profileFrom(@Nullable String input) {
+        if(input != null) {
+            input = input.trim();
+        }
+
+        if(input == null || input.isBlank()) {
+            return null;
+        }
+
+        try {
+            if(StringUtil.isValidPlayerName(input)) {
+                return ResolvableProfile.createUnresolved(input);
+            }
+        } catch (IllegalArgumentException ignored) {
+
+        }
+
+        try {
+            return ResolvableProfile.createUnresolved(UndashedUuid.fromStringLenient(input));
+        } catch (IllegalArgumentException ignored) {
+
+        }
+
+        return null;
     }
 }
