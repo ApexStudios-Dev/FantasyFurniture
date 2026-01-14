@@ -1,5 +1,6 @@
 package dev.apexstudios.fantasyfurniture.decorations.common;
 
+import dev.apexstudios.fantasyfurniture.common.FantasyFurniture;
 import dev.apexstudios.fantasyfurniture.common.util.FurnitureUtil;
 import dev.apexstudios.fantasyfurniture.decorations.common.ber.SimpleBlockEntity;
 import dev.apexstudios.fantasyfurniture.decorations.common.ber.SimpleBlockEntityBlock;
@@ -168,6 +169,7 @@ public class DecorationsFurnitureModule {
 
     public DecorationsFurnitureModule(IEventBus modBus) {
         REGISTREE.registerEvents(modBus);
+        FantasyFurniture.FURNITURE_MODS.add(ID);
 
         NeoForge.EVENT_BUS.addListener(AnvilUpdateEvent.class, event -> {
             var left = event.getLeft();
