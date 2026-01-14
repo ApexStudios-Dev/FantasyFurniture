@@ -49,20 +49,28 @@ import dev.apexstudios.fantasyfurniture.decorations.common.cookie.CookieJarMenuS
 import dev.apexstudios.fantasyfurniture.decorations.common.grave.GravestoneBlock;
 import dev.apexstudios.fantasyfurniture.decorations.common.grave.GravestoneBlockEntity;
 import dev.apexstudios.fantasyfurniture.decorations.common.grave.GravestoneBlockItem;
+import dev.apexstudios.fantasyfurniture.decorations.common.plushie.PlushieBlock;
+import dev.apexstudios.fantasyfurniture.decorations.common.plushie.PlushieBlockEntity;
+import dev.apexstudios.fantasyfurniture.decorations.common.plushie.PlushieBlockItem;
 import dev.apexstudios.fantasyfurniture.decorations.common.util.DecorationUtil;
 import dev.apexstudios.registree.api.Registree;
 import dev.apexstudios.registree.api.holder.DeferredBlock;
 import dev.apexstudios.registree.api.holder.DeferredBlockEntity;
+import dev.apexstudios.registree.api.holder.DeferredDataComponent;
 import dev.apexstudios.registree.api.holder.DeferredItem;
 import dev.apexstudios.registree.api.holder.DeferredMenu;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.Unit;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ChainBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.AnvilUpdateEvent;
 
 @Mod(DecorationsFurnitureModule.ID)
 public class DecorationsFurnitureModule {
@@ -151,10 +159,33 @@ public class DecorationsFurnitureModule {
     public static final DeferredBlockEntity<CookieJarBlockEntity> COOKIE_JAR_BLOCK_ENTITY = REGISTREE.registerBlockEntity(COOKIE_JAR_BLOCK, CookieJarBlockEntity::new);
     public static final DeferredMenu<CookieJarMenu> COOKIE_JAR_MENU = REGISTREE.registerMenu("cookie_jar", CookieJarMenu::new, () -> () -> CookieJarMenuScreen::new);
 
+    public static final DeferredBlock<PlushieBlock> PLUSHIE_BLOCK = REGISTREE.registerBlock("plushie", PlushieBlock::new, FurnitureUtil.mutating(FurnitureUtil.WOOL_PROPERTIES, BlockBehaviour.Properties::noOcclusion));
+    public static final DeferredItem<PlushieBlockItem> PLUSHIE_BLOCK_ITEM = REGISTREE.registerBlockItem(PLUSHIE_BLOCK, PlushieBlockItem::new, properties -> properties.equippable(EquipmentSlot.HEAD));
+    public static final DeferredBlockEntity<PlushieBlockEntity> PLUSHIE_BLOCK_ENTITY = REGISTREE.registerBlockEntity(PLUSHIE_BLOCK, PlushieBlockEntity::new);
+    public static final DeferredDataComponent<Unit> PLUSHIE_RENDER_NAME = REGISTREE.registerDataComponent("render_name", Unit.CODEC, Unit.STREAM_CODEC);
+
     public static final ResourceKey<CreativeModeTab> CREATIVE_MODE_TAB = FurnitureUtil.creativeModeTab(REGISTREE, BERRY_BASKET);
 
     public DecorationsFurnitureModule(IEventBus modBus) {
         REGISTREE.registerEvents(modBus);
+
+        NeoForge.EVENT_BUS.addListener(AnvilUpdateEvent.class, event -> {
+            var left = event.getLeft();
+
+            if (!left.is(PLUSHIE_BLOCK_ITEM) || !event.getRight().isEmpty()) {
+                return;
+            }
+
+            var profile = PlushieBlockItem.profileFrom(event.getName());
+
+            if(profile == null) {
+                return;
+            }
+
+            var result = left.copy();
+            PlushieBlockItem.setProfile(result, profile);
+            event.setOutput(result);
+        });
     }
 
     public static Identifier identifier(String identifier) {
