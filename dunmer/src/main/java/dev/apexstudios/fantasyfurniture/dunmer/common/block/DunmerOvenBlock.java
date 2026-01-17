@@ -83,12 +83,6 @@ public final class DunmerOvenBlock extends OvenBlock implements MultiBlock {
     }
 
     @Override
-    protected void spawnDestroyParticles(Level level, Player player, BlockPos pos, BlockState blockState) {
-        super.spawnDestroyParticles(level, player, pos, blockState);
-        MultiBlock.spawnDestroyParticles(level, pos, blockState, player);
-    }
-
-    @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState blockState) {
         return blockState.getValue(getMultiBlockProperty()) == 0 ? super.newBlockEntity(pos, blockState) : null;
     }

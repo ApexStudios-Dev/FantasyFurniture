@@ -18,7 +18,7 @@ dependencyResolutionManagement {
         version("neoforge", "26.1.0.0-alpha.5+snapshot-2")
 
         library("registree", "dev.apexstudios", "registree").version("26.1.9-beta-pr-17")
-        library("apexcore", "dev.apexstudios", "apexcore").version("26.1.14-beta-pr-70")
+        library("apexcore", "dev.apexstudios", "apexcore").version("26.1.15-beta-pr-70")
         bundle("apexcore", listOf("registree", "apexcore"))
 
         library("contex", "curse.maven", "contex-1296805").version("7051640")

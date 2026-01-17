@@ -7,7 +7,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
@@ -53,12 +52,6 @@ public abstract class InventoryMultiBlock extends InventoryBlock implements Mult
     public void destroy(LevelAccessor level, BlockPos pos, BlockState blockState) {
         super.destroy(level, pos, blockState);
         MultiBlock.destroyBlocks(level, pos, blockState);
-    }
-
-    @Override
-    protected void spawnDestroyParticles(Level level, Player player, BlockPos pos, BlockState blockState) {
-        super.spawnDestroyParticles(level, player, pos, blockState);
-        MultiBlock.spawnDestroyParticles(level, pos, blockState, player);
     }
 
     // region: BlockEntity
