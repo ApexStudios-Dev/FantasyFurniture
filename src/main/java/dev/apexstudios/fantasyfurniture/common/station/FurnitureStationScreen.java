@@ -256,7 +256,7 @@ public final class FurnitureStationScreen extends AbstractContainerScreen<Furnit
 
     private ItemStack displayStack(int index) {
         var recipes = menu.recipes();
-        return FurnitureStationMenu.isValidRecipeIndex(recipes, index) ? recipes.get(index).result() : ItemStack.EMPTY;
+        return FurnitureStationMenu.isValidRecipeIndex(recipes, index) ? recipes.get(index).result().create() : ItemStack.EMPTY;
 
     }
 }

@@ -12,8 +12,7 @@ import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.ItemLike;
@@ -25,10 +24,10 @@ public final class FurnitureStationRecipeBuilder implements RecipeBuilder {
     private final Ingredient planks;
     private final Optional<Ingredient> wool;
     private final Ingredient bindingAgent;
-    private final ItemStack result;
+    private final ItemStackTemplate result;
     private final Map<String, Criterion<?>> criteria = Maps.newLinkedHashMap();
 
-    private FurnitureStationRecipeBuilder(RecipeCategory category, Ingredient planks, @Nullable Ingredient wool, Ingredient bindingAgent, ItemStack result) {
+    private FurnitureStationRecipeBuilder(RecipeCategory category, Ingredient planks, @Nullable Ingredient wool, Ingredient bindingAgent, ItemStackTemplate result) {
         this.category = category;
         this.planks = planks;
         this.wool = Optional.ofNullable(wool);
@@ -49,8 +48,8 @@ public final class FurnitureStationRecipeBuilder implements RecipeBuilder {
     }
 
     @Override
-    public Item getResult() {
-        return result.getItem();
+    public ResourceKey<Recipe<?>> defaultId() {
+        return RecipeBuilder.getDefaultRecipeId(result);
     }
 
     @Override
@@ -69,15 +68,15 @@ public final class FurnitureStationRecipeBuilder implements RecipeBuilder {
         output.accept(recipeKey, recipe, advancement.build(recipeKey.identifier().withPrefix("recipes/" + category.getFolderName() + '/')));
     }
 
-    public static FurnitureStationRecipeBuilder builder(RecipeCategory category, Ingredient planks, @Nullable Ingredient wool, Ingredient bindingAgent, ItemStack result) {
+    public static FurnitureStationRecipeBuilder builder(RecipeCategory category, Ingredient planks, @Nullable Ingredient wool, Ingredient bindingAgent, ItemStackTemplate result) {
         return new FurnitureStationRecipeBuilder(category, planks, wool, bindingAgent, result);
     }
 
     public static FurnitureStationRecipeBuilder builder(RecipeCategory category, Ingredient planks, @Nullable Ingredient wool, Ingredient bindingAgent, ItemLike result, int count) {
-        return builder(category, planks, wool, bindingAgent, new ItemStack(result, count));
+        return builder(category, planks, wool, bindingAgent, new ItemStackTemplate(result.asItem(), count));
     }
 
     public static FurnitureStationRecipeBuilder builder(RecipeCategory category, Ingredient planks, @Nullable Ingredient wool, Ingredient bindingAgent, ItemLike result) {
-        return builder(category, planks, wool, bindingAgent, new ItemStack(result));
+        return builder(category, planks, wool, bindingAgent, new ItemStackTemplate(result.asItem()));
     }
 }

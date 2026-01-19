@@ -17,7 +17,7 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeBookCategory;
 import net.minecraft.world.item.crafting.RecipeHolder;
@@ -54,14 +54,14 @@ public interface FurnitureStationSetup {
                     Ingredient.CODEC.fieldOf("planks").forGetter(FurnitureStationRecipe::planks),
                     Ingredient.CODEC.optionalFieldOf("wool").forGetter(FurnitureStationRecipe::wool),
                     Ingredient.CODEC.fieldOf("binding_agent").forGetter(FurnitureStationRecipe::bindingAgent),
-                    ItemStack.STRICT_CODEC.fieldOf("result").forGetter(FurnitureStationRecipe::result)
+                    ItemStackTemplate.CODEC.fieldOf("result").forGetter(FurnitureStationRecipe::result)
             ).apply(instance, FurnitureStationRecipe::new)),
             StreamCodec.composite(
                     ByteBufCodecs.STRING_UTF8, FurnitureStationRecipe::group,
                     Ingredient.CONTENTS_STREAM_CODEC, FurnitureStationRecipe::planks,
                     ByteBufCodecs.optional(Ingredient.CONTENTS_STREAM_CODEC), FurnitureStationRecipe::wool,
                     Ingredient.CONTENTS_STREAM_CODEC, FurnitureStationRecipe::bindingAgent,
-                    ItemStack.STREAM_CODEC, FurnitureStationRecipe::result,
+                    ItemStackTemplate.STREAM_CODEC, FurnitureStationRecipe::result,
                     FurnitureStationRecipe::new
             )
     );

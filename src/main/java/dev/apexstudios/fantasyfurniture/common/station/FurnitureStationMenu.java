@@ -199,7 +199,7 @@ public final class FurnitureStationMenu extends AbstractContainerMenu {
 
         if(hasInput() && isValidRecipeIndex(recipes, index)) {
             var recipe = recipes.get(index);
-            var result = recipe.assemble(asInput(), player.registryAccess());
+            var result = recipe.assemble(asInput());
             resultContainer.setItem(0, result);
         } else {
             setupRecipes();

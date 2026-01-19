@@ -2,8 +2,8 @@ package dev.apexstudios.fantasyfurniture.common.station;
 
 import java.util.List;
 import java.util.Optional;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.Recipe;
@@ -17,9 +17,9 @@ public final class FurnitureStationRecipe implements Recipe<FurnitureStationReci
     private final Ingredient planks;
     private final Optional<Ingredient> wool;
     private final Ingredient bindingAgent;
-    private final ItemStack result;
+    private final ItemStackTemplate result;
 
-    FurnitureStationRecipe(String group, Ingredient planks, Optional<Ingredient> wool, Ingredient bindingAgent, ItemStack result) {
+    FurnitureStationRecipe(String group, Ingredient planks, Optional<Ingredient> wool, Ingredient bindingAgent, ItemStackTemplate result) {
         this.group = group;
         this.planks = planks;
         this.wool = wool;
@@ -39,7 +39,7 @@ public final class FurnitureStationRecipe implements Recipe<FurnitureStationReci
         return bindingAgent;
     }
 
-    public ItemStack result() {
+    public ItemStackTemplate result() {
         return result;
     }
 
@@ -56,8 +56,8 @@ public final class FurnitureStationRecipe implements Recipe<FurnitureStationReci
     }
 
     @Override
-    public ItemStack assemble(FurnitureStationRecipeInput input, HolderLookup.Provider registries) {
-        return matches(input) ? result.copy() : ItemStack.EMPTY;
+    public ItemStack assemble(FurnitureStationRecipeInput input) {
+        return matches(input) ? result.create() : ItemStack.EMPTY;
     }
 
     @Override

@@ -3,7 +3,6 @@
   "binding_agent": "#fantasyfurniture:binding_agent",
   "planks": "#c:dyes",
   "result": {
-    "count": 1,
     "id": "fantasyfurniture_decorations:floating_tomes"
   }
 }
