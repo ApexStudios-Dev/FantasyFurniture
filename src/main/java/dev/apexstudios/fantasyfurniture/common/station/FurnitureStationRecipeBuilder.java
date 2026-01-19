@@ -1,6 +1,7 @@
 package dev.apexstudios.fantasyfurniture.common.station;
 
 import com.google.common.collect.Maps;
+import dev.apexstudios.apexcore.api.util.ItemTemplateBuilder;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -73,10 +74,10 @@ public final class FurnitureStationRecipeBuilder implements RecipeBuilder {
     }
 
     public static FurnitureStationRecipeBuilder builder(RecipeCategory category, Ingredient planks, @Nullable Ingredient wool, Ingredient bindingAgent, ItemLike result, int count) {
-        return builder(category, planks, wool, bindingAgent, new ItemStackTemplate(result.asItem(), count));
+        return builder(category, planks, wool, bindingAgent, ItemTemplateBuilder.from(result).count(count).build());
     }
 
     public static FurnitureStationRecipeBuilder builder(RecipeCategory category, Ingredient planks, @Nullable Ingredient wool, Ingredient bindingAgent, ItemLike result) {
-        return builder(category, planks, wool, bindingAgent, new ItemStackTemplate(result.asItem()));
+        return builder(category, planks, wool, bindingAgent, result, 1);
     }
 }
