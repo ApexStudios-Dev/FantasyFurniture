@@ -2,6 +2,9 @@
   "pack": {
     "description": "Fantasy's Furniture - Bone",
     "max_format": 97,
-    "min_format": 97
+    "min_format": [
+      97,
+      1
+    ]
   }
 }

@@ -2,6 +2,9 @@
   "pack": {
     "description": "Wither assets",
     "max_format": 78,
-    "min_format": 78
+    "min_format": [
+      78,
+      1
+    ]
   }
 }
