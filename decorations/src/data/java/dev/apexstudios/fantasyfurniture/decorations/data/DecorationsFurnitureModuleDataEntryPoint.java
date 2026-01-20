@@ -243,11 +243,11 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
 
                         lootTables.accept(DecorationsFurnitureModule.PLUSHIE_BLOCK.value(), () -> LootTable
                                 .lootTable()
-                                .withPool(lootTables.applyExplosionCondition(DecorationsFurnitureModule.PLUSHIE_BLOCK, LootPool
+                                .withPool(lootTables.applyExplosionCondition(DecorationsFurnitureModule.PLUSHIE_BLOCK.value(), LootPool
                                         .lootPool()
                                         .setRolls(ConstantValue.exactly(1F))
                                         .add(LootItem
-                                                .lootTableItem(DecorationsFurnitureModule.PLUSHIE_BLOCK)
+                                                .lootTableItem(DecorationsFurnitureModule.PLUSHIE_BLOCK.value())
                                                 .apply(CopyComponentsFunction
                                                         .copyComponentsFromBlockEntity(LootContextParams.BLOCK_ENTITY)
                                                         .include(DataComponents.PROFILE)
@@ -285,8 +285,8 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                            .map(ItemLike::asItem)
                            .forEach(block -> provider.tag(Tags.Items.DYED).withElement(block));
 
-                    provider.tag(ItemTags.CHAINS).withElement(DecorationsFurnitureModule.BRONZE_CHAIN.asItem());
-                    provider.tag(Tags.Items.CHAINS).withElement(DecorationsFurnitureModule.BRONZE_CHAIN.asItem());
+                    provider.tag(ItemTags.CHAINS).withElement(DecorationsFurnitureModule.BRONZE_CHAIN.value().asItem());
+                    provider.tag(Tags.Items.CHAINS).withElement(DecorationsFurnitureModule.BRONZE_CHAIN.value().asItem());
                 })
         );
     }
@@ -714,7 +714,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                 BlockModelGenerators.plainVariant(blockModel)
         ));
 
-        blockModels.itemModelOutput.accept(block.asItem(), ItemModelUtils.specialModel(blockModel, specialModel));
+        blockModels.itemModelOutput.accept(block.value().asItem(), ItemModelUtils.specialModel(blockModel, specialModel));
     }
 
     private void plushie(BlockModelGenerators blockModels) {
@@ -726,7 +726,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
 
         var variant = BlockModelGenerators.plainVariant(model);
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(DecorationsFurnitureModule.PLUSHIE_BLOCK.value(), variant));
-        blockModels.itemModelOutput.accept(DecorationsFurnitureModule.PLUSHIE_BLOCK.asItem(), ItemModelUtils.specialModel(model, new PlushieSpecialModelRenderer.Unbaked()));
+        blockModels.itemModelOutput.accept(DecorationsFurnitureModule.PLUSHIE_BLOCK.value().asItem(), ItemModelUtils.specialModel(model, new PlushieSpecialModelRenderer.Unbaked()));
     }
 
     private MultiVariantGenerator blockState(Holder<Block> holder) {

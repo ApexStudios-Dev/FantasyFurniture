@@ -39,7 +39,7 @@ public final class PlushieSpecialModelRenderer implements SpecialModelRenderer<P
 
     @Override
     public void getExtents(Consumer<Vector3fc> output) {
-        var renderState = extractArgument(DecorationsFurnitureModule.PLUSHIE_BLOCK.toStack());
+        var renderState = extractArgument(new ItemStack(DecorationsFurnitureModule.PLUSHIE_BLOCK.value()));
         var model = modelGetter.apply(renderState.skin.model());
         var poseStack = new PoseStack();
         PlushieBlockEntityRenderer.setupForModel(poseStack, renderState, null);

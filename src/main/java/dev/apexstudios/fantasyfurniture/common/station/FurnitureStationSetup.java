@@ -95,7 +95,7 @@ public interface FurnitureStationSetup {
 
         modBus.addListener(BuildCreativeModeTabContentsEvent.class, event -> {
             if(event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS)
-                event.accept(BLOCK_ITEM);
+                event.accept(BLOCK_ITEM.value());
         });
 
         NeoForge.EVENT_BUS.addListener(OnDatapackSyncEvent.class, event -> event.sendRecipes(RECIPE_TYPE.value()));

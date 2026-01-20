@@ -34,6 +34,7 @@ import java.util.function.Supplier;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CarpetBlock;
 import net.minecraft.world.level.block.CeilingHangingSignBlock;
@@ -105,7 +106,7 @@ public class NecrolordFurnitureSet {
 
     public static final DeferredParticleType<SimpleParticleType, SimpleParticleType> FLAME_PARTICLE = REGISTREE.registerSimpleParticle("flame", false);
 
-    public static final ResourceKey<CreativeModeTab> CREATIVE_MODE_TAB = FurnitureUtil.creativeModeTab(REGISTREE, BED_SINGLE);
+    public static final ResourceKey<CreativeModeTab> CREATIVE_MODE_TAB = FurnitureUtil.creativeModeTab(REGISTREE, () -> new ItemStack(BED_SINGLE.value()));
 
     public NecrolordFurnitureSet(IEventBus modBus) {
         FurnitureUtil.registerEvents(modBus, REGISTREE, WOOD_TYPE);

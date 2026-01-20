@@ -55,7 +55,6 @@ import net.minecraft.world.item.HangingSignItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SignItem;
-import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -295,8 +294,8 @@ public interface FurnitureUtil {
         return new SignPair<>(standingSign, wallSign);
     }
 
-    static ResourceKey<CreativeModeTab> creativeModeTab(Registree registree, ItemLike displayItem) {
-        return registree.registerCreativeModeTab(Names.CREATIVE_MODE_TAB, () -> new ItemStack(displayItem), (parameters, output) -> registree
+    static ResourceKey<CreativeModeTab> creativeModeTab(Registree registree, Supplier<ItemStack> displayItem) {
+        return registree.registerCreativeModeTab(Names.CREATIVE_MODE_TAB, displayItem, (parameters, output) -> registree
                 .asLookup(Registries.ITEM)
                 .filterFeatures(parameters.enabledFeatures())
                 .listElements()

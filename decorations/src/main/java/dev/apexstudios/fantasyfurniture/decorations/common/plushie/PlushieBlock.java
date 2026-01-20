@@ -130,14 +130,14 @@ public final class PlushieBlock extends BaseEntityBlock {
 
     @Override
     public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData, Player player) {
-        var stack = DecorationsFurnitureModule.PLUSHIE_BLOCK.toStack();
+        var stack = new ItemStack(DecorationsFurnitureModule.PLUSHIE_BLOCK.value());
         appendItemData(level, pos, stack, includeData, player);
         return stack;
     }
 
     @Override
     protected ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData) {
-        var stack = DecorationsFurnitureModule.PLUSHIE_BLOCK.toStack();
+        var stack = new ItemStack(DecorationsFurnitureModule.PLUSHIE_BLOCK.value());
         appendItemData(level, pos, stack, includeData, null);
         return stack;
     }

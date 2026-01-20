@@ -37,6 +37,7 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CarpetBlock;
 import net.minecraft.world.level.block.CeilingHangingSignBlock;
@@ -152,7 +153,7 @@ public final class BoneFurnitureSet {
         hangingSign = FurnitureUtil.hangingSign(registree, woodType);
         sign = FurnitureUtil.sign(registree, woodType);
 
-        creativeModeTab = FurnitureUtil.creativeModeTab(registree, bedSingle);
+        creativeModeTab = FurnitureUtil.creativeModeTab(registree, () -> new ItemStack(bedSingle.value()));
     }
 
     public void register(IEventBus modBus) {

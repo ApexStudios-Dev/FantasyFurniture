@@ -65,6 +65,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.Unit;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ChainBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -165,7 +166,7 @@ public class DecorationsFurnitureModule {
     public static final DeferredBlockEntity<PlushieBlockEntity> PLUSHIE_BLOCK_ENTITY = REGISTREE.registerBlockEntity(PLUSHIE_BLOCK, PlushieBlockEntity::new);
     public static final DeferredDataComponent<Unit> PLUSHIE_RENDER_NAME = REGISTREE.registerDataComponent("render_name", Unit.CODEC, Unit.STREAM_CODEC);
 
-    public static final ResourceKey<CreativeModeTab> CREATIVE_MODE_TAB = FurnitureUtil.creativeModeTab(REGISTREE, BERRY_BASKET);
+    public static final ResourceKey<CreativeModeTab> CREATIVE_MODE_TAB = FurnitureUtil.creativeModeTab(REGISTREE, () -> new ItemStack(BERRY_BASKET.value()));
 
     public DecorationsFurnitureModule(IEventBus modBus) {
         REGISTREE.registerEvents(modBus);

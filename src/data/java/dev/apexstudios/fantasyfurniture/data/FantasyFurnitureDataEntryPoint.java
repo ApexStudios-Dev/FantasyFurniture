@@ -54,7 +54,7 @@ public final class FantasyFurnitureDataEntryPoint {
                             .withElement(FurnitureStationSetup.BLOCK)
                     )
                     .providing(ProviderTypes.RECIPES, (context, provider) -> provider
-                            .shapeless(RecipeCategory.MISC, FurnitureStationSetup.BLOCK)
+                            .shapeless(RecipeCategory.MISC, FurnitureStationSetup.BLOCK.value())
                             .requires(Tags.Items.PLAYER_WORKSTATIONS_CRAFTING_TABLES)
                             .requires(Tags.Items.LEATHERS)
                             .unlockedBy("has_crafting_table", provider.has(Tags.Items.PLAYER_WORKSTATIONS_CRAFTING_TABLES))
