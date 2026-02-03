@@ -8,12 +8,12 @@ import dev.apexstudios.apexcore.api.data.pack.PackGenerator;
 import dev.apexstudios.apexcore.api.data.provider.RecipeProvider;
 import dev.apexstudios.apexcore.api.data.provider.loot.LootTableProvider;
 import dev.apexstudios.apexcore.api.data.provider.tag.IntrusiveTagProvider;
+import dev.apexstudios.apexcore.api.placement.BlockItemPlacementEvent;
 import dev.apexstudios.apexcore.api.util.ApexTags;
 import dev.apexstudios.apexcore.api.util.TagPair;
 import dev.apexstudios.fantasyfurniture.common.FantasyFurniture;
 import dev.apexstudios.fantasyfurniture.common.station.FurnitureStationRecipeBuilder;
 import dev.apexstudios.fantasyfurniture.common.station.FurnitureStationSetup;
-import dev.apexstudios.apexcore.api.placement.BlockItemPlacementEvent;
 import dev.apexstudios.registree.api.Registree;
 import java.util.function.Consumer;
 import net.minecraft.core.Registry;
@@ -206,7 +206,7 @@ public interface FurnitureDataUtil {
 
     static void conversionRecipe(TagKey<Item> baseTag, TagKey<Item> furnitureTag, String hasKey, ItemLike result, RecipeProvider provider) {
         SingleItemRecipeBuilder
-                .stonecutting(DifferenceIngredient.of(provider.tag(baseTag), provider.tag(furnitureTag)), RecipeCategory.MISC, result)
+                .stonecutting(DifferenceIngredient.of(provider.tag(baseTag), provider.tag(furnitureTag)), RecipeCategory.MISC, result, 1)
                 .unlockedBy(hasKey, provider.has(baseTag))
                 .save(provider.output(), RecipeProvider.recipeKeyWithPrefix(result, "conversion/"));
     }

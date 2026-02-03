@@ -61,6 +61,11 @@ public final class FurnitureStationRecipe implements Recipe<FurnitureStationReci
     }
 
     @Override
+    public boolean showNotification() {
+        return true;
+    }
+
+    @Override
     public RecipeSerializer<FurnitureStationRecipe> getSerializer() {
         return FurnitureStationSetup.RECIPE_SERIALIZER.value();
     }
