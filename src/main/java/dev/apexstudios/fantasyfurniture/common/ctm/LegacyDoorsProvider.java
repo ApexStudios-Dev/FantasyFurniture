@@ -18,7 +18,7 @@ public interface LegacyDoorsProvider {
         provider.knownBlocks(() -> Stream.of(doors).map(Block::builtInRegistryHolder))
                 .knownItems(() -> Stream.of(doors).map(Block::asItem).map(Item::builtInRegistryHolder));
 
-        for(var block : blocks) {
+        for(var block : doors) {
             var model = ModelLocationUtils.getModelLocation(block.asItem(), "_3d");
 
             if(dyeable) {
