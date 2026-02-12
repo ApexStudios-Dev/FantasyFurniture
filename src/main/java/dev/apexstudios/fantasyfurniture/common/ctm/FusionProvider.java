@@ -8,12 +8,11 @@ import dev.apexstudios.apexcore.api.data.provider.context.ProviderOutputContext;
 import dev.apexstudios.apexcore.common.ApexCore;
 import dev.apexstudios.fantasyfurniture.common.FantasyFurniture;
 import dev.apexstudios.fantasyfurniture.common.util.FurnitureUtil;
-import dev.apexstudios.registree.api.Registree;
+import dev.apexstudios.registree.registrar.BlockRegistrar;
 import java.nio.file.Path;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
@@ -27,10 +26,10 @@ final class FusionProvider extends SimpleJsonProvider {
 
     private final Set<Identifier> textures = Sets.newHashSet();
 
-    public void with(Registree registree) {
-        FurnitureUtil.Names.block(registree, FurnitureUtil.Names.CARPET, carpet -> {
-            var wool = registree.getValueOrThrow(Registries.BLOCK, FurnitureUtil.Names.WOOL);
-            var tinted = isDyeable(registree);
+    public void with(BlockRegistrar blocks) {
+        FurnitureUtil.Names.block(blocks, FurnitureUtil.Names.CARPET, carpet -> {
+            var wool = blocks.getValueOrThrow(FurnitureUtil.Names.WOOL);
+            var tinted = isDyeable(blocks);
 
             with(wool, root -> model(root, wool, tinted, "minecraft:block/cube_all", ApexCore.id("block/cube_all_tinted"), "all"));
             with(carpet, root -> model(root, wool, tinted, "minecraft:block/carpet", ApexCore.id("block/carpet_tinted"), "wool"));

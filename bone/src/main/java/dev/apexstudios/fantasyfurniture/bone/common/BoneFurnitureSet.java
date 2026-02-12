@@ -28,8 +28,8 @@ import dev.apexstudios.fantasyfurniture.bone.common.block.BoneWardrobeBlock;
 import dev.apexstudios.fantasyfurniture.common.FantasyFurniture;
 import dev.apexstudios.fantasyfurniture.common.block.FurnitureDoorBlock;
 import dev.apexstudios.fantasyfurniture.common.util.FurnitureUtil;
-import dev.apexstudios.registree.api.Registree;
-import dev.apexstudios.registree.api.holder.DeferredBlock;
+import dev.apexstudios.registree.Registree;
+import dev.apexstudios.registree.registrar.BlockRegistrar;
 import java.util.function.Supplier;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -54,12 +54,14 @@ import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
+import net.neoforged.neoforge.registries.DeferredBlock;
 
 public final class BoneFurnitureSet {
     public static final String ID = FantasyFurniture.ID + "_bone";
 
     public final String id;
     public final Registree registree;
+    public final BlockRegistrar blocks;
     public final Supplier<WoodType> woodType;
     public final Supplier<BlockSetType> blockSetType;
     public final DeferredBlock<Block> bricks;
@@ -105,64 +107,65 @@ public final class BoneFurnitureSet {
         this.id = id;
 
         registree = Registree.create(modId);
+        blocks = registree.blocks();
 
         woodType = WoodTypeBuilder.builder()
                 .copy(WoodType.OAK)
                 .blockSetType(blockSet -> blockSet
                         .copy(BlockSetType.STONE)
                 )
-                .build(registree.registryIdentifier(id));
+                .build(registree.registryId(id));
 
         blockSetType = () -> woodType.get().setType();
 
-        bricks = FurnitureUtil.bricks(registree, Block::new);
-        wool = FurnitureUtil.wool(registree, Block::new);
-        carpet = FurnitureUtil.carpet(registree, CarpetBlock::new);
-        dresser = FurnitureUtil.dresser(registree, BoneDresserBlock::new);
-        stool = FurnitureUtil.stool(registree, BoneStoolBlock::new);
-        cushion = FurnitureUtil.cushion(registree, BoneCushionBlock::new);
-        lockbox = FurnitureUtil.lockbox(registree, BoneLockBoxBlock::new);
-        drawer = FurnitureUtil.drawer(registree, BoneDrawerBlock::new);
-        chair = FurnitureUtil.chair(registree, BoneChairBlock::new);
-        bookshelf = FurnitureUtil.bookshelf(registree, BoneBookshelfBlock::new);
-        bedSingle = FurnitureUtil.bedSingle(registree, BoneBedSingleBlock::new);
-        bedDouble = FurnitureUtil.bedDouble(registree, BoneBedDoubleBlock::new);
-        doorSingle = FurnitureUtil.doorSingle(registree, blockSetType, FurnitureDoorBlock::new);
-        doorDouble = FurnitureUtil.doorDouble(registree, blockSetType, FurnitureDoorBlock::new);
-        deskLeft = FurnitureUtil.desk(registree, true, BoneDeskLeftBlock::new);
-        deskRight = FurnitureUtil.desk(registree, false, BoneDeskRightBlock::new);
-        paintingWide = FurnitureUtil.paintingWide(registree, BonePaintingWideBlock::new);
-        paintingSmall = FurnitureUtil.paintingSmall(registree, BonePaintingSmallBlock::new);
-        oven = FurnitureUtil.oven(registree, BoneOvenBlock::new);
-        chest = FurnitureUtil.chest(registree, BoneChestBlock::new);
-        floorLight = FurnitureUtil.floorLight(registree, BoneFloorLightBlock::new);
-        chandelier = FurnitureUtil.chandelier(registree, BoneChandelierBlock::new);
-        shelf = FurnitureUtil.shelf(registree, BoneShelfBlock::new);
-        sofa = FurnitureUtil.sofa(registree, BoneSofaBlock::new);
-        counter = FurnitureUtil.counter(registree, BoneCounterBlock::new);
-        wallLight = FurnitureUtil.wallLight(registree, BoneWallLightBlock::new);
-        bench = FurnitureUtil.bench(registree, BoneBenchBlock::new);
-        wardrobe = FurnitureUtil.wardrobe(registree, BoneWardrobeBlock::new);
-        table = FurnitureUtil.table(registree, BoneTableBlock::new);
-        stairs = FurnitureUtil.stairs(registree, bricks);
-        slab = FurnitureUtil.slab(registree);
-        fence = FurnitureUtil.fence(registree);
-        fenceGate = FurnitureUtil.fenceGate(registree, woodType);
-        trapdoor = FurnitureUtil.trapdoor(registree, blockSetType);
-        pressurePlate = FurnitureUtil.pressurePlate(registree, blockSetType);
+        bricks = FurnitureUtil.bricks(blocks, Block::new).register();
+        wool = FurnitureUtil.wool(blocks, Block::new).register();
+        carpet = FurnitureUtil.carpet(blocks, CarpetBlock::new).register();
+        dresser = FurnitureUtil.dresser(blocks, BoneDresserBlock::new).register();
+        stool = FurnitureUtil.stool(blocks, BoneStoolBlock::new).register();
+        cushion = FurnitureUtil.cushion(blocks, BoneCushionBlock::new).register();
+        lockbox = FurnitureUtil.lockbox(blocks, BoneLockBoxBlock::new).register();
+        drawer = FurnitureUtil.drawer(blocks, BoneDrawerBlock::new).register();
+        chair = FurnitureUtil.chair(blocks, BoneChairBlock::new).register();
+        bookshelf = FurnitureUtil.bookshelf(blocks, BoneBookshelfBlock::new).register();
+        bedSingle = FurnitureUtil.bedSingle(blocks, BoneBedSingleBlock::new).register();
+        bedDouble = FurnitureUtil.bedDouble(blocks, BoneBedDoubleBlock::new).register();
+        doorSingle = FurnitureUtil.doorSingle(blocks, blockSetType, FurnitureDoorBlock::new).register();
+        doorDouble = FurnitureUtil.doorDouble(blocks, blockSetType, FurnitureDoorBlock::new).register();
+        deskLeft = FurnitureUtil.desk(blocks, true, BoneDeskLeftBlock::new).register();
+        deskRight = FurnitureUtil.desk(blocks, false, BoneDeskRightBlock::new).register();
+        paintingWide = FurnitureUtil.paintingWide(blocks, BonePaintingWideBlock::new).register();
+        paintingSmall = FurnitureUtil.paintingSmall(blocks, BonePaintingSmallBlock::new).register();
+        oven = FurnitureUtil.oven(blocks, BoneOvenBlock::new).register();
+        chest = FurnitureUtil.chest(blocks, BoneChestBlock::new).register();
+        floorLight = FurnitureUtil.floorLight(blocks, BoneFloorLightBlock::new).register();
+        chandelier = FurnitureUtil.chandelier(blocks, BoneChandelierBlock::new).register();
+        shelf = FurnitureUtil.shelf(blocks, BoneShelfBlock::new).register();
+        sofa = FurnitureUtil.sofa(blocks, BoneSofaBlock::new).register();
+        counter = FurnitureUtil.counter(blocks, BoneCounterBlock::new).register();
+        wallLight = FurnitureUtil.wallLight(blocks, BoneWallLightBlock::new).register();
+        bench = FurnitureUtil.bench(blocks, BoneBenchBlock::new).register();
+        wardrobe = FurnitureUtil.wardrobe(blocks, BoneWardrobeBlock::new).register();
+        table = FurnitureUtil.table(blocks, BoneTableBlock::new).register();
+        stairs = FurnitureUtil.stairs(blocks, bricks).register();
+        slab = FurnitureUtil.slab(blocks).register();
+        fence = FurnitureUtil.fence(blocks).register();
+        fenceGate = FurnitureUtil.fenceGate(blocks, woodType).register();
+        trapdoor = FurnitureUtil.trapdoor(blocks, blockSetType).register();
+        pressurePlate = FurnitureUtil.pressurePlate(blocks, blockSetType).register();
         hangingSign = FurnitureUtil.hangingSign(registree, woodType);
         sign = FurnitureUtil.sign(registree, woodType);
 
         creativeModeTab = FurnitureUtil.creativeModeTab(registree, () -> new ItemStack(bedSingle.value()));
-    }
 
-    public void register(IEventBus modBus) {
-        FurnitureUtil.registerEvents(modBus, registree, woodType);
-
-        modBus.addListener(AddPackFindersEvent.class, event -> {
+        registree.event(AddPackFindersEvent.class, event -> {
             addPackFinder(event, PackType.CLIENT_RESOURCES);
             addPackFinder(event, PackType.SERVER_DATA);
         });
+    }
+
+    public void register(IEventBus modBus) {
+        FurnitureUtil.registerEvents(modBus, registree);
     }
 
     private void addPackFinder(AddPackFindersEvent event, PackType packType) {

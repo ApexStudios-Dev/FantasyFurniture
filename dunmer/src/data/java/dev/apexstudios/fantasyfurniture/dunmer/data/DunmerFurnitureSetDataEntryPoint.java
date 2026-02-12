@@ -4,6 +4,7 @@ import dev.apexstudios.apexcore.api.data.ProviderTypes;
 import dev.apexstudios.apexcore.api.data.ResourceGenerator;
 import dev.apexstudios.apexcore.api.data.provider.context.ProviderListenerContext;
 import dev.apexstudios.apexcore.api.data.provider.model.ModelProvider;
+import dev.apexstudios.apexcore.api.placement.BlockItemPlacementEvent;
 import dev.apexstudios.apexcore.api.util.TagPair;
 import dev.apexstudios.fantasyfurniture.common.block.OvenBlock;
 import dev.apexstudios.fantasyfurniture.common.ctm.CtmPacks;
@@ -11,7 +12,6 @@ import dev.apexstudios.fantasyfurniture.common.util.FurnitureClientDataUtil;
 import dev.apexstudios.fantasyfurniture.common.util.FurnitureDataUtil;
 import dev.apexstudios.fantasyfurniture.common.util.FurnitureUtil;
 import dev.apexstudios.fantasyfurniture.dunmer.common.DunmerFurnitureSet;
-import dev.apexstudios.apexcore.api.placement.BlockItemPlacementEvent;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
@@ -54,7 +54,7 @@ public final class DunmerFurnitureSetDataEntryPoint {
 
             FurnitureDataUtil.registerDataGen(context, pack);
             FurnitureClientDataUtil.registerDataGen(context, pack);
-            CtmPacks.registerDataGen(DunmerFurnitureSet.REGISTREE, pack, false);
+            CtmPacks.registerDataGen(DunmerFurnitureSet.BLOCKS, pack, false);
 
             pack.providing(ProviderTypes.MODELS, this::generateModels)
                     .providing(ProviderTypes.BLOCK_TAGS, (ctx, provider) -> provider

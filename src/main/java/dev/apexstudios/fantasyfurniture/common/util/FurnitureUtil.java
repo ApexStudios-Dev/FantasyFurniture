@@ -1,7 +1,6 @@
 package dev.apexstudios.fantasyfurniture.common.util;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import dev.apexstudios.apexcore.api.multiblock.MultiBlock;
 import dev.apexstudios.fantasyfurniture.common.FantasyFurniture;
 import dev.apexstudios.fantasyfurniture.common.FurnitureBlockEntities;
@@ -30,25 +29,25 @@ import dev.apexstudios.fantasyfurniture.common.block.TableBlock;
 import dev.apexstudios.fantasyfurniture.common.block.WallLightBlock;
 import dev.apexstudios.fantasyfurniture.common.block.WardrobeBlock;
 import dev.apexstudios.fantasyfurniture.common.ctm.CtmPacks;
-import dev.apexstudios.registree.api.Registree;
-import dev.apexstudios.registree.api.holder.DeferredBlock;
-import java.util.Collections;
+import dev.apexstudios.registree.Registree;
+import dev.apexstudios.registree.builder.BlockBuilder;
+import dev.apexstudios.registree.builder.ItemBuilder;
+import dev.apexstudios.registree.registrar.BlockRegistrar;
+import dev.apexstudios.registree.registrar.CreativeModeTabRegistrar;
+import dev.apexstudios.registree.registrar.ItemRegistrar;
 import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Holder;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.TypedInstance;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.ai.village.poi.PoiTypes;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.HangingSignItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemInstance;
 import net.minecraft.world.item.SignItem;
 import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.Block;
@@ -67,6 +66,7 @@ import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.world.level.block.WallHangingSignBlock;
 import net.minecraft.world.level.block.WallSignBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.SignBlockEntity;
 import net.minecraft.world.level.block.entity.SmokerBlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -77,10 +77,7 @@ import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.common.world.poi.ExtendPoiTypesEvent;
-import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent;
-import net.neoforged.neoforge.mixins.BlockEntityTypeAccessor;
+import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.transfer.item.WorldlyContainerWrapper;
 
 public interface FurnitureUtil {
@@ -122,181 +119,232 @@ public interface FurnitureUtil {
     Supplier<BlockBehaviour.Properties> SIGN_BLOCK_PROPERTIES = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.OAK_SIGN);
     Supplier<BlockBehaviour.Properties> WALL_SIGN_BLOCK_PROPERTIES = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.OAK_WALL_SIGN);
 
-    Supplier<Item.Properties> SIGN_ITEM_PROPERTIES = () -> new Item.Properties().stacksTo(16).useBlockDescriptionPrefix();
+    Consumer<Item.Properties> SIGN_ITEM_PROPERTIES = properties -> properties.stacksTo(16).useBlockDescriptionPrefix();
 
-    static <TBlock extends Block> DeferredBlock<TBlock> simpleBlock(Registree registree, String identifier, Function<BlockBehaviour.Properties, TBlock> factory, Supplier<BlockBehaviour.Properties> propertiesFactory) {
-        var block = registree.registerBlock(identifier, factory, propertiesFactory);
-        registree.registerSimpleBlockItem(block);
-        return block;
+    static <TBlock extends Block> BlockBuilder<TBlock> simpleBlock(BlockRegistrar blocks, String identifier, Function<BlockBehaviour.Properties, TBlock> factory, Supplier<BlockBehaviour.Properties> propertiesFactory) {
+        return blocks.builder(identifier, factory)
+                .initialProperties(propertiesFactory)
+                .item();
     }
 
-    static <TBlock extends Block> DeferredBlock<TBlock> planks(Registree registree, Function<BlockBehaviour.Properties, TBlock> factory) {
-        return simpleBlock(registree, Names.PLANKS, factory, PLANK_PROPERTIES);
+    static <TBlock extends Block> BlockBuilder<TBlock> planks(BlockRegistrar blocks, Function<BlockBehaviour.Properties, TBlock> factory) {
+        return simpleBlock(blocks, Names.PLANKS, factory, PLANK_PROPERTIES);
     }
 
-    static <TBlock extends Block> DeferredBlock<TBlock> bricks(Registree registree, Function<BlockBehaviour.Properties, TBlock> factory) {
-        return simpleBlock(registree, Names.BRICKS, factory, STONE_PROPERTIES);
+    static <TBlock extends Block> BlockBuilder<TBlock> bricks(BlockRegistrar blocks, Function<BlockBehaviour.Properties, TBlock> factory) {
+        return simpleBlock(blocks, Names.BRICKS, factory, STONE_PROPERTIES);
     }
 
-    static <TBlock extends Block> DeferredBlock<TBlock> wool(Registree registree, Function<BlockBehaviour.Properties, TBlock> factory) {
-        return simpleBlock(registree, Names.WOOL, factory, WOOL_PROPERTIES);
+    static <TBlock extends Block> BlockBuilder<TBlock> wool(BlockRegistrar blocks, Function<BlockBehaviour.Properties, TBlock> factory) {
+        return simpleBlock(blocks, Names.WOOL, factory, WOOL_PROPERTIES);
     }
 
-    static <TBlock extends CarpetBlock> DeferredBlock<TBlock> carpet(Registree registree, Function<BlockBehaviour.Properties, TBlock> factory) {
-        return simpleBlock(registree, Names.CARPET, factory, CARPET_PROPERTIES);
+    static <TBlock extends CarpetBlock> BlockBuilder<TBlock> carpet(BlockRegistrar blocks, Function<BlockBehaviour.Properties, TBlock> factory) {
+        return simpleBlock(blocks, Names.CARPET, factory, CARPET_PROPERTIES);
     }
 
-    static <TBlock extends DresserBlock> DeferredBlock<TBlock> dresser(Registree registree, Function<BlockBehaviour.Properties, TBlock> factory) {
-        return simpleBlock(registree, Names.DRESSER, factory, DRESSER_PROPERTIES);
+    static <TBlock extends DresserBlock> BlockBuilder<TBlock> dresser(BlockRegistrar blocks, Function<BlockBehaviour.Properties, TBlock> factory) {
+        return simpleBlock(blocks, Names.DRESSER, factory, DRESSER_PROPERTIES)
+                .blockEntityType(FurnitureBlockEntities.INVENTORY);
     }
 
-    static <TBlock extends StoolBlock> DeferredBlock<TBlock> stool(Registree registree, Function<BlockBehaviour.Properties, TBlock> factory) {
-        return simpleBlock(registree, Names.STOOL, factory, STOOL_PROPERTIES);
+    static <TBlock extends StoolBlock> BlockBuilder<TBlock> stool(BlockRegistrar blocks, Function<BlockBehaviour.Properties, TBlock> factory) {
+        return simpleBlock(blocks, Names.STOOL, factory, STOOL_PROPERTIES);
     }
 
-    static <TBlock extends CushionBlock> DeferredBlock<TBlock> cushion(Registree registree, Function<BlockBehaviour.Properties, TBlock> factory) {
-        return simpleBlock(registree, Names.CUSHION, factory, CUSHION_PROPERTIES);
+    static <TBlock extends CushionBlock> BlockBuilder<TBlock> cushion(BlockRegistrar blocks, Function<BlockBehaviour.Properties, TBlock> factory) {
+        return simpleBlock(blocks, Names.CUSHION, factory, CUSHION_PROPERTIES);
     }
 
-    static <TBlock extends LockBoxBlock> DeferredBlock<TBlock> lockbox(Registree registree, Function<BlockBehaviour.Properties, TBlock> factory) {
-        return simpleBlock(registree, Names.LOCKBOX, factory, LOCKBOX_PROPERTIES);
+    static <TBlock extends LockBoxBlock> BlockBuilder<TBlock> lockbox(BlockRegistrar blocks, Function<BlockBehaviour.Properties, TBlock> factory) {
+        return simpleBlock(blocks, Names.LOCKBOX, factory, LOCKBOX_PROPERTIES)
+                .blockEntityType(FurnitureBlockEntities.INVENTORY);
     }
 
-    static <TBlock extends DrawerBlock> DeferredBlock<TBlock> drawer(Registree registree, Function<BlockBehaviour.Properties, TBlock> factory) {
-        return simpleBlock(registree, Names.DRAWER, factory, DRAWER_PROPERTIES);
+    static <TBlock extends DrawerBlock> BlockBuilder<TBlock> drawer(BlockRegistrar blocks, Function<BlockBehaviour.Properties, TBlock> factory) {
+        return simpleBlock(blocks, Names.DRAWER, factory, DRAWER_PROPERTIES)
+                .blockEntityType(FurnitureBlockEntities.INVENTORY);
     }
 
-    static <TBlock extends ChairBlock> DeferredBlock<TBlock> chair(Registree registree, Function<BlockBehaviour.Properties, TBlock> factory) {
-        return simpleBlock(registree, Names.CHAIR, factory, CHAIR_PROPERTIES);
+    static <TBlock extends ChairBlock> BlockBuilder<TBlock> chair(BlockRegistrar blocks, Function<BlockBehaviour.Properties, TBlock> factory) {
+        return simpleBlock(blocks, Names.CHAIR, factory, CHAIR_PROPERTIES);
     }
 
-    static <TBlock extends BookshelfBlock> DeferredBlock<TBlock> bookshelf(Registree registree, Function<BlockBehaviour.Properties, TBlock> factory) {
-        return simpleBlock(registree, Names.BOOKSHELF, factory, BOOKSHELF_PROPERTIES);
+    static <TBlock extends BookshelfBlock> BlockBuilder<TBlock> bookshelf(BlockRegistrar blocks, Function<BlockBehaviour.Properties, TBlock> factory) {
+        return simpleBlock(blocks, Names.BOOKSHELF, factory, BOOKSHELF_PROPERTIES)
+                .blockEntityType(FurnitureBlockEntities.BOOKSHELF);
     }
 
-    static <TBlock extends BedSingleBlock> DeferredBlock<TBlock> bedSingle(Registree registree, Function<BlockBehaviour.Properties, TBlock> factory) {
-        return simpleBlock(registree, Names.BED_SINGLE, factory, BED_PROPERTIES);
+    static <TBlock extends BedSingleBlock> BlockBuilder<TBlock> bedSingle(BlockRegistrar blocks, Function<BlockBehaviour.Properties, TBlock> factory) {
+        return simpleBlock(blocks, Names.BED_SINGLE, factory, BED_PROPERTIES)
+                .poiType(PoiTypes.HOME, BedBlock.PART, BedPart.HEAD);
     }
 
-    static <TBlock extends BedDoubleBlock> DeferredBlock<TBlock> bedDouble(Registree registree, Function<BlockBehaviour.Properties, TBlock> factory) {
-        return simpleBlock(registree, Names.BED_DOUBLE, factory, BED_PROPERTIES);
+    static <TBlock extends BedDoubleBlock> BlockBuilder<TBlock> bedDouble(BlockRegistrar blocks, Function<BlockBehaviour.Properties, TBlock> factory) {
+        return simpleBlock(blocks, Names.BED_DOUBLE, factory, BED_PROPERTIES)
+                .poiType(PoiTypes.HOME, BedBlock.PART, BedPart.HEAD);
     }
 
-    static <TBlock extends FurnitureDoorBlock> DeferredBlock<TBlock> door(Registree registree, String identifier, Supplier<BlockSetType> blockSet, BiFunction<BlockBehaviour.Properties, BlockSetType, TBlock> factory) {
-        return simpleBlock(registree, identifier, properties -> factory.apply(properties, blockSet.get()), DOOR_PROPERTIES);
+    static <TBlock extends FurnitureDoorBlock> BlockBuilder<TBlock> door(BlockRegistrar blocks, String identifier, Supplier<BlockSetType> blockSet, BiFunction<BlockBehaviour.Properties, BlockSetType, TBlock> factory) {
+        return simpleBlock(blocks, identifier, properties -> factory.apply(properties, blockSet.get()), DOOR_PROPERTIES);
     }
 
-    static <TBlock extends FurnitureDoorBlock> DeferredBlock<TBlock> doorSingle(Registree registree, Supplier<BlockSetType> blockSet, BiFunction<BlockBehaviour.Properties, BlockSetType, TBlock> factory) {
-        return door(registree, Names.DOOR_SINGLE, blockSet, factory);
+    static <TBlock extends FurnitureDoorBlock> BlockBuilder<TBlock> doorSingle(BlockRegistrar blocks, Supplier<BlockSetType> blockSet, BiFunction<BlockBehaviour.Properties, BlockSetType, TBlock> factory) {
+        return door(blocks, Names.DOOR_SINGLE, blockSet, factory);
     }
 
-    static <TBlock extends FurnitureDoorBlock> DeferredBlock<TBlock> doorDouble(Registree registree, Supplier<BlockSetType> blockSet, BiFunction<BlockBehaviour.Properties, BlockSetType, TBlock> factory) {
-        return door(registree, Names.DOOR_DOUBLE, blockSet, factory);
+    static <TBlock extends FurnitureDoorBlock> BlockBuilder<TBlock> doorDouble(BlockRegistrar blocks, Supplier<BlockSetType> blockSet, BiFunction<BlockBehaviour.Properties, BlockSetType, TBlock> factory) {
+        return door(blocks, Names.DOOR_DOUBLE, blockSet, factory);
     }
 
-    static <TBlock extends DeskBlock> DeferredBlock<TBlock> desk(Registree registree, boolean left, Function<BlockBehaviour.Properties, TBlock> factory) {
-        return simpleBlock(registree, left ? Names.DESK_LEFT : Names.DESK_RIGHT, factory, DESK_PROPERTIES);
+    static <TBlock extends DeskBlock> BlockBuilder<TBlock> desk(BlockRegistrar blocks, boolean left, Function<BlockBehaviour.Properties, TBlock> factory) {
+        return simpleBlock(blocks, left ? Names.DESK_LEFT : Names.DESK_RIGHT, factory, DESK_PROPERTIES)
+                .blockEntityType(FurnitureBlockEntities.INVENTORY);
     }
 
-    static <TBlock extends PaintingWideBlock> DeferredBlock<TBlock> paintingWide(Registree registree, Function<BlockBehaviour.Properties, TBlock> factory) {
-        return simpleBlock(registree, Names.PAINTING_WIDE, factory, PAINTING_WIDE_PROPERTIES);
+    static <TBlock extends PaintingWideBlock> BlockBuilder<TBlock> paintingWide(BlockRegistrar blocks, Function<BlockBehaviour.Properties, TBlock> factory) {
+        return simpleBlock(blocks, Names.PAINTING_WIDE, factory, PAINTING_WIDE_PROPERTIES);
     }
 
-    static <TBlock extends PaintingSmallBlock> DeferredBlock<TBlock> paintingSmall(Registree registree, Function<BlockBehaviour.Properties, TBlock> factory) {
-        return simpleBlock(registree, Names.PAINTING_SMALL, factory, PAINTING_SMALL_PROPERTIES);
+    static <TBlock extends PaintingSmallBlock> BlockBuilder<TBlock> paintingSmall(BlockRegistrar blocks, Function<BlockBehaviour.Properties, TBlock> factory) {
+        return simpleBlock(blocks, Names.PAINTING_SMALL, factory, PAINTING_SMALL_PROPERTIES);
     }
 
-    static <TBlock extends OvenBlock> DeferredBlock<TBlock> oven(Registree registree, Function<BlockBehaviour.Properties, TBlock> factory) {
-        return simpleBlock(registree, Names.OVEN, factory, OVEN_PROPERTIES);
+    static <TBlock extends OvenBlock> BlockBuilder<TBlock> oven(BlockRegistrar blocks, Function<BlockBehaviour.Properties, TBlock> factory) {
+        return simpleBlock(blocks, Names.OVEN, factory, OVEN_PROPERTIES)
+                .blockEntityType(() -> BlockEntityType.SMOKER)
+                .poiType(PoiTypes.BUTCHER, blockState -> MultiBlock.getIndex(blockState) == 0)
+                .capability(Capabilities.Item.BLOCK, (level, pos, blockState, blockEntity, side) -> {
+                    if(blockEntity == null) {
+                        blockEntity = MultiBlock.getBlockEntity(level, pos, blockState);
+                    }
+
+                    if(!(blockEntity instanceof SmokerBlockEntity smoker)) {
+                        return null;
+                    }
+
+                    return new WorldlyContainerWrapper(smoker, side);
+                });
     }
 
-    static <TBlock extends ChestBlock> DeferredBlock<TBlock> chest(Registree registree, Function<BlockBehaviour.Properties, TBlock> factory) {
-        return simpleBlock(registree, Names.CHEST, factory, CHEST_PROPERTIES);
+    static <TBlock extends ChestBlock> BlockBuilder<TBlock> chest(BlockRegistrar blocks, Function<BlockBehaviour.Properties, TBlock> factory) {
+        return simpleBlock(blocks, Names.CHEST, factory, CHEST_PROPERTIES)
+                .blockEntityType(FurnitureBlockEntities.INVENTORY);
     }
 
-    static <TBlock extends FloorLightBlock> DeferredBlock<TBlock> floorLight(Registree registree, Function<BlockBehaviour.Properties, TBlock> factory) {
-        return simpleBlock(registree, Names.FLOOR_LIGHT, factory, FLOOR_LIGHT_PROPERTIES);
+    static <TBlock extends FloorLightBlock> BlockBuilder<TBlock> floorLight(BlockRegistrar blocks, Function<BlockBehaviour.Properties, TBlock> factory) {
+        return simpleBlock(blocks, Names.FLOOR_LIGHT, factory, FLOOR_LIGHT_PROPERTIES);
     }
 
-    static <TBlock extends ChandelierBlock> DeferredBlock<TBlock> chandelier(Registree registree, Function<BlockBehaviour.Properties, TBlock> factory) {
-        return simpleBlock(registree, Names.CHANDELIER, factory, CHANDELIER_PROPERTIES);
+    static <TBlock extends ChandelierBlock> BlockBuilder<TBlock> chandelier(BlockRegistrar blocks, Function<BlockBehaviour.Properties, TBlock> factory) {
+        return simpleBlock(blocks, Names.CHANDELIER, factory, CHANDELIER_PROPERTIES);
     }
 
-    static <TBlock extends ShelfBlock> DeferredBlock<TBlock> shelf(Registree registree, Function<BlockBehaviour.Properties, TBlock> factory) {
-        return simpleBlock(registree, Names.SHELF, factory, SHELF_PROPERTIES);
+    static <TBlock extends ShelfBlock> BlockBuilder<TBlock> shelf(BlockRegistrar blocks, Function<BlockBehaviour.Properties, TBlock> factory) {
+        return simpleBlock(blocks, Names.SHELF, factory, SHELF_PROPERTIES);
     }
 
-    static <TBlock extends SofaBlock> DeferredBlock<TBlock> sofa(Registree registree, Function<BlockBehaviour.Properties, TBlock> factory) {
-        return simpleBlock(registree, Names.SOFA, factory, SOFA_PROPERTIES);
+    static <TBlock extends SofaBlock> BlockBuilder<TBlock> sofa(BlockRegistrar blocks, Function<BlockBehaviour.Properties, TBlock> factory) {
+        return simpleBlock(blocks, Names.SOFA, factory, SOFA_PROPERTIES);
     }
 
-    static <TBlock extends CounterBlock> DeferredBlock<TBlock> counter(Registree registree, Function<BlockBehaviour.Properties, TBlock> factory) {
-        return simpleBlock(registree, Names.COUNTER, factory, COUNTER_PROPERTIES);
+    static <TBlock extends CounterBlock> BlockBuilder<TBlock> counter(BlockRegistrar blocks, Function<BlockBehaviour.Properties, TBlock> factory) {
+        return simpleBlock(blocks, Names.COUNTER, factory, COUNTER_PROPERTIES)
+                .blockEntityType(FurnitureBlockEntities.INVENTORY);
     }
 
-    static <TBlock extends WallLightBlock> DeferredBlock<TBlock> wallLight(Registree registree, Function<BlockBehaviour.Properties, TBlock> factory) {
-        return simpleBlock(registree, Names.WALL_LIGHT, factory, WALL_LIGHT_PROPERTIES);
+    static <TBlock extends WallLightBlock> BlockBuilder<TBlock> wallLight(BlockRegistrar blocks, Function<BlockBehaviour.Properties, TBlock> factory) {
+        return simpleBlock(blocks, Names.WALL_LIGHT, factory, WALL_LIGHT_PROPERTIES);
     }
 
-    static <TBlock extends BenchBlock> DeferredBlock<TBlock> bench(Registree registree, Function<BlockBehaviour.Properties, TBlock> factory) {
-        return simpleBlock(registree, Names.BENCH, factory, BENCH_PROPERTIES);
+    static <TBlock extends BenchBlock> BlockBuilder<TBlock> bench(BlockRegistrar blocks, Function<BlockBehaviour.Properties, TBlock> factory) {
+        return simpleBlock(blocks, Names.BENCH, factory, BENCH_PROPERTIES);
     }
 
-    static <TBlock extends WardrobeBlock> DeferredBlock<TBlock> wardrobe(Registree registree, Function<BlockBehaviour.Properties, TBlock> factory) {
-        return simpleBlock(registree, Names.WARDROBE, factory, WARDROBE_PROPERTIES);
+    static <TBlock extends WardrobeBlock> BlockBuilder<TBlock> wardrobe(BlockRegistrar blocks, Function<BlockBehaviour.Properties, TBlock> factory) {
+        return simpleBlock(blocks, Names.WARDROBE, factory, WARDROBE_PROPERTIES)
+                .blockEntityType(FurnitureBlockEntities.INVENTORY);
     }
 
-    static <TBlock extends TableBlock> DeferredBlock<TBlock> table(Registree registree, Function<BlockBehaviour.Properties, TBlock> factory) {
-        return simpleBlock(registree, Names.TABLE, factory, TABLE_PROPERTIES);
+    static <TBlock extends TableBlock> BlockBuilder<TBlock> table(BlockRegistrar blocks, String identifier, Function<BlockBehaviour.Properties, TBlock> factory) {
+        return simpleBlock(blocks, identifier, factory, TABLE_PROPERTIES);
     }
 
-    static DeferredBlock<StairBlock> stairs(Registree registree, Supplier<? extends Block> baseBlock) {
-        return simpleBlock(registree, Names.STAIRS, properties -> new StairBlock(baseBlock.get().defaultBlockState(), properties), STAIRS_PROPERTIES);
+    static <TBlock extends TableBlock> BlockBuilder<TBlock> table(BlockRegistrar blocks, Function<BlockBehaviour.Properties, TBlock> factory) {
+        return table(blocks, Names.TABLE, factory);
     }
 
-    static DeferredBlock<SlabBlock> slab(Registree registree) {
-        return simpleBlock(registree, Names.SLAB, SlabBlock::new, SLAB_PROPERTIES);
+    static BlockBuilder<StairBlock> stairs(BlockRegistrar blocks, Supplier<? extends Block> baseBlock) {
+        return simpleBlock(blocks, Names.STAIRS, properties -> new StairBlock(baseBlock.get().defaultBlockState(), properties), STAIRS_PROPERTIES);
     }
 
-    static DeferredBlock<FenceBlock> fence(Registree registree) {
-        return simpleBlock(registree, Names.FENCE, FenceBlock::new, FENCE_PROPERTIES);
+    static BlockBuilder<SlabBlock> slab(BlockRegistrar blocks) {
+        return simpleBlock(blocks, Names.SLAB, SlabBlock::new, SLAB_PROPERTIES);
     }
 
-    static DeferredBlock<FenceGateBlock> fenceGate(Registree registree, Supplier<WoodType> woodType) {
-        return simpleBlock(registree, Names.FENCE_GATE, properties -> new FenceGateBlock(woodType.get(), properties), FENCE_GATE_PROPERTIES);
+    static BlockBuilder<FenceBlock> fence(BlockRegistrar blocks) {
+        return simpleBlock(blocks, Names.FENCE, FenceBlock::new, FENCE_PROPERTIES);
     }
 
-    static DeferredBlock<TrapDoorBlock> trapdoor(Registree registree, Supplier<BlockSetType> blockSet) {
-        return simpleBlock(registree, Names.TRAPDOOR, properties -> new TrapDoorBlock(blockSet.get(), properties), TRAPDOOR_PROPERTIES);
+    static BlockBuilder<FenceGateBlock> fenceGate(BlockRegistrar blocks, Supplier<WoodType> woodType) {
+        return simpleBlock(blocks, Names.FENCE_GATE, properties -> new FenceGateBlock(woodType.get(), properties), FENCE_GATE_PROPERTIES);
     }
 
-    static DeferredBlock<PressurePlateBlock> pressurePlate(Registree registree, Supplier<BlockSetType> blockSet) {
-        return simpleBlock(registree, Names.PRESSURE_PLATE, properties -> new PressurePlateBlock(blockSet.get(), properties), PRESSURE_PLATE_PROPERTIES);
+    static BlockBuilder<TrapDoorBlock> trapdoor(BlockRegistrar blocks, Supplier<BlockSetType> blockSet) {
+        return simpleBlock(blocks, Names.TRAPDOOR, properties -> new TrapDoorBlock(blockSet.get(), properties), TRAPDOOR_PROPERTIES);
+    }
+
+    static BlockBuilder<PressurePlateBlock> pressurePlate(BlockRegistrar blocks, Supplier<BlockSetType> blockSet) {
+        return simpleBlock(blocks, Names.PRESSURE_PLATE, properties -> new PressurePlateBlock(blockSet.get(), properties), PRESSURE_PLATE_PROPERTIES);
     }
 
     static SignPair<CeilingHangingSignBlock, WallHangingSignBlock> hangingSign(Registree registree, Supplier<WoodType> woodType) {
-        var ceilingSign = registree.registerBlock(Names.HANGING_SIGN, properties -> new CeilingHangingSignBlock(woodType.get(), properties), HANGING_SIGN_BLOCK_PROPERTIES);
-        var wallSign = registree.registerBlock(Names.WALL_HANGING_SIGN, properties -> new WallHangingSignBlock(woodType.get(), properties), mutating(WALL_HANGING_SIGN_BLOCK_PROPERTIES, properties -> properties.overrideLootTable(ceilingSign.value().getLootTable())));
-        registree.registerItem(Names.HANGING_SIGN, properties -> new HangingSignItem(ceilingSign.value(), wallSign.value(), properties), SIGN_ITEM_PROPERTIES);
+        var ceilingSign = ceilingHangingSignBlockBuilder(registree.blocks(), Names.HANGING_SIGN, woodType).register();
+        var wallSign = wallHangingSignBlockBuilder(registree.blocks(), Names.WALL_HANGING_SIGN, ceilingSign, woodType).register();
+        signItemBuilder(registree.items(), Names.HANGING_SIGN, ceilingSign, wallSign).register();
         return new SignPair<>(ceilingSign, wallSign);
     }
 
     static SignPair<StandingSignBlock, WallSignBlock> sign(Registree registree, Supplier<WoodType> woodType) {
-        var standingSign = registree.registerBlock(Names.SIGN, properties -> new StandingSignBlock(woodType.get(), properties), SIGN_BLOCK_PROPERTIES);
-        var wallSign = registree.registerBlock(Names.WALL_SIGN, properties -> new WallSignBlock(woodType.get(), properties), mutating(WALL_SIGN_BLOCK_PROPERTIES, properties -> properties.overrideLootTable(standingSign.value().getLootTable())));
-        registree.registerItem(Names.SIGN, properties -> new SignItem(standingSign.value(), wallSign.value(), properties), SIGN_ITEM_PROPERTIES);
+        var standingSign = standingSignBlockBuilder(registree.blocks(), Names.SIGN, woodType).register();
+        var wallSign = wallSignBlockBuilder(registree.blocks(), Names.WALL_SIGN, standingSign, woodType).register();
+        signItemBuilder(registree.items(), Names.SIGN, standingSign, wallSign).register();
         return new SignPair<>(standingSign, wallSign);
     }
 
-    static ResourceKey<CreativeModeTab> creativeModeTab(Registree registree, Supplier<ItemStack> displayItem) {
-        return registree.registerCreativeModeTab(Names.CREATIVE_MODE_TAB, displayItem, (parameters, output) -> registree
-                .asLookup(Registries.ITEM)
-                .filterFeatures(parameters.enabledFeatures())
-                .listElements()
-                .filter(Holder::isBound)
-                .map(Holder::value)
-                .forEach(output::accept)
-        );
+    static BlockBuilder<StandingSignBlock> standingSignBlockBuilder(BlockRegistrar blocks, String identifier, Supplier<WoodType> woodType) {
+        return signBlockBuilder(blocks, identifier, StandingSignBlock::new, woodType, () -> BlockEntityType.SIGN)
+                .initialProperties(SIGN_BLOCK_PROPERTIES);
+    }
+
+    static BlockBuilder<WallSignBlock> wallSignBlockBuilder(BlockRegistrar blocks, String identifier, Supplier<? extends StandingSignBlock> standingSignBlock, Supplier<WoodType> woodType) {
+        return signBlockBuilder(blocks, identifier, WallSignBlock::new, woodType, () -> BlockEntityType.SIGN)
+                .initialProperties(WALL_SIGN_BLOCK_PROPERTIES)
+                .properties(properties -> properties.overrideLootTable(standingSignBlock.get().getLootTable()));
+    }
+
+    static BlockBuilder<CeilingHangingSignBlock> ceilingHangingSignBlockBuilder(BlockRegistrar blocks, String identifier, Supplier<WoodType> woodType) {
+        return signBlockBuilder(blocks, identifier, CeilingHangingSignBlock::new, woodType, () -> BlockEntityType.HANGING_SIGN)
+                .initialProperties(HANGING_SIGN_BLOCK_PROPERTIES);
+    }
+
+    static BlockBuilder<WallHangingSignBlock> wallHangingSignBlockBuilder(BlockRegistrar blocks, String identifier, Supplier<? extends CeilingHangingSignBlock> ceilingHangingSignBlock, Supplier<WoodType> woodType) {
+        return signBlockBuilder(blocks, identifier, WallHangingSignBlock::new, woodType, () -> BlockEntityType.HANGING_SIGN)
+                .initialProperties(WALL_HANGING_SIGN_BLOCK_PROPERTIES)
+                .properties(properties -> properties.overrideLootTable(ceilingHangingSignBlock.get().getLootTable()));
+    }
+
+    static <TBlock extends SignBlock> BlockBuilder<TBlock> signBlockBuilder(BlockRegistrar blocks, String identifier, BiFunction<WoodType, BlockBehaviour.Properties, TBlock> factory, Supplier<WoodType> woodType, Supplier<? extends BlockEntityType<? extends SignBlockEntity>> blockEntityType) {
+        return blocks.builder(identifier, properties -> factory.apply(woodType.get(), properties)).blockEntityType(blockEntityType);
+    }
+
+    static ItemBuilder<SignItem> signItemBuilder(ItemRegistrar items, String identifier, Supplier<? extends SignBlock> standingSignBlock, Supplier<? extends SignBlock> wallSignBlock) {
+        return items.builder(identifier, properties -> new SignItem(standingSignBlock.get(), wallSignBlock.get(), properties))
+                .properties(SIGN_ITEM_PROPERTIES);
+    }
+
+    static ResourceKey<CreativeModeTab> creativeModeTab(Registree registree, Supplier<ItemInstance> displayItem) {
+        return registree.creativeModeTabs().register(Names.CREATIVE_MODE_TAB, displayItem, (parameters, output) -> registree.items().stream().forEach(output::accept));
     }
 
     static <T> Supplier<T> mutating(Supplier<T> initial, Consumer<T> mutator) {
@@ -307,49 +355,9 @@ public interface FurnitureUtil {
         };
     }
 
-    static void registerEvents(IEventBus modBus, Registree registree, Supplier<WoodType> woodType) {
+    static void registerEvents(IEventBus modBus, Registree registree) {
         FantasyFurniture.FURNITURE_MODS.add(registree.namespace());
-
         CtmPacks.register(registree);
-
-        modBus.addListener(BlockEntityTypeAddBlocksEvent.class, event -> {
-            appendValidBlocks(FurnitureBlockEntities.INVENTORY.value(), Names.blocks(
-                    registree, Names.DRESSER, Names.LOCKBOX, Names.DRAWER, Names.DESK_LEFT, Names.DESK_RIGHT,
-                    Names.CHEST, Names.COUNTER, Names.WARDROBE
-            ));
-
-            appendValidBlocks(FurnitureBlockEntities.BOOKSHELF.value(), Names.blocks(registree, Names.BOOKSHELF));
-            appendValidBlocks(BlockEntityType.SMOKER, Names.blocks(registree, Names.OVEN));
-            appendValidBlocks(BlockEntityType.HANGING_SIGN, Names.blocks(registree, Names.HANGING_SIGN, Names.WALL_HANGING_SIGN));
-            appendValidBlocks(BlockEntityType.SIGN, Names.blocks(registree, Names.SIGN, Names.WALL_SIGN));
-        });
-
-        modBus.addListener(ExtendPoiTypesEvent.class, event -> {
-            registerHomePoi(event, registree, Names.BED_SINGLE);
-            registerHomePoi(event, registree, Names.BED_DOUBLE);
-            Names.block(registree, Names.OVEN, block -> event.addBlockToPoi(PoiTypes.BUTCHER, block));
-        });
-
-        modBus.addListener(RegisterCapabilitiesEvent.class, event -> Names.block(
-                registree,
-                Names.OVEN,
-                block -> {
-                    event.registerBlockEntity(Capabilities.Item.BLOCK, BlockEntityType.SMOKER, WorldlyContainerWrapper::new);
-
-                    if(!(block instanceof MultiBlock))
-                        return;
-
-                    event.registerBlock(Capabilities.Item.BLOCK, (level, pos, blockState, blockEntity, side) -> {
-                        if(blockEntity == null)
-                            blockEntity = MultiBlock.getBlockEntity(level, pos, blockState);
-                        if(!(blockEntity instanceof SmokerBlockEntity smoker))
-                            return null;
-
-                        return new WorldlyContainerWrapper(smoker, side);
-                    }, block);
-                })
-        );
-
         registree.registerEvents(modBus);
     }
 
@@ -362,35 +370,14 @@ public interface FurnitureUtil {
         return getShape(shapes.get(facing), blockState, worldPos);
     }
 
-    private static void registerHomePoi(ExtendPoiTypesEvent event, Registree registree, String name) {
-        Names.block(registree, name, block -> event.addStatesToPoi(PoiTypes.HOME, block.getStateDefinition()
-                .getPossibleStates()
-                .stream()
-                .filter(blockState -> blockState.getValue(BedBlock.PART) == BedPart.HEAD)
-                .collect(Collectors.toSet())
-        ));
-    }
-
-    private static void appendValidBlocks(BlockEntityType<?> blockEntityType, Block... blocks) {
-        if(blocks.length == 0)
-            return;
-
-        // neoforges implementation does not work very well
-        // when the given block entity type has 0 valid blocks initially
-        // the determined common super type is pulled from the first registered block
-        // which can differ vastly from the rest of the blocks causing 'IAE' in 'addValidBlock'
-        //
-        // our implementation is basically theirs but without the block type checking
-        // we are assuming that the given blocks are of the correct block types
-        var validBlocks = Sets.newHashSet(blockEntityType.getValidBlocks());
-        Collections.addAll(validBlocks, blocks);
-        ((BlockEntityTypeAccessor) blockEntityType).neoforge$setValidBlocks(validBlocks);
-    }
-
     record SignPair<TSign extends SignBlock, TWall extends SignBlock>(
             DeferredBlock<TSign> sign,
             DeferredBlock<TWall> wall
-    ) { }
+    ) {
+        public boolean is(TypedInstance<Block> instance) {
+            return instance.is(sign) || instance.is(wall);
+        }
+    }
 
     interface Names {
         String PLANKS = "planks";
@@ -437,25 +424,25 @@ public interface FurnitureUtil {
 
         String CREATIVE_MODE_TAB = "furniture_set";
 
-        static void block(Registree registree, String name, Consumer<? super Block> action) {
-            var block = registree.getValue(Registries.BLOCK, name);
+        static void block(BlockRegistrar blocks, String name, Consumer<? super Block> action) {
+            var block = blocks.getValue(name);
 
             if(block != null)
                 action.accept(block);
         }
 
-        static void creativeModeTab(Registree registree, Consumer<ResourceKey<CreativeModeTab>> action) {
-            registree.get(Registries.CREATIVE_MODE_TAB, CREATIVE_MODE_TAB).ifPresent(holder -> action.accept(holder.getKey()));
+        static void creativeModeTab(CreativeModeTabRegistrar creativeModeTabs, Consumer<ResourceKey<CreativeModeTab>> action) {
+            creativeModeTabs.getOptional(CREATIVE_MODE_TAB).ifPresent(holder -> action.accept(holder.getKey()));
         }
 
-        static Block[] blocks(Registree registree, String... names) {
-            var blocks = Lists.<Block>newArrayList();
+        static Block[] blocks(BlockRegistrar blocks, String... names) {
+            var result = Lists.<Block>newArrayList();
 
             for(var name : names) {
-                block(registree, name, blocks::add);
+                block(blocks, name, result::add);
             }
 
-            return blocks.toArray(Block[]::new);
+            return result.toArray(Block[]::new);
         }
     }
 }

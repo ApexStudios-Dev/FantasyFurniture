@@ -19,7 +19,7 @@ public class SignBlockEntityMixin {
     private SignText FantasyFurniture_Bone$createDefaultSignText(SignText original) {
         var self = SignBlockEntity.class.cast(this);
         var blockState = self.getBlockState();
-        return WitherFurnitureSet.FURNITURE_SET.sign.sign().is(blockState) || WitherFurnitureSet.FURNITURE_SET.sign.wall().is(blockState) || WitherFurnitureSet.FURNITURE_SET.hangingSign.sign().is(blockState) || WitherFurnitureSet.FURNITURE_SET.hangingSign.wall().is(blockState) ? new SignText(
+        return WitherFurnitureSet.FURNITURE_SET.sign.is(blockState) || WitherFurnitureSet.FURNITURE_SET.hangingSign.is(blockState) ? new SignText(
                 new Component[] { CommonComponents.EMPTY, CommonComponents.EMPTY, CommonComponents.EMPTY, CommonComponents.EMPTY },
                 new Component[] { CommonComponents.EMPTY, CommonComponents.EMPTY, CommonComponents.EMPTY, CommonComponents.EMPTY },
                 DyeColor.WHITE,

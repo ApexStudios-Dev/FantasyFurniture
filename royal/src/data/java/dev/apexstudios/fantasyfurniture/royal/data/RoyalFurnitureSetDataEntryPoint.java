@@ -83,7 +83,7 @@ public final class RoyalFurnitureSetDataEntryPoint {
 
             FurnitureDataUtil.registerDataGen(context, pack);
             FurnitureClientDataUtil.registerDataGen(context, pack);
-            CtmPacks.registerDataGen(RoyalFurnitureSet.REGISTREE, pack, true);
+            CtmPacks.registerDataGen(RoyalFurnitureSet.BLOCKS, pack, true);
 
             pack.providing(ProviderTypes.MODELS, this::registerModels)
                     .providing(ProviderTypes.BLOCK_TAGS, this::registerBlockTags)

@@ -46,7 +46,7 @@ public final class VenthyrFurnitureSetDataEntryPoint {
 
             FurnitureDataUtil.registerDataGen(context, pack);
             FurnitureClientDataUtil.registerDataGen(context, pack);
-            CtmPacks.registerDataGen(VenthyrFurnitureSet.REGISTREE, pack, false);
+            CtmPacks.registerDataGen(VenthyrFurnitureSet.BLOCKS, pack, false);
 
             pack.providing(ProviderTypes.LOOT_TABLE, (ctx, provider) -> provider
                     .block(blocks -> blocks.dropSelf(VenthyrFurnitureSet.TABLE_CLOTH.value()))

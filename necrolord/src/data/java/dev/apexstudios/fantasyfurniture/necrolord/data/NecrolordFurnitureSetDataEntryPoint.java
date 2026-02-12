@@ -45,7 +45,7 @@ public final class NecrolordFurnitureSetDataEntryPoint {
 
             FurnitureDataUtil.registerDataGen(context, pack);
             FurnitureClientDataUtil.registerDataGen(context, pack);
-            CtmPacks.registerDataGen(NecrolordFurnitureSet.REGISTREE, pack, false);
+            CtmPacks.registerDataGen(NecrolordFurnitureSet.BLOCKS, pack, false);
 
             pack.providing(ProviderTypes.PARTICLES, (ctx, provider) -> provider.sprite(NecrolordFurnitureSet.FLAME_PARTICLE.value(), NecrolordFurnitureSet.FLAME_PARTICLE.getId()));
         });

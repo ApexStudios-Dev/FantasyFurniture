@@ -19,11 +19,11 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.Vec3;
 import org.jspecify.annotations.Nullable;
 
-public final class SimpleBlockEntityRenderer implements BlockEntityRenderer<BlockEntity, SimpleBlockEntityRenderer.RenderState> {
+public final class SimpleBlockEntityRenderer<TBlockEntity extends BlockEntity> implements BlockEntityRenderer<TBlockEntity, SimpleBlockEntityRenderer.RenderState> {
     private final SimpleBlockEntityModel model;
-    private final Function<BlockEntity, Identifier> textureGetter;
+    private final Function<TBlockEntity, Identifier> textureGetter;
 
-    private SimpleBlockEntityRenderer(EntityModelSet models, ModelLayerLocation modelLocation, Function<BlockEntity, Identifier> textureGetter) {
+    private SimpleBlockEntityRenderer(EntityModelSet models, ModelLayerLocation modelLocation, Function<TBlockEntity, Identifier> textureGetter) {
         this.textureGetter = textureGetter;
 
         model = new SimpleBlockEntityModel(models, modelLocation);
@@ -35,7 +35,7 @@ public final class SimpleBlockEntityRenderer implements BlockEntityRenderer<Bloc
     }
 
     @Override
-    public void extractRenderState(BlockEntity blockEntity, RenderState renderState, float partialTick, Vec3 cameraPosition, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+    public void extractRenderState(TBlockEntity blockEntity, RenderState renderState, float partialTick, Vec3 cameraPosition, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
         BlockEntityRenderer.super.extractRenderState(blockEntity, renderState, partialTick, cameraPosition, breakProgress);
         renderState.facing = blockEntity.getBlockState().getValue(SimpleHorizontalDirectionalBlock.FACING);
         renderState.texture = textureGetter.apply(blockEntity);
@@ -46,7 +46,7 @@ public final class SimpleBlockEntityRenderer implements BlockEntityRenderer<Bloc
         model.submitModel(poseStack, nodeCollector, Objects.requireNonNullElseGet(renderState.texture, MissingTextureAtlasSprite::getLocation), renderState.facing, renderState.lightCoords, renderState.breakProgress);
     }
 
-    public static BlockEntityRendererProvider<BlockEntity, RenderState> create(ModelLayerLocation modelLocation, Function<BlockEntity, Identifier> textureGetter) {
+    public static <TBlockEntity extends BlockEntity> BlockEntityRendererProvider<TBlockEntity, RenderState> create(ModelLayerLocation modelLocation, Function<TBlockEntity, Identifier> textureGetter) {
         return context -> new SimpleBlockEntityRenderer(context.entityModelSet(), modelLocation, textureGetter);
     }
 

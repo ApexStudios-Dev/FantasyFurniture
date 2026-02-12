@@ -9,6 +9,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
@@ -29,7 +30,7 @@ public final class FantasyFurnitureDataEntryPoint {
                         provider.tag(FurnitureStationSetup.BINDING_AGENT).withElement(Items.CLAY_BALL);
                     })
                     .providing(ProviderTypes.LOOT_TABLE, (context, provider) -> provider
-                            .fromRegistree(FantasyFurniture.REGISTREE)
+                            .knownElements(Registries.BLOCK, FantasyFurniture.BLOCKS::holders)
                             .block(blocks -> blocks.dropSelf(FurnitureStationSetup.BLOCK.value()))
                     )
                     .providing(ProviderTypes.LANGUAGE, (context, provider) -> provider
@@ -46,7 +47,7 @@ public final class FantasyFurnitureDataEntryPoint {
                             )
                     )
                     .providing(ProviderTypes.MODELS, (context, provider) -> {
-                        provider.fromRegistree(FantasyFurniture.REGISTREE);
+                        provider.knownBlocks(FantasyFurniture.BLOCKS::holders).knownItems(FantasyFurniture.ITEMS::holders);
                         provider.blockModels().createNonTemplateHorizontalBlock(FurnitureStationSetup.BLOCK.value());
                     })
                     .providing(ProviderTypes.BLOCK_TAGS, (context, provider) -> provider

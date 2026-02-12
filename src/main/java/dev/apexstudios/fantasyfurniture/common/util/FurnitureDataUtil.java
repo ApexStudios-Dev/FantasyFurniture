@@ -14,7 +14,7 @@ import dev.apexstudios.apexcore.api.util.TagPair;
 import dev.apexstudios.fantasyfurniture.common.FantasyFurniture;
 import dev.apexstudios.fantasyfurniture.common.station.FurnitureStationRecipeBuilder;
 import dev.apexstudios.fantasyfurniture.common.station.FurnitureStationSetup;
-import dev.apexstudios.registree.api.Registree;
+import dev.apexstudios.registree.Registree;
 import java.util.function.Consumer;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
@@ -44,7 +44,10 @@ public interface FurnitureDataUtil {
     }
 
     static void registerLootTables(DataGenContext context, LootTableProvider provider) {
-        provider.fromRegistree(context.registree);
+        provider.knownElements(
+                Registries.BLOCK,
+                () -> context.registree.registrarOrThrow(Registries.BLOCK).holders()
+        );
 
         provider.block(blocks -> {
             context.block(DataType.LOOT_TABLE, FurnitureUtil.Names.PLANKS, blocks::dropSelf);
@@ -212,7 +215,7 @@ public interface FurnitureDataUtil {
     }
 
     static void furnitureStationRecipe(DataGenContext context, ItemLike result, RecipeProvider provider) {
-        var wool = context.registree.getValue(Registries.BLOCK, FurnitureUtil.Names.WOOL);
+        var wool = context.registree.blocks().getValue(FurnitureUtil.Names.WOOL);
         var woolIngredient = wool == null ? null : Ingredient.of(wool);
 
         FurnitureStationRecipeBuilder
@@ -286,7 +289,7 @@ public interface FurnitureDataUtil {
             if(excluded(dataType, name))
                 return true;
 
-            var value = registree.getValue(registryType, name);
+            var value = registree.registrarOrThrow(registryType).getValue(name);
 
             if(value != null) {
                 action.accept(value);

@@ -7,7 +7,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import dev.apexstudios.apexcore.api.data.provider.context.ProviderOutputContext;
 import dev.apexstudios.apexcore.common.data.provider.BaseProvider;
-import dev.apexstudios.registree.api.Registree;
+import dev.apexstudios.registree.registrar.Registrar;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Map;
@@ -61,8 +61,8 @@ public abstract class SimpleJsonProvider implements BaseProvider {
         from.keySet().forEach(key -> into.add(key, from.get(key).deepCopy()));
     }
 
-    public static boolean isDyeable(Registree registree) {
+    public static boolean isDyeable(Registrar<?> registrar) {
         // TODO: Better check for dyeable blocks
-        return registree.namespace().contains("royal");
+        return registrar.namespace().contains("royal");
     }
 }

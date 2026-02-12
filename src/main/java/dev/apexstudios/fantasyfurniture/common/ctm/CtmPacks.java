@@ -6,14 +6,14 @@ import dev.apexstudios.apexcore.api.data.ResourceGenerator;
 import dev.apexstudios.apexcore.api.data.pack.PackGenerator;
 import dev.apexstudios.fantasyfurniture.common.FantasyFurniture;
 import dev.apexstudios.fantasyfurniture.common.util.FurnitureUtil;
-import dev.apexstudios.registree.api.Registree;
+import dev.apexstudios.registree.Registree;
+import dev.apexstudios.registree.registrar.BlockRegistrar;
 import java.util.List;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.util.Util;
-import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
 
 public final class CtmPacks {
@@ -50,8 +50,8 @@ public final class CtmPacks {
         REFERENCES.add(registree);
     }
 
-    public static void register(IEventBus modBus) {
-        modBus.addListener(AddPackFindersEvent.class, event -> PACKS.stream().filter(CtmPack::isEnabled).forEach(pack -> event.addPackFinders(
+    public static void register() {
+        FantasyFurniture.REGISTREE.event(AddPackFindersEvent.class, event -> PACKS.stream().filter(CtmPack::isEnabled).forEach(pack -> event.addPackFinders(
                 FantasyFurniture.identifier("packs/" + pack.packId()),
                 PackType.CLIENT_RESOURCES,
                 Component.literal(pack.displayName()),
@@ -69,7 +69,7 @@ public final class CtmPacks {
         ));
     }
 
-    public static void registerDataGen(Registree registree, PackGenerator<?> pack, boolean dyeable) {
-        pack.providing(TextureProvider.PROVIDER_TYPE, (context, provider) -> FurnitureUtil.Names.block(registree, FurnitureUtil.Names.WOOL, block -> provider.with(block, dyeable)));
+    public static void registerDataGen(BlockRegistrar blocks, PackGenerator<?> pack, boolean dyeable) {
+        pack.providing(TextureProvider.PROVIDER_TYPE, (context, provider) -> FurnitureUtil.Names.block(blocks, FurnitureUtil.Names.WOOL, block -> provider.with(block, dyeable)));
     }
 }

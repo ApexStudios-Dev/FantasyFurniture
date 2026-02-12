@@ -3,12 +3,9 @@ package dev.apexstudios.fantasyfurniture.decorations.client;
 import dev.apexstudios.apexcore.api.block.Dyeable;
 import dev.apexstudios.fantasyfurniture.decorations.common.DecorationsFurnitureModule;
 import dev.apexstudios.fantasyfurniture.decorations.common.ber.DecorLayerDefinitions;
-import dev.apexstudios.fantasyfurniture.decorations.common.ber.SimpleBlockEntityRenderer;
 import dev.apexstudios.fantasyfurniture.decorations.common.ber.SimpleBlockEntitySpecialRenderer;
 import dev.apexstudios.fantasyfurniture.decorations.common.grave.GravestoneBlockEntity;
-import dev.apexstudios.fantasyfurniture.decorations.common.grave.GravestoneBlockEntityRenderer;
 import dev.apexstudios.fantasyfurniture.decorations.common.grave.GravestoneEditScreen;
-import dev.apexstudios.fantasyfurniture.decorations.common.plushie.PlushieBlockEntityRenderer;
 import dev.apexstudios.fantasyfurniture.decorations.common.plushie.PlushieSpecialModelRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractSignEditScreen;
@@ -26,17 +23,6 @@ public final class DecorationsFurnitureModuleClientSetup {
     public DecorationsFurnitureModuleClientSetup(IEventBus modBus) {
         modBus.addListener(RegisterColorHandlersEvent.Block.class, event -> Dyeable.registerBlockColor(DecorationsFurnitureModule.REGISTREE, event));
 
-        modBus.addListener(EntityRenderersEvent.RegisterRenderers.class, event -> {
-            event.registerBlockEntityRenderer(DecorationsFurnitureModule.GRAVESTONE_BLOCK_ENTITY.value(), GravestoneBlockEntityRenderer::new);
-            event.registerBlockEntityRenderer(DecorationsFurnitureModule.WIDOW_BLOOM_BLOCK_ENTITY.value(), SimpleBlockEntityRenderer.create(DecorLayerDefinitions.WIDOW_BLOOM, blockEntity -> DecorLayerDefinitions.WIDOW_BLOOM_TEXTURE));
-            event.registerBlockEntityRenderer(DecorationsFurnitureModule.PLUSHIE_BLOCK_ENTITY.value(), PlushieBlockEntityRenderer::new);
-
-            event.registerBlockEntityRenderer(DecorationsFurnitureModule.SKULL_BLOSSOM_BLOCK_ENTITY.value(), SimpleBlockEntityRenderer.create(
-                    DecorLayerDefinitions.SKULL_BLOSSOM,
-                    blockEntity -> DecorationsFurnitureModule.SKULL_BLOSSOM_SKELETON_BLOCK.is(blockEntity.getBlockState()) ? DecorLayerDefinitions.SKULL_BLOSSOM_SKELETON_TEXTURE : DecorLayerDefinitions.SKULL_BLOSSOM_WITHER_TEXTURE
-            ));
-        });
-
         modBus.addListener(RegisterSpecialModelRendererEvent.class, event -> {
             event.register(DecorationsFurnitureModule.identifier("widow_bloom"), SimpleBlockEntitySpecialRenderer.WidowBloom.MAP_CODEC);
             event.register(DecorationsFurnitureModule.identifier("skull_blossom"), SimpleBlockEntitySpecialRenderer.SkullBlossom.MAP_CODEC);
@@ -49,7 +35,7 @@ public final class DecorationsFurnitureModuleClientSetup {
         });
 
         NeoForge.EVENT_BUS.addListener(ScreenEvent.Opening.class, event -> {
-            if(event.getNewScreen() instanceof AbstractSignEditScreen screen && !(screen instanceof GravestoneEditScreen) && DecorationsFurnitureModule.GRAVESTONE_BLOCK_ENTITY.is(screen.sign.getType())) {
+            if(event.getNewScreen() instanceof AbstractSignEditScreen screen && !(screen instanceof GravestoneEditScreen) && screen.sign.is(DecorationsFurnitureModule.GRAVESTONE_BLOCK_ENTITY)) {
                 event.setNewScreen(new GravestoneEditScreen(
                         (GravestoneBlockEntity) screen.sign,
                         screen.isFrontText,

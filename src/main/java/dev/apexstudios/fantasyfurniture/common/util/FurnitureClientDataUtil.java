@@ -21,7 +21,6 @@ import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.TexturedModel;
 import net.minecraft.core.Direction;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
@@ -36,14 +35,15 @@ public interface FurnitureClientDataUtil {
 
     static void registerModels(FurnitureDataUtil.DataGenContext context, ModelProvider provider) {
         var blockModels = provider.blockModels();
-        provider.fromRegistree(context.registree());
+        provider.knownBlocks(() -> context.registree().blocks().holders());
+        provider.knownItems(() -> context.registree().items().holders());
 
         context.block(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.PLANKS, blockModels::createTrivialCube);
         context.block(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.BRICKS, blockModels::createTrivialCube);
         context.block(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.WOOL, blockModels::createTrivialCube);
 
         context.block(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.CARPET, block -> {
-            var wool = context.registree().getValueOrThrow(Registries.BLOCK, FurnitureUtil.Names.WOOL);
+            var wool = context.registree().blocks().getValueOrThrow(FurnitureUtil.Names.WOOL);
             createCarpetModel(block, wool, blockModels);
         });
 
@@ -147,7 +147,7 @@ public interface FurnitureClientDataUtil {
         context.block(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.TABLE, block -> createTableModel(block, blockModels));
 
         context.block(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.HANGING_SIGN, block -> {
-            var hangingSign = context.registree().getValueOrThrow(Registries.BLOCK, FurnitureUtil.Names.WALL_HANGING_SIGN);
+            var hangingSign = context.registree().blocks().getValueOrThrow(FurnitureUtil.Names.WALL_HANGING_SIGN);
             blockModels.createHangingSign(context.family().getBaseBlock(), block, hangingSign);
         });
 
@@ -304,7 +304,7 @@ public interface FurnitureClientDataUtil {
     }
 
     static void registerLanguage(FurnitureDataUtil.DataGenContext context, LanguageProvider provider) {
-        FurnitureUtil.Names.creativeModeTab(context.registree(), key -> provider.addCreativeModeTab(key, "Fantasy's Furniture - " + context.englishName()));
+        FurnitureUtil.Names.creativeModeTab(context.registree().creativeModeTabs(), key -> provider.addCreativeModeTab(key, "Fantasy's Furniture - " + context.englishName()));
 
         registerLanguage(context, FurnitureUtil.Names.PLANKS, "Planks", provider);
         registerLanguage(context, FurnitureUtil.Names.BRICKS, "Bricks", provider);

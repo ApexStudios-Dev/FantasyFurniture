@@ -44,7 +44,7 @@ public final class NordicFurnitureSetDataEntryPoint {
 
             FurnitureDataUtil.registerDataGen(context, pack);
             FurnitureClientDataUtil.registerDataGen(context, pack);
-            CtmPacks.registerDataGen(NordicFurnitureSet.REGISTREE, pack, false);
+            CtmPacks.registerDataGen(NordicFurnitureSet.BLOCKS, pack, false);
         });
     }
 }

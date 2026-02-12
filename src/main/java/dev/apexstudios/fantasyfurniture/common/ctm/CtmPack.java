@@ -6,7 +6,8 @@ import com.google.common.collect.MultimapBuilder;
 import dev.apexstudios.apexcore.api.data.ProviderType;
 import dev.apexstudios.apexcore.api.data.pack.FeaturePackGenerator;
 import dev.apexstudios.fantasyfurniture.common.FantasyFurniture;
-import dev.apexstudios.registree.api.Registree;
+import dev.apexstudios.registree.Registree;
+import dev.apexstudios.registree.registrar.BlockRegistrar;
 import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
@@ -45,7 +46,7 @@ public interface CtmPack {
         @Nullable private String packId = null;
         @Nullable private String displayName = null;
         @Nullable private String description = null;
-        private final Multimap<ProviderType<?>, Supplier<? extends BiConsumer<?, Registree>>> providers = MultimapBuilder.hashKeys().linkedHashSetValues().build();
+        private final Multimap<ProviderType<?>, Supplier<? extends BiConsumer<?, BlockRegistrar>>> providers = MultimapBuilder.hashKeys().linkedHashSetValues().build();
 
         private Builder(String modId) {
             this.modId = modId;
@@ -66,12 +67,12 @@ public interface CtmPack {
             return this;
         }
 
-        public <TProvider> Builder providing(ProviderType<TProvider> providerType, Supplier<BiConsumer<TProvider, Registree>> consumer) {
+        public <TProvider> Builder providing(ProviderType<TProvider> providerType, Supplier<BiConsumer<TProvider, BlockRegistrar>> consumer) {
             providers.put(providerType, consumer);
             return this;
         }
 
-        public <TProvider> Builder providing(ProviderType<TProvider> providerType, BiConsumer<TProvider, Registree> consumer) {
+        public <TProvider> Builder providing(ProviderType<TProvider> providerType, BiConsumer<TProvider, BlockRegistrar> consumer) {
             return providing(providerType, () -> consumer);
         }
 
@@ -81,7 +82,7 @@ public interface CtmPack {
                 @Nullable private final String packId = Builder.this.packId;
                 @Nullable private final String displayName = Builder.this.displayName;
                 @Nullable private final String description = Builder.this.description;
-                private final Multimap<ProviderType<?>, Supplier<? extends BiConsumer<?, Registree>>> providers = HashMultimap.create(Builder.this.providers);
+                private final Multimap<ProviderType<?>, Supplier<? extends BiConsumer<?, BlockRegistrar>>> providers = HashMultimap.create(Builder.this.providers);
 
                 @Override
                 public String modId() {
@@ -110,9 +111,11 @@ public interface CtmPack {
 
                 private <TProvider> void provide(FeaturePackGenerator generator, ProviderType<TProvider> providerType) {
                     generator.providing(providerType, (context, provider) -> CtmPacks.REFERENCES
-                            .forEach(registree -> providers
+                            .stream()
+                            .map(Registree::blocks)
+                            .forEach(blocks -> providers
                                     .get(providerType)
-                                    .forEach(listener -> ((BiConsumer<TProvider, Registree>) listener.get()).accept(provider, registree))
+                                    .forEach(listener -> ((BiConsumer<TProvider, BlockRegistrar>) listener.get()).accept(provider, blocks))
                             )
                     );
                 }

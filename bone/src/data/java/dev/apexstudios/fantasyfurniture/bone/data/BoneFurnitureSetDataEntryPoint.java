@@ -53,7 +53,7 @@ public final class BoneFurnitureSetDataEntryPoint {
 
         FurnitureDataUtil.registerDataGen(context, dataPack);
         FurnitureClientDataUtil.registerDataGen(context, assetPack);
-        CtmPacks.registerDataGen(furnitureSet.registree, assetPack, false);
+        CtmPacks.registerDataGen(furnitureSet.blocks, assetPack, false);
     }
 
     private static FeaturePackGenerator createPack(ResourceGenerator generator, PackType packType, BoneFurnitureSet furnitureSet, String englishName) {

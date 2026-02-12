@@ -6,10 +6,9 @@ import dev.apexstudios.apexcore.api.data.ProviderType;
 import dev.apexstudios.apexcore.api.data.provider.context.ProviderOutputContext;
 import dev.apexstudios.fantasyfurniture.common.FantasyFurniture;
 import dev.apexstudios.fantasyfurniture.common.util.FurnitureUtil;
-import dev.apexstudios.registree.api.Registree;
+import dev.apexstudios.registree.registrar.BlockRegistrar;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Util;
 import net.minecraft.world.level.block.Block;
@@ -19,15 +18,15 @@ final class ConTexProvider extends ExtendedBlockStateProvider {
     public static final String ID = "contex";
     public static final ProviderType<ConTexProvider> PROVIDER_TYPE = ProviderType.register(FantasyFurniture.identifier("ctm/" + ID), ConTexProvider::new);
 
-    public void with(Registree registree) {
-        FurnitureUtil.Names.block(registree, FurnitureUtil.Names.CARPET, carpet -> {
-            var wool = registree.getOrThrow(Registries.BLOCK, FurnitureUtil.Names.WOOL);
+    public void with(BlockRegistrar blocks) {
+        FurnitureUtil.Names.block(blocks, FurnitureUtil.Names.CARPET, carpet -> {
+            var wool = blocks.getOrThrow(FurnitureUtil.Names.WOOL);
             var woolRegistryName = wool.key().identifier();
             var texture = woolRegistryName.withPrefix("block/");
             var ctmTexture = woolRegistryName.withPath(path -> "block/ctm/" + path + "_simple");
             BiConsumer<JsonObject, Boolean> additional = (root, isCarpet) -> { };
 
-            if(isDyeable(registree)) {
+            if(isDyeable(blocks)) {
                 var tintTexture = woolRegistryName.withPath(path -> "block/" + path + "_tint");
                 var tintCtmTexture = woolRegistryName.withPath(path -> "block/ctm/" + path + "_tint_simple");
                 additional = (root, isCarpet) -> withTexture(root, tintTexture, tintCtmTexture, isCarpet);
