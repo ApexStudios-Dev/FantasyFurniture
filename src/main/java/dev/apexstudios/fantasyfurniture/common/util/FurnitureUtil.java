@@ -39,15 +39,10 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.MaterialMapper;
-import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
-import net.minecraft.client.resources.model.Material;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.ai.village.poi.PoiTypes;
 import net.minecraft.world.item.CreativeModeTab;
@@ -81,7 +76,6 @@ import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.world.poi.ExtendPoiTypesEvent;
@@ -330,14 +324,6 @@ public interface FurnitureUtil {
             appendValidBlocks(BlockEntityType.SIGN, Names.blocks(registree, Names.SIGN, Names.WALL_SIGN));
         });
 
-        /*modBus.addListener(FMLCommonSetupEvent.class, event -> event.enqueueWork(() -> {
-            // on random launches our wood types are not being registered correctly
-            // leading to null wood types during game initialization
-            // doubly register to attempt to fix this
-            WoodType.register(woodType.get());
-            BlockSetType.register(woodType.get().setType());
-        }));*/
-
         modBus.addListener(ExtendPoiTypesEvent.class, event -> {
             registerHomePoi(event, registree, Names.BED_SINGLE);
             registerHomePoi(event, registree, Names.BED_DOUBLE);
@@ -364,16 +350,6 @@ public interface FurnitureUtil {
                 })
         );
 
-        // Even though vanilla seems to be registering these for us most of the time
-        // there are times in which the game is crashing due to the material not being registered
-        // this is here to ensure that our materials are being registered
-        modBus.addListener(FMLClientSetupEvent.class, event -> event.enqueueWork(() -> {
-            /*Names.block(registree, Names.HANGING_SIGN, block -> registerMaterial(woodType.get(), Sheets.HANGING_SIGN_MATERIALS, Sheets.HANGING_SIGN_MAPPER, true));
-            Names.block(registree, Names.SIGN, block -> registerMaterial(woodType.get(), Sheets.SIGN_MATERIALS, Sheets.SIGN_MAPPER, false));*/
-
-            registree.listElements(Registries.BLOCK).map(Holder::value).forEach(block -> ItemBlockRenderTypes.setRenderLayer(block, ChunkSectionLayer.CUTOUT));
-        }));
-
         registree.registerEvents(modBus);
     }
 
@@ -384,14 +360,6 @@ public interface FurnitureUtil {
     static VoxelShape getShape(Map<Direction, VoxelShape> shapes, BlockState blockState, BlockPos worldPos) {
         var facing = blockState.getValueOrElse(HorizontalDirectionalBlock.FACING, Direction.NORTH);
         return getShape(shapes.get(facing), blockState, worldPos);
-    }
-
-    private static void registerMaterial(WoodType woodType, Map<WoodType, Material> materials, MaterialMapper materialMapper, boolean hanging) {
-        // sometimes vanilla does register these for us
-        // which is causing the 'ISE' to be thrown
-        /*if(materials.putIfAbsent(woodType, materialMapper.apply(ResourceLocation.parse(woodType.name()))) != null)
-            throw new IllegalStateException("Duplicate wood type material registration: " + woodType.name() + " (" + (hanging ? "hanging" : "standing") + ')');*/
-        materials.put(woodType, materialMapper.apply(Identifier.parse(woodType.name())));
     }
 
     private static void registerHomePoi(ExtendPoiTypesEvent event, Registree registree, String name) {

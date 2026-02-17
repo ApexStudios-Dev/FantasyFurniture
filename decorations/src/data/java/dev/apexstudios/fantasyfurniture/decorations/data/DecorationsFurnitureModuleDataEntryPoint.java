@@ -41,6 +41,7 @@ import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
 import net.minecraft.client.data.models.model.TexturedModel;
+import net.minecraft.client.renderer.block.model.Material;
 import net.minecraft.client.renderer.block.model.VariantMutator;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
@@ -575,12 +576,11 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
         createStackedTemplatedModels(DecorationsFurnitureModule.CHALICES_1, DecorationsFurnitureModule.CHALICES_2, TextureSlot.create("chalices"), true, blockModels.modelOutput);
 
         var baseParentPath = ModelLocationUtils.getModelLocation(DecorationsFurnitureModule.CHALICES_0.value());
-        var baseTexturePath = TextureMapping.getBlockTexture(DecorationsFurnitureModule.CHALICES_3.value());
         var cupSlot = TextureSlot.create("cup");
         var fluidSlot = TextureSlot.create("fluid");
-        var textures = TextureMapping.particle(baseTexturePath.withSuffix("_particle"))
-                                     .put(cupSlot, baseTexturePath)
-                                     .put(fluidSlot, baseTexturePath.withSuffix("_tint"));
+        var textures = TextureMapping.particle(TextureMapping.getBlockTexture(DecorationsFurnitureModule.CHALICES_3.value(), "_particle"))
+                                     .put(cupSlot, TextureMapping.getBlockTexture(DecorationsFurnitureModule.CHALICES_3.value(), "_particle"))
+                                     .put(fluidSlot, TextureMapping.getBlockTexture(DecorationsFurnitureModule.CHALICES_3.value(), "_tint"));
 
         var template = ExtendedModelTemplateBuilder
                 .builder()
@@ -764,13 +764,12 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
         var block = holder.value();
         var stackProperty = block.getStackableProperty();
         var templateModelPath = ModelLocationUtils.getModelLocation(templateHolder.value());
-        var baseTexturePath = TextureMapping.getBlockTexture(block);
 
         var textures = new TextureMapping()
-                .put(slot, baseTexturePath);
+                .put(slot, TextureMapping.getBlockTexture(block));
 
         if(replaceParticle) {
-            textures = textures.put(TextureSlot.PARTICLE, baseTexturePath.withSuffix("_particle"));
+            textures = textures.put(TextureSlot.PARTICLE, TextureMapping.getBlockTexture(block, "_particle"));
         }
 
         for(var i = stackProperty.min; i < stackProperty.max + 1; i++) {
@@ -788,11 +787,11 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
         }
     }
 
-    private void createdDyeColorModel(Identifier baseModelPath, Identifier baseTexturePath, TextureSlot slot, boolean replaceParticle, BiConsumer<Identifier, ModelInstance> modelOutput) {
-        var textures = new TextureMapping().put(slot, baseTexturePath.withSuffix("_tint"));
+    private void createdDyeColorModel(Identifier baseModelPath, Material baseTexturePath, TextureSlot slot, boolean replaceParticle, BiConsumer<Identifier, ModelInstance> modelOutput) {
+        var textures = new TextureMapping().put(slot, new Material(baseTexturePath.sprite().withSuffix("_tint")));
 
         if(replaceParticle) {
-            textures = textures.put(TextureSlot.PARTICLE, baseTexturePath.withSuffix("_tint_particle"));
+            textures = textures.put(TextureSlot.PARTICLE, new Material(baseTexturePath.sprite().withSuffix("_tint_particle")));
         }
 
         var template = ExtendedModelTemplateBuilder

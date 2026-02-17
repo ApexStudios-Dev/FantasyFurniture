@@ -12,14 +12,9 @@ import dev.apexstudios.fantasyfurniture.decorations.common.plushie.PlushieBlockE
 import dev.apexstudios.fantasyfurniture.decorations.common.plushie.PlushieSpecialModelRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractSignEditScreen;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
-import net.minecraft.core.Holder;
-import net.minecraft.core.registries.Registries;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterSpecialModelRendererEvent;
@@ -29,12 +24,6 @@ import net.neoforged.neoforge.common.NeoForge;
 @Mod(value = DecorationsFurnitureModule.ID, dist = Dist.CLIENT)
 public final class DecorationsFurnitureModuleClientSetup {
     public DecorationsFurnitureModuleClientSetup(IEventBus modBus) {
-        modBus.addListener(FMLClientSetupEvent.class, event -> event.enqueueWork(() -> DecorationsFurnitureModule.REGISTREE
-                .listElements(Registries.BLOCK)
-                .map(Holder::value)
-                .forEach(block -> ItemBlockRenderTypes.setRenderLayer(block, ChunkSectionLayer.CUTOUT))
-        ));
-
         modBus.addListener(RegisterColorHandlersEvent.Block.class, event -> Dyeable.registerBlockColor(DecorationsFurnitureModule.REGISTREE, event));
 
         modBus.addListener(EntityRenderersEvent.RegisterRenderers.class, event -> {
