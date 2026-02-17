@@ -1,0 +1,14 @@
+{
+  "type": "connecting",
+  "parent": "apexcore:block/carpet_tinted",
+  "connections": [
+    {
+      "type": "is_same_block"
+    }
+  ],
+  "loader": "fusion:model",
+  "textures": {
+    "wool": "fantasyfurniture_royal:block/ctm/wool_simple_vertical",
+    "wool_tinted": "fantasyfurniture_royal:block/ctm/wool_tint_simple_vertical"
+  }
+}

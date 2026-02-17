@@ -1,0 +1,28 @@
+{
+  "neoforge:definition_type": "contex:definition",
+  "contex_meta": [
+    {
+      "type": "contex:carpet_full",
+      "textures": [
+        {
+          "ct_texture": "fantasyfurniture_royal:block/ctm/wool_simple",
+          "main_texture": "fantasyfurniture_royal:block/wool"
+        }
+      ]
+    },
+    {
+      "type": "contex:carpet_full",
+      "textures": [
+        {
+          "ct_texture": "fantasyfurniture_royal:block/ctm/wool_tint_simple",
+          "main_texture": "fantasyfurniture_royal:block/wool_tint"
+        }
+      ]
+    }
+  ],
+  "variants": {
+    "": {
+      "model": "fantasyfurniture_royal:block/carpet"
+    }
+  }
+}
