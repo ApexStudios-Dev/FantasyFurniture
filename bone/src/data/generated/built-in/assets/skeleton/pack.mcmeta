@@ -2,6 +2,9 @@
   "pack": {
     "description": "Skeleton assets",
     "max_format": 81,
-    "min_format": 81
+    "min_format": [
+      81,
+      1
+    ]
   }
 }

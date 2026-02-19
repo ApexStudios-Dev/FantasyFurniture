@@ -2,6 +2,9 @@
   "pack": {
     "description": "Fantasy's Furniture Fusion CTM support",
     "max_format": 81,
-    "min_format": 81
+    "min_format": [
+      81,
+      1
+    ]
   }
 }
