@@ -14,10 +14,10 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.util.Unit;
 import org.jspecify.annotations.Nullable;
 
-final class SimpleBlockEntityModel {
+public final class SimpleBlockEntityModel {
     public final Model.Simple model;
 
-    SimpleBlockEntityModel(EntityModelSet models, ModelLayerLocation modelLocation) {
+    public SimpleBlockEntityModel(EntityModelSet models, ModelLayerLocation modelLocation) {
         model = new Model.Simple(models.bakeLayer(modelLocation), RenderTypes::entityTranslucent);
     }
 

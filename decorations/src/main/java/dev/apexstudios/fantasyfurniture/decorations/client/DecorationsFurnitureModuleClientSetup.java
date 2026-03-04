@@ -24,7 +24,7 @@ import net.neoforged.neoforge.common.NeoForge;
 @Mod(value = DecorationsFurnitureModule.ID, dist = Dist.CLIENT)
 public final class DecorationsFurnitureModuleClientSetup {
     public DecorationsFurnitureModuleClientSetup(IEventBus modBus) {
-        modBus.addListener(RegisterColorHandlersEvent.Block.class, event -> Dyeable.registerBlockColor(DecorationsFurnitureModule.REGISTREE, event));
+        modBus.addListener(RegisterColorHandlersEvent.BlockTintSources.class, event -> Dyeable.registerBlockColor(DecorationsFurnitureModule.REGISTREE, event));
 
         modBus.addListener(EntityRenderersEvent.RegisterRenderers.class, event -> {
             event.registerBlockEntityRenderer(DecorationsFurnitureModule.GRAVESTONE_BLOCK_ENTITY.value(), GravestoneBlockEntityRenderer::new);

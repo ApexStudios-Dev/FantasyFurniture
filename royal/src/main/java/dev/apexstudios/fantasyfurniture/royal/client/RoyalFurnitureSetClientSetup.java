@@ -10,6 +10,6 @@ import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 @Mod(value = RoyalFurnitureSet.ID, dist = Dist.CLIENT)
 public final class RoyalFurnitureSetClientSetup {
     public RoyalFurnitureSetClientSetup(IEventBus modBus) {
-        modBus.addListener(RegisterColorHandlersEvent.Block.class, event -> Dyeable.registerBlockColor(RoyalFurnitureSet.REGISTREE, event));
+        modBus.addListener(RegisterColorHandlersEvent.BlockTintSources.class, event -> Dyeable.registerBlockColor(RoyalFurnitureSet.REGISTREE, event));
     }
 }

@@ -47,7 +47,7 @@ public final class PlushieSpecialModelRenderer implements SpecialModelRenderer<P
         model.root().getExtentsForGui(poseStack, output);
     }
 
-    public record Unbaked() implements SpecialModelRenderer.Unbaked {
+    public record Unbaked() implements SpecialModelRenderer.Unbaked<PlushieRenderState> {
         public static final MapCodec<Unbaked> MAP_CODEC = MapCodec.unit(Unbaked::new);
 
         @Override

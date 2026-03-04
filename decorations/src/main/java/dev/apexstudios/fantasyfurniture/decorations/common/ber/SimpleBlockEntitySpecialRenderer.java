@@ -34,7 +34,7 @@ public final class SimpleBlockEntitySpecialRenderer implements NoDataSpecialMode
         model.model.root().getExtentsForGui(poseStack, output);
     }
 
-    public static abstract class Unbaked implements SpecialModelRenderer.Unbaked {
+    public static abstract class Unbaked implements SpecialModelRenderer.Unbaked<Void> {
         private final ModelLayerLocation modelLocation;
         private final Identifier texture;
 
@@ -44,7 +44,7 @@ public final class SimpleBlockEntitySpecialRenderer implements NoDataSpecialMode
         }
 
         @Override
-        public SpecialModelRenderer<?> bake(BakingContext context) {
+        public SpecialModelRenderer<Void> bake(BakingContext context) {
             return new SimpleBlockEntitySpecialRenderer(new SimpleBlockEntityModel(context.entityModelSet(), modelLocation), texture);
         }
     }

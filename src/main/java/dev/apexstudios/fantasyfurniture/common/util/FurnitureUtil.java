@@ -76,6 +76,7 @@ import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.world.poi.ExtendPoiTypesEvent;
@@ -349,6 +350,10 @@ public interface FurnitureUtil {
                     }, block);
                 })
         );
+
+        if(FMLEnvironment.getDist().isClient()) {
+            FurnitureClientUtil.registerEvents(modBus, registree, woodType);
+        }
 
         registree.registerEvents(modBus);
     }

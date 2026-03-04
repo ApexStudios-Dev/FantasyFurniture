@@ -22,7 +22,7 @@ neoForge {
 }
 
 repositories {
-    maven("https://prmaven.neoforged.net/NeoForge/pr2975") {
+    maven("https://prmaven.neoforged.net/NeoForge/pr2988") {
         content {
             includeModule("net.neoforged", "neoforge")
             includeModule("net.neoforged", "testframework")
