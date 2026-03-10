@@ -2,7 +2,7 @@ package dev.apexstudios.fantasyfurniture.common.station;
 
 import dev.apexstudios.apexcore.api.menu.SimpleMenuScreen;
 import dev.apexstudios.fantasyfurniture.common.FantasyFurniture;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -59,18 +59,12 @@ public final class FurnitureStationScreen extends AbstractContainerScreen<Furnit
     }
 
     @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-        super.render(graphics, mouseX, mouseY, partialTick);
-        renderTooltip(graphics, mouseX, mouseY);
-    }
-
-    @Override
-    protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+    protected void extractLabels(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY) {
 
     }
 
     @Override
-    protected void renderBg(GuiGraphics graphics, float partialTick, int mouseX, int mouseY) {
+    public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         renderWindow(graphics);
 
         graphics.blitSprite(RenderPipelines.GUI_TEXTURED, SPRITE_ARROW, recipeX + (18 * 3) + 15, recipeY - 18 - 7, 60, 16);
@@ -87,8 +81,8 @@ public final class FurnitureStationScreen extends AbstractContainerScreen<Furnit
     }
 
     @Override
-    protected void renderTooltip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-        super.renderTooltip(guiGraphics, mouseX, mouseY);
+    protected void extractTooltip(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY) {
+        super.extractTooltip(guiGraphics, mouseX, mouseY);
 
         if (menu.getCarried().isEmpty() && hoveredSlot != null && hoveredSlot.hasItem())
             return;
@@ -197,7 +191,7 @@ public final class FurnitureStationScreen extends AbstractContainerScreen<Furnit
         scrollBarY = recipeBackgroundY;
     }
 
-    private void renderWindow(GuiGraphics graphics) {
+    private void renderWindow(GuiGraphicsExtractor graphics) {
         graphics.pose().pushMatrix();
         graphics.pose().translate(leftPos, topPos);
         graphics.blitSprite(RenderPipelines.GUI_TEXTURED, SimpleMenuScreen.WINDOW_SPRITE, 0, 0, imageWidth, imageHeight + 1);
@@ -209,7 +203,7 @@ public final class FurnitureStationScreen extends AbstractContainerScreen<Furnit
         graphics.pose().popMatrix();
     }
 
-    private void renderButtons(GuiGraphics graphics, int mouseX, int mouseY, boolean drawItem) {
+    private void renderButtons(GuiGraphicsExtractor graphics, int mouseX, int mouseY, boolean drawItem) {
         var maxSlots = recipeColumns * recipeRows;
         var lastIndex = startIndex + maxSlots;
         var recipes = menu.recipes();
@@ -220,7 +214,7 @@ public final class FurnitureStationScreen extends AbstractContainerScreen<Furnit
             var slotY = recipeY + slotIndex / recipeColumns * AbstractContainerMenu.SLOT_SIZE;
 
             if (drawItem) {
-                graphics.renderItem(displayStack(index), slotX + 1, slotY + 1);
+                graphics.item(displayStack(index), slotX + 1, slotY + 1);
             } else {
                 var slotSprite = SPRITE_RECIPE;
 

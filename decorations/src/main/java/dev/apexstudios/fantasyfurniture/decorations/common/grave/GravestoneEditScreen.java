@@ -1,7 +1,7 @@
 package dev.apexstudios.fantasyfurniture.decorations.common.grave;
 
 import dev.apexstudios.fantasyfurniture.decorations.common.DecorationsFurnitureModule;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractSignEditScreen;
 import net.minecraft.client.gui.screens.inventory.SignEditScreen;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -18,7 +18,7 @@ public final class GravestoneEditScreen extends AbstractSignEditScreen {
     }
 
     @Override
-    protected void renderSignBackground(GuiGraphics graphics) {
+    protected void extractSignBackground(GuiGraphicsExtractor graphics) {
         graphics.blit(
                 RenderPipelines.GUI_TEXTURED,
                 TEXTURE,

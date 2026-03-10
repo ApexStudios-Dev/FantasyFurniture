@@ -11,7 +11,6 @@ import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.player.PlayerModelType;
-import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import org.joml.Vector3fc;
 
@@ -25,9 +24,9 @@ public final class PlushieSpecialModelRenderer implements SpecialModelRenderer<P
     }
 
     @Override
-    public void submit(PlushieRenderState renderState, ItemDisplayContext type, PoseStack poseStack, SubmitNodeCollector nodes, int lightCoords, int overlayCoords, boolean hasFoil, int outlineColor) {
+    public void submit(PlushieRenderState renderState, PoseStack poseStack, SubmitNodeCollector nodes, int lightCoords, int overlayCoords, boolean hasFoil, int outlineColor) {
         var model = modelGetter.apply(renderState.skin.model());
-        PlushieBlockEntityRenderer.submitPlushie(type, poseStack, nodes, lightCoords, model, renderState, outlineColor, null);
+        PlushieBlockEntityRenderer.submitPlushie(poseStack, nodes, lightCoords, model, renderState, outlineColor, null);
     }
 
     @Override
@@ -42,7 +41,7 @@ public final class PlushieSpecialModelRenderer implements SpecialModelRenderer<P
         var renderState = extractArgument(new ItemStack(DecorationsFurnitureModule.PLUSHIE_BLOCK.value()));
         var model = modelGetter.apply(renderState.skin.model());
         var poseStack = new PoseStack();
-        PlushieBlockEntityRenderer.setupForModel(poseStack, renderState, null);
+        PlushieBlockEntityRenderer.setupForModel(poseStack, renderState);
         model.setupAnim(new AvatarRenderState());
         model.root().getExtentsForGui(poseStack, output);
     }

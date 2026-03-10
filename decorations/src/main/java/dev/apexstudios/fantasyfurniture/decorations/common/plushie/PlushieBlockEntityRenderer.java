@@ -18,7 +18,6 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Util;
 import net.minecraft.world.entity.player.PlayerModelType;
-import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.block.state.properties.RotationSegment;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -58,7 +57,7 @@ public final class PlushieBlockEntityRenderer implements BlockEntityRenderer<Plu
 
     @Override
     public void submit(RenderState renderState, PoseStack poseStack, SubmitNodeCollector nodes, CameraRenderState cameraRenderState) {
-        submitPlushie(null, poseStack, nodes, renderState.lightCoords, modelGetter.apply(renderState.plushieRenderState.skin.model()), renderState.plushieRenderState, 0, renderState.breakProgress);
+        submitPlushie(poseStack, nodes, renderState.lightCoords, modelGetter.apply(renderState.plushieRenderState.skin.model()), renderState.plushieRenderState, 0, renderState.breakProgress);
 
         if(renderState.playerName != null) {
             nodes.submitNameTag(poseStack, new Vec3(.5D, .65D, .5D), 0, renderState.playerName, true, renderState.lightCoords, renderState.distanceToCameraSq, cameraRenderState);
@@ -69,14 +68,14 @@ public final class PlushieBlockEntityRenderer implements BlockEntityRenderer<Plu
         }*/
     }
 
-    public static void submitPlushie(@Nullable ItemDisplayContext displayContext, PoseStack poseStack, SubmitNodeCollector nodes, int lightCoords, PlushieModel model, PlushieRenderState plushieRenderState, int outlineColor, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+    public static void submitPlushie(PoseStack poseStack, SubmitNodeCollector nodes, int lightCoords, PlushieModel model, PlushieRenderState plushieRenderState, int outlineColor, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
         poseStack.pushPose();
-        setupForModel(poseStack, plushieRenderState, displayContext);
+        setupForModel(poseStack, plushieRenderState);
         nodes.submitModel(model, new AvatarRenderState(), poseStack, plushieRenderState.renderType, lightCoords, OverlayTexture.NO_OVERLAY, outlineColor, breakProgress);
         poseStack.popPose();
     }
 
-    public static void setupForModel(PoseStack poseStack, PlushieRenderState renderState, @Nullable ItemDisplayContext displayContext) {
+    public static void setupForModel(PoseStack poseStack, PlushieRenderState renderState) {
         poseStack.translate(.5F, 0F, .5F);
 
         if(renderState.facing != null) {
@@ -89,9 +88,9 @@ public final class PlushieBlockEntityRenderer implements BlockEntityRenderer<Plu
         poseStack.scale(.625F, .625F, .625F);
         poseStack.translate(0F, -1F, 0F);
 
-        if(displayContext == ItemDisplayContext.HEAD) {
+        /*if(head) {
             poseStack.translate(0F, -1.5F, 0F);
-        }
+        }*/
     }
 
     public static Function<PlayerModelType, PlushieModel> modelGetter(EntityModelSet entityModelSet) {
