@@ -45,13 +45,6 @@ afterEvaluate {
 }
 
 repositories {
-    maven("https://prmaven.neoforged.net/NeoForge/pr2993") {
-        content {
-            includeModule("net.neoforged", "neoforge")
-            includeModule("net.neoforged", "testframework")
-        }
-    }
-
     maven("https://maven.apexmodder.com/prs/Registree/pr17") {
         content {
             includeModule("dev.apexstudios", "registree")
