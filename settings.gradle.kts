@@ -1,13 +1,13 @@
 pluginManagement {
     repositories {
-        maven("https://maven.apexstudios.dev/proxy")
+        maven("https://maven.apexmodder.com/proxy")
         gradlePluginPortal()
     }
 
     resolutionStrategy {
         eachPlugin {
             if(requested.id.namespace == "apex-conventions") {
-                useVersion("0.1.91")
+                useVersion("0.1.94")
             }
         }
     }
@@ -32,13 +32,13 @@ dependencyResolutionManagement {
             }
         }
 
-        maven("https://maven.apexstudios.dev/prs/Registree/pr17") {
+        maven("https://maven.apexmodder.com/prs/Registree/pr17") {
             content {
                 includeModule("dev.apexstudios", "registree")
             }
         }
 
-        maven("https://maven.apexstudios.dev/prs/ApexCore-Private/pr70") {
+        maven("https://maven.apexmodder.com/prs/ApexCore-Private/pr70") {
             content {
                 includeModule("dev.apexstudios", "apexcore")
             }
