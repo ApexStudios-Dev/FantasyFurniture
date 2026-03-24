@@ -21,7 +21,7 @@ dependencyResolutionManagement {
         library("apexcore", "dev.apexstudios", "apexcore").version("26.1.0")
         bundle("apexcore", listOf("registree", "apexcore"))
 
-        library("contex", "curse.maven", "contex-1296805").version("7051640")
+        library("contex", "curse.maven", "contex-1296805").version("7806346")
     }
 }
 
