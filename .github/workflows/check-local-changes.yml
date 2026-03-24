@@ -134,7 +134,7 @@ jobs:
   check-local-changes-decorations:
     name: Check Local Changes (Decorations)
     needs: determine-changes
-    if: ${{ needs.determine-changes.outputs.decorations-changed }}
+    if: ${{ needs.determine-changes.outputs.decorations-changed == 'true' }}
     uses: ApexStudios-Dev/.github/.github/workflows/_check-local-changes.yml@master
     secrets: inherit
     with:
