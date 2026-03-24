@@ -1,0 +1,24 @@
+{
+  "neoforge:definition_type": "contex:definition",
+  "contex_meta": [
+    {
+      "type": "contex:carpet_full",
+      "textures": [
+        {
+          "ct_textures": {
+            "compact/cross": "fantasyfurniture_nordic:block/ctm/wool_center",
+            "compact/full": "fantasyfurniture_nordic:block/ctm/wool_empty",
+            "compact/hor": "fantasyfurniture_nordic:block/ctm/wool_horizontal",
+            "compact/vert": "fantasyfurniture_nordic:block/ctm/wool_vertical"
+          },
+          "main_texture": "fantasyfurniture_nordic:block/wool"
+        }
+      ]
+    }
+  ],
+  "variants": {
+    "": {
+      "model": "fantasyfurniture_nordic:block/carpet"
+    }
+  }
+}
