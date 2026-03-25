@@ -19,23 +19,28 @@ final class ConTexProvider extends ExtendedBlockStateProvider {
     public static final String XFACT_ID = "contex";
     public static final String SOARYN_ID = "context_matters";
 
+    private static final String HORIZONTAL_SUFFIX = "_horizontal";
+    private static final String VERTICAL_SUFFIX = "_vertical";
+    private static final String CENTER_SUFFIX = "_center";
+    private static final String EMPTY_SUFFIX = "_empty";
+
     public static final ProviderType<ConTexProvider> XFACT_PROVIDER_TYPE = create(XFACT_ID, "definition", XFACT_ID + "_meta", "carpet_full", (textures, main, ctmBase) -> {
         textures.addProperty("main_texture", main.toString());
 
         textures.add("ct_textures", Util.make(new JsonObject(), ctmTextures -> {
-            ctmTextures.addProperty("compact/hor", ctmBase.withSuffix("_horizontal").toString());
-            ctmTextures.addProperty("compact/vert", ctmBase.withSuffix("_vertical").toString());
-            ctmTextures.addProperty("compact/cross", ctmBase.withSuffix("_center").toString());
-            ctmTextures.addProperty("compact/full", ctmBase.withSuffix("_empty").toString());
+            ctmTextures.addProperty("compact/hor", ctmBase.withSuffix(HORIZONTAL_SUFFIX).toString());
+            ctmTextures.addProperty("compact/vert", ctmBase.withSuffix(VERTICAL_SUFFIX).toString());
+            ctmTextures.addProperty("compact/cross", ctmBase.withSuffix(CENTER_SUFFIX).toString());
+            ctmTextures.addProperty("compact/full", ctmBase.withSuffix(EMPTY_SUFFIX).toString());
         }));
     });
 
     public static final ProviderType<ConTexProvider> SOARYN_PROVIDER_TYPE = create(SOARYN_ID, "connected_definition", "metadata", "carpet_full_down", (textures, main, ctmBase) -> {
         textures.addProperty("none", main.toString());
-        textures.addProperty("horizontal", ctmBase.withSuffix("_horizontal").toString());
-        textures.addProperty("vertical", ctmBase.withSuffix("_vertical").toString());
-        textures.addProperty("full", ctmBase.withSuffix("_empty").toString());
-        textures.addProperty("cardinal", ctmBase.withSuffix("_center").toString());
+        textures.addProperty("horizontal", ctmBase.withSuffix(HORIZONTAL_SUFFIX).toString());
+        textures.addProperty("vertical", ctmBase.withSuffix(VERTICAL_SUFFIX).toString());
+        textures.addProperty("full", ctmBase.withSuffix(CENTER_SUFFIX).toString());
+        textures.addProperty("cardinal", ctmBase.withSuffix(EMPTY_SUFFIX).toString());
     });
 
     private final String modId;
