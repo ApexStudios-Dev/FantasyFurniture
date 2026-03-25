@@ -39,8 +39,8 @@ final class ConTexProvider extends ExtendedBlockStateProvider {
         textures.addProperty("none", main.toString());
         textures.addProperty("horizontal", ctmBase.withSuffix(HORIZONTAL_SUFFIX).toString());
         textures.addProperty("vertical", ctmBase.withSuffix(VERTICAL_SUFFIX).toString());
-        textures.addProperty("full", ctmBase.withSuffix(CENTER_SUFFIX).toString());
-        textures.addProperty("cardinal", ctmBase.withSuffix(EMPTY_SUFFIX).toString());
+        textures.addProperty("full", ctmBase.withSuffix(EMPTY_SUFFIX).toString());
+        textures.addProperty("cardinal", ctmBase.withSuffix(CENTER_SUFFIX).toString());
     });
 
     private final String modId;
