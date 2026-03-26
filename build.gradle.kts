@@ -64,6 +64,7 @@ dependencies {
     accessTransformers(libs.apexcore)
 
     compileOnly(libs.contex)
+    compileOnly(libs.contextmatters)
 
     // for some reason without this datagen fails when run locally (in my larger multi project workspace) while CI runs just fine
     if(rootProject != project) {
