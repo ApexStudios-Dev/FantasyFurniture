@@ -1,37 +1,54 @@
 plugins {
-    id("apex-conventions.neoforge")
-    id("apex-conventions.neoforge-datagen")
-    id("apex-conventions.maven-publishing")
+    `java-library`
+    `maven-publish`
+
+    id("net.neoforged.moddev")
     id("apex-conventions.jspecify")
 }
 
-group = "dev.apexstudios"
+group = rootProject.group
+base.archivesName = "fantasyfurniture-bone"
+version = rootProject.version
 
-neoForge {
-    version = libs.versions.neoforge.get()
-
-    afterEvaluate {
-        runs.getByName("data") {
-            programArguments.addAll(
-                "--mod", "fantasyfurniture_bone_skeleton",
-                "--mod", "fantasyfurniture_bone_wither",
-                "--flat"
-            )
+sourceSets {
+    main {
+        resources {
+            exclude(".cache")
+            srcDir("src/data/generated")
         }
+    }
+
+    create("data") {
+        resources.setSrcDirs(files())
+
+        compileClasspath += sourceSets[SourceSet.MAIN_SOURCE_SET_NAME].output
+        runtimeClasspath += sourceSets[SourceSet.MAIN_SOURCE_SET_NAME].output
     }
 }
 
-repositories {
-    maven("https://maven.apexmodder.com/prs/Registree/pr17") {
-        content {
-            includeModule("dev.apexstudios", "registree")
-        }
+neoForge {
+    version = libs.versions.neoforge.get()
+    addModdingDependenciesTo(sourceSets["data"])
+
+    mods.create("data") {
+        sourceSet(sourceSets[SourceSet.MAIN_SOURCE_SET_NAME])
+        sourceSet(sourceSets["data"])
     }
 
-    maven("https://maven.apexmodder.com/prs/ApexCore-Private/pr70") {
-        content {
-            includeModule("dev.apexstudios", "apexcore")
-        }
+    runs.create("data") {
+        clientData()
+
+        ideName.set("Data - Bone")
+        ideFolderName.set("Data")
+        sourceSet.set(sourceSets["data"])
+        loadedMods.set(listOf(mods["data"]))
+
+        programArguments.addAll(
+            "--mod", "fantasyfurniture_bone",
+            "--all",
+            "--output", file("src/data/generated").absolutePath,
+            "--existing", file("src/${SourceSet.MAIN_SOURCE_SET_NAME}/resources").absolutePath
+        )
     }
 }
 
@@ -40,7 +57,38 @@ dependencies {
     "dataImplementation"(libs.bundles.apexcore)
     accessTransformers(libs.apexcore)
 
-    val furnitureProject = findProject(":FantasyFurniture") ?: rootProject
-    implementation(furnitureProject)
-    "dataImplementation"(furnitureProject)
+    implementation(rootProject)
+    "dataImplementation"(rootProject)
+}
+
+java {
+    toolchain.vendor.set(JvmVendorSpec.JETBRAINS)
+    withSourcesJar()
+}
+
+publishing {
+    publications.create("release", MavenPublication::class.java) {
+        afterEvaluate {
+            groupId = "dev.apexstudios"
+            artifactId = "fantasyfurniture-bone"
+            version = project.version as String
+        }
+
+        from(components["java"])
+    }
+
+    repositories {
+        if(System.getenv("MAVEN_USERNAME") != null && System.getenv("MAVEN_PASSWORD") != null) {
+            maven("https://maven.apexmodder.com/releases") {
+                name = "ApexStudios-Releases"
+
+                credentials {
+                    username = System.getenv("MAVEN_USERNAME")
+                    password = System.getenv("MAVEN_PASSWORD")
+                }
+
+                authentication.create<BasicAuthentication>("basic")
+            }
+        }
+    }
 }

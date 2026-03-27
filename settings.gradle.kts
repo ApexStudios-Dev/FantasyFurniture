@@ -1,13 +1,17 @@
 pluginManagement {
     repositories {
-        maven("https://maven.apexmodder.com/proxy")
         gradlePluginPortal()
+        maven("https://maven.apexmodder.com/releases")
     }
 
-    resolutionStrategy {
-        eachPlugin {
-            if(requested.id.namespace == "apex-conventions") {
-                useVersion("0.1.94")
+    if(file("../../ApexGradle").exists()) {
+        includeBuild("../../ApexGradle")
+    } else {
+        resolutionStrategy {
+            eachPlugin {
+                if(requested.id.namespace == "apex-conventions") {
+                    useVersion("0.1.94")
+                }
             }
         }
     }
@@ -15,7 +19,7 @@ pluginManagement {
 
 dependencyResolutionManagement {
     versionCatalogs.create("libs") {
-        version("neoforge", "26.1.0.1-beta")
+        version("neoforge", "26.1.0.7-beta")
 
         library("registree", "dev.apexstudios", "registree").version("26.1.0")
         library("apexcore", "dev.apexstudios", "apexcore").version("26.1.0")
@@ -30,24 +34,46 @@ plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
 }
 
-includeFurnitureSets(
-    "Nordic",
-    "Venthyr",
-    "Bone",
-    "Dunmer",
-    "Necrolord",
-    "Royal",
-    "Decorations",
-)
+gradle.beforeProject {
+    repositories {
+        maven("https://maven.apexmodder.com/releases")
 
-rootProject.name = "FantasyFurniture"
+        exclusiveContent {
+            forRepository {
+                maven("https://cursemaven.com")
+            }
 
-fun includeFurnitureSets(vararg names: String) {
-    names.forEach {
-        include(it)
-        val project = project(":$it")
-        val lower = it.lowercase()
-        project.projectDir = file(lower)
-        project.name = "fantasyfurniture-$lower"
+            filter {
+                includeGroup("curse.maven")
+            }
+        }
     }
 }
+
+include(
+    "nordic",
+    "venthyr",
+    "bone",
+    "dunmer",
+    "necrolord",
+    "royal",
+    "decorations",
+)
+
+listOf(
+    "Registree",
+    "ApexCore"
+).forEach { lib ->
+    if(file("../../${lib}/26.1").exists()) {
+        includeBuild("../../${lib}/26.1") {
+            name = lib
+
+            dependencySubstitution {
+                substitute(module("dev.apexstudios:${lib.lowercase()}"))
+                    .using(project(":"))
+            }
+        }
+    }
+}
+
+rootProject.name = "FantasyFurniture"
