@@ -7,7 +7,7 @@ plugins {
 }
 
 group = rootProject.group
-base.archivesName = "fantasyfurniture-bone"
+base.archivesName = "fantasyfurniture-venthyr"
 version = rootProject.version
 
 sourceSets {
@@ -38,13 +38,13 @@ neoForge {
     runs.create("data") {
         clientData()
 
-        ideName.set("Data - Bone")
+        ideName.set("Data - Venthyr")
         ideFolderName.set("Data")
         sourceSet.set(sourceSets["data"])
         loadedMods.set(listOf(mods["data"]))
 
         programArguments.addAll(
-            "--mod", "fantasyfurniture_bone",
+            "--mod", "fantasyfurniture_venthyr",
             "--all",
             "--output", file("src/data/generated").absolutePath,
             "--existing", file("src/${SourceSet.MAIN_SOURCE_SET_NAME}/resources").absolutePath
@@ -70,7 +70,7 @@ publishing {
     publications.create("release", MavenPublication::class.java) {
         afterEvaluate {
             groupId = "dev.apexstudios"
-            artifactId = "fantasyfurniture-bone"
+            artifactId = "fantasyfurniture-venthyr"
             version = project.version as String
         }
 
