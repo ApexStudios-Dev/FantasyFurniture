@@ -45,6 +45,9 @@ neoForge {
 
         programArguments.addAll(
             "--mod", "fantasyfurniture_bone",
+            "--mod", "fantasyfurniture_bone_skeleton",
+            "--mod", "fantasyfurniture_bone_wither",
+            "--flat",
             "--all",
             "--output", file("src/data/generated").absolutePath,
             "--existing", file("src/${SourceSet.MAIN_SOURCE_SET_NAME}/resources").absolutePath

@@ -46,6 +46,7 @@ neoForge {
         }
 
         create("data") {
+            sourceSet(sourceSets[SourceSet.MAIN_SOURCE_SET_NAME])
             sourceSet(sourceSets["data"])
         }
     }
@@ -82,13 +83,15 @@ neoForge {
 
             ideFolderName.set("Data")
             sourceSet.set(sourceSets["data"])
-            loadedMods.set(listOf(mods[SourceSet.MAIN_SOURCE_SET_NAME], mods["data"]))
+            loadedMods.set(listOf(mods["data"]))
 
             programArguments.addAll(
                 "--mod", "fantasyfurniture",
                 "--all",
                 "--output", file("src/data/generated").absolutePath,
-                "--existing", file("src/${SourceSet.MAIN_SOURCE_SET_NAME}/resources").absolutePath
+                "--existing", file("src/${SourceSet.MAIN_SOURCE_SET_NAME}/resources").absolutePath,
+                "--existing", file("bone/src/data/generated/built-in/assets/skeleton").absolutePath,
+                "--existing", file("bone/src/data/generated/built-in/assets/wither").absolutePath
             )
         }
     }
@@ -101,6 +104,11 @@ dependencies {
 
     runtimeOnly(libs.contex)
     runtimeOnly(libs.contextmatters)
+
+    subprojects.forEach {
+        runtimeOnly(it)
+        "dataRuntimeOnly"(it)
+    }
 }
 
 java {
