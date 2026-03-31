@@ -12,6 +12,12 @@ logoFile = "logo.png"
 displayURL = "https://modrinth.com/project/fantasys-furniture-nordic"
 
 [[dependencies.fantasyfurniture_nordic]]
+modId = "minecraft"
+type = "required"
+versionRange = "[26.1-,26.2)"
+ordering = "NONE"
+side = "BOTH"
+[[dependencies.fantasyfurniture_nordic]]
 modId = "neoforge"
 type = "required"
 versionRange = "[26.1-beta,26.2)"

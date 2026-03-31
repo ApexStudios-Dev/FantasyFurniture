@@ -12,6 +12,12 @@ logoFile = "logo.png"
 displayURL = "https://modrinth.com/project/fantasys-furniture-bone"
 
 [[dependencies.fantasyfurniture_bone]]
+modId = "minecraft"
+type = "required"
+versionRange = "[26.1-,26.2)"
+ordering = "NONE"
+side = "BOTH"
+[[dependencies.fantasyfurniture_bone]]
 modId = "neoforge"
 type = "required"
 versionRange = "[26.1-beta,26.2)"
@@ -43,6 +49,12 @@ description = "Bone Furniture set for Fantasy's Furniture"
 logoFile = "logo_skeleton.png"
 displayURL = "https://modrinth.com/project/fantasys-furniture-bone"
 
+[[dependencies.fantasyfurniture_bone_skeleton]]
+modId = "minecraft"
+type = "required"
+versionRange = "[26.1-,26.2)"
+ordering = "NONE"
+side = "BOTH"
 [[dependencies.fantasyfurniture_bone_skeleton]]
 modId = "neoforge"
 type = "required"
@@ -80,6 +92,12 @@ versionRange = "[26.1-beta,26.2)"
 ordering = "NONE"
 side = "BOTH"
 
+[[dependencies.fantasyfurniture_bone_wither]]
+modId = "minecraft"
+type = "required"
+versionRange = "[26.1-,26.2)"
+ordering = "NONE"
+side = "BOTH"
 [[dependencies.fantasyfurniture_bone_wither]]
 modId = "apexcore"
 type = "required"
