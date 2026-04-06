@@ -13,19 +13,7 @@ neoForge {
     version = libs.versions.neoforge.get()
 
     afterEvaluate {
-        mods {
-            subprojects.forEach {
-                create(it.name) {
-                    sourceSet(it.sourceSets[SourceSet.MAIN_SOURCE_SET_NAME])
-                }
-            }
-        }
-
         runs.getByName("data") {
-            subprojects.forEach {
-                loadedMods.add(mods[it.name])
-            }
-
             // include bone built-in packs as they are needed for
             // ctm asset generation to complete
             programArguments.addAll(
@@ -44,6 +32,7 @@ dependencies {
 
     afterEvaluate {
         subprojects.forEach {
+            "runtimeOnly"(it)
             "dataRuntimeOnly"(it)
         }
     }

@@ -109,6 +109,10 @@ public interface CtmPack {
                 }
 
                 private <TProvider> void provide(FeaturePackGenerator generator, ProviderType<TProvider> providerType) {
+                    if(CtmPacks.REFERENCES.isEmpty()) {
+                        throw new IllegalStateException("Missing FurnitureSet references");
+                    }
+
                     generator.providing(providerType, (context, provider) -> CtmPacks.REFERENCES
                             .forEach(registree -> providers
                                     .get(providerType)
