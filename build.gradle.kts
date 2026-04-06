@@ -42,8 +42,10 @@ dependencies {
     "dataImplementation"(libs.bundles.apexcore)
     accessTransformers(libs.apexcore)
 
-    subprojects.forEach {
-        "dataRuntimeOnly"(it)
+    afterEvaluate {
+        subprojects.forEach {
+            "dataRuntimeOnly"(it)
+        }
     }
 
     runtimeOnly(libs.contex)
