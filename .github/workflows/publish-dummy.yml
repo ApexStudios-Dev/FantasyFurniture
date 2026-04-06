@@ -54,6 +54,7 @@ jobs:
       artifact-id: fantasyfurniture
       display-name: Fantasy's Furniture
       use-self-runner: false
+      build-task: ':build'
 
   publish-nordic-dummy:
     name: Publish Nordic Dummy
@@ -67,6 +68,7 @@ jobs:
       artifact-id: nordic
       display-name: Fantasy's Furniture - Nordic
       use-self-runner: false
+      build-task: ':nordic:build'
 
   publish-venthyr-dummy:
     name: Publish Venthyr Dummy
@@ -80,6 +82,7 @@ jobs:
       artifact-id: venthyr
       display-name: Fantasy's Furniture - Venthyr
       use-self-runner: false
+      build-task: ':venthyr:build'
 
   publish-bone-dummy:
     name: Publish Bone Dummy
@@ -93,6 +96,7 @@ jobs:
       artifact-id: bone
       display-name: Fantasy's Furniture - Bone
       use-self-runner: false
+      build-task: ':bone:build'
 
   publish-dunmer-dummy:
     name: Publish Dunmer Dummy
@@ -106,6 +110,7 @@ jobs:
       artifact-id: dunmer
       display-name: Fantasy's Furniture - Dunmer
       use-self-runner: false
+      build-task: ':dunmer:build'
 
   publish-necrolord-dummy:
     name: Publish Necrolord Dummy
@@ -119,6 +124,7 @@ jobs:
       artifact-id: necrolord
       display-name: Fantasy's Furniture - Necrolord
       use-self-runner: false
+      build-task: ':necrolord:build'
 
   publish-royal-dummy:
     name: Publish Royal Dummy
@@ -132,6 +138,7 @@ jobs:
       artifact-id: royal
       display-name: Fantasy's Furniture - Royal
       use-self-runner: false
+      build-task: ':royal:build'
 
   publish-decorations-dummy:
     name: Publish Decorations Dummy
@@ -145,3 +152,4 @@ jobs:
       artifact-id: decorations
       display-name: Fantasy's Furniture - Decorations
       use-self-runner: false
+      build-task: ':decorations:build'
