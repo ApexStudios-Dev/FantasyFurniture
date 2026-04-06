@@ -5,8 +5,6 @@ plugins {
     id("apex-conventions.jspecify")
 }
 
-evaluationDependsOnChildren()
-
 group = "dev.apexstudios"
 neoForge.version = libs.versions.neoforge.get()
 
