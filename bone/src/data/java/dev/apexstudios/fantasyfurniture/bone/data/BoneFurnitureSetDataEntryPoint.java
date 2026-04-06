@@ -4,7 +4,6 @@ import dev.apexstudios.apexcore.api.data.ResourceGenerator;
 import dev.apexstudios.apexcore.api.data.pack.FeaturePackGenerator;
 import dev.apexstudios.apexcore.api.util.TagPair;
 import dev.apexstudios.fantasyfurniture.bone.common.BoneFurnitureSet;
-import dev.apexstudios.fantasyfurniture.common.FantasyFurniture;
 import dev.apexstudios.fantasyfurniture.common.ctm.CtmPacks;
 import dev.apexstudios.fantasyfurniture.common.util.FurnitureClientDataUtil;
 import dev.apexstudios.fantasyfurniture.common.util.FurnitureDataUtil;
@@ -16,7 +15,7 @@ import net.minecraft.tags.ItemTags;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 
-@Mod(FantasyFurniture.ID + "_bone")
+@Mod(BoneFurnitureSet.ID)
 public final class BoneFurnitureSetDataEntryPoint {
     public BoneFurnitureSetDataEntryPoint(IEventBus modBus) {
         ResourceGenerator.simple(modBus);

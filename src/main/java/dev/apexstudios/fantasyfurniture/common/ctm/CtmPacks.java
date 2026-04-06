@@ -29,10 +29,16 @@ public final class CtmPacks {
                     .providing(FusionProvider.PROVIDER_TYPE, FusionProvider::with)
                     .build(),
 
-            CtmPack.builder(ConTexProvider.ID)
+            CtmPack.builder(ConTexProvider.XFACT_ID)
                     .displayName("ConTex")
-                    .packId("ctm-context")
-                    .providing(ConTexProvider.PROVIDER_TYPE, ConTexProvider::with)
+                    .packId("ctm-contex")
+                    .providing(ConTexProvider.XFACT_PROVIDER_TYPE, ConTexProvider::with)
+                    .build(),
+
+            CtmPack.builder(ConTexProvider.SOARYN_ID)
+                    .displayName("ConText Matters")
+                    .packId("ctm-context-matters")
+                    .providing(ConTexProvider.SOARYN_PROVIDER_TYPE, ConTexProvider::with)
                     .build(),
 
             // 3D-Doors pack added via ctm-packing system

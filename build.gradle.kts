@@ -5,34 +5,15 @@ plugins {
     id("apex-conventions.jspecify")
 }
 
-// while 'rootProject' == 'fantasyfurniture' here i use a multiproject workspace
-// which includes all my mods under this setup 'rootProject' != 'fantasyfurniture'
-// and we have to find the correct furnitureset modules based on the project name
-// which should be in the format 'fantasyfurniture-<furniture_set>'
-val furnitureSets = rootProject.subprojects.filter { it.name.contains("fantasyfurniture-") }.toList()
+evaluationDependsOnChildren()
 
 group = "dev.apexstudios"
-neoForge.version = libs.versions.neoforge.get()
 
-afterEvaluate {
-    furnitureSets.forEach {
-        evaluationDependsOn(it.path)
-    }
+neoForge {
+    version = libs.versions.neoforge.get()
 
-    neoForge {
-        mods {
-            furnitureSets.forEach {
-                create(it.name) {
-                    sourceSet(it.sourceSets[SourceSet.MAIN_SOURCE_SET_NAME])
-                }
-            }
-        }
-
+    afterEvaluate {
         runs.getByName("data") {
-            furnitureSets.forEach {
-                loadedMods.add(mods[it.name])
-            }
-
             // include bone built-in packs as they are needed for
             // ctm asset generation to complete
             programArguments.addAll(
@@ -44,31 +25,18 @@ afterEvaluate {
     }
 }
 
-repositories {
-    maven("https://maven.apexmodder.com/prs/Registree/pr17") {
-        content {
-            includeModule("dev.apexstudios", "registree")
-        }
-    }
-
-    maven("https://maven.apexmodder.com/prs/ApexCore-Private/pr70") {
-        content {
-            includeModule("dev.apexstudios", "apexcore")
-        }
-    }
-}
-
 dependencies {
     implementation(libs.bundles.apexcore)
     "dataImplementation"(libs.bundles.apexcore)
     accessTransformers(libs.apexcore)
 
-    compileOnly(libs.contex)
-
-    // for some reason without this datagen fails when run locally (in my larger multi project workspace) while CI runs just fine
-    if(rootProject != project) {
-        furnitureSets.forEach {
+    afterEvaluate {
+        subprojects.forEach {
+            "runtimeOnly"(it)
             "dataRuntimeOnly"(it)
         }
     }
+
+    runtimeOnly(libs.contex)
+    runtimeOnly(libs.contextmatters)
 }

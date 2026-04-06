@@ -13,24 +13,11 @@ neoForge {
     afterEvaluate {
         runs.getByName("data") {
             programArguments.addAll(
+                "--mod", "fantasyfurniture_bone",
                 "--mod", "fantasyfurniture_bone_skeleton",
                 "--mod", "fantasyfurniture_bone_wither",
                 "--flat"
             )
-        }
-    }
-}
-
-repositories {
-    maven("https://maven.apexmodder.com/prs/Registree/pr17") {
-        content {
-            includeModule("dev.apexstudios", "registree")
-        }
-    }
-
-    maven("https://maven.apexmodder.com/prs/ApexCore-Private/pr70") {
-        content {
-            includeModule("dev.apexstudios", "apexcore")
         }
     }
 }
@@ -40,7 +27,6 @@ dependencies {
     "dataImplementation"(libs.bundles.apexcore)
     accessTransformers(libs.apexcore)
 
-    val furnitureProject = findProject(":FantasyFurniture") ?: rootProject
-    implementation(furnitureProject)
-    "dataImplementation"(furnitureProject)
+    implementation(rootProject)
+    "dataImplementation"(rootProject)
 }
