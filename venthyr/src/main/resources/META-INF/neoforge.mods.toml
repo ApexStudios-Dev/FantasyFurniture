@@ -14,13 +14,13 @@ displayURL = "https://modrinth.com/project/fantasys-furniture-venthyr"
 [[dependencies.fantasyfurniture_venthyr]]
 modId = "minecraft"
 type = "required"
-versionRange = "[26.1-,26.2)"
+versionRange = "[26.1,26.2)"
 ordering = "NONE"
 side = "BOTH"
 [[dependencies.fantasyfurniture_venthyr]]
 modId = "neoforge"
 type = "required"
-versionRange = "[26.1-beta,26.2)"
+versionRange = "[26.1,26.2)"
 ordering = "NONE"
 side = "BOTH"
 

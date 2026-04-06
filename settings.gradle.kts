@@ -34,22 +34,6 @@ plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
 }
 
-gradle.beforeProject {
-    repositories {
-        maven("https://maven.apexmodder.com/releases")
-
-        exclusiveContent {
-            forRepository {
-                maven("https://cursemaven.com")
-            }
-
-            filter {
-                includeGroup("curse.maven")
-            }
-        }
-    }
-}
-
 include(
     "nordic",
     "venthyr",

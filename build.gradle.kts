@@ -8,10 +8,50 @@ plugins {
 evaluationDependsOnChildren()
 
 group = "dev.apexstudios"
-neoForge.version = libs.versions.neoforge.get()
+
+neoForge {
+    version = libs.versions.neoforge.get()
+}
+
+afterEvaluate {
+    neoForge {
+        mods {
+            subprojects.forEach {
+                create(it.name) {
+                    sourceSet(it.sourceSets[SourceSet.MAIN_SOURCE_SET_NAME])
+                }
+            }
+        }
+
+        runs {
+            getByName("client") {
+                loadedMods.set(listOf(mods[SourceSet.MAIN_SOURCE_SET_NAME]))
+                loadedMods.addAll(subprojects.map { mods[it.name] })
+            }
+
+            getByName("server") {
+                loadedMods.set(listOf(mods[SourceSet.MAIN_SOURCE_SET_NAME]))
+                loadedMods.addAll(subprojects.map { mods[it.name] })
+            }
+
+            getByName("data") {
+                // include bone built-in packs as they are needed for
+                // ctm asset generation to complete
+                programArguments.addAll(
+                    "--mod", "fantasyfurniture",
+                    "--existing", file("bone/src/data/generated/built-in/assets/skeleton").absolutePath,
+                    "--existing", file("bone/src/data/generated/built-in/assets/wither").absolutePath
+                )
+            }
+        }
+    }
+}
 
 dependencies {
     implementation(libs.bundles.apexcore)
     "dataImplementation"(libs.bundles.apexcore)
     accessTransformers(libs.apexcore)
+
+    runtimeOnly(libs.contex)
+    runtimeOnly(libs.contextmatters)
 }

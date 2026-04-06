@@ -1,0 +1,147 @@
+name: Publish Dummy
+
+on:
+  pull_request:
+    types:
+      - synchronize
+      - opened
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  determine-changes:
+    name: Determine changes
+    runs-on: ubuntu-latest
+    outputs:
+      main-changed: ${{ steps.changes.outputs.main }}
+      nordic-changed: ${{ steps.changes.outputs.nordic }}
+      venthyr-changed: ${{ steps.changes.outputs.venthyr }}
+      bone-changed: ${{ steps.changes.outputs.bone }}
+      dunmer-changed: ${{ steps.changes.outputs.dunmer }}
+      necrolord-changed: ${{ steps.changes.outputs.necrolord }}
+      royal-changed: ${{ steps.changes.outputs.royal }}
+      decorations-changed: ${{ steps.changes.outputs.decorations }}
+    steps:
+      - name: Checkout Repository
+        uses: ApexStudios-Dev/.github/actions/checkout@master
+
+      - name: Determine changes
+        id: changes
+        uses: dorny/paths-filter@v4
+        with:
+          base: 26.1/main
+          filters: |
+            main: [ 'src/**' ]
+            nordic: [ 'nordic/src/**' ]
+            venthyr: [ 'venthyr/src/**' ]
+            bone: [ 'bone/src/**' ]
+            dunmer: [ 'dunmer/src/**' ]
+            necrolord: [ 'necrolord/src/**' ]
+            royal: [ 'royal/src/**' ]
+            decorations: [ 'decorations/src/**' ]
+
+  publish-main-dummy:
+    name: Publish Main Dummy
+    uses: ApexStudios-Dev/.github/.github/workflows/_publish-dummy.yml@master
+    needs: determine-changes
+    if: ${{ needs.determine-changes.outputs.main-changed == 'true' }}
+    secrets: inherit
+    with:
+      java-version: 25
+      java-vendor: temurin
+      artifact-id: fantasyfurniture
+      display-name: Fantasy's Furniture
+      use-self-runner: false
+
+  publish-nordic-dummy:
+    name: Publish Nordic Dummy
+    uses: ApexStudios-Dev/.github/.github/workflows/_publish-dummy.yml@master
+    needs: determine-changes
+    if: ${{ needs.determine-changes.outputs.nordic-changed == 'true' }}
+    secrets: inherit
+    with:
+      java-version: 25
+      java-vendor: temurin
+      artifact-id: nordic
+      display-name: Fantasy's Furniture - Nordic
+      use-self-runner: false
+
+  publish-venthyr-dummy:
+    name: Publish Venthyr Dummy
+    uses: ApexStudios-Dev/.github/.github/workflows/_publish-dummy.yml@master
+    needs: determine-changes
+    if: ${{ needs.determine-changes.outputs.venthyr-changed == 'true' }}
+    secrets: inherit
+    with:
+      java-version: 25
+      java-vendor: temurin
+      artifact-id: venthyr
+      display-name: Fantasy's Furniture - Venthyr
+      use-self-runner: false
+
+  publish-bone-dummy:
+    name: Publish Bone Dummy
+    uses: ApexStudios-Dev/.github/.github/workflows/_publish-dummy.yml@master
+    needs: determine-changes
+    if: ${{ needs.determine-changes.outputs.bone-changed == 'true' }}
+    secrets: inherit
+    with:
+      java-version: 25
+      java-vendor: temurin
+      artifact-id: bone
+      display-name: Fantasy's Furniture - Bone
+      use-self-runner: false
+
+  publish-dunmer-dummy:
+    name: Publish Dunmer Dummy
+    uses: ApexStudios-Dev/.github/.github/workflows/_publish-dummy.yml@master
+    needs: determine-changes
+    if: ${{ needs.determine-changes.outputs.dunmer-changed == 'true' }}
+    secrets: inherit
+    with:
+      java-version: 25
+      java-vendor: temurin
+      artifact-id: dunmer
+      display-name: Fantasy's Furniture - Dunmer
+      use-self-runner: false
+
+  publish-necrolord-dummy:
+    name: Publish Necrolord Dummy
+    uses: ApexStudios-Dev/.github/.github/workflows/_publish-dummy.yml@master
+    needs: determine-changes
+    if: ${{ needs.determine-changes.outputs.necrolord-changed == 'true' }}
+    secrets: inherit
+    with:
+      java-version: 25
+      java-vendor: temurin
+      artifact-id: necrolord
+      display-name: Fantasy's Furniture - Necrolord
+      use-self-runner: false
+
+  publish-royal-dummy:
+    name: Publish Royal Dummy
+    uses: ApexStudios-Dev/.github/.github/workflows/_publish-dummy.yml@master
+    needs: determine-changes
+    if: ${{ needs.determine-changes.outputs.royal-changed == 'true' }}
+    secrets: inherit
+    with:
+      java-version: 25
+      java-vendor: temurin
+      artifact-id: royal
+      display-name: Fantasy's Furniture - Royal
+      use-self-runner: false
+
+  publish-decorations-dummy:
+    name: Publish Decorations Dummy
+    uses: ApexStudios-Dev/.github/.github/workflows/_publish-dummy.yml@master
+    needs: determine-changes
+    if: ${{ needs.determine-changes.outputs.decorations-changed == 'true' }}
+    secrets: inherit
+    with:
+      java-version: 25
+      java-vendor: temurin
+      artifact-id: fantasyfurniture
+      display-name: Fantasy's Furniture
+      use-self-runner: false

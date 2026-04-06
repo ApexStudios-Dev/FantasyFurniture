@@ -15,13 +15,13 @@ displayURL = "https://modrinth.com/mod/fantasy-furniture"
 [[dependencies.fantasyfurniture]]
 modId = "minecraft"
 type = "required"
-versionRange = "[26.1-,26.2)"
+versionRange = "[26.1,26.2)"
 ordering = "NONE"
 side = "BOTH"
 [[dependencies.fantasyfurniture]]
 modId = "neoforge"
 type = "required"
-versionRange = "[26.1-beta,26.2)"
+versionRange = "[26.1,26.2)"
 ordering = "NONE"
 side = "BOTH"
 

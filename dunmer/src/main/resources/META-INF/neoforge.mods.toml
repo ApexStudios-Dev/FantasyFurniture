@@ -14,13 +14,13 @@ displayURL = "https://modrinth.com/project/fantasys-furniture-dunmer"
 [[dependencies.fantasyfurniture_dunmer]]
 modId = "minecraft"
 type = "required"
-versionRange = "[26.1-,26.2)"
+versionRange = "[26.1,26.2)"
 ordering = "NONE"
 side = "BOTH"
 [[dependencies.fantasyfurniture_dunmer]]
 modId = "neoforge"
 type = "required"
-versionRange = "[26.1-beta,26.2)"
+versionRange = "[26.1,26.2)"
 ordering = "NONE"
 side = "BOTH"
 
