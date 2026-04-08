@@ -1,3 +1,4 @@
+
 license = "AllRightsReserved"
 issueTrackerURL = "https://github.com/ApexStudios-Dev/Issues/issues"
 
@@ -8,7 +9,8 @@ displayName = "Fantasy's Furniture - Bone"
 credits = "Apex - Programming"
 authors = "ApexStudios"
 description = "Bone Furniture set for Fantasy's Furniture"
-logoFile = "logo.png"
+logoFile = "banner.png"
+iconFile = "logo.png"
 displayURL = "https://modrinth.com/project/fantasys-furniture-bone"
 
 [[dependencies.fantasyfurniture_bone]]
@@ -46,7 +48,8 @@ displayName = "Fantasy's Furniture - Skeleton Bone"
 credits = "Apex - Programming"
 authors = "ApexStudios"
 description = "Bone Furniture set for Fantasy's Furniture"
-logoFile = "logo_skeleton.png"
+logoFile = "skeleton_banner.png"
+iconFile = "skeleton_logo.png"
 displayURL = "https://modrinth.com/project/fantasys-furniture-bone"
 
 [[dependencies.fantasyfurniture_bone_skeleton]]
@@ -82,7 +85,8 @@ displayName = "Fantasy's Furniture - Wither Bone"
 credits = "Apex - Programming"
 authors = "ApexStudios"
 description = "Wither Bone Furniture set for Fantasy's Furniture"
-logoFile = "logo_wither.png"
+logoFile = "wither_banner.png"
+iconFile = "wither_logo.png"
 displayURL = "https://modrinth.com/project/fantasys-furniture-bone"
 
 [[dependencies.fantasyfurniture_bone_wither]]

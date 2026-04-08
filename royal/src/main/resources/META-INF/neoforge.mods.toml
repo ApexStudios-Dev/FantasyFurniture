@@ -8,7 +8,8 @@ displayName = "Fantasy's Furniture - Royal"
 credits = "Apex - Programming"
 authors = "ApexStudios"
 description = "Royal Furniture set for Fantasy's Furniture"
-logoFile = "logo.png"
+logoFile = "banner.png"
+iconFile = "logo.png"
 displayURL = "https://modrinth.com/project/fantasys-furniture-royal"
 
 [[dependencies.fantasyfurniture_royal]]

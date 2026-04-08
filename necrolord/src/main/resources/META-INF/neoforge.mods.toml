@@ -8,7 +8,8 @@ displayName = "Fantasy's Furniture - Necrolord"
 credits = "Apex - Programming"
 authors = "ApexStudios"
 description = "Necrolord Furniture set for Fantasy's Furniture"
-logoFile = "logo.png"
+logoFile = "banner.png"
+iconFile = "logo.png"
 displayURL = "https://modrinth.com/project/fantasys-furniture-necrolord"
 
 [[dependencies.fantasyfurniture_necrolord]]

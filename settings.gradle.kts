@@ -19,7 +19,7 @@ pluginManagement {
 
 dependencyResolutionManagement {
     versionCatalogs.create("libs") {
-        version("neoforge", "26.1.2.42-beta")
+        version("neoforge", "26.1.1.35-beta-pr-3073-feat-26.1-new-mods-list-screen")
 
         library("registree", "dev.apexstudios", "registree").version("26.1.0")
         library("apexcore", "dev.apexstudios", "apexcore").version("26.1.2")
@@ -34,7 +34,18 @@ plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
 }
 
-furnitureSet(
+gradle.beforeProject {
+    repositories {
+        maven("https://prmaven.neoforged.net/NeoForge/pr3073") {
+            content {
+                includeModule("net.neoforged", "neoforge")
+                includeModule("net.neoforged", "testframework")
+            }
+        }
+    }
+}
+
+include(
     "nordic",
     "venthyr",
     "bone",

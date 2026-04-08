@@ -8,7 +8,8 @@ displayName = "Fantasy's Furniture - Venthyr"
 credits = "Apex - Programming"
 authors = "ApexStudios"
 description = "Venthyr Furniture set for Fantasy's Furniture"
-logoFile = "logo.png"
+logoFile = "banner.png"
+iconFile = "logo.png"
 displayURL = "https://modrinth.com/project/fantasys-furniture-venthyr"
 
 [[dependencies.fantasyfurniture_venthyr]]
