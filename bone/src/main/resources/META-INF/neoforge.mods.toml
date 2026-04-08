@@ -9,8 +9,8 @@ displayName = "Fantasy's Furniture - Bone"
 credits = "Apex - Programming"
 authors = "ApexStudios"
 description = "Bone Furniture set for Fantasy's Furniture"
-logoFile = "banner.png"
-iconFile = "logo.png"
+logoFile = "mod/fantasyfurniture_bone,fantasyfurniture_bone_skeleton,fantasyfurniture_bone_wither#banner.png"
+iconFile = "mod/fantasyfurniture_bone,fantasyfurniture_bone_skeleton,fantasyfurniture_bone_wither#logo.png"
 displayURL = "https://modrinth.com/project/fantasys-furniture-bone"
 
 [[dependencies.fantasyfurniture_bone]]
@@ -48,8 +48,8 @@ displayName = "Fantasy's Furniture - Skeleton Bone"
 credits = "Apex - Programming"
 authors = "ApexStudios"
 description = "Bone Furniture set for Fantasy's Furniture"
-logoFile = "skeleton_banner.png"
-iconFile = "skeleton_logo.png"
+logoFile = "mod/fantasyfurniture_bone,fantasyfurniture_bone_skeleton,fantasyfurniture_bone_wither#skeleton_banner.png"
+iconFile = "mod/fantasyfurniture_bone,fantasyfurniture_bone_skeleton,fantasyfurniture_bone_wither#skeleton_logo.png"
 displayURL = "https://modrinth.com/project/fantasys-furniture-bone"
 
 [[dependencies.fantasyfurniture_bone_skeleton]]
@@ -85,8 +85,8 @@ displayName = "Fantasy's Furniture - Wither Bone"
 credits = "Apex - Programming"
 authors = "ApexStudios"
 description = "Wither Bone Furniture set for Fantasy's Furniture"
-logoFile = "wither_banner.png"
-iconFile = "wither_logo.png"
+logoFile = "mod/fantasyfurniture_bone,fantasyfurniture_bone_skeleton,fantasyfurniture_bone_wither#wither_banner.png"
+iconFile = "mod/fantasyfurniture_bone,fantasyfurniture_bone_skeleton,fantasyfurniture_bone_wither#wither_logo.png"
 displayURL = "https://modrinth.com/project/fantasys-furniture-bone"
 
 [[dependencies.fantasyfurniture_bone_wither]]
