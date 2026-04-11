@@ -63,14 +63,7 @@ public abstract class InventoryMultiBlock extends InventoryBlock implements Mult
     @Override
     protected void affectNeighborsAfterRemoval(BlockState blockState, ServerLevel level, BlockPos pos, boolean movedByPiston) {
         super.affectNeighborsAfterRemoval(blockState, level, pos, movedByPiston);
-
-        var property = getMultiBlockProperty();
-        int index = blockState.getValue(property);
-
-        MultiBlock.forEachPos(pos, blockState, (otherPos, otherBlockState) -> {
-            if(index != otherBlockState.getValue(property)) // 'index' is updated via super
-                level.updateNeighbourForOutputSignal(otherPos, otherBlockState.getBlock());
-        });
+        MultiBlock.affectNeighborsAfterRemoval(level, pos, blockState, true);
     }
 
     @Override

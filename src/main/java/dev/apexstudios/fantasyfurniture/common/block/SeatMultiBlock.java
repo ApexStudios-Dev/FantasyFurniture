@@ -4,6 +4,7 @@ import dev.apexstudios.apexcore.api.block.Seat;
 import dev.apexstudios.apexcore.api.multiblock.MultiBlock;
 import dev.apexstudios.apexcore.api.util.ApexTags;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -50,6 +51,12 @@ public abstract class SeatMultiBlock extends SeatBlock implements Seat, MultiBlo
     public void destroy(LevelAccessor level, BlockPos pos, BlockState blockState) {
         super.destroy(level, pos, blockState);
         MultiBlock.destroyBlocks(level, pos, blockState);
+    }
+
+    @Override
+    protected void affectNeighborsAfterRemoval(BlockState blockState, ServerLevel level, BlockPos pos, boolean movedByPiston) {
+        super.affectNeighborsAfterRemoval(blockState, level, pos, movedByPiston);
+        MultiBlock.affectNeighborsAfterRemoval(level, pos, blockState, false);
     }
 
     @Override
