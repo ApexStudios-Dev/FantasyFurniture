@@ -13,7 +13,6 @@ neoForge {
     afterEvaluate {
         runs.getByName("data") {
             programArguments.addAll(
-                "--mod", "fantasyfurniture_bone",
                 "--mod", "fantasyfurniture_bone_skeleton",
                 "--mod", "fantasyfurniture_bone_wither",
                 "--flat"

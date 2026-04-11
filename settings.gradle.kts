@@ -34,7 +34,7 @@ plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
 }
 
-include(
+furnitureSet(
     "nordic",
     "venthyr",
     "bone",
@@ -61,3 +61,11 @@ listOf(
 }
 
 rootProject.name = "FantasyFurniture"
+
+fun furnitureSet(vararg names: String) {
+    names.forEach { name ->
+        val id = "fantasyfurniture_${name}"
+        include(id)
+        project(":${id}").projectDir = file(name)
+    }
+}
