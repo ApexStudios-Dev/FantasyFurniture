@@ -65,6 +65,8 @@ public final class FurnitureStationScreen extends AbstractContainerScreen<Furnit
 
     @Override
     public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
+        super.extractBackground(graphics, mouseX, mouseY, partialTick);
+
         renderWindow(graphics);
 
         graphics.blitSprite(RenderPipelines.GUI_TEXTURED, SPRITE_ARROW, recipeX + (18 * 3) + 15, recipeY - 18 - 7, 60, 16);
