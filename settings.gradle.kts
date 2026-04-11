@@ -44,7 +44,7 @@ gradle.beforeProject {
     }
 }
 
-include(
+furnitureSet(
     "nordic",
     "venthyr",
     "bone",
@@ -63,8 +63,7 @@ listOf(
             name = lib
 
             dependencySubstitution {
-                substitute(module("dev.apexstudios:${lib.lowercase()}"))
-                    .using(project(":"))
+                substitute(module("dev.apexstudios:${lib.lowercase()}")).using(project(":"))
             }
         }
     }
