@@ -22,7 +22,7 @@ dependencyResolutionManagement {
         version("neoforge", "26.1.0.7-beta")
 
         library("registree", "dev.apexstudios", "registree").version("26.1.0")
-        library("apexcore", "dev.apexstudios", "apexcore").version("26.1.1")
+        library("apexcore", "dev.apexstudios", "apexcore").version("26.1.3-beta-pr-82")
         bundle("apexcore", listOf("registree", "apexcore"))
 
         library("contex", "curse.maven", "contex-1296805").version("7806346")
@@ -34,7 +34,17 @@ plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
 }
 
-furnitureSet(
+gradle.beforeProject {
+    repositories {
+        maven("https://maven.apexmodder.com/prs/ApexCore/pr82") {
+            content {
+                includeModule("dev.apexstudios", "apexcore")
+            }
+        }
+    }
+}
+
+include(
     "nordic",
     "venthyr",
     "bone",
