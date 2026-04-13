@@ -1,5 +1,6 @@
 package dev.apexstudios.fantasyfurniture.common.block;
 
+import dev.apexstudios.apexcore.api.multiblock.MultiBlock;
 import dev.apexstudios.apexcore.api.multiblock.MultiBlockProperties;
 import dev.apexstudios.apexcore.api.multiblock.MultiBlockProperty;
 import dev.apexstudios.fantasyfurniture.common.util.FurnitureUtil;
@@ -29,5 +30,10 @@ public class ChairBlock extends SeatMultiBlock {
     @Override
     public MultiBlockProperty getMultiBlockProperty() {
         return MultiBlockProperties.MB_1x2x1;
+    }
+
+    @Override
+    protected boolean shouldBounce(BlockState blockState) {
+        return MultiBlock.getIndex(blockState) == 0 && super.shouldBounce(blockState);
     }
 }

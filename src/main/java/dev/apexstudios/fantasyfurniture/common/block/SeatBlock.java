@@ -7,11 +7,13 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.MustBeInvokedByOverriders;
 
 public class SeatBlock extends SimpleHorizontalDirectionalBlock {
     public SeatBlock(Properties properties) {
@@ -42,5 +44,45 @@ public class SeatBlock extends SimpleHorizontalDirectionalBlock {
 
         if(!(entity instanceof Player) && entity instanceof LivingEntity living)
             Seat.trySit(level, pos, living);
+    }
+
+    protected boolean isBouncy(BlockState blockState) {
+        return true;
+    }
+
+    @MustBeInvokedByOverriders
+    protected boolean shouldBounce(BlockState blockState) {
+        return isBouncy(blockState);
+    }
+
+    @Override
+    public void fallOn(Level level, BlockState blockState, BlockPos pos, Entity entity, double fallDistance) {
+        if(shouldBounce(blockState)) {
+            super.fallOn(level, blockState, pos, entity, fallDistance * .5F);
+        } else {
+            super.fallOn(level, blockState, pos, entity, fallDistance);
+        }
+    }
+
+    @Override
+    public void updateEntityMovementAfterFallOn(BlockGetter level, Entity entity) {
+        // same code as to how Entity gets the BlockState
+        var effectPos = entity.getOnPosLegacy();
+        var effectBlockState = level.getBlockState(effectPos);
+
+        if(entity.isSuppressingBounce() || !shouldBounce(effectBlockState)) {
+            super.updateEntityMovementAfterFallOn(level, entity);
+        } else {
+            var movement = entity.getDeltaMovement();
+
+            if(movement.y() < 0D) {
+                var factor = entity instanceof LivingEntity ? 1D : 0D;
+                entity.setDeltaMovement(
+                        movement.x(),
+                        -movement.y() * .66F * factor,
+                        movement.z()
+                );
+            }
+        }
     }
 }
