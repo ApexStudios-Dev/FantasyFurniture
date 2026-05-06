@@ -112,7 +112,7 @@ jobs:
       publish-task: ':fantasyfurniture_nordic:publishReleasePublicationToApexStudios-ReleasesRepository'
       curseforge-id: '1191799'
       modrinth-id: 'DIHzMa8h'
-      artifact-id: nordic
+      artifact-id: fantasyfurniture_nordic
       display-name: Fantasy's Furniture - Nordic
       release-type: release
       logo-url: 'https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture_nordic/banner.png'
@@ -130,7 +130,7 @@ jobs:
       publish-task: ':fantasyfurniture_venthyr:publishReleasePublicationToApexStudios-ReleasesRepository'
       curseforge-id: '1206300'
       modrinth-id: 'FjHW4JvP'
-      artifact-id: venthyr
+      artifact-id: fantasyfurniture_venthyr
       display-name: Fantasy's Furniture - Venthyr
       release-type: release
       logo-url: 'https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture_venthyr/banner.png'
@@ -148,7 +148,7 @@ jobs:
       publish-task: ':fantasyfurniture_bone:publishReleasePublicationToApexStudios-ReleasesRepository'
       curseforge-id: '1209697'
       modrinth-id: 'oJ4TI49S'
-      artifact-id: bone
+      artifact-id: fantasyfurniture_bone
       display-name: Fantasy's Furniture - Bone
       release-type: release
       logo-url: 'https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture_bone/banner.png'
@@ -166,7 +166,7 @@ jobs:
       publish-task: ':fantasyfurniture_dunmer:publishReleasePublicationToApexStudios-ReleasesRepository'
       curseforge-id: '1209702'
       modrinth-id: 'Bs7e2IyQ'
-      artifact-id: dunmer
+      artifact-id: fantasyfurniture_dunmer
       display-name: Fantasy's Furniture - Dunmer
       release-type: release
       logo-url: 'https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture_dunmer/banner.png'
@@ -184,7 +184,7 @@ jobs:
       publish-task: ':fantasyfurniture_necrolord:publishReleasePublicationToApexStudios-ReleasesRepository'
       curseforge-id: '1209752'
       modrinth-id: 'V9TnGtTg'
-      artifact-id: necrolord
+      artifact-id: fantasyfurniture_necrolord
       display-name: Fantasy's Furniture - Necrolord
       release-type: release
       logo-url: 'https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture_necrolord/banner.png'
@@ -202,7 +202,7 @@ jobs:
       publish-task: ':fantasyfurniture_royal:publishReleasePublicationToApexStudios-ReleasesRepository'
       curseforge-id: '1209706'
       modrinth-id: 'OIAm13ki'
-      artifact-id: royal
+      artifact-id: fantasyfurniture_royal
       display-name: Fantasy's Furniture - Royal
       release-type: release
       logo-url: 'https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture_royal/banner.png'
@@ -220,7 +220,7 @@ jobs:
       publish-task: ':fantasyfurniture_decorations:publishReleasePublicationToApexStudios-ReleasesRepository'
       curseforge-id: '1220590'
       modrinth-id: 'bJ7GIx0B'
-      artifact-id: decorations
+      artifact-id: fantasyfurniture_decorations
       display-name: Fantasy's Furniture - Decorations
       release-type: release
       logo-url: 'https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture_decorations/banner.png'
