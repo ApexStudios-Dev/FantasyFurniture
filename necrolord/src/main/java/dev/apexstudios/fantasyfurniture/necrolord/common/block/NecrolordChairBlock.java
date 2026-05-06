@@ -2,6 +2,7 @@ package dev.apexstudios.fantasyfurniture.necrolord.common.block;
 
 import dev.apexstudios.apexcore.api.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.common.block.ChairBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class NecrolordChairBlock extends ChairBlock {
@@ -26,5 +27,10 @@ public final class NecrolordChairBlock extends ChairBlock {
 
     public NecrolordChairBlock(Properties properties) {
         super(properties, SHAPE);
+    }
+
+    @Override
+    protected boolean isBouncy(BlockState blockState) {
+        return false;
     }
 }

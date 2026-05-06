@@ -720,6 +720,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
     private void plushie(BlockModelGenerators blockModels) {
         var model = ExtendedModelTemplateBuilder.builder()
                 .parent(Identifier.withDefaultNamespace("block/block"))
+                .transform(ItemDisplayContext.HEAD, t -> t.translation(0F, 14.5F, 0F))
                 .requiredTextureSlot(TextureSlot.PARTICLE)
                 .build()
                 .create(DecorationsFurnitureModule.PLUSHIE_BLOCK.value(), TextureMapping.particle(Blocks.WHITE_WOOL), blockModels.modelOutput);

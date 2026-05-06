@@ -1,6 +1,7 @@
 package dev.apexstudios.fantasyfurniture.bone.common.block;
 
 import dev.apexstudios.fantasyfurniture.common.block.CushionBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class BoneCushionBlock extends CushionBlock {
@@ -8,5 +9,10 @@ public final class BoneCushionBlock extends CushionBlock {
 
     public BoneCushionBlock(Properties properties) {
         super(properties, SHAPE);
+    }
+
+    @Override
+    protected boolean isBouncy(BlockState blockState) {
+        return false;
     }
 }

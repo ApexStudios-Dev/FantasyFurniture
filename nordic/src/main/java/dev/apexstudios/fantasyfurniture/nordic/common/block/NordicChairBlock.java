@@ -2,6 +2,7 @@ package dev.apexstudios.fantasyfurniture.nordic.common.block;
 
 import dev.apexstudios.apexcore.api.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.common.block.ChairBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class NordicChairBlock extends ChairBlock {
@@ -22,5 +23,10 @@ public final class NordicChairBlock extends ChairBlock {
 
     public NordicChairBlock(Properties properties) {
         super(properties, SHAPE);
+    }
+
+    @Override
+    protected boolean isBouncy(BlockState blockState) {
+        return false;
     }
 }
