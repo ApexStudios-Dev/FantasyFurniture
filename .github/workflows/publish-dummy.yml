@@ -65,7 +65,7 @@ jobs:
     with:
       java-version: 25
       java-vendor: temurin
-      artifact-id: nordic
+      artifact-id: fantasyfurniture_nordic
       display-name: Fantasy's Furniture - Nordic
       use-self-runner: false
       build-task: ':fantasyfurniture_nordic:build'
@@ -79,7 +79,7 @@ jobs:
     with:
       java-version: 25
       java-vendor: temurin
-      artifact-id: venthyr
+      artifact-id: fantasyfurniture_venthyr
       display-name: Fantasy's Furniture - Venthyr
       use-self-runner: false
       build-task: ':fantasyfurniture_venthyr:build'
@@ -93,7 +93,7 @@ jobs:
     with:
       java-version: 25
       java-vendor: temurin
-      artifact-id: bone
+      artifact-id: fantasyfurniture_bone
       display-name: Fantasy's Furniture - Bone
       use-self-runner: false
       build-task: ':fantasyfurniture_bone:build'
@@ -107,7 +107,7 @@ jobs:
     with:
       java-version: 25
       java-vendor: temurin
-      artifact-id: dunmer
+      artifact-id: fantasyfurniture_dunmer
       display-name: Fantasy's Furniture - Dunmer
       use-self-runner: false
       build-task: ':fantasyfurniture_dunmer:build'
@@ -121,7 +121,7 @@ jobs:
     with:
       java-version: 25
       java-vendor: temurin
-      artifact-id: necrolord
+      artifact-id: fantasyfurniture_necrolord
       display-name: Fantasy's Furniture - Necrolord
       use-self-runner: false
       build-task: ':fantasyfurniture_necrolord:build'
@@ -135,7 +135,7 @@ jobs:
     with:
       java-version: 25
       java-vendor: temurin
-      artifact-id: royal
+      artifact-id: fantasyfurniture_royal
       display-name: Fantasy's Furniture - Royal
       use-self-runner: false
       build-task: ':fantasyfurniture_royal:build'
@@ -149,7 +149,7 @@ jobs:
     with:
       java-version: 25
       java-vendor: temurin
-      artifact-id: decorations
+      artifact-id: fantasyfurniture_decorations
       display-name: Fantasy's Furniture - Decorations
       use-self-runner: false
       build-task: ':fantasyfurniture_decorations:build'
