@@ -18,4 +18,4 @@ jobs:
       java-version: 25
       java-vendor: temurin
       use-self-runner: false
-      build-task: ':build :fantasyfurniture_nordic:build :fantasyfurniture_venthyr:build :fantasyfurniture_bone:build :fantasyfurniture_dunmer:build :fantasyfurniture_necrolord:build :fantasyfurniture_royal:build :fantasyfurniture_decorations:build'
+      build-task: ':build :nordic:build :venthyr:build :bone:build :dunmer:build :necrolord:build :royal:build :decorations:build'
