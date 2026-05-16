@@ -45,7 +45,7 @@ gradle.beforeProject {
     }
 }
 
-include(
+furnitureSet(
     "nordic",
     "venthyr",
     "bone",
