@@ -33,7 +33,7 @@ public final class VenthyrFurnitureSetDataEntryPoint {
                             .trapdoor(VenthyrFurnitureSet.TRAPDOOR.value())
                             .pressurePlate(VenthyrFurnitureSet.PRESSURE_PLATE.value())
                             .sign(VenthyrFurnitureSet.SIGN.sign().value(), VenthyrFurnitureSet.SIGN.wall().value())
-                            .hangingSign(VenthyrFurnitureSet.HANGING_SIGN.sign().value(), VenthyrFurnitureSet.HANGING_SIGN.wall().value())
+                            .customHangingSign(VenthyrFurnitureSet.HANGING_SIGN.sign().value(), VenthyrFurnitureSet.HANGING_SIGN.wall().value())
                     .getFamily(),
                     BlockTags.MINEABLE_WITH_AXE,
                     new TagPair(BlockTags.WOODEN_DOORS, ItemTags.WOODEN_DOORS),

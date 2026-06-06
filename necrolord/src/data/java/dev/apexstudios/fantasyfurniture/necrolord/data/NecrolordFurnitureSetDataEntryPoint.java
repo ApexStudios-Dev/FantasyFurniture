@@ -32,7 +32,7 @@ public final class NecrolordFurnitureSetDataEntryPoint {
                             .trapdoor(NecrolordFurnitureSet.TRAPDOOR.value())
                             .pressurePlate(NecrolordFurnitureSet.PRESSURE_PLATE.value())
                             .sign(NecrolordFurnitureSet.SIGN.sign().value(), NecrolordFurnitureSet.SIGN.wall().value())
-                            .hangingSign(NecrolordFurnitureSet.HANGING_SIGN.sign().value(), NecrolordFurnitureSet.HANGING_SIGN.wall().value())
+                            .customHangingSign(NecrolordFurnitureSet.HANGING_SIGN.sign().value(), NecrolordFurnitureSet.HANGING_SIGN.wall().value())
                     .getFamily(),
                     BlockTags.MINEABLE_WITH_PICKAXE,
                     new TagPair(BlockTags.DOORS, ItemTags.WOODEN_DOORS),

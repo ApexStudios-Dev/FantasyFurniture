@@ -40,7 +40,7 @@ public final class DunmerFurnitureSetDataEntryPoint {
                             .trapdoor(DunmerFurnitureSet.TRAPDOOR.value())
                             .pressurePlate(DunmerFurnitureSet.PRESSURE_PLATE.value())
                             .sign(DunmerFurnitureSet.SIGN.sign().value(), DunmerFurnitureSet.SIGN.wall().value())
-                            .hangingSign(DunmerFurnitureSet.HANGING_SIGN.sign().value(), DunmerFurnitureSet.HANGING_SIGN.wall().value())
+                            .customHangingSign(DunmerFurnitureSet.HANGING_SIGN.sign().value(), DunmerFurnitureSet.HANGING_SIGN.wall().value())
                     .getFamily(),
                     BlockTags.MINEABLE_WITH_AXE,
                     new TagPair(BlockTags.WOODEN_DOORS, ItemTags.WOODEN_DOORS),

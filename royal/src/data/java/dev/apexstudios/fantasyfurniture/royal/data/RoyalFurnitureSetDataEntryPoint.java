@@ -51,7 +51,7 @@ public final class RoyalFurnitureSetDataEntryPoint {
                             .trapdoor(RoyalFurnitureSet.TRAPDOOR.value())
                             .pressurePlate(RoyalFurnitureSet.PRESSURE_PLATE.value())
                             .sign(RoyalFurnitureSet.SIGN.sign().value(), RoyalFurnitureSet.SIGN.wall().value())
-                            .hangingSign(RoyalFurnitureSet.HANGING_SIGN.sign().value(), RoyalFurnitureSet.HANGING_SIGN.wall().value())
+                            .customHangingSign(RoyalFurnitureSet.HANGING_SIGN.sign().value(), RoyalFurnitureSet.HANGING_SIGN.wall().value())
                     .getFamily(),
                     BlockTags.MINEABLE_WITH_PICKAXE,
                     new TagPair(BlockTags.DOORS, ItemTags.WOODEN_DOORS),

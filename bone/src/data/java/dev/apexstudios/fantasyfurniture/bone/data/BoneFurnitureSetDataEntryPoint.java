@@ -39,7 +39,7 @@ public final class BoneFurnitureSetDataEntryPoint {
                         .trapdoor(furnitureSet.trapdoor.value())
                         .pressurePlate(furnitureSet.pressurePlate.value())
                         .sign(furnitureSet.sign.sign().value(), furnitureSet.sign.wall().value())
-                        .hangingSign(furnitureSet.hangingSign.sign().value(), furnitureSet.hangingSign.wall().value())
+                        .customHangingSign(furnitureSet.hangingSign.sign().value(), furnitureSet.hangingSign.wall().value())
                 .getFamily(),
                 BlockTags.MINEABLE_WITH_PICKAXE,
                 new TagPair(BlockTags.DOORS, ItemTags.WOODEN_DOORS),

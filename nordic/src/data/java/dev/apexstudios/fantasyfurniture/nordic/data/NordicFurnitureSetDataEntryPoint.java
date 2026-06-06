@@ -31,7 +31,7 @@ public final class NordicFurnitureSetDataEntryPoint {
                             .trapdoor(NordicFurnitureSet.TRAPDOOR.value())
                             .pressurePlate(NordicFurnitureSet.PRESSURE_PLATE.value())
                             .sign(NordicFurnitureSet.SIGN.sign().value(), NordicFurnitureSet.SIGN.wall().value())
-                            .hangingSign(NordicFurnitureSet.HANGING_SIGN.sign().value(), NordicFurnitureSet.HANGING_SIGN.wall().value())
+                            .customHangingSign(NordicFurnitureSet.HANGING_SIGN.sign().value(), NordicFurnitureSet.HANGING_SIGN.wall().value())
                     .getFamily(),
                     BlockTags.MINEABLE_WITH_AXE,
                     new TagPair(BlockTags.WOODEN_DOORS, ItemTags.WOODEN_DOORS),
