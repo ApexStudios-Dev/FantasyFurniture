@@ -34,6 +34,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.BedPart;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.crafting.DifferenceIngredient;
+import org.jspecify.annotations.Nullable;
 
 public interface FurnitureDataUtil {
     static void registerDataGen(DataGenContext context, PackGenerator<?> pack) {
@@ -143,7 +144,7 @@ public interface FurnitureDataUtil {
         context.item(DataType.ITEM_TAG, FurnitureUtil.Names.DOOR_SINGLE, item -> tag(provider, item, context.doorTag.item()));
         context.item(DataType.ITEM_TAG, FurnitureUtil.Names.DOOR_DOUBLE, item -> tag(provider, item, context.doorTag.item()));
         context.item(DataType.ITEM_TAG, FurnitureUtil.Names.OVEN, item -> tag(provider, item, Tags.Items.PLAYER_WORKSTATIONS_FURNACES));
-        context.item(DataType.ITEM_TAG, FurnitureUtil.Names.STAIRS, item -> tag(provider, item, ItemTags.STAIRS));
+        context.item(DataType.ITEM_TAG, FurnitureUtil.Names.STAIRS, item -> tag(provider, item, ItemTags.WOODEN_STAIRS));
         context.item(DataType.ITEM_TAG, FurnitureUtil.Names.SLAB, item -> tag(provider, item, context.slabTag.item()));
         context.item(DataType.ITEM_TAG, FurnitureUtil.Names.FENCE, item -> tag(provider, item, context.fenceTag.item()));
         context.item(DataType.ITEM_TAG, FurnitureUtil.Names.FENCE_GATE, item -> tag(provider, item, ItemTags.FENCE_GATES));
@@ -155,7 +156,7 @@ public interface FurnitureDataUtil {
     }
 
     @SafeVarargs
-    static <TRegistry> void tag(IntrusiveTagProvider<TRegistry> provider, TRegistry element, TagKey<TRegistry>... tags) {
+    static <TRegistry> void tag(IntrusiveTagProvider<TRegistry> provider, TRegistry element, @Nullable TagKey<TRegistry>... tags) {
         for(var tag : tags) {
             if(tag != null)
                 provider.tag(tag).withElement(element);

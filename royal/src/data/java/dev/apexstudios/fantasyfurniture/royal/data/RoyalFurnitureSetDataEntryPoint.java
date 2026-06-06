@@ -51,15 +51,16 @@ public final class RoyalFurnitureSetDataEntryPoint {
                             .trapdoor(RoyalFurnitureSet.TRAPDOOR.value())
                             .pressurePlate(RoyalFurnitureSet.PRESSURE_PLATE.value())
                             .sign(RoyalFurnitureSet.SIGN.sign().value(), RoyalFurnitureSet.SIGN.wall().value())
+                            .customHangingSign(RoyalFurnitureSet.HANGING_SIGN.sign().value(), RoyalFurnitureSet.HANGING_SIGN.wall().value())
                     .getFamily(),
                     BlockTags.MINEABLE_WITH_PICKAXE,
-                    new TagPair(BlockTags.DOORS, ItemTags.DOORS),
+                    new TagPair(BlockTags.DOORS, ItemTags.WOODEN_DOORS),
                     BlockTags.STAIRS,
-                    new TagPair(BlockTags.BUTTONS, ItemTags.BUTTONS),
+                    new TagPair(BlockTags.BUTTONS, ItemTags.WOODEN_BUTTONS),
                     new TagPair(BlockTags.PRESSURE_PLATES, null),
-                    new TagPair(BlockTags.TRAPDOORS, ItemTags.TRAPDOORS),
-                    new TagPair(BlockTags.FENCES, ItemTags.FENCES),
-                    new TagPair(BlockTags.SLABS, ItemTags.SLABS),
+                    new TagPair(BlockTags.TRAPDOORS, ItemTags.WOODEN_TRAPDOORS),
+                    new TagPair(BlockTags.FENCES, ItemTags.WOODEN_FENCES),
+                    new TagPair(BlockTags.SLABS, ItemTags.WOODEN_SLABS),
                     exclusions -> {
                         exclusions.put(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.WOOL);
                         exclusions.put(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.CARPET);

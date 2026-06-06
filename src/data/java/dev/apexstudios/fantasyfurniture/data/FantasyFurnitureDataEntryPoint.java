@@ -5,9 +5,6 @@ import dev.apexstudios.apexcore.api.data.ResourceGenerator;
 import dev.apexstudios.fantasyfurniture.common.FantasyFurniture;
 import dev.apexstudios.fantasyfurniture.common.ctm.CtmPacks;
 import dev.apexstudios.fantasyfurniture.common.station.FurnitureStationSetup;
-import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import net.minecraft.ChatFormatting;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.tags.BlockTags;
@@ -38,11 +35,15 @@ public final class FantasyFurnitureDataEntryPoint {
                             .add(FantasyFurniture.FURNITURE_WOOL, "Wools (Furniture Input)")
                             .add(FantasyFurniture.FURNITURE_BRICKS, "Bricks (Furniture Input)")
                             .add(FurnitureStationSetup.BINDING_AGENT, "Furniture Binding Agents")
-                            .add(FantasyFurniture.LOADING_ISSUE_KEY,
-                                    formatted("No Furniture Set modules detected.", ChatFormatting.BOLD, ChatFormatting.UNDERLINE, ChatFormatting.RED) +
-                                            "\n\nFantasy's Furniture does nothing on it's own, " +
-                                            formatted("at least 1", ChatFormatting.BOLD) +
-                                            " Furniture Set module must be installed."
+                            .add(FantasyFurniture.LOADING_ISSUE_KEY, "" +
+                                    ChatFormatting.RED + ChatFormatting.BOLD + ChatFormatting.UNDERLINE +
+                                    "No Furniture Set modules detected." +
+                                    ChatFormatting.RESET +
+                                    "\n\nFantasy's Furniture does nothing on it's own, " +
+                                    ChatFormatting.BOLD +
+                                    "at least 1" +
+                                    ChatFormatting.RESET +
+                                    " Furniture Set module must be installed."
                             )
                     )
                     .providing(ProviderTypes.MODELS, (context, provider) -> {
@@ -63,17 +64,5 @@ public final class FantasyFurnitureDataEntryPoint {
 
             CtmPacks.registerMainDataGen(generator);
         });
-    }
-
-    private String formatted(String str, ChatFormatting... codes) {
-        if(str.isBlank())
-            return "";
-        if(codes.length == 0)
-            return str;
-
-        var nonNull = Stream.of(codes).filter(Objects::nonNull).toList();
-        var colors = nonNull.stream().filter(ChatFormatting::isColor).map(Object::toString).collect(Collectors.joining());
-        var formats = nonNull.stream().filter(ChatFormatting::isFormat).map(Object::toString).collect(Collectors.joining());
-        return colors + formats + str + ChatFormatting.RESET;
     }
 }

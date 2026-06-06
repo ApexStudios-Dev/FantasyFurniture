@@ -23,7 +23,6 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jspecify.annotations.Nullable;
 
-// TODO: Upstream into Dyeable to allow no color
 public final class FairyLightsBlock extends SimpleHorizontalDirectionalBlock implements Dyeable.WithNone {
     public static final VoxelShape SHAPE = ApexShapes.join(
             box(2D, 10D, 14D, 14D, 16D, 16D),

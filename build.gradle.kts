@@ -58,6 +58,6 @@ dependencies {
     "dataImplementation"(libs.bundles.apexcore)
     accessTransformers(libs.apexcore)
 
-    runtimeOnly(libs.contex)
-    runtimeOnly(libs.contextmatters)
+    // runtimeOnly(libs.contex)
+    // runtimeOnly(libs.contextmatters)
 }

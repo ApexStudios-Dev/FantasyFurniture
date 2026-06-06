@@ -60,7 +60,7 @@ public final class PlushieBlockEntityRenderer implements BlockEntityRenderer<Plu
         submitPlushie(poseStack, nodes, renderState.lightCoords, modelGetter.apply(renderState.plushieRenderState.skin.model()), renderState.plushieRenderState, 0, renderState.breakProgress);
 
         if(renderState.playerName != null) {
-            nodes.submitNameTag(poseStack, new Vec3(.5D, .65D, .5D), 0, renderState.playerName, true, renderState.lightCoords, renderState.distanceToCameraSq, cameraRenderState);
+            nodes.submitNameTag(poseStack, new Vec3(.5D, .65D, .5D), 0, renderState.playerName, true, renderState.lightCoords, cameraRenderState);
         }
 
         /*if(renderState.plushieRenderState.facing != null) {

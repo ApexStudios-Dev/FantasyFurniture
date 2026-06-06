@@ -19,10 +19,10 @@ pluginManagement {
 
 dependencyResolutionManagement {
     versionCatalogs.create("libs") {
-        version("neoforge", "26.1.2.42-beta")
+        version("neoforge", "26.2.0.0-beta")
 
-        library("registree", "dev.apexstudios", "registree").version("26.1.0")
-        library("apexcore", "dev.apexstudios", "apexcore").version("26.1.2")
+        library("registree", "dev.apexstudios", "registree").version("26.2.0")
+        library("apexcore", "dev.apexstudios", "apexcore").version("26.2.0")
         bundle("apexcore", listOf("registree", "apexcore"))
 
         library("contex", "curse.maven", "contex-1296805").version("7806346")
@@ -34,6 +34,29 @@ plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
 }
 
+gradle.beforeProject {
+    repositories {
+        /*maven("https://prmaven.neoforged.net/NeoForge/pr3198") {
+            content {
+                includeModule("net.neoforged", "neoforge")
+                includeModule("net.neoforged", "testframework")
+            }
+        }*/
+
+        /*maven("https://maven.apexmodder.com/prs/Registree/pr29") {
+            content {
+                includeModule("dev.apexstudios", "registree")
+            }
+        }*/
+
+        /*maven("https://maven.apexmodder.com/prs/ApexCore/pr88") {
+            content {
+                includeModule("dev.apexstudios", "apexcore")
+            }
+        }*/
+    }
+}
+
 furnitureSet(
     "nordic",
     "venthyr",
@@ -43,21 +66,6 @@ furnitureSet(
     "royal",
     "decorations",
 )
-
-listOf(
-    "Registree",
-    "ApexCore"
-).forEach { lib ->
-    if(file("../../${lib}/26.1").exists()) {
-        includeBuild("../../${lib}/26.1") {
-            name = lib
-
-            dependencySubstitution {
-                substitute(module("dev.apexstudios:${lib.lowercase()}")).using(project(":"))
-            }
-        }
-    }
-}
 
 rootProject.name = "FantasyFurniture"
 
