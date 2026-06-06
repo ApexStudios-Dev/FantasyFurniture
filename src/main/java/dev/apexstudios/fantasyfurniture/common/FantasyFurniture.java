@@ -6,7 +6,11 @@ import dev.apexstudios.fantasyfurniture.common.station.FurnitureStationSetup;
 import dev.apexstudios.registree.api.Registree;
 import java.util.Set;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.repository.Pack;
+import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.flag.FeatureFlag;
 import net.minecraft.world.flag.FeatureFlags;
@@ -16,6 +20,7 @@ import net.neoforged.fml.ModLoader;
 import net.neoforged.fml.ModLoadingIssue;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.event.AddPackFindersEvent;
 
 @Mod(FantasyFurniture.ID)
 public final class FantasyFurniture {
@@ -43,6 +48,15 @@ public final class FantasyFurniture {
             if(FURNITURE_MODS.isEmpty())
                 ModLoader.addLoadingIssue(ModLoadingIssue.warning(LOADING_ISSUE_KEY));
         });
+
+        modBus.addListener(AddPackFindersEvent.class, event -> event.addPackFinders(
+                EXPERIMENTAL_FLAG_ID.withPrefix("packs/"),
+                PackType.SERVER_DATA,
+                Component.translatable(EXPERIMENTAL_FLAG_KEY),
+                PackSource.FEATURE,
+                false,
+                Pack.Position.TOP
+        ));
     }
 
     public static Identifier identifier(String identifier) {
