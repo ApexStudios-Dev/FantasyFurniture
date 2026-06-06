@@ -146,11 +146,6 @@ public interface FurnitureClientDataUtil {
 
         context.block(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.TABLE, block -> createTableModel(block, blockModels));
 
-        context.block(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.HANGING_SIGN, block -> {
-            var hangingSign = context.registree().getValueOrThrow(Registries.BLOCK, FurnitureUtil.Names.WALL_HANGING_SIGN);
-            blockModels.createHangingSign(context.family().getBaseBlock(), block, hangingSign);
-        });
-
         blockModels.familyWithExistingFullBlock(context.family().getBaseBlock()).generateFor(context.family());
     }
 

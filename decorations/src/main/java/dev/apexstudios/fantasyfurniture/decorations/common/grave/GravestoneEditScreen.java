@@ -7,7 +7,7 @@ import net.minecraft.client.gui.screens.inventory.SignEditScreen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-import org.joml.Vector3f;
+import org.joml.Vector3fc;
 
 public final class GravestoneEditScreen extends AbstractSignEditScreen {
     public static final Identifier TEXTURE = DecorationsFurnitureModule.identifier("textures/gui/gravestone.png");
@@ -30,7 +30,7 @@ public final class GravestoneEditScreen extends AbstractSignEditScreen {
     }
 
     @Override
-    protected Vector3f getSignTextScale() {
+    protected Vector3fc getSignTextScale() {
         return SignEditScreen.TEXT_SCALE;
     }
 

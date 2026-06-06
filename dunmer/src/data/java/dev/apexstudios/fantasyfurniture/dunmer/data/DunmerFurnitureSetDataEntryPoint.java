@@ -4,6 +4,7 @@ import dev.apexstudios.apexcore.api.data.ProviderTypes;
 import dev.apexstudios.apexcore.api.data.ResourceGenerator;
 import dev.apexstudios.apexcore.api.data.provider.context.ProviderListenerContext;
 import dev.apexstudios.apexcore.api.data.provider.model.ModelProvider;
+import dev.apexstudios.apexcore.api.placement.BlockItemPlacementEvent;
 import dev.apexstudios.apexcore.api.util.TagPair;
 import dev.apexstudios.fantasyfurniture.common.block.OvenBlock;
 import dev.apexstudios.fantasyfurniture.common.ctm.CtmPacks;
@@ -11,7 +12,6 @@ import dev.apexstudios.fantasyfurniture.common.util.FurnitureClientDataUtil;
 import dev.apexstudios.fantasyfurniture.common.util.FurnitureDataUtil;
 import dev.apexstudios.fantasyfurniture.common.util.FurnitureUtil;
 import dev.apexstudios.fantasyfurniture.dunmer.common.DunmerFurnitureSet;
-import dev.apexstudios.apexcore.api.placement.BlockItemPlacementEvent;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
@@ -40,6 +40,7 @@ public final class DunmerFurnitureSetDataEntryPoint {
                             .trapdoor(DunmerFurnitureSet.TRAPDOOR.value())
                             .pressurePlate(DunmerFurnitureSet.PRESSURE_PLATE.value())
                             .sign(DunmerFurnitureSet.SIGN.sign().value(), DunmerFurnitureSet.SIGN.wall().value())
+                            .hangingSign(DunmerFurnitureSet.HANGING_SIGN.sign().value(), DunmerFurnitureSet.HANGING_SIGN.wall().value())
                     .getFamily(),
                     BlockTags.MINEABLE_WITH_AXE,
                     new TagPair(BlockTags.WOODEN_DOORS, ItemTags.WOODEN_DOORS),

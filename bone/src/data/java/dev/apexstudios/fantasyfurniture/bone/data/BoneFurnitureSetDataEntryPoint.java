@@ -39,15 +39,16 @@ public final class BoneFurnitureSetDataEntryPoint {
                         .trapdoor(furnitureSet.trapdoor.value())
                         .pressurePlate(furnitureSet.pressurePlate.value())
                         .sign(furnitureSet.sign.sign().value(), furnitureSet.sign.wall().value())
+                        .hangingSign(furnitureSet.hangingSign.sign().value(), furnitureSet.hangingSign.wall().value())
                 .getFamily(),
                 BlockTags.MINEABLE_WITH_PICKAXE,
-                new TagPair(BlockTags.DOORS, ItemTags.DOORS),
+                new TagPair(BlockTags.DOORS, ItemTags.WOODEN_DOORS),
                 BlockTags.STAIRS,
-                new TagPair(BlockTags.BUTTONS, ItemTags.BUTTONS),
+                new TagPair(BlockTags.BUTTONS, ItemTags.WOODEN_BUTTONS),
                 new TagPair(BlockTags.PRESSURE_PLATES, null),
-                new TagPair(BlockTags.TRAPDOORS, ItemTags.TRAPDOORS),
-                new TagPair(BlockTags.FENCES, ItemTags.FENCES),
-                new TagPair(BlockTags.SLABS, ItemTags.SLABS)
+                new TagPair(BlockTags.TRAPDOORS, ItemTags.WOODEN_TRAPDOORS),
+                new TagPair(BlockTags.FENCES, ItemTags.WOODEN_FENCES),
+                new TagPair(BlockTags.SLABS, ItemTags.WOODEN_SLABS)
         );
 
         FurnitureDataUtil.registerDataGen(context, dataPack);

@@ -7,7 +7,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -64,7 +63,8 @@ public class SeatBlock extends SimpleHorizontalDirectionalBlock {
         }
     }
 
-    @Override
+    // TODO: validate against beds
+    /*@Override
     public void updateEntityMovementAfterFallOn(BlockGetter level, Entity entity) {
         // same code as to how Entity gets the BlockState
         var effectPos = entity.getOnPosLegacy();
@@ -84,5 +84,5 @@ public class SeatBlock extends SimpleHorizontalDirectionalBlock {
                 );
             }
         }
-    }
+    }*/
 }

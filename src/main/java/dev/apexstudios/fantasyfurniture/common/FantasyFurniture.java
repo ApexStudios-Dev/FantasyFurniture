@@ -8,6 +8,8 @@ import java.util.Set;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.flag.FeatureFlag;
+import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModLoader;
@@ -25,6 +27,10 @@ public final class FantasyFurniture {
 
     public static final Set<String> FURNITURE_MODS = Sets.newHashSet();
     public static final String LOADING_ISSUE_KEY = ID + ".loading_issue.missing_furniture_sets";
+
+    public static final Identifier EXPERIMENTAL_FLAG_ID = identifier("experimental");
+    public static final String EXPERIMENTAL_FLAG_KEY = EXPERIMENTAL_FLAG_ID.toLanguageKey("feature_flag");
+    public static final FeatureFlag EXPERIMENTAL = FeatureFlags.REGISTRY.getFlag(EXPERIMENTAL_FLAG_ID);
 
     public FantasyFurniture(IEventBus modBus) {
         REGISTREE.registerEvents(modBus);

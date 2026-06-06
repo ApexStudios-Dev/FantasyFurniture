@@ -49,7 +49,6 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.ItemLike;
@@ -286,7 +285,6 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                            .map(ItemLike::asItem)
                            .forEach(block -> provider.tag(Tags.Items.DYED).withElement(block));
 
-                    provider.tag(ItemTags.CHAINS).withElement(DecorationsFurnitureModule.BRONZE_CHAIN.value().asItem());
                     provider.tag(Tags.Items.CHAINS).withElement(DecorationsFurnitureModule.BRONZE_CHAIN.value().asItem());
                 })
         );
@@ -723,7 +721,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                 .transform(ItemDisplayContext.HEAD, t -> t.translation(0F, 14.5F, 0F))
                 .requiredTextureSlot(TextureSlot.PARTICLE)
                 .build()
-                .create(DecorationsFurnitureModule.PLUSHIE_BLOCK.value(), TextureMapping.particle(Blocks.WHITE_WOOL), blockModels.modelOutput);
+                .create(DecorationsFurnitureModule.PLUSHIE_BLOCK.value(), TextureMapping.particle(Blocks.WOOL.white()), blockModels.modelOutput);
 
         var variant = BlockModelGenerators.plainVariant(model);
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(DecorationsFurnitureModule.PLUSHIE_BLOCK.value(), variant));

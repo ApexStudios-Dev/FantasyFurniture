@@ -14,32 +14,27 @@ displayURL = "https://modrinth.com/project/fantasys-furniture-venthyr"
 [[dependencies.fantasyfurniture_venthyr]]
 modId = "minecraft"
 type = "required"
-versionRange = "[26.1,26.2)"
+versionRange = "[26.2,26.3)"
 ordering = "NONE"
 side = "BOTH"
 [[dependencies.fantasyfurniture_venthyr]]
 modId = "neoforge"
 type = "required"
-versionRange = "[26.1,26.2)"
+versionRange = "[26.2-alpha,26.3)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.fantasyfurniture_venthyr]]
 modId = "apexcore"
 type = "required"
-versionRange = "[26.1,26.2)"
+versionRange = "[26.2,26.3)"
 [dependencies.fantasyfurniture_venthyr.mc-publish]
 modrinth = "xl3myxch"
 curseforge = "550778"
 [[dependencies.fantasyfurniture_venthyr]]
 modId = "fantasyfurniture"
 type = "required"
-versionRange = "[26.1,26.2)"
+versionRange = "[26.2,26.3)"
 [dependencies.fantasyfurniture_venthyr.mc-publish]
 modrinth = "A0nfCqYw"
 curseforge = "579564"
-
-#[[accessTransformers]]
-#    file="META-INF/accesstransformer.cfg"
-#[[mixins]]
-#    config="META-INF/fantasyfurniture_venthyr.mixins.json"

@@ -25,7 +25,7 @@ import org.joml.Vector3f;
 import org.jspecify.annotations.Nullable;
 
 public final class GravestoneBlockEntityRenderer implements BlockEntityRenderer<GravestoneBlockEntity, SignRenderState> {
-    private static final Function<Direction, SignRenderState.SignTransformations> TRANSFORMATIONS = Util.memoize(facing -> new SignRenderState.SignTransformations(Transformation.IDENTITY, textTransformation(facing, true), textTransformation(facing, false)));
+    private static final Function<Direction, SignRenderState.SignTransformations> TRANSFORMATIONS = Util.memoize(facing -> new SignRenderState.SignTransformations(textTransformation(facing, true), textTransformation(facing, false)));
 
     private final Font font;
 
@@ -58,10 +58,6 @@ public final class GravestoneBlockEntityRenderer implements BlockEntityRenderer<
     }
 
     private void submitSignWithText(SignRenderState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector) {
-        poseStack.pushPose();
-        poseStack.mulPose(state.transformations.body());
-        poseStack.popPose();
-
         if (state.frontText != null) {
             poseStack.pushPose();
             poseStack.mulPose(state.transformations.frontText());

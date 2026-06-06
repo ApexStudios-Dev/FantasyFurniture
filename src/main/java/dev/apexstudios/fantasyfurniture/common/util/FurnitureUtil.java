@@ -67,6 +67,7 @@ import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.world.level.block.WallHangingSignBlock;
 import net.minecraft.world.level.block.WallSignBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.BlockEntityTypes;
 import net.minecraft.world.level.block.entity.SmokerBlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -76,7 +77,6 @@ import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.world.poi.ExtendPoiTypesEvent;
@@ -87,8 +87,8 @@ import net.neoforged.neoforge.transfer.item.WorldlyContainerWrapper;
 public interface FurnitureUtil {
     Supplier<BlockBehaviour.Properties> PLANK_PROPERTIES = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.OAK_PLANKS);
     Supplier<BlockBehaviour.Properties> STONE_PROPERTIES = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.STONE);
-    Supplier<BlockBehaviour.Properties> WOOL_PROPERTIES = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.WHITE_WOOL);
-    Supplier<BlockBehaviour.Properties> CARPET_PROPERTIES = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.WHITE_CARPET);
+    Supplier<BlockBehaviour.Properties> WOOL_PROPERTIES = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.WOOL.white());
+    Supplier<BlockBehaviour.Properties> CARPET_PROPERTIES = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.CARPET.white());
     Supplier<BlockBehaviour.Properties> DRESSER_PROPERTIES = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.CHEST).pushReaction(PushReaction.BLOCK);
     Supplier<BlockBehaviour.Properties> STOOL_PROPERTIES = PLANK_PROPERTIES;
     Supplier<BlockBehaviour.Properties> CUSHION_PROPERTIES = PLANK_PROPERTIES;
@@ -96,7 +96,7 @@ public interface FurnitureUtil {
     Supplier<BlockBehaviour.Properties> DRAWER_PROPERTIES = DRESSER_PROPERTIES;
     Supplier<BlockBehaviour.Properties> CHAIR_PROPERTIES = mutating(PLANK_PROPERTIES, properties -> properties.pushReaction(PushReaction.BLOCK));
     Supplier<BlockBehaviour.Properties> BOOKSHELF_PROPERTIES = DRESSER_PROPERTIES;
-    Supplier<BlockBehaviour.Properties> BED_PROPERTIES = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.WHITE_BED).pushReaction(PushReaction.BLOCK);
+    Supplier<BlockBehaviour.Properties> BED_PROPERTIES = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.BED.white()).pushReaction(PushReaction.BLOCK);
     Supplier<BlockBehaviour.Properties> DOOR_PROPERTIES = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.OAK_DOOR).pushReaction(PushReaction.BLOCK);
     Supplier<BlockBehaviour.Properties> DESK_PROPERTIES = DRESSER_PROPERTIES;
     Supplier<BlockBehaviour.Properties> PAINTING_WIDE_PROPERTIES = CHAIR_PROPERTIES;
@@ -118,12 +118,12 @@ public interface FurnitureUtil {
     Supplier<BlockBehaviour.Properties> FENCE_GATE_PROPERTIES = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.OAK_FENCE_GATE);
     Supplier<BlockBehaviour.Properties> TRAPDOOR_PROPERTIES = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.OAK_TRAPDOOR);
     Supplier<BlockBehaviour.Properties> PRESSURE_PLATE_PROPERTIES = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.OAK_PRESSURE_PLATE);
-    Supplier<BlockBehaviour.Properties> HANGING_SIGN_BLOCK_PROPERTIES = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.OAK_HANGING_SIGN);
-    Supplier<BlockBehaviour.Properties> WALL_HANGING_SIGN_BLOCK_PROPERTIES = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.OAK_WALL_HANGING_SIGN);
-    Supplier<BlockBehaviour.Properties> SIGN_BLOCK_PROPERTIES = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.OAK_SIGN);
-    Supplier<BlockBehaviour.Properties> WALL_SIGN_BLOCK_PROPERTIES = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.OAK_WALL_SIGN);
+    Supplier<BlockBehaviour.Properties> HANGING_SIGN_BLOCK_PROPERTIES = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.OAK_HANGING_SIGN).requiredFeatures(FantasyFurniture.EXPERIMENTAL);
+    Supplier<BlockBehaviour.Properties> WALL_HANGING_SIGN_BLOCK_PROPERTIES = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.OAK_WALL_HANGING_SIGN).requiredFeatures(FantasyFurniture.EXPERIMENTAL);
+    Supplier<BlockBehaviour.Properties> SIGN_BLOCK_PROPERTIES = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.OAK_SIGN).requiredFeatures(FantasyFurniture.EXPERIMENTAL);
+    Supplier<BlockBehaviour.Properties> WALL_SIGN_BLOCK_PROPERTIES = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.OAK_WALL_SIGN).requiredFeatures(FantasyFurniture.EXPERIMENTAL);
 
-    Supplier<Item.Properties> SIGN_ITEM_PROPERTIES = () -> new Item.Properties().stacksTo(16).useBlockDescriptionPrefix();
+    Supplier<Item.Properties> SIGN_ITEM_PROPERTIES = () -> new Item.Properties().stacksTo(16).useBlockDescriptionPrefix().requiredFeatures(FantasyFurniture.EXPERIMENTAL);
 
     static <TBlock extends Block> DeferredBlock<TBlock> simpleBlock(Registree registree, String identifier, Function<BlockBehaviour.Properties, TBlock> factory, Supplier<BlockBehaviour.Properties> propertiesFactory) {
         var block = registree.registerBlock(identifier, factory, propertiesFactory);
@@ -320,9 +320,9 @@ public interface FurnitureUtil {
             ));
 
             appendValidBlocks(FurnitureBlockEntities.BOOKSHELF.value(), Names.blocks(registree, Names.BOOKSHELF));
-            appendValidBlocks(BlockEntityType.SMOKER, Names.blocks(registree, Names.OVEN));
-            appendValidBlocks(BlockEntityType.HANGING_SIGN, Names.blocks(registree, Names.HANGING_SIGN, Names.WALL_HANGING_SIGN));
-            appendValidBlocks(BlockEntityType.SIGN, Names.blocks(registree, Names.SIGN, Names.WALL_SIGN));
+            appendValidBlocks(BlockEntityTypes.SMOKER, Names.blocks(registree, Names.OVEN));
+            appendValidBlocks(BlockEntityTypes.HANGING_SIGN, Names.blocks(registree, Names.HANGING_SIGN, Names.WALL_HANGING_SIGN));
+            appendValidBlocks(BlockEntityTypes.SIGN, Names.blocks(registree, Names.SIGN, Names.WALL_SIGN));
         });
 
         modBus.addListener(ExtendPoiTypesEvent.class, event -> {
@@ -335,7 +335,7 @@ public interface FurnitureUtil {
                 registree,
                 Names.OVEN,
                 block -> {
-                    event.registerBlockEntity(Capabilities.Item.BLOCK, BlockEntityType.SMOKER, WorldlyContainerWrapper::new);
+                    event.registerBlockEntity(Capabilities.Item.BLOCK, BlockEntityTypes.SMOKER, WorldlyContainerWrapper::new);
 
                     if(!(block instanceof MultiBlock))
                         return;
@@ -350,10 +350,6 @@ public interface FurnitureUtil {
                     }, block);
                 })
         );
-
-        if(FMLEnvironment.getDist().isClient()) {
-            FurnitureClientUtil.registerEvents(modBus, registree, woodType);
-        }
 
         registree.registerEvents(modBus);
     }
