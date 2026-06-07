@@ -2,6 +2,9 @@
   "pack": {
     "description": "Fantasy's Furniture - Necrolord",
     "max_format": 107,
-    "min_format": 107
+    "min_format": [
+      107,
+      1
+    ]
   }
 }

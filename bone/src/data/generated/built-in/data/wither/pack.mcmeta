@@ -2,6 +2,9 @@
   "pack": {
     "description": "Wither data-files",
     "max_format": 107,
-    "min_format": 107
+    "min_format": [
+      107,
+      1
+    ]
   }
 }
