@@ -7,7 +7,6 @@ import dev.apexstudios.fantasyfurniture.common.ctm.CtmPacks;
 import dev.apexstudios.fantasyfurniture.common.station.FurnitureStationSetup;
 import net.minecraft.ChatFormatting;
 import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.network.chat.Component;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
@@ -19,8 +18,6 @@ import net.neoforged.neoforge.common.Tags;
 public final class FantasyFurnitureDataEntryPoint {
     public FantasyFurnitureDataEntryPoint(IEventBus modBus) {
         ResourceGenerator.of(modBus, generator -> {
-            var experimentalDescKey = FantasyFurniture.EXPERIMENTAL_FLAG_KEY + ".desc";
-
             generator.pack()
                     .providing(ProviderTypes.ITEM_TAGS, (context, provider) -> {
                         provider.tag(ItemTags.PLANKS).withOptionalTag(FantasyFurniture.FURNITURE_PLANKS);
@@ -48,8 +45,6 @@ public final class FantasyFurnitureDataEntryPoint {
                                     ChatFormatting.RESET +
                                     " Furniture Set module must be installed."
                             )
-                            .add(FantasyFurniture.EXPERIMENTAL_FLAG_KEY, "Fantasy's Furniture - Experimental")
-                            .add(experimentalDescKey, "Experimental Furniture Blocks")
                     )
                     .providing(ProviderTypes.MODELS, (context, provider) -> {
                         provider.fromRegistree(FantasyFurniture.REGISTREE);
@@ -66,10 +61,6 @@ public final class FantasyFurnitureDataEntryPoint {
                             .unlockedBy("has_crafting_table", provider.has(Tags.Items.PLAYER_WORKSTATIONS_CRAFTING_TABLES))
                             .save(provider.output())
                     );
-
-            generator.pack("experimental")
-                    .enabling(FantasyFurniture.EXPERIMENTAL)
-                    .description(Component.translatable(experimentalDescKey));
 
             CtmPacks.registerMainDataGen(generator);
         });

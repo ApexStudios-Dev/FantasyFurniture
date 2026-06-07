@@ -10,7 +10,6 @@ authors = "ApexStudios"
 description = "Fantasy's Furniture is a modular mod which adds various new Furniture Sets and Decorational blocks to Minecraft"
 logoFile = "logo.png"
 displayURL = "https://modrinth.com/mod/fantasy-furniture"
-featureFlags="META-INF/feature_flags.json"
 
 [[dependencies.fantasyfurniture]]
 modId = "minecraft"
