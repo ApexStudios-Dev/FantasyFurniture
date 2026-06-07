@@ -47,7 +47,7 @@ public class SeatBlock extends SimpleHorizontalDirectionalBlock {
 
     @Override
     public void fallOn(Level level, BlockState blockState, BlockPos pos, Entity entity, double fallDistance) {
-        if(BlockHelper.shouldBounceOnBlock(entity, blockState)) {
+        if(BlockHelper.shouldBounceOnBlock(pos, blockState, entity)) {
             super.fallOn(level, blockState, pos, entity, fallDistance * .5F);
         } else {
             super.fallOn(level, blockState, pos, entity, fallDistance);
