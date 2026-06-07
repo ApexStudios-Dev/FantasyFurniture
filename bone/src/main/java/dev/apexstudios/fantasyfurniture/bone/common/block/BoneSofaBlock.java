@@ -2,7 +2,6 @@ package dev.apexstudios.fantasyfurniture.bone.common.block;
 
 import dev.apexstudios.apexcore.api.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.common.block.SofaBlock;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class BoneSofaBlock extends SofaBlock {
@@ -75,11 +74,6 @@ public final class BoneSofaBlock extends SofaBlock {
     );
 
     public BoneSofaBlock(Properties properties) {
-        super(properties, LEFT_SHAPE, RIGHT_SHAPE, BOTH_SHAPE, CORNER_SHAPE, SHAPE);
-    }
-
-    @Override
-    protected boolean isBouncy(BlockState blockState) {
-        return false;
+        super(properties.bounceRestitution(0F), LEFT_SHAPE, RIGHT_SHAPE, BOTH_SHAPE, CORNER_SHAPE, SHAPE);
     }
 }

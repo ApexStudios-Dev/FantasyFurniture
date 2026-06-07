@@ -2,7 +2,6 @@ package dev.apexstudios.fantasyfurniture.dunmer.common.block;
 
 import dev.apexstudios.apexcore.api.util.ApexShapes;
 import dev.apexstudios.fantasyfurniture.common.block.BenchBlock;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class DunmerBenchBlock extends BenchBlock {
@@ -17,11 +16,6 @@ public final class DunmerBenchBlock extends BenchBlock {
     );
 
     public DunmerBenchBlock(Properties properties) {
-        super(properties, SHAPE);
-    }
-
-    @Override
-    protected boolean isBouncy(BlockState blockState) {
-        return false;
+        super(properties.bounceRestitution(0F), SHAPE);
     }
 }

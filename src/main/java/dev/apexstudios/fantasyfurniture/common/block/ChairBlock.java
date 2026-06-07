@@ -3,6 +3,7 @@ package dev.apexstudios.fantasyfurniture.common.block;
 import dev.apexstudios.apexcore.api.multiblock.MultiBlock;
 import dev.apexstudios.apexcore.api.multiblock.MultiBlockProperties;
 import dev.apexstudios.apexcore.api.multiblock.MultiBlockProperty;
+import dev.apexstudios.apexcore.extension.BlockExtension;
 import dev.apexstudios.fantasyfurniture.common.util.FurnitureUtil;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
@@ -13,7 +14,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class ChairBlock extends SeatMultiBlock {
+public class ChairBlock extends SeatMultiBlock implements BlockExtension {
     private final Map<Direction, VoxelShape> shapes;
 
     public ChairBlock(Properties properties, VoxelShape baseShape) {
@@ -33,7 +34,7 @@ public class ChairBlock extends SeatMultiBlock {
     }
 
     @Override
-    protected boolean shouldBounce(BlockState blockState) {
-        return MultiBlock.getIndex(blockState) == 0 && super.shouldBounce(blockState);
+    public float getBounceRestitution(BlockState blockState) {
+        return MultiBlock.getIndex(blockState) == 0 ? BlockExtension.super.getBounceRestitution(blockState) : 0F;
     }
 }
