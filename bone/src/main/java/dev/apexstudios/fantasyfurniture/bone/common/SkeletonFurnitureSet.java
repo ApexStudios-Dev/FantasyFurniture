@@ -9,6 +9,6 @@ public final class SkeletonFurnitureSet {
     public static final BoneFurnitureSet FURNITURE_SET = new BoneFurnitureSet(ID, "skeleton");
 
     public SkeletonFurnitureSet(IEventBus modBus) {
-        FURNITURE_SET.register(modBus);
+        FURNITURE_SET.registree.register(modBus);
     }
 }

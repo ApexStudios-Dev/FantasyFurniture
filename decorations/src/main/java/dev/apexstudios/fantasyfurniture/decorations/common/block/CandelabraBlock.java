@@ -115,7 +115,7 @@ public final class CandelabraBlock extends SimpleHorizontalDirectionalBlock impl
         var stepZ = facing.getStepZ();
         var stepOffset = .25D;
 
-        if(DecorationsFurnitureModule.CANDELABRA_1.is(blockState)) {
+        if(blockState.is(DecorationsFurnitureModule.CANDELABRA_1)) {
             y += .1D;
             stepOffset += .1D;
         }

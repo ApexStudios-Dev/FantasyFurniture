@@ -9,6 +9,6 @@ public final class WitherFurnitureSet {
     public static final BoneFurnitureSet FURNITURE_SET = new BoneFurnitureSet(ID, "wither");
 
     public WitherFurnitureSet(IEventBus modBus) {
-        FURNITURE_SET.register(modBus);
+        FURNITURE_SET.registree.register(modBus);
     }
 }

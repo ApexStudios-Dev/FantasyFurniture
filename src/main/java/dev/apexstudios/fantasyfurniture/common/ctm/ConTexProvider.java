@@ -6,7 +6,7 @@ import dev.apexstudios.apexcore.api.data.ProviderType;
 import dev.apexstudios.apexcore.api.data.provider.context.ProviderOutputContext;
 import dev.apexstudios.fantasyfurniture.common.FantasyFurniture;
 import dev.apexstudios.fantasyfurniture.common.util.FurnitureUtil;
-import dev.apexstudios.registree.api.Registree;
+import dev.apexstudios.registree.BaseRegistree;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import net.minecraft.core.registries.Registries;
@@ -57,9 +57,9 @@ final class ConTexProvider extends ExtendedBlockStateProvider {
         this.texturesConsumer = texturesConsumer;
     }
 
-    public void with(Registree registree) {
+    public void with(BaseRegistree<?> registree) {
         FurnitureUtil.Names.block(registree, FurnitureUtil.Names.CARPET, carpet -> {
-            var wool = registree.getOrThrow(Registries.BLOCK, FurnitureUtil.Names.WOOL);
+            var wool = registree.getHolderOrThrow(Registries.BLOCK, FurnitureUtil.Names.WOOL);
             var woolRegistryName = wool.key().identifier();
             var texture = woolRegistryName.withPrefix("block/");
             var ctmBaseTexture = woolRegistryName.withPath(path -> "block/ctm/" + path);

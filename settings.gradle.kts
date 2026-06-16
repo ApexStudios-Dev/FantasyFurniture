@@ -21,8 +21,8 @@ dependencyResolutionManagement {
     versionCatalogs.create("libs") {
         version("neoforge", "26.2.0.0-beta")
 
-        library("registree", "dev.apexstudios", "registree").version("26.2.0")
-        library("apexcore", "dev.apexstudios", "apexcore").version("26.2.0")
+        library("registree", "dev.apexstudios", "registree").version("26.2.1-beta-pr-89")
+        library("apexcore", "dev.apexstudios", "apexcore").version("26.2.3-beta-pr-30")
         bundle("apexcore", listOf("registree", "apexcore"))
 
         library("contex", "curse.maven", "contex-1296805").version("7806346")
@@ -43,17 +43,17 @@ gradle.beforeProject {
             }
         }*/
 
-        /*maven("https://maven.apexmodder.com/prs/Registree/pr29") {
+        maven("https://maven.apexmodder.com/prs/Registree/pr30") {
             content {
                 includeModule("dev.apexstudios", "registree")
             }
-        }*/
+        }
 
-        /*maven("https://maven.apexmodder.com/prs/ApexCore/pr88") {
+        maven("https://maven.apexmodder.com/prs/ApexCore/pr89") {
             content {
                 includeModule("dev.apexstudios", "apexcore")
             }
-        }*/
+        }
     }
 }
 

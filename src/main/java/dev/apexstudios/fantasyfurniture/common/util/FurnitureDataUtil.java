@@ -14,7 +14,7 @@ import dev.apexstudios.apexcore.api.util.TagPair;
 import dev.apexstudios.fantasyfurniture.common.FantasyFurniture;
 import dev.apexstudios.fantasyfurniture.common.station.FurnitureStationRecipeBuilder;
 import dev.apexstudios.fantasyfurniture.common.station.FurnitureStationSetup;
-import dev.apexstudios.registree.api.Registree;
+import dev.apexstudios.registree.BaseRegistree;
 import java.util.function.Consumer;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
@@ -224,7 +224,7 @@ public interface FurnitureDataUtil {
     }
 
     record DataGenContext(
-            Registree registree,
+            BaseRegistree<?> registree,
             String englishName,
             BlockFamily family,
             TagKey<Block> mineableTag,
@@ -242,7 +242,7 @@ public interface FurnitureDataUtil {
         }
 
         public DataGenContext(
-                Registree registree,
+                BaseRegistree<?> registree,
                 String englishName,
                 BlockFamily family,
                 TagKey<Block> mineableTag,
@@ -258,7 +258,7 @@ public interface FurnitureDataUtil {
         }
 
         public DataGenContext(
-                Registree registree,
+                BaseRegistree<?> registree,
                 String englishName,
                 BlockFamily family,
                 TagKey<Block> mineableTag,
