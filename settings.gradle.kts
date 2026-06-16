@@ -19,10 +19,10 @@ pluginManagement {
 
 dependencyResolutionManagement {
     versionCatalogs.create("libs") {
-        version("neoforge", "26.2.0-alpha.0+pre-4.20260607.184824")
+        version("neoforge", "26.2.0.0-beta")
 
-        library("registree", "dev.apexstudios", "registree").version("26.2.1-beta-pr-29")
-        library("apexcore", "dev.apexstudios", "apexcore").version("26.2.6-beta-pr-88")
+        library("registree", "dev.apexstudios", "registree").version("26.2.0")
+        library("apexcore", "dev.apexstudios", "apexcore").version("26.2.0")
         bundle("apexcore", listOf("registree", "apexcore"))
 
         library("contex", "curse.maven", "contex-1296805").version("7806346")
@@ -36,24 +36,24 @@ plugins {
 
 gradle.beforeProject {
     repositories {
-        maven("https://prmaven.neoforged.net/NeoForge/pr3198") {
+        /*maven("https://prmaven.neoforged.net/NeoForge/pr3198") {
             content {
                 includeModule("net.neoforged", "neoforge")
                 includeModule("net.neoforged", "testframework")
             }
-        }
+        }*/
 
-        maven("https://maven.apexmodder.com/prs/Registree/pr29") {
+        /*maven("https://maven.apexmodder.com/prs/Registree/pr29") {
             content {
                 includeModule("dev.apexstudios", "registree")
             }
-        }
+        }*/
 
-        maven("https://maven.apexmodder.com/prs/ApexCore/pr88") {
+        /*maven("https://maven.apexmodder.com/prs/ApexCore/pr88") {
             content {
                 includeModule("dev.apexstudios", "apexcore")
             }
-        }
+        }*/
     }
 }
 
