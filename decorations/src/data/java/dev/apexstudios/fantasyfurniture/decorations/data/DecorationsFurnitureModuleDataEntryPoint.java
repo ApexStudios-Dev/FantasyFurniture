@@ -29,7 +29,6 @@ import dev.apexstudios.fantasyfurniture.decorations.common.cookie.CookieJarBlock
 import dev.apexstudios.fantasyfurniture.decorations.common.grave.GravestoneEditScreen;
 import dev.apexstudios.fantasyfurniture.decorations.common.plushie.PlushieBlockItem;
 import dev.apexstudios.fantasyfurniture.decorations.common.plushie.PlushieSpecialModelRenderer;
-import dev.apexstudios.registree.api.holder.DeferredBlock;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 import net.minecraft.client.data.models.BlockModelGenerators;
@@ -54,6 +53,7 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.ChainBlock;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -65,6 +65,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.client.model.generators.template.ExtendedModelTemplateBuilder;
 import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.registries.DeferredBlock;
 
 @Mod(DecorationsFurnitureModule.ID)
 public final class DecorationsFurnitureModuleDataEntryPoint {
@@ -227,8 +228,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     provider.add(PlushieBlockItem.DYANMIC_KEY, "%s %s");
                 })
                 .providing(ProviderTypes.RECIPES, (context, provider) -> DecorationsFurnitureModule.REGISTREE
-                        .listElements(Registries.ITEM)
-                        .map(Holder::value)
+                        .values(Registries.ITEM)
                         .forEach(item -> furnitureStation(item, provider))
                 )
                 .providing(ProviderTypes.LOOT_TABLE, (context, provider) -> {
@@ -236,9 +236,9 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
 
                     provider.block(lootTables -> {
                         DecorationsFurnitureModule.REGISTREE
-                                .listElements(Registries.BLOCK)
-                                .map(Holder::value)
+                                .holders(Registries.BLOCK)
                                 .filter(Predicate.not(DecorationsFurnitureModule.PLUSHIE_BLOCK::is))
+                                .map(Holder::value)
                                 .forEach(lootTables::dropSelf);
 
                         lootTables.accept(DecorationsFurnitureModule.PLUSHIE_BLOCK.value(), () -> LootTable
@@ -259,14 +259,14 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
                     });
                 })
                 .providing(ProviderTypes.BLOCK_TAGS, (context, provider) -> {
-                    DecorationsFurnitureModule.REGISTREE.listElements(Registries.BLOCK).map(Holder::value).forEach(block -> {
+                    DecorationsFurnitureModule.REGISTREE.values(Registries.BLOCK).forEach(block -> {
                         provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(block);
 
                         if(block instanceof Dyeable) {
                             provider.tag(Tags.Blocks.DYED).withElement(block);
                         }
 
-                        if(block instanceof MultiBlock || block instanceof Stackable || DecorationsFurnitureModule.BRONZE_CHAIN.is(block)) {
+                        if(block instanceof MultiBlock || block instanceof Stackable || block instanceof ChainBlock) {
                             provider.tag(BlockItemPlacementEvent.RENDERABLES).withElement(block);
                         }
 

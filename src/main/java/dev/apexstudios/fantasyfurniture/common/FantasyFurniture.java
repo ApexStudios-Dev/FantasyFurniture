@@ -3,7 +3,7 @@ package dev.apexstudios.fantasyfurniture.common;
 import com.google.common.collect.Sets;
 import dev.apexstudios.fantasyfurniture.common.ctm.CtmPacks;
 import dev.apexstudios.fantasyfurniture.common.station.FurnitureStationSetup;
-import dev.apexstudios.registree.api.Registree;
+import dev.apexstudios.registree.Registree;
 import java.util.Set;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
@@ -27,11 +27,11 @@ public final class FantasyFurniture {
     public static final String LOADING_ISSUE_KEY = ID + ".loading_issue.missing_furniture_sets";
 
     public FantasyFurniture(IEventBus modBus) {
-        REGISTREE.registerEvents(modBus);
-        FurnitureStationSetup.register(modBus);
-        FurnitureBlockEntities.register(modBus);
-        FurnitureMenus.register(modBus);
-        CtmPacks.register(modBus);
+        REGISTREE.register(modBus);
+        FurnitureStationSetup.register();
+        FurnitureBlockEntities.register();
+        FurnitureMenus.register();
+        CtmPacks.register();
 
         modBus.addListener(FMLCommonSetupEvent.class, event -> {
             if(FURNITURE_MODS.isEmpty())
@@ -46,6 +46,4 @@ public final class FantasyFurniture {
     public static String id(String identifier) {
         return ID + Identifier.NAMESPACE_SEPARATOR + identifier;
     }
-
-    private record CtmPack(String packId, String packName) { }
 }

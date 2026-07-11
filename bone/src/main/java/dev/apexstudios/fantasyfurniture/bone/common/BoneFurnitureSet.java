@@ -27,9 +27,9 @@ import dev.apexstudios.fantasyfurniture.bone.common.block.BoneWallLightBlock;
 import dev.apexstudios.fantasyfurniture.bone.common.block.BoneWardrobeBlock;
 import dev.apexstudios.fantasyfurniture.common.FantasyFurniture;
 import dev.apexstudios.fantasyfurniture.common.block.FurnitureDoorBlock;
+import dev.apexstudios.fantasyfurniture.common.ctm.CtmPacks;
 import dev.apexstudios.fantasyfurniture.common.util.FurnitureUtil;
-import dev.apexstudios.registree.api.Registree;
-import dev.apexstudios.registree.api.holder.DeferredBlock;
+import dev.apexstudios.registree.Registree;
 import java.util.function.Supplier;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -52,8 +52,8 @@ import net.minecraft.world.level.block.WallHangingSignBlock;
 import net.minecraft.world.level.block.WallSignBlock;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.WoodType;
-import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
+import net.neoforged.neoforge.registries.DeferredBlock;
 
 public final class BoneFurnitureSet {
     public static final String ID = FantasyFurniture.ID + "_bone";
@@ -115,51 +115,50 @@ public final class BoneFurnitureSet {
 
         blockSetType = () -> woodType.get().setType();
 
-        bricks = FurnitureUtil.bricks(registree, Block::new);
-        wool = FurnitureUtil.wool(registree, Block::new);
-        carpet = FurnitureUtil.carpet(registree, CarpetBlock::new);
-        dresser = FurnitureUtil.dresser(registree, BoneDresserBlock::new);
-        stool = FurnitureUtil.stool(registree, BoneStoolBlock::new);
-        cushion = FurnitureUtil.cushion(registree, BoneCushionBlock::new);
-        lockbox = FurnitureUtil.lockbox(registree, BoneLockBoxBlock::new);
-        drawer = FurnitureUtil.drawer(registree, BoneDrawerBlock::new);
-        chair = FurnitureUtil.chair(registree, BoneChairBlock::new);
-        bookshelf = FurnitureUtil.bookshelf(registree, BoneBookshelfBlock::new);
-        bedSingle = FurnitureUtil.bedSingle(registree, BoneBedSingleBlock::new);
-        bedDouble = FurnitureUtil.bedDouble(registree, BoneBedDoubleBlock::new);
-        doorSingle = FurnitureUtil.doorSingle(registree, blockSetType, FurnitureDoorBlock::new);
-        doorDouble = FurnitureUtil.doorDouble(registree, blockSetType, FurnitureDoorBlock::new);
-        deskLeft = FurnitureUtil.desk(registree, true, BoneDeskLeftBlock::new);
-        deskRight = FurnitureUtil.desk(registree, false, BoneDeskRightBlock::new);
-        paintingWide = FurnitureUtil.paintingWide(registree, BonePaintingWideBlock::new);
-        paintingSmall = FurnitureUtil.paintingSmall(registree, BonePaintingSmallBlock::new);
-        oven = FurnitureUtil.oven(registree, BoneOvenBlock::new);
-        chest = FurnitureUtil.chest(registree, BoneChestBlock::new);
-        floorLight = FurnitureUtil.floorLight(registree, BoneFloorLightBlock::new);
-        chandelier = FurnitureUtil.chandelier(registree, BoneChandelierBlock::new);
-        shelf = FurnitureUtil.shelf(registree, BoneShelfBlock::new);
-        sofa = FurnitureUtil.sofa(registree, BoneSofaBlock::new);
-        counter = FurnitureUtil.counter(registree, BoneCounterBlock::new);
-        wallLight = FurnitureUtil.wallLight(registree, BoneWallLightBlock::new);
-        bench = FurnitureUtil.bench(registree, BoneBenchBlock::new);
-        wardrobe = FurnitureUtil.wardrobe(registree, BoneWardrobeBlock::new);
-        table = FurnitureUtil.table(registree, BoneTableBlock::new);
-        stairs = FurnitureUtil.stairs(registree, bricks);
-        slab = FurnitureUtil.slab(registree);
-        fence = FurnitureUtil.fence(registree);
-        fenceGate = FurnitureUtil.fenceGate(registree, woodType);
-        trapdoor = FurnitureUtil.trapdoor(registree, blockSetType);
-        pressurePlate = FurnitureUtil.pressurePlate(registree, blockSetType);
+        bricks = FurnitureUtil.bricks(registree, Block::new).register();
+        wool = FurnitureUtil.wool(registree, Block::new).register();
+        carpet = FurnitureUtil.carpet(registree, CarpetBlock::new).register();
+        dresser = FurnitureUtil.dresser(registree, BoneDresserBlock::new).register();
+        stool = FurnitureUtil.stool(registree, BoneStoolBlock::new).register();
+        cushion = FurnitureUtil.cushion(registree, BoneCushionBlock::new).register();
+        lockbox = FurnitureUtil.lockbox(registree, BoneLockBoxBlock::new).register();
+        drawer = FurnitureUtil.drawer(registree, BoneDrawerBlock::new).register();
+        chair = FurnitureUtil.chair(registree, BoneChairBlock::new).register();
+        bookshelf = FurnitureUtil.bookshelf(registree, BoneBookshelfBlock::new).register();
+        bedSingle = FurnitureUtil.bedSingle(registree, BoneBedSingleBlock::new).register();
+        bedDouble = FurnitureUtil.bedDouble(registree, BoneBedDoubleBlock::new).register();
+        doorSingle = FurnitureUtil.doorSingle(registree, blockSetType, FurnitureDoorBlock::new).register();
+        doorDouble = FurnitureUtil.doorDouble(registree, blockSetType, FurnitureDoorBlock::new).register();
+        deskLeft = FurnitureUtil.desk(registree, true, BoneDeskLeftBlock::new).register();
+        deskRight = FurnitureUtil.desk(registree, false, BoneDeskRightBlock::new).register();
+        paintingWide = FurnitureUtil.paintingWide(registree, BonePaintingWideBlock::new).register();
+        paintingSmall = FurnitureUtil.paintingSmall(registree, BonePaintingSmallBlock::new).register();
+        oven = FurnitureUtil.oven(registree, BoneOvenBlock::new).register();
+        chest = FurnitureUtil.chest(registree, BoneChestBlock::new).register();
+        floorLight = FurnitureUtil.floorLight(registree, BoneFloorLightBlock::new).register();
+        chandelier = FurnitureUtil.chandelier(registree, BoneChandelierBlock::new).register();
+        shelf = FurnitureUtil.shelf(registree, BoneShelfBlock::new).register();
+        sofa = FurnitureUtil.sofa(registree, BoneSofaBlock::new).register();
+        counter = FurnitureUtil.counter(registree, BoneCounterBlock::new).register();
+        wallLight = FurnitureUtil.wallLight(registree, BoneWallLightBlock::new).register();
+        bench = FurnitureUtil.bench(registree, BoneBenchBlock::new).register();
+        wardrobe = FurnitureUtil.wardrobe(registree, BoneWardrobeBlock::new).register();
+        table = FurnitureUtil.table(registree, BoneTableBlock::new).register();
+        stairs = FurnitureUtil.stairs(registree, bricks).register();
+        slab = FurnitureUtil.slab(registree).register();
+        fence = FurnitureUtil.fence(registree).register();
+        fenceGate = FurnitureUtil.fenceGate(registree, woodType).register();
+        trapdoor = FurnitureUtil.trapdoor(registree, blockSetType).register();
+        pressurePlate = FurnitureUtil.pressurePlate(registree, blockSetType).register();
         hangingSign = FurnitureUtil.hangingSign(registree, woodType);
         sign = FurnitureUtil.sign(registree, woodType);
 
         creativeModeTab = FurnitureUtil.creativeModeTab(registree, () -> new ItemStack(bedSingle.value()));
-    }
 
-    public void register(IEventBus modBus) {
-        FurnitureUtil.registerEvents(modBus, registree, woodType);
+        FantasyFurniture.FURNITURE_MODS.add(modId);
+        CtmPacks.register(registree);
 
-        modBus.addListener(AddPackFindersEvent.class, event -> {
+        registree.event(AddPackFindersEvent.class, event -> {
             addPackFinder(event, PackType.CLIENT_RESOURCES);
             addPackFinder(event, PackType.SERVER_DATA);
         });

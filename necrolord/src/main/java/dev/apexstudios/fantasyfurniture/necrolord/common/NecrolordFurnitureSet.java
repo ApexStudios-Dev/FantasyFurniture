@@ -1,7 +1,9 @@
 package dev.apexstudios.fantasyfurniture.necrolord.common;
 
 import dev.apexstudios.apexcore.api.util.WoodTypeBuilder;
+import dev.apexstudios.fantasyfurniture.common.FantasyFurniture;
 import dev.apexstudios.fantasyfurniture.common.block.FurnitureDoorBlock;
+import dev.apexstudios.fantasyfurniture.common.ctm.CtmPacks;
 import dev.apexstudios.fantasyfurniture.common.util.FurnitureUtil;
 import dev.apexstudios.fantasyfurniture.necrolord.common.block.NecrolordBedDoubleBlock;
 import dev.apexstudios.fantasyfurniture.necrolord.common.block.NecrolordBedSingleBlock;
@@ -27,10 +29,10 @@ import dev.apexstudios.fantasyfurniture.necrolord.common.block.NecrolordStoolBlo
 import dev.apexstudios.fantasyfurniture.necrolord.common.block.NecrolordTableBlock;
 import dev.apexstudios.fantasyfurniture.necrolord.common.block.NecrolordWallLightBlock;
 import dev.apexstudios.fantasyfurniture.necrolord.common.block.NecrolordWardrobeBlock;
-import dev.apexstudios.registree.api.Registree;
-import dev.apexstudios.registree.api.holder.DeferredBlock;
-import dev.apexstudios.registree.api.holder.DeferredParticleType;
+import dev.apexstudios.registree.Registree;
+import dev.apexstudios.registree.holder.DeferredParticle;
 import java.util.function.Supplier;
+import net.minecraft.client.particle.FlameParticle;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
@@ -51,6 +53,7 @@ import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.registries.DeferredBlock;
 
 @Mod(NecrolordFurnitureSet.ID)
 public class NecrolordFurnitureSet {
@@ -66,49 +69,53 @@ public class NecrolordFurnitureSet {
 
     public static final Supplier<BlockSetType> BLOCK_SET_TYPE = () -> WOOD_TYPE.get().setType();
 
-    public static final DeferredBlock<Block> BRICKS = FurnitureUtil.bricks(REGISTREE, Block::new);
-    public static final DeferredBlock<Block> WOOL = FurnitureUtil.wool(REGISTREE, Block::new);
-    public static final DeferredBlock<CarpetBlock> CARPET = FurnitureUtil.carpet(REGISTREE, CarpetBlock::new);
-    public static final DeferredBlock<NecrolordDresserBlock> DRESSER = FurnitureUtil.dresser(REGISTREE, NecrolordDresserBlock::new);
-    public static final DeferredBlock<NecrolordStoolBlock> STOOL = FurnitureUtil.stool(REGISTREE, NecrolordStoolBlock::new);
-    public static final DeferredBlock<NecrolordCushionBlock> CUSION = FurnitureUtil.cushion(REGISTREE, NecrolordCushionBlock::new);
-    public static final DeferredBlock<NecrolordLockBoxBlock> LOCKBOX = FurnitureUtil.lockbox(REGISTREE, NecrolordLockBoxBlock::new);
-    public static final DeferredBlock<NecrolordDrawerBlock> DRAWER = FurnitureUtil.drawer(REGISTREE, NecrolordDrawerBlock::new);
-    public static final DeferredBlock<NecrolordChairBlock> CHAIR = FurnitureUtil.chair(REGISTREE, NecrolordChairBlock::new);
-    public static final DeferredBlock<NecrolordBookshelfBlock> BOOKSHELF = FurnitureUtil.bookshelf(REGISTREE, NecrolordBookshelfBlock::new);
-    public static final DeferredBlock<NecrolordBedSingleBlock> BED_SINGLE = FurnitureUtil.bedSingle(REGISTREE, NecrolordBedSingleBlock::new);
-    public static final DeferredBlock<NecrolordBedDoubleBlock> BED_DOUBLE = FurnitureUtil.bedDouble(REGISTREE, NecrolordBedDoubleBlock::new);
-    public static final DeferredBlock<FurnitureDoorBlock> DOOR_SINGLE = FurnitureUtil.doorSingle(REGISTREE, BLOCK_SET_TYPE, FurnitureDoorBlock::new);
-    public static final DeferredBlock<FurnitureDoorBlock> DOOR_DOUBLE = FurnitureUtil.doorDouble(REGISTREE, BLOCK_SET_TYPE, FurnitureDoorBlock::new);
-    public static final DeferredBlock<NecrolordDeskLeftBlock> DESK_LEFT = FurnitureUtil.desk(REGISTREE, true, NecrolordDeskLeftBlock::new);
-    public static final DeferredBlock<NecrolordDeskRightBlock> DESK_RIGHT = FurnitureUtil.desk(REGISTREE, false, NecrolordDeskRightBlock::new);
-    public static final DeferredBlock<NecrolordPaintingWideBlock> PAINTING_WIDE = FurnitureUtil.paintingWide(REGISTREE, NecrolordPaintingWideBlock::new);
-    public static final DeferredBlock<NecrolordPaintingSmallBlock> PAINTING_SMALL = FurnitureUtil.paintingSmall(REGISTREE, NecrolordPaintingSmallBlock::new);
-    public static final DeferredBlock<NecrolordOvenBlock> OVEN = FurnitureUtil.oven(REGISTREE, NecrolordOvenBlock::new);
-    public static final DeferredBlock<NecrolordChestBlock> CHEST = FurnitureUtil.chest(REGISTREE, NecrolordChestBlock::new);
-    public static final DeferredBlock<NecrolordFloorLightBlock> FLOOR_LIGHT = FurnitureUtil.floorLight(REGISTREE, NecrolordFloorLightBlock::new);
-    public static final DeferredBlock<NecrolordChandelierBlock> CHANDELIER = FurnitureUtil.chandelier(REGISTREE, NecrolordChandelierBlock::new);
-    public static final DeferredBlock<NecrolordShelfBlock> SHELF = FurnitureUtil.shelf(REGISTREE, NecrolordShelfBlock::new);
-    public static final DeferredBlock<NecrolordSofaBlock> SOFA = FurnitureUtil.sofa(REGISTREE, NecrolordSofaBlock::new);
-    public static final DeferredBlock<NecrolordCounterBlock> COUNTER = FurnitureUtil.counter(REGISTREE, NecrolordCounterBlock::new);
-    public static final DeferredBlock<NecrolordWallLightBlock> WALL_LIGHT = FurnitureUtil.wallLight(REGISTREE, NecrolordWallLightBlock::new);
-    public static final DeferredBlock<NecrolordBenchBlock> BENCH = FurnitureUtil.bench(REGISTREE, NecrolordBenchBlock::new);
-    public static final DeferredBlock<NecrolordWardrobeBlock> WARDROBE = FurnitureUtil.wardrobe(REGISTREE, NecrolordWardrobeBlock::new);
-    public static final DeferredBlock<NecrolordTableBlock> TABLE = FurnitureUtil.table(REGISTREE, NecrolordTableBlock::new);
-    public static final DeferredBlock<StairBlock> STAIRS = FurnitureUtil.stairs(REGISTREE, BRICKS);
-    public static final DeferredBlock<SlabBlock> SLAB = FurnitureUtil.slab(REGISTREE);
-    public static final DeferredBlock<FenceBlock> FENCE = FurnitureUtil.fence(REGISTREE);
-    public static final DeferredBlock<FenceGateBlock> FENCE_GATE = FurnitureUtil.fenceGate(REGISTREE, WOOD_TYPE);
-    public static final DeferredBlock<TrapDoorBlock> TRAPDOOR = FurnitureUtil.trapdoor(REGISTREE, BLOCK_SET_TYPE);
-    public static final DeferredBlock<PressurePlateBlock> PRESSURE_PLATE = FurnitureUtil.pressurePlate(REGISTREE, BLOCK_SET_TYPE);
+    public static final DeferredBlock<Block> BRICKS = FurnitureUtil.bricks(REGISTREE, Block::new).register();
+    public static final DeferredBlock<Block> WOOL = FurnitureUtil.wool(REGISTREE, Block::new).register();
+    public static final DeferredBlock<CarpetBlock> CARPET = FurnitureUtil.carpet(REGISTREE, CarpetBlock::new).register();
+    public static final DeferredBlock<NecrolordDresserBlock> DRESSER = FurnitureUtil.dresser(REGISTREE, NecrolordDresserBlock::new).register();
+    public static final DeferredBlock<NecrolordStoolBlock> STOOL = FurnitureUtil.stool(REGISTREE, NecrolordStoolBlock::new).register();
+    public static final DeferredBlock<NecrolordCushionBlock> CUSION = FurnitureUtil.cushion(REGISTREE, NecrolordCushionBlock::new).register();
+    public static final DeferredBlock<NecrolordLockBoxBlock> LOCKBOX = FurnitureUtil.lockbox(REGISTREE, NecrolordLockBoxBlock::new).register();
+    public static final DeferredBlock<NecrolordDrawerBlock> DRAWER = FurnitureUtil.drawer(REGISTREE, NecrolordDrawerBlock::new).register();
+    public static final DeferredBlock<NecrolordChairBlock> CHAIR = FurnitureUtil.chair(REGISTREE, NecrolordChairBlock::new).register();
+    public static final DeferredBlock<NecrolordBookshelfBlock> BOOKSHELF = FurnitureUtil.bookshelf(REGISTREE, NecrolordBookshelfBlock::new).register();
+    public static final DeferredBlock<NecrolordBedSingleBlock> BED_SINGLE = FurnitureUtil.bedSingle(REGISTREE, NecrolordBedSingleBlock::new).register();
+    public static final DeferredBlock<NecrolordBedDoubleBlock> BED_DOUBLE = FurnitureUtil.bedDouble(REGISTREE, NecrolordBedDoubleBlock::new).register();
+    public static final DeferredBlock<FurnitureDoorBlock> DOOR_SINGLE = FurnitureUtil.doorSingle(REGISTREE, BLOCK_SET_TYPE, FurnitureDoorBlock::new).register();
+    public static final DeferredBlock<FurnitureDoorBlock> DOOR_DOUBLE = FurnitureUtil.doorDouble(REGISTREE, BLOCK_SET_TYPE, FurnitureDoorBlock::new).register();
+    public static final DeferredBlock<NecrolordDeskLeftBlock> DESK_LEFT = FurnitureUtil.desk(REGISTREE, true, NecrolordDeskLeftBlock::new).register();
+    public static final DeferredBlock<NecrolordDeskRightBlock> DESK_RIGHT = FurnitureUtil.desk(REGISTREE, false, NecrolordDeskRightBlock::new).register();
+    public static final DeferredBlock<NecrolordPaintingWideBlock> PAINTING_WIDE = FurnitureUtil.paintingWide(REGISTREE, NecrolordPaintingWideBlock::new).register();
+    public static final DeferredBlock<NecrolordPaintingSmallBlock> PAINTING_SMALL = FurnitureUtil.paintingSmall(REGISTREE, NecrolordPaintingSmallBlock::new).register();
+    public static final DeferredBlock<NecrolordOvenBlock> OVEN = FurnitureUtil.oven(REGISTREE, NecrolordOvenBlock::new).register();
+    public static final DeferredBlock<NecrolordChestBlock> CHEST = FurnitureUtil.chest(REGISTREE, NecrolordChestBlock::new).register();
+    public static final DeferredBlock<NecrolordFloorLightBlock> FLOOR_LIGHT = FurnitureUtil.floorLight(REGISTREE, NecrolordFloorLightBlock::new).register();
+    public static final DeferredBlock<NecrolordChandelierBlock> CHANDELIER = FurnitureUtil.chandelier(REGISTREE, NecrolordChandelierBlock::new).register();
+    public static final DeferredBlock<NecrolordShelfBlock> SHELF = FurnitureUtil.shelf(REGISTREE, NecrolordShelfBlock::new).register();
+    public static final DeferredBlock<NecrolordSofaBlock> SOFA = FurnitureUtil.sofa(REGISTREE, NecrolordSofaBlock::new).register();
+    public static final DeferredBlock<NecrolordCounterBlock> COUNTER = FurnitureUtil.counter(REGISTREE, NecrolordCounterBlock::new).register();
+    public static final DeferredBlock<NecrolordWallLightBlock> WALL_LIGHT = FurnitureUtil.wallLight(REGISTREE, NecrolordWallLightBlock::new).register();
+    public static final DeferredBlock<NecrolordBenchBlock> BENCH = FurnitureUtil.bench(REGISTREE, NecrolordBenchBlock::new).register();
+    public static final DeferredBlock<NecrolordWardrobeBlock> WARDROBE = FurnitureUtil.wardrobe(REGISTREE, NecrolordWardrobeBlock::new).register();
+    public static final DeferredBlock<NecrolordTableBlock> TABLE = FurnitureUtil.table(REGISTREE, NecrolordTableBlock::new).register();
+    public static final DeferredBlock<StairBlock> STAIRS = FurnitureUtil.stairs(REGISTREE, BRICKS).register();
+    public static final DeferredBlock<SlabBlock> SLAB = FurnitureUtil.slab(REGISTREE).register();
+    public static final DeferredBlock<FenceBlock> FENCE = FurnitureUtil.fence(REGISTREE).register();
+    public static final DeferredBlock<FenceGateBlock> FENCE_GATE = FurnitureUtil.fenceGate(REGISTREE, WOOD_TYPE).register();
+    public static final DeferredBlock<TrapDoorBlock> TRAPDOOR = FurnitureUtil.trapdoor(REGISTREE, BLOCK_SET_TYPE).register();
+    public static final DeferredBlock<PressurePlateBlock> PRESSURE_PLATE = FurnitureUtil.pressurePlate(REGISTREE, BLOCK_SET_TYPE).register();
     public static final FurnitureUtil.SignPair<CeilingHangingSignBlock, WallHangingSignBlock> HANGING_SIGN = FurnitureUtil.hangingSign(REGISTREE, WOOD_TYPE);
     public static final FurnitureUtil.SignPair<StandingSignBlock, WallSignBlock> SIGN = FurnitureUtil.sign(REGISTREE, WOOD_TYPE);
 
-    public static final DeferredParticleType<SimpleParticleType, SimpleParticleType> FLAME_PARTICLE = REGISTREE.registerSimpleParticle("flame", false);
+    public static final DeferredParticle<SimpleParticleType, SimpleParticleType> FLAME_PARTICLE = REGISTREE.particle("flame")
+            .spriteProvider(() -> () -> FlameParticle.Provider::new)
+            .register();
 
     public static final ResourceKey<CreativeModeTab> CREATIVE_MODE_TAB = FurnitureUtil.creativeModeTab(REGISTREE, () -> new ItemStack(BED_SINGLE.value()));
 
     public NecrolordFurnitureSet(IEventBus modBus) {
-        FurnitureUtil.registerEvents(modBus, REGISTREE, WOOD_TYPE);
+        FantasyFurniture.FURNITURE_MODS.add(ID);
+        CtmPacks.register(REGISTREE);
+        REGISTREE.register(modBus);
     }
 }

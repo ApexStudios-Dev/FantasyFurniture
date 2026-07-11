@@ -8,7 +8,7 @@ import dev.apexstudios.apexcore.api.data.provider.context.ProviderOutputContext;
 import dev.apexstudios.apexcore.common.ApexCore;
 import dev.apexstudios.fantasyfurniture.common.FantasyFurniture;
 import dev.apexstudios.fantasyfurniture.common.util.FurnitureUtil;
-import dev.apexstudios.registree.api.Registree;
+import dev.apexstudios.registree.BaseRegistree;
 import java.nio.file.Path;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
@@ -27,7 +27,7 @@ final class FusionProvider extends SimpleJsonProvider {
 
     private final Set<Identifier> textures = Sets.newHashSet();
 
-    public void with(Registree registree) {
+    public void with(BaseRegistree<?> registree) {
         FurnitureUtil.Names.block(registree, FurnitureUtil.Names.CARPET, carpet -> {
             var wool = registree.getValueOrThrow(Registries.BLOCK, FurnitureUtil.Names.WOOL);
             var tinted = isDyeable(registree);

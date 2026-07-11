@@ -1,6 +1,7 @@
 package dev.apexstudios.fantasyfurniture.decorations.common.plushie;
 
 import com.mojang.serialization.MapCodec;
+import dev.apexstudios.apexcore.api.block.BlockHelper;
 import dev.apexstudios.fantasyfurniture.decorations.common.DecorationsFurnitureModule;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
@@ -51,7 +52,7 @@ public final class PlushieBlock extends BaseEntityBlock {
 
     @Override
     protected InteractionResult useItemOn(ItemStack stack, BlockState blockState, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        var blockEntity = DecorationsFurnitureModule.PLUSHIE_BLOCK_ENTITY.get(level, pos);
+        var blockEntity = BlockHelper.getBlockEntity(level, pos, DecorationsFurnitureModule.PLUSHIE_BLOCK_ENTITY);
 
         if(blockEntity != null) {
             var changed = false;
@@ -88,7 +89,7 @@ public final class PlushieBlock extends BaseEntityBlock {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState blockState, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        var blockEntity = DecorationsFurnitureModule.PLUSHIE_BLOCK_ENTITY.get(level, pos);
+        var blockEntity = BlockHelper.getBlockEntity(level, pos, DecorationsFurnitureModule.PLUSHIE_BLOCK_ENTITY);
 
         if(player.isSecondaryUseActive() && blockEntity != null && blockEntity.setProfile(ResolvableProfile.createResolved(player.getGameProfile()))) {
             blockEntity.setChanged();

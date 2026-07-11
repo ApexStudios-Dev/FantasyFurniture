@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 import dev.apexstudios.apexcore.api.data.ProviderType;
 import dev.apexstudios.fantasyfurniture.common.FantasyFurniture;
 import dev.apexstudios.fantasyfurniture.common.util.FurnitureUtil;
-import dev.apexstudios.registree.api.Registree;
+import dev.apexstudios.registree.BaseRegistree;
 import java.util.Map;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
@@ -16,9 +16,9 @@ final class AthenaProvider extends ExtendedBlockStateProvider {
     public static final String ID = "athena";
     public static final ProviderType<AthenaProvider> PROVIDER_TYPE = ProviderType.register(FantasyFurniture.identifier("ctm/" + ID), AthenaProvider::new);
 
-    public void with(Registree registree) {
+    public void with(BaseRegistree<?> registree) {
         FurnitureUtil.Names.block(registree, FurnitureUtil.Names.CARPET, carpet -> {
-            var wool = registree.getOrThrow(Registries.BLOCK, FurnitureUtil.Names.WOOL);
+            var wool = registree.getHolderOrThrow(Registries.BLOCK, FurnitureUtil.Names.WOOL);
             var registryName = wool.key().identifier();
             var ctm = registryName.withPrefix("block/ctm/");
 

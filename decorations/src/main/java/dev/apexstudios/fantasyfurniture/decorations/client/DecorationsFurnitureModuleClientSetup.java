@@ -33,7 +33,7 @@ public final class DecorationsFurnitureModuleClientSetup {
 
             event.registerBlockEntityRenderer(DecorationsFurnitureModule.SKULL_BLOSSOM_BLOCK_ENTITY.value(), SimpleBlockEntityRenderer.create(
                     DecorLayerDefinitions.SKULL_BLOSSOM,
-                    blockEntity -> DecorationsFurnitureModule.SKULL_BLOSSOM_SKELETON_BLOCK.is(blockEntity.getBlockState()) ? DecorLayerDefinitions.SKULL_BLOSSOM_SKELETON_TEXTURE : DecorLayerDefinitions.SKULL_BLOSSOM_WITHER_TEXTURE
+                    blockEntity -> blockEntity.getBlockState().is(DecorationsFurnitureModule.SKULL_BLOSSOM_SKELETON_BLOCK) ? DecorLayerDefinitions.SKULL_BLOSSOM_SKELETON_TEXTURE : DecorLayerDefinitions.SKULL_BLOSSOM_WITHER_TEXTURE
             ));
         });
 
@@ -49,7 +49,7 @@ public final class DecorationsFurnitureModuleClientSetup {
         });
 
         NeoForge.EVENT_BUS.addListener(ScreenEvent.Opening.class, event -> {
-            if(event.getNewScreen() instanceof AbstractSignEditScreen screen && !(screen instanceof GravestoneEditScreen) && DecorationsFurnitureModule.GRAVESTONE_BLOCK_ENTITY.is(screen.sign.getType())) {
+            if(event.getNewScreen() instanceof AbstractSignEditScreen screen && !(screen instanceof GravestoneEditScreen) && screen.sign.getType() == DecorationsFurnitureModule.GRAVESTONE_BLOCK_ENTITY.value()) {
                 event.setNewScreen(new GravestoneEditScreen(
                         (GravestoneBlockEntity) screen.sign,
                         screen.isFrontText,
