@@ -7,7 +7,9 @@ import dev.apexstudios.apexcore.api.data.ProviderTypes;
 import dev.apexstudios.apexcore.api.data.pack.PackGenerator;
 import dev.apexstudios.apexcore.api.data.provider.RecipeProvider;
 import dev.apexstudios.apexcore.api.data.provider.loot.LootTableProvider;
+import dev.apexstudios.apexcore.api.data.provider.tag.BlockTagProvider;
 import dev.apexstudios.apexcore.api.data.provider.tag.IntrusiveTagProvider;
+import dev.apexstudios.apexcore.api.data.provider.tag.ItemTagProvider;
 import dev.apexstudios.apexcore.api.placement.BlockItemPlacementEvent;
 import dev.apexstudios.apexcore.api.util.ApexTags;
 import dev.apexstudios.fantasyfurniture.common.FantasyFurniture;
@@ -41,7 +43,7 @@ import org.jspecify.annotations.Nullable;
 
 public interface FurnitureDataUtil {
     @SafeVarargs
-    static <TRegistry> void tag(IntrusiveTagProvider<TRegistry> provider, TRegistry element, @Nullable TagKey<TRegistry>... tags) {
+    static <TRegistry> void tag(IntrusiveTagProvider<TRegistry, ?> provider, TRegistry element, @Nullable TagKey<TRegistry>... tags) {
         for(var tag : tags) {
             if(tag != null)
                 provider.tag(tag).withElement(element);
@@ -220,7 +222,7 @@ public interface FurnitureDataUtil {
             });
         }
 
-        public void registerBlockTags(IntrusiveTagProvider<Block> provider) {
+        public void registerBlockTags(BlockTagProvider provider) {
             block(DataType.BLOCK_TAG, FurnitureUtil.Names.PLANKS, block -> tag(provider, block, BlockTags.PLANKS));
             block(DataType.BLOCK_TAG, FurnitureUtil.Names.BRICKS, block -> tag(provider, block, Tags.Blocks.STONES));
             block(DataType.BLOCK_TAG, FurnitureUtil.Names.WOOL, block -> tag(provider, block, BlockTags.WOOL));
@@ -264,7 +266,7 @@ public interface FurnitureDataUtil {
             registerMineableTags(provider);
         }
 
-        private void registerMineableTags(IntrusiveTagProvider<Block> provider) {
+        private void registerMineableTags(BlockTagProvider provider) {
             registerMineableTag(provider, FurnitureUtil.Names.PLANKS);
             registerMineableTag(provider, FurnitureUtil.Names.BRICKS);
             // registerMineableTag(provider, FurnitureUtil.Names.WOOL);
@@ -306,11 +308,11 @@ public interface FurnitureDataUtil {
             registerMineableTag(provider, FurnitureUtil.Names.WALL_SIGN);
         }
 
-        public void registerMineableTag(IntrusiveTagProvider<Block> provider, String name) {
+        public void registerMineableTag(BlockTagProvider provider, String name) {
             block(DataType.BLOCK_TAG, name, block -> tag(provider, block, mineableTag(name)));
         }
 
-        public void registerItemTags(IntrusiveTagProvider<Item> provider) {
+        public void registerItemTags(ItemTagProvider provider) {
             item(DataType.ITEM_TAG, FurnitureUtil.Names.PLANKS, item -> tag(provider, item, FantasyFurniture.FURNITURE_PLANKS));
             item(DataType.ITEM_TAG, FurnitureUtil.Names.BRICKS, item -> tag(provider, item, FantasyFurniture.FURNITURE_BRICKS));
             item(DataType.ITEM_TAG, FurnitureUtil.Names.WOOL, item -> tag(provider, item, FantasyFurniture.FURNITURE_WOOL));

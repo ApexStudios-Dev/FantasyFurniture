@@ -6,7 +6,8 @@ import dev.apexstudios.apexcore.api.data.ResourceGenerator;
 import dev.apexstudios.apexcore.api.data.provider.context.ProviderListenerContext;
 import dev.apexstudios.apexcore.api.data.provider.model.ApexModelTemplates;
 import dev.apexstudios.apexcore.api.data.provider.model.ModelProvider;
-import dev.apexstudios.apexcore.api.data.provider.tag.IntrusiveTagProvider;
+import dev.apexstudios.apexcore.api.data.provider.tag.BlockTagProvider;
+import dev.apexstudios.apexcore.api.data.provider.tag.ItemTagProvider;
 import dev.apexstudios.apexcore.client.DyeColorItemTintSource;
 import dev.apexstudios.fantasyfurniture.common.block.property.CounterConnection;
 import dev.apexstudios.fantasyfurniture.common.block.property.ShelfConnection;
@@ -23,7 +24,6 @@ import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
 import net.minecraft.client.data.models.model.TexturedModel;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
@@ -150,12 +150,12 @@ public final class RoyalFurnitureSetDataEntryPoint {
         registerDyeableItemModel(block, modelPath, blockModels);
     }
 
-    private void registerBlockTags(ProviderListenerContext context, IntrusiveTagProvider<Block> provider) {
+    private void registerBlockTags(ProviderListenerContext context, BlockTagProvider provider) {
         var dyedTag = provider.tag(Tags.Blocks.DYED);
         Dyeable.dyeableBlocks(RoyalFurnitureSet.REGISTREE).forEach(dyedTag::withElement);
     }
 
-    private void registerItemTags(ProviderListenerContext context, IntrusiveTagProvider<Item> provider) {
+    private void registerItemTags(ProviderListenerContext context, ItemTagProvider provider) {
         var dyedTag = provider.tag(Tags.Items.DYED);
         Dyeable.dyeableItems(RoyalFurnitureSet.REGISTREE).forEach(dyedTag::withElement);
     }
