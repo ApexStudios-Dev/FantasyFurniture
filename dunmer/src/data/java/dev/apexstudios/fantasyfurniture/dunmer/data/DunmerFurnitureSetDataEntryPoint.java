@@ -5,7 +5,6 @@ import dev.apexstudios.apexcore.api.data.ResourceGenerator;
 import dev.apexstudios.apexcore.api.data.provider.context.ProviderListenerContext;
 import dev.apexstudios.apexcore.api.data.provider.model.ModelProvider;
 import dev.apexstudios.apexcore.api.placement.BlockItemPlacementEvent;
-import dev.apexstudios.apexcore.api.util.TagPair;
 import dev.apexstudios.fantasyfurniture.common.block.OvenBlock;
 import dev.apexstudios.fantasyfurniture.common.ctm.CtmPacks;
 import dev.apexstudios.fantasyfurniture.common.util.FurnitureClientDataUtil;
@@ -16,52 +15,32 @@ import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.model.ModelLocationUtils;
-import net.minecraft.data.BlockFamily;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ItemTags;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.common.Tags;
 
 @Mod(DunmerFurnitureSet.ID)
 public final class DunmerFurnitureSetDataEntryPoint {
     public DunmerFurnitureSetDataEntryPoint(IEventBus modBus) {
         ResourceGenerator.of(modBus, generator -> {
             var pack = generator.pack();
-            var context = new FurnitureDataUtil.DataGenContext(
-                    DunmerFurnitureSet.REGISTREE,
-                    "Dunmer",
-                    new BlockFamily.Builder(DunmerFurnitureSet.PLANKS.value())
-                            .recipeGroupPrefix("dunmer")
-                            .recipeUnlockedBy("has_" + FurnitureUtil.Names.PLANKS)
-                            .stairs(DunmerFurnitureSet.STAIRS.value())
-                            .slab(DunmerFurnitureSet.SLAB.value())
-                            .fence(DunmerFurnitureSet.FENCE.value())
-                            .fenceGate(DunmerFurnitureSet.FENCE_GATE.value())
-                            .trapdoor(DunmerFurnitureSet.TRAPDOOR.value())
-                            .pressurePlate(DunmerFurnitureSet.PRESSURE_PLATE.value())
-                            .sign(DunmerFurnitureSet.SIGN.sign().value(), DunmerFurnitureSet.SIGN.wall().value())
-                            .customHangingSign(DunmerFurnitureSet.HANGING_SIGN.sign().value(), DunmerFurnitureSet.HANGING_SIGN.wall().value())
-                    .getFamily(),
-                    BlockTags.MINEABLE_WITH_AXE,
-                    new TagPair(BlockTags.WOODEN_DOORS, ItemTags.WOODEN_DOORS),
-                    BlockTags.WOODEN_STAIRS,
-                    new TagPair(BlockTags.WOODEN_BUTTONS, ItemTags.WOODEN_BUTTONS),
-                    new TagPair(BlockTags.WOODEN_PRESSURE_PLATES, ItemTags.WOODEN_PRESSURE_PLATES),
-                    new TagPair(BlockTags.WOODEN_TRAPDOORS, ItemTags.WOODEN_TRAPDOORS),
-                    new TagPair(BlockTags.WOODEN_FENCES, ItemTags.WOODEN_FENCES),
-                    new TagPair(BlockTags.WOODEN_SLABS, ItemTags.WOODEN_SLABS),
-                    exclusions -> exclusions.put(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.OVEN)
-            );
 
-            FurnitureDataUtil.registerDataGen(context, pack);
+            var context = FurnitureDataUtil.context(DunmerFurnitureSet.REGISTREE, "Dunmer", "dunmer")
+                    .exclude(FurnitureDataUtil.DataType.BLOCK_TAG, FurnitureUtil.Names.OVEN)
+                    .exclude(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.OVEN)
+                    .build();
+
+            context.register(pack);
             FurnitureClientDataUtil.registerDataGen(context, pack);
             CtmPacks.registerDataGen(DunmerFurnitureSet.REGISTREE, pack, false);
 
             pack.providing(ProviderTypes.MODELS, this::generateModels)
-                    .providing(ProviderTypes.BLOCK_TAGS, (ctx, provider) -> provider
-                            .tag(BlockItemPlacementEvent.RENDERABLES)
-                            .withElement(DunmerFurnitureSet.OVEN)
-                    );
+                    .providing(ProviderTypes.BLOCK_TAGS, (ctx, provider) -> {
+                        provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(DunmerFurnitureSet.OVEN);
+                        provider.tag(Tags.Blocks.PLAYER_WORKSTATIONS_FURNACES).withElement(DunmerFurnitureSet.OVEN);
+                        provider.tag(BlockItemPlacementEvent.RENDERABLES).withElement(DunmerFurnitureSet.OVEN);
+                    });
         });
     }
 

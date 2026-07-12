@@ -7,7 +7,6 @@ import dev.apexstudios.apexcore.api.data.provider.context.ProviderListenerContex
 import dev.apexstudios.apexcore.api.data.provider.model.ApexModelTemplates;
 import dev.apexstudios.apexcore.api.data.provider.model.ModelProvider;
 import dev.apexstudios.apexcore.api.data.provider.tag.IntrusiveTagProvider;
-import dev.apexstudios.apexcore.api.util.TagPair;
 import dev.apexstudios.apexcore.client.DyeColorItemTintSource;
 import dev.apexstudios.fantasyfurniture.common.block.property.CounterConnection;
 import dev.apexstudios.fantasyfurniture.common.block.property.ShelfConnection;
@@ -23,10 +22,7 @@ import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
 import net.minecraft.client.data.models.model.TexturedModel;
-import net.minecraft.data.BlockFamily;
 import net.minecraft.resources.Identifier;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.IEventBus;
@@ -38,51 +34,29 @@ public final class RoyalFurnitureSetDataEntryPoint {
     public RoyalFurnitureSetDataEntryPoint(IEventBus modBus) {
         ResourceGenerator.of(modBus, generator -> {
             var pack = generator.pack();
-            var context = new FurnitureDataUtil.DataGenContext(
-                    RoyalFurnitureSet.REGISTREE,
-                    "Royal",
-                    new BlockFamily.Builder(RoyalFurnitureSet.BRICKS.value())
-                            .recipeGroupPrefix("royal")
-                            .recipeUnlockedBy("has_" + FurnitureUtil.Names.BRICKS)
-                            .stairs(RoyalFurnitureSet.STAIRS.value())
-                            .slab(RoyalFurnitureSet.SLAB.value())
-                            .fence(RoyalFurnitureSet.FENCE.value())
-                            .fenceGate(RoyalFurnitureSet.FENCE_GATE.value())
-                            .trapdoor(RoyalFurnitureSet.TRAPDOOR.value())
-                            .pressurePlate(RoyalFurnitureSet.PRESSURE_PLATE.value())
-                            .sign(RoyalFurnitureSet.SIGN.sign().value(), RoyalFurnitureSet.SIGN.wall().value())
-                            .customHangingSign(RoyalFurnitureSet.HANGING_SIGN.sign().value(), RoyalFurnitureSet.HANGING_SIGN.wall().value())
-                    .getFamily(),
-                    BlockTags.MINEABLE_WITH_PICKAXE,
-                    new TagPair(BlockTags.DOORS, ItemTags.WOODEN_DOORS),
-                    BlockTags.STAIRS,
-                    new TagPair(BlockTags.BUTTONS, ItemTags.WOODEN_BUTTONS),
-                    new TagPair(BlockTags.PRESSURE_PLATES, null),
-                    new TagPair(BlockTags.TRAPDOORS, ItemTags.WOODEN_TRAPDOORS),
-                    new TagPair(BlockTags.FENCES, ItemTags.WOODEN_FENCES),
-                    new TagPair(BlockTags.SLABS, ItemTags.WOODEN_SLABS),
-                    exclusions -> {
-                        exclusions.put(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.WOOL);
-                        exclusions.put(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.CARPET);
-                        exclusions.put(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.DRESSER);
-                        exclusions.put(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.CHAIR);
-                        exclusions.put(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.BOOKSHELF);
-                        exclusions.put(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.BED_SINGLE);
-                        exclusions.put(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.BED_DOUBLE);
-                        exclusions.put(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.DOOR_SINGLE);
-                        exclusions.put(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.DOOR_DOUBLE);
-                        exclusions.put(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.DESK_LEFT);
-                        exclusions.put(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.DESK_RIGHT);
-                        exclusions.put(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.CHEST);
-                        exclusions.put(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.SHELF);
-                        exclusions.put(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.SOFA);
-                        exclusions.put(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.COUNTER);
-                        exclusions.put(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.BENCH);
-                        exclusions.put(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.WARDROBE);
-                    }
-            );
 
-            FurnitureDataUtil.registerDataGen(context, pack);
+            var context = FurnitureDataUtil.context(RoyalFurnitureSet.REGISTREE, "Royal", "royal")
+                    .stoneLike()
+                    .exclude(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.WOOL)
+                    .exclude(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.CARPET)
+                    .exclude(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.DRESSER)
+                    .exclude(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.CHAIR)
+                    .exclude(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.BOOKSHELF)
+                    .exclude(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.BED_SINGLE)
+                    .exclude(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.BED_DOUBLE)
+                    .exclude(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.DOOR_SINGLE)
+                    .exclude(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.DOOR_DOUBLE)
+                    .exclude(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.DESK_LEFT)
+                    .exclude(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.DESK_RIGHT)
+                    .exclude(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.CHEST)
+                    .exclude(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.SHELF)
+                    .exclude(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.SOFA)
+                    .exclude(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.COUNTER)
+                    .exclude(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.BENCH)
+                    .exclude(FurnitureDataUtil.DataType.MODEL, FurnitureUtil.Names.WARDROBE)
+                    .build();
+
+            context.register(pack);
             FurnitureClientDataUtil.registerDataGen(context, pack);
             CtmPacks.registerDataGen(RoyalFurnitureSet.REGISTREE, pack, true);
 

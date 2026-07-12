@@ -465,6 +465,10 @@ public interface FurnitureUtil {
                 action.accept(block);
         }
 
+        static Block blockOrThrow(BaseRegistree<?> registree, String name) {
+            return registree.getValueOrThrow(Registries.BLOCK, name);
+        }
+
         static void creativeModeTab(BaseRegistree<?> registree, Consumer<ResourceKey<CreativeModeTab>> action) {
             if(registree.isRegistered(Registries.CREATIVE_MODE_TAB, CREATIVE_MODE_TAB)) {
                 action.accept(registree.registryKey(Registries.CREATIVE_MODE_TAB, CREATIVE_MODE_TAB));
