@@ -5,7 +5,6 @@ import dev.apexstudios.apexcore.api.data.ProviderTypes;
 import dev.apexstudios.apexcore.api.data.ResourceGenerator;
 import dev.apexstudios.apexcore.api.data.provider.RecipeProvider;
 import dev.apexstudios.apexcore.api.multiblock.MultiBlock;
-import dev.apexstudios.apexcore.api.placement.BlockItemPlacementEvent;
 import dev.apexstudios.apexcore.api.util.ApexTags;
 import dev.apexstudios.apexcore.client.DyeColorItemTintSource;
 import dev.apexstudios.fantasyfurniture.common.station.FurnitureStationRecipeBuilder;
@@ -53,7 +52,6 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.ChainBlock;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -264,10 +262,6 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
 
                         if(block instanceof Dyeable) {
                             provider.tag(Tags.Blocks.DYED).withElement(block);
-                        }
-
-                        if(block instanceof MultiBlock || block instanceof Stackable || block instanceof ChainBlock) {
-                            provider.tag(BlockItemPlacementEvent.RENDERABLES).withElement(block);
                         }
 
                         if(block instanceof MultiBlock) {

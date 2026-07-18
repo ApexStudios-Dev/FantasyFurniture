@@ -4,7 +4,6 @@ import dev.apexstudios.apexcore.api.data.ProviderTypes;
 import dev.apexstudios.apexcore.api.data.ResourceGenerator;
 import dev.apexstudios.apexcore.api.data.provider.context.ProviderListenerContext;
 import dev.apexstudios.apexcore.api.data.provider.model.ModelProvider;
-import dev.apexstudios.apexcore.api.placement.BlockItemPlacementEvent;
 import dev.apexstudios.fantasyfurniture.common.block.OvenBlock;
 import dev.apexstudios.fantasyfurniture.common.ctm.CtmPacks;
 import dev.apexstudios.fantasyfurniture.common.util.FurnitureClientDataUtil;
@@ -39,7 +38,6 @@ public final class DunmerFurnitureSetDataEntryPoint {
                     .providing(ProviderTypes.BLOCK_TAGS, (ctx, provider) -> {
                         provider.tag(BlockTags.MINEABLE_WITH_AXE).withElement(DunmerFurnitureSet.OVEN);
                         provider.tag(Tags.Blocks.PLAYER_WORKSTATIONS_FURNACES).withElement(DunmerFurnitureSet.OVEN);
-                        provider.tag(BlockItemPlacementEvent.RENDERABLES).withElement(DunmerFurnitureSet.OVEN);
                     });
         });
     }
