@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_decorations:furniture_station/tankards"
+        "recipes": "fantasyfurniture_decorations:furniture_station/tankards"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

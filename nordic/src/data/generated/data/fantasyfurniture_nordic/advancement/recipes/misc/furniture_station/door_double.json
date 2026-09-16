@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_nordic:furniture_station/door_double"
+        "recipes": "fantasyfurniture_nordic:furniture_station/door_double"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

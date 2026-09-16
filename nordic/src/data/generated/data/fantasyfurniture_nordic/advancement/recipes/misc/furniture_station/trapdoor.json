@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_nordic:furniture_station/trapdoor"
+        "recipes": "fantasyfurniture_nordic:furniture_station/trapdoor"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

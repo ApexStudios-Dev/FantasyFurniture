@@ -49,7 +49,6 @@ import dev.apexstudios.fantasyfurniture.decorations.common.cookie.CookieJarMenu;
 import dev.apexstudios.fantasyfurniture.decorations.common.cookie.CookieJarMenuScreen;
 import dev.apexstudios.fantasyfurniture.decorations.common.grave.GravestoneBlock;
 import dev.apexstudios.fantasyfurniture.decorations.common.grave.GravestoneBlockEntity;
-import dev.apexstudios.fantasyfurniture.decorations.common.grave.GravestoneBlockItem;
 import dev.apexstudios.fantasyfurniture.decorations.common.plushie.PlushieBlock;
 import dev.apexstudios.fantasyfurniture.decorations.common.plushie.PlushieBlockEntity;
 import dev.apexstudios.fantasyfurniture.decorations.common.plushie.PlushieBlockItem;
@@ -64,6 +63,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.Unit;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
@@ -148,7 +148,7 @@ public class DecorationsFurnitureModule {
 
     public static final DeferredBlock<GravestoneBlock> GRAVESTONE_BLOCK = REGISTREE.registerBlock("gravestone", GravestoneBlock::new, FurnitureUtil.PLANK_PROPERTIES);
     public static final DeferredBlockEntity<GravestoneBlockEntity> GRAVESTONE_BLOCK_ENTITY = REGISTREE.registerBlockEntity(GRAVESTONE_BLOCK, GravestoneBlockEntity::new);
-    public static final DeferredItem<GravestoneBlockItem> GRAVESTONE_BLOCK_ITEM = REGISTREE.registerBlockItem(GRAVESTONE_BLOCK, GravestoneBlockItem::new);
+    public static final DeferredItem<BlockItem> GRAVESTONE_BLOCK_ITEM = REGISTREE.registerSimpleBlockItem(GRAVESTONE_BLOCK);
 
     public static final DeferredBlock<SimpleBlockEntityBlock.WidowBloom> WIDOW_BLOOM_BLOCK = FurnitureUtil.simpleBlock(REGISTREE, "widow_bloom", SimpleBlockEntityBlock.WidowBloom::new, FurnitureUtil.mutating(FurnitureUtil.PLANK_PROPERTIES, BlockBehaviour.Properties::noOcclusion));
     public static final DeferredBlockEntity<SimpleBlockEntity.WidowBloom> WIDOW_BLOOM_BLOCK_ENTITY = REGISTREE.registerBlockEntity(WIDOW_BLOOM_BLOCK, SimpleBlockEntity.WidowBloom::new);

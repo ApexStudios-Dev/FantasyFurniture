@@ -167,7 +167,7 @@ public final class BoneFurnitureSet {
 
     private void addPackFinder(AddPackFindersEvent event, PackType packType) {
         event.addPackFinders(
-                registree.registryName(packPath(packType, this)),
+                registree.registryName(packPath(this)),
                 packType,
                 Component.literal("Fantasy's Furniture - Bone"),
                 PackSource.DEFAULT,
@@ -176,7 +176,7 @@ public final class BoneFurnitureSet {
         );
     }
 
-    public static String packPath(PackType packType, BoneFurnitureSet furnitureSet) {
-        return "built-in/" + packType.getDirectory() + '/' + furnitureSet.id;
+    public static String packPath(BoneFurnitureSet furnitureSet) {
+        return "built-in/" + furnitureSet.id;
     }
 }

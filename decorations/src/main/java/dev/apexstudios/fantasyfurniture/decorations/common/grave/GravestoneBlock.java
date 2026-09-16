@@ -1,6 +1,5 @@
 package dev.apexstudios.fantasyfurniture.decorations.common.grave;
 
-import com.mojang.serialization.MapCodec;
 import dev.apexstudios.apexcore.api.block.SimpleHorizontalDirectionalBlock;
 import dev.apexstudios.apexcore.api.util.ApexShapes;
 import java.util.Map;
@@ -24,7 +23,6 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class GravestoneBlock extends SignBlock implements EntityBlock {
-    public static final MapCodec<GravestoneBlock> CODEC = simpleCodec(GravestoneBlock::new);
     public static final EnumProperty<Direction> FACING = SimpleHorizontalDirectionalBlock.FACING;
 
     public static final VoxelShape SHAPE = ApexShapes.join(
@@ -39,11 +37,6 @@ public final class GravestoneBlock extends SignBlock implements EntityBlock {
         super(WoodType.OAK, properties);
 
         registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH));
-    }
-
-    @Override
-    protected MapCodec<? extends SignBlock> codec() {
-        return CODEC;
     }
 
     @Override

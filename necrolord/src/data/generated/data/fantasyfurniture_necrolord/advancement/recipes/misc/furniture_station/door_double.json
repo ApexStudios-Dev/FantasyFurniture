@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_necrolord:furniture_station/door_double"
+        "recipes": "fantasyfurniture_necrolord:furniture_station/door_double"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

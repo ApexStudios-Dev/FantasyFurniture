@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_decorations:furniture_station/bronze_chain"
+        "recipes": "fantasyfurniture_decorations:furniture_station/bronze_chain"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

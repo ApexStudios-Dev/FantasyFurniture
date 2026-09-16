@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_royal:conversion/bricks"
+        "recipes": "fantasyfurniture_royal:conversion/bricks"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

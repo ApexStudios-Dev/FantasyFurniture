@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_decorations:furniture_station/soul_gems_light"
+        "recipes": "fantasyfurniture_decorations:furniture_station/soul_gems_light"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_decorations:furniture_station/cookie_jar"
+        "recipes": "fantasyfurniture_decorations:furniture_station/cookie_jar"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

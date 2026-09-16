@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_venthyr:furniture_station/fence"
+        "recipes": "fantasyfurniture_venthyr:furniture_station/fence"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_dunmer:furniture_station/chest"
+        "recipes": "fantasyfurniture_dunmer:furniture_station/chest"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

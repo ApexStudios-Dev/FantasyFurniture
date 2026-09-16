@@ -1,8 +1,5 @@
 {
   "values": [
-    {
-      "id": "#fantasyfurniture:furniture_planks",
-      "required": false
-    }
+    "#fantasyfurniture:furniture_planks"
   ]
 }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_nordic:furniture_station/chest"
+        "recipes": "fantasyfurniture_nordic:furniture_station/chest"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
