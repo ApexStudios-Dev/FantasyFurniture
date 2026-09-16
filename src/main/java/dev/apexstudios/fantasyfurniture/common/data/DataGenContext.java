@@ -4,7 +4,7 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multimaps;
 import com.mojang.datafixers.util.Function3;
-import dev.apexstudios.apexcore.api.util.TagPair;
+import dev.apexstudios.apexcore.api.util.ApexUtil;
 import dev.apexstudios.registree.api.Registree;
 import java.util.List;
 import java.util.Set;
@@ -22,11 +22,12 @@ import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.data.loot.LootTableSubProvider;
-import net.minecraft.data.metadata.PackMetadataGenerator;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.tags.BlockItemTagId;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Util;
 import net.minecraft.world.item.Item;
@@ -40,13 +41,14 @@ public record DataGenContext(
         String englishName,
         BlockFamily family,
         TagKey<Block> mineableTag,
-        TagPair doorTag,
-        TagKey<Block> stairsTag,
-        TagPair buttonTag,
-        TagPair pressurePlateTag,
-        TagPair trapdoorTag,
-        TagPair fenceTag,
-        TagPair slabTag,
+        BlockItemTagId doorTag,
+        BlockItemTagId stairsTag,
+        BlockItemTagId buttonTag,
+        BlockItemTagId pressurePlateTag,
+        BlockItemTagId trapdoorTag,
+        BlockItemTagId fenceTag,
+        BlockItemTagId fenceGateTag,
+        BlockItemTagId slabTag,
         Multimap<DataGenType, String> exclusions
 ) {
     public DataGenContext {
@@ -58,15 +60,16 @@ public record DataGenContext(
             String englishName,
             BlockFamily family,
             TagKey<Block> mineableTag,
-            TagPair doorTag,
-            TagKey<Block> stairsTag,
-            TagPair buttonTag,
-            TagPair pressurePlateTag,
-            TagPair trapdoorTag,
-            TagPair fenceTag,
-            TagPair slabTag
+            BlockItemTagId doorTag,
+            BlockItemTagId stairsTag,
+            BlockItemTagId buttonTag,
+            BlockItemTagId pressurePlateTag,
+            BlockItemTagId trapdoorTag,
+            BlockItemTagId fenceTag,
+            BlockItemTagId fenceGateTag,
+            BlockItemTagId slabTag
     ) {
-        this(registree, englishName, family, mineableTag, doorTag, stairsTag, buttonTag, pressurePlateTag, trapdoorTag, fenceTag, slabTag, HashMultimap.create());
+        this(registree, englishName, family, mineableTag, doorTag, stairsTag, buttonTag, pressurePlateTag, trapdoorTag, fenceTag, fenceGateTag, slabTag, HashMultimap.create());
     }
 
     public DataGenContext(
@@ -74,16 +77,17 @@ public record DataGenContext(
             String englishName,
             BlockFamily family,
             TagKey<Block> mineableTag,
-            TagPair doorTag,
-            TagKey<Block> stairsTag,
-            TagPair buttonTag,
-            TagPair pressurePlateTag,
-            TagPair trapdoorTag,
-            TagPair fenceTag,
-            TagPair slabTag,
+            BlockItemTagId doorTag,
+            BlockItemTagId stairsTag,
+            BlockItemTagId buttonTag,
+            BlockItemTagId pressurePlateTag,
+            BlockItemTagId trapdoorTag,
+            BlockItemTagId fenceTag,
+            BlockItemTagId fenceGateTag,
+            BlockItemTagId slabTag,
             Consumer<Multimap<DataGenType, String>> exclusions
     ) {
-        this(registree, englishName, family, mineableTag, doorTag, stairsTag, buttonTag, pressurePlateTag, trapdoorTag, fenceTag, slabTag, Util.make(HashMultimap.create(), exclusions));
+        this(registree, englishName, family, mineableTag, doorTag, stairsTag, buttonTag, pressurePlateTag, trapdoorTag, fenceTag, fenceGateTag, slabTag, Util.make(HashMultimap.create(), exclusions));
     }
 
     public boolean excluded(DataGenType dataType, String name) {
@@ -149,6 +153,6 @@ public record DataGenContext(
         event.createProvider(fromOutput(FurnitureModelProvider::new));
         event.createProvider(fromOutputLookup(FurnitureBlockTagsProvider::new));
         event.createProvider(fromOutputLookup(FurnitureItemTagsProvider::new));
-        event.createProvider(output -> PackMetadataGenerator.forFeaturePack(output, Component.literal(englishName + " Furniture Set resources")));
+        event.createProvider(output -> ApexUtil.createMetadataProvider(output, Component.literal(englishName + " Furniture Set resources"), PackType.SERVER_DATA));
     }
 }

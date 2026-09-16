@@ -19,13 +19,13 @@ pluginManagement {
 
 dependencyResolutionManagement {
     versionCatalogs.create("libs") {
-        version("neoforge", "26.3.0.11-beta-pr-3492-pr-data-gen-extensions")
+        version("neoforge", "26.3.0.12-beta-pr-3492-pr-data-gen-extensions")
 
-        library("registree", "dev.apexstudios", "registree").version("26.3.2-beta-pr-37")
-        library("apexcore", "dev.apexstudios", "apexcore").version("26.3.5-beta-pr-96")
+        library("registree", "dev.apexstudios", "registree").version("26.3.3-beta-pr-37")
+        library("apexcore", "dev.apexstudios", "apexcore").version("26.3.6-beta-pr-96")
         bundle("apexcore", listOf("registree", "apexcore"))
 
-        library("contex", "curse.maven", "contex-1296805").version("7806346")
+        library("contex", "curse.maven", "contex-1296805").version("8892042") // 15.0.0 (26.3)
         library("contextmatters", "curse.maven", "context-matters-1265417").version("7808075")
     }
 }
@@ -36,6 +36,16 @@ plugins {
 
 gradle.beforeProject {
     repositories {
+        exclusiveContent {
+            forRepository {
+                maven("https://cursemaven.com")
+            }
+
+            filter {
+                includeGroup("curse.maven")
+            }
+        }
+
         maven("https://prmaven.neoforged.net/NeoForge/pr3492") {
             content {
                 includeModule("net.neoforged", "neoforge")

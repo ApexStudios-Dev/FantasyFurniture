@@ -122,6 +122,7 @@ final class DFModelProvider extends ModelProvider {
         plushie(blockModels);
     }
 
+    @SuppressWarnings("deprecation")
     private void berryBasket(Holder<Block> holder, BlockModelGenerators blockModels) {
         if(!DecorationsFurnitureModule.BERRY_BASKET.is(holder)) {
             var slot = TextureSlot.create("berry_basket");
@@ -141,6 +142,7 @@ final class DFModelProvider extends ModelProvider {
         blockModels.createNonTemplateHorizontalBlock(holder.value());
     }
 
+    @SuppressWarnings("deprecation")
     private void bowl(DeferredBlock<BowlBlock> holder, BlockModelGenerators blockModels) {
         if(!DecorationsFurnitureModule.BOWL.is(holder)) {
             var slot = TextureSlot.create("bowl");
@@ -160,6 +162,7 @@ final class DFModelProvider extends ModelProvider {
         blockModels.createNonTemplateHorizontalBlock(holder.value());
     }
 
+    @SuppressWarnings("deprecation")
     private void coinStack(DeferredBlock<CoinStackBlock> holder, BlockModelGenerators blockModels) {
         if(!DecorationsFurnitureModule.GOLDEN_COIN_STACK.is(holder)) {
             var slot = TextureSlot.create("coin_stack");
@@ -326,6 +329,7 @@ final class DFModelProvider extends ModelProvider {
         stackedItemModel(DecorationsFurnitureModule.MEAD_BOTTLES, blockModels);
     }
 
+    @SuppressWarnings("deprecation")
     private void soulGems(DeferredBlock<SoulGemsBlock> holder, BlockModelGenerators blockModels) {
         if(!DecorationsFurnitureModule.SOUL_GEMS_DARK.is(holder)) {
             var slot = TextureSlot.create("soul_gems");
@@ -464,6 +468,7 @@ final class DFModelProvider extends ModelProvider {
         blockModels.createHorizontallyRotatedBlock(DecorationsFurnitureModule.CANDLES_1.value(), provider);
     }
 
+    @SuppressWarnings("deprecation")
     private void bonePile(DeferredBlock<BonePileBlock> holder, BlockModelGenerators blockModels) {
         if(!DecorationsFurnitureModule.BONE_PILE_SKELETON.is(holder)) {
             var slot = TextureSlot.create("bone_pile");
@@ -564,6 +569,7 @@ final class DFModelProvider extends ModelProvider {
         );
     }
 
+    @SuppressWarnings("SameParameterValue")
     private <TBlock extends Block & Dyeable> void dyedColorItemModel(DeferredBlock<TBlock> holder, BlockModelGenerators blockModels) {
         blockModels.registerSimpleTintedItemModel(
                 holder.value(),
@@ -580,6 +586,7 @@ final class DFModelProvider extends ModelProvider {
         );
     }
 
+    @SuppressWarnings("deprecation")
     private <TTemplate extends Block & Stackable, TBlock extends TTemplate> void createStackedTemplatedModels(DeferredBlock<TTemplate> templateHolder, DeferredBlock<TBlock> holder, TextureSlot slot, boolean replaceParticle, BiConsumer<Identifier, ModelInstance> modelOutput) {
         if(templateHolder.is(holder)) {
             return;
@@ -630,6 +637,7 @@ final class DFModelProvider extends ModelProvider {
         template.build().create(baseModelPath.withSuffix("_tint"), textures, modelOutput);
     }
 
+    @SuppressWarnings("SameParameterValue")
     private <TBlock extends Block & Dyeable> void createdDyeColorModel(DeferredBlock<TBlock> holder, TextureSlot slot, boolean replaceParticle, BiConsumer<Identifier, ModelInstance> modelOutput) {
         createdDyeColorModel(
                 ModelLocationUtils.getModelLocation(holder.value()),

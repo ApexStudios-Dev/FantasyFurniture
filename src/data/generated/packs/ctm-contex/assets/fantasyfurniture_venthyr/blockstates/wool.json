@@ -1,0 +1,24 @@
+{
+  "neoforge:definition_type": "contex:definition",
+  "contex_meta": [
+    {
+      "type": "contex:full",
+      "textures": [
+        {
+          "ct_textures": {
+            "compact/cross": "fantasyfurniture_venthyr:block/ctm/wool_center",
+            "compact/full": "fantasyfurniture_venthyr:block/ctm/wool_empty",
+            "compact/hor": "fantasyfurniture_venthyr:block/ctm/wool_horizontal",
+            "compact/vert": "fantasyfurniture_venthyr:block/ctm/wool_vertical"
+          },
+          "main_texture": "fantasyfurniture_venthyr:block/wool"
+        }
+      ]
+    }
+  ],
+  "variants": {
+    "": {
+      "model": "fantasyfurniture_venthyr:block/wool"
+    }
+  }
+}

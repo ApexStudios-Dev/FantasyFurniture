@@ -1,28 +1,34 @@
 package dev.apexstudios.fantasyfurniture.data;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import dev.apexstudios.fantasyfurniture.common.util.FurnitureUtil;
 import dev.apexstudios.fantasyfurniture.common.util.OptionalPacks;
-import dev.apexstudios.registree.api.Registree;
+import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.util.Util;
-import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.NeoForgeMod;
+import org.jspecify.annotations.Nullable;
 
-final class ConTexProvider extends ExtendedBlockStateProvider {
+final class ConTexProvider implements DataProvider {
     public static final String HORIZONTAL_SUFFIX = "_horizontal";
     public static final String VERTICAL_SUFFIX = "_vertical";
     public static final String CENTER_SUFFIX = "_center";
     public static final String EMPTY_SUFFIX = "_empty";
 
+    private final Map<Identifier, Consumer<JsonObject>> map = Maps.newHashMap();
+    private final PackOutput output;
+    private final ResourceManager resourceManager;
     private final String modId;
     private final String definitionId;
     private final String metadataKey;
@@ -30,8 +36,8 @@ final class ConTexProvider extends ExtendedBlockStateProvider {
     private final TexturesConsumer texturesConsumer;
 
     private ConTexProvider(PackOutput output, ResourceManager resourceManager, String modId, String definitionId, String metadataKey, String carpetKey, TexturesConsumer texturesConsumer) {
-        super(output, resourceManager);
-
+        this.output = output;
+        this.resourceManager = resourceManager;
         this.modId = modId;
         this.definitionId = definitionId;
         this.metadataKey = metadataKey;
@@ -39,39 +45,59 @@ final class ConTexProvider extends ExtendedBlockStateProvider {
         this.texturesConsumer = texturesConsumer;
     }
 
-    public void with(Registree registree) {
-        FurnitureUtil.Names.block(registree, FurnitureUtil.Names.CARPET, carpet -> {
-            var wool = registree.getOrThrow(Registries.BLOCK, FurnitureUtil.Names.WOOL);
-            var woolRegistryName = wool.key().identifier();
-            var texture = woolRegistryName.withPrefix("block/");
-            var ctmBaseTexture = woolRegistryName.withPath(path -> "block/ctm/" + path);
-            BiConsumer<JsonObject, Boolean> additional = (root, isCarpet) -> { };
+    private void registerJsons() {
+        FantasyFurnitureDataEntryPoint.forEachModule((modId, dyeable) -> {
+            var woolId = Identifier.fromNamespaceAndPath(modId, FurnitureUtil.Names.WOOL);
+            var texture = woolId.withPrefix("block/");
+            var ctmBaseTexture = woolId.withPath(path -> "block/ctm/" + path);
 
-            if(isDyeable(registree)) {
-                var tintTexture = woolRegistryName.withPath(path -> "block/" + path + "_tint");
-                var tintCtmBaseTexture = woolRegistryName.withPath(path -> "block/ctm/" + path + "_tint");
-                additional = (root, isCarpet) -> withTexture(root, tintTexture, tintCtmBaseTexture, isCarpet);
+            BiConsumer<JsonObject, Boolean> additional = null;
+
+            if(dyeable) {
+                additional = (root, isCarpet) -> withTexture(root, texture.withSuffix("_tint"), ctmBaseTexture.withSuffix("_tint"), isCarpet);
             }
 
-            with(wool.value(), texture, ctmBaseTexture, false, additional);
-            with(carpet, texture, ctmBaseTexture, true, additional);
+            with(woolId, texture, ctmBaseTexture, false, additional);
+            with(Identifier.fromNamespaceAndPath(modId, FurnitureUtil.Names.CARPET), texture, ctmBaseTexture, true, additional);
         });
     }
 
-    private void with(Block block, Identifier texture, Identifier ctmBaseTexture, boolean isCarpet, BiConsumer<JsonObject, Boolean> additional) {
-        with(block, root -> {
+    private void with(Identifier blockId, Identifier texture, Identifier ctmBaseTexture, boolean isCarpet, @Nullable BiConsumer<JsonObject, Boolean> additional) {
+        var existing = FantasyFurnitureDataEntryPoint.loadExisting(resourceManager, "blockstates", blockId);
+
+        if(existing == null) {
+            return;
+        }
+
+        Consumer<JsonObject> consumer = root -> {
+            root.addProperty(NeoForgeMod.MOD_ID + Identifier.NAMESPACE_SEPARATOR + "definition_type", modId + Identifier.NAMESPACE_SEPARATOR + definitionId);
             withTexture(root, texture, ctmBaseTexture, isCarpet);
-            additional.accept(root, isCarpet);
-        });
+
+            if(additional != null) {
+                additional.accept(root, isCarpet);
+            }
+
+            FantasyFurnitureDataEntryPoint.copyInto(existing, root);
+        };
+
+        if(map.putIfAbsent(blockId, consumer) != null) {
+            throw new IllegalStateException("Duplicate Model registration: " + blockId);
+        }
     }
 
     private void withTexture(JsonObject root, Identifier texture, Identifier ctmBaseTexture, boolean isCarpet) {
         var metaJson = metadata(root);
 
-        metaJson.add(Util.make(new JsonObject(), conTexJson -> {
-            conTexJson.addProperty("type", modId + ':' + (isCarpet ? carpetKey : "full"));
-            conTexJson.add("textures", Util.make(new JsonArray(), texturesJson -> texturesJson.add(Util.make(new JsonObject(), textureJson -> texturesConsumer.accept(textureJson, texture, ctmBaseTexture)))));
-        }));
+        var conTexJson = new JsonObject();
+        var texturesJson = new JsonArray();
+        var textureJson = new JsonObject();
+
+        conTexJson.addProperty("type", modId + Identifier.NAMESPACE_SEPARATOR + (isCarpet ? carpetKey : "full"));
+        texturesConsumer.accept(textureJson, texture, ctmBaseTexture);
+
+        texturesJson.add(textureJson);
+        conTexJson.add("textures", texturesJson);
+        metaJson.add(conTexJson);
     }
 
     private JsonArray metadata(JsonObject root) {
@@ -85,10 +111,12 @@ final class ConTexProvider extends ExtendedBlockStateProvider {
     }
 
     @Override
-    protected JsonObject json(Block block, Consumer<JsonObject> consumer) {
-        var root = super.json(block, consumer);
-        root.addProperty(NeoForgeMod.MOD_ID + Identifier.NAMESPACE_SEPARATOR + "definition_type", modId + Identifier.NAMESPACE_SEPARATOR + definitionId);
-        return root;
+    public CompletableFuture<?> run(CachedOutput cache) {
+        registerJsons();
+        var futures = Lists.<CompletableFuture<?>>newArrayList();
+        var pathProvider = output.createPathProvider(PackOutput.Target.RESOURCE_PACK, "blockstates");
+        map.forEach((blockId, consumer) -> futures.add(DataProvider.saveStable(cache, Util.make(new JsonObject(), consumer), pathProvider.json(blockId))));
+        return CompletableFuture.allOf(futures.toArray(CompletableFuture[]::new));
     }
 
     @Override

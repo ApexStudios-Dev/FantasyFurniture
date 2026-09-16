@@ -14,6 +14,7 @@ final class RFItemTagsProvider extends FurnitureItemTagsProvider {
         super(output, lookupProvider, furniture);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     protected void addTags(HolderLookup.Provider registries) {
         super.addTags(registries);

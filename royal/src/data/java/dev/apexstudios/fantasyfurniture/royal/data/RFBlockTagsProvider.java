@@ -14,6 +14,7 @@ final class RFBlockTagsProvider extends FurnitureBlockTagsProvider {
         super(output, lookupProvider, furniture);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     protected void addTags(HolderLookup.Provider registries) {
         super.addTags(registries);

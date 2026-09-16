@@ -2,7 +2,6 @@ package dev.apexstudios.fantasyfurniture.decorations.data;
 
 import dev.apexstudios.apexcore.api.block.Dyeable;
 import dev.apexstudios.apexcore.api.multiblock.MultiBlock;
-import dev.apexstudios.apexcore.api.util.ApexTags;
 import dev.apexstudios.fantasyfurniture.decorations.common.DecorationsFurnitureModule;
 import java.util.concurrent.CompletableFuture;
 import net.minecraft.core.Holder;
@@ -18,6 +17,7 @@ final class DFBlockTagsProvider extends BlockTagsProvider {
         super(output, lookupProvider, DecorationsFurnitureModule.ID);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     protected void addTags(HolderLookup.Provider registries) {
         DecorationsFurnitureModule.REGISTREE.listElements(Registries.BLOCK).map(Holder::value).forEach(block -> {
@@ -35,6 +35,6 @@ final class DFBlockTagsProvider extends BlockTagsProvider {
         tag(Tags.Blocks.CHAINS).add(DecorationsFurnitureModule.BRONZE_CHAIN.getKey());
         tag(Tags.Blocks.CHAINS).add(DecorationsFurnitureModule.BRONZE_CHAIN.getKey());
 
-        tag(ApexTags.Blocks.SHEARS_EFFICIENT).add(DecorationsFurnitureModule.PLUSHIE_BLOCK.getKey());
+        tag(BlockTags.SHEARS_MAJOR_BREAKING_SPEED).add(DecorationsFurnitureModule.PLUSHIE_BLOCK.getKey());
     }
 }

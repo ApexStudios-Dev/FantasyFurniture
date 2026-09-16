@@ -1,10 +1,16 @@
 package dev.apexstudios.fantasyfurniture.data;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import dev.apexstudios.apexcore.api.util.ApexUtil;
 import dev.apexstudios.fantasyfurniture.common.FantasyFurniture;
 import dev.apexstudios.fantasyfurniture.common.util.OptionalPacks;
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
+import java.util.function.BiConsumer;
+import net.minecraft.DetectedVersion;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataProvider;
@@ -12,15 +18,22 @@ import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.data.metadata.PackMetadataGenerator;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
+import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.util.GsonHelper;
 import net.minecraft.util.Util;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
+import org.jspecify.annotations.Nullable;
 
 @Mod(FantasyFurniture.ID)
 public final class FantasyFurnitureDataEntryPoint {
+    private static final Gson GSON = new GsonBuilder().create();
+
     public FantasyFurnitureDataEntryPoint(IEventBus modBus) {
         modBus.addListener(GatherDataEvent.Client.class, event -> {
             event.createReloadableRegistryObjects(new RegistrySetBuilder()
@@ -32,7 +45,7 @@ public final class FantasyFurnitureDataEntryPoint {
             event.createProvider(FFLanguageProvider::new);
             event.createProvider(FFModelProvider::new);
             event.createProvider(FFBlockTagsProvider::new);
-            event.createProvider(output -> PackMetadataGenerator.forFeaturePack(output, Component.literal("Fantasy's Furniture resources")));
+            event.createProvider(output -> ApexUtil.createMetadataProvider(output, Component.literal("Fantasy's Furniture resources"), PackType.SERVER_DATA));
 
             pack(
                     event,
@@ -73,14 +86,42 @@ public final class FantasyFurnitureDataEntryPoint {
                             })
             );
 
-            pack(event, OptionalPacks.LEGACY_DOORS, LegacyDoorsProvider::new);
+            pack(event, OptionalPacks.LEGACY_DOORS, output -> new LegacyDoorsProvider(output, event.getResourceManager(PackType.CLIENT_RESOURCES)));
         });
     }
 
     private <T extends DataProvider> void pack(GatherDataEvent event, OptionalPacks pack, DataProvider.Factory<T> factory) {
         var generator = event.getGenerator();
         var generated = generator.getPackGenerator(true, pack.id + "-providers",pack.packPath());
-        generated.addProvider(output -> PackMetadataGenerator.forFeaturePack(output, Component.literal(pack.description)));
+        generated.addProvider(output -> new PackMetadataGenerator(output).add(PackMetadataSection.CLIENT_TYPE, new PackMetadataSection(Component.literal(pack.description), DetectedVersion.BUILT_IN.packVersion(PackType.CLIENT_RESOURCES).minorRange())));
         generated.addProvider(factory);
+    }
+
+    public static void forEachModule(BiConsumer<String, Boolean> action) {
+        // action.accept(FantasyFurniture.ID + "_bone", false);
+        action.accept(FantasyFurniture.ID + "_bone_skeleton", false);
+        action.accept(FantasyFurniture.ID + "_bone_wither", false);
+        // action.accept(FantasyFurniture.ID + "_decorations", false);
+        action.accept(FantasyFurniture.ID + "_dunmer", false);
+        action.accept(FantasyFurniture.ID + "_necrolord", false);
+        action.accept(FantasyFurniture.ID + "_nordic", false);
+        action.accept(FantasyFurniture.ID + "_royal", true);
+        action.accept(FantasyFurniture.ID + "_venthyr", false);
+    }
+
+    public static void copyInto(@Nullable JsonObject from, JsonObject into) {
+        if(from == null || from.isEmpty()) {
+            return;
+        }
+
+        from.keySet().forEach(key -> into.add(key, from.get(key).deepCopy()));
+    }
+
+    public static @Nullable JsonObject loadExisting(ResourceManager resourceManager, String type, Identifier id) {
+        try(var reader = resourceManager.openAsReader(id.withPath(path -> type + '/' + path + ".json"))) {
+            return GsonHelper.fromJson(GSON, reader, JsonObject.class);
+        } catch (IOException e) {
+            return null;
+        }
     }
 }

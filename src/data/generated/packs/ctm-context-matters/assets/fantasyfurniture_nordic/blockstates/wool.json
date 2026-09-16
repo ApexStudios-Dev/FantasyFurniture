@@ -1,0 +1,22 @@
+{
+  "neoforge:definition_type": "context_matters:connected_definition",
+  "metadata": [
+    {
+      "type": "context_matters:full",
+      "textures": [
+        {
+          "cardinal": "fantasyfurniture_nordic:block/ctm/wool_center",
+          "full": "fantasyfurniture_nordic:block/ctm/wool_empty",
+          "horizontal": "fantasyfurniture_nordic:block/ctm/wool_horizontal",
+          "none": "fantasyfurniture_nordic:block/wool",
+          "vertical": "fantasyfurniture_nordic:block/ctm/wool_vertical"
+        }
+      ]
+    }
+  ],
+  "variants": {
+    "": {
+      "model": "fantasyfurniture_nordic:block/wool"
+    }
+  }
+}

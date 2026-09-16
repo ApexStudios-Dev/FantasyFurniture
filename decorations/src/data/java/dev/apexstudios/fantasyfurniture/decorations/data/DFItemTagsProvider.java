@@ -14,6 +14,7 @@ final class DFItemTagsProvider extends ItemTagsProvider {
         super(output, lookupProvider, DecorationsFurnitureModule.ID);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     protected void addTags(HolderLookup.Provider registries) {
         Dyeable.dyeableItems(DecorationsFurnitureModule.REGISTREE)

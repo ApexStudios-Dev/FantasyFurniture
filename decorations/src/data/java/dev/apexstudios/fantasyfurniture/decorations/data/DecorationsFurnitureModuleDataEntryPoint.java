@@ -1,14 +1,15 @@
 package dev.apexstudios.fantasyfurniture.decorations.data;
 
+import dev.apexstudios.apexcore.api.util.ApexUtil;
 import dev.apexstudios.fantasyfurniture.decorations.common.DecorationsFurnitureModule;
 import java.util.List;
 import java.util.Set;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.LootTableProvider;
-import net.minecraft.data.metadata.PackMetadataGenerator;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.packs.PackType;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
@@ -27,7 +28,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
             event.createProvider(DFModelProvider::new);
             event.createProvider(DFBlockTagsProvider::new);
             event.createProvider(DFItemTagsProvider::new);
-            event.createProvider(output -> PackMetadataGenerator.forFeaturePack(output, Component.literal("Decorations Furniture Set resources")));
+            event.createProvider(output -> ApexUtil.createMetadataProvider(output, Component.literal("Decorations Furniture Set resources"), PackType.SERVER_DATA));
         });
     }
 }

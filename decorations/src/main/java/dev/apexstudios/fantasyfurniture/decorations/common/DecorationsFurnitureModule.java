@@ -76,7 +76,7 @@ import net.neoforged.neoforge.event.AnvilUpdateEvent;
 
 @Mod(DecorationsFurnitureModule.ID)
 public class DecorationsFurnitureModule {
-    public static final String ID = "fantasyfurniture_decorations";
+    public static final String ID = FantasyFurniture.ID + "_decorations";
     public static final Registree REGISTREE = Registree.create(ID);
 
     public static final DeferredBlock<BerryBasketBlock> BERRY_BASKET = DecorationUtil.berryBasket(REGISTREE, "berry");
@@ -170,7 +170,6 @@ public class DecorationsFurnitureModule {
 
     public DecorationsFurnitureModule(IEventBus modBus) {
         REGISTREE.registerEvents(modBus);
-        FantasyFurniture.FURNITURE_MODS.add(ID);
 
         NeoForge.EVENT_BUS.addListener(AnvilUpdateEvent.class, event -> {
             var left = event.getLeft();

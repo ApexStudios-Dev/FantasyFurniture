@@ -55,10 +55,10 @@ public class FurnitureBlockTagsProvider extends BlockTagsProvider {
         furniture.block(DataGenType.BLOCK_TAG, FurnitureUtil.Names.BENCH, block -> tag(block, furniture.mineableTag(), ApexTags.Blocks.SEAT_PER_BLOCK, Tags.Blocks.RELOCATION_NOT_SUPPORTED));
         furniture.block(DataGenType.BLOCK_TAG, FurnitureUtil.Names.WARDROBE, block -> tag(block, furniture.mineableTag(), Tags.Blocks.RELOCATION_NOT_SUPPORTED));
         furniture.block(DataGenType.BLOCK_TAG, FurnitureUtil.Names.TABLE, block -> tag(block, furniture.mineableTag()));
-        furniture.block(DataGenType.BLOCK_TAG, FurnitureUtil.Names.STAIRS, block -> tag(block, furniture.mineableTag(), furniture.stairsTag()));
+        furniture.block(DataGenType.BLOCK_TAG, FurnitureUtil.Names.STAIRS, block -> tag(block, furniture.mineableTag(), furniture.stairsTag().block()));
         furniture.block(DataGenType.BLOCK_TAG, FurnitureUtil.Names.SLAB, block -> tag(block, furniture.mineableTag(), furniture.slabTag().block()));
         furniture.block(DataGenType.BLOCK_TAG, FurnitureUtil.Names.FENCE, block -> tag(block, furniture.mineableTag(), furniture.fenceTag().block()));
-        furniture.block(DataGenType.BLOCK_TAG, FurnitureUtil.Names.FENCE_GATE, block -> tag(block, furniture.mineableTag(), BlockTags.FENCE_GATES));
+        furniture.block(DataGenType.BLOCK_TAG, FurnitureUtil.Names.FENCE_GATE, block -> tag(block, furniture.mineableTag(), furniture.fenceGateTag().block()));
         furniture.block(DataGenType.BLOCK_TAG, FurnitureUtil.Names.TRAPDOOR, block -> tag(block, furniture.mineableTag(), furniture.trapdoorTag().block()));
         furniture.block(DataGenType.BLOCK_TAG, FurnitureUtil.Names.PRESSURE_PLATE, block -> tag(block, furniture.mineableTag(), furniture.pressurePlateTag().block()));
         furniture.block(DataGenType.BLOCK_TAG, FurnitureUtil.Names.BUTTON, block -> tag(block, furniture.mineableTag(), furniture.buttonTag().block()));

@@ -1,6 +1,6 @@
 package dev.apexstudios.fantasyfurniture.venthyr.data;
 
-import dev.apexstudios.apexcore.api.util.TagPair;
+import dev.apexstudios.apexcore.api.util.ApexUtil;
 import dev.apexstudios.fantasyfurniture.common.data.DataGenContext;
 import dev.apexstudios.fantasyfurniture.common.data.FurnitureItemTagsProvider;
 import dev.apexstudios.fantasyfurniture.common.util.FurnitureUtil;
@@ -11,12 +11,14 @@ import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.data.loot.LootTableProvider;
-import net.minecraft.data.metadata.PackMetadataGenerator;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.tags.BlockItemTagId;
+import net.minecraft.tags.BlockItemTags;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ItemTags;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 @Mod(VenthyrFurnitureSet.ID)
@@ -39,13 +41,14 @@ public final class VenthyrFurnitureSetDataEntryPoint {
                             .customHangingSign(VenthyrFurnitureSet.HANGING_SIGN.sign().value(), VenthyrFurnitureSet.HANGING_SIGN.wall().value())
                             .getFamily(),
                     BlockTags.MINEABLE_WITH_AXE,
-                    new TagPair(BlockTags.WOODEN_DOORS, ItemTags.WOODEN_DOORS),
-                    BlockTags.WOODEN_STAIRS,
-                    new TagPair(BlockTags.WOODEN_BUTTONS, ItemTags.WOODEN_BUTTONS),
-                    new TagPair(BlockTags.WOODEN_PRESSURE_PLATES, ItemTags.WOODEN_PRESSURE_PLATES),
-                    new TagPair(BlockTags.WOODEN_TRAPDOORS, ItemTags.WOODEN_TRAPDOORS),
-                    new TagPair(BlockTags.WOODEN_FENCES, ItemTags.WOODEN_FENCES),
-                    new TagPair(BlockTags.WOODEN_SLABS, ItemTags.WOODEN_SLABS)
+                    BlockItemTags.WOODEN_DOORS,
+                    BlockItemTags.WOODEN_STAIRS,
+                    BlockItemTags.WOODEN_BUTTONS,
+                    BlockItemTags.WOODEN_PRESSURE_PLATES,
+                    BlockItemTags.WOODEN_TRAPDOORS,
+                    new BlockItemTagId(Tags.Blocks.FENCES_WOODEN, Tags.Items.FENCES_WOODEN),
+                    new BlockItemTagId(Tags.Blocks.FENCE_GATES_WOODEN, Tags.Items.FENCE_GATES_WOODEN),
+                    BlockItemTags.WOODEN_SLABS
             );
 
             event.createReloadableRegistryObjects(new RegistrySetBuilder()
@@ -57,7 +60,7 @@ public final class VenthyrFurnitureSetDataEntryPoint {
             event.createProvider(context.fromOutput(VFModelProvider::new));
             event.createProvider(context.fromOutputLookup(VFBlockTagsProvider::new));
             event.createProvider(context.fromOutputLookup(FurnitureItemTagsProvider::new));
-            event.createProvider(output -> PackMetadataGenerator.forFeaturePack(output, Component.literal("Venthyr Furniture Set resources")));
+            event.createProvider(output -> ApexUtil.createMetadataProvider(output, Component.literal("Venthyr Furniture Set resources"), PackType.SERVER_DATA));
         });
     }
 }

@@ -1,0 +1,38 @@
+{
+  "neoforge:definition_type": "contex:definition",
+  "contex_meta": [
+    {
+      "type": "contex:full",
+      "textures": [
+        {
+          "ct_textures": {
+            "compact/cross": "fantasyfurniture_royal:block/ctm/wool_center",
+            "compact/full": "fantasyfurniture_royal:block/ctm/wool_empty",
+            "compact/hor": "fantasyfurniture_royal:block/ctm/wool_horizontal",
+            "compact/vert": "fantasyfurniture_royal:block/ctm/wool_vertical"
+          },
+          "main_texture": "fantasyfurniture_royal:block/wool"
+        }
+      ]
+    },
+    {
+      "type": "contex:full",
+      "textures": [
+        {
+          "ct_textures": {
+            "compact/cross": "fantasyfurniture_royal:block/ctm/wool_tint_center",
+            "compact/full": "fantasyfurniture_royal:block/ctm/wool_tint_empty",
+            "compact/hor": "fantasyfurniture_royal:block/ctm/wool_tint_horizontal",
+            "compact/vert": "fantasyfurniture_royal:block/ctm/wool_tint_vertical"
+          },
+          "main_texture": "fantasyfurniture_royal:block/wool_tint"
+        }
+      ]
+    }
+  ],
+  "variants": {
+    "": {
+      "model": "fantasyfurniture_royal:block/wool"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "neoforge:definition_type": "contex:definition",
+  "contex_meta": [
+    {
+      "type": "contex:carpet_full",
+      "textures": [
+        {
+          "ct_textures": {
+            "compact/cross": "fantasyfurniture_dunmer:block/ctm/wool_center",
+            "compact/full": "fantasyfurniture_dunmer:block/ctm/wool_empty",
+            "compact/hor": "fantasyfurniture_dunmer:block/ctm/wool_horizontal",
+            "compact/vert": "fantasyfurniture_dunmer:block/ctm/wool_vertical"
+          },
+          "main_texture": "fantasyfurniture_dunmer:block/wool"
+        }
+      ]
+    }
+  ],
+  "variants": {
+    "": {
+      "model": "fantasyfurniture_dunmer:block/carpet"
+    }
+  }
+}

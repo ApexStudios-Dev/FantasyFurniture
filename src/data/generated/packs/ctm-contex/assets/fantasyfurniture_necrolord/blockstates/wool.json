@@ -1,0 +1,24 @@
+{
+  "neoforge:definition_type": "contex:definition",
+  "contex_meta": [
+    {
+      "type": "contex:full",
+      "textures": [
+        {
+          "ct_textures": {
+            "compact/cross": "fantasyfurniture_necrolord:block/ctm/wool_center",
+            "compact/full": "fantasyfurniture_necrolord:block/ctm/wool_empty",
+            "compact/hor": "fantasyfurniture_necrolord:block/ctm/wool_horizontal",
+            "compact/vert": "fantasyfurniture_necrolord:block/ctm/wool_vertical"
+          },
+          "main_texture": "fantasyfurniture_necrolord:block/wool"
+        }
+      ]
+    }
+  ],
+  "variants": {
+    "": {
+      "model": "fantasyfurniture_necrolord:block/wool"
+    }
+  }
+}
