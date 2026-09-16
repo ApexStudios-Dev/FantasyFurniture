@@ -25,16 +25,30 @@ public final class SimpleBlockEntityModel {
         poseStack.pushPose();
         preparePose(poseStack, facing);
 
+        var renderType = model.renderType(texture);
+
         nodeCollector.submitModel(
                 model,
                 Unit.INSTANCE,
                 poseStack,
-                model.renderType(texture),
+                renderType,
                 packedLight,
                 OverlayTexture.NO_OVERLAY,
-                0,
-                breakProgress
+                0
         );
+
+        if(breakProgress != null) {
+            nodeCollector.submitCrumblingOverlay(
+                    model,
+                    Unit.INSTANCE,
+                    poseStack,
+                    renderType,
+                    packedLight,
+                    OverlayTexture.NO_OVERLAY,
+                    -1,
+                    breakProgress
+            );
+        }
 
         poseStack.popPose();
     }
@@ -42,10 +56,10 @@ public final class SimpleBlockEntityModel {
     public void preparePose(PoseStack poseStack, @Nullable Direction facing) {
         poseStack.translate(0D, 1D, 0D);
         poseStack.translate(.5D, .5D, .5D);
-        poseStack.mulPose(Axis.ZP.rotationDegrees(180F));
+        poseStack.rotate(Axis.ZP, 180F);
 
         if(facing != null) {
-            poseStack.mulPose(Axis.YP.rotationDegrees(facing.toYRot()));
+            poseStack.rotate(Axis.YP, facing.toYRot());
         }
     }
 }

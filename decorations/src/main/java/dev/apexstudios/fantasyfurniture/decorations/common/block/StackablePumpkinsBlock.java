@@ -5,11 +5,11 @@ import dev.apexstudios.apexcore.api.util.ApexShapes;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -91,8 +91,8 @@ public final class StackablePumpkinsBlock extends SimpleHorizontalDirectionalBlo
     }
 
     @Override
-    public void playerDestroy(Level level, Player player, BlockPos pos, BlockState blockState, @Nullable BlockEntity blockEntity, ItemStack tool) {
-        super.playerDestroy(level, player, pos, blockState, blockEntity, tool);
+    public void playerDestroy(ServerLevel level, ServerPlayer player, BlockPos pos, BlockState blockState, @Nullable BlockEntity blockEntity, ItemStack destroyedWith) {
+        super.playerDestroy(level, player, pos, blockState, blockEntity, destroyedWith);
         Stackable.playerDestroy(this, level, pos, blockState);
     }
 }

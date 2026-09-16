@@ -1,8 +1,8 @@
 package dev.apexstudios.fantasyfurniture.common;
 
 import com.google.common.collect.Sets;
-import dev.apexstudios.fantasyfurniture.common.ctm.CtmPacks;
 import dev.apexstudios.fantasyfurniture.common.station.FurnitureStationSetup;
+import dev.apexstudios.fantasyfurniture.common.util.OptionalPacks;
 import dev.apexstudios.registree.api.Registree;
 import java.util.Set;
 import net.minecraft.core.registries.Registries;
@@ -14,6 +14,7 @@ import net.neoforged.fml.ModLoader;
 import net.neoforged.fml.ModLoadingIssue;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.event.AddPackFindersEvent;
 
 @Mod(FantasyFurniture.ID)
 public final class FantasyFurniture {
@@ -31,7 +32,12 @@ public final class FantasyFurniture {
         FurnitureStationSetup.register(modBus);
         FurnitureBlockEntities.register(modBus);
         FurnitureMenus.register(modBus);
-        CtmPacks.register(modBus);
+
+        modBus.addListener(AddPackFindersEvent.class, event -> {
+            for(var pack : OptionalPacks.values()) {
+                pack.register(event);
+            }
+        });
 
         modBus.addListener(FMLCommonSetupEvent.class, event -> {
             if(FURNITURE_MODS.isEmpty())
@@ -46,6 +52,4 @@ public final class FantasyFurniture {
     public static String id(String identifier) {
         return ID + Identifier.NAMESPACE_SEPARATOR + identifier;
     }
-
-    private record CtmPack(String packId, String packName) { }
 }

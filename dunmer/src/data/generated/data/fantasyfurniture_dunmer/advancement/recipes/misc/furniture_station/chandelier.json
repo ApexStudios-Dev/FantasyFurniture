@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_dunmer:furniture_station/chandelier"
+        "recipes": "fantasyfurniture_dunmer:furniture_station/chandelier"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

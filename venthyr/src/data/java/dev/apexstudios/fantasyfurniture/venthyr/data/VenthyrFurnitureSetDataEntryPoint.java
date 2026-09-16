@@ -1,26 +1,31 @@
 package dev.apexstudios.fantasyfurniture.venthyr.data;
 
-import dev.apexstudios.apexcore.api.data.ProviderTypes;
-import dev.apexstudios.apexcore.api.data.ResourceGenerator;
-import dev.apexstudios.apexcore.api.placement.BlockItemPlacementEvent;
-import dev.apexstudios.apexcore.api.util.TagPair;
-import dev.apexstudios.fantasyfurniture.common.ctm.CtmPacks;
-import dev.apexstudios.fantasyfurniture.common.util.FurnitureClientDataUtil;
-import dev.apexstudios.fantasyfurniture.common.util.FurnitureDataUtil;
+import dev.apexstudios.apexcore.api.util.ApexUtil;
+import dev.apexstudios.fantasyfurniture.common.data.DataGenContext;
+import dev.apexstudios.fantasyfurniture.common.data.FurnitureItemTagsProvider;
 import dev.apexstudios.fantasyfurniture.common.util.FurnitureUtil;
 import dev.apexstudios.fantasyfurniture.venthyr.common.VenthyrFurnitureSet;
+import java.util.List;
+import java.util.Set;
+import net.minecraft.core.RegistrySetBuilder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.BlockFamily;
+import net.minecraft.data.loot.LootTableProvider;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.tags.BlockItemTagId;
+import net.minecraft.tags.BlockItemTags;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ItemTags;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 @Mod(VenthyrFurnitureSet.ID)
 public final class VenthyrFurnitureSetDataEntryPoint {
     public VenthyrFurnitureSetDataEntryPoint(IEventBus modBus) {
-        ResourceGenerator.of(modBus, generator -> {
-            var pack = generator.pack();
-            var context = new FurnitureDataUtil.DataGenContext(
+        modBus.addListener(GatherDataEvent.Client.class, event -> {
+            var context = new DataGenContext(
                     VenthyrFurnitureSet.REGISTREE,
                     "Venthyr",
                     new BlockFamily.Builder(VenthyrFurnitureSet.PLANKS.value())
@@ -34,32 +39,28 @@ public final class VenthyrFurnitureSetDataEntryPoint {
                             .pressurePlate(VenthyrFurnitureSet.PRESSURE_PLATE.value())
                             .sign(VenthyrFurnitureSet.SIGN.sign().value(), VenthyrFurnitureSet.SIGN.wall().value())
                             .customHangingSign(VenthyrFurnitureSet.HANGING_SIGN.sign().value(), VenthyrFurnitureSet.HANGING_SIGN.wall().value())
-                    .getFamily(),
+                            .getFamily(),
                     BlockTags.MINEABLE_WITH_AXE,
-                    new TagPair(BlockTags.WOODEN_DOORS, ItemTags.WOODEN_DOORS),
-                    BlockTags.WOODEN_STAIRS,
-                    new TagPair(BlockTags.WOODEN_BUTTONS, ItemTags.WOODEN_BUTTONS),
-                    new TagPair(BlockTags.WOODEN_PRESSURE_PLATES, ItemTags.WOODEN_PRESSURE_PLATES),
-                    new TagPair(BlockTags.WOODEN_TRAPDOORS, ItemTags.WOODEN_TRAPDOORS),
-                    new TagPair(BlockTags.WOODEN_FENCES, ItemTags.WOODEN_FENCES),
-                    new TagPair(BlockTags.WOODEN_SLABS, ItemTags.WOODEN_SLABS)
+                    BlockItemTags.WOODEN_DOORS,
+                    BlockItemTags.WOODEN_STAIRS,
+                    BlockItemTags.WOODEN_BUTTONS,
+                    BlockItemTags.WOODEN_PRESSURE_PLATES,
+                    BlockItemTags.WOODEN_TRAPDOORS,
+                    new BlockItemTagId(Tags.Blocks.FENCES_WOODEN, Tags.Items.FENCES_WOODEN),
+                    new BlockItemTagId(Tags.Blocks.FENCE_GATES_WOODEN, Tags.Items.FENCE_GATES_WOODEN),
+                    BlockItemTags.WOODEN_SLABS
             );
 
-            FurnitureDataUtil.registerDataGen(context, pack);
-            FurnitureClientDataUtil.registerDataGen(context, pack);
-            CtmPacks.registerDataGen(VenthyrFurnitureSet.REGISTREE, pack, false);
-
-            pack.providing(ProviderTypes.LOOT_TABLE, (ctx, provider) -> provider
-                    .block(blocks -> blocks.dropSelf(VenthyrFurnitureSet.TABLE_CLOTH.value()))
-            ).providing(ProviderTypes.BLOCK_TAGS, (ctx, provider) -> FurnitureDataUtil
-                    .tag(provider, VenthyrFurnitureSet.TABLE_CLOTH.value(), context.mineableTag(), BlockItemPlacementEvent.RENDERABLES)
-            ).providing(ProviderTypes.RECIPES, (ctx, provider) -> FurnitureDataUtil.furnitureStationRecipe(
-                    context, VenthyrFurnitureSet.TABLE_CLOTH.value(), provider
-            )).providing(ProviderTypes.MODELS, (ctx, provider) -> FurnitureClientDataUtil
-                    .createTableModel(VenthyrFurnitureSet.TABLE_CLOTH.value(), provider.blockModels())
-            ).providing(ProviderTypes.LANGUAGE, (ctx, provider) -> provider
-                    .addBlock(VenthyrFurnitureSet.TABLE_CLOTH, context.englishName() + " Table Cloth")
+            event.createReloadableRegistryObjects(new RegistrySetBuilder()
+                    .add(Registries.LOOT_TABLE, new LootTableProvider(Set.of(), List.of(context.forLootTable(VFBlockLootSubProvider::new))))
+                    .add(context.forBootstrap(VFRecipeProvider::new))
             );
+
+            event.createProvider(context.fromOutput(VFLanguageProvider::new));
+            event.createProvider(context.fromOutput(VFModelProvider::new));
+            event.createProvider(context.fromOutputLookup(VFBlockTagsProvider::new));
+            event.createProvider(context.fromOutputLookup(FurnitureItemTagsProvider::new));
+            event.createProvider(output -> ApexUtil.createMetadataProvider(output, Component.literal("Venthyr Furniture Set resources"), PackType.SERVER_DATA));
         });
     }
 }

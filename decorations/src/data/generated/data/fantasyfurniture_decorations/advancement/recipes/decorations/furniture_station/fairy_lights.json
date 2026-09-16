@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_decorations:furniture_station/fairy_lights"
+        "recipes": "fantasyfurniture_decorations:furniture_station/fairy_lights"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

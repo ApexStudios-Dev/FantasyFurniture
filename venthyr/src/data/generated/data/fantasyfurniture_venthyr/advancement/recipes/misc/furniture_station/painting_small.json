@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_venthyr:furniture_station/painting_small"
+        "recipes": "fantasyfurniture_venthyr:furniture_station/painting_small"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

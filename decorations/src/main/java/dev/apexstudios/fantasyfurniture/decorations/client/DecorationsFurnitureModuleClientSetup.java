@@ -52,7 +52,7 @@ public final class DecorationsFurnitureModuleClientSetup {
             if(event.getNewScreen() instanceof AbstractSignEditScreen screen && !(screen instanceof GravestoneEditScreen) && DecorationsFurnitureModule.GRAVESTONE_BLOCK_ENTITY.is(screen.sign.getType())) {
                 event.setNewScreen(new GravestoneEditScreen(
                         (GravestoneBlockEntity) screen.sign,
-                        screen.isFrontText,
+                        screen.sign.getSlotPlayerIsFacing(Minecraft.getInstance().player),
                         Minecraft.getInstance().isTextFilteringEnabled()
                 ));
             }

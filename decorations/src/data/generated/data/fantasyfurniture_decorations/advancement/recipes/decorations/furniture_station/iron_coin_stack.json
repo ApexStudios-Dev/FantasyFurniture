@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_decorations:furniture_station/iron_coin_stack"
+        "recipes": "fantasyfurniture_decorations:furniture_station/iron_coin_stack"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

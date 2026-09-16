@@ -1,31 +1,30 @@
 {
+  "type": "minecraft:block",
   "pools": [
     {
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "modifier": [
             {
-              "conditions": [
-                {
-                  "block": "fantasyfurniture_royal:slab",
-                  "condition": "minecraft:block_state_property",
-                  "properties": {
-                    "type": "double"
-                  }
+              "type": "minecraft:set_count",
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "fantasyfurniture_royal:slab",
+                "state": {
+                  "type": "double"
                 }
-              ],
-              "count": 2.0,
-              "function": "minecraft:set_count"
+              },
+              "count": 2
             },
             {
-              "function": "minecraft:explosion_decay"
+              "type": "minecraft:explosion_decay"
             }
           ],
           "name": "fantasyfurniture_royal:slab"
         }
       ],
-      "rolls": 1.0
+      "rolls": 1
     }
   ],
   "random_sequence": "fantasyfurniture_royal:blocks/slab"

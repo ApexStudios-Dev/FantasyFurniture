@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_venthyr:conversion/wool"
+        "recipes": "fantasyfurniture_venthyr:conversion/wool"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

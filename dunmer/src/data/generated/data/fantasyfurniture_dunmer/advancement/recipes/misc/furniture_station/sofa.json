@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_dunmer:furniture_station/sofa"
+        "recipes": "fantasyfurniture_dunmer:furniture_station/sofa"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

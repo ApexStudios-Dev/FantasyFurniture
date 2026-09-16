@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_decorations:furniture_station/skull_blossom_wither"
+        "recipes": "fantasyfurniture_decorations:furniture_station/skull_blossom_wither"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_necrolord:furniture_station/bench"
+        "recipes": "fantasyfurniture_necrolord:furniture_station/bench"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_royal:furniture_station/dresser"
+        "recipes": "fantasyfurniture_royal:furniture_station/dresser"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

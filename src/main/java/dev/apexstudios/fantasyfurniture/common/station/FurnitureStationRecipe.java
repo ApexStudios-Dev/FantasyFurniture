@@ -13,7 +13,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
 public final class FurnitureStationRecipe implements Recipe<FurnitureStationRecipeInput> {
-    private final String group;
+    private String group;
     private final Ingredient planks;
     private final Optional<Ingredient> wool;
     private final Ingredient bindingAgent;

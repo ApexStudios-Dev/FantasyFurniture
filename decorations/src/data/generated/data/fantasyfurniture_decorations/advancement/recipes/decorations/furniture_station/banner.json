@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_decorations:furniture_station/banner"
+        "recipes": "fantasyfurniture_decorations:furniture_station/banner"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

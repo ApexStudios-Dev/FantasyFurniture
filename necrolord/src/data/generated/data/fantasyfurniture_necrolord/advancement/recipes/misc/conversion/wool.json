@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_necrolord:conversion/wool"
+        "recipes": "fantasyfurniture_necrolord:conversion/wool"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
