@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_nordic:furniture_station/stool"
+        "recipes": "fantasyfurniture_nordic:furniture_station/stool"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

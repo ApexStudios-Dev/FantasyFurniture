@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_royal:furniture_station/bed_single"
+        "recipes": "fantasyfurniture_royal:furniture_station/bed_single"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

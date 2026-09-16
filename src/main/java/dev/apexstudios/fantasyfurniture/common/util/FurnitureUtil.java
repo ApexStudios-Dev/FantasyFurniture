@@ -29,7 +29,6 @@ import dev.apexstudios.fantasyfurniture.common.block.StoolBlock;
 import dev.apexstudios.fantasyfurniture.common.block.TableBlock;
 import dev.apexstudios.fantasyfurniture.common.block.WallLightBlock;
 import dev.apexstudios.fantasyfurniture.common.block.WardrobeBlock;
-import dev.apexstudios.fantasyfurniture.common.ctm.CtmPacks;
 import dev.apexstudios.registree.api.Registree;
 import dev.apexstudios.registree.api.holder.DeferredBlock;
 import java.util.Collections;
@@ -49,7 +48,7 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.HangingSignItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.SignItem;
+import net.minecraft.world.item.StandingAndWallBlockItem;
 import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -89,27 +88,27 @@ public interface FurnitureUtil {
     Supplier<BlockBehaviour.Properties> STONE_PROPERTIES = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.STONE);
     Supplier<BlockBehaviour.Properties> WOOL_PROPERTIES = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.WOOL.white());
     Supplier<BlockBehaviour.Properties> CARPET_PROPERTIES = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.CARPET.white());
-    Supplier<BlockBehaviour.Properties> DRESSER_PROPERTIES = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.CHEST).pushReaction(PushReaction.BLOCK);
+    Supplier<BlockBehaviour.Properties> DRESSER_PROPERTIES = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.CHEST).pushReaction(PushReaction.IMMOVEABLE);
     Supplier<BlockBehaviour.Properties> STOOL_PROPERTIES = mutating(PLANK_PROPERTIES, properties -> properties.bounceRestitution(.75F));
     Supplier<BlockBehaviour.Properties> CUSHION_PROPERTIES = mutating(PLANK_PROPERTIES, properties -> properties.bounceRestitution(.75F));
     Supplier<BlockBehaviour.Properties> LOCKBOX_PROPERTIES = DRESSER_PROPERTIES;
     Supplier<BlockBehaviour.Properties> DRAWER_PROPERTIES = DRESSER_PROPERTIES;
-    Supplier<BlockBehaviour.Properties> CHAIR_PROPERTIES = mutating(PLANK_PROPERTIES, properties -> properties.bounceRestitution(.75F).pushReaction(PushReaction.BLOCK));
+    Supplier<BlockBehaviour.Properties> CHAIR_PROPERTIES = mutating(PLANK_PROPERTIES, properties -> properties.bounceRestitution(.75F).pushReaction(PushReaction.IMMOVEABLE));
     Supplier<BlockBehaviour.Properties> BOOKSHELF_PROPERTIES = DRESSER_PROPERTIES;
-    Supplier<BlockBehaviour.Properties> BED_PROPERTIES = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.BED.white()).pushReaction(PushReaction.BLOCK);
-    Supplier<BlockBehaviour.Properties> DOOR_PROPERTIES = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.OAK_DOOR).pushReaction(PushReaction.BLOCK);
+    Supplier<BlockBehaviour.Properties> BED_PROPERTIES = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.BED.white()).pushReaction(PushReaction.IMMOVEABLE);
+    Supplier<BlockBehaviour.Properties> DOOR_PROPERTIES = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.OAK_DOOR).pushReaction(PushReaction.IMMOVEABLE);
     Supplier<BlockBehaviour.Properties> DESK_PROPERTIES = DRESSER_PROPERTIES;
     Supplier<BlockBehaviour.Properties> PAINTING_WIDE_PROPERTIES = CHAIR_PROPERTIES;
     Supplier<BlockBehaviour.Properties> PAINTING_SMALL_PROPERTIES = PLANK_PROPERTIES;
     Supplier<BlockBehaviour.Properties> OVEN_PROPERTIES = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.SMOKER);
     Supplier<BlockBehaviour.Properties> CHEST_PROPERTIES = DRESSER_PROPERTIES;
-    Supplier<BlockBehaviour.Properties> FLOOR_LIGHT_PROPERTIES = mutating(PLANK_PROPERTIES, properties -> properties.pushReaction(PushReaction.BLOCK).lightLevel(blockState -> MultiBlock.getIndex(blockState) == 1 ? 14 : 0));
+    Supplier<BlockBehaviour.Properties> FLOOR_LIGHT_PROPERTIES = mutating(PLANK_PROPERTIES, properties -> properties.pushReaction(PushReaction.IMMOVEABLE).lightLevel(blockState -> MultiBlock.getIndex(blockState) == 1 ? 14 : 0));
     Supplier<BlockBehaviour.Properties> CHANDELIER_PROPERTIES = mutating(PLANK_PROPERTIES, properties -> properties.lightLevel(blockState -> 14));
     Supplier<BlockBehaviour.Properties> SHELF_PROPERTIES = PLANK_PROPERTIES;
     Supplier<BlockBehaviour.Properties> SOFA_PROPERTIES = mutating(PLANK_PROPERTIES, properties -> properties.bounceRestitution(.75F));
     Supplier<BlockBehaviour.Properties> COUNTER_PROPERTIES = DRESSER_PROPERTIES;
     Supplier<BlockBehaviour.Properties> WALL_LIGHT_PROPERTIES = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.WALL_TORCH);
-    Supplier<BlockBehaviour.Properties> BENCH_PROPERTIES = mutating(PLANK_PROPERTIES, properties -> properties.bounceRestitution(.75F).pushReaction(PushReaction.BLOCK));
+    Supplier<BlockBehaviour.Properties> BENCH_PROPERTIES = mutating(PLANK_PROPERTIES, properties -> properties.bounceRestitution(.75F).pushReaction(PushReaction.IMMOVEABLE));
     Supplier<BlockBehaviour.Properties> WARDROBE_PROPERTIES = DRESSER_PROPERTIES;
     Supplier<BlockBehaviour.Properties> TABLE_PROPERTIES = PLANK_PROPERTIES;
     Supplier<BlockBehaviour.Properties> STAIRS_PROPERTIES = () -> BlockBehaviour.Properties.ofLegacyCopy(Blocks.OAK_STAIRS);
@@ -285,7 +284,7 @@ public interface FurnitureUtil {
     static SignPair<StandingSignBlock, WallSignBlock> sign(Registree registree, Supplier<WoodType> woodType) {
         var standingSign = registree.registerBlock(Names.SIGN, properties -> new StandingSignBlock(woodType.get(), properties), SIGN_BLOCK_PROPERTIES);
         var wallSign = registree.registerBlock(Names.WALL_SIGN, properties -> new WallSignBlock(woodType.get(), properties), mutating(WALL_SIGN_BLOCK_PROPERTIES, properties -> properties.overrideLootTable(standingSign.value().getLootTable())));
-        registree.registerItem(Names.SIGN, properties -> new SignItem(standingSign.value(), wallSign.value(), properties), SIGN_ITEM_PROPERTIES);
+        registree.registerItem(Names.SIGN, properties -> new StandingAndWallBlockItem(standingSign.value(), wallSign.value(), Direction.DOWN, properties), SIGN_ITEM_PROPERTIES);
         return new SignPair<>(standingSign, wallSign);
     }
 
@@ -310,8 +309,6 @@ public interface FurnitureUtil {
 
     static void registerEvents(IEventBus modBus, Registree registree, Supplier<WoodType> woodType) {
         FantasyFurniture.FURNITURE_MODS.add(registree.namespace());
-
-        CtmPacks.register(registree);
 
         modBus.addListener(BlockEntityTypeAddBlocksEvent.class, event -> {
             appendValidBlocks(FurnitureBlockEntities.INVENTORY.value(), Names.blocks(

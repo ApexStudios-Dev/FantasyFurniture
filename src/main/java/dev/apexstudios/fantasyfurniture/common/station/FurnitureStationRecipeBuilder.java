@@ -1,16 +1,12 @@
 package dev.apexstudios.fantasyfurniture.common.station;
 
-import com.google.common.collect.Maps;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import net.minecraft.advancements.AdvancementRequirements;
-import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.triggers.Criterion;
-import net.minecraft.advancements.triggers.RecipeUnlockedTrigger;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeUnlockAdvancementBuilder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -25,7 +21,7 @@ public final class FurnitureStationRecipeBuilder implements RecipeBuilder {
     private final Optional<Ingredient> wool;
     private final Ingredient bindingAgent;
     private final ItemStackTemplate result;
-    private final Map<String, Criterion<?>> criteria = Maps.newLinkedHashMap();
+    private final RecipeUnlockAdvancementBuilder criteria = new RecipeUnlockAdvancementBuilder();
 
     private FurnitureStationRecipeBuilder(RecipeCategory category, Ingredient planks, @Nullable Ingredient wool, Ingredient bindingAgent, ItemStackTemplate result) {
         this.category = category;
@@ -37,7 +33,7 @@ public final class FurnitureStationRecipeBuilder implements RecipeBuilder {
 
     @Override
     public FurnitureStationRecipeBuilder unlockedBy(String name, Criterion<?> criterion) {
-        criteria.put(name, criterion);
+        criteria.unlockedBy(name, criterion);
         return this;
     }
 
@@ -54,18 +50,8 @@ public final class FurnitureStationRecipeBuilder implements RecipeBuilder {
 
     @Override
     public void save(RecipeOutput output, ResourceKey<Recipe<?>> recipeKey) {
-        if(criteria.isEmpty())
-            throw new IllegalStateException("No way of obtaining recipe: " + recipeKey.identifier());
-
-        var advancement = output.advancement()
-                .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(recipeKey))
-                .rewards(AdvancementRewards.Builder.recipe(recipeKey))
-                .requirements(AdvancementRequirements.Strategy.OR);
-
-        criteria.forEach(advancement::addCriterion);
-
         var recipe = new FurnitureStationRecipe(Objects.requireNonNullElse(group, ""), planks, wool, bindingAgent, result);
-        output.accept(recipeKey, recipe, advancement.build(recipeKey.identifier().withPrefix("recipes/" + category.getFolderName() + '/')));
+        output.accept(recipeKey, recipe, criteria.build(output, recipeKey, category));
     }
 
     public static FurnitureStationRecipeBuilder builder(RecipeCategory category, Ingredient planks, @Nullable Ingredient wool, Ingredient bindingAgent, ItemStackTemplate result) {

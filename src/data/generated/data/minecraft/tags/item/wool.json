@@ -1,8 +1,5 @@
 {
   "values": [
-    {
-      "id": "#fantasyfurniture:furniture_wool",
-      "required": false
-    }
+    "#fantasyfurniture:furniture_wool"
   ]
 }

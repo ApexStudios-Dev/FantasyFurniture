@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_decorations:furniture_station/paper_stack"
+        "recipes": "fantasyfurniture_decorations:furniture_station/paper_stack"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

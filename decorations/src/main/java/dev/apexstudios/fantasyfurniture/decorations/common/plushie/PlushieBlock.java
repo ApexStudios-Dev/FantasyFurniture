@@ -1,6 +1,5 @@
 package dev.apexstudios.fantasyfurniture.decorations.common.plushie;
 
-import com.mojang.serialization.MapCodec;
 import dev.apexstudios.fantasyfurniture.decorations.common.DecorationsFurnitureModule;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
@@ -42,11 +41,6 @@ public final class PlushieBlock extends BaseEntityBlock {
         super(properties);
 
         registerDefaultState(defaultBlockState().setValue(ROTATION, 0));
-    }
-
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return null;
     }
 
     @Override

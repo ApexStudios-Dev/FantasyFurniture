@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_decorations:furniture_station/stackable_pumpkins"
+        "recipes": "fantasyfurniture_decorations:furniture_station/stackable_pumpkins"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_decorations:furniture_station/potion_bottles"
+        "recipes": "fantasyfurniture_decorations:furniture_station/potion_bottles"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

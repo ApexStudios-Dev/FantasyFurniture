@@ -15,20 +15,20 @@ displayURL = "https://modrinth.com/mod/fantasy-furniture"
 [[dependencies.fantasyfurniture]]
 modId = "minecraft"
 type = "required"
-versionRange = "[26.2,26.3)"
+versionRange = "[26.3,26.4)"
 ordering = "NONE"
 side = "BOTH"
 [[dependencies.fantasyfurniture]]
 modId = "neoforge"
 type = "required"
-versionRange = "[26.2-alpha,26.3)"
+versionRange = "[26.3-alpha,26.4)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.fantasyfurniture]]
 modId = "apexcore"
 type = "required"
-versionRange = "[26.2,26.3)"
+versionRange = "[26.3,26.4)"
 [dependencies.fantasyfurniture.mc-publish]
 modrinth = "xl3myxch"
 curseforge = "550778"

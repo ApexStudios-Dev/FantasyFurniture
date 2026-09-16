@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_venthyr:conversion/planks"
+        "recipes": "fantasyfurniture_venthyr:conversion/planks"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

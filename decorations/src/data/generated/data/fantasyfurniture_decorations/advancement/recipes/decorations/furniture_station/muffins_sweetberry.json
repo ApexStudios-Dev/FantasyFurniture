@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_decorations:furniture_station/muffins_sweetberry"
+        "recipes": "fantasyfurniture_decorations:furniture_station/muffins_sweetberry"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

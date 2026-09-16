@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_nordic:furniture_station/sign"
+        "recipes": "fantasyfurniture_nordic:furniture_station/sign"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

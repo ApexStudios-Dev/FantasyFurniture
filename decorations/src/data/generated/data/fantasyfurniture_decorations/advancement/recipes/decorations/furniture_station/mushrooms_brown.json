@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_decorations:furniture_station/mushrooms_brown"
+        "recipes": "fantasyfurniture_decorations:furniture_station/mushrooms_brown"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

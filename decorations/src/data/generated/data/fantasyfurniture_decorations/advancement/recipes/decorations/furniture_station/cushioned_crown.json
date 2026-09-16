@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_decorations:furniture_station/cushioned_crown"
+        "recipes": "fantasyfurniture_decorations:furniture_station/cushioned_crown"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

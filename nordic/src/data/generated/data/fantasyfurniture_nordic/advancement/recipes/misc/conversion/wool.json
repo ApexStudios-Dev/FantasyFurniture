@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_nordic:conversion/wool"
+        "recipes": "fantasyfurniture_nordic:conversion/wool"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

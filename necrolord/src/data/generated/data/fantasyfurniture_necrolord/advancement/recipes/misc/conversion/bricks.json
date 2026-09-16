@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_necrolord:conversion/bricks"
+        "recipes": "fantasyfurniture_necrolord:conversion/bricks"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

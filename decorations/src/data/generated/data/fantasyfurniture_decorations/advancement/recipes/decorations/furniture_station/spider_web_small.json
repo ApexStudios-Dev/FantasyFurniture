@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_decorations:furniture_station/spider_web_small"
+        "recipes": "fantasyfurniture_decorations:furniture_station/spider_web_small"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

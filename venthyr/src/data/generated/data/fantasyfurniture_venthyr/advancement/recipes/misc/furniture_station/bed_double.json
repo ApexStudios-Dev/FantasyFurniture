@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_venthyr:furniture_station/bed_double"
+        "recipes": "fantasyfurniture_venthyr:furniture_station/bed_double"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_venthyr:furniture_station/dresser"
+        "recipes": "fantasyfurniture_venthyr:furniture_station/dresser"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

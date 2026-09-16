@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_decorations:furniture_station/skull_blossom_skeleton"
+        "recipes": "fantasyfurniture_decorations:furniture_station/skull_blossom_skeleton"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

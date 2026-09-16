@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_dunmer:conversion/planks"
+        "recipes": "fantasyfurniture_dunmer:conversion/planks"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
