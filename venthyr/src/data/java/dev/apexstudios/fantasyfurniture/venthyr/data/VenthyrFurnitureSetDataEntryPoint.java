@@ -2,7 +2,6 @@ package dev.apexstudios.fantasyfurniture.venthyr.data;
 
 import dev.apexstudios.apexcore.api.util.TagPair;
 import dev.apexstudios.fantasyfurniture.common.data.DataGenContext;
-import dev.apexstudios.fantasyfurniture.common.data.FurnitureBlockLootSubProvider;
 import dev.apexstudios.fantasyfurniture.common.data.FurnitureItemTagsProvider;
 import dev.apexstudios.fantasyfurniture.common.util.FurnitureUtil;
 import dev.apexstudios.fantasyfurniture.venthyr.common.VenthyrFurnitureSet;
@@ -50,7 +49,7 @@ public final class VenthyrFurnitureSetDataEntryPoint {
             );
 
             event.createReloadableRegistryObjects(new RegistrySetBuilder()
-                    .add(Registries.LOOT_TABLE, registry -> new LootTableProvider(Set.of(), List.of(context.forLootTable(FurnitureBlockLootSubProvider::new))))
+                    .add(Registries.LOOT_TABLE, new LootTableProvider(Set.of(), List.of(context.forLootTable(VFBlockLootSubProvider::new))))
                     .add(context.forBootstrap(VFRecipeProvider::new))
             );
 

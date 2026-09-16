@@ -1,27 +1,24 @@
 {
+  "type": "minecraft:block",
   "pools": [
     {
-      "conditions": [
-        {
-          "condition": "minecraft:survives_explosion"
-        }
-      ],
+      "condition": {
+        "type": "minecraft:survives_explosion"
+      },
       "entries": [
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "block": "fantasyfurniture_necrolord:bed_single",
-              "condition": "minecraft:block_state_property",
-              "properties": {
-                "part": "head"
-              }
+          "condition": {
+            "type": "minecraft:match_block",
+            "blocks": "fantasyfurniture_necrolord:bed_single",
+            "state": {
+              "part": "head"
             }
-          ],
+          },
           "name": "fantasyfurniture_necrolord:bed_single"
         }
       ],
-      "rolls": 1.0
+      "rolls": 1
     }
   ],
   "random_sequence": "fantasyfurniture_necrolord:blocks/bed_single"

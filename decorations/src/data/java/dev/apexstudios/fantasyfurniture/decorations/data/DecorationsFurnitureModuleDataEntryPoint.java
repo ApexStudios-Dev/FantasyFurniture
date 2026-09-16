@@ -19,7 +19,7 @@ public final class DecorationsFurnitureModuleDataEntryPoint {
     public DecorationsFurnitureModuleDataEntryPoint(IEventBus modBus) {
         modBus.addListener(GatherDataEvent.Client.class, event -> {
             event.createReloadableRegistryObjects(new RegistrySetBuilder()
-                    .add(Registries.LOOT_TABLE, registry -> new LootTableProvider(Set.of(), List.of(new LootTableProvider.SubProviderEntry(DFBlockLootSubProvider::new, LootContextParamSets.BLOCK))))
+                    .add(Registries.LOOT_TABLE, new LootTableProvider(Set.of(), List.of(new LootTableProvider.SubProviderEntry(DFBlockLootSubProvider::new, LootContextParamSets.BLOCK))))
                     .add(RecipeProvider.asBootstrap(DFRecipeProvider::new))
             );
 

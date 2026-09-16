@@ -55,7 +55,7 @@ public final class DunmerFurnitureSetDataEntryPoint {
             );
 
             event.createReloadableRegistryObjects(new RegistrySetBuilder()
-                    .add(Registries.LOOT_TABLE, registry -> new LootTableProvider(Set.of(), List.of(context.forLootTable(FurnitureBlockLootSubProvider::new))))
+                    .add(Registries.LOOT_TABLE, new LootTableProvider(Set.of(), List.of(context.forLootTable(FurnitureBlockLootSubProvider::new))))
                     .add(context.forBootstrap(FurnitureRecipeProvider::new))
             );
 

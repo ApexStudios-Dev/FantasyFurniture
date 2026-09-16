@@ -141,7 +141,7 @@ public record DataGenContext(
 
     public void registerBasicDataGen(GatherDataEvent event) {
         event.createReloadableRegistryObjects(new RegistrySetBuilder()
-                .add(Registries.LOOT_TABLE, registry -> new LootTableProvider(Set.of(), List.of(forLootTable(FurnitureBlockLootSubProvider::new))))
+                .add(Registries.LOOT_TABLE, new LootTableProvider(Set.of(), List.of(forLootTable(FurnitureBlockLootSubProvider::new))))
                 .add(forBootstrap(FurnitureRecipeProvider::new))
         );
 

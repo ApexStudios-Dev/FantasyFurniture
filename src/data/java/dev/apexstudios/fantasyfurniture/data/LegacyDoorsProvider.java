@@ -9,7 +9,6 @@ import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
 import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.core.Holder;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -45,9 +44,7 @@ final class LegacyDoorsProvider extends ModelProvider {
 
     @Override
     protected Stream<? extends Holder<Block>> getKnownBlocks() {
-        return BuiltInRegistries.BLOCK
-                .filterElements(this::isFurnitureDoor)
-                .listElements();
+        return Stream.empty();
     }
 
     @Override
