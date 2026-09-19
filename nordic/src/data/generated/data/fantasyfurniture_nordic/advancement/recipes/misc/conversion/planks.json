@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_nordic:conversion/planks"
+        "recipes": "fantasyfurniture_nordic:conversion/planks"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

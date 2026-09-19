@@ -7,14 +7,15 @@ import net.minecraft.client.gui.screens.inventory.SignEditScreen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.level.block.entity.SignTextSlot;
 import org.joml.Vector3fc;
 
 public final class GravestoneEditScreen extends AbstractSignEditScreen {
     public static final Identifier TEXTURE = DecorationsFurnitureModule.identifier("textures/gui/gravestone.png");
     public static final String TRANSLATION = DecorationsFurnitureModule.ID + ".gravestone.edit";
 
-    public GravestoneEditScreen(GravestoneBlockEntity blockEntity, boolean isFrontText, boolean isFiltered) {
-        super(blockEntity, isFrontText, isFiltered, Component.translatable(TRANSLATION));
+    public GravestoneEditScreen(GravestoneBlockEntity blockEntity, SignTextSlot slot, boolean isFiltered) {
+        super(blockEntity, slot, isFiltered, Component.translatable(TRANSLATION));
     }
 
     @Override

@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_dunmer:conversion/wool"
+        "recipes": "fantasyfurniture_dunmer:conversion/wool"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

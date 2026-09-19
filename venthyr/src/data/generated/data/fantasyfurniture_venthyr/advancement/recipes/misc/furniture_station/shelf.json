@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_venthyr:furniture_station/shelf"
+        "recipes": "fantasyfurniture_venthyr:furniture_station/shelf"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_decorations:furniture_station/muffins_blueberry"
+        "recipes": "fantasyfurniture_decorations:furniture_station/muffins_blueberry"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

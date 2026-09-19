@@ -71,7 +71,14 @@ public final class PlushieBlockEntityRenderer implements BlockEntityRenderer<Plu
     public static void submitPlushie(PoseStack poseStack, SubmitNodeCollector nodes, int lightCoords, PlushieModel model, PlushieRenderState plushieRenderState, int outlineColor, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
         poseStack.pushPose();
         setupForModel(poseStack, plushieRenderState);
-        nodes.submitModel(model, new AvatarRenderState(), poseStack, plushieRenderState.renderType, lightCoords, OverlayTexture.NO_OVERLAY, outlineColor, breakProgress);
+
+        var modelState = new AvatarRenderState();
+        nodes.submitModel(model, modelState, poseStack, plushieRenderState.renderType, lightCoords, OverlayTexture.NO_OVERLAY, outlineColor);
+
+        if(breakProgress != null) {
+            nodes.order(1).submitCrumblingOverlay(model, modelState, poseStack, plushieRenderState.renderType, lightCoords, OverlayTexture.NO_OVERLAY, -1, breakProgress);
+        }
+
         poseStack.popPose();
     }
 
@@ -82,7 +89,7 @@ public final class PlushieBlockEntityRenderer implements BlockEntityRenderer<Plu
             poseStack.translate(renderState.facing.getStepX() * -.175F, 0F, renderState.facing.getStepZ() * -.175F);
         }
 
-        poseStack.mulPose(Axis.YN.rotationDegrees(renderState.rotation));
+        poseStack.rotate(Axis.YN, renderState.rotation);
 
         poseStack.scale(-1F, -1F, 1F);
         poseStack.scale(.625F, .625F, .625F);

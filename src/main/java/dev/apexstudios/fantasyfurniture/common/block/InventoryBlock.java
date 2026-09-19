@@ -1,6 +1,5 @@
 package dev.apexstudios.fantasyfurniture.common.block;
 
-import com.mojang.serialization.MapCodec;
 import dev.apexstudios.apexcore.api.block.SimpleHorizontalDirectionalBlock;
 import dev.apexstudios.apexcore.api.block.entity.InventoryBlockEntity;
 import dev.apexstudios.fantasyfurniture.common.block.entity.FurnitureInventoryBlockEntity;
@@ -25,18 +24,12 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.neoforge.transfer.ResourceHandlerUtil;
 
 public class InventoryBlock extends BaseEntityBlock {
-    public static final MapCodec<InventoryBlock> CODEC = simpleCodec(InventoryBlock::new);
     public static final EnumProperty<Direction> FACING = SimpleHorizontalDirectionalBlock.FACING;
 
     public InventoryBlock(Properties properties) {
         super(properties);
 
         registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH));
-    }
-
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return CODEC;
     }
 
     @Override

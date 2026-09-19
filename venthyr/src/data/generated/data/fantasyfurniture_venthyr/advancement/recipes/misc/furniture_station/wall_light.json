@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_venthyr:furniture_station/wall_light"
+        "recipes": "fantasyfurniture_venthyr:furniture_station/wall_light"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

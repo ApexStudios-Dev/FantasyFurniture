@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_decorations:furniture_station/wall_mirror_large"
+        "recipes": "fantasyfurniture_decorations:furniture_station/wall_mirror_large"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

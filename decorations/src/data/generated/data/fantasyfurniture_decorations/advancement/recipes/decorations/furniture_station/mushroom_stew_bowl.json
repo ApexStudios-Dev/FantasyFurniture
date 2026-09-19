@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_decorations:furniture_station/mushroom_stew_bowl"
+        "recipes": "fantasyfurniture_decorations:furniture_station/mushroom_stew_bowl"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

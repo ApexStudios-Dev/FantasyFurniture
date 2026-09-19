@@ -3,6 +3,8 @@ package dev.apexstudios.fantasyfurniture.decorations.common.block;
 import dev.apexstudios.apexcore.api.block.Dyeable;
 import dev.apexstudios.apexcore.api.block.SimpleHorizontalDirectionalBlock;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -67,8 +69,8 @@ public abstract class StackedDyeableBlock extends SimpleHorizontalDirectionalBlo
     }
 
     @Override
-    public void playerDestroy(Level level, Player player, BlockPos pos, BlockState blockState, @Nullable BlockEntity blockEntity, ItemStack tool) {
-        super.playerDestroy(level, player, pos, blockState, blockEntity, tool);
+    public void playerDestroy(ServerLevel level, ServerPlayer player, BlockPos pos, BlockState blockState, @Nullable BlockEntity blockEntity, ItemStack destroyedWith) {
+        super.playerDestroy(level, player, pos, blockState, blockEntity, destroyedWith);
         Stackable.playerDestroy(this, level, pos, blockState);
     }
 

@@ -19,6 +19,7 @@ import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Util;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.entity.SignText;
+import net.minecraft.world.level.block.entity.SignTextSlot;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
@@ -44,8 +45,8 @@ public final class GravestoneBlockEntityRenderer implements BlockEntityRenderer<
 
         renderState.maxTextLineWidth = blockEntity.getMaxTextLineWidth();
         renderState.textLineHeight = blockEntity.getTextLineHeight();
-        renderState.frontText = blockEntity.getFrontText();
-        renderState.backText = blockEntity.getBackText();
+        renderState.frontText = blockEntity.getText(SignTextSlot.FRONT);
+        renderState.backText = blockEntity.getText(SignTextSlot.BACK);
         renderState.isTextFilteringEnabled = Minecraft.getInstance().isTextFilteringEnabled();
         renderState.drawOutline = AbstractSignRenderer.isOutlineVisible(blockEntity.getBlockPos());
         // renderState.woodType = SignBlock.getWoodType(blockEntity.getBlockState().getBlock());

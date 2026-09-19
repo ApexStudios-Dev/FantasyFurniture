@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_decorations:furniture_station/sweetrolls"
+        "recipes": "fantasyfurniture_decorations:furniture_station/sweetrolls"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

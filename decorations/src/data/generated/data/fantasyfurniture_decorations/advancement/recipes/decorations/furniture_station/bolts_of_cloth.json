@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fantasyfurniture_decorations:furniture_station/bolts_of_cloth"
+        "recipes": "fantasyfurniture_decorations:furniture_station/bolts_of_cloth"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

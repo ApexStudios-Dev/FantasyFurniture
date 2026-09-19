@@ -10,7 +10,7 @@ pluginManagement {
         resolutionStrategy {
             eachPlugin {
                 if(requested.id.namespace == "apex-conventions") {
-                    useVersion("0.1.101")
+                    useVersion("0.1.102")
                 }
             }
         }
@@ -19,13 +19,13 @@ pluginManagement {
 
 dependencyResolutionManagement {
     versionCatalogs.create("libs") {
-        version("neoforge", "26.2.0.50-beta")
+        version("neoforge", "26.3.0.7-beta")
 
-        library("registree", "dev.apexstudios", "registree").version("26.2.0")
-        library("apexcore", "dev.apexstudios", "apexcore").version("26.2.0")
+        library("registree", "dev.apexstudios", "registree").version("26.3.0")
+        library("apexcore", "dev.apexstudios", "apexcore").version("26.3.0")
         bundle("apexcore", listOf("registree", "apexcore"))
 
-        library("contex", "curse.maven", "contex-1296805").version("7806346")
+        library("contex", "curse.maven", "contex-1296805").version("8892042") // 15.0.0 (26.3)
         library("contextmatters", "curse.maven", "context-matters-1265417").version("7808075")
     }
 }
@@ -36,20 +36,30 @@ plugins {
 
 gradle.beforeProject {
     repositories {
-        /*maven("https://prmaven.neoforged.net/NeoForge/pr3198") {
+        exclusiveContent {
+            forRepository {
+                maven("https://cursemaven.com")
+            }
+
+            filter {
+                includeGroup("curse.maven")
+            }
+        }
+
+        /*maven("https://prmaven.neoforged.net/NeoForge/pr3492") {
             content {
                 includeModule("net.neoforged", "neoforge")
                 includeModule("net.neoforged", "testframework")
             }
         }*/
 
-        /*maven("https://maven.apexmodder.com/prs/Registree/pr29") {
+        /*maven("https://maven.apexmodder.com/prs/Registree/pr37") {
             content {
                 includeModule("dev.apexstudios", "registree")
             }
         }*/
 
-        /*maven("https://maven.apexmodder.com/prs/ApexCore/pr88") {
+        /*maven("https://maven.apexmodder.com/prs/ApexCore/pr96") {
             content {
                 includeModule("dev.apexstudios", "apexcore")
             }
