@@ -19,10 +19,10 @@ pluginManagement {
 
 dependencyResolutionManagement {
     versionCatalogs.create("libs") {
-        version("neoforge", "26.3.0.12-beta-pr-3492-pr-data-gen-extensions")
+        version("neoforge", "26.3.0.7-beta")
 
-        library("registree", "dev.apexstudios", "registree").version("26.3.3-beta-pr-37")
-        library("apexcore", "dev.apexstudios", "apexcore").version("26.3.6-beta-pr-96")
+        library("registree", "dev.apexstudios", "registree").version("26.3.0")
+        library("apexcore", "dev.apexstudios", "apexcore").version("26.3.0")
         bundle("apexcore", listOf("registree", "apexcore"))
 
         library("contex", "curse.maven", "contex-1296805").version("8892042") // 15.0.0 (26.3)
@@ -46,24 +46,24 @@ gradle.beforeProject {
             }
         }
 
-        maven("https://prmaven.neoforged.net/NeoForge/pr3492") {
+        /*maven("https://prmaven.neoforged.net/NeoForge/pr3492") {
             content {
                 includeModule("net.neoforged", "neoforge")
                 includeModule("net.neoforged", "testframework")
             }
-        }
+        }*/
 
-        maven("https://maven.apexmodder.com/prs/Registree/pr37") {
+        /*maven("https://maven.apexmodder.com/prs/Registree/pr37") {
             content {
                 includeModule("dev.apexstudios", "registree")
             }
-        }
+        }*/
 
-        maven("https://maven.apexmodder.com/prs/ApexCore/pr96") {
+        /*maven("https://maven.apexmodder.com/prs/ApexCore/pr96") {
             content {
                 includeModule("dev.apexstudios", "apexcore")
             }
-        }
+        }*/
     }
 }
 
