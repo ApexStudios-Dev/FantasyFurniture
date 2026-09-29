@@ -19,6 +19,6 @@ final class RFItemTagsProvider extends FurnitureItemTagsProvider {
     protected void addTags(HolderLookup.Provider registries) {
         super.addTags(registries);
 
-        Dyeable.dyeableItems(RoyalFurnitureSet.REGISTREE).forEach(item -> tag(Tags.Items.DYED).add(item.builtInRegistryHolder().key()));
+        Dyeable.dyeableItems(RoyalFurnitureSet.REGISTREE).forEach(item -> tag(Tags.Items.DYEABLE_REDYEABLE_SIMPLE).add(item.builtInRegistryHolder().key()));
     }
 }

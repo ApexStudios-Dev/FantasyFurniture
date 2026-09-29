@@ -19,6 +19,6 @@ final class RFBlockTagsProvider extends FurnitureBlockTagsProvider {
     protected void addTags(HolderLookup.Provider registries) {
         super.addTags(registries);
 
-        Dyeable.dyeableBlocks(RoyalFurnitureSet.REGISTREE).forEach(block -> tag(Tags.Blocks.DYED).add(block.builtInRegistryHolder().key()));
+        Dyeable.dyeableBlocks(RoyalFurnitureSet.REGISTREE).forEach(block -> tag(Tags.Blocks.DYEABLE_REDYEABLE_SIMPLE).add(block.builtInRegistryHolder().key()));
     }
 }
