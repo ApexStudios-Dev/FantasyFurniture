@@ -35,6 +35,7 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.data.event.PackGenerator;
 
 public record DataGenContext(
         Registree registree,
@@ -127,11 +128,11 @@ public record DataGenContext(
         return block(dataType, name, block -> action.accept(block.asItem()));
     }
 
-    public <T extends DataProvider> GatherDataEvent.DataProviderFromOutput<T> fromOutput(BiFunction<PackOutput, DataGenContext, T> factory) {
+    public <T extends DataProvider> PackGenerator.DataProviderFromOutput<T> fromOutput(BiFunction<PackOutput, DataGenContext, T> factory) {
         return output -> factory.apply(output, this);
     }
 
-    public <T extends DataProvider> GatherDataEvent.DataProviderFromOutputLookup<T> fromOutputLookup(Function3<PackOutput, CompletableFuture<HolderLookup.Provider>, DataGenContext, T> factory) {
+    public <T extends DataProvider> PackGenerator.DataProviderFromOutputLookup<T> fromOutputLookup(Function3<PackOutput, CompletableFuture<HolderLookup.Provider>, DataGenContext, T> factory) {
         return (output, lookupProvider) -> factory.apply(output, lookupProvider, this);
     }
 
