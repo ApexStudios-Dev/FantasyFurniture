@@ -21,7 +21,7 @@ side = "BOTH"
 [[dependencies.fantasyfurniture_bone]]
 modId = "neoforge"
 type = "required"
-versionRange = "[26.3-alpha,26.4)"
+versionRange = "[26.3.0.58-beta,26.4)"
 ordering = "NONE"
 side = "BOTH"
 
@@ -60,7 +60,7 @@ side = "BOTH"
 [[dependencies.fantasyfurniture_bone_skeleton]]
 modId = "neoforge"
 type = "required"
-versionRange = "[26.3-alpha,26.4)"
+versionRange = "[26.3.0.58-beta,26.4)"
 ordering = "NONE"
 side = "BOTH"
 [[dependencies.fantasyfurniture_bone_skeleton]]
@@ -91,7 +91,7 @@ displayURL = "https://modrinth.com/project/fantasys-furniture-bone"
 [[dependencies.fantasyfurniture_bone_wither]]
 modId = "neoforge"
 type = "required"
-versionRange = "[26.3-alpha,26.4)"
+versionRange = "[26.3.0.58-beta,26.4)"
 ordering = "NONE"
 side = "BOTH"
 
