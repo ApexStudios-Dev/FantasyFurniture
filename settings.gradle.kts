@@ -19,10 +19,10 @@ pluginManagement {
 
 dependencyResolutionManagement {
     versionCatalogs.create("libs") {
-        version("neoforge", "26.3.0.8-beta")
+        version("neoforge", "26.3.0.64-beta")
 
         library("registree", "dev.apexstudios", "registree").version("26.3.0")
-        library("apexcore", "dev.apexstudios", "apexcore").version("26.3.0")
+        library("apexcore", "dev.apexstudios", "apexcore").version("26.3.4")
         bundle("apexcore", listOf("registree", "apexcore"))
 
         library("contex", "curse.maven", "contex-1296805").version("8892042") // 15.0.0 (26.3)
@@ -46,7 +46,7 @@ gradle.beforeProject {
             }
         }
 
-        /*maven("https://prmaven.neoforged.net/NeoForge/pr3492") {
+        /*maven("https://prmaven.neoforged.net/NeoForge/pr3611") {
             content {
                 includeModule("net.neoforged", "neoforge")
                 includeModule("net.neoforged", "testframework")
@@ -59,7 +59,7 @@ gradle.beforeProject {
             }
         }*/
 
-        /*maven("https://maven.apexmodder.com/prs/ApexCore/pr96") {
+        /*maven("https://maven.apexmodder.com/prs/ApexCore/pr100") {
             content {
                 includeModule("dev.apexstudios", "apexcore")
             }

@@ -21,14 +21,14 @@ side = "BOTH"
 [[dependencies.fantasyfurniture_bone]]
 modId = "neoforge"
 type = "required"
-versionRange = "[26.3-alpha,26.4)"
+versionRange = "[26.3.0.64-beta,26.4)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.fantasyfurniture_bone]]
 modId = "apexcore"
 type = "required"
-versionRange = "[26.3,26.4)"
+versionRange = "[26.3.4,26.4)"
 [dependencies.fantasyfurniture_bone.mc-publish]
 modrinth = "xl3myxch"
 curseforge = "550778"
@@ -60,7 +60,7 @@ side = "BOTH"
 [[dependencies.fantasyfurniture_bone_skeleton]]
 modId = "neoforge"
 type = "required"
-versionRange = "[26.3-alpha,26.4)"
+versionRange = "[26.3.0.64-beta,26.4)"
 ordering = "NONE"
 side = "BOTH"
 [[dependencies.fantasyfurniture_bone_skeleton]]
@@ -71,7 +71,7 @@ versionRange = "[26.3-alpha,26.4)"
 [[dependencies.fantasyfurniture_bone_skeleton]]
 modId = "apexcore"
 type = "required"
-versionRange = "[26.3,26.4)"
+versionRange = "[26.3.4,26.4)"
 [[dependencies.fantasyfurniture_bone_skeleton]]
 modId = "fantasyfurniture"
 type = "required"
@@ -91,7 +91,7 @@ displayURL = "https://modrinth.com/project/fantasys-furniture-bone"
 [[dependencies.fantasyfurniture_bone_wither]]
 modId = "neoforge"
 type = "required"
-versionRange = "[26.3-alpha,26.4)"
+versionRange = "[26.3.0.64-beta,26.4)"
 ordering = "NONE"
 side = "BOTH"
 
@@ -110,7 +110,7 @@ side = "BOTH"
 [[dependencies.fantasyfurniture_bone_wither]]
 modId = "apexcore"
 type = "required"
-versionRange = "[26.3,26.4)"
+versionRange = "[26.3.4,26.4)"
 [[dependencies.fantasyfurniture_bone_wither]]
 modId = "fantasyfurniture"
 type = "required"
