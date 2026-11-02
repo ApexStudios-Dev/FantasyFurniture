@@ -1,5 +1,6 @@
 package dev.apexstudios.fantasyfurniture.decorations.common.cookie;
 
+import dev.apexstudios.fantasyfurniture.common.menu.ResourceHandlerSlotFixed;
 import dev.apexstudios.fantasyfurniture.decorations.common.DecorationsFurnitureModule;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -10,7 +11,6 @@ import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.StacksResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
-import net.neoforged.neoforge.transfer.item.ResourceHandlerSlot;
 
 public final class CookieJarMenu extends AbstractContainerMenu {
     private CookieJarMenu(int containerId, Inventory inventory, ResourceHandler<ItemResource> itemHandler, IndexModifier<ItemResource> indexModifier) {
@@ -18,7 +18,7 @@ public final class CookieJarMenu extends AbstractContainerMenu {
 
         for(var i = 0; i < 3; i++) {
             for(var j = 0; j < 3; j++) {
-                addSlot(new ResourceHandlerSlot(itemHandler, indexModifier, j + i * 3, 62 + j * 18, 17 + i * 18));
+                addSlot(new ResourceHandlerSlotFixed(itemHandler, indexModifier, j + i * 3, 62 + j * 18, 17 + i * 18));
             }
         }
 
