@@ -4,7 +4,10 @@ import dev.apexstudios.apexcore.api.block.entity.InventoryBlockEntity;
 import dev.apexstudios.apexcore.api.menu.SimpleMenu;
 import dev.apexstudios.fantasyfurniture.common.FurnitureBlockEntities;
 import dev.apexstudios.fantasyfurniture.common.FurnitureMenus;
+import dev.apexstudios.fantasyfurniture.common.menu.FurnitureInventoryMenu;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -24,5 +27,10 @@ public class FurnitureInventoryBlockEntity extends InventoryBlockEntity {
     @Override
     protected MenuType<? extends SimpleMenu> menuType() {
         return FurnitureMenus.INVENTORY.value();
+    }
+
+    @Override
+    public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player player) {
+        return new FurnitureInventoryMenu(FurnitureMenus.INVENTORY.value(), windowId, playerInventory, inventory);
     }
 }
