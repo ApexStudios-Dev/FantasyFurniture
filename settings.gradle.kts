@@ -34,6 +34,20 @@ plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
 }
 
+gradle.beforeProject {
+    repositories {
+        exclusiveContent {
+            forRepository {
+                maven("https://cursemaven.com")
+            }
+
+            filter {
+                includeGroup("curse.maven")
+            }
+        }
+    }
+}
+
 furnitureSet(
     "nordic",
     "venthyr",
